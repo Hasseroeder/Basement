@@ -83,7 +83,7 @@
   margin: -0.2em 0px;
   border-radius: 3px;
   background: #191919;
-  font-size: 0.85em;
+  font-size: 0.85rem; /* this used to be 0.85em originally in discord's code, but I hate working with em */
   line-height: 1.125rem;
   white-space: pre-wrap;
 }
