@@ -6,6 +6,7 @@
     <title>Basement Introduction</title>
     
     <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all">
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
   <body>
   
@@ -26,11 +27,11 @@
         <p> Pet experience is gained by a couple of methods, including battling, hunting, and also just by doing absolutely nothing. <br>
             I won't be talking about Profile exp here, since I honestly just find that boring as fuck.<br><br>
             
-            You'll have 2 or 3 teams in your <code class="discord-code">owotm</code>, which we call "Primary", "Secondary", and "Tertiary", the last of which is exclusive to <img src="media/owo_images/uncommon.png"  style="width:1rem; margin-bottom: -0.1rem;" title=":uncommon:"  aria-label=":uncommon:"  alt=":uncommon:"  draggable="false">uncommon and above Patreons. 
+            You'll have 2 or 3 teams in your <code class="discord-code">owotm</code>, which we call "Primary", "Secondary", and "Tertiary", the last of which is exclusive to uncommon and above Patreons. 
             Your Primary team is the selected one, and the others are to the right of this, cycling back to the start after the third slot.
             Generally speaking, your Primary gains full exp, Secondary gains half exp and <img src="media/owo_images/patreon.png"  style="width:1rem; margin-bottom: -0.1rem;" title=":patreon:"  aria-label=":patreon:"  alt=":patreon:"  draggable="false"> Tertiary gains no exp.<br><br>
             
-            But exp does not stack if you have Pets on both your Primary & Secondary, so it generally doesn't make much sense to share pets between these teams.
+            But exp doesn't stack if you have Pets on both your Primary & Secondary, so it generally doesn't make much sense to share pets between these teams.
             Stacking Pets or even entire Teams in the Tertiary team is quite common though, as there's no reason not to, and you're getting extra Blitz performance for free.<br><br>
 
             The basic exp needed per level up is: <code class="discord-code">1000 + (level)^4</code>
@@ -39,18 +40,36 @@
         <p>
         
             Your main team gains 200/100/50 Exp on a Win/Tie/Loss. <br>
-            And your secondary team passively gains 100/50/25 Exp for the same. <br> <br>
+            <span style="margin-bottom:0.7rem; display: inline-block;">And your secondary team passively gains 100/50/25 Exp for the same.</span><br>
             
-            This also happens when people encounter you in random battles, and not just when you grind <code class="discord-code">owob</code> yourself. Due to how rarely you're encountered by random people though, the amount of gained exp is negliealbe compared to other sources. We typically call this "Blitz" exp, because it's more noticeable when your blitz team kills some high level player and you gain a bunch of Bonus exp. <br> <br>
+            This also happens when people encounter you in random battles, and not just when you grind <code class="discord-code">owob</code> yourself. Your streaks are unaffected by these battles though, and due to how rarely you're encountered by random people, the amount of gained exp is negliealbe compared to other sources. We typically call this "Blitz" exp, because it's more noticeable when your blitz team kills some high level player and you gain a bunch of Bonus exp.<br> <br>
         </p>  
-            <h3 style="margin-bottom:-1.7rem;">Bonus exp is gained through two ways:</h3> <br>
-        <p>
-            Killing a team which has a level advantage over yours
-        </p>
-        
-            
+        <h3 style="margin-bottom:-1.7rem;">Bonus exp is gained through two ways:</h3> <br>
+    
+        <ol>
+          <li style= "line-height:1.2rem; margin-bottom: 1rem;">By defeating teams that have a higher average level than yours. <br>
+              Which is very useful for new players, but quickly becomes a rarity once you've got a leveled team yourself. <br>
+              <span style="line-height:1.5rem;"> You gain this much: <code class="discord-code"> 600(avgEnemyLevel-avgAllyLevel) </code> </span>
+          </li>
+          <li>
+              By reaching certain streak milestones! Which is where the real gains lie <img src="media/misc_images/stonks.png"  style="width:1.5rem; margin-bottom: -0.3rem;" title=":stonks:"  aria-label=":stonks:"  alt=":stonks:"  draggable="false">. <br>
+              Multiples of 10, 50, 100, 500 and 1000 give Bonus Exp: 
+              <ul style="list-style: none; padding: 0.5rem 1rem 0.5rem 1rem;">
+                <li><code class="discord-code">   10 </code> - <code class="discord-code"> 10√x + 500 </code></li>
+                <li><code class="discord-code">   50 </code> - <code class="discord-code"> 30√x + 1500 </code></li>
+                <li><code class="discord-code">  100 </code> - <code class="discord-code"> 50√x + 2500 </code></li>
+                <li><code class="discord-code">  500 </code> - <code class="discord-code"> 100√x + 5000 </code></li>
+                <li><code class="discord-code"> 1000 </code> - <code class="discord-code"> 250√x + 12500 </code></li>
+                <li><span style="font-size:0.7rem;">The max is capped at 100k in these.</span></li>
+              </ul>
+              If we adjust these for how often they occur:
+              <div style="font-size: 0.95rem;">
+                $$\frac{10\sqrt{x} + 500}{12.5}+\frac{30\sqrt{x} + 1500}{100}+\frac{50\sqrt{x} + 2500}{125}+\frac{100\sqrt{x} + 5000}{1000}+\frac{250\sqrt{x} + 12500}{1000}$$
+                $$= 92.5 + 1.85 \sqrt{x}$$
+              </div>
+          </li>
+        </ol>
       </div>  
     </div>  
-
   </body>
 </html>
