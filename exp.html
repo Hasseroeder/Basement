@@ -52,24 +52,38 @@
               <span style="line-height:1.5rem;"> You gain this much: <code class="discord-code"> 600(avgEnemyLevel-avgAllyLevel) </code> </span>
           </li>
           <li>
-              By reaching certain streak milestones! Which is where the real gains lie <img src="media/misc_images/stonks.png"  style="width:1.5rem; margin-bottom: -0.3rem;" title=":stonks:"  aria-label=":stonks:"  alt=":stonks:"  draggable="false">. <br>
-              Multiples of 10, 50, 100, 500 and 1000 give Bonus Exp: 
-              <ul style="list-style: none; padding: 0.5rem 1rem 0.5rem 1rem;">
-                <li><code class="discord-code">   10 </code> - <code class="discord-code"> 10√x + 500 </code></li>
-                <li><code class="discord-code">   50 </code> - <code class="discord-code"> 30√x + 1500 </code></li>
-                <li><code class="discord-code">  100 </code> - <code class="discord-code"> 50√x + 2500 </code></li>
-                <li><code class="discord-code">  500 </code> - <code class="discord-code"> 100√x + 5000 </code></li>
-                <li><code class="discord-code"> 1000 </code> - <code class="discord-code"> 250√x + 12500 </code></li>
-                <li><span style="font-size:0.7rem;">The max is capped at 100k in these.</span></li>
-              </ul>
-              If we adjust these for how often they occur:
-              <div style="font-size: 0.95rem;">
-                $$\frac{10\sqrt{x} + 500}{12.5}+\frac{30\sqrt{x} + 1500}{100}+\frac{50\sqrt{x} + 2500}{125}+\frac{100\sqrt{x} + 5000}{1000}+\frac{250\sqrt{x} + 12500}{1000}$$
-                $$= 92.5 + 1.85 \sqrt{x}$$
-              </div>
+            By reaching certain streak milestones! Which is where the real gains lie <img src="media/misc_images/stonks.png"  style="width:1.5rem; margin-bottom: -0.3rem;" title=":stonks:"  aria-label=":stonks:"  alt=":stonks:"  draggable="false">. <br>
+            Multiples of 10, 50, 100, 500 and 1000 give Bonus Exp: 
+            <ul style="list-style: none; padding: 0.5rem 1rem 0.5rem 1rem;">
+              <li><code class="discord-code">   10 </code> - <code class="discord-code"> 10√x + 500 </code></li>
+              <li><code class="discord-code">   50 </code> - <code class="discord-code"> 30√x + 1500 </code></li>
+              <li><code class="discord-code">  100 </code> - <code class="discord-code"> 50√x + 2500 </code></li>
+              <li><code class="discord-code">  500 </code> - <code class="discord-code"> 100√x + 5000 </code></li>
+              <li><code class="discord-code"> 1000 </code> - <code class="discord-code"> 250√x + 12500 </code></li>
+              <li><span style="font-size:0.7rem;">The max is capped at 100k in these.</span></li>
+            </ul>
           </li>
         </ol>
+        <div class = "container" id="streakWorthContainer">
+          <div class = "toolbar">
+            <button id="streakWorthButton">V</button> 
+            <div style="font-size:1rem"> Streak Worth </div>
+          </div>
+        </div>
+        <div class = "container" id="globalContainer">
+          <div class = "toolbar">
+            <button id="globalButton">V</button> 
+            <div style="font-size:1rem"> NeonUtil Global </div>
+          </div>
+        </div>
+        
+        
+            
       </div>  
     </div>  
+    <script src="js/basement_js/exp.js"> </script>
+
+  </body>
+</html>
   </body>
 </html>
