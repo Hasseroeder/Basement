@@ -8,7 +8,6 @@
     margin-right:2.5rem;
 }
 
-/* Links inside the toolbar */
 .toolbar a {
     color: lightgray;
     padding: 9px 11px;
@@ -18,7 +17,6 @@
 
 }
 
-/* Hover effect for links */
 .toolbar a:hover {
     background-color: #555555;
     color: lightgray;
@@ -33,7 +31,7 @@
   width: 70%;       
   min-width: 1000px;
   max-width: 1200px;
-  margin: 0 auto; /* Centers horizontally */
+  margin: 0 auto; 
   padding-bottom:1.25rem;
   padding-top:1.25rem;
   background-color: #222222;
@@ -42,12 +40,12 @@
 
 .art-display {
  
-  font-family: monospace; /* Matches the typical <pre> font */
+  font-family: monospace; 
   background-color: #333;
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
-  width: fit-content; /* default is auto, but explicitly setting can help */
-  height: fit-content; /* allows content to decide height */
+  width: fit-content; 
+  height: fit-content; 
 }
 
 .flexContainer{
@@ -83,9 +81,11 @@
   margin: -0.2em 0px;
   border-radius: 3px;
   background: #191919;
-  font-size: 0.85rem; /* this used to be 0.85em originally in discord's code, but I hate working with em */
+  font-size: 0.85rem; /*check if this looks decent with rem, used to be em*/
   line-height: 1.125rem;
-  white-space: pre-wrap;
+  
+  white-space: pre;
+
 }
 
 .discord-message-outer{
@@ -230,12 +230,10 @@
 }
  
 .no-arrows {
-  /* For most modern browsers */
   -moz-appearance: textfield;
   appearance: textfield;
 }
 
-/* Hides the spinners */
 .no-arrows::-webkit-inner-spin-button, 
 .no-arrows::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -243,24 +241,24 @@
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
+  -webkit-appearance: none; 
   appearance: none;
-  width: 0.8rem; /* Set a specific slider handle width */
-  height: 0.8rem; /* Slider handle height */
-  background: #eee; /* Green background */
-  cursor: pointer; /* Cursor on hover */
+  width: 0.8rem; 
+  height: 0.8rem; 
+  background: #eee; 
+  cursor: pointer; 
 } 
 input[type="range"]::-moz-range-thumb {
-  width: 0.8rem; /* Set a specific slider handle width */
-  height: 0.8rem; /* Slider handle height */
-  background: #eee; /* Green background */
-  cursor: pointer; /* Cursor on hover */
+  width: 0.8rem; 
+  height: 0.8rem;
+  background: #eee;
+  cursor: pointer; 
 }
 
 input[type="range"] {
-  -webkit-appearance: none; /* Remove default styling */
-  appearance: none; /* For compatibility */
-  background: #555; /* Slider track color */
+  -webkit-appearance: none;
+  appearance: none;
+  background: #555;
   border-radius: 0px;
   outline: none;
   width:7.5rem;
@@ -307,9 +305,9 @@ h1{
 
 
 a {
-    color: #6d97c0; /* Light blue links */
+    color: #6d97c0; 
 }
 
 a:hover {
-    color: #70b7cf; /* Brighter hover effect */
+    color: #70b7cf;
 }
