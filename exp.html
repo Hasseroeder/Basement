@@ -7,6 +7,7 @@
     
     <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all">
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
   
@@ -34,17 +35,18 @@
             But exp doesn't stack if you have Pets on both your Primary & Secondary, so it generally doesn't make much sense to share pets between these teams.
             Stacking Pets or even entire Teams in the Tertiary team is quite common though, as there's no reason not to, and you're getting extra Blitz performance for free.<br><br>
 
-            The basic exp needed per level up is: <code class="discord-code">1000 + (level)^4</code>
+            The basic exp needed per level up is: <code class="discord-code">1000 + level^4</code>
         </p>
-        <h2 style="margin-top:2rem;"> Battle Exp </h2>
+        <h2 style="margin-top:2rem;"> Battle Exp <img src="media/owo_images/crossed-swords.png"  style="width:1.7rem; margin-bottom: -0.3rem;" title=":crossed-swords:"  aria-label=":crossed-swords:"  alt=":crossed-swords:"  draggable="false">
+</h2>
         <p>
         
             Your main team gains 200/100/50 Exp on a Win/Tie/Loss. <br>
             <span style="margin-bottom:0.7rem; display: inline-block;">And your secondary team passively gains 100/50/25 Exp for the same.</span><br>
             
-            This also happens when people encounter you in random battles, and not just when you grind <code class="discord-code">owob</code> yourself. Your streaks are unaffected by these battles though, and due to how rarely you're encountered by random people, the amount of gained exp is negliealbe compared to other sources. We typically call this "Blitz" exp, because it's more noticeable when your blitz team kills some high level player and you gain a bunch of Bonus exp.<br> <br>
+            This also happens when others encounter you in random battles, and not just when you grind <code class="discord-code">owob</code> yourself. Your streaks are unaffected by these battles though, and due to how rarely you're encountered by random people, the amount of gained exp is miniscule compared to grinding <code class="discord-code">owob</code> yourself. We typically call this "Blitz" exp, because it's more noticeable when your blitz team kills some high level player and you gain a bunch of Bonus exp.<br> <br>
         </p>  
-        <h3 style="margin-bottom:-1.7rem;">Bonus Exp is gained through two ways:</h3> <br>
+        <h3 style="margin-bottom:-0.7rem;">Bonus Exp is gained in two ways:</h3> 
     
         <ol>
           <li style= "line-height:1.2rem; margin-bottom: 1rem;">By defeating teams that have a higher average level than yours. <br>
@@ -76,18 +78,38 @@
             <div style="font-size:1rem"> NeonUtil Global </div>
           </div>
         </div>
-        <h3 style="margin-bottom:-1.7rem;margin-top:2rem;">Exp Multiplier</h3> <br>
+        
+        <h3 style="margin-bottom:-0.7rem;margin-top:2rem;">Exp Multiplier</h3>
         <p>
           Pets on your <strong>primary</strong> team sometimes gain a multiplier on their battle Exp.  This happens when said pet is on a team with another pet of higher level— OwO then gives the lower leveled pet a multiplier for it to "catch up". You could also imagine it as your more experienced pet "training" the other. <br>
           The multiplier is equal to: <code class="discord-code"> (2 + .1 * levelDifference) </code>
         </p>
+        <div class = "container" id="knowledgeContainer">
+          <div class = "toolbar">
+            <button id="knowledgeButton">V</button> 
+            <div style="font-size:1rem"> Knowledge <img src="media/owo_images/knowledge.png"  style="width:1.3rem; margin-bottom: -0.3rem;" title=":knowledge:"  aria-label=":knowledge:"  alt=":knowledge:"  draggable="false"> </div>
+          </div>
+        </div>
         
-            
+        <h2 style="margin-top:2rem;margin-bottom:0.5rem;"> Hunt Exp 
+        <img src="media/owo_images/gem1c1.png"  style="width:1.7rem; margin-bottom: -0.3rem;" title=":gem1c1:"  aria-label=":gem1c1:"  alt=":gem1c1:"  draggable="false">
+        <img src="media/owo_images/gem1c2.png"  style="width:1.7rem; margin-bottom: -0.3rem;" title=":gem1c2:"  aria-label=":gem1c2:"  alt=":gem1c2:"  draggable="false">
+        <img src="media/owo_images/gem1c3.png"  style="width:1.7rem; margin-bottom: -0.3rem;" title=":gem1c3:"  aria-label=":gem1c3:"  alt=":gem1c3:"  draggable="false">
+        </h2>
+        <p style="margin-top:0"> Unsure how interesting this is, but here's the amount of Exp you get per hunt, depending on Gem Tier and Patreon status: </p>
+        <div style="background-color:#303030;color:lightgray;padding-top:20px;padding-left:20px;margin: 10px 10px 10px;justify-content: center; display:flex"> 
+        
+          <canvas id="myChart" style="max-width:70%;max-height:300px;margin-bottom:10px; margin-right:4rem;"></canvas>
+        </div>
+        
+        <h2 style="margin-top:2rem;margin-bottom:0.5rem;"> Hunt Exp 
+        <img src="media/owo_images/gem1c1.png"  style="width:1.7rem; margin-bottom: -0.3rem;" title=":gem1c1:"  aria-label=":gem1c1:"  alt=":gem1c1:"  draggable="false">
+        </h2>
+        
       </div>  
     </div>  
+    
     <script src="js/basement_js/exp.js"> </script>
-
-  </body>
-</html>
+    <script src="js/basement_js/gemchart_setup.js"> </script>
   </body>
 </html>
