@@ -281,6 +281,19 @@ button {
   margin-right:10px;
 }
 
+table, th, td {
+  border:1px solid #303030;
+  text-align: center;
+  vertical-align: middle;
+}
+table{
+  border-collapse: collapse;
+}
+td, th{
+  padding-top: 0.5rem;
+  padding-bottom:0.5rem;
+}
+
 
 body {
 	font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -290,12 +303,12 @@ body {
 }
 	
 ul {
-  font-size: 1.05rem;
+  font-size: 1rem;
   margin-top:0px;
 }
 	
 p {
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 h1{
   font-size:1.7rem;
