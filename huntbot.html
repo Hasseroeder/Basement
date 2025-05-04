@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huntbot</title>
+    <link rel="icon" type="image/png" href="media/misc_images/favicon.png">
+    <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  <body>
+    <div class="center-pillar">
+        <div class="toolbar">
+            <a href="/introduction.html">Introduction</a>
+            <a href="/pets.html">Pets</a>
+            <a href="/battles.html">Battle System</a>
+            <a href="/exp.html">Exp</a>
+            <a href="/weapon_technicals.html">Technicalities</a>
+            <a href="/weapon.html">Weapons</a>
+            <a href="/passive.html">Passives</a>
+            <a href="/deepdives.html">Deepdives</a>
+            <a href="/huntbot.html">Huntbot</a>
+        </div>
+        <div class="container">
+            <h1> Huntbot Stuff</h1>
+            <p>
+                Former huntbot guides have mostly tried to give exact instructions, such as "upgarde this twice, then that once". <br>
+                I feel that vastly oversimplifies the whole topic though, so I'll also try to give more insights into how exactly people got to those exact instructions. And then you can maybe adjust the instructions slightly based on your own situation!
+                <br><br>
+
+                Upgrade cost grows polynomially, this means that as your huntbot is leveled higher, and becomes more useful, it becomes increasingly expensive to upgrade. <br>
+                These are the relevant formulas for upgrading to level x from the previous level:<br>
+            </p>
+            <ul style="list-style: none;">
+                <li><code class="discord-code"> Efficiency = floor(10x^1.748) where x ≤ 215; </code><br>
+                <li><code class="discord-code"> Gain       = floor(10x^1.800) where x ≤ 200; </code><br>
+                <li><code class="discord-code"> Duration   = floor(10x^1.700) where x ≤ 235; </code><br>
+                <li><code class="discord-code"> Exp        = floor(10x^1.800) where x ≤ 200; </code><br>
+                <li><code class="discord-code"> Cost       = floor(1000x^3.4) where x ≤   5; </code><br>
+                <li><code class="discord-code"> Radar      = floor(50x^2.500) where x ≤ 999; </code><br>
+            </ul>    
+                
+            <h2>⏱ Efficiency (alias <code style="font-size: 1.2rem;" class="discord-code">cd</code>)</h2>
+            <p style="margin-bottom: 0.5rem;">
+                Efficiency directly affects the amount of pets you catch per hour. <br>
+                At level 0, you catch 25 pets/h and every level adds 1 onto that. Such that when you're at the max level of 215, you gain 240 pets/h. <br>
+                Each caught pet costs some cowoncy though, which actually means that you'll make your huntbot burn more money by upgrading efficiency. Sold pets definitely make up for this, but it's important to be aware of.<br>
+                <br>
+                Caught pets are commonly sacrificed for 
+                <img src="media/owo_images/essence.gif"  style="width:1.2rem; margin-bottom: -0.2rem;" title=":essence:"  aria-label=":essence:"  alt=":essence:"  draggable="false">Essence or sold for 
+                <img src="media/owo_images/cowoncy.png"  style="width:1.2rem; margin-bottom: -0.2rem;" title=":cowoncy:"  aria-label=":cowoncy:"  alt=":cowoncy:"  draggable="false">Cowoncy. 
+            </p>
+            <ul style="margin-top: 0;">
+                <li style="margin-bottom:0.2rem;">The average pet is worth 16-22 essence and 20-32 cowoncy, depending on various factors ( 
+                        <img src="media/owo_images/patreon.png"  style="width:1.2rem; margin-bottom: -0.2rem;" title=":patreon:"  aria-label=":patreon:"  alt=":patreon:"  draggable="false"> / 
+                        <img src="media/owo_images/radar.png"  style="width:1.2rem; margin-bottom: -0.2rem;" title=":radar:"  aria-label=":radar:"  alt=":radar:"  draggable="false"> ).
+                <li style="margin-bottom:0.2rem;">Assuming you never need to sell any of your pets, this basically means an Efficiency upgrade gains you +16 to +22 essence/h.
+                <li style="margin-bottom:0.2rem;">Now, if you take the amount of extra Essence gained in some timeframe, and divide that by the cost of the upgrade, you have your Return on Investment (ROI).
+                <li style="margin-bottom:0.2rem;">This Return on Investment is the main thing that huntbot guides try to optimise, and it's incredibly important, but I'll go into more detail later.
+            </ul>
+            <p>
+                This source of Essence makes Efficiency one of the two main Traits of your huntbot, the other being <i>Gain</i>. <br>
+                They're so essential because they're the best method to accelerate your huntbot leveling! Invest mainly into these two and your other traits will also be leveled faster! 
+                <br>
+                This is the tierchart, it's important to understand when sacrificing and selling pets: 
+            </p>
+
+            <div style="display: flex; justify-content: center; margin-top: 3rem;">
+                
+                <table style="width:95%;max-width:100%; font-size:0.6rem; table-layout: fixed;">
+                    <tr>
+                        <th></th> 
+                        <th><img src="media/owo_images/common.png"  style="width:2rem;" title=":common:"  aria-label=":common:"  alt=":common:"  draggable="false"></th>
+                        <th><img src="media/owo_images/uncommon.png"  style="width:2rem;" title=":uncommon:"  aria-label=":uncommon:"  alt=":uncommon:"  draggable="false"></th>
+                        <th><img src="media/owo_images/rare.png"  style="width:2rem;" title=":rare:"  aria-label=":rare:"  alt=":rare:"  draggable="false"></th>
+                        <th><img src="media/owo_images/epic.png"  style="width:2rem;" title=":epic:"  aria-label=":epic:"  alt=":epic:"  draggable="false"></th>
+                        <th><img src="media/owo_images/mythic.png"  style="width:2rem;" title=":mythic:"  aria-label=":mythic:"  alt=":mythic:"  draggable="false"></th>
+                        <th><img src="media/owo_images/patreon.png"  style="width:2rem;" title=":patreon:"  aria-label=":patreon:"  alt=":patreon:"  draggable="false"></th>
+                        <th><img src="media/owo_images/patreon.gif"  style="width:2rem;" title=":patreon:"  aria-label=":patreon:"  alt=":patreon:"  draggable="false"></th>
+                        <th><img src="media/owo_images/legendary.gif"  style="width:2rem;" title=":legendary:"  aria-label=":legendary:"  alt=":legendary:"  draggable="false"></th>
+                        <th><img src="media/owo_images/gem.gif"  style="width:2rem;" title=":gem:"  aria-label=":gem:"  alt=":gem:"  draggable="false"></th>
+                        <th><img src="media/owo_images/bot.gif"  style="width:2rem;" title=":bot:"  aria-label=":bot:"  alt=":bot:"  draggable="false"></th>
+                        <th><img src="media/owo_images/distorted.gif"  style="width:2rem;" title=":distorted:"  aria-label=":distorted:"  alt=":distorted:"  draggable="false"></th>
+                        <th><img src="media/owo_images/fabled.gif"  style="width:2rem;" title=":fabled:"  aria-label=":fabled:"  alt=":fabled:"  draggable="false"></th>
+                        <th><img src="media/owo_images/special.png"  style="width:2rem;" title=":special:"  aria-label=":special:"  alt=":special:"  draggable="false"></th>
+                        <th><img src="media/owo_images/hidden.gif"  style="width:2rem;" title=":hidden:"  aria-label=":hidden:"  alt=":hidden:"  draggable="false"></th>
+                    </tr>
+                    <tr>
+                        <td><strong>catch <br>
+                            rate%</strong></td>
+                        <td>58.8489% <br>
+                            - extra pets 
+
+                        </td>
+                        <td>30%</td>
+                        <td>10%</td>
+                        <td>1%</td>
+                        <td>0.1%</td>
+                        <td>0.5%</td>
+                        <td>0.01%</td>
+                        <td>0.05%</td>
+                        <td>0.01% *<br>
+                            Gem Tier</td>
+                        <td>depends <br>
+                            on radar</td>
+                        <td>0.00025%</td>
+                        <td>0.001%</td>
+                        <td>0.005% → <br>
+                            0.05%</td>
+                        <td>0.0001%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>exp <br>
+                            /catch</strong></td>
+                        <td>1<br>exp</td>
+                        <td>10<br>exp</td>
+                        <td>20<br>exp</td>
+                        <td>400<br>exp</td>
+                        <td>1,000<br>exp</td>
+                        <td>400<br>exp</td>
+                        <td>2,000<br>exp</td>
+                        <td>2,000<br>exp</td>
+                        <td>5,000<br>exp</td>
+                        <td>-</td>
+                        <td>100,000<br>exp</td>
+                        <td>100,000<br>exp</td>
+                        <td>250<br>exp</td>
+                        <td>300,000<br>exp</td>
+                    </tr>
+                    <tr>
+                        <td><strong>cowoncy <br> /selling</strong></td>
+                        <td>1 <br>cowoncy</td>
+                        <td>3 <br>cowoncy</td>
+                        <td>10 <br>cowoncy</td>
+                        <td>250 <br>cowoncy</td>
+                        <td>5,000 <br>cowoncy</td>
+                        <td>1,000 <br>cowoncy</td>
+                        <td>50,000 <br>cowoncy</td>
+                        <td>15,000 <br>cowoncy</td>
+                        <td>30,000 <br>cowoncy</td>
+                        <td>50,000 <br>cowoncy</td>
+                        <td>300,000 <br>cowoncy</td>
+                        <td>250,000 <br>cowoncy</td>
+                        <td>6,000 <br>cowoncy</td>
+                        <td>1,000,000 <br>cowoncy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>essence <br> /sacrifice</strong></td>
+                        <td>1 <br>essence</td>
+                        <td>5 <br>essence</td>
+                        <td>20 <br>essence</td>
+                        <td>250 <br>essence</td>
+                        <td>3,000 <br>essence</td>
+                        <td>500 <br>essence</td>
+                        <td>25,000 <br>essence</td>
+                        <td>10,000 <br>essence</td>
+                        <td>20,000 <br>essence</td>
+                        <td>10,000 <br>essence</td>
+                        <td>200,000 <br>essence</td>
+                        <td>100,000 <br>essence</td>
+                        <td>5,000 <br>essence</td>
+                        <td>500,000 <br>essence</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zoo <br> Points</strong></td>
+                        <td>1 <br>ZP</td>
+                        <td>5 <br>ZP</td>
+                        <td>20 <br>ZP</td>
+                        <td>250 <br>ZP</td>
+                        <td>3,000 <br>ZP</td>
+                        <td>500 <br>ZP</td>
+                        <td>25,000 <br>ZP</td>
+                        <td>10,000 <br>ZP</td>
+                        <td>20,000 <br>ZP</td>
+                        <td>30,000 <br>ZP</td>
+                        <td>200,000 <br>ZP</td>
+                        <td>100,000 <br>ZP</td>
+                        <td>500 <br>ZP</td>
+                        <td>500,000 <br>ZP</td>
+                    </tr>
+                </table>
+            </div>
+            <p style="font-size:0.6rem;margin-left:2rem; margin-bottom: 3rem;">
+                <img src="media/owo_images/gem.gif"  style="width:0.8rem; margin-bottom: -0.2rem;" title=":gem:"  aria-label=":gem:"  alt=":gem:"  draggable="false"> Gem and 
+                <img src="media/owo_images/distorted.gif"  style="width:0.8rem; margin-bottom: -0.2rem;" title=":distorted:"  aria-label=":distorted:"  alt=":distorted:"  draggable="false"> Distorted
+                aren't obtainable in hb.<br> 
+                <img src="media/owo_images/special.png"  style="width:0.8rem; margin-bottom: -0.2rem;" title=":special:"  aria-label=":special:"  alt=":special:"  draggable="false"> Catchrate is nerfed by 75% in hb.
+            </p>
+            <p>
+                Above, you can see that the lower Tiers reward more Essence through sacrificing, than Cowoncy through selling.<br>
+                This is reversed for the higher tiers, which sell for large amounts, but don't sacrifice as well.<br>
+                If you're short on cowoncy, it's thus the better choice to sell the higher ranking ones instead of the lower ranking ones.
+            </p>
+
+            <h2 style="margin-bottom: -0.5rem; margin-top: 2rem;">🔧Gain</h2>
+            <p>
+                Gain directly gives you an amount of essence per hour. <br>
+                It starts with 0 ess/h at level zero, and each additional level gives +25 ess/h. At the max level of 200, that's 5000 ess/h.
+            </p>        
+            <p>
+                As already mentioned, besides Efficiency, this is the second main trait of your huntbot.<br>
+                It similarly affects the amount of Essence your huntbot gains, and is thus essential for fast leveling.<br>
+            </p>
+            <h3 style="margin-bottom: -0.5rem;">The Efficiency vs. Gain debate</h3>
+            <p>
+                These traits are often compared, especially because the intent in upgrading them is the same. Which one should you focus? How much should you focus one over the other? <br>
+                Generally speaking, keeping them roughly the same level is advised, but we'll try to look a bit more into the math behind why this is the case.<br>
+            </p>
+            <h4>1. Return on Investment</h4>
+            <p style="margin-top:-1rem; margin-bottom:1rem; font-size: 0.8rem;"> Simply click <a href="google.com">here</a> for the calculator.
+
+            </p>
+            <p>
+                In the case that you want optimal essence return ratios of your upgrades, you should look at your upgrade costs and the essence gained from said upgrades. 
+                Let's continue with lvl100 Efficiency & Gain, with no Radar nor Patreon for simplicity's sake. <br>
+                Your upgrade costs would be <code class="discord-code"> 31882 </code> and <code class="discord-code"> 40530 </code> for Efficiency and Gain respectively. <br>
+                An Efficiency upgrade would gain +1 pet/h, which is <code class="discord-code"> +16.09 ess/h </code>— simply the pet worth assuming no Radar/Patreon. <br>
+                You could continue with this hourly ROI now, but I feel like the daily ROI is slightly more intuitive. So I multiply this by 24 for <code class="discord-code"> +386.1 ess/day </code>. A Gain upgrade would give <code class="discord-code"> +25 ess/h </code> which is <code class="discord-code"> +600 ess/day </code>. <br>
+                Now, to calculate the return ratios: <br>
+            </p>
+            <ul>
+                <li>
+                    ⏱ Efficiency: <code class="discord-code"> 31882 / 386.1 = 0.0121 </code> <br>
+                    <ul style="list-style-type: none; margin-top:0.1rem;">
+                        <li>
+                            → An Efficiency Upgrade has a return of <code class="discord-code"> 1.21% </code> per day.
+                        </li>
+                    </ul>
+                </li>
+            
+                <li style="margin-top:0.2rem;">
+                    🔧 Gain: <code class="discord-code"> 40530 / 600 = 0.0148 </code> <br>
+                    <ul style="list-style-type: none;margin-top:0.1rem;">
+                        <li>
+                            → A Gain Upgrade has a return of <code class="discord-code"> 1.48% </code> per day.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <p>
+                This would mean you have a better return when leveling Gain, and it would make more sense to invest into Gain rather than Efficiency.
+                These ratios change somewhat with every level, and also upon other factors.
+                In the default scenario, best ROI is achieved by keeping your Gain roughly 10% above your Efficiency.
+                But if you have Patreon, it more-or-less makes sense to keep them at the same level.
+                <br><br>
+                Exactly this calculation is what most HB guides are based on—
+                it's super important to level your huntbot fast, as that will also allow you to better invest into your other traits.
+            </p>
+            <h4>2. Other factors to consider</h4>
+            <p>
+                <ul>
+                    <li style = "margin-bottom: 0.3rem;">
+                        An Efficiency upgrade will make your HB less efficient. Both in Essence/owo and in Exp/owo. 
+                        Furthermore, your efficiency ROI is hampered when you're forced to sell your pets, instead of sacrificing them. 
+                        So if you're low on Cash, you might want to hold off on Efficiency upgrades.
+                    </li>
+                    <li style = "margin-bottom: 0.3rem;">
+                        Efficiency is inconsistent, gain is consistent.
+                    </li>
+                    <li style = "margin-bottom: 0.3rem;">
+                        Focusing on efficiency gives more pets along the way
+                    </li>
+                </ul>
+            </p>
+
+
+            <h2 style="margin-top: 2rem;">⌛ Duration ( <code style="font-size: 1.2rem;" class="discord-code">time</code> )</h2>
+            <p>
+                Your huntbot starts with a duration of 30 minutes. And every Duration level adds +6min onto that. ( <code class="discord-code">0.1h</code> ) <br>
+                Such that at level 235, you have a full day. <br> <br>
+
+                Duration is mostly a convenience upgrade. If you're very attentive to your huntbot, then all levels of duration are practically the same. <br>
+                But I'm lazy, and you probably are too.<br>
+                So invest into Duration at least so much that you can have it running for most of the day with little effort.<br>
+                This is probably ~8h for most people, as that's how long they sleep, and it also nicely divides the day into 3 huntbots.<br>
+                I'm lazy and focused duration until I had 12h cycles.
+                <img src="media/misc_images/blahaj_head.png"  style="width:1.1rem; margin-bottom: -0.2rem;" title=":blahaj_head:"  aria-label=":blahaj_head:"  alt=":blahaj_head:"  draggable="false"><img src="media/misc_images/blahaj_tail.png"  style="width:1.1rem; margin-bottom: -0.2rem;" title=":blahaj_tail:"  aria-label=":blahaj_tail:"  alt=":blahaj_tail:"  draggable="false">
+                <br>
+                This concept of cylces is also pretty important; Any duration longer than 12h won't help you (until you reach 24h)— you'll still have 2 huntbots per day.<br>
+                Once you have the upper two traits maxed, then you can think about further leveling Duration & also maxing it.<br><br>
+
+                <code class="discord-code">owo hb 12h</code> using this format is probably the fastest way of sending your hb out with a given time.<br>
+                I used to specify cowoncy for way too long, it's annoying.<br>
+            </p>
+
+            <h2 style="margin-top: 2rem;">⚔ Experience ( <code style="font-size: 1.2rem;" class="discord-code">xp</code> ) </h2>
+            <p>
+                You start with 0 Exp/h and gain +35 Exp/h per upgrade. At the maximum level of 200, you gain 7000 Exp/hour.<br>
+                This is actually a huge amount per day, and for many people the main source of Exp. You probably shouldn't invest too much as a beginner though, as your pets are probably temporary for now anyway. <br>
+                Investing a bit into the cheap upgrades is a safe bet, but it probably shouldn't become a focus until after Efficiency & Gain have been maxed.<br>
+            </p>           
+
+            <h2 style="margin-top: 2rem;">
+                <img src="media/owo_images/cowoncy.png"  style="width:1.6rem; margin-bottom: -0.3rem;" title=":cowoncy:"  aria-label=":cowoncy:"  alt=":cowoncy:"  draggable="false">
+                Cost
+            </h2>
+            <p>
+                <strong>Cost</strong> is a shackle forged by the hands of <strong>capitalist oppressors</strong>, binding the grinders to their ceaseless toil. Under the iron grip of this system, the fruits of labor are siphoned away, leaving the masses with mere crumbs while the bourgeoisie (OBS staff) feast upon the banquet of excess. The factories hum with the rhythm of exploited souls, their sweat and blood staining the gears of the profit machine. But fear not, comrades! For the winds of revolution whisper through the spam channels, and the proletariat shall rise, reclaiming what is rightfully theirs. The ledger of history shall be balanced, and the cost of liberation paid in the currency of blood. 
+                <br> (pleas stop owo pay-to-win im begging)
+            </p>
+
+            <h2> 
+                <img src="media/owo_images/radar.png"  style="width:1.6rem; margin-bottom: -0.3rem;" title=":radar:"  aria-label=":radar:"  alt=":radar:"  draggable="false">   
+                Radar 
+            </h2> 
+            <p>
+                <img src="media/owo_images/bot.gif"  style="width:1.1rem; margin-bottom: -0.15rem;" title=":bot:"  aria-label=":bot:"  alt=":bot:"  draggable="false">   
+                Pet Chance is usually 0%. <br>
+                Every Radar upgrade adds +0.000004% onto that. <br> <br>
+
+                The max level is technically 999, but this can't be achieved. This is why there's no real "maxed" huntbot. Whenever we refer to such, we only mean a huntbot that has had everything but Radar maxed.<br> <br>
+
+                Because Bots sacrifice for more than <img src="media/owo_images/common.png"  style="width:1.1rem; margin-bottom: -0.15rem;" title=":common:"  aria-label=":common:"  alt=":common:"  draggable="false"> pets, we could also talk about the <i>upgrade ROI</i> here, such as with Gain & Efficiency. Doesn't make much sense to do this, as the effects are miniscule, but I've included the calculation on the calculator anyway. <br> 
+                Going solely by this, you should have a level 2 Radar by the time Efficiency & Gain maxed. <br> <br>
+
+                Though, that's probably not why you're considering Radar. <br>
+                But even as the biggest Bot-enthusiast, you shouldn't have Radar over lvl30 by the time you're maxed. It's just way too expensive and probably has no payoff. <br>
+            </p> 
+            <h4 style="margin-bottom:-0.5rem;">math 😱</h4>
+            <p>
+                We'll calculate some more; this time Bot chances. <br>
+                Assuming you have a level 20 Radar, your base chance is <strong>0.00008%</strong>. <br>
+                Thus, our chance of not getting a bot for each individual pet is:  <code class="discord-code"> NoBot = 100% - 0.00008% </code> <br><br>
+
+                Imagine we have a maxed huntbot and we leave it running for 5 weeks. <br>
+                We will have gotten <code class="discord-code"> 35 * 5760 = 201600 </code> pets by then. <br>
+                Now if we take <code class="discord-code"> Unlucky = NoBot ^ pets </code>, then we'll have the chance of not having gotten a Bot within so many pets.<br><br>
+
+                Now your chances of getting a <img src="media/owo_images/bot.gif"  style="width:1.1rem; margin-bottom: -0.15rem;" title=":bot:"  aria-label=":bot:"  alt=":bot:"  draggable="false">Bot are <code class="discord-code"> 100% - Unlucky </code><br>
+                In this example, within 5 weeks we had a Bot chance of <code class="discord-code"> 0.14895 </code> ( or 14.895% )
+            </p>
+
+        </div>
+        
+    </div>
+  </body>
+</html>
