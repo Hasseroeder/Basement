@@ -41,7 +41,7 @@
 .item-8{
     grid-area: 4 / 1 / 5 / 4;
     display:grid;
-    grid-template-columns: auto 21rem;
+    grid-template-columns: auto 27rem;
 }  
 
 .discord-code{
@@ -60,6 +60,12 @@
     border: 1px solid lightgray;
     font-size:0.8rem;
 }
+
+#table-2 td,
+#table-2 th {
+    min-width: 5.6rem;
+}
+
 
 td:hover {
     background-color: #555555;
