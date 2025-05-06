@@ -163,8 +163,6 @@ button {
     left: 110%;
     transform: translateX(-50%);
     
-    /* Animation */
-    opacity: 0;
 }
 
 .tooltip:hover .tooltip-text {
