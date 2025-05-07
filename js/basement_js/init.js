@@ -62,12 +62,11 @@ class OwOimg extends HTMLElement {
         
         fetch(gifSrc, { method: "GET" })
         .then((response) => {
-          if (response.ok) {
-            img.src = gifSrc; // Use GIF if found
-          } else {
-            img.src = pngSrc; // Otherwise, use PNG
-            console.log("we're inside the png thing");
+          if (!response.ok) {
+            throw new Error("GIF not found, switching to PNG...");
           }
+          img.src = gifSrc;
+          
         })
         .catch(() => {
           img.src = pngSrc; // Default to PNG in case of error
