@@ -10,7 +10,7 @@
 
 .toolbar a {
     color: lightgray;
-    padding: 9px 11px;
+    padding: 0.5rem 0.5rem;
     text-decoration: none;
     text-align: center;
     margin: 0 5px;
@@ -20,6 +20,14 @@
 .toolbar a:hover {
     background-color: #555555;
     color: lightgray;
+}
+
+.toolbarSubMenu{
+  visibility: hidden;
+}
+
+.toolbarMenu:hover .toolbarSubMenu{
+  visibility:visible;
 }
 
 .list-paragraph {

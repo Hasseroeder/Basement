@@ -1,4 +1,4 @@
-fetch("/donatorPages/navbar.html")
+fetch("./donatorPages/navBar.html")
 .then(response => response.text())
 .then(data => {
   document.getElementById("navbar").innerHTML = data;
