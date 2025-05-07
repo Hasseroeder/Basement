@@ -60,7 +60,7 @@ class OwOimg extends HTMLElement {
 
       if (value) {
         
-        fetch(gifSrc, { method: "HEAD" })
+        fetch(gifSrc, { method: "GET" })
         .then((response) => {
           if (response.ok) {
             img.src = gifSrc; // Use GIF if found
