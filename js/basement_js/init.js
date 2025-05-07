@@ -65,9 +65,9 @@ class OwOimg extends HTMLElement {
           if (!response.ok) {
             img.src = pngSrc; 
             throw new Error("GIF not found, switching to PNG...");
+          }else{
+            img.src = gifSrc;
           }
-          img.src = gifSrc;
-          
         })
         .catch(() => {
           img.src = pngSrc; // Default to PNG in case of error
