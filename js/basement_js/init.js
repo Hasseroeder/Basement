@@ -62,7 +62,7 @@ class OwOimg extends HTMLElement {
         
         fetch(gifSrc, { method: "GET" })
         .then((response) => {
-          if (!response.ok || response.status === 204) {
+          if (!response.ok || response.headers.get("Content-Type")?.includes("text/html")) {
             img.src = pngSrc; 
             console.log("image source is:" + pngSrc);
             console.log(response);
