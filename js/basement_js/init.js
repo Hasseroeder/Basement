@@ -66,10 +66,12 @@ class OwOimg extends HTMLElement {
             img.src = gifSrc; // Use GIF if found
           } else {
             img.src = pngSrc; // Otherwise, use PNG
+            console.log("we're inside the png thing");
           }
         })
         .catch(() => {
           img.src = pngSrc; // Default to PNG in case of error
+          console.log("we're inside the png error thing");
         });
 
         img.alt = `:${value}:`;          
