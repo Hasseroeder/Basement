@@ -138,22 +138,53 @@ function getUpgradeCost(index, level) {
     }
 }
 
-const cells = Array.from(document.querySelectorAll("#table-1 td"));
+const cells = Array.from(document.querySelectorAll("#table-1 th"));
 const isSac = cells.map(cell => cell.textContent.trim() === "Sac ");
 
-cells.forEach((cell, index) => {
-    cell.addEventListener("click", () => {
-        if (cell.textContent === "Sac ") {
-            cell.innerHTML = 'Sell <img src="media/owo_images/cowoncy.png" style="width:1rem; margin-bottom:-0.2rem;">'; 
-            isSac[index]=false;
-        } else {
-            cell.innerHTML = 'Sac <img src="media/owo_images/essence.gif" style="width:1rem; margin-bottom:-0.2rem;">';
-            isSac[index]=true;
+// START
+
+let isDragging = false;
+
+
+document.addEventListener("mouseup", () => {
+    isDragging = false;
+});
+document.addEventListener("mousedown", () => {
+    isDragging = true;
+});
+
+cells.forEach((cell,index) => {
+    cell.addEventListener("mousedown", (event) => {
+        isDragging = true;
+        if (isDragging) {
+            let targetCell = event.target.closest("th");
+            if (targetCell) toggleCell(targetCell,index);
         }
-        //console.log(isSac);
-        drawData();
+    });
+
+    cell.addEventListener("mouseenter",(event) => {
+        if (isDragging) {
+            let targetCell = event.target.closest("th"); 
+            if (targetCell) toggleCell(targetCell,index);
+        }
     });
 });
+
+function toggleCell(cell,index) {
+    let targetText = cell.querySelector(".table-1-text");
+    if (targetText.textContent === "Sac ") {
+        targetText.innerHTML = 'Sell <img src="media/owo_images/cowoncy.png" style="width:1rem; margin-bottom:-0.2rem;">'; 
+        isSac[index]=false;
+    } else {
+        targetText.innerHTML = 'Sac <img src="media/owo_images/essence.gif" style="width:1rem; margin-bottom:-0.2rem;">';
+        isSac[index]=true;
+    }
+    drawData();
+}
+
+// END
+
+
 
 document.getElementById("patreonCheck").addEventListener("change", function() {
     patreon=this.checked; 

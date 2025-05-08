@@ -54,20 +54,20 @@
     max-width: fit-content;
 }
 
-#table-1 td,
 #table-1 th {
-    width: 3rem;
+    width: 3.3rem;
+    height:2.2rem;
     border: 1px solid lightgray;
     font-size:0.8rem;
+
 }
 
-#table-2 td,
 #table-2 th {
     min-width: 5.6rem;
 }
 
 
-td:hover {
+th:hover {
     background-color: #555555;
 }
 
