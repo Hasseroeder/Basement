@@ -160,23 +160,34 @@ cells.forEach((cell,index) => {
             let targetCell = event.target.closest("th");
             if (targetCell) toggleCell(targetCell,index);
         }
+       
+            //if (isDragging) toggleCell(cell,index);
     });
 
     cell.addEventListener("mouseenter",(event) => {
+        if (event.relatedTarget && cell.contains(event.relatedTarget)) {
+            // Ignore the event if it was triggered by an internal element change
+            return;
+        }
+        
         if (isDragging) {
             let targetCell = event.target.closest("th"); 
             if (targetCell) toggleCell(targetCell,index);
         }
+            //if (isDragging) toggleCell(cell,index);
     });
 });
 
 function toggleCell(cell,index) {
     let targetText = cell.querySelector(".table-1-text");
-    if (targetText.textContent === "Sac ") {
-        targetText.innerHTML = 'Sell <img src="media/owo_images/cowoncy.png" style="width:1rem; margin-bottom:-0.2rem;">'; 
+    let targetImg = cell.querySelector(".table-1-img");
+    if (targetText.innerHTML === "Sac&nbsp;") {
+        targetText.innerHTML = 'Sell&nbsp;';
+        targetImg.src = "media/owo_images/cowoncy.png";
         isSac[index]=false;
     } else {
-        targetText.innerHTML = 'Sac <img src="media/owo_images/essence.gif" style="width:1rem; margin-bottom:-0.2rem;">';
+        targetText.innerHTML = 'Sac&nbsp;';
+        targetImg.src = "media/owo_images/essence.gif";
         isSac[index]=true;
     }
     drawData();
