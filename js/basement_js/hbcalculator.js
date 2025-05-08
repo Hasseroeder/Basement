@@ -380,7 +380,7 @@ function drawData(){
     efficiencyHeader.textContent="⏱ Efficiency - " + (efficiency+25) + "/h";
     let hours = (duration/10+0.5);
     durationHeader.textContent="⏳ Duration - "+hours+"h"
-    costHeader.textContent="Cost - "+ (10-cost) +" cowoncy";
+    costHeader.innerHTML= '&nbsp;Cost - '+ (10-cost) +" cowoncy";
     gainHeader.textContent="🔧 Gain - "+ (gain*25)+" ess/h";
     expHeader.textContent="⚔ Experience - "+ (exp*35) +" exp/h";
     radarHeader.textContent= (radar*0.04).toFixed(2)+"ppm";
