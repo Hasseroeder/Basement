@@ -64,19 +64,19 @@ class OwOimg extends HTMLElement {
         .then((response) => {
           if (!response.ok || response.headers.get("Content-Type")?.includes("text/html")) {
             img.src = pngSrc; 
-            console.log("image source is:" + pngSrc);
-            console.log(response);
+            //console.log("image source is:" + pngSrc);
+            //console.log(response);
             throw new Error("GIF not found, switching to PNG...");
           }else{
             img.src = gifSrc;
-            console.log("image source is:" + gifSrc);
-            console.log(response);
+            //console.log("image source is:" + gifSrc);
+            //console.log(response);
           }
         })
         .catch(() => {
           img.src = pngSrc; // Default to PNG in case of error
-          console.log("we're inside the png error thing");
-          console.log("(from error) image source is:" + pngSrc);
+          //console.log("we're inside the png error thing");
+          //console.log("(from error) image source is:" + pngSrc);
         });
 
         img.alt = `:${value}:`;          

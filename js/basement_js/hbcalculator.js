@@ -283,7 +283,7 @@ function modifyValueDirect(index, value) {
         
         if (value >= maxValues[index] ) {
             btnPlus.textContent = "MAX";
-            input.value = maxValues[index];
+            value = maxValues[index];
 
             tooltip.innerHTML = "<s>" + getUpgradeCost(index, parseInt(input.value)).toLocaleString() + "</s>";
 
@@ -295,11 +295,12 @@ function modifyValueDirect(index, value) {
 
         if (value <= 0) {
             btnMinus.textContent = "MIN";
-            input.value =0;
+            value =0;
         } else {
             btnMinus.textContent = "<";
         }
 
+        input.value= value;
         btnPlus.appendChild(tooltip);
         updateLevel(index, parseInt(input.value));
 
@@ -451,7 +452,29 @@ function drawData(){
 
     radarEssence.textContent="+"+Number(radarUpg.toFixed(1)).toLocaleString() + " ess/day";
 
-    radarROI.textContent=Number((radarUpg/getUpgradeCost(5,radar)*100).toFixed(1)).toLocaleString() + "%/day";
+    radarROI.textContent=Number((radarUpg/getUpgradeCost(5,radar)*100).toFixed(1)).toLocaleString() + "%/day"; 
+}
 
- 
+
+// start of HB interpreter
+
+document.addEventListener("paste", (event) => {
+    console.log(extractLevels(event.clipboardData.getData("text")));
+});
+
+function extractLevels(text) {
+    const levelPattern = /\bLvl (\d+)\b/g;
+    const levels = [];
+    let match;
+
+    while ((match = levelPattern.exec(text)) !== null) {
+        levels.push(parseInt(match[1], 10));
+    }
+
+    for (i =0; i<6;i++){
+        if (levels[i] !== undefined) {
+            modifyValueDirect(i, levels[i]);
+        }
+    }
+    return levels;
 }
