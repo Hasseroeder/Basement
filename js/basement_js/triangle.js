@@ -1,7 +1,3 @@
-import { Chart } from './node_modules/chart.js/auto';
-import annotationPlugin from "../node_modules/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.esm.js";
-
-
 const ctx = document.getElementById('myChart');
 const trianglePlugin = {
     id: 'triangleOverlay',
@@ -24,8 +20,6 @@ const trianglePlugin = {
         ctx.restore();
     }
 };
-
-Chart.register(annotationPlugin);
 
 
 new Chart(ctx, {
