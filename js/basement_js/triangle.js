@@ -1,3 +1,9 @@
+//import { Chart } from 'chart.js';
+//import annotationPlugin from 'chartjs-plugin-annotation';
+//import Chart from 'chart.js/auto';
+//import annotationPlugin from 'chartjs-plugin-annotation';
+
+
 const ctx = document.getElementById('myChart');
 const trianglePlugin = {
     id: 'triangleOverlay',
@@ -21,65 +27,79 @@ const trianglePlugin = {
     }
 };
 
+//const { annotationPlugin } = Chart.plugins.get('annotation');
+document.addEventListener("DOMContentLoaded", function () {
 
-new Chart(ctx, {
-    type: 'scatter',
-    plugins: 
-        [trianglePlugin],
-        annotation: {
-            annotations: {
-                clayLabel: {
-                    type: 'label',
-                    content: 'Clay (%)',
-                    position: 'top',
-                    xValue: 10, // Adjust position
-                    yValue: 90, // Adjust position
-                    rotation: -45, // Rotate along triangle edge
-                    font: {
-                        size: 14,
-                        style: 'italic'
+    //Chart.register(ChartAnnotation);
+    Chart.register(window['chartjs-plugin-annotation']);
+    console.log(Chart.registry.plugins.items); 
+    //console.log(Object.keys(Chart));
+
+    //console.log(window.ChartAnnotation);
+    //console.log(window.annotationPlugin);
+
+
+    new Chart(ctx, {
+        type: 'scatter',
+        plugins: 
+            [trianglePlugin],
+            annotation: {
+                annotations: {
+                    line0: {
+                        type: 'line',
+                        yMin: 5,
+                        yMax: 5,
+                        borderColor: '#ffffff',
+                        borderWidth: 200
+                    },
+                    line1: {
+                        type: 'line',
+                        yMin: 60,
+                        yMax: 60,
+                        borderColor: '#ffff33',
+                        borderWidth: 2
+                    }
+                }
+            },
+        data: {
+            datasets: [{
+                label: 'Soil Composition',
+                data: [
+                    { x: 20, y: 80 }, // Example data point (Sand 20%, Clay 80%)
+                    { x: 50, y: 30 }, // Example (Sand 50%, Clay 30%)
+                    { x: 70, y: 10 }  // Example (Sand 70%, Clay 10%)
+                ],
+                backgroundColor: 'red'
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Sand (%)'
+                    },
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        drawOnChartArea: false // Hides square gridlines
+                    }
+                },
+                y: {
+                    type: 'linear',
+                    title: {
+                        display: true,
+                        text: 'Clay (%)'
+                    },
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        drawOnChartArea: false // Hides square gridlines
                     }
                 }
             }
-        },
-    data: {
-        datasets: [{
-            label: 'Soil Composition',
-            data: [
-                { x: 20, y: 80 }, // Example data point (Sand 20%, Clay 80%)
-                { x: 50, y: 30 }, // Example (Sand 50%, Clay 30%)
-                { x: 70, y: 10 }  // Example (Sand 70%, Clay 10%)
-            ],
-            backgroundColor: 'red'
-        }]
-    },
-    options: {
-        scales: {
-            x: {
-                type: 'linear',
-                position: 'bottom',
-                title: {
-                    display: true,
-                    text: 'Sand (%)'
-                },
-                min: 0,
-                max: 100,
-                grid: {
-                    drawOnChartArea: false // Hides square gridlines
-                }
-            },
-            y: {
-                type: 'linear',
-                title: {
-                    display: true,
-                    text: 'Clay (%)'
-                },
-                min: 0,
-                max: 100,
-                grid: {
-                    drawOnChartArea: false // Hides square gridlines
-                }
-            }
         }
-    }
+    });
 });
