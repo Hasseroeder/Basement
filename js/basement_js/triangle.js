@@ -43,24 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
         type: 'scatter',
         plugins: 
             [trianglePlugin],
-            annotation: {
-                annotations: {
-                    line0: {
-                        type: 'line',
-                        yMin: 5,
-                        yMax: 5,
-                        borderColor: '#ffffff',
-                        borderWidth: 200
-                    },
-                    line1: {
-                        type: 'line',
-                        yMin: 60,
-                        yMax: 60,
-                        borderColor: '#ffff33',
-                        borderWidth: 2
-                    }
-                }
-            },
         data: {
             datasets: [{
                 label: 'Soil Composition',
@@ -73,6 +55,22 @@ document.addEventListener("DOMContentLoaded", function () {
             }]
         },
         options: {
+            plugins: {
+                annotation: {
+                    annotations: {
+                        clayLabel: {
+                            type: 'label',
+                            content: 'Clay (%)',
+                            xValue: 20, // Adjust position
+                            yValue: 50, // Adjust position
+                            rotation: -45, // Rotate along triangle edge
+                            font: {
+                                size: 14,
+                            }
+                        }    
+                    }
+                }
+            },
             scales: {
                 x: {
                     type: 'linear',
