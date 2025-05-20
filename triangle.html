@@ -13,8 +13,14 @@
         <div id="navbar"></div>
         <div style="background-color:#303030;color:lightgray;padding-top:20px;padding-left:20px;margin: 10px 10px 10px;">
             <p style= "margin-top:0;"> Here is a triangle chart:</p>
-            <div class="flexContainer" style="align-items:normal;margin:0 0 0;">
-                <canvas id="myChart" style="max-width:600px;max-height:600px;margin-bottom:10px"></canvas>
+            <div class="flexContainer" style="align-items:normal;margin: 0 0 0; justify-content: center;">
+                <canvas id="myChart" 
+                    style="
+                        width: 600px;
+                        max-width:600px;
+                        height:calc(600px * sqrt(0.75)px);
+                        max-height:calc(600px * sqrt(0.75)px);
+                        margin-bottom:10px"></canvas>
             </div>
         </div>
 
