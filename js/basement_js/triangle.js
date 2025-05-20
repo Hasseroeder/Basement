@@ -132,7 +132,6 @@ const externalTooltipHandler = (context) => {
 
   tooltipEl.innerHTML = innerHTML;
 
-  // Positioning the tooltip relative to the canvas
   const canvasRect = chart.canvas.getBoundingClientRect();
   tooltipEl.style.opacity = 1;
   tooltipEl.style.position = 'absolute';
@@ -226,6 +225,8 @@ function getPosition(attributes){
 
     return [Power, Wp];
 }
+
+
 
 for (let i = 10; i <= 100; i += 10) {
     lines[`Power${i}`] = createLine('power',i);
@@ -327,12 +328,6 @@ pets.push({
 });
 
 pets.push({
-    image: "../media/owo_images/horsebot.gif",
-    name: "Horsebot",
-    attributes: [2, 1, 2, 8, 5, 2]
-});
-
-pets.push({
     image: "../media/owo_images/zebra.gif",
     name: "Zebra",
     attributes: [3, 1, 2, 8, 5, 2]
@@ -392,7 +387,6 @@ pets.push({
     attributes: [9, 1, 1, 7, 1, 1]
 });
 
-
 pets.push({
     image: "../media/owo_images/night.gif",
     name: "Night",
@@ -418,9 +412,7 @@ document.addEventListener("DOMContentLoaded", function () {
     Chart.register(window['chartjs-plugin-annotation']);
     Chart.register(imagePlugin);
     console.log(Chart.registry.plugins.items); 
-
-
-
+    
     new Chart(ctx, {
         type: 'scatter',
         plugins: 
@@ -457,6 +449,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 tooltip: {
                     enabled: false,           // Disable the default tooltip
+                    animation: false,
                     external: externalTooltipHandler 
                 },
                 legend: {
@@ -529,6 +522,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
             }
-        }
+        },
     });
 });
