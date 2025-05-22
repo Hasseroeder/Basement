@@ -1,3 +1,5 @@
+import * as cookie from "../basement_js/util/cookieUtil.js";
+
 const maxValues = {
     0: 215,
     1: 235,
@@ -119,8 +121,8 @@ function petRates(){
 }
 
 function getWorth(){
-    sacWorth=0;
-    sellWorth=0;
+    let sacWorth=0;
+    let sellWorth=0;
 
     isSac.forEach((bool, index) => {
         if (bool) {
@@ -203,8 +205,11 @@ function toggleCell(cell,index) {
 }
 
 document.getElementById("patreonCheck").addEventListener("change", function() {
-    patreon=this.checked; 
-    drawData();
+    if (event.isTrusted) {
+        patreon=this.checked; 
+        saveDataCookie();
+        drawData();
+    }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -266,6 +271,8 @@ document.addEventListener("DOMContentLoaded", () => {
             container.appendChild(wrapper);
         }
     }
+    
+    loadDataCookie();
     drawData();
 });
 
@@ -348,8 +355,30 @@ function modifyValue(index, change) {
 
 function updateLevel(index, value){
     levels[index]=value;
+    saveDataCookie();
     drawData();
 }
+
+function saveDataCookie(){
+    cookie.setCookie("Patreon",patreon.toString(),30);
+    cookie.setCookie("Levels",levels.join(","),30)
+}
+
+function loadDataCookie(){
+    let patreonData = cookie.getCookie("Patreon");
+    let levelsData = cookie.getCookie("Levels");
+    let newLevelsData = null;
+
+    if (levelsData){
+        newLevelsData =levelsData.split(",").map(Number);
+        newLevelsData.forEach((element,index) => {
+            modifyValueDirect(index,newLevelsData[index]);
+        });
+    }
+    
+    patreon = patreonData === "true";
+}
+
 
 function drawData(){
     
@@ -364,7 +393,7 @@ function drawData(){
         (levels[5] * 0.04).toFixed(2)   //radar
     ];
 
-    const table2essenceValues = [
+    const upgradeWorth = [
         getWorth()[0] * 24,
         600,
         (isSac[8] ? 0.00000004 * petWorth[8][1] * values[0] * 24 : 0)   // add if bots sacced
@@ -375,13 +404,27 @@ function drawData(){
         header.innerHTML = labels[index] + values[index] + suffixes[index];
     });
 
+    let maxROIindex = -1;
+    let maxROI = -Infinity;
+
     [0, 3, 5].forEach((index, i) => {
+        let ROI = upgradeWorth[i]/getUpgradeCost(index,levels[index]);
+
+        if (ROI > maxROI) {
+            maxROI = ROI;
+            maxROIindex = i;
+        }
+
         table2.cost[i].textContent = getUpgradeCost(index, levels[index]).toLocaleString();
         table2.rows[i].style.textDecoration = levels[index] === maxValues[index] ? "line-through" : "none";
-        table2.essence[i].textContent = `+${numberFixedString(table2essenceValues[i],1)} ess/day`;
-        table2.ROI[i].textContent= numberFixedString(table2essenceValues[i]/getUpgradeCost(index,levels[index])*100,1) + "%/day"
+        table2.rows[i].style.fontWeight="normal";
+        table2.essence[i].textContent = `+${numberFixedString(upgradeWorth[i],1)} ess/day`;
+        table2.ROI[i].textContent= numberFixedString(ROI*100,1) + "%/day"
     });
 
+    if (maxROIindex !== -1) {
+        table2.rows[maxROIindex].style.fontWeight = "bolder";
+    }
 
     let dailyPets = values[0]*24;
     let hbPets = Math.floor(values[0]*values[1]);
@@ -412,6 +455,7 @@ function drawData(){
     petWorthSac.textContent = numberFixedString(worth[0],1) +" ess/pet";      
     hbWorthSac.textContent  = numberFixedString(worth[0]*hbPets,0) +" ess/hb"; 
  
+    document.getElementById("patreonCheck").checked=patreon;
 }
 
 function numberFixedString(input,fixed){
