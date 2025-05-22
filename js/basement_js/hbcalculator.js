@@ -266,6 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
             container.appendChild(wrapper);
         }
     }
+    drawData();
 });
 
 function modifyValueDirect(index, value) {
@@ -366,8 +367,8 @@ function drawData(){
     const table2essenceValues = [
         getWorth()[0] * 24,
         600,
-        (isSac[8] ? 0.00000004 * petWorth[8][1] * values[0] * 24 : 0)
-        - (isSac[0] ? petRates()[8] * values[0] * 24 : 0)
+        (isSac[8] ? 0.00000004 * petWorth[8][1] * values[0] * 24 : 0)   // add if bots sacced
+        - (isSac[0] ? petRates()[8] * values[0] * 24 : 0)               // subtract if commons sacced
     ];
 
     headers.forEach((header, index) => {
