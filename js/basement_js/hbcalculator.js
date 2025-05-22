@@ -7,35 +7,62 @@ const maxValues = {
     5: 999
 };
 
-const efficiencyHeader= document.getElementById("efficiencyHeader");
-const durationHeader= document.getElementById("durationHeader");
-const costHeader= document.getElementById("costHeader");
-const gainHeader= document.getElementById("gainHeader");
-const expHeader= document.getElementById("expHeader");
-const radarHeader= document.getElementById("radarHeader");
+const headers =[
+    document.getElementById("efficiencyHeader"),
+    document.getElementById("durationHeader"),
+    document.getElementById("costHeader"),
+    document.getElementById("gainHeader"),
+    document.getElementById("expHeader"),
+    document.getElementById("radarHeader")
+]
 
-const efficiencyRow =document.getElementById("efficiencyRow");
-const gainRow =document.getElementById("gainRow");
-const radarRow =document.getElementById("radarRow");
+const table2={
+    rows:[
+        document.getElementById("efficiencyRow"),
+        document.getElementById("gainRow"),
+        document.getElementById("radarRow")
+    ],
+    cost: [
+        document.getElementById("efficiencyCost"),
+        document.getElementById("gainCost"),
+        document.getElementById("radarCost")
+    ],
+    essence: [
+        document.getElementById("efficiencyEssence"),
+        document.getElementById("gainEssence"),
+        document.getElementById("radarEssence")
+    ],
+    ROI:[
+        document.getElementById("efficiencyROI"),
+        document.getElementById("gainROI"),
+        document.getElementById("radarROI")
+    ]
+}
 
-const efficiencyCost = document.getElementById("efficiencyCost");
-const gainCost = document.getElementById("gainCost");
-const radarCost = document.getElementById("radarCost");
+const efficiencyOutput =[
+    document.getElementById("efficiencyOutput1"),
+    document.getElementById("efficiencyOutput2")
+]
 
-const efficiencyOutput1= document.getElementById("efficiencyOutput1");
-const efficiencyOutput2= document.getElementById("efficiencyOutput2");
+const costOutput =[
+    document.getElementById("costOutput1"),
+    document.getElementById("costOutput2")
 
-const costOutput1= document.getElementById("costOutput1");
-const costOutput2= document.getElementById("costOutput2");
+]
+const gainOutput =[
+    document.getElementById("gainOutput1"),
+    document.getElementById("gainOutput2")
+]
 
-const gainOutput1= document.getElementById("gainOutput1");
-const gainOutput2= document.getElementById("gainOutput2");
+const expOutput=[
+    document.getElementById("expOutput1"),
+    document.getElementById("expOutput2")
+]
 
-const expOutput1= document.getElementById("expOutput1");
-const expOutput2= document.getElementById("expOutput2");
-
-const radarOutput1= document.getElementById("radarOutput1");
-const radarOutput2= document.getElementById("radarOutput2");
+const radarOutput=[
+    document.getElementById("radarOutput1"),
+    document.getElementById("radarOutput2")
+]
 
 const petWorthSac = document.getElementById("petWorthSac");
 const petWorthSell= document.getElementById("petWorthSell");
@@ -45,23 +72,16 @@ const hbWorthSac = document.getElementById("hbWorthSac");
 const hbWorthSell = document.getElementById("hbWorthSell");
 const hbWorthProfit = document.getElementById("hbWorthProfit");
 
-const efficiencyEssence = document.getElementById("efficiencyEssence");
-const radarEssence = document.getElementById("radarEssence");
-
-const efficiencyROI = document.getElementById("efficiencyROI");
-const gainROI = document.getElementById("gainROI");
-const radarROI = document.getElementById("radarROI");
-
-
-let efficiency = 0;
-let duration = 0;
-let cost = 0;
-let gain = 0;
-let exp = 0;
-let radar = 0;
+const levels = [
+    0, //efficiency
+    0, //duration
+    0, //cost
+    0, //gain
+    0, //exp
+    0  //radar
+]
 
 let patreon = false;
-
 
 const petWorth = [
 /*[sell,sac]*/
@@ -87,7 +107,7 @@ function petRates(){
         patreon? 0.005:0,      //p1
         patreon? 0.0001:0,     //p2
         0.0005,     //l
-        0.00000004*radar, //b
+        0.00000004*levels[5], //b
         0.00001,    //f
         0.000001,   //h
     
@@ -99,9 +119,6 @@ function petRates(){
 }
 
 function getWorth(){
-    // (sacrifice == false) => SELLING
-    // (sacrifice == true)  => SACRIFICE
-
     sacWorth=0;
     sellWorth=0;
 
@@ -120,31 +137,27 @@ function getWorth(){
 
 
 function getUpgradeCost(index, level) {
-    switch (index) {
-        case 0:
-            return Math.floor(10 * Math.pow(level+1, 1.748));
-        case 1:
-            return Math.floor(10 * Math.pow(level+1, 1.700));
-        case 2:
-            return Math.floor(1000 * Math.pow(level+1, 3.4));
-        case 3:
-            return Math.floor(10 * Math.pow(level+1, 1.800));
-        case 4:
-            return Math.floor(10 * Math.pow(level+1, 1.800));
-        case 5:
-            return Math.floor(50 * Math.pow(level+1, 2.500));
-        default:
-            throw new Error("Invalid index");
-    }
+  const upgradeParams = [
+    { multiplier: 10, exponent: 1.748 },    //efficiency
+    { multiplier: 10, exponent: 1.700 },    //duration
+    { multiplier: 1000, exponent: 3.4 },    //cost
+    { multiplier: 10, exponent: 1.800 },    //gain
+    { multiplier: 10, exponent: 1.800 },    //exp
+    { multiplier: 50, exponent: 2.500 },    //radar
+  ];
+
+  const params = upgradeParams[index];
+  if (!params) {
+    throw new Error("Invalid index");
+  }
+  return Math.floor(params.multiplier * Math.pow(level + 1, params.exponent));
 }
 
 const cells = Array.from(document.querySelectorAll("#table-1 th"));
 const isSac = cells.map(cell => cell.textContent.trim() === "Sac ");
 
-// START
 
 let isDragging = false;
-
 
 document.addEventListener("mouseup", () => {
     isDragging = false;
@@ -160,13 +173,10 @@ cells.forEach((cell,index) => {
             let targetCell = event.target.closest("th");
             if (targetCell) toggleCell(targetCell,index);
         }
-       
-            //if (isDragging) toggleCell(cell,index);
     });
 
     cell.addEventListener("mouseenter",(event) => {
         if (event.relatedTarget && cell.contains(event.relatedTarget)) {
-            // Ignore the event if it was triggered by an internal element change
             return;
         }
         
@@ -174,7 +184,6 @@ cells.forEach((cell,index) => {
             let targetCell = event.target.closest("th"); 
             if (targetCell) toggleCell(targetCell,index);
         }
-            //if (isDragging) toggleCell(cell,index);
     });
 });
 
@@ -193,18 +202,10 @@ function toggleCell(cell,index) {
     drawData();
 }
 
-// END
-
-
-
 document.getElementById("patreonCheck").addEventListener("change", function() {
     patreon=this.checked; 
     drawData();
-
-
 });
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < 6; i++) {
@@ -345,136 +346,95 @@ function modifyValue(index, change) {
 }
 
 function updateLevel(index, value){
-    switch (index){
-        case 0:
-            efficiency=value;
-
-        break;
-        case 1:
-            duration= value;
-
-        break;
-        case 2:
-            cost= value;
-
-        break;
-        case 3:
-            gain= value;
-
-        break;
-        case 4:
-            exp= value;
-
-        break;
-        case 5:
-            radar= value;
-
-    }
+    levels[index]=value;
     drawData();
-
-
 }
 
 function drawData(){
     
-    efficiencyHeader.textContent="⏱ Efficiency - " + (efficiency+25) + "/h";
-    let hours = (duration/10+0.5);
-    durationHeader.textContent="⏳ Duration - "+hours+"h"
-    costHeader.innerHTML= '&nbsp;Cost - '+ (10-cost) +" cowoncy";
-    gainHeader.textContent="🔧 Gain - "+ (gain*25)+" ess/h";
-    expHeader.textContent="⚔ Experience - "+ (exp*35) +" exp/h";
-    radarHeader.textContent= (radar*0.04).toFixed(2)+"ppm";
+    const labels = ["⏱ Efficiency - ", "⏳ Duration - ", "&nbsp;Cost - ", "🔧 Gain - ", "⚔ Experience - ", "📡 Radar - "];
+    const suffixes = ["/h", "h", " cowoncy", " ess/h", " exp/h", "ppm"];
+    const values = [
+        levels[0] + 25,                 //efficiency
+        levels[1]/10+0.5,               //duration
+        10 - levels[2],                 //cost
+        levels[3] * 25,                 //gain
+        levels[4] * 35,                 //exp
+        (levels[5] * 0.04).toFixed(2)   //radar
+    ];
 
-    if (efficiency == maxValues[0]){
-        efficiencyRow.style="text-decoration: line-through;";
-    }else{
-        efficiencyRow.style="text-decoration: none;";
-    }
-    efficiencyCost.textContent=getUpgradeCost(0,efficiency).toLocaleString();
-    let dailyPets = ((efficiency+25)*24);
-    efficiencyOutput1.textContent=dailyPets.toLocaleString()+" pets/day";
-    let hbPets = Math.floor((efficiency+25)*hours);
-    efficiencyOutput2.textContent=hbPets.toLocaleString()+" pets/hb";
+    const table2essenceValues = [
+        getWorth()[0] * 24,
+        600,
+        (isSac[8] ? 0.00000004 * petWorth[8][1] * values[0] * 24 : 0)
+        - (isSac[0] ? petRates()[8] * values[0] * 24 : 0)
+    ];
 
-    costOutput1.textContent="-"+(dailyPets*(10-cost)).toLocaleString()+" owo/day";
-    costOutput2.textContent="-"+(hbPets*(10-cost)).toLocaleString()+" owo/hb";   
+    headers.forEach((header, index) => {
+        header.innerHTML = labels[index] + values[index] + suffixes[index];
+    });
 
-    gainOutput1.textContent=(gain*25*24).toLocaleString()+" ess/day";
-    gainOutput2.textContent=(Math.floor(gain*25*hours)).toLocaleString()+" ess/hb";   
+    [0, 3, 5].forEach((index, i) => {
+        table2.cost[i].textContent = getUpgradeCost(index, levels[index]).toLocaleString();
+        table2.rows[i].style.textDecoration = levels[index] === maxValues[index] ? "line-through" : "none";
+        table2.essence[i].textContent = `+${numberFixedString(table2essenceValues[i],1)} ess/day`;
+        table2.ROI[i].textContent= numberFixedString(table2essenceValues[i]/getUpgradeCost(index,levels[index])*100,1) + "%/day"
+    });
 
-    expOutput1.textContent=(exp*35*24).toLocaleString()+" exp/day";
-    expOutput2.textContent=(Math.floor(exp*35*hours)).toLocaleString()+" exp/hb";   
 
-    let noBot = 1 - (0.00000004*radar);
-    //console.log("noBot: "+ noBot);
-    //console.log("noBot^10: "+ Math.pow(noBot, 5000));
+    let dailyPets = values[0]*24;
+    let hbPets = Math.floor(values[0]*values[1]);
 
-    radarOutput1.textContent="weekly bot: "+(100-100*Math.pow(noBot, dailyPets*7)).toFixed(1)+"%";
-    radarOutput2.textContent="monthly bot: "+(100-100*Math.pow(noBot, dailyPets*30)).toFixed(1)+"%";
+    efficiencyOutput[0].textContent=dailyPets.toLocaleString()+" pets/day";
+    efficiencyOutput[1].textContent=hbPets.toLocaleString()+" pets/hb";
+
+    costOutput[0].textContent="-"+(dailyPets*values[2]).toLocaleString()+" owo/day";
+    costOutput[1].textContent="-"+(hbPets*values[2]).toLocaleString()+" owo/hb";   
+
+    gainOutput[0].textContent=(values[3]*24).toLocaleString()+" ess/day";
+    gainOutput[1].textContent=(Math.floor(values[3]*values[1])).toLocaleString()+" ess/hb";   
+
+    expOutput[0].textContent=(values[4]*24).toLocaleString()+" exp/day";
+    expOutput[1].textContent=(Math.floor(values[4]*values[1])).toLocaleString()+" exp/hb";   
+
+    radarOutput[0].textContent="weekly bot: "+(100-100*Math.pow(1 - (0.00000004*levels[5]), dailyPets*7)).toFixed(1)+"%";
+    radarOutput[1].textContent="monthly bot: "+(100-100*Math.pow(1 - (0.00000004*levels[5]), dailyPets*30)).toFixed(1)+"%";
     
-    if (gain == maxValues[3]){
-        gainRow.style="text-decoration: line-through;";
-    }else{
-        gainRow.style="text-decoration: none;";
-    }
-    gainCost.textContent=getUpgradeCost(3,gain).toLocaleString();
+    let worth=getWorth();
 
+    petWorthSell.textContent = numberFixedString(worth[1],1) +" owo/pet"; 
+    hbWorthSell.textContent  = numberFixedString(worth[1]*hbPets,0) +" owo/hb"; 
 
-    
-    if (radar == maxValues[5]){
-        radarRow.style="text-decoration: line-through;";
-    }else{
-        radarRow.style="text-decoration: none;";
-    }
-    radarCost.textContent=getUpgradeCost(5,radar).toLocaleString();
+    petWorthProfit.textContent = "Profit: "+numberFixedString(worth[1]-values[2],1) +" owo/pet"; 
+    hbWorthProfit.textContent  = "Profit: "+numberFixedString((worth[1]-values[2])*hbPets,0)+" owo/hb";
 
-    petWorthSell.textContent = getWorth()[1].toFixed(2).toLocaleString() +" owo/pet"; 
-    petWorthProfit.textContent = "Profit: "+(getWorth()[1]-10+cost).toFixed(2).toLocaleString() +" owo/pet"; 
-    petWorthSac.textContent = getWorth()[0].toFixed(2).toLocaleString() +" ess/pet"; 
-
-    hbWorthSell.textContent = Number((getWorth()[1]*hbPets).toFixed(0)).toLocaleString() +" owo/hb"; 
-    hbWorthProfit.textContent = "Profit: "+Number(((getWorth()[1]-10+cost)*hbPets).toFixed(0)).toLocaleString() +" owo/hb";     
-    hbWorthSac.textContent = Number((getWorth()[0]*hbPets).toFixed(0)).toLocaleString() +" ess/hb"; 
-
-
-    efficiencyEssence.textContent= "+"+Number((getWorth()[0]*24).toFixed(1)).toLocaleString()+" ess/day";
-    efficiencyROI.textContent=Number((getWorth()[0]*24/getUpgradeCost(0,efficiency)*100).toFixed(1)).toLocaleString() + "%/day";
-
-    
-    gainROI.textContent=Number((600/getUpgradeCost(3,gain)*100).toFixed(1)).toLocaleString() + "%/day";
-    
-    let radarUpg = 0;
-    if (isSac[8]){
-        radarUpg = 0.00000004*petWorth[8][1]*dailyPets;
-    }if(isSac[0]){
-        radarUpg -= (petRates()[8]*dailyPets);
-    }
-
-    radarEssence.textContent="+"+Number(radarUpg.toFixed(1)).toLocaleString() + " ess/day";
-
-    radarROI.textContent=Number((radarUpg/getUpgradeCost(5,radar)*100).toFixed(1)).toLocaleString() + "%/day"; 
+    petWorthSac.textContent = numberFixedString(worth[0],1) +" ess/pet";      
+    hbWorthSac.textContent  = numberFixedString(worth[0]*hbPets,0) +" ess/hb"; 
+ 
 }
 
+function numberFixedString(input,fixed){
+    return Number(input.toFixed(fixed)).toLocaleString();
+}
 
 // start of HB interpreter
 
 document.addEventListener("paste", (event) => {
-    console.log(extractLevels(event.clipboardData.getData("text")));
+    extractLevels(event.clipboardData.getData("text"));
 });
 
 function extractLevels(text) {
     const levelPattern = /\bLvl (\d+)\b/g;
-    const levels = [];
+    const extractedLevels = [];
     let match;
 
     while ((match = levelPattern.exec(text)) !== null) {
-        levels.push(parseInt(match[1], 10));
+        extractedLevels.push(parseInt(match[1], 10));
     }
 
     for (i =0; i<6;i++){
-        if (levels[i] !== undefined) {
-            modifyValueDirect(i, levels[i]);
+        if (extractedLevels[i] !== undefined) {
+            modifyValueDirect(i, extractedLevels[i]);
         }
     }
-    return levels;
 }
