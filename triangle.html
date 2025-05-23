@@ -21,6 +21,16 @@
                         height:480px;
                         max-height:480px;
                         margin-bottom:10px"></canvas>
+                 <canvas id="overlayCanvas" 
+                    style="
+                        width: 600px;
+                        max-width:600px;
+                        height:480px;
+                        max-height:480px;
+                        margin-bottom:10px;
+                        position: absolute;
+                        pointer-events: none"></canvas>
+
             </div>
         </div>
 
@@ -32,6 +42,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
     <script src="js/basement_js/init.js"></script>
+    <script src="https://unpkg.com/merge-images"></script>
     <script type="module" src="js/basement_js/triangle.js"></script>
     
     </body>

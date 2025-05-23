@@ -1,4 +1,6 @@
 const ctx = document.getElementById('myChart');
+const overlayCtx = document.getElementById("overlayCanvas");
+
 const trianglePlugin = {
     id: 'triangleOverlay',
     beforeDraw(chart) {
@@ -12,7 +14,7 @@ const trianglePlugin = {
         ctx.closePath();
 
         ctx.strokeStyle = 'lightgray';
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 0.2;
         ctx.stroke();
 
         ctx.fillStyle = 'rgba(200, 200, 200, 0.0)'; // Light overlay
@@ -21,45 +23,6 @@ const trianglePlugin = {
     }
 };
 
-const imagePlugin = {
-  id: 'imagePlugin',
-  afterDatasetsDraw(chart, args, pluginOptions) {
-    const ctx = chart.ctx;
-    const defaultWidth = pluginOptions.width || 40;
-    const defaultHeight = pluginOptions.height || 40;
-    
-    // Loop over all datasets (or adjust to target a specific one)
-    chart.data.datasets.forEach(dataset => {
-      if (!dataset.data) return;
-      dataset.data.forEach(dataPoint => {
-        if (dataPoint.img) {
-          // Convert chart data values into pixel coordinates
-          const x = chart.scales.x.getPixelForValue(dataPoint.x);
-          const y = chart.scales.y.getPixelForValue(dataPoint.y);
-
-          let image = new Image();
-          image.src = dataPoint.img;
-
-          // If the image is loaded, draw it immediately
-          if (image.complete) {
-            ctx.drawImage(
-              image,
-              x - defaultWidth / 2,
-              y - defaultHeight / 2,
-              defaultWidth,
-              defaultHeight
-            );
-          } else {
-            // If not loaded yet, trigger a redraw when it finishes loading.
-            image.onload = () => {
-              chart.draw();
-            };
-          }
-        }
-      });
-    });
-  }
-};
 
 const externalTooltipHandler = (context) => {
   const { chart, tooltip } = context;
@@ -139,11 +102,57 @@ const externalTooltipHandler = (context) => {
   tooltipEl.style.top = canvasRect.top + window.pageYOffset + tooltip.caretY + 'px';
 };
 
+
+const imagePlugin = {
+  id: 'imagePlugin',
+  afterDatasetsDraw(chart, args, pluginOptions) {
+    const overlayCanvas = document.getElementById("overlayCanvas");
+    const ctx = overlayCanvas.getContext("2d");
+
+    const defaultWidth = pluginOptions.width || 20;
+    const defaultHeight = pluginOptions.height || 20;
+    
+    chart.data.datasets.forEach(dataset => {
+        if (!dataset.data) return;
+        dataset.data.forEach(dataPoint => {
+            if (dataPoint.img && dataPoint.drawn=="false") {
+                const x = chart.scales.x.getPixelForValue(dataPoint.x);
+                const y = chart.scales.y.getPixelForValue(dataPoint.y);
+
+                let image = new Image();
+                image.src = dataPoint.img;
+
+                if (image.complete) {
+                    ctx.drawImage(
+                        image,
+                        x - defaultWidth / 2,
+                        y - defaultWidth / 2,
+                        defaultWidth,
+                        defaultHeight
+                    );
+                    dataPoint.drawn = "true";
+                }else {
+                    image.onload = () => {
+                        chart.draw();
+                    };
+                }
+            }
+        });        
+    });
+  }
+};
+
 const lines = {};
 
 const labels = {};
 
 const pets = []
+
+const powerImage = new Image();
+
+const tankImage = new Image();
+
+const wpImage = new Image();
 
 function getX(Power, WP){
     return WP + 0.5 * Power;
@@ -151,6 +160,8 @@ function getX(Power, WP){
 function getY(Power,WP){
     return Power;
 }
+
+
 
 function createLine(type, percent) {
     if (type == 'power'){
@@ -227,7 +238,6 @@ function getPosition(attributes){
 }
 
 
-
 for (let i = 10; i <= 100; i += 10) {
     lines[`Power${i}`] = createLine('power',i);
     labels[`PowerLabel${i}`] = createLabel('power',i);
@@ -239,9 +249,6 @@ for (let i = 10; i <= 100; i += 10) {
     labels[`TankLabel${i}`] = createLabel('tank',i);
 }
 
-window.getPets = function(){
-    return pets;
-}
 
 pets.push({
     image: "../media/owo_images/spider.gif",
@@ -405,9 +412,30 @@ pets.push({
     attributes: [2, 1, 1, 7, 8, 1]
 });
 
+window.getPowerImage = function(){
+    return powerImage;
 
+}
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    mergeImages([
+    { src: '../media/owo_images/STR.png'},
+    { src: '../media/owo_images/MAG.png', x:128}
+    ],{width: 256,height:128}
+    )
+    .then(b64 => powerImage.src= b64);
+
+    wpImage.src = '../media/owo_images/WP.png';
+
+    mergeImages([
+    { src: '../media/owo_images/HP.png'},
+    { src: '../media/owo_images/PR.png', x:128},
+    { src: '../media/owo_images/MR.png', x:256}
+    ],{width: 384,height:128}
+    )
+    .then(b64 => tankImage.src= b64);
+
 
     Chart.register(window['chartjs-plugin-annotation']);
     Chart.register(imagePlugin);
@@ -426,7 +454,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         y: getY(...getPosition(pet.attributes)),
                         label: pet.name,
                         img: pet.image,
-                        attributes: pet.attributes
+                        attributes: pet.attributes,
+                        drawn: "false"
                     })),
                 pointStyle: false,
                 pointRadius: 10,
@@ -443,14 +472,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             },
             plugins: {
-                imagePlugin: {
-                    width: 20,   // Desired width of the static image
-                    height: 20   // Desired height of the static image
-                },
                 tooltip: {
-                    enabled: false,           // Disable the default tooltip
-                    animation: false,
-                    external: externalTooltipHandler 
+                    mode: 'nearest',
+                    enabled: false,          
+                    animation: false, 
+                    external: externalTooltipHandler  
                 },
                 legend: {
                     display: false
@@ -463,32 +489,55 @@ document.addEventListener("DOMContentLoaded", function () {
                         PowerLabel: {
                             type: 'label',
                             content: '% of stats in Power',
-                            xValue: getX(50,-10), 
-                            yValue: getY(50,-10), 
+                            xValue: getX(49,-10), 
+                            yValue: getY(49,-10), 
                             rotation: -57.2957795, 
                             color: 'lightgray',
                             font: {
-                                size: 18,
+                                size: 16,
                             }
+                        },PowerImage: {
+                            type: 'label',
+                            content: powerImage,
+                            width: 40,
+                            height: 20,
+                            xValue: getX(70,-10),
+                            yValue: getY(70,-10),
+                            rotation: -57.2957795, 
                         },WPLabel: {
                             type: 'label',
                             content: '% of stats in WP',
-                            xValue: getX(50,60), 
-                            yValue: getY(50,60), 
+                            xValue: getX(55,55), 
+                            yValue: getY(55,55), 
                             rotation: 57.2957795, 
                             color: 'lightgray',
                             font: {
-                                size: 18,
+                                size: 16,
                             }
+                        },WPImage: {
+                            type: 'label',
+                            content: wpImage,
+                            width: 20,
+                            height: 20,
+                            xValue: getX(39.3,71), 
+                            yValue: getY(39.3,71), 
+                            rotation: 57.2957795,  
                         },TankLabel: {
                             type: 'label',
                             content: '% of stats in Tanking',
-                            xValue: getX(-10,55), 
-                            yValue: getY(-10,55), 
+                            xValue: getX(-10,47), 
+                            yValue: getY(-10,47), 
                             color: 'lightgray',
                             font: {
-                                size: 18,
+                                size: 16,
                             }
+                        },TankImage: {
+                            type: 'label',
+                            content: tankImage,
+                            width: 60,
+                            height: 20,
+                            xValue: getX(-10,69.5), 
+                            yValue: getY(-10,69.5)
                         }      
                         
                     }
@@ -496,7 +545,6 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             scales: {
                 x: {
-                    
                     display: false,
                     type: 'linear',
                     position: 'bottom',
@@ -524,4 +572,57 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         },
     });
+
+    new Chart(overlayCtx, {
+        type: 'scatter',
+        plugins: 
+            [trianglePlugin],
+        options: {
+            plugins: {
+                tooltip: {
+                    enabled: false,           // Disable the default tooltip
+                    animation: false, 
+                },
+                legend: {
+                    display: false
+                },
+            },
+            layout: {
+                padding: {
+                    left: 60,
+                    right: 60,
+                    top: 48,
+                    bottom: 48
+                }
+            },
+            scales: {
+                x: {
+                    display: false,
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: false,
+                    },
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        drawOnChartArea: false // Hides square gridlines
+                    }
+                },
+                y: {
+                    display: false,
+                    type: 'linear',
+                    title: {
+                        display: false,
+                    },
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        drawOnChartArea: false // Hides square gridlines
+                    }
+                }
+            }
+        },
+    });
+
 });
