@@ -37,13 +37,46 @@ const polygonPlugin = {
             { x: chart.scales.x.getPixelForValue(getX(50,50)), y: chart.scales.y.getPixelForValue(getY(50,50)) },
             { x: chart.scales.x.getPixelForValue(getX(40,50)), y: chart.scales.y.getPixelForValue(getY(40,50)) },
             { x: chart.scales.x.getPixelForValue(getX(90,0)), y: chart.scales.y.getPixelForValue(getY(90,0)) },
+        ],
+        [
+            { x: chart.scales.x.getPixelForValue(getX(90,0)), y: chart.scales.y.getPixelForValue(getY(90,0)) },
+            { x: chart.scales.x.getPixelForValue(getX(40,50)), y: chart.scales.y.getPixelForValue(getY(40,50)) },
+            { x: chart.scales.x.getPixelForValue(getX(30,50)), y: chart.scales.y.getPixelForValue(getY(30,50)) },
+            { x: chart.scales.x.getPixelForValue(getX(80,0)), y: chart.scales.y.getPixelForValue(getY(80,0)) },
+        ],
+        [
+            { x: chart.scales.x.getPixelForValue(getX(100,0)), y: chart.scales.y.getPixelForValue(getY(100,0)) },
+            { x: chart.scales.x.getPixelForValue(getX(85,15)), y: chart.scales.y.getPixelForValue(getY(85,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(55,15)), y: chart.scales.y.getPixelForValue(getY(55,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(55,0)), y: chart.scales.y.getPixelForValue(getY(55,0)) },
+        ],
+        [
+            { x: chart.scales.x.getPixelForValue(getX(55,0)), y: chart.scales.y.getPixelForValue(getY(55,0)) },
+            { x: chart.scales.x.getPixelForValue(getX(55,15)), y: chart.scales.y.getPixelForValue(getY(55,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(15,15)), y: chart.scales.y.getPixelForValue(getY(15,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(15,0)), y: chart.scales.y.getPixelForValue(getY(15,0)) },
+        ],
+        [
+            { x: chart.scales.x.getPixelForValue(getX(15,0)), y: chart.scales.y.getPixelForValue(getY(15,0)) },
+            { x: chart.scales.x.getPixelForValue(getX(15,15)), y: chart.scales.y.getPixelForValue(getY(15,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(0,15)), y: chart.scales.y.getPixelForValue(getY(0,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(0,0)), y: chart.scales.y.getPixelForValue(getY(0,0)) },
+        ],
+        [
+            { x: chart.scales.x.getPixelForValue(getX(15,15)), y: chart.scales.y.getPixelForValue(getY(15,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(15,50)), y: chart.scales.y.getPixelForValue(getY(15,50)) },
+            { x: chart.scales.x.getPixelForValue(getX(0,50)), y: chart.scales.y.getPixelForValue(getY(0,50)) },
+            { x: chart.scales.x.getPixelForValue(getX(0,15)), y: chart.scales.y.getPixelForValue(getY(0,15)) },
         ]
     ];
 
     const colors = [
-        "rgba(78, 255, 34, 0.05)",
-
-
+        "rgba(78, 255, 34, 0.15)",
+        "rgba(77, 204, 45, 0.15)",
+        "rgba(255, 255, 255, 0.15)",
+        "rgba(255, 199, 80, 0.15)",
+        "rgba(255, 255, 255, 0.15)",
+        "rgba(76, 168, 255, 0.15)",
     ]
 
     polygons.forEach((points, index) => {
