@@ -1,0 +1,137 @@
+[
+    {
+        "image": "../media/owo_images/day.gif",
+        "name": "Day",
+        "attributes": [7, 1, 1, 9, 1, 1]
+    },
+    {
+        "image": "../media/owo_images/love.gif",
+        "name": "Love",
+        "attributes": [9, 1, 1, 7, 1, 1]
+    },
+    {
+        "image": "../media/owo_images/night.gif",
+        "name": "Night",
+        "attributes": [12, 1, 1, 5, 1, 1]
+    },
+    {
+        "image": "../media/owo_images/lovebunny.gif",
+        "name": "Lovebunny",
+        "attributes": [8, 1, 1, 8, 1, 1]
+    },
+    {
+        "image": "../media/owo_images/angelowo.gif",
+        "name": "Angelowo",
+        "attributes": [2, 1, 1, 7, 8, 1]
+    },
+    {
+        "image": "../media/owo_images/spider.gif",
+        "name": "Spider",
+        "attributes": [0, 19, 0, 1, 0, 0]
+    },
+    {
+        "image": "../media/owo_images/camel.gif",
+        "name": "Camel",
+        "attributes": [1, 0, 0, 5, 14, 0]
+    },
+    {
+        "image": "../media/owo_images/shrimp.gif",
+        "name": "Shrimp",
+        "attributes": [0, 0, 0, 10, 10, 0]
+    },
+    {
+        "image": "../media/owo_images/panda.gif",
+        "name": "Panda",
+        "attributes": [1, 10, 0, 9, 0, 0]
+    },
+    {
+        "image": "../media/owo_images/fox.gif",
+        "name": "Fox",
+        "attributes": [4, 9, 1, 3, 1, 2]
+    },
+    {
+        "image": "../media/owo_images/slothbot.gif",
+        "name": "Slothbot",
+        "attributes": [9, 0, 2, 8, 0, 2]
+    },
+    {
+        "image": "../media/owo_images/lobbot.gif",
+        "name": "Lobbot",
+        "attributes": [14, 0, 3, 1, 0, 3]
+    },
+    {
+        "image": "../media/owo_images/dinobot.gif",
+        "name": "Dinobot",
+        "attributes": [13, 0, 2, 4, 0, 2]
+    },
+    {
+        "image": "../media/owo_images/may.gif",
+        "name": "May",
+        "attributes": [15, 1, 1, 1, 1, 1]
+    },
+    {
+        "image": "../media/owo_images/gorilla.gif",
+        "name": "Gorilla",
+        "attributes": [8, 7, 2, 1, 1, 2]  
+    },
+    {
+        "image": "../media/owo_images/spoopy.gif",
+        "name": "Spoopy",
+        "attributes": [9, 6, 2, 1, 1, 2]
+    },
+    {
+        "image": "../media/owo_images/squid.gif",
+        "name": "Squid",
+        "attributes": [3, 1, 2, 6, 6, 2]
+    },
+    {
+        "image": "../media/owo_images/deer.gif",
+        "name": "Deer",
+        "attributes": [3, 1, 1, 3, 11, 1]
+    },
+    {
+        "image": "../media/owo_images/lion.gif",
+        "name": "Lion",
+        "attributes": [7, 7, 2, 1, 1, 2]
+    },
+    {
+        "image": "../media/owo_images/zebra.gif",
+        "name": "Zebra",
+        "attributes": [3, 1, 2, 8, 5, 2]
+    },
+    {
+        "image": "../media/owo_images/eagle.gif",
+        "name": "Eagle",
+        "attributes": [2, 13, 2, 1, 1, 2]
+    },
+    {
+        "image": "../media/owo_images/bitter.png",
+        "name": "Bitter",
+        "attributes": [1, 15, 1, 1, 1, 1]
+    },
+    {
+        "image": "../media/owo_images/vampire.gif",
+        "name": "Vampire",
+        "attributes": [2, 1, 1, 1, 14, 1]
+    },
+    {
+        "image": "../media/owo_images/pastel.gif",
+        "name": "Pastel",
+        "attributes": [11, 3, 3, 1, 1, 1]
+    },
+    {
+        "image": "../media/owo_images/snail.png",
+        "name": "Snail",
+        "attributes": [8, 1, 2, 3, 5, 1]
+    },
+    {
+        "image": "../media/owo_images/boar.gif",
+        "name": "Boar",
+        "attributes": [7, 5, 2, 4, 1, 2]
+    },
+    {
+        "image": "../media/owo_images/new_owo.png",
+        "name": "new_owo",
+        "attributes": [4, 1, 1, 4, 11, 1]
+    }
+]

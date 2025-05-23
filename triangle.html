@@ -14,14 +14,8 @@
         <div style="background-color:#303030;color:lightgray;padding-top:20px;padding-left:20px;margin: 10px 10px 10px;">
             <p style= "margin-top:0;"> Here is a triangle chart:</p>
             <div class="flexContainer" style="align-items:normal;margin: 0 0 0; justify-content: center;">
-                <canvas id="myChart" 
-                    style="
-                        width: 600px;
-                        max-width:600px;
-                        height:480px;
-                        max-height:480px;
-                        margin-bottom:10px"></canvas>
-                 <canvas id="overlayCanvas" 
+                
+                <canvas id="areaCanvas" 
                     style="
                         width: 600px;
                         max-width:600px;
@@ -29,7 +23,43 @@
                         max-height:480px;
                         margin-bottom:10px;
                         position: absolute;
-                        pointer-events: none"></canvas>
+                        pointer-events: none;
+                        opacity:1">
+                </canvas>       
+                <canvas id="myChart" 
+                    style="
+                        width: 600px;
+                        max-width:600px;
+                        height:480px;
+                        max-height:480px;
+                        margin-bottom:10px">
+                </canvas>
+                <canvas id="overlayCanvas" 
+                    style="
+                        width: 600px;
+                        max-width:600px;
+                        height:480px;
+                        max-height:480px;
+                        margin-bottom:10px;
+                        position: absolute;
+                        pointer-events: none;
+                        opacity:1">
+                </canvas> 
+                <button id="petButton"
+                    style="
+                    position: absolute;
+                    width: 4rem;
+                    transform: translate(-275%,175%);">
+                    Pets
+                </button>
+                <button id="areaButton"
+                    style="
+                    position: absolute;
+                    width: 4rem;
+                    transform: translate(-275%,300%);">
+                    Area
+                </button>
+
 
             </div>
         </div>

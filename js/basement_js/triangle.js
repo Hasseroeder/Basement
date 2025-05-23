@@ -1,5 +1,9 @@
 const ctx = document.getElementById('myChart');
 const overlayCtx = document.getElementById("overlayCanvas");
+const areaCtx = document.getElementById("areaCanvas");
+
+const petButton = document.getElementById("petButton");
+const areaButton = document.getElementById("areaButton");
 
 const trianglePlugin = {
     id: 'triangleOverlay',
@@ -8,19 +12,51 @@ const trianglePlugin = {
 
         ctx.save();
         ctx.beginPath();
-        ctx.moveTo(left, bottom);  // Bottom left (Sand 100%, Clay 0%)
-        ctx.lineTo(right, bottom); // Bottom right (Sand 0%, Clay 0%)
-        ctx.lineTo(left + (right - left) / 2, top); // Top middle (Sand 0%, Clay 100%)
+        ctx.moveTo(left, bottom); 
+        ctx.lineTo(right, bottom); 
+        ctx.lineTo(left + (right - left) / 2, top); 
         ctx.closePath();
 
         ctx.strokeStyle = 'lightgray';
         ctx.lineWidth = 0.2;
         ctx.stroke();
 
-        ctx.fillStyle = 'rgba(200, 200, 200, 0.0)'; // Light overlay
-        ctx.fill();
         ctx.restore();
     }
+};
+
+const polygonPlugin = {
+  id: 'polygonHighlight',
+  afterDraw: (chart) => {
+    const ctx = chart.ctx;
+    ctx.save();
+
+    const polygons = [
+        [
+            { x: chart.scales.x.getPixelForValue(getX(100,0)), y: chart.scales.y.getPixelForValue(getY(100,0)) },
+            { x: chart.scales.x.getPixelForValue(getX(50,50)), y: chart.scales.y.getPixelForValue(getY(50,50)) },
+            { x: chart.scales.x.getPixelForValue(getX(40,50)), y: chart.scales.y.getPixelForValue(getY(40,50)) },
+            { x: chart.scales.x.getPixelForValue(getX(90,0)), y: chart.scales.y.getPixelForValue(getY(90,0)) },
+        ]
+    ];
+
+    const colors = [
+        "rgba(78, 255, 34, 0.05)",
+
+
+    ]
+
+    polygons.forEach((points, index) => {
+        ctx.fillStyle = colors[index];
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        points.forEach(point => ctx.lineTo(point.x, point.y));
+        ctx.closePath();
+        ctx.fill();
+    });
+
+    ctx.restore();
+  }
 };
 
 
@@ -41,16 +77,13 @@ const externalTooltipHandler = (context) => {
     document.body.appendChild(tooltipEl);
   }
 
-  // Hide tooltip if there's no content to display
-  if (tooltip.opacity === 0) {
+  if (tooltip.opacity === 0 || overlayCtx.style.opacity == 0) {
     tooltipEl.style.opacity = 0;
     return;
   }
 
-  // Build custom HTML for the tooltip. Here we assume each tooltip data point should show an image along with the label and value.
   let innerHTML = `<div>`;
   tooltip.dataPoints?.forEach(dataPoint => {
-    // Access the image from your data. We assume it is under dataPoint.raw.img.
     const imageUrl= [
         "./media/owo_images/HP.png",
         "./media/owo_images/STR.png",
@@ -232,8 +265,6 @@ function getPosition(attributes){
     let Wp= 100*(attributes[3])/sum;
     let Power= 100*(attributes[1]+attributes[4])/sum;
 
-    console.log("WP is:" + Wp +". And Power is:" + Power);
-
     return [Power, Wp];
 }
 
@@ -249,175 +280,28 @@ for (let i = 10; i <= 100; i += 10) {
     labels[`TankLabel${i}`] = createLabel('tank',i);
 }
 
-
-pets.push({
-    image: "../media/owo_images/spider.gif",
-    name: "Spider",
-    attributes: [0, 19, 0, 1, 0, 0]
+petButton.addEventListener('click', async function() {
+    overlayCtx.style.opacity= overlayCtx.style.opacity== 1 ? 0 : 1;
 });
 
-pets.push({
-    image: "../media/owo_images/camel.gif",
-    name: "Camel",
-    attributes: [1, 0, 0, 5, 14, 0]
+areaButton.addEventListener('click', async function() {
+    areaCtx.style.opacity= areaCtx.style.opacity== 1 ? 0 : 1;
 });
 
-pets.push({
-    image: "../media/owo_images/shrimp.gif",
-    name: "Shrimp",
-    attributes: [0, 0, 0, 10, 10, 0]
-});
-
-pets.push({
-    image: "../media/owo_images/panda.gif",
-    name: "Panda",
-    attributes: [1, 10, 0, 9, 0, 0]
-});
-
-pets.push({
-    image: "../media/owo_images/fox.gif",
-    name: "Fox",
-    attributes: [4, 9, 1, 3, 1, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/slothbot.gif",
-    name: "Slothbot",
-    attributes: [9, 0, 2, 8, 0, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/lobbot.gif",
-    name: "Lobbot",
-    attributes: [14, 0, 3, 1, 0, 3]
-});
-
-pets.push({
-    image: "../media/owo_images/dinobot.gif",
-    name: "Dinobot",
-    attributes: [13, 0, 2, 4, 0, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/may.gif",
-    name: "May",
-    attributes: [15, 1, 1, 1, 1, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/gorilla.gif",
-    name: "Gorilla",
-    attributes: [8, 7, 2, 1, 1, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/spoopy.gif",
-    name: "Spoopy",
-    attributes: [9, 6, 2, 1, 1, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/squid.gif",
-    name: "Squid",
-    attributes: [3, 1, 2, 6, 6, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/deer.gif",
-    name: "Deer",
-    attributes: [3, 1, 1, 3, 11, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/lion.gif",
-    name: "Lion",
-    attributes: [7, 7, 2, 1, 1, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/zebra.gif",
-    name: "Zebra",
-    attributes: [3, 1, 2, 8, 5, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/eagle.gif",
-    name: "Eagle",
-    attributes: [2, 13, 2, 1, 1, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/bitter.png",
-    name: "Bitter",
-    attributes: [1, 15, 1, 1, 1, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/vampire.gif",
-    name: "Vampire",
-    attributes: [2, 1, 1, 1, 14, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/pastel.gif",
-    name: "Pastel",
-    attributes: [11, 3, 3, 1, 1, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/snail.png",
-    name: "Snail",
-    attributes: [8, 1, 2, 3, 5, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/boar.gif",
-    name: "Boar",
-    attributes: [7, 5, 2, 4, 1, 2]
-});
-
-pets.push({
-    image: "../media/owo_images/new_owo.png",
-    name: "new_owo",
-    attributes: [4, 1, 1, 4, 11, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/day.gif",
-    name: "Day",
-    attributes: [7, 1, 1, 9, 1, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/love.gif",
-    name: "Love",
-    attributes: [9, 1, 1, 7, 1, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/night.gif",
-    name: "Night",
-    attributes: [12, 1, 1, 5, 1, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/lovebunny.gif",
-    name: "Lovebunny",
-    attributes: [8, 1, 1, 8, 1, 1]
-});
-
-pets.push({
-    image: "../media/owo_images/angelowo.gif",
-    name: "Angelowo",
-    attributes: [2, 1, 1, 7, 8, 1]
-});
-
-window.getPowerImage = function(){
-    return powerImage;
-
+async function loadPets() {
+    try {
+        const response = await fetch("../json/pets.json");
+        const data = await response.json();
+        pets.push(...data);
+        console.log("Pets after fetch:", pets); // Ensure pets are populated
+    } catch (error) {
+        console.error("Error loading pets:", error);
+    }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {    
+
+    await loadPets();
 
     mergeImages([
     { src: '../media/owo_images/STR.png'},
@@ -436,10 +320,8 @@ document.addEventListener("DOMContentLoaded", function () {
     )
     .then(b64 => tankImage.src= b64);
 
-
     Chart.register(window['chartjs-plugin-annotation']);
     Chart.register(imagePlugin);
-    console.log(Chart.registry.plugins.items); 
     
     new Chart(ctx, {
         type: 'scatter',
@@ -575,8 +457,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     new Chart(overlayCtx, {
         type: 'scatter',
-        plugins: 
-            [trianglePlugin],
         options: {
             plugins: {
                 tooltip: {
@@ -586,6 +466,64 @@ document.addEventListener("DOMContentLoaded", function () {
                 legend: {
                     display: false
                 },
+            },
+            layout: {
+                padding: {
+                    left: 60,
+                    right: 60,
+                    top: 48,
+                    bottom: 48
+                }
+            },
+            scales: {
+                x: {
+                    display: false,
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: false,
+                    },
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        drawOnChartArea: false // Hides square gridlines
+                    }
+                },
+                y: {
+                    display: false,
+                    type: 'linear',
+                    title: {
+                        display: false,
+                    },
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        drawOnChartArea: false // Hides square gridlines
+                    }
+                }
+            }
+        },
+    });
+
+    new Chart(areaCtx, {
+        type: 'scatter',
+        plugins:
+            [polygonPlugin],
+        options: {
+            plugins: {
+                tooltip: {
+                    enabled: false,           // Disable the default tooltip
+                    animation: false, 
+                },
+                legend: {
+                    display: false
+                },
+                annotation: {
+                    clip: false,
+                    annotations: {
+
+                    }
+                }
             },
             layout: {
                 padding: {
