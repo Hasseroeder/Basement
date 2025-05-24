@@ -1,6 +1,7 @@
 const ctx = document.getElementById('myChart');
 const overlayCtx = document.getElementById("overlayCanvas");
 const areaCtx = document.getElementById("areaCanvas");
+const labelCtx = document.getElementById("labelCanvas");
 
 const petButton = document.getElementById("petButton");
 const areaButton = document.getElementById("areaButton");
@@ -24,6 +25,17 @@ const trianglePlugin = {
         ctx.restore();
     }
 };
+
+const colors = [
+    "rgba(65, 172, 39, 0.25)",
+    "rgba(99, 192, 187, 0.25)",
+    "rgba(210, 210, 210, 0.25)",
+    "rgba(218, 147, 214, 0.25)",
+    "rgba(210, 210, 210, 0.25)",
+    "rgba(99, 192, 187, 0.25)",
+    "rgba(76, 148, 255, 0.25)",
+    "rgba(160, 160, 160, 0.25)",
+]
 
 const polygonPlugin = {
   id: 'polygonHighlight',
@@ -67,17 +79,21 @@ const polygonPlugin = {
             { x: chart.scales.x.getPixelForValue(getX(15,50)), y: chart.scales.y.getPixelForValue(getY(15,50)) },
             { x: chart.scales.x.getPixelForValue(getX(0,50)), y: chart.scales.y.getPixelForValue(getY(0,50)) },
             { x: chart.scales.x.getPixelForValue(getX(0,15)), y: chart.scales.y.getPixelForValue(getY(0,15)) },
+        ],
+        [
+            { x: chart.scales.x.getPixelForValue(getX(15,15)), y: chart.scales.y.getPixelForValue(getY(15,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(45,15)), y: chart.scales.y.getPixelForValue(getY(45,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(15,45)), y: chart.scales.y.getPixelForValue(getY(15,45)) },
+        ],
+        [
+            { x: chart.scales.x.getPixelForValue(getX(45,15)), y: chart.scales.y.getPixelForValue(getY(45,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(85,15)), y: chart.scales.y.getPixelForValue(getY(85,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(50,50)), y: chart.scales.y.getPixelForValue(getY(50,50)) },
+            { x: chart.scales.x.getPixelForValue(getX(15,50)), y: chart.scales.y.getPixelForValue(getY(15,50)) },
+            { x: chart.scales.x.getPixelForValue(getX(15,45)), y: chart.scales.y.getPixelForValue(getY(15,45)) },
         ]
-    ];
 
-    const colors = [
-        "rgba(78, 255, 34, 0.15)",
-        "rgba(77, 204, 45, 0.15)",
-        "rgba(255, 255, 255, 0.15)",
-        "rgba(255, 199, 80, 0.15)",
-        "rgba(255, 255, 255, 0.15)",
-        "rgba(76, 168, 255, 0.15)",
-    ]
+    ];
 
     polygons.forEach((points, index) => {
         ctx.fillStyle = colors[index];
@@ -227,8 +243,6 @@ function getY(Power,WP){
     return Power;
 }
 
-
-
 function createLine(type, percent) {
     if (type == 'power'){
         return {
@@ -268,17 +282,17 @@ function createLabel(type, percent){
     if (type== 'power'){
         return{
             type: 'label',
-            xValue: getX(percent,-3.5), 
-            yValue: getY(percent,-3.5), 
-            content: `${percent}%`,
+            xValue: getX(percent,-3), 
+            yValue: getY(percent,-3), 
+            content: `${percent}`,
             color: 'lightgray'
         }
     }else if (type == 'wp'){
         return {
             type: 'label',
-            xValue: getX(100-percent, percent+3.5),
-            yValue: getY(100-percent, percent+3.5),
-            content: `${percent}%`,
+            xValue: getX(100-percent, percent+3),
+            yValue: getY(100-percent, percent+3),
+            content: `${percent}`,
             color: 'lightgray'
         };
     }else if (type == 'tank'){
@@ -286,7 +300,7 @@ function createLabel(type, percent){
             type: 'label',
             xValue: getX(-3, 100- percent),
             yValue: getY(-3, 100- percent),
-            content: `${percent}%`,
+            content: `${percent}`,
             color: 'lightgray'
         };
     }
@@ -301,6 +315,9 @@ function getPosition(attributes){
     return [Power, Wp];
 }
 
+function rgbaToRgb(rgba) {
+    return rgba.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*\d*\.?\d*\)/, 'rgb($1, $2, $3)');
+}
 
 for (let i = 10; i <= 100; i += 10) {
     lines[`Power${i}`] = createLine('power',i);
@@ -314,11 +331,24 @@ for (let i = 10; i <= 100; i += 10) {
 }
 
 petButton.addEventListener('click', async function() {
-    overlayCtx.style.opacity= overlayCtx.style.opacity== 1 ? 0 : 1;
+    if ( overlayCtx.style.opacity== 1 ){
+        overlayCtx.style.opacity = 0;
+        labelCtx.style.opacity= areaCtx.style.opacity== 1? 1: 0;
+    }else{
+        overlayCtx.style.opacity = 1;
+        labelCtx.style.opacity = 0;
+    }
 });
 
 areaButton.addEventListener('click', async function() {
-    areaCtx.style.opacity= areaCtx.style.opacity== 1 ? 0 : 1;
+    if ( areaCtx.style.opacity == 1){
+        areaCtx.style.opacity =0;
+        labelCtx.style.opacity = 0;
+    }else {
+        areaCtx.style.opacity =1;
+        labelCtx.style.opacity= overlayCtx.style.opacity == 0? 1:0;
+    }
+
 });
 
 async function loadPets() {
@@ -555,6 +585,148 @@ document.addEventListener("DOMContentLoaded", async function () {
                     clip: false,
                     annotations: {
 
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    left: 60,
+                    right: 60,
+                    top: 48,
+                    bottom: 48
+                }
+            },
+            scales: {
+                x: {
+                    display: false,
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: false,
+                    },
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        drawOnChartArea: false // Hides square gridlines
+                    }
+                },
+                y: {
+                    display: false,
+                    type: 'linear',
+                    title: {
+                        display: false,
+                    },
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        drawOnChartArea: false // Hides square gridlines
+                    }
+                }
+            }
+        },
+    });
+
+    
+    new Chart(labelCtx, {
+        type: 'scatter',
+        options: {
+            plugins: {
+                tooltip: {
+                    enabled: false,           // Disable the default tooltip
+                    animation: false, 
+                },
+                legend: {
+                    display: false
+                },
+                annotation: {
+                    clip: false,
+                    annotations: {
+                        GemLabel: {
+                            type: 'label',
+                            content: 'Gem',
+                            xValue: getX(70,25), 
+                            yValue: getY(70,25), 
+                            color: rgbaToRgb(colors[0]),
+                            rotation: 57.2957795, 
+                            font: {
+                                size: 16,
+                                weight:"bold"
+                            }
+                        },GemlikeLabel: {
+                            type: 'label',
+                            content: 'Gemlike',
+                            xValue: getX(60,25), 
+                            yValue: getY(60,25), 
+                            color: rgbaToRgb(colors[1]),
+                            rotation: 57.2957795, 
+                            font: {
+                                size: 16,
+                                weight:"bold"
+                            }
+                        },AttackLabel: {
+                            type: 'label',
+                            content: 'Attacker',
+                            xValue: getX(72.5,7), 
+                            yValue: getY(72.5,7), 
+                            color: rgbaToRgb(colors[2]),
+                            rotation: -57.2957795, 
+                            font: {
+                                size: 16,
+                                weight:"bold"
+                            }
+                        },HybridLabel: {
+                            type: 'label',
+                            content: 'Hybrid',
+                            xValue: getX(35.5,7), 
+                            yValue: getY(35.5,7), 
+                            color: rgbaToRgb(colors[3]),
+                            rotation: -57.2957795, 
+                            font: {
+                                size: 16,
+                                weight:"bold"
+                            }
+                        },PureLabel: {
+                            type: 'label',
+                            content: 'Pure',
+                            xValue: getX(7.5,7), 
+                            yValue: getY(7.5,7), 
+                            color: rgbaToRgb(colors[4]),
+                            rotation: -57.2957795, 
+                            font: {
+                                size: 16,
+                                weight:"bold"
+                            }
+                        },WpTankLabel: {
+                            type: 'label',
+                            content: 'WP Tank',
+                            xValue: getX(7.5,32.5), 
+                            yValue: getY(7.5,32.5), 
+                            color: rgbaToRgb(colors[5]),
+                            font: {
+                                size: 16,
+                                weight:"bold"
+                            }
+                        },WpHybridLabel: {
+                            type: 'label',
+                            content: 'WP Hybrid',
+                            xValue: getX(23,25.6), 
+                            yValue: getY(23,25.6), 
+                            color: rgbaToRgb(colors[6]),
+                            font: {
+                                size: 16,
+                                weight:"bold"
+                            }
+                        },SupporterLabel: {
+                            type: 'label',
+                            content: 'Supporter',
+                            xValue: getX(47.5,32.5), 
+                            yValue: getY(47.5,32.5), 
+                            color: rgbaToRgb(colors[7]),
+                            font: {
+                                size: 16,
+                                weight:"bold"
+                            }
+                        }      
                     }
                 }
             },
