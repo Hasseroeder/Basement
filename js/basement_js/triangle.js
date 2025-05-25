@@ -111,12 +111,10 @@ const polygonPlugin = {
 
 const externalTooltipHandler = (context) => {
   const { chart, tooltip } = context;
-  // Look for existing tooltip element in the DOM
   let tooltipEl = document.getElementById('chartjs-tooltip');
   if (!tooltipEl) {
     tooltipEl = document.createElement('div');
     tooltipEl.id = 'chartjs-tooltip';
-    // Basic styling for the tooltip container:
     tooltipEl.style.background = '#222222';
     tooltipEl.style.color = 'white';
     tooltipEl.style.borderRadius = '3px';
@@ -290,18 +288,20 @@ function createLabel(type, percent){
     }else if (type == 'wp'){
         return {
             type: 'label',
-            xValue: getX(100-percent, percent+3),
-            yValue: getY(100-percent, percent+3),
+            xValue: getX(103-percent, percent),
+            yValue: getY(103-percent, percent),
             content: `${percent}`,
-            color: 'lightgray'
+            color: 'lightgray',
+            rotation: -57.2957795 // TODO: decide whether to rotate this or keep it level
         };
     }else if (type == 'tank'){
         return {
             type: 'label',
-            xValue: getX(-3, 100- percent),
-            yValue: getY(-3, 100- percent),
+            xValue: getX(-3, 103- percent),
+            yValue: getY(-3, 103- percent),
             content: `${percent}`,
-            color: 'lightgray'
+            color: 'lightgray',
+            rotation: 57.2957795 // TODO: decide whether to rotate this or keep it level
         };
     }
 }
@@ -721,6 +721,16 @@ document.addEventListener("DOMContentLoaded", async function () {
                             content: 'Supporter',
                             xValue: getX(47.5,32.5), 
                             yValue: getY(47.5,32.5), 
+                            color: rgbaToRgb(colors[7]),
+                            font: {
+                                size: 16,
+                                weight:"bold"
+                            }
+                        },UselessLabel: {
+                            type: 'label',
+                            content: 'Useless',
+                            xValue: getX(15,67.5), 
+                            yValue: getY(15,67.5), 
                             color: rgbaToRgb(colors[7]),
                             font: {
                                 size: 16,
