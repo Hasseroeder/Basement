@@ -1,10 +1,4 @@
 const ctx = document.getElementById('myChart');
-const overlayCtx = document.getElementById("overlayCanvas");
-const areaCtx = document.getElementById("areaCanvas");
-const labelCtx = document.getElementById("labelCanvas");
-
-const petButton = document.getElementById("petButton");
-const areaButton = document.getElementById("areaButton");
 
 const trianglePlugin = {
     id: 'triangleOverlay',
@@ -29,48 +23,118 @@ const trianglePlugin = {
 const cursorLinePlugin = {
   id: 'cursorLinePlugin',
 
-  afterEvent: (chart, args) => {
-    const event = args.event;
-
-    // When the mouse leaves the chart area, clear the stored position.
-    if (event.type === 'mouseout') {
-      chart._cursorPosition = null;
-    }
-    // When the mouse moves, capture the new position.
-    else if (event.type === 'mousemove') {
-      chart._cursorPosition = {
-        x: event.offsetX,
-        y: event.offsetY
-      };
-    }
+  beforeInit: (chart) => {
+        chart._cursorPosition = { x: 0, y: 0 }; // Initialize to avoid undefined errors
   },
 
-  afterDraw: (chart, args, options) => {
+  afterEvent: (chart, args) => {
+        const event = args.event;
+
+        if (event.type === 'mousemove') {
+            chart._cursorPosition = {
+                x: event.x,
+                y: event.y
+            };
+        }
+  },
+
+  afterDraw: (chart) => {
     const ctx = chart.ctx;
     
-    // Only draw the line if we have a valid cursor position and a defined pointB.
-    if (!chart._cursorPosition || !options.pointB) {
-      return;
+    if (!chart._cursorPosition) {
+        return;
     }
 
-    ctx.save();
-    ctx.beginPath();
-    // Move to current cursor position:
-    ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
-    // Draw line to pointB (provided via plugin options):
-    ctx.lineTo(options.pointB.x, options.pointB.y);
-    ctx.lineWidth = options.lineWidth || 2;
-    ctx.strokeStyle = options.lineColor || 'rgba(0, 0, 0, 0.5)';
-    
-    // If a dashed style is wanted, you can configure it (example: [5, 5]).
-    if (options.lineDash && Array.isArray(options.lineDash)) {
-      ctx.setLineDash(options.lineDash);
+    const xScale = chart.scales['x'];
+    const yScale = chart.scales['y'];
+
+    const canvasRect = chart.canvas.getBoundingClientRect();
+
+    let dataX = xScale.getValueForPixel(chart._cursorPosition.x);
+    let dataY = yScale.getValueForPixel(chart._cursorPosition.y);
+
+    let Heal = reverseXY(dataX, dataY).Heal;
+    let Sustain = reverseXY(dataX, dataY).Sustain;
+    let Health = reverseXY(dataX, dataY).Health;
+
+    let SustainX = getPixelForX(xScale, getX(100-Sustain,Sustain));
+    let SustainY = getPixelForY(yScale, getY(100-Sustain,Sustain));
+    let HealX = getPixelForX(xScale, getX(Heal,0));
+    let HealY = getPixelForY(yScale, getY(Heal,0));
+    let HealthX = getPixelForX(xScale, getX(0,100-Health));
+    let HealthY = getPixelForY(yScale, getY(0,100-Health));
+
+    let HealLabel = document.getElementById('healLabel');
+    if (!HealLabel) {
+        HealLabel = document.createElement('div');
+        HealLabel.id = 'healLabel';
+        HealLabel.style.pointerEvents = 'none';
+        HealLabel.style.transform = 'rotate(-57.2957795deg)';
+        document.body.appendChild(HealLabel);
     }
+    let SustainLabel = document.getElementById('sustainLabel');
+    if (!SustainLabel) {
+        SustainLabel = document.createElement('div');
+        SustainLabel.id = 'sustainLabel';
+        SustainLabel.style.pointerEvents = 'none';
+        SustainLabel.style.transform = 'rotate(57.2957795deg)';
+        document.body.appendChild(SustainLabel);
+    }
+    let HealthLabel = document.getElementById('healthLabel');
+    if (!HealthLabel) {
+        HealthLabel = document.createElement('div');
+        HealthLabel.id = 'healthLabel';
+        HealthLabel.style.pointerEvents = 'none';
+        document.body.appendChild(HealthLabel);
+    }
+
+
     
-    ctx.stroke();
-    ctx.restore();
+    if (
+        Heal >= 0 &&
+        Sustain >= 0 &&
+        Health >= 0
+    ){
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
+        ctx.lineTo(SustainX,SustainY);
+        ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
+        ctx.lineTo(HealX,HealY);
+        ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
+        ctx.lineTo(HealthX,HealthY);
+        ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'gray';
+        ctx.stroke();
+        ctx.restore();
+
+        HealLabel.innerHTML = `<div>${Heal.toFixed(0)}%</div>`;
+        HealLabel.style.position = 'absolute';
+        HealLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(Heal,0)) - 30 + 'px';
+        HealLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(Heal,0)) - 15+  'px';
+
+        SustainLabel.innerHTML = `<div>${Sustain.toFixed(0)}%</div>`;
+        SustainLabel.style.position = 'absolute';
+        SustainLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(100-Sustain,Sustain)) + 'px';
+        SustainLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(100-Sustain,Sustain)) - 15+ 'px';
+
+        HealthLabel.innerHTML = `<div>${Health.toFixed(0)}%</div>`;
+        HealthLabel.style.position = 'absolute';
+        HealthLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(0,100-Health)) + 'px';
+        HealthLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(0,100-Health)) + 5+ 'px';
+
+    }
   }
 };
+
+function getPixelForY(scale, data){
+    return scale.bottom - (data - scale.min) * (scale.height / (scale.max - scale.min));
+}
+
+function getPixelForX(scale,data){
+    return scale.left + (data - scale.min) * (scale.width / (scale.max - scale.min));
+}
 
 const lines = {};
 
@@ -86,6 +150,18 @@ function getX(Heal, Sustain){
 function getY(Heal,WP){
     return Heal;
 }
+
+function reverseXY(x,y){
+    
+    
+    let Heal= y;
+    let Sustain= x -0.5 * Heal;
+    let Health=100-Heal-Sustain;
+
+    return {Heal, Sustain, Health};
+
+}
+
 
 function createLine(type, percent) {
     if (type == 'power'){
@@ -135,15 +211,15 @@ function getPosition(attributes){
 }
 
 
-for (let i = 10; i <= 100; i += 10) {
+for (let i = 10; i < 100; i += 10) {
     lines[`Power${i}`] = createLine('power',i);
     lines[`WP${i}`] = createLine('wp',i);
     lines[`Tank${i}`] = createLine('tank',i);
 }
 
-Chart.register(cursorLinePlugin);
 
 document.addEventListener("DOMContentLoaded", async function () {    
+
 
     healImage.src= '../media/owo_images/PR.png';
 
@@ -158,21 +234,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     Chart.register(window['chartjs-plugin-annotation']);
 
-    new Chart(ctx, {
+    const myChart = new Chart(ctx, {
         type: 'scatter',
         plugins: [
-            trianglePlugin
+            trianglePlugin,
+            cursorLinePlugin
         ],
         data: {
         },
         options: {
             cursorLinePlugin: {
-                pointB: { x: 150, y: 50 },   // Set your fixed point B coordinates (adjust as needed)
-                lineColor: 'red',           // Customize the line color
-                lineWidth: 3,               // Customize the line width
-                lineDash: [5, 5]            // Example: Dashed line of 5px dash, 5px gap
             },
-
             layout: {
                 padding: {
                     left: 60,
@@ -197,58 +269,34 @@ document.addEventListener("DOMContentLoaded", async function () {
                         ...lines,
                         HealLabel: {
                             type: 'label',
-                            content: '% of stats in Healing',
-                            xValue: getX(51,-10), 
-                            yValue: getY(51,-10), 
+                            content: '% of stats in ???',
+                            xValue: getX(50,-10), 
+                            yValue: getY(50,-10), 
                             rotation: -57.2957795, 
                             color: 'lightgray',
                             font: {
                                 size: 16,
                             }
-                        },HealImage: {
-                            type: 'label',
-                            content: healImage,
-                            width: 20,
-                            height: 20,
-                            xValue: getX(70,-9.5),
-                            yValue: getY(70,-9.5),
-                            rotation: -57.2957795, 
                         },SustainLabel: {
                             type: 'label',
-                            content: '% of stats in Sustain',
-                            xValue: getX(60,50), 
-                            yValue: getY(60,50), 
+                            content: '% of stats in ???',
+                            xValue: getX(50,60), 
+                            yValue: getY(50,60), 
                             rotation: 57.2957795, 
                             color: 'lightgray',
                             font: {
                                 size: 16,
                             }
-                        },SustainImage: {
-                            type: 'label',
-                            content: sustainImage,
-                            width: 40,
-                            height: 20,
-                            xValue: getX(39,71.3), 
-                            yValue: getY(39,71.3), 
-                            rotation: 57.2957795,  
                         },HealthLabel: {
                             type: 'label',
-                            content: '% of stats in Health',
-                            xValue: getX(-10,52), 
-                            yValue: getY(-10,52), 
+                            content: '% of stats in ???',
+                            xValue: getX(-10,55), 
+                            yValue: getY(-10,55), 
                             color: 'lightgray',
                             font: {
                                 size: 16,
                             }
-                        },HealthImage: {
-                            type: 'label',
-                            content: healthImage,
-                            width: 20,
-                            height: 20,
-                            xValue: getX(-9.8,69), 
-                            yValue: getY(-9.8,69)
-                        }      
-                        
+                        }  
                     }
                 }
             },
@@ -256,7 +304,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 x: {
                     display: false,
                     type: 'linear',
-                    position: 'bottom',
                     title: {
                         display: false,
                     },
@@ -281,5 +328,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         },
     });
+
+    ctx.addEventListener('mousemove', () => {
+        myChart.update();  // Forces the chart to rerender
+    });
+
 
 });
