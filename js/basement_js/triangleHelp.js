@@ -69,7 +69,6 @@ const cursorLinePlugin = {
         HealLabel = document.createElement('div');
         HealLabel.id = 'healLabel';
         HealLabel.style.pointerEvents = 'none';
-        HealLabel.style.transform = 'rotate(-57.2957795deg)';
         document.body.appendChild(HealLabel);
     }
     let SustainLabel = document.getElementById('sustainLabel');
@@ -77,7 +76,7 @@ const cursorLinePlugin = {
         SustainLabel = document.createElement('div');
         SustainLabel.id = 'sustainLabel';
         SustainLabel.style.pointerEvents = 'none';
-        SustainLabel.style.transform = 'rotate(57.2957795deg)';
+        SustainLabel.style.transform = 'rotate(-57.2957795deg)';
         document.body.appendChild(SustainLabel);
     }
     let HealthLabel = document.getElementById('healthLabel');
@@ -85,6 +84,7 @@ const cursorLinePlugin = {
         HealthLabel = document.createElement('div');
         HealthLabel.id = 'healthLabel';
         HealthLabel.style.pointerEvents = 'none';
+        HealthLabel.style.transform = 'rotate(57.2957795deg)';
         document.body.appendChild(HealthLabel);
     }
 
@@ -111,18 +111,18 @@ const cursorLinePlugin = {
 
         HealLabel.innerHTML = `<div>${Heal.toFixed(0)}%</div>`;
         HealLabel.style.position = 'absolute';
-        HealLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(Heal,0)) - 30 + 'px';
-        HealLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(Heal,0)) - 15+  'px';
+        HealLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(Heal,0)) - 37 + 'px';
+        HealLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(Heal,0)) - 10+  'px';
 
         SustainLabel.innerHTML = `<div>${Sustain.toFixed(0)}%</div>`;
         SustainLabel.style.position = 'absolute';
-        SustainLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(100-Sustain,Sustain)) + 'px';
-        SustainLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(100-Sustain,Sustain)) - 15+ 'px';
+        SustainLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(100-Sustain,Sustain)) -5 + 'px';
+        SustainLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(100-Sustain,Sustain)) - 30+ 'px';
 
         HealthLabel.innerHTML = `<div>${Health.toFixed(0)}%</div>`;
         HealthLabel.style.position = 'absolute';
         HealthLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(0,100-Health)) + 'px';
-        HealthLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(0,100-Health)) + 5+ 'px';
+        HealthLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(0,100-Health)) + 10+ 'px';
 
     }
   }
@@ -267,36 +267,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                     clip: false,
                     annotations: {
                         ...lines,
-                        HealLabel: {
-                            type: 'label',
-                            content: '% of stats in ???',
-                            xValue: getX(50,-10), 
-                            yValue: getY(50,-10), 
-                            rotation: -57.2957795, 
-                            color: 'lightgray',
-                            font: {
-                                size: 16,
-                            }
-                        },SustainLabel: {
-                            type: 'label',
-                            content: '% of stats in ???',
-                            xValue: getX(50,60), 
-                            yValue: getY(50,60), 
-                            rotation: 57.2957795, 
-                            color: 'lightgray',
-                            font: {
-                                size: 16,
-                            }
-                        },HealthLabel: {
-                            type: 'label',
-                            content: '% of stats in ???',
-                            xValue: getX(-10,55), 
-                            yValue: getY(-10,55), 
-                            color: 'lightgray',
-                            font: {
-                                size: 16,
-                            }
-                        }  
                     }
                 }
             },
