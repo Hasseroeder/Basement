@@ -27,14 +27,8 @@ const trianglePlugin = {
 };
 
 const colors = [
-    "rgba(65, 172, 39, 0.25)",
-    "rgba(99, 192, 187, 0.25)",
-    "rgba(210, 210, 210, 0.25)",
-    "rgba(218, 147, 214, 0.25)",
-    "rgba(210, 210, 210, 0.25)",
-    "rgba(99, 192, 187, 0.25)",
-    "rgba(76, 148, 255, 0.25)",
-    "rgba(160, 160, 160, 0.25)",
+    "rgba(40, 119, 194, 0.25)",
+    "rgba(133, 106, 207, 0.25)"
 ]
 
 const polygonPlugin = {
@@ -42,57 +36,22 @@ const polygonPlugin = {
   afterDraw: (chart) => {
     const ctx = chart.ctx;
     ctx.save();
-
     const polygons = [
         [
-            { x: chart.scales.x.getPixelForValue(getX(100,0)), y: chart.scales.y.getPixelForValue(getY(100,0)) },
-            { x: chart.scales.x.getPixelForValue(getX(50,50)), y: chart.scales.y.getPixelForValue(getY(50,50)) },
-            { x: chart.scales.x.getPixelForValue(getX(40,50)), y: chart.scales.y.getPixelForValue(getY(40,50)) },
-            { x: chart.scales.x.getPixelForValue(getX(90,0)), y: chart.scales.y.getPixelForValue(getY(90,0)) },
+            { x: chart.scales.x.getPixelForValue(getX(70,10)), y: chart.scales.y.getPixelForValue(getY(70,10)) },
+            { x: chart.scales.x.getPixelForValue(getX(70,15)), y: chart.scales.y.getPixelForValue(getY(70,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(45,40)), y: chart.scales.y.getPixelForValue(getY(45,40)) },
+            { x: chart.scales.x.getPixelForValue(getX(45,20)), y: chart.scales.y.getPixelForValue(getY(45,20)) },
+            { x: chart.scales.x.getPixelForValue(getX(55,10)), y: chart.scales.y.getPixelForValue(getY(55,10)) },
         ],
         [
-            { x: chart.scales.x.getPixelForValue(getX(90,0)), y: chart.scales.y.getPixelForValue(getY(90,0)) },
-            { x: chart.scales.x.getPixelForValue(getX(40,50)), y: chart.scales.y.getPixelForValue(getY(40,50)) },
-            { x: chart.scales.x.getPixelForValue(getX(30,50)), y: chart.scales.y.getPixelForValue(getY(30,50)) },
-            { x: chart.scales.x.getPixelForValue(getX(80,0)), y: chart.scales.y.getPixelForValue(getY(80,0)) },
-        ],
-        [
-            { x: chart.scales.x.getPixelForValue(getX(100,0)), y: chart.scales.y.getPixelForValue(getY(100,0)) },
-            { x: chart.scales.x.getPixelForValue(getX(85,15)), y: chart.scales.y.getPixelForValue(getY(85,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(55,15)), y: chart.scales.y.getPixelForValue(getY(55,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(55,0)), y: chart.scales.y.getPixelForValue(getY(55,0)) },
-        ],
-        [
-            { x: chart.scales.x.getPixelForValue(getX(55,0)), y: chart.scales.y.getPixelForValue(getY(55,0)) },
-            { x: chart.scales.x.getPixelForValue(getX(55,15)), y: chart.scales.y.getPixelForValue(getY(55,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(15,15)), y: chart.scales.y.getPixelForValue(getY(15,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(15,0)), y: chart.scales.y.getPixelForValue(getY(15,0)) },
-        ],
-        [
-            { x: chart.scales.x.getPixelForValue(getX(15,0)), y: chart.scales.y.getPixelForValue(getY(15,0)) },
-            { x: chart.scales.x.getPixelForValue(getX(15,15)), y: chart.scales.y.getPixelForValue(getY(15,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(0,15)), y: chart.scales.y.getPixelForValue(getY(0,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(0,0)), y: chart.scales.y.getPixelForValue(getY(0,0)) },
-        ],
-        [
-            { x: chart.scales.x.getPixelForValue(getX(15,15)), y: chart.scales.y.getPixelForValue(getY(15,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(15,50)), y: chart.scales.y.getPixelForValue(getY(15,50)) },
-            { x: chart.scales.x.getPixelForValue(getX(0,50)), y: chart.scales.y.getPixelForValue(getY(0,50)) },
-            { x: chart.scales.x.getPixelForValue(getX(0,15)), y: chart.scales.y.getPixelForValue(getY(0,15)) },
-        ],
-        [
-            { x: chart.scales.x.getPixelForValue(getX(15,15)), y: chart.scales.y.getPixelForValue(getY(15,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(45,15)), y: chart.scales.y.getPixelForValue(getY(45,15)) },
+            { x: chart.scales.x.getPixelForValue(getX(45,40)), y: chart.scales.y.getPixelForValue(getY(45,40)) },
+            { x: chart.scales.x.getPixelForValue(getX(40,45)), y: chart.scales.y.getPixelForValue(getY(40,45)) },
             { x: chart.scales.x.getPixelForValue(getX(15,45)), y: chart.scales.y.getPixelForValue(getY(15,45)) },
-        ],
-        [
-            { x: chart.scales.x.getPixelForValue(getX(45,15)), y: chart.scales.y.getPixelForValue(getY(45,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(85,15)), y: chart.scales.y.getPixelForValue(getY(85,15)) },
-            { x: chart.scales.x.getPixelForValue(getX(50,50)), y: chart.scales.y.getPixelForValue(getY(50,50)) },
-            { x: chart.scales.x.getPixelForValue(getX(15,50)), y: chart.scales.y.getPixelForValue(getY(15,50)) },
-            { x: chart.scales.x.getPixelForValue(getX(15,45)), y: chart.scales.y.getPixelForValue(getY(15,45)) },
+            { x: chart.scales.x.getPixelForValue(getX(15,25)), y: chart.scales.y.getPixelForValue(getY(15,25)) },
+            { x: chart.scales.x.getPixelForValue(getX(20,20)), y: chart.scales.y.getPixelForValue(getY(20,20)) },
+            { x: chart.scales.x.getPixelForValue(getX(45,20)), y: chart.scales.y.getPixelForValue(getY(45,20)) },
         ]
-
     ];
 
     polygons.forEach((points, index) => {
@@ -189,8 +148,8 @@ const imagePlugin = {
     const overlayCanvas = document.getElementById("overlayCanvas");
     const ctx = overlayCanvas.getContext("2d");
 
-    const defaultWidth = 20;
-    const defaultHeight = 20;
+    const defaultWidth = 22;
+    const defaultHeight = 22;
     
     chart.data.datasets.forEach(dataset => {
         if (!dataset.data) return;
@@ -228,21 +187,21 @@ const labels = {};
 
 const pets = []
 
-const powerImage = new Image();
+const healImage = new Image();
 
-const tankImage = new Image();
+const sustainImage = new Image();
 
-const wpImage = new Image();
+const healthImage = new Image();
 
-function getX(Power, WP){
-    return WP + 0.5 * Power;
+function getX(Heal, Sustain){
+    return Sustain + 0.5 * Heal;
 }
-function getY(Power,WP){
-    return Power;
+function getY(Heal,WP){
+    return Heal;
 }
 
 function createLine(type, percent) {
-    if (type == 'power'){
+    if (type == 'heal'){
         return {
             type: 'line',
             xMin: getX(percent, 0),
@@ -252,7 +211,7 @@ function createLine(type, percent) {
             borderWidth: 0.5,
             color: 'lightgray'
         };
-    }else if (type == 'wp'){
+    }else if (type == 'sustain'){
         return {
             type: 'line',
             xMin: getX(100-percent, percent),
@@ -262,7 +221,7 @@ function createLine(type, percent) {
             borderWidth: 0.5,
             color: 'lightgray'
         };
-    }else if (type == 'tank'){
+    }else if (type == 'health'){
         return {
             type: 'line',
             xMin: getX(0, percent),
@@ -277,7 +236,7 @@ function createLine(type, percent) {
 }
 
 function createLabel(type, percent){
-    if (type== 'power'){
+    if (type== 'heal'){
         return{
             type: 'label',
             xValue: getX(percent,-3), 
@@ -285,7 +244,7 @@ function createLabel(type, percent){
             content: `${percent}`,
             color: 'lightgray'
         }
-    }else if (type == 'wp'){
+    }else if (type == 'sustain'){
         return {
             type: 'label',
             xValue: getX(103-percent, percent),
@@ -294,7 +253,7 @@ function createLabel(type, percent){
             color: 'lightgray',
             rotation: -57.2957795 // TODO: decide whether to rotate this or keep it level
         };
-    }else if (type == 'tank'){
+    }else if (type == 'health'){
         return {
             type: 'label',
             xValue: getX(-3, 103- percent),
@@ -307,12 +266,15 @@ function createLabel(type, percent){
 }
 
 function getPosition(attributes){
-    let sum = attributes.reduce((acc, num) => acc + num, 0);
+    let sum = attributes[0]
+            + attributes[2]
+            + attributes[3]
+            + attributes[5];
 
-    let Wp= 100*(attributes[3])/sum;
-    let Power= 100*(attributes[1]+attributes[4])/sum;
+    let Heal= 100*(attributes[2])/sum;
+    let Sustain= 100*(attributes[3]+attributes[5])/sum;
 
-    return [Power, Wp];
+    return [Heal, Sustain];
 }
 
 function rgbaToRgb(rgba) {
@@ -320,14 +282,14 @@ function rgbaToRgb(rgba) {
 }
 
 for (let i = 10; i <= 100; i += 10) {
-    lines[`Power${i}`] = createLine('power',i);
-    labels[`PowerLabel${i}`] = createLabel('power',i);
+    lines[`Heal${i}`] = createLine('heal',i);
+    labels[`HealLabel${i}`] = createLabel('heal',i);
 
-    lines[`WP${i}`] = createLine('wp',i);
-    labels[`WPLabel${i}`] = createLabel('wp',i);
+    lines[`Sustain${i}`] = createLine('sustain',i);
+    labels[`SustainLabel${i}`] = createLabel('sustain',i);
 
-    lines[`Tank${i}`] = createLine('tank',i);
-    labels[`TankLabel${i}`] = createLabel('tank',i);
+    lines[`Health${i}`] = createLine('health',i);
+    labels[`HealthLabel${i}`] = createLabel('health',i);
 }
 
 petButton.addEventListener('click', async function() {
@@ -353,7 +315,7 @@ areaButton.addEventListener('click', async function() {
 
 async function loadPets() {
     try {
-        const response = await fetch("../json/pets.json");
+        const response = await fetch("../json/cruneHolders.json");
         const data = await response.json();
         pets.push(...data);
         console.log("Pets after fetch:", pets); // Ensure pets are populated
@@ -366,22 +328,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     await loadPets();
 
+    healImage.src= '../media/owo_images/PR.png';
+
     mergeImages([
-    { src: '../media/owo_images/STR.png'},
-    { src: '../media/owo_images/MAG.png', x:128}
+    { src: '../media/owo_images/WP.png'},
+    { src: '../media/owo_images/MR.png', x:128}
     ],{width: 256,height:128}
     )
-    .then(b64 => powerImage.src= b64);
+    .then(b64 => sustainImage.src= b64);
 
-    wpImage.src = '../media/owo_images/WP.png';
-
-    mergeImages([
-    { src: '../media/owo_images/HP.png'},
-    { src: '../media/owo_images/PR.png', x:128},
-    { src: '../media/owo_images/MR.png', x:256}
-    ],{width: 384,height:128}
-    )
-    .then(b64 => tankImage.src= b64);
+    healthImage.src = '../media/owo_images/HP.png'
 
     Chart.register(window['chartjs-plugin-annotation']);
     Chart.register(imagePlugin);
@@ -431,58 +387,58 @@ document.addEventListener("DOMContentLoaded", async function () {
                     annotations: {
                         ...lines,
                         ...labels,
-                        PowerLabel: {
+                        HealLabel: {
                             type: 'label',
-                            content: '% of stats in Power',
-                            xValue: getX(49,-10), 
-                            yValue: getY(49,-10), 
+                            content: '% of stats in Healing',
+                            xValue: getX(51,-10), 
+                            yValue: getY(51,-10), 
                             rotation: -57.2957795, 
                             color: 'lightgray',
                             font: {
                                 size: 16,
                             }
-                        },PowerImage: {
+                        },HealImage: {
                             type: 'label',
-                            content: powerImage,
-                            width: 40,
+                            content: healImage,
+                            width: 20,
                             height: 20,
-                            xValue: getX(70,-10),
-                            yValue: getY(70,-10),
+                            xValue: getX(70,-9.5),
+                            yValue: getY(70,-9.5),
                             rotation: -57.2957795, 
-                        },WPLabel: {
+                        },SustainLabel: {
                             type: 'label',
-                            content: '% of stats in WP',
-                            xValue: getX(55,55), 
-                            yValue: getY(55,55), 
+                            content: '% of stats in Sustain',
+                            xValue: getX(60,50), 
+                            yValue: getY(60,50), 
                             rotation: 57.2957795, 
                             color: 'lightgray',
                             font: {
                                 size: 16,
                             }
-                        },WPImage: {
+                        },SustainImage: {
                             type: 'label',
-                            content: wpImage,
-                            width: 20,
+                            content: sustainImage,
+                            width: 40,
                             height: 20,
-                            xValue: getX(39.3,71), 
-                            yValue: getY(39.3,71), 
+                            xValue: getX(39,71.3), 
+                            yValue: getY(39,71.3), 
                             rotation: 57.2957795,  
-                        },TankLabel: {
+                        },HealthLabel: {
                             type: 'label',
-                            content: '% of stats in Tanking',
-                            xValue: getX(-10,47), 
-                            yValue: getY(-10,47), 
+                            content: '% of stats in Health',
+                            xValue: getX(-10,52), 
+                            yValue: getY(-10,52), 
                             color: 'lightgray',
                             font: {
                                 size: 16,
                             }
-                        },TankImage: {
+                        },HealthImage: {
                             type: 'label',
-                            content: tankImage,
-                            width: 60,
+                            content: healthImage,
+                            width: 20,
                             height: 20,
-                            xValue: getX(-10,69.5), 
-                            yValue: getY(-10,69.5)
+                            xValue: getX(-9.8,69), 
+                            yValue: getY(-9.8,69)
                         }      
                         
                     }
@@ -641,102 +597,27 @@ document.addEventListener("DOMContentLoaded", async function () {
                 annotation: {
                     clip: false,
                     annotations: {
-                        GemLabel: {
+                        SheieldedLabel: {
                             type: 'label',
-                            content: 'Gem',
-                            xValue: getX(70,25), 
-                            yValue: getY(70,25), 
+                            content: 'shielded',
+                            xValue: getX(55,20), 
+                            yValue: getY(55,20), 
                             color: rgbaToRgb(colors[0]),
-                            rotation: 57.2957795, 
                             font: {
                                 size: 16,
                                 weight:"bold"
                             }
-                        },GemlikeLabel: {
+                        },NoShieldLabel: {
                             type: 'label',
-                            content: 'Gemlike',
-                            xValue: getX(60,25), 
-                            yValue: getY(60,25), 
+                            content: 'non-shielded',
+                            xValue: getX(30,32.5), 
+                            yValue: getY(30,32.5), 
                             color: rgbaToRgb(colors[1]),
-                            rotation: 57.2957795, 
                             font: {
                                 size: 16,
                                 weight:"bold"
                             }
-                        },AttackLabel: {
-                            type: 'label',
-                            content: 'Attacker',
-                            xValue: getX(72.5,7), 
-                            yValue: getY(72.5,7), 
-                            color: rgbaToRgb(colors[2]),
-                            rotation: -57.2957795, 
-                            font: {
-                                size: 16,
-                                weight:"bold"
-                            }
-                        },HybridLabel: {
-                            type: 'label',
-                            content: 'Hybrid',
-                            xValue: getX(35.5,7), 
-                            yValue: getY(35.5,7), 
-                            color: rgbaToRgb(colors[3]),
-                            rotation: -57.2957795, 
-                            font: {
-                                size: 16,
-                                weight:"bold"
-                            }
-                        },PureLabel: {
-                            type: 'label',
-                            content: 'Pure',
-                            xValue: getX(7.5,7), 
-                            yValue: getY(7.5,7), 
-                            color: rgbaToRgb(colors[4]),
-                            rotation: -57.2957795, 
-                            font: {
-                                size: 16,
-                                weight:"bold"
-                            }
-                        },WpTankLabel: {
-                            type: 'label',
-                            content: 'WP Tank',
-                            xValue: getX(7.5,32.5), 
-                            yValue: getY(7.5,32.5), 
-                            color: rgbaToRgb(colors[5]),
-                            font: {
-                                size: 16,
-                                weight:"bold"
-                            }
-                        },WpHybridLabel: {
-                            type: 'label',
-                            content: 'WP Hybrid',
-                            xValue: getX(23,25.6), 
-                            yValue: getY(23,25.6), 
-                            color: rgbaToRgb(colors[6]),
-                            font: {
-                                size: 16,
-                                weight:"bold"
-                            }
-                        },SupporterLabel: {
-                            type: 'label',
-                            content: 'Supporter',
-                            xValue: getX(47.5,32.5), 
-                            yValue: getY(47.5,32.5), 
-                            color: rgbaToRgb(colors[7]),
-                            font: {
-                                size: 16,
-                                weight:"bold"
-                            }
-                        },UselessLabel: {
-                            type: 'label',
-                            content: 'Useless',
-                            xValue: getX(15,67.5), 
-                            yValue: getY(15,67.5), 
-                            color: rgbaToRgb(colors[7]),
-                            font: {
-                                size: 16,
-                                weight:"bold"
-                            }
-                        }      
+                        }
                     }
                 }
             },

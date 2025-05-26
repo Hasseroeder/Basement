@@ -11,7 +11,7 @@
     
     <div class="center-pillar">
         <div id="navbar"></div>
-        <div style="background-color:#303030;color:lightgray;padding-top:20px;padding-left:20px;padding-right:20px; margin: 1.5rem 6rem 6rem;">
+        <div style="background-color:#303030;color:lightgray;padding: 20px 20px 20px 20px; margin: 1.5rem 6rem 6rem;">
             <p style= "margin-top:0;"> 
                 While there are only rough and vague categories of pets. <br>
                 I'll still try to give a basic understanding of why we call pets a certain way.
@@ -94,67 +94,68 @@
 </ul>
 
 
-
-            <div class="flexContainer" style="align-items:normal;margin: 0 0 0; justify-content: center;">
-                
-                <canvas id="areaCanvas" 
-                    style="
-                        width: 600px;
-                        max-width:600px;
-                        height:480px;
-                        max-height:480px;
-                        margin-bottom:10px;
+            <div style="display:flex; flex-direction: column; align-items: center;">
+                <div class="flexContainer" style="align-items:normal;margin: 0 0 1rem; justify-content: center;">
+                    
+                    <canvas id="areaCanvas" 
+                        style="
+                            width: 600px;
+                            max-width:600px;
+                            height:480px;
+                            max-height:480px;
+                            margin-bottom:10px;
+                            position: absolute;
+                            pointer-events: none;
+                            opacity:1">
+                    </canvas>       
+                    <canvas id="myChart" 
+                        style="
+                            width: 600px;
+                            max-width:600px;
+                            height:480px;
+                            max-height:480px;
+                            margin-bottom:10px">
+                    </canvas>
+                    <canvas id="labelCanvas" 
+                        style="
+                            width: 600px;
+                            max-width:600px;
+                            height:480px;
+                            max-height:480px;
+                            margin-bottom:10px;
+                            position: absolute;
+                            pointer-events: none;
+                            opacity:1">
+                    </canvas> 
+                    <canvas id="overlayCanvas" 
+                        style="
+                            width: 600px;
+                            max-width:600px;
+                            height:480px;
+                            max-height:480px;
+                            margin-bottom:10px;
+                            position: absolute;
+                            pointer-events: none;
+                            opacity:0">
+                    </canvas> 
+                    <button id="petButton"
+                        style="
                         position: absolute;
-                        pointer-events: none;
-                        opacity:1">
-                </canvas>       
-                <canvas id="myChart" 
-                    style="
-                        width: 600px;
-                        max-width:600px;
-                        height:480px;
-                        max-height:480px;
-                        margin-bottom:10px">
-                </canvas>
-                <canvas id="labelCanvas" 
-                    style="
-                        width: 600px;
-                        max-width:600px;
-                        height:480px;
-                        max-height:480px;
-                        margin-bottom:10px;
+                        width: 4rem;
+                        transform: translate(-275%,175%);">
+                        Pets
+                    </button>
+                    <button id="areaButton"
+                        style="
                         position: absolute;
-                        pointer-events: none;
-                        opacity:1">
-                </canvas> 
-                <canvas id="overlayCanvas" 
-                    style="
-                        width: 600px;
-                        max-width:600px;
-                        height:480px;
-                        max-height:480px;
-                        margin-bottom:10px;
-                        position: absolute;
-                        pointer-events: none;
-                        opacity:0">
-                </canvas> 
-                <button id="petButton"
-                    style="
-                    position: absolute;
-                    width: 4rem;
-                    transform: translate(-275%,175%);">
-                    Pets
-                </button>
-                <button id="areaButton"
-                    style="
-                    position: absolute;
-                    width: 4rem;
-                    transform: translate(-275%,300%);">
-                    Area
-                </button>
-
-
+                        width: 4rem;
+                        transform: translate(-275%,300%);">
+                        Area
+                    </button> 
+                </div>
+            <button style="width: 12rem;" onclick="window.location.href='https://www.rgs.org/media/22njkw1x/gaguidetotriangulargraphs.pdf';">confused? click here</button>
             </div>
+            
         </div>
 
 
