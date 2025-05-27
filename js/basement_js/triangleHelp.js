@@ -23,10 +23,6 @@ const trianglePlugin = {
 const cursorLinePlugin = {
   id: 'cursorLinePlugin',
 
-  beforeInit: (chart) => {
-        chart._cursorPosition = { x: 0, y: 0 }; // Initialize to avoid undefined errors
-  },
-
   afterEvent: (chart, args) => {
         const event = args.event;
 
@@ -65,31 +61,9 @@ const cursorLinePlugin = {
     let HealthY = getPixelForY(yScale, getY(0,100-Health));
 
     let HealLabel = document.getElementById('healLabel');
-    if (!HealLabel) {
-        HealLabel = document.createElement('div');
-        HealLabel.id = 'healLabel';
-        HealLabel.style.pointerEvents = 'none';
-        document.body.appendChild(HealLabel);
-    }
     let SustainLabel = document.getElementById('sustainLabel');
-    if (!SustainLabel) {
-        SustainLabel = document.createElement('div');
-        SustainLabel.id = 'sustainLabel';
-        SustainLabel.style.pointerEvents = 'none';
-        SustainLabel.style.transform = 'rotate(-57.2957795deg)';
-        document.body.appendChild(SustainLabel);
-    }
     let HealthLabel = document.getElementById('healthLabel');
-    if (!HealthLabel) {
-        HealthLabel = document.createElement('div');
-        HealthLabel.id = 'healthLabel';
-        HealthLabel.style.pointerEvents = 'none';
-        HealthLabel.style.transform = 'rotate(57.2957795deg)';
-        document.body.appendChild(HealthLabel);
-    }
 
-
-    
     if (
         Heal >= 0 &&
         Sustain >= 0 &&
@@ -109,18 +83,15 @@ const cursorLinePlugin = {
         ctx.stroke();
         ctx.restore();
 
-        HealLabel.innerHTML = `<div>${Heal.toFixed(0)}%</div>`;
-        HealLabel.style.position = 'absolute';
+        HealLabel.innerHTML = `${Heal.toFixed(0)}%`;
         HealLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(Heal,0)) - 37 + 'px';
         HealLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(Heal,0)) - 10+  'px';
 
-        SustainLabel.innerHTML = `<div>${Sustain.toFixed(0)}%</div>`;
-        SustainLabel.style.position = 'absolute';
+        SustainLabel.innerHTML = `${Sustain.toFixed(0)}%`;
         SustainLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(100-Sustain,Sustain)) -5 + 'px';
         SustainLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(100-Sustain,Sustain)) - 30+ 'px';
 
-        HealthLabel.innerHTML = `<div>${Health.toFixed(0)}%</div>`;
-        HealthLabel.style.position = 'absolute';
+        HealthLabel.innerHTML = `${Health.toFixed(0)}%`;
         HealthLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(xScale, getX(0,100-Health)) + 'px';
         HealthLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(yScale, getY(0,100-Health)) + 10+ 'px';
 
@@ -138,12 +109,6 @@ function getPixelForX(scale,data){
 
 const lines = {};
 
-const healImage = new Image();
-
-const sustainImage = new Image();
-
-const healthImage = new Image();
-
 function getX(Heal, Sustain){
     return Sustain + 0.5 * Heal;
 }
@@ -152,7 +117,6 @@ function getY(Heal,WP){
 }
 
 function reverseXY(x,y){
-    
     
     let Heal= y;
     let Sustain= x -0.5 * Heal;
@@ -198,19 +162,6 @@ function createLine(type, percent) {
 
 }
 
-function getPosition(attributes){
-    let sum = attributes[0]
-            + attributes[2]
-            + attributes[3]
-            + attributes[5];
-
-    let Heal= 100*(attributes[2])/sum;
-    let Sustain= 100*(attributes[3]+attributes[5])/sum;
-
-    return [Heal, Sustain];
-}
-
-
 for (let i = 10; i < 100; i += 10) {
     lines[`Power${i}`] = createLine('power',i);
     lines[`WP${i}`] = createLine('wp',i);
@@ -220,31 +171,13 @@ for (let i = 10; i < 100; i += 10) {
 
 document.addEventListener("DOMContentLoaded", async function () {    
 
-
-    healImage.src= '../media/owo_images/PR.png';
-
-    mergeImages([
-    { src: '../media/owo_images/WP.png'},
-    { src: '../media/owo_images/MR.png', x:128}
-    ],{width: 256,height:128}
-    )
-    .then(b64 => sustainImage.src= b64);
-
-    healthImage.src = '../media/owo_images/HP.png'
-
-    Chart.register(window['chartjs-plugin-annotation']);
-
     const myChart = new Chart(ctx, {
         type: 'scatter',
         plugins: [
             trianglePlugin,
             cursorLinePlugin
         ],
-        data: {
-        },
         options: {
-            cursorLinePlugin: {
-            },
             layout: {
                 padding: {
                     left: 60,
@@ -302,6 +235,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     ctx.addEventListener('mousemove', () => {
         myChart.update();  // Forces the chart to rerender
     });
-
-
 });
