@@ -24,46 +24,45 @@
   <div style="font-size: 0.90rem;text-align: center;">
     <div style="padding:1rem 1rem 1rem 1rem">
         $$
-          \displaylines{  
-          \mathrm{Multi}(n) =\begin{cases}
-          25 & \mathrm{if} \ n\bmod 1000=0,\\
-          10 & \mathrm{if} \ n\bmod 500=0,\\
-          5 & \mathrm{if} \ n\bmod 100=0,\\
-          3 & \mathrm{if} \ n\bmod 50=0,\\
-          1 & \mathrm{if} \ n\bmod 10=0,\\
-          0 & \mathrm{otherwise}
+        \displaylines{  
+          \mathrm{Multi}(n) =
+          \begin{cases}
+            25 & \mathrm{if} \ n\bmod 1000=0,\\
+            10 & \mathrm{if} \ n\bmod 500=0,\\
+            5 & \mathrm{if} \ n\bmod 100=0,\\
+            3 & \mathrm{if} \ n\bmod 50=0,\\
+            1 & \mathrm{if} \ n\bmod 10=0,\\
+            0 & \mathrm{otherwise}
           \end{cases}
           \\\\
 
-          \mathrm{Exp}_{win}(n) 
-          =200 + 
-          \min\Big( 100000,⌊\mathrm{Multi}(n) \cdot \left( 10\sqrt{n} +500\right)⌉\Big)
+          \mathrm{Exp}_\mathrm{win}(n) = 200 + 
+          \min\Big( 
+            100000,
+            ⌊\mathrm{Multi}(n) \cdot \left( 10\sqrt{n} +500\right)⌉
+          \Big)
           
           
           \\\\
-          \mathrm{Exp}_{streak}(s,t)=
+          \mathrm{Exp}_\mathrm{streak}(s,t)=
           50+
-          
           \sum_{n=1}^{\infty} \; 
           \Biggl[
-          \bigg(
-            \frac{s}{s+1}
-          \bigg)^{n-1}
-          
+            \bigg(
+              \frac{s}{s+1}
+            \bigg)^{n-1}
             \cdot
-            
-            
-              \frac{100\cdot t}{1-t}
-            
-            
-            +\bigg(
-            \frac{s}{s+1}
-          \bigg)^{n}\cdot \mathrm{Exp}_{win}(n)
-          
+            \frac{100\cdot t}{1-t}
+            +
+            \bigg(
+              \frac{s}{s+1}
+            \bigg)^{n}
+            \cdot 
+            \mathrm{Exp}_\mathrm{win}(n)
           \Biggl]
-          
           \\\\
-          \mathrm{Exp}_{battle}(s,t)= \frac{f(s,t)\cdot (1-t)}{s+1}}
+          \mathrm{Exp}_\mathrm{battle}(s,t)= \frac{f(s,t)\cdot (1-t)}{s+1}
+        }
         $$
     </div>
     <button style="width: 8rem;" onclick="window.location.href='https://www.desmos.com/3d/zeecw3zmhs';">
