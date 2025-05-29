@@ -10,6 +10,47 @@ const knowledgeButton = document.getElementById("knowledgeButton");
 const knowledgeContainer = document.getElementById("knowledgeContainer");
 let isknowledgeCreated = false;
 
+document.addEventListener("DOMContentLoaded", async function () {
+    if (window.location.hash === "#global") {
+        await createGlobalElement(); 
+        globalContainer.scrollIntoView({ behavior: "smooth", block: "start"});
+    }
+});
+
+globalButton.addEventListener('click', async function() {
+    createGlobalElement();
+});
+
+async function createGlobalElement(){
+        if (isglobalCreated) {
+        const divToRemove = document.querySelector(".dynamic-global-div");
+        if (divToRemove) {
+            globalContainer.removeChild(divToRemove);
+        }
+        isglobalCreated = false;
+    }else{ 
+      try {
+          const response = await fetch('donatorPages/globalExp.html'); 
+          if (!response.ok) {
+              throw new Error('Failed to fetch the file');
+          }
+          const htmlContent = await response.text();
+  
+          const newDiv = document.createElement('div');
+          newDiv.innerHTML = htmlContent;
+          newDiv.className = "dynamic-global-div";
+        
+          document.getElementById('globalContainer').appendChild(newDiv);
+          
+          MathJax.typeset();
+          isglobalCreated = true;
+          
+      } catch (error) {
+          console.error('Error:', error);
+      }
+    }  
+}
+
 
 streakWorthButton.addEventListener('click', async function() {
     if (isstreakWorthCreated) {
@@ -34,36 +75,6 @@ streakWorthButton.addEventListener('click', async function() {
           
           MathJax.typeset();
           isstreakWorthCreated = true;
-          
-      } catch (error) {
-          console.error('Error:', error);
-      }
-    }  
-});
-
-globalButton.addEventListener('click', async function() {
-    if (isglobalCreated) {
-        const divToRemove = document.querySelector(".dynamic-global-div");
-        if (divToRemove) {
-            globalContainer.removeChild(divToRemove);
-        }
-        isglobalCreated = false;
-    }else{ 
-      try {
-          const response = await fetch('donatorPages/globalExp.html'); 
-          if (!response.ok) {
-              throw new Error('Failed to fetch the file');
-          }
-          const htmlContent = await response.text();
-  
-          const newDiv = document.createElement('div');
-          newDiv.innerHTML = htmlContent;
-          newDiv.className = "dynamic-global-div";
-        
-          document.getElementById('globalContainer').appendChild(newDiv);
-          
-          MathJax.typeset();
-          isglobalCreated = true;
           
       } catch (error) {
           console.error('Error:', error);
