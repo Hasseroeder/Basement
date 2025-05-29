@@ -17,51 +17,55 @@
     <button onClick="copyMedian()" style="width: 8rem;">copy to clipboard </button> 
     <br><br>
   </div>  
-  <p style="margin-left:2rem;margin-right:2rem;margin-top:0; font-size:1rem;">
+  <p style="margin: 1rem 2rem 0 2rem; font-size:1rem;">
     We can also calculate your average streak Exp, even considering tierate!
-    Although I do admit this isn't really math, it's more of a glorified for-loop at this point.  
+    Although I do admit this isn't really math, it's more of a glorified for-loop at this point:
   </p>
   <div style="font-size: 0.90rem;text-align: center;">
-    $$
-      \displaylines{
-      g(x)=200\;+\\
-      \{
-      h(x)>100000:100000,⌊h(x)⌉\}
-      \\\\
-      h(x)=\\
-      \{x\bmod1000=0:250\sqrt{x}\;+12500,\{ \\
-      x\bmod500=0:100\sqrt{x}\;+5000,\{ \\
-      x\bmod100=0:50\sqrt{x}\;+2500,\{ \\
-      x\bmod50=0:30\sqrt{x}\;+1500,\{ \\
-      x\bmod10=0:10\sqrt{x}\;+500,0 \\
-      
-      \}\}\}\}\}
-      
-      \newline\newline
-      f(s,t)=
-      50+
-      
-       \sum_{n=1}^{\infty} \; 
-      \Biggl[
-       \bigg(
-        \frac{s}{s+1}
-       \bigg)^{n-1}
-      
-         \cdot
-         
-         
-          \frac{100\cdot t}{1-t}
-         
-        
-         +\bigg(
-        \frac{s}{s+1}
-       \bigg)^{n}\cdot g(n)
-      
-      \Biggl]
-      
-      \newline\newline
-      f_{avg}(s,t)= \frac{f(s,t)\cdot (1-t)}{s+1}}
-    $$
+    <div style="padding:1rem 1rem 1rem 1rem">
+        $$
+          \displaylines{  
+          \mathrm{Multi}(n) =\begin{cases}
+          25 & \mathrm{if} \ n\bmod 1000=0,\\
+          10 & \mathrm{if} \ n\bmod 500=0,\\
+          5 & \mathrm{if} \ n\bmod 100=0,\\
+          3 & \mathrm{if} \ n\bmod 50=0,\\
+          1 & \mathrm{if} \ n\bmod 10=0,\\
+          0 & \mathrm{otherwise}
+          \end{cases}
+          \\\\
+
+          \mathrm{Exp}_{win}(n) 
+          =200 + 
+          \min\Big( 100000,⌊\mathrm{Multi}(n) \cdot \left( 10\sqrt{n} +500\right)⌉\Big)
+          
+          
+          \\\\
+          \mathrm{Exp}_{streak}(s,t)=
+          50+
+          
+          \sum_{n=1}^{\infty} \; 
+          \Biggl[
+          \bigg(
+            \frac{s}{s+1}
+          \bigg)^{n-1}
+          
+            \cdot
+            
+            
+              \frac{100\cdot t}{1-t}
+            
+            
+            +\bigg(
+            \frac{s}{s+1}
+          \bigg)^{n}\cdot g(n)
+          
+          \Biggl]
+          
+          \\\\
+          \mathrm{Exp}_{battle}(s,t)= \frac{f(s,t)\cdot (1-t)}{s+1}}
+        $$
+    </div>
     <button style="width: 8rem;" onclick="window.location.href='https://www.desmos.com/3d/zeecw3zmhs';">
       <a href="https://www.desmos.com/3d/zeecw3zmhs">click for Desmos</a>
     </button> 
