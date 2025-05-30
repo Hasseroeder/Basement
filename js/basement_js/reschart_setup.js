@@ -101,7 +101,7 @@ const htmlLegendPlugin = {
 };
 
 
-function createChart(){    
+function initializeresChart(){    
   new Chart("myChart", {
     type: "line",
     data: {
