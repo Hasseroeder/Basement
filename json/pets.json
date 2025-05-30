@@ -133,5 +133,10 @@
         "image": "../media/owo_images/new_owo.png",
         "name": "new_owo",
         "attributes": [4, 1, 1, 4, 11, 1]
+    },
+    {
+        "image": "../media/owo_images/candydeer.gif",
+        "name": "candydeer",
+        "attributes": [7, 1, 1, 1, 9, 1]
     }
 ]

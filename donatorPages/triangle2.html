@@ -1,0 +1,92 @@
+
+<div style="background-color:#303030;color:lightgray;padding: 20px 20px 20px 20px; margin: 10px 10px 10px;">
+    <p style="margin-top: 0;">
+        Continuing from the triangle chart above (please dont skip it lol), there's some pets that don't fit into the graph. <br>
+    </p>
+    <p style="line-height: 1.3rem; padding-right: 1rem;">    
+        <owo-img style="width:1.2rem;margin-bottom:-0.2rem">crune</owo-img> Crune is an incredibly unique weapon in the game, which uses the PR and MR stats for healing and replenishing respectively, thus using them effectively as "power stats" like other weapons use Str and Mag. <br>
+        These stats, which are somehow power stats now, still make their pets incredibly tanky though. And this unique situation makes it impossible to plot Crune Holders on the chart above, which neatly divides stats into "tank", "power" and "wp". <br>
+        <br>
+        So I made a new chart, entirely for crune holders :3
+    </p>
+    <p style="margin-bottom: 0.5rem;">
+        <i>Notes:</i>
+    </p>
+    <ul style="margin-left: -1rem; line-height: 1.3rem; ">
+        <li>
+            On a purely technical level, this one completely ignores Str and Mag in calculations, <br> 
+            so it would assume <owo-img style="width:1.2rem;margin-bottom:-0.2rem">capybara</owo-img>Capybara to be an 18stat.
+        </li>
+        <li style="margin-top:0.5rem">
+            Why is the "non-shielded" area so empty? Because bots just mog everything else, lol.
+        </li>
+
+    </ul>    
+
+
+
+    <div style="display:flex; flex-direction: column; align-items: center;">
+        <div class="flexContainer" style="align-items:normal;margin: 0 0 1rem; justify-content: center;">
+            
+            <canvas id="2areaCanvas" 
+                style="
+                    width: 600px;
+                    max-width:600px;
+                    height:480px;
+                    max-height:480px;
+                    margin-bottom:10px;
+                    position: absolute;
+                    pointer-events: none;
+                    opacity:1">
+            </canvas>       
+            <canvas id="2myChart" 
+                style="
+                    width: 600px;
+                    max-width:600px;
+                    height:480px;
+                    max-height:480px;
+                    margin-bottom:10px">
+            </canvas>
+            <canvas id="2labelCanvas" 
+                style="
+                    width: 600px;
+                    max-width:600px;
+                    height:480px;
+                    max-height:480px;
+                    margin-bottom:10px;
+                    position: absolute;
+                    pointer-events: none;
+                    opacity:1">
+            </canvas> 
+            <canvas id="2overlayCanvas" 
+                style="
+                    width: 600px;
+                    max-width:600px;
+                    height:480px;
+                    max-height:480px;
+                    margin-bottom:10px;
+                    position: absolute;
+                    pointer-events: none;
+                    opacity:0">
+            </canvas> 
+            <button id="2petButton"
+                style="
+                position: absolute;
+                width: 4rem;
+                transform: translate(-275%,175%);">
+                Pets
+            </button>
+            <button id="2areaButton"
+                style="
+                position: absolute;
+                width: 4rem;
+                transform: translate(-275%,300%);">
+                Area
+            </button> 
+        </div>
+    <button style="width: 12rem;" onclick="window.location.href='/triangleHelp.html';">
+        <a href="/triangleHelp.html">confused? click here</a>
+    </button>
+    </div>
+    
+</div>

@@ -7,8 +7,6 @@
 
     <link rel="icon" type="image/png" href="media/misc_images/favicon.png">
     <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/basement_js/reschart_setup.js"></script>
   </head>
   <body>
     <div class="center-pillar">
@@ -162,8 +160,30 @@ For simpler pets, like <code class="discord-code">8.1.1.8.1.1</code>, people als
           <div style="font-size:1rem"> Effective Stats </div>
         </div>
       </div>
+      <div class = "container" id="triangleContainer" style="margin-top: 1rem;">
+        <div class = "toolbar">
+          <button id="triangleButton">V</button> 
+          <div style="font-size:1rem"> Pet Roles </div>
+        </div>
+      </div>
+      <div class = "container" id="triangle2Container">
+        <div class = "toolbar">
+          <button id="triangle2Button">V</button> 
+          <div style="font-size:1rem"> Pet Roles - Crune </div>
+        </div>
+      </div>
+
     </div>  
-    <script src="js/basement_js/pets.js"> </script>
+
+    <script src="js/basement_js/reschart_setup.js"></script>
+   
+    <script type="module" src="js/basement_js/pets.js"> </script>
     <script src="js/basement_js/init.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+
+    <script src="https://unpkg.com/merge-images"></script>
+
   </body>
 </html>

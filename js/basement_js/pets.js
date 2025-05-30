@@ -1,6 +1,9 @@
+import { initializeTriangle } from './triangle.js';
+import { initializeTriangle2 } from './triangle2.js';
+
 const resButton = document.getElementById("resChartButton");
 const resContainer = document.getElementById("resChartContainer");
-let isResCreated = false; // Flag to track the state
+let isResCreated = false; 
 
 const hpButton = document.getElementById("effectiveHealthButton");
 const hpContainer = document.getElementById("effectiveHealthContainer");
@@ -10,14 +13,21 @@ const statButton = document.getElementById("effectiveStatsButton");
 const statContainer = document.getElementById("effectiveStatsContainer");
 let isStatCreated = false;
 
+const triangleButton = document.getElementById("triangleButton");
+const triangleContainer = document.getElementById("triangleContainer");
+let isTriangleCreated = false;
+
+const triangle2Button = document.getElementById("triangle2Button");
+const triangle2Container = document.getElementById("triangle2Container");
+let isTriangle2Created = false;
+
 resButton.addEventListener('click', async function() {
     if (isResCreated) {
-        // Delete the <div> if it exists
         const divToRemove = document.querySelector(".dynamic-chart-div");
         if (divToRemove) {
             resContainer.removeChild(divToRemove);
         }
-        isResCreated = false; // Update the flag
+        isResCreated = false; 
     }else{ 
       try {
           const response = await fetch('donatorPages/resChart.html'); 
@@ -26,12 +36,10 @@ resButton.addEventListener('click', async function() {
           }
           const htmlContent = await response.text();
   
-          // Create a div and add the fetched content
           const newDiv = document.createElement('div');
           newDiv.innerHTML = htmlContent;
           newDiv.className = "dynamic-chart-div";
         
-          // Append the div to the container
           document.getElementById('resChartContainer').appendChild(newDiv);
           isResCreated = true;
       } catch (error) {
@@ -42,14 +50,12 @@ resButton.addEventListener('click', async function() {
 });
 
 hpButton.addEventListener('click', async function() {
-    // Fetch the external HTML file
     if (isHpCreated) {
-        // Delete the <div> if it exists
         const divToRemove = document.querySelector(".dynamic-hp-div");
         if (divToRemove) {
             hpContainer.removeChild(divToRemove);
         }
-        isHpCreated = false; // Update the flag
+        isHpCreated = false; 
     }else{ 
       try {
           const response = await fetch('donatorPages/effectiveHP.html'); 
@@ -58,12 +64,10 @@ hpButton.addEventListener('click', async function() {
           }
           const htmlContent = await response.text();
   
-          // Create a div and add the fetched content
           const newDiv = document.createElement('div');
           newDiv.innerHTML = htmlContent;
           newDiv.className = "dynamic-hp-div";
         
-          // Append the div to the container
           document.getElementById('effectiveHealthContainer').appendChild(newDiv);
           isHpCreated = true;
       } catch (error) {
@@ -73,14 +77,12 @@ hpButton.addEventListener('click', async function() {
 });
 
 statButton.addEventListener('click', async function() {
-    // Fetch the external HTML file
     if (isStatCreated) {
-        // Delete the <div> if it exists
         const divToRemove = document.querySelector(".dynamic-stat-div");
         if (divToRemove) {
             statContainer.removeChild(divToRemove);
         }
-        isStatCreated = false; // Update the flag
+        isStatCreated = false; 
     }else{ 
       try {
           const response = await fetch('donatorPages/effectiveStats.html'); 
@@ -89,14 +91,68 @@ statButton.addEventListener('click', async function() {
           }
           const htmlContent = await response.text();
   
-          // Create a div and add the fetched content
           const newDiv = document.createElement('div');
           newDiv.innerHTML = htmlContent;
           newDiv.className = "dynamic-stat-div";
         
-          // Append the div to the container
           document.getElementById('effectiveStatsContainer').appendChild(newDiv);
           isStatCreated = true;
+      } catch (error) {
+          console.error('Error:', error);
+      }
+    }  
+});
+
+triangleButton.addEventListener('click', async function() {
+    if (isTriangleCreated) {
+        const divToRemove = document.querySelector(".dynamic-triangle-div");
+        if (divToRemove) {
+            triangleContainer.removeChild(divToRemove);
+        }
+        isTriangleCreated = false; 
+    }else{ 
+      try {
+          const response = await fetch('donatorPages/triangle.html'); 
+          if (!response.ok) {
+              throw new Error('Failed to fetch the file');
+          }
+          const htmlContent = await response.text();
+  
+          const newDiv = document.createElement('div');
+          newDiv.innerHTML = htmlContent;
+          newDiv.className = "dynamic-triangle-div";
+        
+          document.getElementById('triangleContainer').appendChild(newDiv);
+          isTriangleCreated = true;
+          initializeTriangle();
+      } catch (error) {
+          console.error('Error:', error);
+      }
+    }  
+});
+
+triangle2Button.addEventListener('click', async function() {
+    if (isTriangle2Created) {
+        const divToRemove = document.querySelector(".dynamic-triangle2-div");
+        if (divToRemove) {
+            triangle2Container.removeChild(divToRemove);
+        }
+        isTriangle2Created = false; 
+    }else{ 
+      try {
+          const response = await fetch('donatorPages/triangle2.html'); 
+          if (!response.ok) {
+              throw new Error('Failed to fetch the file');
+          }
+          const htmlContent = await response.text();
+  
+          const newDiv = document.createElement('div');
+          newDiv.innerHTML = htmlContent;
+          newDiv.className = "dynamic-triangle2-div";
+        
+          document.getElementById('triangle2Container').appendChild(newDiv);
+          isTriangle2Created = true;
+          initializeTriangle2();
       } catch (error) {
           console.error('Error:', error);
       }

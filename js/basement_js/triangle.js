@@ -1,11 +1,3 @@
-const ctx = document.getElementById('myChart');
-const overlayCtx = document.getElementById("overlayCanvas");
-const areaCtx = document.getElementById("areaCanvas");
-const labelCtx = document.getElementById("labelCanvas");
-
-const petButton = document.getElementById("petButton");
-const areaButton = document.getElementById("areaButton");
-
 const trianglePlugin = {
     id: 'triangleOverlay',
     beforeDraw(chart) {
@@ -108,125 +100,9 @@ const polygonPlugin = {
   }
 };
 
-
-const externalTooltipHandler = (context) => {
-  const { chart, tooltip } = context;
-  let tooltipEl = document.getElementById('chartjs-tooltip');
-  if (!tooltipEl) {
-    tooltipEl = document.createElement('div');
-    tooltipEl.id = 'chartjs-tooltip';
-    tooltipEl.style.background = '#222222';
-    tooltipEl.style.color = 'white';
-    tooltipEl.style.borderRadius = '3px';
-    tooltipEl.style.padding = '8px';
-    tooltipEl.style.transition = 'all .1s ease';
-    tooltipEl.style.pointerEvents = 'none';
-    document.body.appendChild(tooltipEl);
-  }
-
-  if (tooltip.opacity === 0 || overlayCtx.style.opacity == 0) {
-    tooltipEl.style.opacity = 0;
-    return;
-  }
-
-  let innerHTML = `<div>`;
-  tooltip.dataPoints?.forEach(dataPoint => {
-    const imageUrl= [
-        "./media/owo_images/HP.png",
-        "./media/owo_images/STR.png",
-        "./media/owo_images/PR.png",
-        "./media/owo_images/WP.png",
-        "./media/owo_images/MAG.png",
-        "./media/owo_images/MR.png",
-    ]; 
-
-
-    innerHTML +=`<div style="margin-bottom: 0.1rem;"> ${dataPoint.raw.label}</div>`;
-    innerHTML +=`<div style="display:flex;">`
-    innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
-                    <img src="${imageUrl[0]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
-                    ${dataPoint.raw.attributes[0]}` + 
-                "</div>";
-    innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
-                    <img src="${imageUrl[1]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
-                    ${dataPoint.raw.attributes[1]}` + 
-                "</div>";
-    innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
-                    <img src="${imageUrl[2]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;"> 
-                    ${dataPoint.raw.attributes[2]}` + 
-                "</div>";
-    innerHTML +=`</div> <div style="display:flex">`
-    innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
-                    <img src="${imageUrl[3]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
-                    ${dataPoint.raw.attributes[3]}` + 
-                "</div>";
-    innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
-                    <img src="${imageUrl[4]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
-                    ${dataPoint.raw.attributes[4]}` + 
-                "</div>";
-    innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
-                    <img src="${imageUrl[5]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
-                    ${dataPoint.raw.attributes[5]}` + 
-                "</div>";
-    innerHTML += `</div>`
-
-  });
-  innerHTML += `</div>`;
-
-  tooltipEl.innerHTML = innerHTML;
-
-  const canvasRect = chart.canvas.getBoundingClientRect();
-  tooltipEl.style.opacity = 1;
-  tooltipEl.style.position = 'absolute';
-  tooltipEl.style.left = canvasRect.left + window.pageXOffset + tooltip.caretX + 'px';
-  tooltipEl.style.top = canvasRect.top + window.pageYOffset + tooltip.caretY + 'px';
-};
-
-
-const imagePlugin = {
-  id: 'imagePlugin',
-  afterDatasetsDraw(chart, args, pluginOptions) {
-    const overlayCanvas = document.getElementById("overlayCanvas");
-    const ctx = overlayCanvas.getContext("2d");
-
-    const defaultWidth = 20;
-    const defaultHeight = 20;
-    
-    chart.data.datasets.forEach(dataset => {
-        if (!dataset.data) return;
-        dataset.data.forEach(dataPoint => {
-            if (dataPoint.img && dataPoint.drawn=="false") {
-                const x = chart.scales.x.getPixelForValue(dataPoint.x);
-                const y = chart.scales.y.getPixelForValue(dataPoint.y);
-
-                let image = new Image();
-                image.src = dataPoint.img;
-
-                if (image.complete) {
-                    ctx.drawImage(
-                        image,
-                        x - defaultWidth / 2,
-                        y - defaultWidth / 2,
-                        defaultWidth,
-                        defaultHeight
-                    );
-                    dataPoint.drawn = "true";
-                }else {
-                    image.onload = () => {
-                        chart.draw();
-                    };
-                }
-            }
-        });        
-    });
-  }
-};
-
 const lines = {};
 
 const labels = {};
-
-const pets = []
 
 const powerImage = new Image();
 
@@ -330,28 +206,8 @@ for (let i = 10; i <= 100; i += 10) {
     labels[`TankLabel${i}`] = createLabel('tank',i);
 }
 
-petButton.addEventListener('click', async function() {
-    if ( overlayCtx.style.opacity== 1 ){
-        overlayCtx.style.opacity = 0;
-        labelCtx.style.opacity= areaCtx.style.opacity== 1? 1: 0;
-    }else{
-        overlayCtx.style.opacity = 1;
-        labelCtx.style.opacity = 0;
-    }
-});
-
-areaButton.addEventListener('click', async function() {
-    if ( areaCtx.style.opacity == 1){
-        areaCtx.style.opacity =0;
-        labelCtx.style.opacity = 0;
-    }else {
-        areaCtx.style.opacity =1;
-        labelCtx.style.opacity= overlayCtx.style.opacity == 0? 1:0;
-    }
-
-});
-
 async function loadPets() {
+    let pets = []
     try {
         const response = await fetch("../json/pets.json");
         const data = await response.json();
@@ -360,11 +216,155 @@ async function loadPets() {
     } catch (error) {
         console.error("Error loading pets:", error);
     }
-}
+    return pets;
+}   
 
-document.addEventListener("DOMContentLoaded", async function () {    
+export async function initializeTriangle(){
 
-    await loadPets();
+    const ctx = document.getElementById('myChart');
+    const overlayCtx = document.getElementById("overlayCanvas");
+    const areaCtx = document.getElementById("areaCanvas");
+    const labelCtx = document.getElementById("labelCanvas");
+
+    const petButton = document.getElementById("petButton");
+    const areaButton = document.getElementById("areaButton");
+
+    const pets = [];
+
+    const imagePlugin = {
+        id: 'imagePlugin',
+        afterDatasetsDraw(chart, args) {
+            const ctx = overlayCtx.getContext("2d");
+
+            const defaultWidth = 20;
+            const defaultHeight = 20;
+            
+            chart.data.datasets.forEach(dataset => {
+                if (!dataset.data) return;
+                dataset.data.forEach(dataPoint => {
+                    if (dataPoint.img && dataPoint.drawn=="false") {
+                        const x = chart.scales.x.getPixelForValue(dataPoint.x);
+                        const y = chart.scales.y.getPixelForValue(dataPoint.y);
+
+                        let image = new Image();
+                        image.src = dataPoint.img;
+
+                        if (image.complete) {
+                            ctx.drawImage(
+                                image,
+                                x - defaultWidth / 2,
+                                y - defaultWidth / 2,
+                                defaultWidth,
+                                defaultHeight
+                            );
+                            dataPoint.drawn = "true";
+                        }else {
+                            image.onload = () => {
+                                chart.draw();
+                            };
+                        }
+                    }
+                });        
+            });
+        }
+    };
+
+    const externalTooltipHandler = (context) => {
+        const { chart, tooltip } = context;
+        let tooltipEl = document.getElementById('chartjs-tooltip');
+        if (!tooltipEl) {
+            tooltipEl = document.createElement('div');
+            tooltipEl.id = 'chartjs-tooltip';
+            tooltipEl.style.background = '#222222';
+            tooltipEl.style.color = 'white';
+            tooltipEl.style.borderRadius = '3px';
+            tooltipEl.style.padding = '8px';
+            tooltipEl.style.transition = 'all .1s ease';
+            tooltipEl.style.pointerEvents = 'none';
+            document.body.appendChild(tooltipEl);
+        }
+
+        if (tooltip.opacity === 0 || overlayCtx.style.opacity == 0) {
+            tooltipEl.style.opacity = 0;
+            return;
+        }
+
+        let innerHTML = `<div>`;
+        tooltip.dataPoints?.forEach(dataPoint => {
+            const imageUrl= [
+                "./media/owo_images/HP.png",
+                "./media/owo_images/STR.png",
+                "./media/owo_images/PR.png",
+                "./media/owo_images/WP.png",
+                "./media/owo_images/MAG.png",
+                "./media/owo_images/MR.png",
+            ]; 
+
+
+            innerHTML +=`<div style="margin-bottom: 0.1rem;"> ${dataPoint.raw.label}</div>`;
+            innerHTML +=`<div style="display:flex;">`
+            innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
+                            <img src="${imageUrl[0]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
+                            ${dataPoint.raw.attributes[0]}` + 
+                        "</div>";
+            innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
+                            <img src="${imageUrl[1]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
+                            ${dataPoint.raw.attributes[1]}` + 
+                        "</div>";
+            innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
+                            <img src="${imageUrl[2]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;"> 
+                            ${dataPoint.raw.attributes[2]}` + 
+                        "</div>";
+            innerHTML +=`</div> <div style="display:flex">`
+            innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
+                            <img src="${imageUrl[3]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
+                            ${dataPoint.raw.attributes[3]}` + 
+                        "</div>";
+            innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
+                            <img src="${imageUrl[4]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
+                            ${dataPoint.raw.attributes[4]}` + 
+                        "</div>";
+            innerHTML +=`<div style="display:flex; gap:0.2rem; width:2.5rem;"> 
+                            <img src="${imageUrl[5]}" alt="" style="width:1rem;height:1rem;margin-top:0.05rem;">
+                            ${dataPoint.raw.attributes[5]}` + 
+                        "</div>";
+            innerHTML += `</div>`
+
+        });
+        innerHTML += `</div>`;
+
+        tooltipEl.innerHTML = innerHTML;
+
+        const canvasRect = chart.canvas.getBoundingClientRect();
+        tooltipEl.style.opacity = 1;
+        tooltipEl.style.position = 'absolute';
+        tooltipEl.style.left = canvasRect.left + window.pageXOffset + tooltip.caretX + 'px';
+        tooltipEl.style.top = canvasRect.top + window.pageYOffset + tooltip.caretY + 'px';
+    };
+    
+    areaButton.addEventListener('click', async function() {
+        if ( areaCtx.style.opacity == 1){
+            areaCtx.style.opacity =0;
+            labelCtx.style.opacity = 0;
+        }else {
+            areaCtx.style.opacity =1;
+            labelCtx.style.opacity= overlayCtx.style.opacity == 0? 1:0;
+        }
+
+    });
+
+    petButton.addEventListener('click', async function() {
+        if ( overlayCtx.style.opacity== 1 ){
+            overlayCtx.style.opacity = 0;
+            labelCtx.style.opacity= areaCtx.style.opacity== 1? 1: 0;
+        }else{
+            overlayCtx.style.opacity = 1;
+            labelCtx.style.opacity = 0;
+        }
+    });
+
+    const newPets = await loadPets(); 
+    pets.push(...newPets);
 
     mergeImages([
     { src: '../media/owo_images/STR.png'},
@@ -384,12 +384,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     .then(b64 => tankImage.src= b64);
 
     Chart.register(window['chartjs-plugin-annotation']);
-    Chart.register(imagePlugin);
+    //Chart.register(imagePlugin);
     
     new Chart(ctx, {
         type: 'scatter',
         plugins: 
-            [trianglePlugin],
+            [
+                trianglePlugin,
+                imagePlugin
+            ],
         data: {
             datasets: [{
                 label: 'Pet Stats',
@@ -571,7 +574,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     new Chart(areaCtx, {
         type: 'scatter',
         plugins:
-            [polygonPlugin],
+            [
+                polygonPlugin,
+            ],
         options: {
             plugins: {
                 tooltip: {
@@ -777,5 +782,4 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         },
     });
-
-});
+}
