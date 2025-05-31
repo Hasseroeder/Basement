@@ -7,6 +7,7 @@ window.initializetriangle2 = initializeTriangle2;
 const buttonNames = ["resChart","effectiveHP","effectiveStats","triangle", "triangle2"];
 
 function handleButtonClick(Name) {
+    const button = document.getElementById(`${Name}Button`); 
     const container = document.getElementById(`${Name}Container`);
     let isCreated = container.dataset.created === "true";
 
@@ -17,6 +18,7 @@ function handleButtonClick(Name) {
         }
         container.dataset.created = "false";
     } else {
+        button.disabled = true; 
         fetch(`donatorPages/${Name}.html`)
             .then(response => {
                 if (!response.ok) throw new Error('Failed to fetch the file');
@@ -33,7 +35,8 @@ function handleButtonClick(Name) {
                     window[`initialize${Name}`]();
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error:', error))
+            .finally(() => button.disabled = false);
     }
 }
 
