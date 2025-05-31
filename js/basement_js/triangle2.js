@@ -339,7 +339,6 @@ export async function initializeTriangle2(){
     healthImage.src = '../media/owo_images/HP.png'
 
     Chart.register(window['chartjs-plugin-annotation']);
-    //Chart.register(imagePlugin2);
     
     new Chart(ctx2, {
         type: 'scatter',
@@ -584,7 +583,6 @@ export async function initializeTriangle2(){
             }
         },
     });
-
     
     new Chart(labelCtx2, {
         type: 'scatter',
