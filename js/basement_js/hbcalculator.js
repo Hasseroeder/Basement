@@ -212,7 +212,20 @@ document.getElementById("patreonCheck").addEventListener("change", function() {
     }
 });
 
+function showTimestamps() {
+    const now = new Date();
+    let formattedTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+    
+    document.getElementById("timestamp1").textContent = formattedTime;
+    document.getElementById("timestamp2").textContent = formattedTime;
+}
+
+        
+
 document.addEventListener("DOMContentLoaded", () => {
+    
+    showTimestamps();
+
     for (let i = 0; i < 6; i++) {
         const container = document.getElementById(`inputContainer${i + 1}`);
         
@@ -223,6 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
             input.value = 0;
             input.min = 0; 
             input.max = maxValues[i];
+            input.tabIndex=i+1;
             input.onchange = function() {
                 modifyValueDirect(i, parseInt(this.value));
             };
