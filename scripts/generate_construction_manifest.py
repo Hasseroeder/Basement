@@ -17,7 +17,7 @@ for root, dirs, filenames in os.walk(media_dir):
 files.sort()
 
 # write out
-out_path = media_dir / "list.json"
+out_path = media_dir / "construction-list.json"
 with open(out_path, "w", encoding="utf-8") as f:
     json.dump(files, f, indent=2)
 
