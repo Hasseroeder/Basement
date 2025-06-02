@@ -28,49 +28,48 @@ const injectors = [
     selector: "#construction",
     load: () => {
       const container = document.createElement("div");
-      
-      fetch('media/construction/construction-list.json')
-      .then(response => response.json())
-      .then(files => {
-        const gifFiles = files.filter(file => file.endsWith('.gif'));
-        const randomIndex = Math.floor(Math.random() * gifFiles.length);
-        const imageSrc = `media/construction/${gifFiles[randomIndex]}`;
 
-        const image = createImage(
-          {
-            src: imageSrc,
-            alt: "Under construction…",
-            height: 200     
-          },
-          {
-            display: "block",
-            margin: "0 auto"
-          }
-        );
+      Object.assign(container.style, {
+        padding: "2rem 2rem 2rem 2rem",
+        margin: "0 10rem 0 10rem",
+        border:"1px solid lightgray",
 
-        container.appendChild(image);
-
-      })
-      .catch(error => console.error('Error loading JSON:', error));
-
-      const text = document.createElement("p");
-      text.textContent = "This section is currently under construction!";
-      Object.assign(text.style, {
-        textAlign: "center",
-        fontSize: "18px",
-        fontWeight: "bold",
-        marginTop: "10px"
       });
 
-      container.appendChild(text);
-      container.style.padding= "2rem 2rem 0 2rem";
-      container.style.margin= "0 10rem 0 10rem";
-      container.style.border="1px solid lightgray";
+      const gifPromise = fetch("../media/construction/construction-list.json")
+      .then(res => res.json())
+      .then(files =>{
+        const gifFiles = files.filter(f => f.endsWith(".gif"));
+        const idx = Math.floor(Math.random()*gifFiles.length);
+        const img = createImage(
+          {
+          src: `../media/construction/${gifFiles[idx]}`,
+          alt:"Under construction...",
+          height:200  
+          },{
+              display: "block",
+              margin: "0 auto"
+            }
+          );
+        container.appendChild(img);
+        return img;
+      });
 
+      gifPromise
+        .then(()=> fetch("../donatorPages/underConstruction.html"))
+        .then(res => {
+          if (!res.ok) throw new Error("HTML not found");
+          return res.text();
+        })
+        .then(htmlString => {
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlString;
+          container.appendChild(wrapper);
+        });
 
-      return Promise.resolve(container);
-    }  
-  }
+      return gifPromise.then(() => container);
+    }
+  }  
 ];
 
 
