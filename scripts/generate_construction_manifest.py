@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 # point this at your media folder
-media_dir = Path(__file__).resolve().parent.parent / "media"
+media_dir = Path(__file__).resolve().parent.parent / "media" / "construction"
 
 files = []
 for root, dirs, filenames in os.walk(media_dir):
