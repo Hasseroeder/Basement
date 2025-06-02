@@ -1,9 +1,85 @@
-fetch("./donatorPages/navBar.html")
-.then(response => response.text())
-.then(data => {
-  document.getElementById("navbar").innerHTML = data;
-})
-.catch(error => console.error("Error loading navbar:", error));
+function createImage(attrs = {}, styles = {}) {
+  const img = document.createElement("img");
+  Object.entries(attrs).forEach(([key, val]) => {
+    if ((key === "width" || key === "height") && typeof val === "number") {
+      img[key] = val;
+    } else {
+      img.setAttribute(key, val);
+    }
+  });
+  Object.assign(img.style, styles);
+  return img;
+}
+
+function applyContent(el, content, config = {}) {
+  if (typeof content === "string") {
+    el.innerHTML = content;
+    return;
+  }
+  el.appendChild(content);
+}
+
+const injectors = [
+  {
+    selector: "#navbar",
+    load: () => fetch("./donatorPages/navBar.html").then(r => r.text()),
+  },
+  {
+    selector: "#construction",
+    load: () => {
+      const numImages = 6;
+      const randomIndex = Math.floor(Math.random() * numImages) + 1;
+      const imageSrc = `media/construction/${randomIndex}.gif`;
+
+      const image = createImage(
+        {
+          src: imageSrc,
+          alt: "Under construction…",
+          height: 200     
+        },
+        {
+          display: "block",
+          margin: "0 auto"
+        }
+      );
+
+      const text = document.createElement("p");
+      text.textContent = "This section is currently under construction!";
+      Object.assign(text.style, {
+        textAlign: "center",
+        fontSize: "18px",
+        fontWeight: "bold",
+        marginTop: "10px"
+      });
+
+      const container = document.createElement("div");
+      container.appendChild(image);
+      container.appendChild(text);
+      container.style.padding= "2rem 2rem 0 2rem";
+      container.style.margin= "0 10rem 0 10rem";
+      container.style.border="1px solid lightgray";
+
+
+      return Promise.resolve(container);
+    }  
+  }
+];
+
+
+function initInjectors() {
+  injectors.forEach(({ selector, load }) => {
+    const el = document.querySelector(selector);
+    if (!el) return;
+
+    load()
+      .then(content => applyContent(el, content))
+      .catch(err =>
+        console.error(`Failed to inject ${selector}:`, err)
+      );
+  });
+}
+
+window.addEventListener("DOMContentLoaded", initInjectors);
 
 
 class OwOimg extends HTMLElement {
