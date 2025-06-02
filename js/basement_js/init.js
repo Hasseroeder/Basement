@@ -31,8 +31,8 @@ const injectors = [
 
       Object.assign(container.style, {
         padding: "2rem 2rem 2rem 2rem",
-        margin: "0 10rem 0 10rem",
-        border:"1px solid lightgray",
+        margin: "2rem 10rem 2rem 10rem",
+        border:"1px solid gray",
 
       });
 
@@ -45,7 +45,7 @@ const injectors = [
           {
           src: `../media/construction/${gifFiles[idx]}`,
           alt:"Under construction...",
-          height:200  
+          height: 150 
           },{
               display: "block",
               margin: "0 auto"
