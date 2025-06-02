@@ -13,7 +13,8 @@ for root, dirs, filenames in os.walk(media_dir):
         rel = Path(root, fname).relative_to(media_dir).as_posix()
         files.append(rel)
 
-# write out
+files.sort()
+
 out_path = media_dir / "construction-list.json"
 with open(out_path, "w", encoding="utf-8") as f:
     json.dump(files, f, indent=2)
