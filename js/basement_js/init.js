@@ -27,21 +27,31 @@ const injectors = [
   {
     selector: "#construction",
     load: () => {
-      const numImages = 6;
-      const randomIndex = Math.floor(Math.random() * numImages) + 1;
-      const imageSrc = `media/construction/${randomIndex}.gif`;
+      const container = document.createElement("div");
+      
+      fetch('media/construction/construction-list.json')
+      .then(response => response.json())
+      .then(files => {
+        const gifFiles = files.filter(file => file.endsWith('.gif'));
+        const randomIndex = Math.floor(Math.random() * gifFiles.length);
+        const imageSrc = `media/construction/${gifFiles[randomIndex]}`;
 
-      const image = createImage(
-        {
-          src: imageSrc,
-          alt: "Under construction…",
-          height: 200     
-        },
-        {
-          display: "block",
-          margin: "0 auto"
-        }
-      );
+        const image = createImage(
+          {
+            src: imageSrc,
+            alt: "Under construction…",
+            height: 200     
+          },
+          {
+            display: "block",
+            margin: "0 auto"
+          }
+        );
+
+        container.appendChild(image);
+
+      })
+      .catch(error => console.error('Error loading JSON:', error));
 
       const text = document.createElement("p");
       text.textContent = "This section is currently under construction!";
@@ -52,8 +62,6 @@ const injectors = [
         marginTop: "10px"
       });
 
-      const container = document.createElement("div");
-      container.appendChild(image);
       container.appendChild(text);
       container.style.padding= "2rem 2rem 0 2rem";
       container.style.margin= "0 10rem 0 10rem";
