@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The web site of hasse</title>
+    <title>Pet Calculator</title>
     <link rel="icon" type="image/png" href="media/misc_images/favicon.png">
     <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all">
   </head>
@@ -26,30 +26,58 @@
                     </div>
                   </span>
                   
-                  <div class="discord-embed-text" style="white-space: normal;">
-                    <div style="display:flex; justify-content: center;align-items: center;">
-                      <strong>Lvl.<input class="calculatorInput no-arrows" 
-                                        style="background-color:#333;font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif; font-size:1rem; width:1.7rem; text-align:start;" 
-                                        type="number" id="input1" required="" min="1" max="100" value="20"></strong> 
-                                        
-                                        <input type="range" min="1" max="100" value="20">
+                  <div style="display: grid;
+                              grid-template-columns: 7rem 7rem;
+                              grid-template-rows: 3rem 2.5rem 2.5rem 2.5rem 0.5rem;
+                              justify-items: start;
+                              align-items: center;
+                  ">
+                    <div style="
+                    grid-row: 1 / 2;
+                    grid-column: span 2;
+                    display:flex; justify-content: center;align-items: center;">
+                      <strong>Lvl.</strong> 
+                      <input  class="calculatorInput no-arrows" 
+                              style="background-color:transparent; font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif; font-size:1rem; width:1.7rem; text-align:start;" 
+                              type="number" id="input1" required="" min="1" max="100" value="20"
+                              tabindex="1">
+                      <input type="range" min="1" max="100" value="20">
+                    </div>
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">HP</owo-img>
+                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="4" tabindex="2"> 
+                      <code class="calculatorInput" style="width:2.5rem">  660</code> 
                     </div>  
-                    <owo-img class="discord-embed-emote" style="margin-right:-0.05rem;">hp</owo-img>
-                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="4"> <code class="discord-code">  660</code> 
-                    <owo-img class="discord-embed-emote" style="margin-right:-0.05rem; margin-left:0.45rem">wp</owo-img> 
-                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="3"> <code class="discord-code">  620</code> 
-                    <br>
-                    <owo-img class="discord-embed-emote" style="margin-right:-0.05rem;">str</owo-img>
-                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="9"> <code class="discord-code">  280</code> 
-                    <owo-img class="discord-embed-emote" style="margin-right:-0.05rem; margin-left:0.45rem">mag</owo-img>
-                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="1"> <code class="discord-code">  120</code>
-                    <br>
-                    <owo-img class="discord-embed-emote" style="margin-right:-0.05rem;">pr</owo-img>
-                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="1"> <code class="discord-code">31.5%</code> 
-                    <owo-img class="discord-embed-emote" style="margin-right:-0.05rem; margin-left:0.45rem">mr</owo-img>
-                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="2"> <code class="discord-code">41.0%</code>
-                    <br>  
-                    <span style="color:#aaa; font-size:10px"> 20 stats </span>                  
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">WP</owo-img> 
+                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="3" tabindex="3"> 
+                      <code class="calculatorInput" style="width:2.5rem">  620</code> 
+                    </div>
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">STR</owo-img>
+                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="9" tabindex="4"> 
+                      <code class="calculatorInput" style="width:2.5rem">  280</code> 
+                    </div>
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">MAG</owo-img>
+                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="1" tabindex="5"> 
+                      <code class="calculatorInput" style="width:2.5rem">  120</code>
+                    </div>
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">PR</owo-img>
+                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="1" tabindex="6"> 
+                      <code class="calculatorInput" style="width:2.5rem">31.5%</code> 
+                    </div>
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">MR</owo-img>
+                      <input class="calculatorInput no-arrows" type="number" id="input1" required="" min="0" max="22" value="2" tabindex="7"> 
+                      <code class="calculatorInput" style="width:2.5rem">41.0%</code>
+                    </div>
+                    <div>
+                      <span style="
+                        grid-column: span 2;
+                        color:#aaa; font-size:10px"> 20 stats </span>                  
+                    </div>
                   </div>
                 </div>
                 <div class="discord-embed-inner">
@@ -60,28 +88,39 @@
           </div>
           <div class="discord-message-outer">
             <div class="discord-message-header">
-              <owo-img class="discord-avatar">neonUtil</owo-img>
+              <owo-img class="discord-avatar">neonutil</owo-img>
               <h1 class="discord-name">NeonUtil</h1><span class="discord-bot-tag">✓APP</span><span id="timestamp2" class="discord-timestamp">15:35</span>
             </div>
             <div class="discord-embed-outer">
               <div style="border-color:#909090" class="discord-embed-middle">
                 <div class="discord-embed-inner">
         
-                  <div class="discord-embed-text" style="white-space: normal;">
-                    <owo-img class="discord-embed-emote" style="margin-right:-0.05rem;">prHP</owo-img> 
-                      <code class="discord-code">eHP</code> 
-                      <code class="discord-code">  964</code> 
-                      <owo-img class="discord-embed-emote" style="margin-right:-0.05rem; margin-left:0.45rem">mrHP</owo-img> 
-                      <code class="discord-code">eHP</code> 
-                      <code class="discord-code"> 1118</code> 
-                    <br>
-                    <owo-img class="discord-embed-emote" style="margin-right:-0.05rem;">iPR</owo-img> 
-                      <code class="discord-code">iPR</code> 
-                      <code class="discord-code">   65</code> 
-                    <owo-img class="discord-embed-emote" style="margin-right:-0.05rem; margin-left:0.45rem">iMR</owo-img> 
-                      <code class="discord-code">iMR</code> 
-                      <code class="discord-code">  105</code>
-                    <br>                 
+                  <div style="display: grid;
+                              grid-template-columns: 7rem 7rem;
+                              grid-template-rows: 1.75rem 1.75rem;
+                              justify-items: start;
+                              align-items: center;
+                  ">
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">prHP</owo-img> 
+                      <code class="calculatorInput">eHP</code> 
+                      <code class="calculatorInput" style="width:2.5rem">  964</code> 
+                    </div>
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">mrHP</owo-img> 
+                      <code class="calculatorInput">eHP</code> 
+                      <code class="calculatorInput" style="width:2.5rem"> 1118</code>   
+                    </div>
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">iPR</owo-img> 
+                      <code class="calculatorInput">iPR</code> 
+                      <code class="calculatorInput" style="width:2.5rem">   65</code> 
+                    </div>
+                    <div style="display:flex; align-items: center; gap:0.2rem">
+                      <owo-img class="discord-embed-emote">iMR</owo-img> 
+                      <code class="calculatorInput">iMR</code> 
+                      <code class="calculatorInput" style="width:2.5rem">  105</code>  
+                    </div>
                   </div>
                 </div>
               </div>
