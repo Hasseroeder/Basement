@@ -91,7 +91,7 @@ function throttle(fn, delay) {
   };
 }
 
-const fetchNeonThrottled = throttle(await fetchNeon(), 1000);
+const fetchNeonThrottled = throttle(fetchNeon, 1000);
 
 
 function lookForMatchingPets(){
@@ -141,15 +141,14 @@ function updateOutputs(){
 }
 
 //start of event listener functions
-function updateStats(){
+async function updateStats(){
     inputs.forEach((input,i) => {
         stats[i]=input?.value;
     });
     updateInternalStats();
 
-    fetchNeonThrottled()
-        .then(data => console.log("got neon data", data))
-        .catch(err => console.error(err));
+    const data = await fetchNeonThrottled();
+    console.log(data);    
 }
 
 function updateLevelFromNumber(){
