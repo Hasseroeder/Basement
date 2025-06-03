@@ -52,23 +52,39 @@ const outsideStats = [
 // for outputs 5-6, use 9-10
 // for outputs 7-8, use 1+Res
 
-let petArray = []
-
 function fetchNeon(){
-    fetch(  neonURL
-            +stats[0]+"."
-            +stats[1]+"."
-            +stats[2]+"."
-            +stats[3]+"."
-            +stats[4]+"."
-            +stats[5]) 
-    .then(response => response.json())
-    .then(data => {
-        petArray = data.map(item => item); 
-        console.log(myArray);
-    }) 
-    .catch(error => console.error('Error fetching data:', error));
+    return fetch(  neonURL + stats.join(".")) 
+    .then(response => response.json());
 }
+
+function throttle(fn, delay) {
+  let last = 0;
+  let timeout = null;
+  return function throttled(...args) {
+    const now = Date.now();
+    const remaining = delay - (now - last);
+
+    // If we're outside the window, fire immediately
+    if (remaining <= 0) {
+      clearTimeout(timeout);
+      timeout = null;
+      last = now;
+      fn.apply(this, args);
+    }
+    // Otherwise schedule one final call after the delay
+    else if (!timeout) {
+      timeout = setTimeout(() => {
+        last = Date.now();
+        timeout = null;
+        fn.apply(this, args);
+      }, remaining);
+    }
+  };
+}
+
+function fetchNeonThrottled() {
+    throttle(fetchNeon(), 1000)
+};
 
 function lookForMatchingPets(){
 }
@@ -122,7 +138,7 @@ function updateStats(){
         stats[i]=input?.value;
     });
     updateInternalStats();
-    fetchNeon();
+    console.log(fetchNeonThrottled());
 }
 
 function updateLevelFromNumber(){
