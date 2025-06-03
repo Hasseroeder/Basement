@@ -71,10 +71,6 @@ function fetchNeon(){
 }
 
 function lookForMatchingPets(){
-    fetch(neonURL) 
-    .then(response => response.json())
-    .then(data => console.log(data)) 
-    .catch(error => console.error('Error fetching data:', error));
 }
 
 
@@ -133,6 +129,7 @@ function updateLevelFromNumber(){
     level = inputLvl.value;
     sliderLvl.value=level;
     updateInternalStats();
+    fetchNeon();
 }
 
 function updateLevelFromSlider(){
@@ -165,7 +162,5 @@ document.addEventListener("DOMContentLoaded", () => {
             updateLevelFromSlider();
         }
     });
-
-    lookForMatchingPets();
     inputs[0].focus();
 });
