@@ -59,7 +59,7 @@ function fetchNeon(){
                     + stats[1] +"."
                     + stats[4] +"."
                     + stats[2] +"."
-                    + stats[5] +"."
+                    + stats[5]
     ) 
     .then(response => response.json())
 }
