@@ -91,7 +91,7 @@ function throttle(fn, delay) {
   };
 }
 
-const fetchNeonThrottled = throttle(fetchNeon, 1000);
+const fetchNeonThrottled = throttle(await fetchNeon, 1000);
 
 
 function lookForMatchingPets(){
