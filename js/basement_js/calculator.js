@@ -6,7 +6,7 @@ function showTimestamps() {
     document.getElementById("timestamp2").textContent = formattedTime;
 }
 
-const neonURL = "https://neonutil.vercel.app/zoo-stats?s=4.1.10.1.1.3";
+const neonURL = "https://neonutil.vercel.app/zoo-stats?s=";
 
 const inputLvl = document.getElementById("inputLvl");
 const sliderLvl = document.getElementById("sliderLvl");
@@ -52,20 +52,28 @@ const outsideStats = [
 // for outputs 5-6, use 9-10
 // for outputs 7-8, use 1+Res
 
+const petArray = []
+
+function fetchNeon(){
+    fetch(  neonURL
+            +stats[0]+"."
+            +stats[1]+"."
+            +stats[2]+"."
+            +stats[3]+"."
+            +stats[4]+"."
+            +stats[5]) 
+    .then(response => response.json())
+    .then(data => {
+        petArray = data.map(item => item); 
+        console.log(myArray);
+    }) 
+    .catch(error => console.error('Error fetching data:', error));
+}
+
 function lookForMatchingPets(){
-
-    //fetch('https://cors-anywhere.herokuapp.com/https://neonutil.vercel.app/zoo-stats?s=4.1.10.1.1.3')
-    //.then(response => console.log(response))
-    //.catch(error => console.error('Error fetching data:', error));
-
-
-    //fetch('https://cors-anywhere.herokuapp.com/https://neonutil.vercel.app/zoo-stats?s=4.1.10.1.1.3')
-    //.then(response => response.json())
-    //.then(data => console.log(data))
-    //.catch(error => console.error('Error fetching data:', error));
-
-    fetch("https://neonutil.vercel.app/zoo-stats?s=4.1.10.1.1.3") 
-    .then(response =>console.log(response)) 
+    fetch(neonURL) 
+    .then(response => response.json())
+    .then(data => console.log(data)) 
     .catch(error => console.error('Error fetching data:', error));
 }
 
