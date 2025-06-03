@@ -58,33 +58,34 @@ function fetchNeon(){
 }
 
 function throttle(fn, delay) {
-  let last = 0;
-  let timeout = null;
+  let last = 0,
+      timer = null;
+
   return function throttled(...args) {
-    const now = Date.now();
+    const now       = Date.now();
     const remaining = delay - (now - last);
 
-    // If we're outside the window, fire immediately
     if (remaining <= 0) {
-      clearTimeout(timeout);
-      timeout = null;
-      last = now;
-      fn.apply(this, args);
+      clearTimeout(timer);
+      timer = null;
+      last  = now;
+      return fn.apply(this, args);
     }
-    // Otherwise schedule one final call after the delay
-    else if (!timeout) {
-      timeout = setTimeout(() => {
-        last = Date.now();
-        timeout = null;
-        fn.apply(this, args);
-      }, remaining);
+
+    if (!timer) {
+      return new Promise(resolve => {
+        timer = setTimeout(() => {
+          last  = Date.now();
+          timer = null;
+          resolve(fn.apply(this, args));
+        }, remaining);
+      });
     }
   };
 }
 
-function fetchNeonThrottled() {
-    throttle(fetchNeon(), 1000)
-};
+const fetchNeonThrottled = throttle(fetchNeon, 1000);
+
 
 function lookForMatchingPets(){
 }
@@ -138,7 +139,10 @@ function updateStats(){
         stats[i]=input?.value;
     });
     updateInternalStats();
-    console.log(fetchNeonThrottled());
+
+    fetchNeonThrottled()
+        .then(data => console.log("got neon data", data))
+        .catch(err => console.error(err));
 }
 
 function updateLevelFromNumber(){
