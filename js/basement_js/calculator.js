@@ -53,8 +53,15 @@ const outsideStats = [
 // for outputs 7-8, use 1+Res
 
 function fetchNeon(){
-    return fetch(  neonURL + stats.join(".")) 
-    .then(response => response.json());
+    return fetch(  neonURL 
+                    + stats[0] +"."
+                    + stats[3] +"."
+                    + stats[1] +"."
+                    + stats[4] +"."
+                    + stats[2] +"."
+                    + stats[5] +"."
+    ) 
+    .then(response => response.json())
 }
 
 function throttle(fn, delay) {
