@@ -52,7 +52,7 @@ const outsideStats = [
 // for outputs 5-6, use 9-10
 // for outputs 7-8, use 1+Res
 
-const petArray = []
+let petArray = []
 
 function fetchNeon(){
     fetch(  neonURL
@@ -122,6 +122,7 @@ function updateStats(){
         stats[i]=input?.value;
     });
     updateInternalStats();
+    fetchNeon();
 }
 
 function updateLevelFromNumber(){
@@ -129,7 +130,6 @@ function updateLevelFromNumber(){
     level = inputLvl.value;
     sliderLvl.value=level;
     updateInternalStats();
-    fetchNeon();
 }
 
 function updateLevelFromSlider(){
