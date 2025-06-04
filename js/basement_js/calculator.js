@@ -112,6 +112,7 @@ function fetchNeon(){
     ) 
     .then(response => {
         petArray = response.json();
+        console.log(petArray);
         sortPetArray();
     })
 }
