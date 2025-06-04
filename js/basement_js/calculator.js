@@ -65,7 +65,7 @@ function outputPetArray(){
     let containerToApply = createColumn(petContainer);
     petArray.forEach((_,i)=>{
         displayPet(containerToApply, petArray[i]);
-        if ((i+1) % 35 == 0){
+        if ((i+1) % 40 == 0){
             containerToApply = createColumn(petContainer);
         }
     });
@@ -242,7 +242,7 @@ function displayPet(element, pet){
                                         style="weight:1rem;height:1rem;"
                                 >
                                 <code   class="discord-code"
-                                        style="font-size:0.8rem;"
+                                        style="font-size:0.7rem;"
                                 >${pet[0]}</div>`;
     element.append(displayElement);
 }
@@ -250,7 +250,7 @@ function displayPet(element, pet){
 function createColumn(element){
     const column = document.createElement("div");
     column.style.display = "flex";
-    column.style.width ="9rem";
+    column.style.width ="12rem";
     column.style.flexDirection = "column";
 
     element.append(column);
