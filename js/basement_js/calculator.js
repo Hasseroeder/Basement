@@ -96,10 +96,8 @@ function throttle(fn, delay) {
 
 const fetchNeonThrottled = throttle(fetchNeon, 1000);
 
-
 function lookForMatchingPets(){
 }
-
 
 function updateInternalStats(){
     const base =[500,500,100,100,25,25]
@@ -150,8 +148,9 @@ async function updateStats(){
     });
     updateInternalStats();
 
-    const data = await fetchNeonThrottled();
-    console.log(data);    
+    const response = await fetchNeonThrottled();
+    const data = await response.json();           
+    console.log(data);        
 }
 
 function updateLevelFromNumber(){
