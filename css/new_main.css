@@ -174,8 +174,8 @@
   display: flex;
   background: #303030;
   border-radius: 4px;
-  border-left: 4px solid rgb(32, 34, 37);
-    border-left-color: rgb(32, 34, 37);
+  border-left: 4px solid #909090;
+    border-left-color: #909090;
 }
 	
 .discord-embed-inner{

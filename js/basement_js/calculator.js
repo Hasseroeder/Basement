@@ -6,6 +6,7 @@ function showTimestamps() {
     document.getElementById("timestamp2").textContent = formattedTime;
 }
 
+const petContainer = document.getElementById("petContainer");
 
 const petTypeOrder = {
     "common":   1,
@@ -29,7 +30,100 @@ const petArray = [
     ["espe",       1, "719733304290705462", [],               "cpatreon"],
     ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
     ["toycat",     0, "653141221249908746", [],               "cpatreon"],
-    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"]
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+        ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+        ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+        ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+        ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+        ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+        ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+        ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
+
 ];
 
 function sortPetArray(){
@@ -41,6 +135,18 @@ function sortPetArray(){
             return orderA - orderB;
         }
         return petA[0].localeCompare(petB[0]);  
+    });
+    outputPetArray();
+}
+
+function outputPetArray(){
+    deleteChildren(petContainer);
+    let containerToApply = createColumn(petContainer);
+    petArray.forEach((_,i)=>{
+        displayPet(containerToApply, petArray[i]);
+        if ((i+1) % 30 == 0){
+            containerToApply = createColumn(petContainer);
+        }
     });
 }
 
@@ -132,7 +238,7 @@ function throttle(fn, delay) {
   };
 }
 
-const fetchNeonThrottled = throttle(fetchNeon, 1000);
+const fetchNeonThrottled = throttle(fetchNeon, 2500);
 
 function lookForMatchingPets(){
 }
@@ -186,8 +292,9 @@ async function updateStats(){
     });
     updateInternalStats();
 
-    //const petArray = await fetchNeonThrottled();
-    //console.log(petArray);    
+    petArray = await fetchNeonThrottled();
+    sortPetArray();
+    console.log(petArray);    
 }
 
 function updateLevelFromNumber(){
@@ -204,7 +311,27 @@ function updateLevelFromSlider(){
 }
 //end of event listener functions
 
+function displayPet(element, pet){
+    const displayElement = document.createElement("div");
+    displayElement.innerHTML= `<code class="discord-code">${pet[0]}</div>`;
+    element.append(displayElement);
+}
 
+function createColumn(element){
+    const column = document.createElement("div");
+    column.style.display = "flex";
+    column.style.width ="6rem";
+    column.style.flexDirection = "column";
+
+    element.append(column);
+    return column;
+}
+
+function deleteChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -230,10 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
     inputs[0].focus();
 
     initFields();
-
     sortPetArray();
-    console.log(petArray);
-
 });
 
 
