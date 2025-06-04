@@ -6,6 +6,45 @@ function showTimestamps() {
     document.getElementById("timestamp2").textContent = formattedTime;
 }
 
+
+const petTypeOrder = {
+    "common":   1,
+    "uncommon": 2,
+    "rare":     3,
+    "epic":     4,
+    "mythical": 5,
+    "legendary":6,
+    "gem":      7,
+    "bot":      8,
+    "distorted":9,
+    "fabled":   10,
+    "hidden:":  11,
+    "special":  12,
+    "patreon":  13,
+    "cpatreon": 14
+};
+
+const petArray = [
+    // NAME,ANIMATED, ID,                   ALIAS,            TYPE
+    ["espe",       1, "719733304290705462", [],               "cpatreon"],
+    ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
+    ["toycat",     0, "653141221249908746", [],               "cpatreon"],
+    ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"]
+];
+
+function sortPetArray(){
+    petArray.sort((petA, petB) => {
+        const orderA = petTypeOrder[petA[4]] = petTypeOrder[petA[4]];
+        const orderB = petTypeOrder[petB[4]] = petTypeOrder[petB[4]];
+
+        if (orderA !== orderB) {
+            return orderA - orderB;
+        }
+        return petA[0].localeCompare(petB[0]);  
+    });
+}
+
+
 const neonURL = "https://neonutil.vercel.app/zoo-stats?s=";
 
 const inputLvl = document.getElementById("inputLvl");
@@ -62,7 +101,6 @@ function fetchNeon(){
                     + stats[5]
     ) 
     .then(response => {
-        console.log(response);
         return response.json();
     })
 }
@@ -148,8 +186,8 @@ async function updateStats(){
     });
     updateInternalStats();
 
-    const data = await fetchNeonThrottled();
-    console.log(data);    
+    //const petArray = await fetchNeonThrottled();
+    //console.log(petArray);    
 }
 
 function updateLevelFromNumber(){
@@ -190,4 +228,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     inputs[0].focus();
+
+    initFields();
+
+    sortPetArray();
+    console.log(petArray);
+
 });
+
+
+
+function initFields(){
+    updateStats();
+    updateLevelFromNumber();
+}
