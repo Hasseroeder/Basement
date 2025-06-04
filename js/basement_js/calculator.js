@@ -25,6 +25,23 @@ const petTypeOrder = {
     "cpatreon": 14
 };
 
+const petTypeImages= {
+    "common":   "..media/owo_images/common.png",
+    "uncommon": "..media/owo_images/uncommon.png",
+    "rare":     "..media/owo_images/rare.png",
+    "epic":     "..media/owo_images/epic.png",
+    "mythical": "..media/owo_images/mythic.png",
+    "legendary":"..media/owo_images/legendary.gif",
+    "gem":      "..media/owo_images/gem.gif",
+    "bot":      "..media/owo_images/bot.gif",
+    "distorted":"..media/owo_images/distorted.gif",
+    "fabled":   "..media/owo_images/fabled.gif",
+    "hidden:":  "..media/owo_images/hidden.gif",
+    "special":  "..media/owo_images/special.png",
+    "patreon":  "..media/owo_images/patreon.png",
+    "cpatreon": "..media/owo_images/patreon.gif"
+}
+
 let petArray = [
     // NAME,ANIMATED, ID, ALIAS, TYPE
 
@@ -48,7 +65,7 @@ function outputPetArray(){
     let containerToApply = createColumn(petContainer);
     petArray.forEach((_,i)=>{
         displayPet(containerToApply, petArray[i]);
-        if ((i+1) % 30 == 0){
+        if ((i+1) % 35 == 0){
             containerToApply = createColumn(petContainer);
         }
     });
@@ -218,7 +235,13 @@ function updateLevelFromSlider(){
 
 function displayPet(element, pet){
     const displayElement = document.createElement("div");
-    displayElement.innerHTML= `<code class="discord-code">${pet[0]}</div>`;
+    displayElement.style.display = "flex";
+
+    const imgSrc = petTypeImages[pet[4]];
+    displayElement.innerHTML= ` <img src=${imgSrc}>
+                                <code    class="discord-code"
+                                        style="font-size:0.8rem;"
+                                >${pet[0]}</div>`;
     element.append(displayElement);
 }
 
@@ -262,7 +285,6 @@ document.addEventListener("DOMContentLoaded", () => {
     inputs[0].focus();
 
     initFields();
-    sortPetArray();
 });
 
 
