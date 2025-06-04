@@ -111,9 +111,13 @@ function fetchNeon(){
                     + stats[5]
     ) 
     .then(response => {
-        petArray = response.json();
-        console.log(petArray);
-        sortPetArray();
+        if(Array.isArray(response.json)){
+            petArray = response.json();
+            sortPetArray();
+        }
+        console.log("response is: " + response);
+        console.log("petArray is: " + petArray);
+
     })
 }
 
