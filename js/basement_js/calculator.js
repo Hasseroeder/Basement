@@ -147,7 +147,7 @@ async function updateStats(){
     });
     updateInternalStats();
 
-    const data = await fetchNeonThrottled();
+    const data = await fetchNeon();
     console.log(data);    
 }
 
