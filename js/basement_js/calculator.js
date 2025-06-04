@@ -25,7 +25,7 @@ const petTypeOrder = {
     "cpatreon": 14
 };
 
-const petArray = [
+let petArray = [
     // NAME,ANIMATED, ID,                   ALIAS,            TYPE
     ["espe",       1, "719733304290705462", [],               "cpatreon"],
     ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
