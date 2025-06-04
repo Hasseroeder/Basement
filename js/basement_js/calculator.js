@@ -142,7 +142,7 @@ function throttle(fn, delay) {
   };
 }
 
-const fetchNeonThrottled = throttle(fetchNeon, 2500);
+const fetchNeonThrottled = throttle(fetchNeon, 1000);
 
 function lookForMatchingPets(){
 }
@@ -225,7 +225,7 @@ function displayPet(element, pet){
 function createColumn(element){
     const column = document.createElement("div");
     column.style.display = "flex";
-    column.style.width ="6rem";
+    column.style.width ="9rem";
     column.style.flexDirection = "column";
 
     element.append(column);
