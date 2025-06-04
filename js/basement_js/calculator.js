@@ -44,6 +44,7 @@ const petTypeImages= {
 
 let petArray = [
     // NAME,ANIMATED, ID, ALIAS, TYPE
+    /*
     ["espe",       1, "719733304290705462", [],               "cpatreon"],
     ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
     ["toycat",     0, "653141221249908746", [],               "cpatreon"],
@@ -170,7 +171,7 @@ let petArray = [
     ["toycat",     0, "653141221249908746", [],               "cpatreon"],
     ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
     ["espe",       1, "719733304290705462", [],               "cpatreon"],
-    
+    */
     //TODO: remove all of these comments when I'm done testing
 ];
 
@@ -340,8 +341,8 @@ async function updateStats(){
     });
     updateInternalStats();
 
-    //tempArray = await fetchNeonThrottled();
-    //petArray = Array.isArray(tempArray) ? tempArray:petArray;
+    tempArray = await fetchNeonThrottled();
+    petArray = Array.isArray(tempArray) ? tempArray:petArray;
     sortPetArray();
     console.log(petArray);    
 }
