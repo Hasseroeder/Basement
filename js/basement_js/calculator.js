@@ -26,20 +26,20 @@ const petTypeOrder = {
 };
 
 const petTypeImages= {
-    "common":   "..media/owo_images/common.png",
-    "uncommon": "..media/owo_images/uncommon.png",
-    "rare":     "..media/owo_images/rare.png",
-    "epic":     "..media/owo_images/epic.png",
-    "mythical": "..media/owo_images/mythic.png",
-    "legendary":"..media/owo_images/legendary.gif",
-    "gem":      "..media/owo_images/gem.gif",
-    "bot":      "..media/owo_images/bot.gif",
-    "distorted":"..media/owo_images/distorted.gif",
-    "fabled":   "..media/owo_images/fabled.gif",
-    "hidden:":  "..media/owo_images/hidden.gif",
-    "special":  "..media/owo_images/special.png",
-    "patreon":  "..media/owo_images/patreon.png",
-    "cpatreon": "..media/owo_images/patreon.gif"
+    "common":   "../media/owo_images/common.png",
+    "uncommon": "../media/owo_images/uncommon.png",
+    "rare":     "../media/owo_images/rare.png",
+    "epic":     "../media/owo_images/epic.png",
+    "mythical": "../media/owo_images/mythic.png",
+    "legendary":"../media/owo_images/legendary.gif",
+    "gem":      "../media/owo_images/gem.gif",
+    "bot":      "../media/owo_images/bot.gif",
+    "distorted":"../media/owo_images/distorted.gif",
+    "fabled":   "../media/owo_images/fabled.gif",
+    "hidden:":  "../media/owo_images/hidden.gif",
+    "special":  "../media/owo_images/special.png",
+    "patreon":  "../media/owo_images/patreon.png",
+    "cpatreon": "../media/owo_images/patreon.gif"
 }
 
 let petArray = [
@@ -238,8 +238,10 @@ function displayPet(element, pet){
     displayElement.style.display = "flex";
 
     const imgSrc = petTypeImages[pet[4]];
-    displayElement.innerHTML= ` <img src=${imgSrc}>
-                                <code    class="discord-code"
+    displayElement.innerHTML= ` <img    src=${imgSrc}
+                                        style="weight:1rem;height:1rem;"
+                                >
+                                <code   class="discord-code"
                                         style="font-size:0.8rem;"
                                 >${pet[0]}</div>`;
     element.append(displayElement);
