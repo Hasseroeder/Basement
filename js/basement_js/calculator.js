@@ -61,7 +61,10 @@ function fetchNeon(){
                     + stats[2] +"."
                     + stats[5]
     ) 
-    .then(response => response.json())
+    .then(response => {
+        console.log(response);
+        return response.json
+    })
 }
 
 function throttle(fn, delay) {
@@ -147,7 +150,7 @@ async function updateStats(){
     });
     updateInternalStats();
 
-    const data = await fetchNeon();
+    const data = await fetchNeonThrottled();
     console.log(data);    
 }
 
