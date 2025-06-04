@@ -24,6 +24,7 @@
 
 .toolbarSubMenu{
   visibility: hidden;
+  z-index: 100;
 }
 
 .toolbarMenu:hover .toolbarSubMenu{
