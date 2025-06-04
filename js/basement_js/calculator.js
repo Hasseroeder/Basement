@@ -55,10 +55,10 @@ const outsideStats = [
 function fetchNeon(){
     return fetch(  neonURL 
                     + stats[0] +"."
-                    + stats[3] +"."
-                    + stats[1] +"."
-                    + stats[4] +"."
                     + stats[2] +"."
+                    + stats[4] +"."
+                    + stats[1] +"."
+                    + stats[3] +"."
                     + stats[5]
     ) 
     .then(response => {
