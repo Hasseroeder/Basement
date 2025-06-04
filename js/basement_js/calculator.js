@@ -111,13 +111,7 @@ function fetchNeon(){
                     + stats[5]
     ) 
     .then(response => {
-        if(Array.isArray(response.json)){
-            petArray = response.json();
-            sortPetArray();
-        }
-        console.log("response is: " + response);
-        console.log("petArray is: " + petArray);
-
+        return response.json();
     })
 }
 
@@ -202,7 +196,9 @@ async function updateStats(){
     });
     updateInternalStats();
 
-    await fetchNeonThrottled();
+    tempArray = await fetchNeonThrottled();
+    petArray = Array.isArray(tempArray) ? tempArray:petArray;
+    sortPetArray();
     console.log(petArray);    
 }
 
