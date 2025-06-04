@@ -246,6 +246,15 @@ const outsideStats = [
 // for outputs 5-6, use 9-10
 // for outputs 7-8, use 1+Res
 
+const statSpan =document.getElementById("statSpan");
+
+let statAmount = 0;
+
+function updateStatSpan(){
+    statAmount = stats.reduce((sum, plus) => sum + plus, 0);
+    statSpan.textContent=`${statAmount} stats`;
+}
+
 function fetchNeon(){
     return fetch(  neonURL 
                     + stats[0] +"."
@@ -339,6 +348,7 @@ async function updateStats(){
     inputs.forEach((input,i) => {
         stats[i]=input?.value;
     });
+    updateStatSpan();
     updateInternalStats();
 
     tempArray = await fetchNeonThrottled();
