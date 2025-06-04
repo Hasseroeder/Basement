@@ -63,7 +63,7 @@ function fetchNeon(){
     ) 
     .then(response => {
         console.log(response);
-        return response.json
+        return response.json();
     })
 }
 
@@ -148,9 +148,8 @@ async function updateStats(){
     });
     updateInternalStats();
 
-    const response = await fetchNeonThrottled();
-    const data = await response.json();           
-    console.log(data);        
+    const data = await fetchNeonThrottled();
+    console.log(data);    
 }
 
 function updateLevelFromNumber(){
