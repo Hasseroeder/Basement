@@ -251,7 +251,7 @@ const statSpan =document.getElementById("statSpan");
 let statAmount = 0;
 
 function updateStatSpan(){
-    statAmount = stats.reduce((sum, plus) => sum + plus, 0);
+    statAmount = stats.reduce((sum, plus) => sum + Number(plus), 0);
     statSpan.textContent=`${statAmount} stats`;
 }
 
