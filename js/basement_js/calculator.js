@@ -57,7 +57,7 @@ const petTypeImages= {
 
 let petArray = [
     // NAME,ANIMATED, ID, ALIAS, TYPE
-    
+    /*
     ["espe",       1, "719733304290705462", [],               "cpatreon"],
     ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
     ["toycat",     0, "653141221249908746", [],               "cpatreon"],
@@ -184,7 +184,7 @@ let petArray = [
     ["toycat",     0, "653141221249908746", [],               "cpatreon"],
     ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
     ["espe",       1, "719733304290705462", [],               "cpatreon"],
-    
+    */
     //TODO: remove all of these comments when I'm done testing
 ];
 
@@ -223,7 +223,7 @@ function outputPetContainer(){
 }
 
 
-const neonURL = "https://neonutil.vercel.app/zoo-stats?s=";
+const neonURL = "https://neonutil.vercel.app/zoo-stats?";
 
 const inputLvl = document.getElementById("inputLvl");
 const sliderLvl = document.getElementById("sliderLvl");
@@ -278,18 +278,20 @@ function updateStatSpan(){
     statSpan.textContent=`${statAmount} stats`;
 }
 
-function fetchNeon(){
-    return fetch(  neonURL 
-                    + stats[0] +"."
-                    + stats[2] +"."
-                    + stats[4] +"."
-                    + stats[1] +"."
-                    + stats[3] +"."
-                    + stats[5]
-    ) 
+function fetchNeon(petString){
+
+    const order = [0, 2, 4, 1, 3, 5];
+    let fetchURL = NeonURL;
+    fetchURL += ( petString? 
+                    `q=${petString}`
+                    : `s=${order.map(i => stats[i]).join('.')}.`
+                );
+
+    return fetch( fetchURL) 
     .then(response => {
         return response.json();
     })
+    
 }
 
 function throttle(fn, delay) {
@@ -378,8 +380,8 @@ async function updateStats(){
 
 async function updatePetArray(){
 
-    //tempArray = await fetchNeonThrottled();
-    //petArray = Array.isArray(tempArray) ? tempArray:petArray;
+    tempArray = await fetchNeonThrottled();
+    petArray = Array.isArray(tempArray) ? tempArray:petArray;
     sortPetArray();
     
 }
