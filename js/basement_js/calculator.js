@@ -282,9 +282,10 @@ function fetchNeon(petString){
 
     const order = [0, 2, 4, 1, 3, 5];
     let fetchURL = neonURL;
+
     fetchURL += ( petString? 
                     `q=${petString}`
-                    : `s=${order.map(i => stats[i]).join('.')}.`
+                    : `s=${order.map(i => stats[i]).join('.')}`
                 );
 
     return fetch( fetchURL) 
