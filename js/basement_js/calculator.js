@@ -8,6 +8,19 @@ function showTimestamps() {
 
 const petContainer = document.getElementById("petContainer");
 
+const petButton = document.getElementById("petButton");
+
+petButton.addEventListener("click", function (){
+
+    showPets = !showPets;
+    petButton.textContent= showPets? "Mode: Matching Pets" : "Mode: Search Pets";
+
+    outputPetContainer();
+});
+
+let showPets = true;
+
+
 const petTypeOrder = {
     "common":   1,
     "uncommon": 2,
@@ -44,7 +57,7 @@ const petTypeImages= {
 
 let petArray = [
     // NAME,ANIMATED, ID, ALIAS, TYPE
-    /*
+    
     ["espe",       1, "719733304290705462", [],               "cpatreon"],
     ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
     ["toycat",     0, "653141221249908746", [],               "cpatreon"],
@@ -171,7 +184,7 @@ let petArray = [
     ["toycat",     0, "653141221249908746", [],               "cpatreon"],
     ["Devlin",     0, "844131789147996210", [ "zk", "yumak" ],"cpatreon"],
     ["espe",       1, "719733304290705462", [],               "cpatreon"],
-    */
+    
     //TODO: remove all of these comments when I'm done testing
 ];
 
@@ -185,18 +198,28 @@ function sortPetArray(){
         }
         return petA[0].localeCompare(petB[0]);  
     });
-    outputPetArray();
+    outputPetContainer();
 }
 
-function outputPetArray(){
+function outputPetContainer(){
     deleteChildren(petContainer);
-    let containerToApply = createColumn(petContainer);
-    petArray.forEach((_,i)=>{
-        displayPet(containerToApply, petArray[i]);
-        if ((i+1) % 40 == 0){
-            containerToApply = createColumn(petContainer);
-        }
-    });
+
+    if (showPets){
+        let containerToApply = createColumn(petContainer);
+        petArray.forEach((_,i)=>{
+            displayPet(containerToApply, petArray[i]);
+            if ((i+1) % 40 == 0){
+                containerToApply = createColumn(petContainer);
+            }
+        });
+    }else{
+        let containerToApply = document.createElement("input");
+        containerToApply.className="calculatorInput";
+        containerToApply.style.width="11.6rem";
+        containerToApply.style.textAlign="start";
+        petContainer.appendChild(containerToApply);
+        containerToApply.focus();
+    }    
 }
 
 
@@ -350,11 +373,15 @@ async function updateStats(){
     });
     updateStatSpan();
     updateInternalStats();
+    updatePetArray();
+}
 
-    tempArray = await fetchNeonThrottled();
-    petArray = Array.isArray(tempArray) ? tempArray:petArray;
+async function updatePetArray(){
+
+    //tempArray = await fetchNeonThrottled();
+    //petArray = Array.isArray(tempArray) ? tempArray:petArray;
     sortPetArray();
-    console.log(petArray);    
+    
 }
 
 function updateLevelFromNumber(){
