@@ -279,10 +279,8 @@ function updateStatSpan(){
 }
 
 function fetchNeon(petString){
-
     const order = [0, 2, 4, 1, 3, 5];
     let fetchURL = neonURL;
-
     fetchURL += ( petString? 
                     `q=${petString}`
                     : `s=${order.map(i => stats[i]).join('.')}`
@@ -292,7 +290,6 @@ function fetchNeon(petString){
     .then(response => {
         return response.json();
     })
-    
 }
 
 function throttle(fn, delay) {
@@ -302,14 +299,12 @@ function throttle(fn, delay) {
   return function throttled(...args) {
     const now       = Date.now();
     const remaining = delay - (now - last);
-
     if (remaining <= 0) {
       clearTimeout(timer);
       timer = null;
       last  = now;
       return fn.apply(this, args);
     }
-
     if (!timer) {
       return new Promise(resolve => {
         timer = setTimeout(() => {
@@ -479,6 +474,11 @@ document.addEventListener("DOMContentLoaded", () => {
     inputs[0].focus();
 
     initFields();
+
+    fetchNeonThrottled("wainie")
+        .then(data => console.log(data))
+        .catch(err  => console.error(err));
+
 });
 
 
