@@ -202,9 +202,8 @@ function sortPetArray(){
 }
 
 function outputPetContainer(){
-    deleteChildren(petContainer);
-
     if (showPets){
+        deleteChildren(petContainer);
         let containerToApply = createColumn(petContainer);
         let headersCreated = 1;
         petArray.forEach((_,i)=>{
@@ -217,8 +216,10 @@ function outputPetContainer(){
                 containerToApply = createColumn(petContainer);
             }
         });
-    }else{
+    }else if (!document.getElementById("textInput")){
+        deleteChildren(petContainer);
         let containerToApply = document.createElement("input");
+        containerToApply.id="textInput";
         containerToApply.className="calculatorInput";
         containerToApply.style.width="11.6rem";
         containerToApply.style.textAlign="start";
