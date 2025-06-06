@@ -406,10 +406,11 @@ function updateStats(){
     updatePetArray();
 }
 
-function updateStatsFromPet(petString){
+async function updateStatsFromPet(petString){
     if (petString){
 
-        pet =fetchNeonThrottled("q="+petString);
+        pet =await fetchNeonThrottled("q="+petString);
+        console.log(pet);
         outputSmallPetContainer(pet);
 
 
