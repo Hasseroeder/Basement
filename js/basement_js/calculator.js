@@ -204,19 +204,20 @@ function sortPetArray(){
 function outputPetContainer(){
     if (showPets){
         deleteChildren(petContainer);
-        let containerToApply = createColumn(petContainer);
+        let wrapper = document.createElement("div");
+        wrapper.style.display="flex";
+        petContainer.appendChild(wrapper);
+
+        let containerToApply = createColumn(wrapper);
         let headersCreated = 1;
         petArray.forEach((_,i)=>{
             if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
                 headersCreated++;
             }
 
-            displayPet(containerToApply, petArray[i],petArray[i-1]);
-
-            console.log("lines: "+(i+headersCreated));
-            
+            displayPet(containerToApply, petArray[i],petArray[i-1]);            
             if ((i+headersCreated) % 40 == 0){
-                containerToApply = createColumn(petContainer);
+                containerToApply = createColumn(wrapper);
             }
         });
     }else if (!document.getElementById("textInput")){
