@@ -222,7 +222,7 @@ function outputPetContainer(){
         containerToApply.className="calculatorInput";
         containerToApply.style.width="11.6rem";
         containerToApply.style.textAlign="start";
-        
+
         containerToApply.addEventListener("blur", function(){
             updateStatsFromPet(containerToApply.value);
         })
@@ -235,6 +235,23 @@ function outputPetContainer(){
         petContainer.appendChild(containerToApply);
         containerToApply.focus();
     }    
+}
+
+function outputSmallPetContainer(pet){
+
+    let parentContainer;
+    if (document.getElementById("smallPetContainer")){
+        parentContainer=document.getElementById("smallPetContainer");
+    }else{
+        parentContainer=document.createElement("div",id)
+        parentContainer.id="smallPetContainer";
+        petContainer.append(parentContainer);
+    }
+    deleteChildren(parentContainer);
+
+    let childContainer=document.createElement("div");
+    childContainer.innerHTML="Hello world! your pet is:"+pet[0];
+    parentContainer.appendChild(childContainer);
 }
 
 
@@ -391,9 +408,11 @@ function updateStats(){
 
 function updateStatsFromPet(petString){
     if (petString){
-        fetchNeonThrottled("q="+petString)
-            .then(data => console.log(data))
-            .catch(err  => console.error(err));
+
+        pet =fetchNeonThrottled("q="+petString);
+        outputSmallPetContainer(pet);
+
+
         updateStatSpan();
         updateInternalStats();
     }
