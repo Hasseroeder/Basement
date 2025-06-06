@@ -255,18 +255,22 @@ function outputSmallPetContainer(pet){
     imageContainer.style.width="3rem";                            
 
     let aliasContainer=document.createElement("div");
-    aliasContainer.innerHTML=pet[3]?pet[3].join(", "): null;
+    aliasContainer.innerHTML="Aliases: "(pet[3]?pet[3].join(", "): "none");
     aliasContainer.className="calculatorInput";
-    aliasContainer.style.width="100%";
-    aliasContainer.style.display="unset";
+    aliasContainer.style.width="max-content";
+    aliasContainer.style.display="block";
     aliasContainer.style.textAlign="unset";
+    aliasContainer.style.fontSize="0.75rem";
+
 
 
     let nameContainer=document.createElement("div");
     nameContainer.innerHTML=pet[0]? pet[0]:"none";
     nameContainer.className="calculatorInput";
-    nameContainer.style.width="100%";
+    nameContainer.style.width="max-content";
+    nameContainer.style.display="block";
     nameContainer.style.textAlign="unset";
+    nameContainer.style.fontWeight="bold";
 
 
     parentContainer.appendChild(imageContainer);
