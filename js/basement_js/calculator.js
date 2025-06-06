@@ -437,7 +437,11 @@ function displayPet(element, pet, prevPet){
     displayElement.style.height="1.25rem";
 
     const imageElement = document.createElement("img");
-    imageElement.src= `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
+    if (petTypeOrder[pet[4]]>=5){
+        imageElement.src= `../media/owo_images/${pet[2]}.png`;
+    }else{
+        imageElement.src= `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
+    }
     imageElement.style ="weight:1rem; height:1rem;";
 
     const codeWrapper = document.createElement("div");
