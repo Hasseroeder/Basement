@@ -208,7 +208,6 @@ function outputPetContainer(){
         let containerToApply = createColumn(petContainer);
         let headersCreated = 1;
         petArray.forEach((_,i)=>{
-
             if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
                 headersCreated++;
             }
@@ -217,14 +216,21 @@ function outputPetContainer(){
             if ((i+headersCreated) % 40 == 0){
                 containerToApply = createColumn(petContainer);
             }
-
-
         });
     }else{
         let containerToApply = document.createElement("input");
         containerToApply.className="calculatorInput";
         containerToApply.style.width="11.6rem";
         containerToApply.style.textAlign="start";
+        containerToApply.addEventListener("blur", function(){
+            updateStatsFromPet(containerToApply.value);
+        })
+        containerToApply.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+            handleInputCompletion(containerToApply.value);
+            }
+        });
+
         petContainer.appendChild(containerToApply);
         containerToApply.focus();
     }    
@@ -290,7 +296,7 @@ function fetchNeon(petString){
     const order = [0, 2, 4, 1, 3, 5];
     let fetchURL = neonURL;
     fetchURL += ( petString? 
-                    `q=${petString}`
+                    petString
                     : `s=${order.map(i => stats[i]).join('.')}`
                 );
 
@@ -373,13 +379,23 @@ function updateOutputs(){
 }
 
 //start of event listener functions
-async function updateStats(){
+function updateStats(){
     inputs.forEach((input,i) => {
         stats[i]=input?.value;
     });
     updateStatSpan();
     updateInternalStats();
     updatePetArray();
+}
+
+function updateStatsFromPet(petString){
+    
+    fetchNeonThrottled("q="+petString)
+        .then(data => console.log(data))
+        .catch(err  => console.error(err));
+
+    updateStatSpan();
+    updateInternalStats();
 }
 
 async function updatePetArray(){
@@ -514,7 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initFields();
 
-    //fetchNeonThrottled("wainie")
+    //fetchNeonThrottled("q=wainie")
     //    .then(data => console.log(data))
     //    .catch(err  => console.error(err));
 
