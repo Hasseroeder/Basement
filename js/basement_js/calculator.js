@@ -244,6 +244,9 @@ function outputSmallPetContainer(pet){
         parentContainer.id="smallPetContainer";
         petContainer.append(parentContainer);
     }
+    parentContainer.style="border: 2px solid #909090;border-radius: 0.2rem;width: 11rem;margin-top: 0.5rem;padding: 0.35rem;";
+
+
     deleteChildren(parentContainer);
 
     let nameContainer=document.createElement("div");
@@ -256,8 +259,8 @@ function outputSmallPetContainer(pet){
     let aliasContainer=document.createElement("div");
     aliasContainer.innerHTML=pet[3]?pet[3].join(", "): null;
 
-    parentContainer.appendChild(nameContainer);
     parentContainer.appendChild(imageContainer);
+    parentContainer.appendChild(nameContainer);
     parentContainer.appendChild(aliasContainer);
 
 }
