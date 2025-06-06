@@ -457,6 +457,7 @@ async function updateStatsFromPet(petString){
         outputSmallPetContainer(pet[0]);
         
         inputs.forEach((input,i) => {
+            console.log(pet);
             input.value=pet[5][order[i]];
             stats[i]=input?.value;
         });
