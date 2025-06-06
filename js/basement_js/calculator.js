@@ -223,9 +223,6 @@ function outputPetContainer(){
         containerToApply.style.width="11.6rem";
         containerToApply.style.textAlign="start";
 
-        containerToApply.addEventListener("blur", function(){
-            updateStatsFromPet(containerToApply.value);
-        })
         containerToApply.addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
             updateStatsFromPet(containerToApply.value);
@@ -249,9 +246,20 @@ function outputSmallPetContainer(pet){
     }
     deleteChildren(parentContainer);
 
-    let childContainer=document.createElement("div");
-    childContainer.innerHTML="Hello world! your pet is:"+pet[0];
-    parentContainer.appendChild(childContainer);
+    let nameContainer=document.createElement("div");
+    nameContainer.innerHTML=pet[0]? pet[0]:"none";
+
+    let imageContainer=document.createElement("img");
+    imageContainer.src=pet[2]?  `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`:
+                                `../media/owo_images/questionmark.jpg`;
+
+    let aliasContainer=document.createElement("div");
+    aliasContainer.innerHTML=pet[3]?pet[3].join(", "): null;
+
+    parentContainer.appendChild(nameContainer);
+    parentContainer.appendChild(imageContainer);
+    parentContainer.appendChild(aliasContainer);
+
 }
 
 
