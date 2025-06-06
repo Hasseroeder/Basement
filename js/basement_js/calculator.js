@@ -263,7 +263,7 @@ function outputSmallPetContainer(pet){
     imageContainer.style.width="3rem";                            
 
     let aliasContainer=document.createElement("div");
-    aliasContainer.innerHTML="Aliases: "(pet[3]?pet[3].join(", "): "none");
+    aliasContainer.innerHTML="Aliases: "+(pet[3]?pet[3].join(", "): "none");
     aliasContainer.className="calculatorInput";
     aliasContainer.style.width="max-content";
     aliasContainer.style.display="block";
