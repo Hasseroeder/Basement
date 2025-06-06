@@ -457,14 +457,21 @@ async function updateStatsFromPet(petString){
         pet = pet[0];
         outputSmallPetContainer(pet);
         
-        inputs.forEach((input,i) => {
-            input.value=pet[5][order[i]];
-            stats[i]=input?.value;
-        });
+        if (pet) {petToStats(pet)}
 
         updateStatSpan();
         updateInternalStats();
     }
+}
+
+function petToStats(pet){
+            
+    const order =[0, 3, 1, 4, 2, 5];
+    inputs.forEach((input,i) => {
+            input.value=pet[5][order[i]];
+            stats[i]=input?.value;
+    });
+
 }
 
 async function updatePetArray(){
