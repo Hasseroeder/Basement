@@ -227,7 +227,7 @@ function outputPetContainer(){
         })
         containerToApply.addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
-            handleInputCompletion(containerToApply.value);
+            updateStatsFromPet(containerToApply.value);
             }
         });
 
