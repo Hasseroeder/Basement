@@ -258,12 +258,12 @@ function outputSmallPetContainer(pet){
     deleteChildren(parentContainer);
 
     let imageContainer=document.createElement("img");
-    imageContainer.src=pet?  `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`:
+    imageContainer.src=pet?  getPetImage(pet):
                                 `../media/owo_images/questionmark.jpg`;
     imageContainer.style.width="3rem";                            
 
     let aliasContainer=document.createElement("div");
-    aliasContainer.innerHTML="Aliases: "+(pet?pet[3].join(", "): null);
+    aliasContainer.innerHTML="Aliases: "+(pet?pet[3].join(", "): "undefined");
     aliasContainer.className="calculatorInput";
     aliasContainer.style.width="max-content";
     aliasContainer.style.display="block";
@@ -273,7 +273,7 @@ function outputSmallPetContainer(pet){
 
 
     let nameContainer=document.createElement("div");
-    nameContainer.innerHTML=pet? pet[0]:"???";
+    nameContainer.innerHTML=pet? pet[0]:"undefined";
     nameContainer.className="calculatorInput";
     nameContainer.style.width="max-content";
     nameContainer.style.display="block";
@@ -515,11 +515,7 @@ function displayPet(element, pet, prevPet){
     displayElement.style.height="1.25rem";
 
     const imageElement = document.createElement("img");
-    if (petTypeOrder[pet[4]]<=5){
-        imageElement.src= `../media/owo_images/${pet[2]}.png`;
-    }else{
-        imageElement.src= `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
-    }
+    imageElement.src= getPetImage(pet);
     imageElement.style ="weight:1rem; height:1rem;";
 
     const codeWrapper = document.createElement("div");
@@ -549,6 +545,14 @@ function displayPet(element, pet, prevPet){
     codeWrapper.appendChild(tooltip);
     displayElement.appendChild(codeWrapper);
     element.append(displayElement);
+}
+
+function getPetImage(pet){
+    if (petTypeOrder[pet[4]]<=5){
+        return `../media/owo_images/${pet[2]}.png`;
+    }else{
+        return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
+    }
 }
 
 function createColumn(element){
