@@ -225,7 +225,7 @@ function outputPetContainer(){
         /*containerToApply.addEventListener("blur", function(){
             updateStatsFromPet(containerToApply.value);
         })*/
-        containerToApply.addEventListener("submit", function(event) {
+        containerToApply.addEventListener("change", function(event) {
             updateStatsFromPet(containerToApply.value);
             
         });
