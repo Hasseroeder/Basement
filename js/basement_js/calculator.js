@@ -212,6 +212,9 @@ function outputPetContainer(){
             }
 
             displayPet(containerToApply, petArray[i],petArray[i-1]);
+
+            console.log("lines: "+(i+headersCreated));
+            
             if ((i+headersCreated) % 40 == 0){
                 containerToApply = createColumn(petContainer);
             }
@@ -450,7 +453,6 @@ function updateStats(){
 }
 
 async function updateStatsFromPet(petString){
-    const order = [0, 2, 4, 1, 3, 5];
     if (petString){
         petString = petString.toLowerCase();
         pet =await fetchNeonThrottled("q="+petString);
