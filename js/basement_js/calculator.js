@@ -222,13 +222,12 @@ function outputPetContainer(){
         containerToApply.className="calculatorInput";
         containerToApply.style.width="11.6rem";
         containerToApply.style.textAlign="start";
-        containerToApply.addEventListener("blur", function(){
+        /*containerToApply.addEventListener("blur", function(){
             updateStatsFromPet(containerToApply.value);
-        })
-        containerToApply.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
+        })*/
+        containerToApply.addEventListener("submit", function(event) {
             updateStatsFromPet(containerToApply.value);
-            }
+            
         });
 
         petContainer.appendChild(containerToApply);
