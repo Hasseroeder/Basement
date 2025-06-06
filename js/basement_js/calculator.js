@@ -38,25 +38,25 @@ const petTypeOrder = {
     "cpatreon": 14
 };
 
-const petTypeImages= {
-    "common":   "../media/owo_images/common.png",
-    "uncommon": "../media/owo_images/uncommon.png",
-    "rare":     "../media/owo_images/rare.png",
-    "epic":     "../media/owo_images/epic.png",
-    "mythical": "../media/owo_images/mythic.png",
-    "legendary":"../media/owo_images/legendary.gif",
-    "gem":      "../media/owo_images/gem.gif",
-    "bot":      "../media/owo_images/bot.gif",
-    "distorted":"../media/owo_images/distorted.gif",
-    "fabled":   "../media/owo_images/fabled.gif",
-    "hidden:":  "../media/owo_images/hidden.gif",
-    "special":  "../media/owo_images/special.png",
-    "patreon":  "../media/owo_images/patreon.png",
-    "cpatreon": "../media/owo_images/patreon.gif"
+const petTypeNames= {
+    "common":   "Common",
+    "uncommon": "Uncommon",
+    "rare":     "Rare",
+    "epic":     "Epic",
+    "mythical": "Mythic",
+    "legendary":"Legendary",
+    "gem":      "Gem",
+    "bot":      "Bot",
+    "distorted":"Distorted",
+    "fabled":   "Fabled",
+    "hidden:":  "Hidden",
+    "special":  "Special",
+    "patreon":  "Patreon",
+    "cpatreon": "Custom"
 }
 
 let petArray = [
-    // NAME,ANIMATED, ID, ALIAS, TYPE
+    // NAME,ANIMATED, EMOJI, ALIAS, TYPE
     /*
     ["espe",       1, "719733304290705462", [],               "cpatreon"],
     ["250kpeacock",1, "666875798590062592", ["250k", "250"],  "special"],
@@ -206,11 +206,19 @@ function outputPetContainer(){
 
     if (showPets){
         let containerToApply = createColumn(petContainer);
+        let headersCreated = 1;
         petArray.forEach((_,i)=>{
-            displayPet(containerToApply, petArray[i]);
-            if ((i+1) % 40 == 0){
+
+            if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
+                headersCreated++;
+            }
+
+            displayPet(containerToApply, petArray[i],petArray[i-1]);
+            if ((i+headersCreated) % 40 == 0){
                 containerToApply = createColumn(petContainer);
             }
+
+
         });
     }else{
         let containerToApply = document.createElement("input");
@@ -396,13 +404,32 @@ function updateLevelFromSlider(){
 }
 //end of event listener functions
 
-function displayPet(element, pet){
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function displayPet(element, pet, prevPet){
+
+    if (!prevPet || pet[4]!=prevPet[4]){
+        const headerElement = document.createElement("div");
+        headerElement.textContent   = " ----- "
+                                    + petTypeNames[pet[4]]
+                                    + " ----- ";
+        headerElement.style.whiteSpace="preserve-spaces";
+        headerElement.style.height="1rem";
+        headerElement.style.paddingTop="0.25rem";
+        headerElement.style.fontSize="0.75rem";
+        headerElement.style.alignContent="center";
+        element.appendChild(headerElement);
+    }
+
     const displayElement = document.createElement("div");
     displayElement.style.display = "flex";
     displayElement.style.alignItems="center";
+    displayElement.style.height="1.25rem";
 
     const imageElement = document.createElement("img");
-    imageElement.src=petTypeImages[pet[4]];
+    imageElement.src= `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
     imageElement.style ="weight:1rem; height:1rem;";
 
     const codeWrapper = document.createElement("div");
@@ -475,9 +502,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initFields();
 
-    fetchNeonThrottled("wainie")
-        .then(data => console.log(data))
-        .catch(err  => console.error(err));
+    //fetchNeonThrottled("wainie")
+    //    .then(data => console.log(data))
+    //    .catch(err  => console.error(err));
 
 });
 
