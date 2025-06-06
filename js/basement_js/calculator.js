@@ -389,13 +389,13 @@ function updateStats(){
 }
 
 function updateStatsFromPet(petString){
-    
-    fetchNeonThrottled("q="+petString)
-        .then(data => console.log(data))
-        .catch(err  => console.error(err));
-
-    updateStatSpan();
-    updateInternalStats();
+    if (petString){
+        fetchNeonThrottled("q="+petString)
+            .then(data => console.log(data))
+            .catch(err  => console.error(err));
+        updateStatSpan();
+        updateInternalStats();
+    }
 }
 
 async function updatePetArray(){
