@@ -249,15 +249,25 @@ function outputSmallPetContainer(pet){
 
     deleteChildren(parentContainer);
 
-    let nameContainer=document.createElement("div");
-    nameContainer.innerHTML=pet[0]? pet[0]:"none";
-
     let imageContainer=document.createElement("img");
     imageContainer.src=pet[2]?  `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`:
                                 `../media/owo_images/questionmark.jpg`;
+    imageContainer.style.width="3rem";                            
 
     let aliasContainer=document.createElement("div");
     aliasContainer.innerHTML=pet[3]?pet[3].join(", "): null;
+    aliasContainer.className="calculatorInput";
+    aliasContainer.style.width="100%";
+    aliasContainer.style.display="unset";
+    aliasContainer.style.textAlign="unset";
+
+
+    let nameContainer=document.createElement("div");
+    nameContainer.innerHTML=pet[0]? pet[0]:"none";
+    nameContainer.className="calculatorInput";
+    nameContainer.style.width="100%";
+    nameContainer.style.textAlign="unset";
+
 
     parentContainer.appendChild(imageContainer);
     parentContainer.appendChild(nameContainer);
