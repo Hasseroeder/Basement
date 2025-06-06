@@ -454,10 +454,10 @@ async function updateStatsFromPet(petString){
     if (petString){
 
         pet =await fetchNeonThrottled("q="+petString);
-        outputSmallPetContainer(pet[0]);
+        pet = pet[0];
+        outputSmallPetContainer(pet);
         
         inputs.forEach((input,i) => {
-            console.log(pet);
             input.value=pet[5][order[i]];
             stats[i]=input?.value;
         });
