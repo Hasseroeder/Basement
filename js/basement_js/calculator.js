@@ -244,7 +244,15 @@ function outputSmallPetContainer(pet){
         parentContainer.id="smallPetContainer";
         petContainer.append(parentContainer);
     }
-    parentContainer.style="border: 2px solid #909090;border-radius: 0.2rem;width: 11rem;margin-top: 0.5rem;padding: 0.35rem;";
+    parentContainer.style=` border-top: 2px solid #909090;
+                            border-left: 2px solid #909090;
+                            border-right: 2px solid #606060;
+                            border-bottom: 2px solid #606060;
+                            
+                            border-radius: 0.2rem;  
+                            width: 11rem;
+                            margin-top: 0.5rem;
+                            padding: 0.35rem;`;
 
 
     deleteChildren(parentContainer);
