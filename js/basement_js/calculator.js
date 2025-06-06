@@ -410,8 +410,8 @@ async function updateStatsFromPet(petString){
     if (petString){
 
         pet =await fetchNeonThrottled("q="+petString);
-        console.log(pet);
-        outputSmallPetContainer(pet);
+        console.log(pet[0]);
+        outputSmallPetContainer(pet[0]);
 
 
         updateStatSpan();
