@@ -243,7 +243,7 @@ function outputSmallPetContainer(pet){
     if (document.getElementById("smallPetContainer")){
         parentContainer=document.getElementById("smallPetContainer");
     }else{
-        parentContainer=document.createElement("div",id)
+        parentContainer=document.createElement("div")
         parentContainer.id="smallPetContainer";
         petContainer.append(parentContainer);
     }
