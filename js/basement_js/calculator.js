@@ -39,20 +39,20 @@ const petTypeOrder = {
 };
 
 const petTypeNames= {
-    "common":   "Common",
-    "uncommon": "Uncommon",
-    "rare":     "Rare",
-    "epic":     "Epic",
-    "mythical": "Mythic",
-    "legendary":"Legendary",
-    "gem":      "Gem",
-    "bot":      "Bot",
-    "distorted":"Distorted",
-    "fabled":   "Fabled",
-    "hidden:":  "Hidden",
-    "special":  "Special",
-    "patreon":  "Patreon",
-    "cpatreon": "Custom"
+    "common":   "——— Common ———",
+    "uncommon": "—— Uncommon ——",
+    "rare":     "———— Rare ————",
+    "epic":     "———— Epic ————",
+    "mythical": "——— Mythic ———",
+    "legendary":"—— Legendary ——",
+    "gem":      "———— Gem —————",
+    "bot":      "———— Bot —————",
+    "distorted":"—— Distorted ——",
+    "fabled":   "——— Fabled ———",
+    "hidden:":  "——— Hidden ———",
+    "special":  "——— Special ———",
+    "patreon":  "——— Patreon ———",
+    "cpatreon": "——— Custom ———"
 }
 
 let petArray = [
@@ -412,14 +412,16 @@ function displayPet(element, pet, prevPet){
 
     if (!prevPet || pet[4]!=prevPet[4]){
         const headerElement = document.createElement("div");
-        headerElement.textContent   = " ----- "
+        headerElement.textContent   = " ------"
                                     + petTypeNames[pet[4]]
-                                    + " ----- ";
+                                    + "------ ";
         headerElement.style.whiteSpace="preserve-spaces";
         headerElement.style.height="1rem";
         headerElement.style.paddingTop="0.25rem";
         headerElement.style.fontSize="0.75rem";
         headerElement.style.alignContent="center";
+        headerElement.style.fontFamily="monospace";
+        headerElement.style.textAlign="center";
         element.appendChild(headerElement);
     }
 
