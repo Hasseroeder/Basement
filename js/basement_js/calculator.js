@@ -326,26 +326,35 @@ function fetchNeon(petString){
 
 function throttle(fn, delay) {
   let last = 0,
-      timer = null;
+      timer = null,
+      pending = null;
 
   return function throttled(...args) {
     const now       = Date.now();
     const remaining = delay - (now - last);
+
     if (remaining <= 0) {
       clearTimeout(timer);
-      timer = null;
-      last  = now;
-      return fn.apply(this, args);
+      timer  = null;
+      last   = now;
+      return Promise.resolve(fn.apply(this, args));
     }
-    if (!timer) {
-      return new Promise(resolve => {
-        timer = setTimeout(() => {
-          last  = Date.now();
-          timer = null;
-          resolve(fn.apply(this, args));
-        }, remaining);
-      });
+
+    if (pending) {
+      return pending;
     }
+
+    pending = new Promise(resolve => {
+      timer = setTimeout(() => {
+        last    = Date.now();
+        timer   = null;
+        const result = fn.apply(this, args);
+        resolve(result);
+        pending = null;
+      }, remaining);
+    });
+
+    return pending;
   };
 }
 
