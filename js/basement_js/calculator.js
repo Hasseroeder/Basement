@@ -499,7 +499,7 @@ function capitalizeFirstLetter(str) {
 function displayPet(element, pet, prevPet){
 
     if (!prevPet || pet[4]!=prevPet[4]){
-        element.appendChild(createHeader[pet]);
+        element.appendChild(createHeader(pet));
     }
 
     const wrapper = document.createElement("div");
