@@ -516,7 +516,7 @@ function displayPet(element, pet, prevPet){
     const codeElement = document.createElement("code");
     codeElement.textContent=pet[0];
     codeElement.className ="discord-code";
-    codeElement.style.fontSize="0.7rem";
+    codeElement.style="font-size: 0.7rem; line-height:unset;";
 
     const tooltip = document.createElement("span");
     tooltip.innerHTML = pet[3].length == 0 ? "no Alias" : pet[3].join(", ");

@@ -27,7 +27,7 @@
 .tooltip .pet-tooltip-text {
     z-index: 100;
     width: max-content;
-    padding: 0.15rem;
+    padding: 0.1rem;
     pointer-events: none;
     border: 2.5px solid rgb(25, 25, 25);
     font-size: 0.7rem;
