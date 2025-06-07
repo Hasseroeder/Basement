@@ -241,11 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 modifyValueDirect(i, parseInt(this.value));
             };
 
-
             input.id = `num${i}`;
-            input.className="calculatorInput no-arrows";
+            input.className="discord-code-lite no-arrows";
 
-            
             const span =document.createElement("span");
             span.textContent="Lvl";
             span.className="calculatorLevel";
@@ -253,7 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const tooltip = document.createElement("span");
             tooltip.innerHTML = getUpgradeCost(i, 0).toLocaleString();
             tooltip.className="tooltip-text";
-
 
             const btnPlus = document.createElement("button");
             btnPlus.textContent = ">";

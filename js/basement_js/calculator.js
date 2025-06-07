@@ -224,7 +224,7 @@ function outputPetContainer(){
         deleteChildren(petContainer);
         let containerToApply = document.createElement("input");
         containerToApply.id="textInput";
-        containerToApply.className="calculatorInput";
+        containerToApply.className="discord-code-lite";
         containerToApply.style.width="11.6rem";
         containerToApply.style.textAlign="start";
 
@@ -241,26 +241,25 @@ function outputPetContainer(){
 
 function outputSmallPetContainer(pet){
 
-    let parentContainer;
+    let wrapper;
     if (document.getElementById("smallPetContainer")){
-        parentContainer=document.getElementById("smallPetContainer");
+        wrapper=document.getElementById("smallPetContainer");
     }else{
-        parentContainer=document.createElement("div")
-        parentContainer.id="smallPetContainer";
-        petContainer.append(parentContainer);
+        wrapper=document.createElement("div")
+        wrapper.id="smallPetContainer";
+        petContainer.append(wrapper);
     }
-    parentContainer.style=` border-top: 2px solid #909090;
-                            border-left: 2px solid #909090;
-                            border-right: 2px solid #606060;
-                            border-bottom: 2px solid #606060;
-                            
-                            border-radius: 0.2rem;  
-                            width: 11rem;
-                            margin-top: 0.5rem;
-                            padding: 0.35rem;`;
+    wrapper.style=` border-top: 2px solid #909090;
+                    border-left: 2px solid #909090;
+                    border-right: 2px solid #606060;
+                    border-bottom: 2px solid #606060;
+                    
+                    border-radius: 0.2rem;  
+                    width: 11rem;
+                    margin-top: 0.5rem;
+                    padding: 0.35rem;`;
 
-
-    deleteChildren(parentContainer);
+    deleteChildren(wrapper);
 
     let imageContainer=document.createElement("img");
     imageContainer.src=pet?  getPetImage(pet):
@@ -269,27 +268,23 @@ function outputSmallPetContainer(pet){
 
     let aliasContainer=document.createElement("div");
     aliasContainer.innerHTML="Aliases: "+(pet?pet[3].join(", "): "undefined");
-    aliasContainer.className="calculatorInput";
+    aliasContainer.className="discord-code-lite";
     aliasContainer.style.width="max-content";
     aliasContainer.style.display="block";
     aliasContainer.style.textAlign="unset";
     aliasContainer.style.fontSize="0.75rem";
 
-
-
     let nameContainer=document.createElement("div");
     nameContainer.innerHTML=pet? pet[0]:"undefined";
-    nameContainer.className="calculatorInput";
+    nameContainer.className="discord-code-lite";
     nameContainer.style.width="max-content";
     nameContainer.style.display="block";
     nameContainer.style.textAlign="unset";
     nameContainer.style.fontWeight="bold";
 
-
-    parentContainer.appendChild(imageContainer);
-    parentContainer.appendChild(nameContainer);
-    parentContainer.appendChild(aliasContainer);
-
+    wrapper.appendChild(imageContainer);
+    wrapper.appendChild(nameContainer);
+    wrapper.appendChild(aliasContainer);
 }
 
 
