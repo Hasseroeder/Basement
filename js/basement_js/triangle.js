@@ -221,7 +221,7 @@ async function loadPets() {
 
 export async function initializeTriangle(){
 
-    const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('1myChart');
     const overlayCtx = document.getElementById("overlayCanvas");
     const areaCtx = document.getElementById("areaCanvas");
     const labelCtx = document.getElementById("labelCanvas");

@@ -226,7 +226,7 @@ function outputPetContainer(){
         containerToApply.id="textInput";
         containerToApply.className="discord-code-lite";
         containerToApply.style.width="11.6rem";
-        containerToApply.style.textAlign="start";
+        containerToApply.style.textAlign="unset";
 
         containerToApply.addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
@@ -269,18 +269,16 @@ function outputSmallPetContainer(pet){
     let aliasContainer=document.createElement("div");
     aliasContainer.innerHTML="Aliases: "+(pet?pet[3].join(", "): "undefined");
     aliasContainer.className="discord-code-lite";
-    aliasContainer.style.width="max-content";
-    aliasContainer.style.display="block";
-    aliasContainer.style.textAlign="unset";
-    aliasContainer.style.fontSize="0.75rem";
+    aliasContainer.style= ` width: max-content;
+                            text-align:unset;
+                            font-size:0.75rem`;
 
     let nameContainer=document.createElement("div");
     nameContainer.innerHTML=pet? pet[0]:"undefined";
     nameContainer.className="discord-code-lite";
-    nameContainer.style.width="max-content";
-    nameContainer.style.display="block";
-    nameContainer.style.textAlign="unset";
-    nameContainer.style.fontWeight="bold";
+    nameContainer.style= `  width: max-content;
+                            text-align:unset;
+                            font-weight:bold;`;
 
     wrapper.appendChild(imageContainer);
     wrapper.appendChild(nameContainer);
@@ -501,37 +499,19 @@ function capitalizeFirstLetter(str) {
 function displayPet(element, pet, prevPet){
 
     if (!prevPet || pet[4]!=prevPet[4]){
-        const headerElement = document.createElement("div");
-        const headerSubElement = document.createElement("div");
-        
-        headerElement.style.width="10.8rem";
-
-        headerSubElement.textContent   = " ------"
-                                    + petTypeNames[pet[4]]
-                                    + "------ ";
-        headerSubElement.style.whiteSpace="preserve-spaces";
-        headerSubElement.style.height="1rem";
-        headerSubElement.style.paddingTop="0.25rem";
-        headerSubElement.style.fontSize="0.75rem";
-        headerSubElement.style.alignContent="center";
-        headerSubElement.style.fontFamily="monospace";
-        headerSubElement.style.textAlign="center";
-
-        headerElement.appendChild(headerSubElement);
-        element.appendChild(headerElement);
+        element.appendChild(createHeader[pet]);
     }
 
-    const displayElement = document.createElement("div");
-    displayElement.style.display = "flex";
-    displayElement.style.alignItems="center";
-    displayElement.style.height="1.25rem";
+    const wrapper = document.createElement("div");
+    wrapper.style = "display:flex; align-items:center; height:1.25rem;"
+
+    const codeWrapper = document.createElement("div");
+    codeWrapper.className="tooltip";
+    codeWrapper.style="display:flex; align-items:center; gap:0.1rem;";
 
     const imageElement = document.createElement("img");
     imageElement.src= getPetImage(pet);
     imageElement.style ="weight:1rem; height:1rem;";
-
-    const codeWrapper = document.createElement("div");
-    codeWrapper.className="tooltip";
 
     const codeElement = document.createElement("code");
     codeElement.textContent=pet[0];
@@ -541,23 +521,41 @@ function displayPet(element, pet, prevPet){
     const tooltip = document.createElement("span");
     tooltip.innerHTML = pet[3].length == 0 ? "no Alias" : pet[3].join(", ");
     tooltip.className="tooltip-text";
+    tooltip.style="all: unset;";
+
     tooltip.style.zIndex = '100';
-    tooltip.style.transform='unset';
-    tooltip.style.width='max-content';
-    tooltip.style.padding='0.15rem';
+    tooltip.style.width='max-content'; //dunno if i should keep this
+    tooltip.style.padding='0.125rem';
     tooltip.style.pointerEvents ='none';
     tooltip.style.border ="2.5px solid #191919";
     tooltip.style.fontSize="0.7rem";
     tooltip.style.borderRadius="0.2rem";
-    tooltip.style.bottom="-9%";
-    tooltip.style.left="105%";
 
-    displayElement.appendChild(imageElement);
+    codeWrapper.appendChild(imageElement);
     codeWrapper.appendChild(codeElement);
     codeWrapper.appendChild(tooltip);
-    displayElement.appendChild(codeWrapper);
-    element.append(displayElement);
+    wrapper.appendChild(codeWrapper);
+    element.append(wrapper);
 }
+
+function createHeader(pet){
+    const headerElement = document.createElement("div");
+    const headerSubElement = document.createElement("div");
+    
+    headerElement.style.width="10.8rem";
+
+    headerSubElement.textContent   = ` ------${petTypeNames[pet[4]]}------ `;
+    headerSubElement.style=`white-space:preserve-spaces;
+                            height:1rem;
+                            padding-top:0.25rem;
+                            font-size:0.75rem;
+                            align-content:center;
+                            font-family:monospace;
+                            text-align:center;`;
+    headerElement.appendChild(headerSubElement);
+    return headerElement;
+}
+
 
 function getPetImage(pet){
     if (petTypeOrder[pet[4]]<=5){
