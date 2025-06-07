@@ -522,14 +522,6 @@ function displayPet(element, pet, prevPet){
     tooltip.innerHTML = pet[3].length == 0 ? "no Alias" : pet[3].join(", ");
     tooltip.className="pet-tooltip-text";
 
-    tooltip.style.zIndex = '100';
-    tooltip.style.width='max-content'; //dunno if i should keep this
-    tooltip.style.padding='0.125rem';
-    tooltip.style.pointerEvents ='none';
-    tooltip.style.border ="2.5px solid #191919";
-    tooltip.style.fontSize="0.7rem";
-    tooltip.style.borderRadius="0.2rem";
-
     codeWrapper.appendChild(imageElement);
     codeWrapper.appendChild(codeElement);
     codeWrapper.appendChild(tooltip);
