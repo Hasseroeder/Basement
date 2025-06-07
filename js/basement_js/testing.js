@@ -207,3 +207,13 @@ function deleteChildren(element) {
         element.removeChild(element.firstChild);
     }
 }
+
+function getPetImage(pet, wantAnimated){
+    if (petTypeOrder[pet[4]]<=5){
+        return `../media/owo_images/${pet[2]}.png`;
+    }else if( wantAnimated && pet[1] == 1){
+        return `https://cdn.discordapp.com/emojis/${pet[2]}.gif?size=96`;
+    }else{
+        return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
+    }
+}
