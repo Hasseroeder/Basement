@@ -201,3 +201,9 @@ async function updateStatsFromPet(petString){
         outputSmallPetContainer(pet);
     }
 }
+
+function deleteChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
