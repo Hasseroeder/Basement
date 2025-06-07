@@ -520,8 +520,7 @@ function displayPet(element, pet, prevPet){
 
     const tooltip = document.createElement("span");
     tooltip.innerHTML = pet[3].length == 0 ? "no Alias" : pet[3].join(", ");
-    tooltip.className="tooltip-text";
-    tooltip.style="all: unset;";
+    tooltip.className="pet-tooltip-text";
 
     tooltip.style.zIndex = '100';
     tooltip.style.width='max-content'; //dunno if i should keep this
