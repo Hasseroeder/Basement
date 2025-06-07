@@ -262,7 +262,7 @@ function outputSmallPetContainer(pet){
     deleteChildren(wrapper);
 
     let imageContainer=document.createElement("img");
-    imageContainer.src=pet?  getPetImage(pet):
+    imageContainer.src=pet?  getPetImage(pet,true):
                                 `../media/owo_images/questionmark.jpg`;
     imageContainer.style.width="3rem";                            
 
@@ -530,27 +530,29 @@ function displayPet(element, pet, prevPet){
 }
 
 function createHeader(pet){
+    const wrapper = document.createElement("div");
     const headerElement = document.createElement("div");
-    const headerSubElement = document.createElement("div");
     
-    headerElement.style.width="10.8rem";
+    wrapper.style.width="10.8rem";
 
-    headerSubElement.textContent   = ` ------${petTypeNames[pet[4]]}------ `;
-    headerSubElement.style=`white-space:preserve-spaces;
+    headerElement.textContent   = ` ------${petTypeNames[pet[4]]}------ `;
+    headerElement.style=`white-space:preserve-spaces;
                             height:1rem;
                             padding-top:0.25rem;
                             font-size:0.75rem;
                             align-content:center;
                             font-family:monospace;
                             text-align:center;`;
-    headerElement.appendChild(headerSubElement);
-    return headerElement;
+    wrapper.appendChild(headerElement);
+    return wrapper;
 }
 
 
-function getPetImage(pet){
+function getPetImage(pet, wantAnimated){
     if (petTypeOrder[pet[4]]<=5){
         return `../media/owo_images/${pet[2]}.png`;
+    }else if( wantAnimated && pet[1] == 1){
+        return `https://cdn.discordapp.com/emojis/${pet[2]}.gif?size=96`;
     }else{
         return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
     }
