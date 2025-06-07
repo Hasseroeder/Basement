@@ -519,7 +519,13 @@ function displayPet(element, pet, prevPet){
     codeElement.style="font-size: 0.7rem; line-height:unset;";
 
     const tooltip = document.createElement("span");
-    tooltip.innerHTML = pet[3].length == 0 ? "no Alias" : pet[3].join(", ");
+
+    const aliases = []
+        .concat(pet[3] || [])         
+        .filter(a => typeof a === 'string' && a.trim()); 
+    tooltip.innerHTML = aliases.length
+        ? aliases.join(', ')
+        : 'no Alias';
     tooltip.className="pet-tooltip-text";
 
     codeWrapper.appendChild(imageElement);
