@@ -49,7 +49,7 @@ const petTypeNames= {
     "bot":      "——— Bot ———",
     "distorted":"— Distorted —",
     "fabled":   "—— Fabled ——",
-    "hidden:":  "—— Hidden ——",
+    "hidden":   "—— Hidden ——",
     "special":  "—— Special ——",
     "patreon":  "—— Patreon ——",
     "cpatreon": "—— Custom ——"
