@@ -25,23 +25,15 @@
 }
 
 .tooltip .pet-tooltip-text {
+    z-index: 100;
+    width: max-content;
+    padding: 0.15rem;
+    pointer-events: none;
+    border: 2.5px solid rgb(25, 25, 25);
+    font-size: 0.7rem;
+    border-radius: 0.2rem;
     visibility: hidden;
     background-color: #333;
-    color: lightgray;
-    text-align: center;
-    padding: 0.2rem;
-    width:4rem;
-    border-left: 0.125rem   solid #D3D3D3;
-    border-right: 0.125rem   solid #8D8D8D; 
-    border-top: 0.125rem   solid #D3D3D3;  
-    border-bottom: 0.125rem   solid #8D8D8D;
-
-    /* Position */
-    position: absolute;
-    bottom: 125%; 
-    left: 110%;
-    transform: translateX(-50%);
-    
 }
 
 
