@@ -510,7 +510,7 @@ function displayPet(element, pet, prevPet){
     codeWrapper.style="display:flex; align-items:center; gap:0.1rem;";
 
     const imageElement = document.createElement("img");
-    imageElement.src= getPetImage(pet);
+    imageElement.src= getPetImage(pet, true);           // TODO: decide whether to keep animated=true
     imageElement.style ="weight:1rem; height:1rem;";
 
     const codeElement = document.createElement("code");
