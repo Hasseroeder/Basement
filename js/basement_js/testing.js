@@ -74,19 +74,9 @@ const fetchNeonThrottled = throttle(fetchNeon, 500);
 
 function onInput(e) {
 
-    console.log("hello world");
-
     const q = e.target.value.trim();
     if (!q) return hideSuggestions();
 
-    //items = STATIC_LIST.filter(s =>
-    //  s.toLowerCase().startsWith(q.toLowerCase())
-    //).slice(0,5);
-    //renderSuggestions();
-
-    console.log(items);
-
-    // Or if you need to fetch from server, debounce it:
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(async ()=> {
 
@@ -158,6 +148,56 @@ function highlight() {
 
 function applyItem(i) {
     input.value = items[i];
+    updateStatsFromPet(input.value);
     hideSuggestions();
     input.focus();
+}
+
+function outputSmallPetContainer(pet){
+
+    const wrapper = document.getElementById("petOutput");
+    
+    wrapper.style=` border-top: 2px solid #909090;
+                    border-left: 2px solid #909090;
+                    border-right: 2px solid #606060;
+                    border-bottom: 2px solid #606060;
+                    
+                    border-radius: 0.2rem;  
+                    width: 11rem;
+                    margin-top: 0.5rem;
+                    padding: 0.35rem;`;
+
+    deleteChildren(wrapper);
+
+    let imageContainer=document.createElement("img");
+    imageContainer.src=pet?  getPetImage(pet,true):
+                                `../media/owo_images/questionmark.jpg`;
+    imageContainer.style.width="3rem";                            
+
+    let aliasContainer=document.createElement("div");
+    aliasContainer.innerHTML="Aliases: "+(pet?pet[3].join(", "): "undefined");
+    aliasContainer.className="discord-code-lite";
+    aliasContainer.style= ` width: max-content;
+                            text-align:unset;
+                            font-size:0.75rem`;
+
+    let nameContainer=document.createElement("div");
+    nameContainer.innerHTML=pet? pet[0]:"undefined";
+    nameContainer.className="discord-code-lite";
+    nameContainer.style= `  width: max-content;
+                            text-align:unset;
+                            font-weight:bold;`;
+
+    wrapper.appendChild(imageContainer);
+    wrapper.appendChild(nameContainer);
+    wrapper.appendChild(aliasContainer);
+}
+
+async function updateStatsFromPet(petString){
+    if (petString){
+        petString = petString.toLowerCase();
+        pet =await fetchNeonThrottled("q="+petString);
+        pet = pet[0];
+        outputSmallPetContainer(pet);
+    }
 }
