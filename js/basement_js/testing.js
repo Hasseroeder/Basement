@@ -1,16 +1,25 @@
 const input        = document.getElementById('search');
 const container    = document.getElementById('suggestions');
-const STATIC_LIST  = [
-    "apple",
-    "banana",
-    "application",
-    "bamboo",
-    "boobs",
-    "penis"
-];
 let items          = [];      // current array of suggestions
 let selectedIndex  = -1;      // for arrow navigation
 let debounceTimer;
+
+const petTypeOrder = {
+    "common":   1,
+    "uncommon": 2,
+    "rare":     3,
+    "epic":     4,
+    "mythical": 5,
+    "legendary":6,
+    "gem":      7,
+    "bot":      8,
+    "distorted":9,
+    "fabled":   10,
+    "hidden:":  11,
+    "special":  12,
+    "patreon":  13,
+    "cpatreon": 14
+};
 
 const neonURL = "https://neonutil.vercel.app/zoo-stats?";
 
