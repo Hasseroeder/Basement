@@ -6,9 +6,33 @@
     <title>Basement Testing</title>
     <link rel="icon" type="image/png" href="media/misc_images/favicon.png">
     <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+
   </head>
   <body>
-    
-    <p>no tests right now.</p>
+    <style>
+      .suggestions {
+        border: 1px solid #ccc;
+        background: white;
+        z-index: 1000;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;        /* hide when empty */
+      }
+
+      .suggestion {
+        padding: 8px;
+        cursor: pointer;
+      }
+
+      .suggestion:hover,
+      .suggestion.active {
+        background: #f0f0f0;
+      }
+    </style>
+    <input  id="search"
+            autocomplete="off">
+    <div id="suggestions" class="suggestions"></div>
+  
+  <script src="../js/basement_js/testing.js"></script>
   </body>
 </html>
