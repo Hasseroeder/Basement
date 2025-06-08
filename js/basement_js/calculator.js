@@ -15,7 +15,7 @@ petButton.addEventListener("click", function (){
     showPets = !showPets;
     petButton.textContent= showPets? "Mode: Matching Pets" : "Mode: Search Pets";
 
-    outputPetContainer();
+    updatePetArray();
 });
 
 let showPets = true;
@@ -224,6 +224,7 @@ function outputPetContainer(){
         deleteChildren(petContainer);
         let containerToApply = document.createElement("input");
         containerToApply.id="textInput";
+        containerToApply.autocomplete="off";
         containerToApply.className="discord-code-lite";
         containerToApply.style.width="11.6rem";
         containerToApply.style.textAlign="unset";
@@ -583,7 +584,6 @@ function deleteChildren(element) {
 document.addEventListener("DOMContentLoaded", () => {
 
     showTimestamps();
-
     inputs.forEach((input,i)=>{
         input.addEventListener("change", function(){    
             if (event.isTrusted) {
@@ -604,11 +604,6 @@ document.addEventListener("DOMContentLoaded", () => {
     inputs[0].focus();
 
     initFields();
-
-    //fetchNeonThrottled("q=wainie")
-    //    .then(data => console.log(data))
-    //    .catch(err  => console.error(err));
-
 });
 
 
