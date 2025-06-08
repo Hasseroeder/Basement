@@ -130,6 +130,17 @@ function renderSuggestions() {
             applyItem(i);
         });
         container.appendChild(div);
+
+        const aliasDiv = document.createElement('div');
+        aliasDiv.className="suggestionAlias";
+        const aliases = []
+            .concat(pet[3] || [])         
+            .filter(a => typeof a === 'string' && a.trim()); 
+
+        aliasDiv.innerHTML = aliases.length
+            ? aliases.join(', ')
+            : 'no Alias';   
+
     });
     showSuggestions();
 }
