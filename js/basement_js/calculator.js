@@ -20,6 +20,7 @@ petButton.addEventListener("click", function (){
 
 let showPets = true;
 
+const neonCache = new Map();
 
 const petTypeOrder = {
     "common":   1,
