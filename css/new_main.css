@@ -218,9 +218,7 @@
   border: 1px solid #ccc;
   background: #333;
   z-index: 1000;
-  max-height: 200px;
-  overflow-y: auto;
-  display: none;        /* hide when empty */
+  display: none;
 }
 
 .suggestion {
