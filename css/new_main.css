@@ -215,10 +215,11 @@
 }
 
 .suggestions {
-  border: 1px solid #ccc;
+  border: 1px solid #191919;
   background: #191919;
   width: max-content;
   border-radius: 0.2rem;
+  margin-top: 0.2rem;
 }
 
 .suggestion {
@@ -230,8 +231,6 @@
   gap: 0.35rem;
   align-items: baseline;
   font-size: 0.8rem;
-  border-radius: 0.2rem;
-
 }
 
 .suggestionAlias {
