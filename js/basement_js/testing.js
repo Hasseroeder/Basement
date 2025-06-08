@@ -25,11 +25,15 @@ const neonURL = "https://neonutil.vercel.app/zoo-stats?";
 
 input.addEventListener('input', onInput);
 input.addEventListener('keydown', onKeyDown);
-document.addEventListener('click', e => {
-    if (!container.contains(e.target) && e.target!==input) {
-        hideSuggestions();
-    }
+input.addEventListener('blur',function (){
+            console.log("blurring!");
+            hideSuggestions();
 });
+//document.addEventListener('click', e => {
+//    if (!container.contains(e.target) && e.target!==input) {
+//        hideSuggestions();
+//    }
+//});
 
 function fetchNeon(petString){
     const order = [0, 2, 4, 1, 3, 5];
