@@ -76,7 +76,7 @@ function throttle(fn, delay) {
   };
 }
 
-const fetchNeonThrottled = throttle(fetchNeon, 500);
+const fetchNeonThrottled = throttle(fetchNeon, 5000);
 
 function fetchNeonWithCache(query) {
     query = query.trim();
