@@ -510,7 +510,7 @@ function displayPet(element, pet, prevPet){
     codeWrapper.style="display:flex; align-items:center; gap:0.1rem;";
 
     const imageElement = document.createElement("img");
-    imageElement.src= getPetImage(pet, true);           // TODO: decide whether to keep animated=true
+    imageElement.src= getPetImage(pet);           // TODO: decide whether to keep animated=true
     imageElement.style ="weight:1rem; height:1rem;";
 
     const codeElement = document.createElement("code");
@@ -555,10 +555,10 @@ function createHeader(pet){
 
 
 function getPetImage(pet, wantAnimated){
-    if (petTypeOrder[pet[4]]<=5){
-        return `../media/owo_images/${pet[2]}.png`;
-    }else if( wantAnimated && pet[1] == 1){
+    if( wantAnimated && pet[1] == 1){
         return `https://cdn.discordapp.com/emojis/${pet[2]}.gif?size=96`;
+    }if (petTypeOrder[pet[4]]<=5 || petTypeOrder[pet[4]]==11){
+        return `../media/owo_images/${pet[0]}.png`;
     }else{
         return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
     }
