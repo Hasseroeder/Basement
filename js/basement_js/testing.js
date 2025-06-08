@@ -4,6 +4,8 @@ let items          = [];      // current array of suggestions
 let selectedIndex  = -1;      // for arrow navigation
 let debounceTimer;
 
+const neonCache = new Map();
+
 const petTypeOrder = {
     "common":   1,
     "uncommon": 2,
