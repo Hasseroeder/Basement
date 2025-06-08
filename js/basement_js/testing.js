@@ -7,6 +7,8 @@ let debounceTimer;
 
 const neonCache = new Map();
 
+let hideNextSuggestion = false;
+
 const petTypeOrder = {
     "common":   1,
     "uncommon": 2,
@@ -27,6 +29,7 @@ const petTypeOrder = {
 const neonURL = "https://neonutil.vercel.app/zoo-stats?";
 
 input.addEventListener('input', onInput);
+input.addEventListener('focus', onInput);
 input.addEventListener('keydown', onKeyDown);
 input.addEventListener('blur',hideSuggestions);
 
@@ -103,8 +106,9 @@ function onInput(e) {
             suggestedPets.push(tempArray[i]);
         })
 
-        if (!suggestedPets.length || suggestedPets[0][0] == chosenPet[0]){
+        if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet[0] && hideNextSuggestion)){
             console.log("hiding suggestions!");
+            hideNextSuggestion = false;
             return hideSuggestions();
         }
         renderSuggestions();
@@ -171,6 +175,7 @@ async function applyItem(i) {
         tempArray.forEach((_,i)=>{
             suggestedPets.push(tempArray[i]);
         })
+        hideNextSuggestion = suggestedPets[0]? true : false;
     }
 
     chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
