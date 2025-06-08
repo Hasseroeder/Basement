@@ -25,21 +25,13 @@ const neonURL = "https://neonutil.vercel.app/zoo-stats?";
 
 input.addEventListener('input', onInput);
 input.addEventListener('keydown', onKeyDown);
-input.addEventListener('blur',function (){
-            console.log("blurring!");
-            hideSuggestions();
-});
-//document.addEventListener('click', e => {
-//    if (!container.contains(e.target) && e.target!==input) {
-//        hideSuggestions();
-//    }
-//});
+input.addEventListener('blur',hideSuggestions);
 
-function fetchNeon(petString){
+function fetchNeon(query){
     const order = [0, 2, 4, 1, 3, 5];
     let fetchURL = neonURL;
-    fetchURL += ( petString? 
-                    petString
+    fetchURL += ( query? 
+                    query
                     : `s=${order.map(i => stats[i]).join('.')}`
                 );
 
@@ -85,16 +77,27 @@ function throttle(fn, delay) {
 
 const fetchNeonThrottled = throttle(fetchNeon, 500);
 
-function onInput(e) {
+function fetchNeonWithCache(query) {
+  if (neonCache.has(query)) {
+    return Promise.resolve(neonCache.get(query));
+  }
 
+  return fetchNeonThrottled(query)
+    .then(data => {
+      neonCache.set(query, data);
+      return data;
+    });
+}
+
+function onInput(e) {
     const q = e.target.value.trim();
-    if (!q || q.length<=1) return hideSuggestions();
+    if (!q || q.length<=2) return hideSuggestions();
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(async ()=> {
 
         items.length = 0;
-        const tempArray = await fetchNeonThrottled("n="+encodeURIComponent(q));
+        const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(q));
         tempArray.forEach((item,i)=>{
             items.push(tempArray[i][0]);
         })
@@ -116,7 +119,6 @@ function renderSuggestions() {
             e.preventDefault();
             applyItem(i);
         });
-        console.log("we're hopefully appending!");
         container.appendChild(div);
     });
     showSuggestions();
@@ -149,7 +151,7 @@ function onKeyDown(e) {
         applyItem(selectedIndex);
     }
     else if (e.key === 'Escape') {
-        hideSuggestions();
+        e.target.blur();
     }
 }
 
@@ -209,7 +211,7 @@ function outputSmallPetContainer(pet){
 async function updateStatsFromPet(petString){
     if (petString){
         petString = petString.toLowerCase();
-        pet =await fetchNeonThrottled("q="+petString);
+        pet =await fetchNeonWithCache("q="+petString);
         pet = pet[0];
         outputSmallPetContainer(pet);
     }
