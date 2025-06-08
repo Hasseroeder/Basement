@@ -165,12 +165,16 @@ function highlight() {
 async function applyItem(i) {
     
     let chosenPet;
-    if (suggestedPets.length>=1){
-        chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
-    }else{
-        chosenPet = await fetchNeonWithCache("n="+encodeURIComponent(input.value))[0];
+    if (suggestedPets.length==0){
+        const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(input.value.trim()));
+        tempArray.forEach((_,i)=>{
+            suggestedPets.push(tempArray[i]);
+        })
     }
 
+    chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
+
+    console.log(chosenPet);
     outputSmallPetContainer(chosenPet);
     hideSuggestions();
     input.focus();
