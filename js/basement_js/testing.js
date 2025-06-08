@@ -162,9 +162,14 @@ function highlight() {
     });
 }
 
-function applyItem(i) {
+async function applyItem(i) {
     
-    let chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
+    let chosenPet;
+    if (suggestedPets){
+        chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
+    }else{
+        chosenPet = await fetchNeonWithCache("n="+encodeURIComponent(input.value));
+    }
 
     outputSmallPetContainer(chosenPet);
     hideSuggestions();
@@ -209,14 +214,6 @@ function outputSmallPetContainer(pet){
     wrapper.appendChild(imageContainer);
     wrapper.appendChild(nameContainer);
     wrapper.appendChild(aliasContainer);
-}
-
-async function updateStatsFromPet(petString){
-    if (petString){
-        pet =await fetchNeonWithCache("q="+petString);
-        pet = pet[0];
-        outputSmallPetContainer(pet);
-    }
 }
 
 function deleteChildren(element) {
