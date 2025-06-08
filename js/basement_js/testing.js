@@ -168,7 +168,7 @@ async function applyItem(i) {
     if (suggestedPets.length>=1){
         chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
     }else{
-        chosenPet = await fetchNeonWithCache("n="+encodeURIComponent(input.value));
+        chosenPet = await fetchNeonWithCache("n="+encodeURIComponent(input.value))[0];
     }
 
     outputSmallPetContainer(chosenPet);
