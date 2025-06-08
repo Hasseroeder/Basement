@@ -210,16 +210,15 @@ function outputPetContainer(){
         petContainer.appendChild(wrapper);
 
         let containerToApply = createColumn(wrapper);
-        let headersCreated = 1;
+        let headersCreated = 0;
         petArray.forEach((_,i)=>{
             if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
                 headersCreated++;
             }
-
-            displayPet(containerToApply, petArray[i],petArray[i-1]);            
             if ((i+headersCreated) % 40 == 0){
                 containerToApply = createColumn(wrapper);
             }
+            displayPet(containerToApply, petArray[i],petArray[i-1]);            
         });
     }else if (!document.getElementById("textInput")){
         deleteChildren(petContainer);
