@@ -30,9 +30,7 @@ input.addEventListener('keydown', onKeyDown);
 input.addEventListener('blur',hideSuggestions);
 
 function fetchNeon(query){ 
-    let fetchURL = neonURL + query;
-
-    return fetch(fetchURL) 
+    return fetch(neonURL + query) 
     .then(response => {
         return response.json();
     })
