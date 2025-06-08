@@ -342,15 +342,8 @@ function updateStatSpan(){
     statSpan.textContent=`${statAmount} stats`;
 }
 
-function fetchNeon(petString){
-    const order = [0, 2, 4, 1, 3, 5];
-    let fetchURL = neonURL;
-    fetchURL += ( petString? 
-                    petString
-                    : `s=${order.map(i => stats[i]).join('.')}`
-                );
-
-    return fetch( fetchURL) 
+function fetchNeon(query){ 
+    return fetch(neonURL + query) 
     .then(response => {
         return response.json();
     })
@@ -391,6 +384,23 @@ function throttle(fn, delay) {
 }
 
 const fetchNeonThrottled = throttle(fetchNeon, 500);
+
+function fetchNeonWithCache(query) {
+    query = query.trim();
+    query = query.split(/\s+/)[0];
+    query = query.toLowerCase();
+
+
+    if (neonCache.has(query)) {
+        return Promise.resolve(neonCache.get(query));
+    }
+
+    return fetchNeonThrottled(query)
+        .then(data => {
+        neonCache.set(query, data);
+        return data;
+        });
+}
 
 function lookForMatchingPets(){
 }
@@ -448,7 +458,7 @@ function updateStats(){
 async function updateStatsFromPet(petString){
     if (petString){
         petString = petString.toLowerCase();
-        pet =await fetchNeonThrottled("q="+petString);
+        pet =await fetchNeonWithCache("q="+petString);
         pet = pet[0];
         outputSmallPetContainer(pet);
         
@@ -470,11 +480,12 @@ function petToStats(pet){
 }
 
 async function updatePetArray(){
+    const statOrder = [0, 2, 4, 1, 3, 5];
+    const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
 
-    tempArray = await fetchNeonThrottled();
-    petArray = Array.isArray(tempArray) ? tempArray:petArray;
+    tempArray = await fetchNeonWithCache(query);
+    petArray = Array.isArray(tempArray) ? tempArray:[];
     sortPetArray();
-    
 }
 
 function updateLevelFromNumber(){

@@ -161,7 +161,6 @@ function highlight() {
 }
 
 async function applyItem(i) {
-    
     if (suggestedPets.length==0){
         const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(input.value.trim()));
         tempArray.forEach((_,i)=>{
