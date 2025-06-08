@@ -84,7 +84,7 @@ const fetchNeonThrottled = throttle(fetchNeon, 500);
 function onInput(e) {
 
     const q = e.target.value.trim();
-    if (!q || q.length<3) return hideSuggestions();
+    if (!q || q.length<=1) return hideSuggestions();
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(async ()=> {
