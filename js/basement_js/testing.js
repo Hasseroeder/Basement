@@ -1,6 +1,6 @@
 const input        = document.getElementById('search');
 const container    = document.getElementById('suggestions');
-let items          = [];      // current array of suggestions
+let suggestedPets  = [];      // current array of suggestions
 let selectedIndex  = -1;      // for arrow navigation
 let debounceTimer;
 
@@ -98,10 +98,10 @@ function onInput(e) {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(async ()=> {
 
-        items.length = 0;
+        suggestedPets.length = 0;
         const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(q));
-        tempArray.forEach((item,i)=>{
-            items.push(tempArray[i][0]);
+        tempArray.forEach((_,i)=>{
+            suggestedPets.push(tempArray[i]);
         })
         renderSuggestions();
     }, 200);
@@ -110,12 +110,12 @@ function onInput(e) {
 function renderSuggestions() {
     container.innerHTML = '';
     selectedIndex = -1;
-    if (!items.length) return hideSuggestions();
+    if (!suggestedPets.length) return hideSuggestions();
 
-    items.forEach((text, i) => {
+    suggestedPets.forEach((pet, i) => {
         const div = document.createElement('div');
         div.className = 'suggestion';
-        div.textContent = text;
+        div.textContent = pet[0];
         div.addEventListener('mousedown', e => {
             e.preventDefault();
             applyItem(i);
@@ -131,12 +131,12 @@ function showSuggestions() {
 
 function hideSuggestions() {
     container.style.display = 'none';
-    items = [];
+    suggestedPets = [];
     selectedIndex = -1;
 }
 
 function onKeyDown(e) {
-    const max = items.length - 1;
+    const max = suggestedPets.length - 1;
     if (e.key === 'ArrowDown') {
         e.preventDefault();
         selectedIndex = (selectedIndex < max ? selectedIndex + 1 : 0);
@@ -163,8 +163,10 @@ function highlight() {
 }
 
 function applyItem(i) {
-    if (items[i]){input.value = items[i]}
-    updateStatsFromPet(input.value);
+    
+    let chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
+
+    outputSmallPetContainer(chosenPet);
     hideSuggestions();
     input.focus();
 }
