@@ -84,7 +84,7 @@ const fetchNeonThrottled = throttle(fetchNeon, 500);
 function onInput(e) {
 
     const q = e.target.value.trim();
-    if (!q /*|| q.length<=1*/) return hideSuggestions();
+    if (!q || q.length<=1) return hideSuggestions();
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(async ()=> {
@@ -140,7 +140,7 @@ function onKeyDown(e) {
         selectedIndex = (selectedIndex > 0 ? selectedIndex - 1 : max);
         highlight();
     }
-    else if (e.key === 'Enter' && selectedIndex > -1) {
+    else if (e.key === 'Enter') {
         e.preventDefault();
         applyItem(selectedIndex);
     }
@@ -156,7 +156,7 @@ function highlight() {
 }
 
 function applyItem(i) {
-    input.value = items[i];
+    if (items[i]){input.value = items[i]}
     updateStatsFromPet(input.value);
     hideSuggestions();
     input.focus();
