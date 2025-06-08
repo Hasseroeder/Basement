@@ -174,7 +174,6 @@ async function applyItem(i) {
     console.log(chosenPet);
     outputSmallPetContainer(chosenPet);
     hideSuggestions();
-    input.focus();
 }
 
 function outputSmallPetContainer(pet){
