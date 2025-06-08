@@ -95,8 +95,8 @@ function fetchNeonWithCache(query) {
         });
 }
 
-function onInput(e) {
-    const q = e.target.value.trim();
+function onInput() {
+    const q = input.value.trim();
     if (!q || q.length<=2) return hideSuggestions();
 
     clearTimeout(debounceTimer);
