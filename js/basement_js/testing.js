@@ -177,7 +177,9 @@ function onKeyDown(e) {
     }
     else if (e.key === ' ') {
         e.preventDefault();
-        onInput();
+        const q = input.value.trim();
+        if (!q || q.length<=2) return hideSuggestions();
+        fetchAndRenderSuggestions(q);
     }
 }
 
