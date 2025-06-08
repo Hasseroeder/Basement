@@ -176,7 +176,7 @@ function onKeyDown(e) {
         e.target.blur();
     }
     else if (e.key === 'Space') {
-        e.target.value = e.target.value.trim();
+        input.value = input.value.trim();
         onInput();
     }
 }
