@@ -178,7 +178,7 @@ function onKeyDown(e) {
     else if (e.key === ' ') {
         e.preventDefault();
 
-        input.value = input.value.trim();
+        //input.value = input.value.trim();
         onInput();
     }
 }
