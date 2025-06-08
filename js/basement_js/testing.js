@@ -76,7 +76,7 @@ function throttle(fn, delay) {
   };
 }
 
-const fetchNeonThrottled = throttle(fetchNeon, 5000);
+const fetchNeonThrottled = throttle(fetchNeon, 500);
 
 function fetchNeonWithCache(query) {
     query = query.trim();
@@ -177,6 +177,7 @@ function onKeyDown(e) {
     }
     else if (e.key === ' ') {
         e.preventDefault();
+        clearTimeout(debounceTimer);
         onInput();
     }
 }
