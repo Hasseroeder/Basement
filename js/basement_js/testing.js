@@ -77,6 +77,8 @@ const fetchNeonThrottled = throttle(fetchNeon, 500);
 function fetchNeonWithCache(query) {
     query = query.trim();
     query = query.split(/\s+/)[0];
+    query = query.toLowerCase();
+
 
     if (neonCache.has(query)) {
         return Promise.resolve(neonCache.get(query));
@@ -209,7 +211,6 @@ function outputSmallPetContainer(pet){
 
 async function updateStatsFromPet(petString){
     if (petString){
-        petString = petString.toLowerCase();
         pet =await fetchNeonWithCache("q="+petString);
         pet = pet[0];
         outputSmallPetContainer(pet);
