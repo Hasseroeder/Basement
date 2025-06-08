@@ -103,8 +103,10 @@ function onInput(e) {
             suggestedPets.push(tempArray[i]);
         })
 
-        if (suggestedPets[0] == chosenPet) return hideSuggestions();
-
+        if (suggestedPets[0] == chosenPet){
+            console.log("hiding suggestions!");
+            return hideSuggestions();
+        }
         renderSuggestions();
     }, 200);
 }
