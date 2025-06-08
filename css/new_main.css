@@ -216,7 +216,7 @@
 
 .suggestions {
   border: 1px solid #ccc;
-  background: #333;
+  background: #191919;
   width: max-content;
   border-radius: 0.2rem;
 }
@@ -243,6 +243,9 @@
   background: #555;
 }
 
+.suggestions > .suggestion + .suggestion {
+    border-bottom: 1px solid #bbb;
+}
 
  
 .no-arrows {
