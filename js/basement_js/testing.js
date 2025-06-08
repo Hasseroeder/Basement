@@ -100,21 +100,21 @@ function onInput() {
     if (!q || q.length<=2) return hideSuggestions();
 
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(async ()=> {
+    debounceTimer = setTimeout(fetchAndRenderSuggestions, 200);
+}
 
-        suggestedPets.length = 0;
-        const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(q));
-        tempArray.forEach((_,i)=>{
-            suggestedPets.push(tempArray[i]);
-        })
+async function fetchAndRenderSuggestions(){
+    suggestedPets.length = 0;
+    const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(q));
+    tempArray.forEach((_,i)=>{
+        suggestedPets.push(tempArray[i]);
+    })
 
-        if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet[0] && hideNextSuggestion)){
-            console.log("hiding suggestions!");
-            hideNextSuggestion = false;
-            return hideSuggestions();
-        }
-        renderSuggestions();
-    }, 200);
+    if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet[0] && hideNextSuggestion)){
+        hideNextSuggestion = false;
+        return hideSuggestions();
+    }
+    renderSuggestions();
 }
 
 function renderSuggestions() {
@@ -177,7 +177,6 @@ function onKeyDown(e) {
     }
     else if (e.key === ' ') {
         e.preventDefault();
-        clearTimeout(debounceTimer);
         onInput();
     }
 }
