@@ -141,6 +141,7 @@ function renderSuggestions() {
             ? aliases.join(', ')
             : 'no Alias';   
 
+        div.appendChild(aliasDiv);
     });
     showSuggestions();
 }
