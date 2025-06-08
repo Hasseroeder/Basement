@@ -1,6 +1,7 @@
 const input        = document.getElementById('search');
 const container    = document.getElementById('suggestions');
 let suggestedPets  = [];      // current array of suggestions
+let chosenPet      = [];
 let selectedIndex  = -1;      // for arrow navigation
 let debounceTimer;
 
@@ -101,6 +102,9 @@ function onInput(e) {
         tempArray.forEach((_,i)=>{
             suggestedPets.push(tempArray[i]);
         })
+
+        if (suggestedPets[0] == chosenPet) return hideSuggestions();
+
         renderSuggestions();
     }, 200);
 }
@@ -168,9 +172,8 @@ async function applyItem(i) {
         })
     }
 
-    let chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
+    chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
 
-    console.log(chosenPet);
     outputSmallPetContainer(chosenPet);
     hideSuggestions();
 }
