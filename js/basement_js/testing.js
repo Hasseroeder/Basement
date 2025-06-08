@@ -29,10 +29,7 @@ input.addEventListener('input', onInput);
 input.addEventListener('keydown', onKeyDown);
 input.addEventListener('blur',hideSuggestions);
 
-function fetchNeon(query){
-    query = query.trim();
-    query = query.split(/\s+/)[0];
-    
+function fetchNeon(query){ 
     let fetchURL = neonURL + query;
 
     return fetch(fetchURL) 
@@ -78,15 +75,18 @@ function throttle(fn, delay) {
 const fetchNeonThrottled = throttle(fetchNeon, 500);
 
 function fetchNeonWithCache(query) {
-  if (neonCache.has(query)) {
-    return Promise.resolve(neonCache.get(query));
-  }
+    query = query.trim();
+    query = query.split(/\s+/)[0];
 
-  return fetchNeonThrottled(query)
-    .then(data => {
-      neonCache.set(query, data);
-      return data;
-    });
+    if (neonCache.has(query)) {
+        return Promise.resolve(neonCache.get(query));
+    }
+
+    return fetchNeonThrottled(query)
+        .then(data => {
+        neonCache.set(query, data);
+        return data;
+        });
 }
 
 function onInput(e) {
