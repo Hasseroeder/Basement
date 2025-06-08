@@ -32,7 +32,7 @@ const petTypeOrder = {
     "bot":      8,
     "distorted":9,
     "fabled":   10,
-    "hidden:":  11,
+    "hidden":  11,
     "special":  12,
     "patreon":  13,
     "cpatreon": 14
