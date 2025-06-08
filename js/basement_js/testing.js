@@ -175,6 +175,10 @@ function onKeyDown(e) {
     else if (e.key === 'Escape') {
         e.target.blur();
     }
+    else if (e.key === 'Space') {
+        e.target.value = e.target.value.trim();
+        onInput();
+    }
 }
 
 function highlight() {
