@@ -384,6 +384,7 @@ function throttle(fn, delay) {
 }
 
 const fetchNeonThrottled = throttle(fetchNeon, 5000);
+//TODO: remove this massive throttle
 
 function fetchNeonWithCache(query) {
     query = query.trim();
