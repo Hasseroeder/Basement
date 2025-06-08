@@ -243,8 +243,8 @@
   background: #555;
 }
 
-.suggestions > .suggestion + .suggestion {
-    border-bottom: 1px solid #bbb;
+.suggestions > .suggestion:not(:last-child) {
+    border-bottom: 1px dashed #666;
 }
 
  
