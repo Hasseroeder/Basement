@@ -165,7 +165,7 @@ function highlight() {
 async function applyItem(i) {
     
     let chosenPet;
-    if (suggestedPets){
+    if (suggestedPets.length>=1){
         chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
     }else{
         chosenPet = await fetchNeonWithCache("n="+encodeURIComponent(input.value));
