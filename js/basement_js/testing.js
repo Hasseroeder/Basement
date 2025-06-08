@@ -100,7 +100,7 @@ function onInput() {
     if (!q || q.length<=2) return hideSuggestions();
 
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(fetchAndRenderSuggestions(q), 200);
+    debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q), 200);
 }
 
 async function fetchAndRenderSuggestions(q){
