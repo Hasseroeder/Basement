@@ -29,7 +29,9 @@ const petTypeOrder = {
 const neonURL = "https://neonutil.vercel.app/zoo-stats?";
 
 input.addEventListener('input', onInput);
-input.addEventListener('focus', onInput);
+input.addEventListener('focus', onInput);//this new
+input.addEventListener('click', onInput);//this new
+
 input.addEventListener('keydown', onKeyDown);
 input.addEventListener('blur',hideSuggestions);
 
