@@ -103,7 +103,7 @@ function onInput(e) {
             suggestedPets.push(tempArray[i]);
         })
 
-        if (suggestedPets[0][0] == chosenPet[0]){
+        if (!suggestedPets.length || suggestedPets[0][0] == chosenPet[0]){
             console.log("hiding suggestions!");
             return hideSuggestions();
         }
@@ -114,8 +114,7 @@ function onInput(e) {
 function renderSuggestions() {
     container.innerHTML = '';
     selectedIndex = -1;
-    if (!suggestedPets.length) return hideSuggestions();
-
+    
     suggestedPets.forEach((pet, i) => {
         const div = document.createElement('div');
         div.className = 'suggestion';
