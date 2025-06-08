@@ -103,9 +103,7 @@ function onInput(e) {
             suggestedPets.push(tempArray[i]);
         })
 
-        console.log("suggested pet: " + suggestedPets[0]);
-        console.log("chosen pet: " + chosenPet);
-        if (suggestedPets[0] == chosenPet){
+        if (suggestedPets[0][0] == chosenPet[0]){
             console.log("hiding suggestions!");
             return hideSuggestions();
         }
