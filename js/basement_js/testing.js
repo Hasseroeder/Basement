@@ -162,7 +162,6 @@ function highlight() {
 
 async function applyItem(i) {
     
-    let chosenPet;
     if (suggestedPets.length==0){
         const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(input.value.trim()));
         tempArray.forEach((_,i)=>{
@@ -170,7 +169,7 @@ async function applyItem(i) {
         })
     }
 
-    chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
+    let chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
 
     console.log(chosenPet);
     outputSmallPetContainer(chosenPet);
@@ -179,7 +178,6 @@ async function applyItem(i) {
 }
 
 function outputSmallPetContainer(pet){
-
     const wrapper = document.getElementById("petOutput");
     
     wrapper.style=` border-top: 2px solid #909090;

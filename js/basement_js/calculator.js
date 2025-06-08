@@ -425,14 +425,12 @@ function updateOutsideStats(){
 
 function updateOutputs(){
     outputs.forEach((output,i )=>{    
-        
         let temp;
         if (i==4 || i ==5){
             temp= ((outsideStats[i]*100).toFixed(1)).toLocaleString()+"%"; 
         }else{
             temp= Math.round(outsideStats[i]).toLocaleString();
-        }
-        
+        }  
         output.textContent=temp;       
     });
 }
