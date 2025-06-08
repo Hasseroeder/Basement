@@ -84,7 +84,7 @@ const fetchNeonThrottled = throttle(fetchNeon, 500);
 function onInput(e) {
 
     const q = e.target.value.trim();
-    if (!q || q.length<=1) return hideSuggestions();
+    if (!q /*|| q.length<=1*/) return hideSuggestions();
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(async ()=> {
@@ -109,8 +109,8 @@ function renderSuggestions() {
         div.className = 'suggestion';
         div.textContent = text;
         div.addEventListener('mousedown', e => {
-        e.preventDefault();
-        applyItem(i);
+            e.preventDefault();
+            applyItem(i);
         });
         console.log("we're hopefully appending!");
         container.appendChild(div);
