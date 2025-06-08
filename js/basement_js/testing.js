@@ -30,14 +30,12 @@ input.addEventListener('keydown', onKeyDown);
 input.addEventListener('blur',hideSuggestions);
 
 function fetchNeon(query){
-    const order = [0, 2, 4, 1, 3, 5];
-    let fetchURL = neonURL;
-    fetchURL += ( query? 
-                    query
-                    : `s=${order.map(i => stats[i]).join('.')}`
-                );
+    query = query.trim();
+    query = query.split(/\s+/)[0];
+    
+    let fetchURL = neonURL + query;
 
-    return fetch( fetchURL) 
+    return fetch(fetchURL) 
     .then(response => {
         return response.json();
     })
@@ -107,7 +105,6 @@ function onInput(e) {
     }, 200);
 }
 
-// 3) Build the drop-down
 function renderSuggestions() {
     container.innerHTML = '';
     selectedIndex = -1;
