@@ -223,18 +223,18 @@
 }
 
 .suggestion {
-  padding: 8px;
+  padding: 0.3rem;
   cursor: pointer;
 
   width: 15rem;
   display: flex;
   gap: 0.35rem;
   align-items: baseline;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .suggestionAlias {
-  font-size:0.75rem;
+  font-size:0.6rem;
 }
 
 .suggestion:hover,
