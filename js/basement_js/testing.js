@@ -175,7 +175,9 @@ function onKeyDown(e) {
     else if (e.key === 'Escape') {
         e.target.blur();
     }
-    else if (e.key === 'Space') {
+    else if (e.key === ' ') {
+        e.preventDefault();
+
         input.value = input.value.trim();
         onInput();
     }
