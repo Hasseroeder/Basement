@@ -209,57 +209,41 @@ function outputPetContainer(){
         wrapper.style.display="flex";
         petContainer.appendChild(wrapper);
 
-        let containerToApply = createColumn(wrapper);
+        let myColumn = createColumn(wrapper);
         let headersCreated = 0;
         petArray.forEach((_,i)=>{
             if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
                 headersCreated++;
             }
             if ((i+headersCreated) % 40 == 0){
-                containerToApply = createColumn(wrapper);
+                myColumn = createColumn(wrapper);
             }
-            displayPet(containerToApply, petArray[i],petArray[i-1]);            
+            displayPet(myColumn, petArray[i],petArray[i-1]);            
         });
     }else if (!document.getElementById("textInput")){
         deleteChildren(petContainer);
-        let containerToApply = document.createElement("input");
-        containerToApply.id="textInput";
-        containerToApply.autocomplete="off";
-        containerToApply.className="discord-code-lite";
-        containerToApply.style.width="11.6rem";
-        containerToApply.style.textAlign="unset";
+        const textInput = document.createElement("input");
+        textInput.id="textInput";
+        textInput.autocomplete="off";
+        textInput.className="discord-code-lite";
+        textInput.style.width="11.6rem";
+        textInput.style.textAlign="unset";
 
-        containerToApply.addEventListener("keydown", function(event) {
+        const outputWrapper = document.createElement("div");
+        outputWrapper.className="pet-output-wrapper";
+        textInput.addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
-            updateStatsFromPet(containerToApply.value);
+            updateStatsFromPet(outputWrapper,textInput.value);
             }
         });
 
-        petContainer.appendChild(containerToApply);
-        containerToApply.focus();
+        petContainer.appendChild(outputWrapper);
+        petContainer.appendChild(textInput);
+        textInput.focus();
     }    
 }
 
-function outputSmallPetContainer(pet){
-
-    let wrapper;
-    if (document.getElementById("smallPetContainer")){
-        wrapper=document.getElementById("smallPetContainer");
-    }else{
-        wrapper=document.createElement("div")
-        wrapper.id="smallPetContainer";
-        petContainer.append(wrapper);
-    }
-    wrapper.style=` border-top: 2px solid #909090;
-                    border-left: 2px solid #909090;
-                    border-right: 2px solid #606060;
-                    border-bottom: 2px solid #606060;
-                    
-                    border-radius: 0.2rem;  
-                    width: 11rem;
-                    margin-top: 0.5rem;
-                    padding: 0.35rem;`;
-
+function outputSmallPetContainer(wrapper, pet){
     deleteChildren(wrapper);
 
     let imageContainer=document.createElement("img");
@@ -281,9 +265,7 @@ function outputSmallPetContainer(pet){
                             text-align:unset;
                             font-weight:bold;`;
 
-    wrapper.appendChild(imageContainer);
-    wrapper.appendChild(nameContainer);
-    wrapper.appendChild(aliasContainer);
+    wrapper.append(imageContainer, nameContainer, aliasContainer);
 }
 
 
@@ -449,11 +431,11 @@ function updateStats(){
     updatePetArray();
 }
 
-async function updateStatsFromPet(petString){
-    if (petString){
-        pet =await fetchNeonWithCache("q="+petString);
+async function updateStatsFromPet(wrapper,query){
+    if (query){
+        pet =await fetchNeonWithCache("q="+query);
         pet = pet[0];
-        outputSmallPetContainer(pet);
+        outputSmallPetContainer(wrapper,pet);
         
         if (pet) {petToStats(pet)}
 
