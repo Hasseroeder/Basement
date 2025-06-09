@@ -387,15 +387,15 @@ const fetchNeonThrottled = throttle(fetchNeon, 500);
 
 function fetchNeonWithCache(query) {
     query = query.toLowerCase();
-    //query = encodeURIComponent(query);
+    let URIquery = encodeURIComponent(query);
 
-    if (neonCache.has(query)) {
-        return Promise.resolve(neonCache.get(query));
+    if (neonCache.has(URIquery)) {
+        return Promise.resolve(neonCache.get(URIquery));
     }
 
-    return fetchNeonThrottled(query)
+    return fetchNeonThrottled(URIquery)
         .then(data => {
-        neonCache.set(query, data);
+        neonCache.set(URIquery, data);
         return data;
         });
 }
