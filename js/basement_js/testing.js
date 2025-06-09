@@ -114,10 +114,10 @@ async function fetchAndRenderSuggestions(q){
         hideNextSuggestion = false;
         return hideSuggestions();
     }
-    renderSuggestions();
+    renderSuggestions(q);
 }
 
-function renderSuggestions() {
+function renderSuggestions(q) {
     container.innerHTML = '';
     selectedIndex = -1;
     
@@ -133,12 +133,19 @@ function renderSuggestions() {
 
         const aliasDiv = document.createElement('div');
         aliasDiv.className="suggestionAlias";
+
         const aliases = []
             .concat(pet[3] || [])         
             .filter(a => typeof a === 'string' && a.trim()); 
 
-        aliasDiv.innerHTML = aliases.length
-            ? aliases.join(', ')
+        const filteredAliases = aliases.filter(a => a.includes('q'));
+
+        if (filteredAliases.length < aliases.length) {
+            filteredAliases.push("...");
+        }    
+
+        aliasDiv.innerHTML = filteredAliases.length
+            ? filteredAliases.join(', ')
             : 'no Alias';   
 
         div.appendChild(aliasDiv);
@@ -227,7 +234,7 @@ function outputSmallPetContainer(pet){
     let aliasContainer=document.createElement("div");
     aliasContainer.innerHTML="Aliases: "+(pet?pet[3].join(", "): "undefined");
     aliasContainer.className="discord-code-lite";
-    aliasContainer.style= ` width: max-content;
+    aliasContainer.style= ` display: inline;
                             text-align:unset;
                             font-size:0.75rem`;
 

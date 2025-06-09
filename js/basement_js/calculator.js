@@ -270,7 +270,7 @@ function outputSmallPetContainer(pet){
     let aliasContainer=document.createElement("div");
     aliasContainer.innerHTML="Aliases: "+(pet?pet[3].join(", "): "undefined");
     aliasContainer.className="discord-code-lite";
-    aliasContainer.style= ` width: max-content;
+    aliasContainer.style= ` display: inline;
                             text-align:unset;
                             font-size:0.75rem`;
 
