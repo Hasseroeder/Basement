@@ -264,7 +264,7 @@ function outputSmallPetContainer(wrapper, pet){
                             font-weight:bold;`;
 
     wrapper.append(imageContainer, nameContainer);
-    if (pet && pet[3]){
+    if (pet && pet[3][0]){
         aliasContainer.innerHTML="Aliases: " + pet[3].join(", ");
         wrapper.append(aliasContainer);
     }
