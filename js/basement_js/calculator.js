@@ -518,13 +518,7 @@ function createHeader(pet){
     wrapper.style.width="10.8rem";
 
     headerElement.textContent   = ` ------${petTypeNames[pet[4]]}------ `;
-    headerElement.style=`white-space:preserve-spaces;
-                            height:1rem;
-                            padding-top:0.25rem;
-                            font-size:0.75rem;
-                            align-content:center;
-                            font-family:monospace;
-                            text-align:center;`;
+    headerElement.className="pet-type-header";
     wrapper.appendChild(headerElement);
     return wrapper;
 }
