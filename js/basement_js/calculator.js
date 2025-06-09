@@ -269,6 +269,12 @@ async function applyItem(textInput,suggestions,petWrapper) {
 
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
 
+    //upper
+    petToStats(chosenPet)
+    updateStatSpan();
+    updateInternalStats();
+
+    //lower
     outputSmallPetContainer(petWrapper,chosenPet);
     hideSuggestions(suggestions);
 }
@@ -441,19 +447,6 @@ function updateStats(){
     updateStatSpan();
     updateInternalStats();
     updatePetArray();
-}
-
-async function updateStatsFromPet(wrapper,query){
-    if (query){
-        pet =await fetchNeonWithCache("q="+query);
-        pet = pet[0];
-        outputSmallPetContainer(wrapper,pet);
-        
-        if (pet) {petToStats(pet)}
-
-        updateStatSpan();
-        updateInternalStats();
-    }
 }
 
 function petToStats(pet){
