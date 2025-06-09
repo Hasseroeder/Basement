@@ -89,6 +89,7 @@ function outputPetContainer(){
         wrapper.style.display="flex";
         petContainer.appendChild(wrapper);
 
+        columns.length=0;
         columns.push(createColumn());        
         let headersCreated = 0;
         petArray.forEach((_,i)=>{
