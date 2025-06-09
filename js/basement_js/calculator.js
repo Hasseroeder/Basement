@@ -115,12 +115,21 @@ function outputPetContainer(){
         outputWrapper.className="pet-output-wrapper";
         outputWrapper.id = "petOutput";
 
-        textInput.addEventListener('input', console.log("something is happening!"));
-        //textInput.addEventListener('input', onInput(textInput,suggestionWrapper));
-        textInput.addEventListener('focus', onInputNoDebounce(textInput,suggestionWrapper));
-        textInput.addEventListener('click', onInputNoDebounce(textInput,suggestionWrapper));
-        textInput.addEventListener('keydown', onKeyDown(textInput,suggestionWrapper,outputWrapper));
-        textInput.addEventListener('blur',hideSuggestions(suggestionWrapper));
+        textInput.addEventListener('input', () => {
+             onInput(textInput,suggestionWrapper);
+        });
+        textInput.addEventListener('focus', () => {
+            onInputNoDebounce(textInput,suggestionWrapper);
+        });
+        textInput.addEventListener('click', () => {
+            onInputNoDebounce(textInput,suggestionWrapper);
+        });
+        textInput.addEventListener('keydown', () => {
+            onKeyDown(textInput,suggestionWrapper,outputWrapper);
+        });
+        textInput.addEventListener('blur', () => {
+            hideSuggestions(suggestionWrapper);
+        });
 
         petContainer.append(textInput,suggestionWrapper,outputWrapper);
         textInput.focus();
