@@ -237,8 +237,7 @@ function outputPetContainer(){
             }
         });
 
-        petContainer.appendChild(outputWrapper);
-        petContainer.appendChild(textInput);
+        petContainer.append(textInput,outputWrapper);
         textInput.focus();
     }    
 }
@@ -507,9 +506,7 @@ function displayPet(element, pet, prevPet){
         : 'no Alias';
     tooltip.className="pet-tooltip-text";
 
-    codeWrapper.appendChild(imageElement);
-    codeWrapper.appendChild(codeElement);
-    codeWrapper.appendChild(tooltip);
+    codeWrapper.append(imageElement,codeElement,tooltip);
     wrapper.appendChild(codeWrapper);
     element.append(wrapper);
 }
