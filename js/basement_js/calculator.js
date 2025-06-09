@@ -22,6 +22,7 @@ const neonCache = new Map();
 
 //for Mode: matching pets
 let showPets = true;
+let columns=[];
 
 //for Mode: searching pets
 let suggestedPets  = [];    
@@ -88,17 +89,19 @@ function outputPetContainer(){
         wrapper.style.display="flex";
         petContainer.appendChild(wrapper);
 
-        let myColumn = createColumn(wrapper);
+        columns.push(createColumn());        
         let headersCreated = 0;
         petArray.forEach((_,i)=>{
             if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
                 headersCreated++;
             }
             if ((i+headersCreated) % 40 == 0){
-                myColumn = createColumn(wrapper);
+                columns.push(createColumn());
             }
-            displayPet(myColumn, petArray[i],petArray[i-1]);            
+            displayPet(columns.at(-1), petArray[i],petArray[i-1]);            
         });
+        wrapper.append(...columns);
+
     }else if (!document.getElementById("textInput")){
         deleteChildren(petContainer);
         const textInput = document.createElement("input");
@@ -544,13 +547,12 @@ function getPetImage(pet, wantAnimated){
     }
 }
 
-function createColumn(element){
+function createColumn(){
     const column = document.createElement("div");
     column.style.display = "flex";
     column.style.width ="12rem";
     column.style.flexDirection = "column";
 
-    element.append(column);
     return column;
 }
 
