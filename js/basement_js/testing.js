@@ -134,19 +134,14 @@ function renderSuggestions(q) {
         const aliasDiv = document.createElement('div');
         aliasDiv.className="suggestionAlias";
 
-        const aliases = []
-            .concat(pet[3] || [])         
-            .filter(a => typeof a === 'string' && a.trim()); 
+        let aliases = (pet[3] || [])
+            .filter(a => typeof a === 'string' && a.trim())
+            .filter(a => a.includes(q))
+            .map(a => `"${a}"`);
 
-        const filteredAliases = aliases.filter(a => a.includes(q));
-
-        if (filteredAliases.length < aliases.length) {
-            filteredAliases.push("...");
-        }    
-
-        aliasDiv.innerHTML = filteredAliases.length
-            ? filteredAliases.join(', ')
-            : 'no Alias';   
+        aliasDiv.innerHTML = aliases.length
+            ? aliases.join(', ')
+            : '';   
 
         div.appendChild(aliasDiv);
     });
