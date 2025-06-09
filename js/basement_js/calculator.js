@@ -138,9 +138,13 @@ function outputPetContainer(){
 
 function onInput(textInput,suggestions,petWrapper) {
     const q = textInput.value.trim();
-    if (!q || q.length<=2) return hideSuggestions(suggestions);
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,textInput,suggestions,petWrapper), 200);
+    
+    if (!q || q.length<=2){
+        debounceTimer = setTimeout(()=>hideSuggestions(suggestions), 200);
+    }else {
+        debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,textInput,suggestions,petWrapper), 200);
+    }
 }
 
 function onInputNoDebounce(textInput,suggestions,petWrapper){
