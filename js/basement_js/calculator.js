@@ -127,9 +127,10 @@ function outputPetContainer(){
 }
 
 function onInput(textInput,suggestions) {
+    console.log("you've inputted a letter!")
     const q = textInput.value.trim();
     if (!q || q.length<=2) return hideSuggestions(suggestions);
-
+    console.log("we're past input verification!")
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,suggestions), 200);
 }
@@ -141,12 +142,15 @@ function onInputNoDebounce(textInput,suggestions){
 }
 
 async function fetchAndRenderSuggestions(query, suggestions){
+    
+    console.log("we're trying to fetch suggestions now!")
     suggestedPets.length = 0;
     const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(query));
     tempArray.forEach((_,i)=>{
         suggestedPets.push(tempArray[i]);
     })
 
+    console.log("these are the suggested pets: "+ suggestedPets);
     if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet?.[0] && hideNextSuggestion)){
         hideNextSuggestion = false;
         return hideSuggestions(suggestions);
