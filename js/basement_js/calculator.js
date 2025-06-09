@@ -116,13 +116,13 @@ function outputPetContainer(){
         outputWrapper.id = "petOutput";
 
         textInput.addEventListener('input', () => {
-             onInput(textInput,suggestionWrapper);
+             onInput(textInput,suggestionWrapper,outputWrapper);
         });
         textInput.addEventListener('focus', () => {
-            onInputNoDebounce(textInput,suggestionWrapper);
+            onInputNoDebounce(textInput,suggestionWrapper,outputWrapper);
         });
         textInput.addEventListener('click', () => {
-            onInputNoDebounce(textInput,suggestionWrapper);
+            onInputNoDebounce(textInput,suggestionWrapper,outputWrapper);
         });
         textInput.addEventListener('keydown', () => {
             onKeyDown(textInput,suggestionWrapper,outputWrapper);
@@ -136,20 +136,20 @@ function outputPetContainer(){
     }    
 }
 
-function onInput(textInput,suggestions) {
+function onInput(textInput,suggestions,petWrapper) {
     const q = textInput.value.trim();
     if (!q || q.length<=2) return hideSuggestions(suggestions);
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,suggestions), 200);
+    debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,textInput,suggestions,petWrapper), 200);
 }
 
-function onInputNoDebounce(textInput,suggestions){
+function onInputNoDebounce(textInput,suggestions,petWrapper){
     const q = textInput.value.trim();
     if (!q || q.length<=2) return hideSuggestions(suggestions);
-    fetchAndRenderSuggestions(q,suggestions);
+    fetchAndRenderSuggestions(q,textInput,suggestions,petWrapper);
 }
 
-async function fetchAndRenderSuggestions(query, suggestions){
+async function fetchAndRenderSuggestions(query, textInput,suggestions,petWrapper){
     suggestedPets.length = 0;
     const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(query));
     tempArray.forEach((_,i)=>{
@@ -159,11 +159,11 @@ async function fetchAndRenderSuggestions(query, suggestions){
         hideNextSuggestion = false;
         return hideSuggestions(suggestions);
     }
-    renderSuggestions(query,suggestions);
+    renderSuggestions(query,textInput,suggestions,petWrapper);
 }
 
 
-function renderSuggestions(query,suggestions) {
+function renderSuggestions(query,textInput,suggestions,petWrapper) {
     suggestions.innerHTML = '';
     selectedIndex = -1;
     
@@ -173,7 +173,7 @@ function renderSuggestions(query,suggestions) {
         div.textContent = pet[0];
         div.addEventListener('mousedown', e => {
             e.preventDefault();
-            applyItem(i);
+            applyItem(textInput,suggestions,petWrapper);
         });
         suggestions.appendChild(div);
 
@@ -247,7 +247,7 @@ function onKeyDown(e,textInput,suggestions,petWrapper) {
     }
     else if (e.key === 'Enter') {
         e.preventDefault();
-        applyItem(selectedIndex,textInput,suggestions,petWrapper);
+        applyItem(textInput,suggestions,petWrapper);
     }
     else if (e.key === 'Escape') {
         e.target.blur();
@@ -258,7 +258,7 @@ function onKeyDown(e,textInput,suggestions,petWrapper) {
     }
 }
 
-async function applyItem(i,textInput,suggestions,petWrapper) {
+async function applyItem(textInput,suggestions,petWrapper) {
     if (suggestedPets.length==0){
         const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(textInput.value.trim()));
         tempArray.forEach((_,i)=>{
@@ -267,7 +267,7 @@ async function applyItem(i,textInput,suggestions,petWrapper) {
         hideNextSuggestion = !!suggestedPets[0];
     }
 
-    chosenPet = suggestedPets[i]? suggestedPets[i]: suggestedPets[0];
+    chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
 
     outputSmallPetContainer(petWrapper,chosenPet);
     hideSuggestions(suggestions);
