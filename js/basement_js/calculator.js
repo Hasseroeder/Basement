@@ -400,14 +400,6 @@ function fetchNeonWithCache(query) {
         });
 }
 
-function validateQuery(query){
-    // TODO: remove if no longer used
-    query = query.trim();
-    query = query.split(/\s+/)[0];
-    query = query.toLowerCase();
-    return query
-}
-
 function updateInternalStats(){
     const base =[500,500,100,100,25,25]
     const multi =[2,2,1,1,2,2]
@@ -527,8 +519,7 @@ function displayPet(element, pet, prevPet){
 
     const tooltip = document.createElement("span");
 
-    const aliases = []
-        .concat(pet[3] || [])         
+    const aliases = (pet[3] || [])         
         .filter(a => typeof a === 'string' && a.trim()); 
     tooltip.innerHTML = aliases.length
         ? aliases.join(', ')
