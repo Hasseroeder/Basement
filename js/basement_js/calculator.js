@@ -170,7 +170,7 @@ async function fetchAndRenderSuggestions(query, suggestions){
 
 
 function renderSuggestions(query,suggestions) {
-    container.innerHTML = '';
+    suggestions.innerHTML = '';
     selectedIndex = -1;
     
     suggestedPets.forEach((pet, i) => {
@@ -181,7 +181,7 @@ function renderSuggestions(query,suggestions) {
             e.preventDefault();
             applyItem(i);
         });
-        container.appendChild(div);
+        suggestions.appendChild(div);
 
         const aliasDiv = document.createElement('div');
         aliasDiv.className="suggestionAlias";
