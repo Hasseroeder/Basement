@@ -128,7 +128,7 @@ function outputPetContainer(){
 
 function onInput(textInput,suggestions) {
     const q = textInput.value.trim();
-    if (!q || q.length<=2) return hideSuggestions();
+    if (!q || q.length<=2) return hideSuggestions(suggestions);
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,suggestions), 200);
@@ -136,7 +136,7 @@ function onInput(textInput,suggestions) {
 
 function onInputNoDebounce(textInput,suggestions){
     const q = textInput.value.trim();
-    if (!q || q.length<=2) return hideSuggestions();
+    if (!q || q.length<=2) return hideSuggestions(suggestions);
     fetchAndRenderSuggestions(q,suggestions);
 }
 
