@@ -1,8 +1,8 @@
 const input        = document.getElementById('search');
 const container    = document.getElementById('suggestions');
-let suggestedPets  = [];      // current array of suggestions
+let suggestedPets  = [];    
 let chosenPet      = [];
-let selectedIndex  = -1;      // for arrow navigation
+let selectedIndex  = -1;    
 let debounceTimer;
 
 const neonCache = new Map();
@@ -116,7 +116,7 @@ async function fetchAndRenderSuggestions(q){
         suggestedPets.push(tempArray[i]);
     })
 
-    if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet[0] && hideNextSuggestion)){
+    if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet?.[0] && hideNextSuggestion)){
         hideNextSuggestion = false;
         return hideSuggestions();
     }
