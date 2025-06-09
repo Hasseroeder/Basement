@@ -138,7 +138,7 @@ function renderSuggestions(q) {
             .concat(pet[3] || [])         
             .filter(a => typeof a === 'string' && a.trim()); 
 
-        const filteredAliases = aliases.filter(a => a.includes('q'));
+        const filteredAliases = aliases.filter(a => a.includes(q));
 
         if (filteredAliases.length < aliases.length) {
             filteredAliases.push("...");
