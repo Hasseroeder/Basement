@@ -29,8 +29,8 @@ const petTypeOrder = {
 const neonURL = "https://neonutil.vercel.app/zoo-stats?";
 
 input.addEventListener('input', onInput);
-input.addEventListener('focus', onInput);//this new
-input.addEventListener('click', onInput);//this new
+input.addEventListener('focus', onInputNoDebounce);//this new
+input.addEventListener('click', onInputNoDebounce);//this new
 
 input.addEventListener('keydown', onKeyDown);
 input.addEventListener('blur',hideSuggestions);
@@ -101,6 +101,12 @@ function onInput() {
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q), 200);
+}
+
+function onInputNoDebounce(){
+    const q = input.value.trim();
+    if (!q || q.length<=2) return hideSuggestions();
+    fetchAndRenderSuggestions(q);
 }
 
 async function fetchAndRenderSuggestions(q){
@@ -179,9 +185,7 @@ function onKeyDown(e) {
     }
     else if (e.key === ' ') {
         e.preventDefault();
-        const q = input.value.trim();
-        if (!q || q.length<=2) return hideSuggestions();
-        fetchAndRenderSuggestions(q);
+        onInputNoDebounce();
     }
 }
 
