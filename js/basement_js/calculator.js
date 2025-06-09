@@ -124,8 +124,8 @@ function outputPetContainer(){
         textInput.addEventListener('click', () => {
             onInputNoDebounce(textInput,suggestionWrapper,outputWrapper);
         });
-        textInput.addEventListener('keydown', () => {
-            onKeyDown(textInput,suggestionWrapper,outputWrapper);
+        textInput.addEventListener('keydown', (event) => {
+            onKeyDown(event,textInput,suggestionWrapper,outputWrapper);
         });
         textInput.addEventListener('blur', () => {
             hideSuggestions(suggestionWrapper);
