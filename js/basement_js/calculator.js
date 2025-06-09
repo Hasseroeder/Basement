@@ -387,7 +387,7 @@ const fetchNeonThrottled = throttle(fetchNeon, 500);
 
 function fetchNeonWithCache(query) {
     query = query.toLowerCase();
-
+    query = encodeURIComponent(query);
 
     if (neonCache.has(query)) {
         return Promise.resolve(neonCache.get(query));
@@ -519,7 +519,7 @@ function displayPet(element, pet, prevPet){
 
     const tooltip = document.createElement("span");
 
-    const aliases = (pet[3] || [])         
+    const aliases =(pet[3] || [])         
         .filter(a => typeof a === 'string' && a.trim()); 
     tooltip.innerHTML = aliases.length
         ? aliases.join(', ')
