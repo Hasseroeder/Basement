@@ -251,7 +251,6 @@ function outputSmallPetContainer(wrapper, pet){
     imageContainer.style.width="3rem";                            
 
     let aliasContainer=document.createElement("div");
-    aliasContainer.innerHTML=pet && pet[3]?"Aliases: " + pet[3].join(", "):"";
     aliasContainer.className="discord-code-lite";
     aliasContainer.style= ` display: inline;
                             text-align:unset;
@@ -264,7 +263,11 @@ function outputSmallPetContainer(wrapper, pet){
                             text-align:unset;
                             font-weight:bold;`;
 
-    wrapper.append(imageContainer, nameContainer, aliasContainer);
+    wrapper.append(imageContainer, nameContainer);
+    if (pet && pet[3]){
+        aliasContainer.innerHTML="Aliases: " + pet[3].join(", ");
+        wrapper.append(aliasContainer);
+    }
 }
 
 
