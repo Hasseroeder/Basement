@@ -122,7 +122,7 @@ function outputPetContainer(){
         });
 
         plusButton.addEventListener('click', ()=>{
-            if (page < columns.length-1){page++;}
+            if (page < columns.length/2){page++;}
             displayColumns();
         });
 
@@ -167,7 +167,10 @@ function outputPetContainer(){
 
 function displayColumns(){
     deleteChildren(petContainer.firstChild)
-    petContainer.firstChild.append(columns[page]);
+    if (columns[2*page])
+    petContainer.firstChild.append(columns[2*page]);
+    if (columns[1+2*page])
+    petContainer.firstChild.append(columns[1+2*page]);
 }
 
 function onInput(textInput,suggestions,petWrapper) {
