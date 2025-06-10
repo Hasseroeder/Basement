@@ -91,13 +91,14 @@ function outputPetContainer(){
         petContainer.appendChild(wrapper);
 
         columns.length=0;
+        page=0;
         columns.push(createColumn());        
         let headersCreated = 0;
         petArray.forEach((_,i)=>{
             if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
                 headersCreated++;
             }
-            if ((i+headersCreated) % 40 == 0){
+            if ((i+headersCreated) % 20 == 0){
                 columns.push(createColumn());
             }
             displayPet(columns.at(-1), petArray[i],petArray[i-1]);            
@@ -109,7 +110,9 @@ function outputPetContainer(){
         petContainer.appendChild(buttonWrapper);
 
         let minusButton = document.createElement("button");
+        minusButton.textContent="<";
         let plusButton = document.createElement("button");
+        plusButton.textContent=">";
         buttonWrapper.append(minusButton,plusButton);
 
         minusButton.addEventListener('click', ()=>{
@@ -118,7 +121,7 @@ function outputPetContainer(){
         });
 
         plusButton.addEventListener('click', ()=>{
-            if (page < columns.length){page++;}
+            if (page < columns.length-1){page++;}
             displayColumns();
         });
 
