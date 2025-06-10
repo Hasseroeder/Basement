@@ -110,9 +110,11 @@ function outputPetContainer(){
 
         let minusButton = document.createElement("button");
         minusButton.textContent="<";
+        minusButton.tabIndex="9";
         minusButton.className="petButtonFromCalculator";
         let plusButton = document.createElement("button");
         plusButton.textContent=">";
+        plusButton.tabIndex="10";
         plusButton.className="petButtonFromCalculator";
         buttonWrapper.append(minusButton,plusButton);
 
@@ -132,6 +134,7 @@ function outputPetContainer(){
         deleteChildren(petContainer);
         const textInput = document.createElement("input");
         textInput.id="textInput";
+        textInput.tabIndex="9";
         textInput.autocomplete="off";
         textInput.className="discord-code-lite";
         textInput.style="width:11.6rem; text-align:unset;";
