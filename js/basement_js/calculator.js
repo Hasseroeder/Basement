@@ -22,6 +22,7 @@ const neonCache = new Map();
 
 //for Mode: matching pets
 let showPets = true;
+let page = 0;
 let columns=[];
 
 //for Mode: searching pets
@@ -101,7 +102,27 @@ function outputPetContainer(){
             }
             displayPet(columns.at(-1), petArray[i],petArray[i-1]);            
         });
-        wrapper.append(...columns);
+        //wrapper.append(columns[page]);
+
+        let buttonWrapper = document.createElement("div");
+        buttonWrapper.style.display="flex";
+        petContainer.appendChild(buttonWrapper);
+
+        let minusButton = document.createElement("button");
+        let plusButton = document.createElement("button");
+        buttonWrapper.append(minusButton,plusButton);
+
+        minusButton.addEventListener('click', ()=>{
+            if (page > 0){page--;}
+            displayColumns();
+        });
+
+        plusButton.addEventListener('click', ()=>{
+            if (page < columns.length){page++;}
+            displayColumns();
+        });
+
+        displayColumns();
 
     }else if (!document.getElementById("textInput")){
         deleteChildren(petContainer);
@@ -138,6 +159,11 @@ function outputPetContainer(){
         petContainer.append(textInput,suggestionWrapper,outputWrapper);
         textInput.focus();
     }    
+}
+
+function displayColumns(){
+    deleteChildren(petContainer.firstChild)
+    petContainer.firstChild.append(columns[page]);
 }
 
 function onInput(textInput,suggestions,petWrapper) {
