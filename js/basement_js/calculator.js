@@ -103,7 +103,6 @@ function outputPetContainer(){
             }
             displayPet(columns.at(-1), petArray[i],petArray[i-1]);            
         });
-        //wrapper.append(columns[page]);
 
         let buttonWrapper = document.createElement("div");
         buttonWrapper.style.display="flex";
@@ -111,8 +110,10 @@ function outputPetContainer(){
 
         let minusButton = document.createElement("button");
         minusButton.textContent="<";
+        minusButton.className="petButtonFromCalculator";
         let plusButton = document.createElement("button");
         plusButton.textContent=">";
+        plusButton.className="petButtonFromCalculator";
         buttonWrapper.append(minusButton,plusButton);
 
         minusButton.addEventListener('click', ()=>{
