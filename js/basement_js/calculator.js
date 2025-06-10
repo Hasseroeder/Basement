@@ -122,7 +122,7 @@ function outputPetContainer(){
         });
 
         plusButton.addEventListener('click', ()=>{
-            if (page < columns.length/2){page++;}
+            if (page < (columns.length/2)-1){page++;}
             displayColumns();
         });
 
