@@ -214,6 +214,7 @@ function renderSuggestions(query,textInput,suggestions,petWrapper) {
         div.textContent = pet[0];
         div.addEventListener('mousedown', e => {
             e.preventDefault();
+            selectedIndex=i;
             applyItem(textInput,suggestions,petWrapper);
         });
         suggestions.appendChild(div);
