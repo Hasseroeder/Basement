@@ -662,16 +662,16 @@ function addAddEffects(){
     imgContainer.style="display:flex; background-color: #303030; justify-content: center; align-items: center; width:100%; z-index: 100;"
     imgContainer.className="hidden";
     for (let i = 0; i<effectIcons.length; i++){
-        const owoImg = document.createElement("owo-img");
-        owoImg.textContent=effectIcons[i];
-        owoImg.style="height:1.5rem; display:block;";
-        if(i==6) owoImg.style.height="1.4rem"; 
+        const Img = document.createElement("img");
+        Img.src=`../media/owo_images/${effectIcons[i]}.png`;
+        Img.style="height:1.5rem;";
+        if(i==6) Img.style.height="1.4rem"; 
         // rune image has to be made smaller simply cus it doesn't have transparent border 
 
-        owoImg.addEventListener('click', e => {
+        Img.addEventListener('click', e => {
             addEffect(i);
         });
-        imgContainer.append(owoImg);
+        imgContainer.append(Img);
     }
     wrapper.append(text,imgContainer);
     effectContainer.append(wrapper);
