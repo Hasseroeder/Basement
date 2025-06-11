@@ -225,7 +225,7 @@ function outputPetContainerSEARCH(){
     });
 
     petContainer.append(textInput,suggestionWrapper);
-    outputSmallPetContainer();
+    outputSmallPetContainer(chosenPet);
     textInput.focus();
 }
 
