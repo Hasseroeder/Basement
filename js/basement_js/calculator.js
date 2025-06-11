@@ -763,8 +763,7 @@ document.addEventListener("DOMContentLoaded", () => {
     petButton.addEventListener("click", function (){
         showPets = !showPets;
         petButton.textContent= showPets? "Mode: Matching Pets" : "Mode: Search Pets";
-        //updatePetArray();
-        //do I actually need this?
+        updatePetArray();
     });
 
     initFields();
