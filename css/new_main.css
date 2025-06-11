@@ -220,6 +220,7 @@
   width: max-content;
   border-radius: 0.2rem;
   margin-top: 0.2rem;
+  display:none;
 }
 
 .suggestion {
