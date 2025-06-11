@@ -466,16 +466,17 @@ function updateInternalStats(){
     const effectMax = [0.20, 0.20, 0.35, 0.30, 0.20, 0.35, 0.15 ]
     const extraStats= [0,0,0,0,0,0];
 
-    effects.forEach((effect,i)=>{
+    effects.forEach(effect=>{
         let stat = statOrder[effect.type];
         let range = effectMax[effect.type]-effectMin[effect.type];
         let boost = effectMin[effect.type] + (range*effect.quality/100);
+
 
         if (effect.type<6){
                 extraStats[stat]+=internalStats[stat]*boost;
         }else{
             for (let i = 0; i < extraStats.length; i++) {
-                extraStats[i] += internalStats[extraStats[i]] * boost;
+                extraStats[i] += internalStats[i] * boost;
             }
         }
     });
