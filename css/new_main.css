@@ -360,6 +360,18 @@ body {
 	color: lightgray;
 	text-rendering: optimizelegibility;
 }
+
+@media screen and (orientation: portrait) {
+  .center-pillar {
+    display: none;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .center-pillar {
+    display: block;
+  }
+}
 	
 ul {
   margin-top:0px;
