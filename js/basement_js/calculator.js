@@ -187,7 +187,7 @@ function outputPetContainer(){
 
         displayColumns();
 
-    }else if (!document.getElementById("textInput")){
+    }else{
         deleteChildren(petContainer);
         const textInput = document.createElement("input");
         textInput.id="textInput";
