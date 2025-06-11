@@ -142,12 +142,11 @@ function sortPetArray(){
 }
 
 function outputPetContainer(){
-    deleteChildren(petContainer);
-    console.log(showPets);
     if (showPets){
+        deleteChildren(petContainer);
         outputPetContainerMATCHING();
     }else if (!document.getElementById("textInput")){
-        console.log("we're outputting again!");
+        deleteChildren(petContainer);
         outputPetContainerSEARCH();
     }    
 }
