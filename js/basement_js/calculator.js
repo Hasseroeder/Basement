@@ -146,7 +146,7 @@ function outputPetContainer(){
     console.log(showPets);
     if (showPets){
         outputPetContainerMATCHING();
-    }else{
+    }else if (!document.getElementById("textInput")){
         outputPetContainerSEARCH();
     }    
 }
