@@ -638,7 +638,7 @@ function addAddEffects(){
     wrapper.className="tooltip pet-output-wrapper";
 
     const text = document.createElement("div");
-    text.style="position:fixed;width:inherit; font-family: monospace;font-size: 0.8rem; text-align: center;";
+    text.style="position:absolute;width:inherit; font-family: monospace;font-size: 0.8rem; text-align: center;";
     text.textContent="add effect";
 
     const imgContainer = document.createElement("div");
