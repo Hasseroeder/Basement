@@ -319,7 +319,7 @@ function hideSuggestions(suggestions) {
 }
 
 function outputSmallPetContainer(pet){
-    const wrapper = document.getElementById("yourElementID");
+    let wrapper = document.getElementById("petOutput");
     if (wrapper) {
         wrapper.remove();
     }
