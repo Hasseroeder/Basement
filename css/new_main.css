@@ -379,11 +379,13 @@ body {
   }
 }
 .landscape-reminder{
-  position: fixed;
-  top: 50%; 
-  right: 48%; 
-  z-index: -1;
+    position: fixed;
+    width: 100%;
+    z-index: -1;
+    text-align: center;
+    top: 50%;
 }
+
 ul {
   margin-top:0px;
 }
