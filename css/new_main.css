@@ -378,11 +378,12 @@ body {
     visibility: hidden;
   }
 }
-
 .landscape-reminder{
-    visibility: hidden;
+  position: fixed;
+  top: 50%; 
+  right: 48%; 
+  z-index: -1;
 }
-	
 ul {
   margin-top:0px;
 }
