@@ -208,6 +208,7 @@ function outputPetContainerSEARCH(){
     suggestionWrapper.className="suggestions";
     suggestionWrapper.id = "suggestions";
 
+
     textInput.addEventListener('input', () => {
         onInput(textInput,suggestionWrapper);
     });
@@ -324,7 +325,7 @@ function outputSmallPetContainer(pet){
     petContainer.append(wrapper);
 
     let imageContainer=document.createElement("img");
-    imageContainer.src=pet?  getPetImage(pet,true):
+    imageContainer.src=pet[2]?  getPetImage(pet,true):
                                 `../media/owo_images/questionmark.jpg`;
     imageContainer.style.width="3rem";                            
 
@@ -335,7 +336,7 @@ function outputSmallPetContainer(pet){
                             font-size:0.75rem`;
 
     let nameContainer=document.createElement("div");
-    nameContainer.innerHTML=pet? pet[0]:"undefined";
+    nameContainer.innerHTML=pet? pet[0]:"your pet will appear here!";
     nameContainer.className="discord-code-lite";
     nameContainer.style= `  width: max-content;
                             text-align:unset;
