@@ -142,88 +142,95 @@ function sortPetArray(){
 }
 
 function outputPetContainer(){
+    deleteChildren(petContainer);
     if (showPets){
-        deleteChildren(petContainer);
-        let wrapper = document.createElement("div");
-        wrapper.style.display="flex";
-        petContainer.appendChild(wrapper);
-
-        columns.length=0;
-        page=0;
-        columns.push(createColumn());        
-        let headersCreated = 0;
-        petArray.forEach((_,i)=>{
-            if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
-                headersCreated++;
-            }
-            if ((i+headersCreated) % 20 == 0){
-                columns.push(createColumn());
-            }
-            displayPet(columns.at(-1), petArray[i],petArray[i-1]);            
-        });
-
-        let buttonWrapper = document.createElement("div");
-        buttonWrapper.style.display="flex";
-        petContainer.appendChild(buttonWrapper);
-
-        let minusButton = document.createElement("button");
-        minusButton.textContent="<";
-        minusButton.tabIndex="9";
-        minusButton.className="petButtonFromCalculator";
-        let plusButton = document.createElement("button");
-        plusButton.textContent=">";
-        plusButton.tabIndex="10";
-        plusButton.className="petButtonFromCalculator";
-        buttonWrapper.append(minusButton,plusButton);
-
-        minusButton.addEventListener('click', ()=>{
-            if (page > 0){page--;}
-            displayColumns();
-        });
-        plusButton.addEventListener('click', ()=>{
-            if (page < (columns.length/2)-1){page++;}
-            displayColumns();
-        });
-
-        displayColumns();
-
+        outputPetContainerMATCHING();
     }else{
-        deleteChildren(petContainer);
-        const textInput = document.createElement("input");
-        textInput.id="textInput";
-        textInput.tabIndex="9";
-        textInput.autocomplete="off";
-        textInput.className="discord-code-lite";
-        textInput.style="width:11.6rem; text-align:unset;";
-
-        const suggestionWrapper = document.createElement("div");
-        suggestionWrapper.className="suggestions";
-        suggestionWrapper.id = "suggestions";
-
-        const outputWrapper = document.createElement("div");
-        outputWrapper.className="pet-output-wrapper";
-        outputWrapper.id = "petOutput";
-
-        textInput.addEventListener('input', () => {
-             onInput(textInput,suggestionWrapper,outputWrapper);
-        });
-        textInput.addEventListener('focus', () => {
-            onInputNoDebounce(textInput,suggestionWrapper,outputWrapper);
-        });
-        textInput.addEventListener('click', () => {
-            onInputNoDebounce(textInput,suggestionWrapper,outputWrapper);
-        });
-        textInput.addEventListener('keydown', (event) => {
-            onKeyDown(event,textInput,suggestionWrapper,outputWrapper);
-        });
-        textInput.addEventListener('blur', () => {
-            hideSuggestions(suggestionWrapper);
-        });
-
-        petContainer.append(textInput,suggestionWrapper,outputWrapper);
-        textInput.focus();
+        outputPetContainerSEARCH();
     }    
 }
+
+function outputPetContainerMATCHING(){
+    let wrapper = document.createElement("div");
+    wrapper.style.display="flex";
+    petContainer.appendChild(wrapper);
+
+    columns.length=0;
+    page=0;
+    columns.push(createColumn());        
+    let headersCreated = 0;
+    petArray.forEach((_,i)=>{
+        if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
+            headersCreated++;
+        }
+        if ((i+headersCreated) % 20 == 0){
+            columns.push(createColumn());
+        }
+        displayPet(columns.at(-1), petArray[i],petArray[i-1]);            
+    });
+
+    let buttonWrapper = document.createElement("div");
+    buttonWrapper.style.display="flex";
+    petContainer.appendChild(buttonWrapper);
+
+    let minusButton = document.createElement("button");
+    minusButton.textContent="<";
+    minusButton.tabIndex="9";
+    minusButton.className="petButtonFromCalculator";
+    let plusButton = document.createElement("button");
+    plusButton.textContent=">";
+    plusButton.tabIndex="10";
+    plusButton.className="petButtonFromCalculator";
+    buttonWrapper.append(minusButton,plusButton);
+
+    minusButton.addEventListener('click', ()=>{
+        if (page > 0){page--;}
+        displayColumns();
+    });
+    plusButton.addEventListener('click', ()=>{
+        if (page < (columns.length/2)-1){page++;}
+        displayColumns();
+    });
+
+    displayColumns();
+}
+
+function outputPetContainerSEARCH(){
+    const textInput = document.createElement("input");
+    textInput.id="textInput";
+    textInput.tabIndex="9";
+    textInput.autocomplete="off";
+    textInput.className="discord-code-lite";
+    textInput.style="width:11.6rem; text-align:unset;";
+
+    const suggestionWrapper = document.createElement("div");
+    suggestionWrapper.className="suggestions";
+    suggestionWrapper.id = "suggestions";
+
+    const outputWrapper = document.createElement("div");
+    outputWrapper.className="pet-output-wrapper";
+    outputWrapper.id = "petOutput";
+
+    textInput.addEventListener('input', () => {
+            onInput(textInput,suggestionWrapper,outputWrapper);
+    });
+    textInput.addEventListener('focus', () => {
+        onInputNoDebounce(textInput,suggestionWrapper,outputWrapper);
+    });
+    textInput.addEventListener('click', () => {
+        onInputNoDebounce(textInput,suggestionWrapper,outputWrapper);
+    });
+    textInput.addEventListener('keydown', (event) => {
+        onKeyDown(event,textInput,suggestionWrapper,outputWrapper);
+    });
+    textInput.addEventListener('blur', () => {
+        hideSuggestions(suggestionWrapper);
+    });
+
+    petContainer.append(textInput,suggestionWrapper,outputWrapper);
+    textInput.focus();
+}
+
 
 function displayColumns(){
     deleteChildren(petContainer.firstChild)
@@ -373,8 +380,6 @@ async function applyItem(textInput,suggestions,petWrapper) {
 
     //upper
     petToStats(chosenPet)
-    updateStatSpan();
-    updateInternalStats();
 
     //lower
     outputSmallPetContainer(petWrapper,chosenPet);
@@ -529,9 +534,8 @@ function petToStats(pet){
     const order =[0, 3, 1, 4, 2, 5];
     inputs.forEach((input,i) => {
             input.value=pet[5][order[i]];
-            stats[i]=input?.value;
     });
-
+    updateStats();
 }
 
 async function updatePetArray(){
@@ -758,13 +762,13 @@ document.addEventListener("DOMContentLoaded", () => {
     petButton.addEventListener("click", function (){
         showPets = !showPets;
         petButton.textContent= showPets? "Mode: Matching Pets" : "Mode: Search Pets";
-        updatePetArray();
+        //updatePetArray();
+        //do I actually need this?
     });
 
     initFields();
     addAddEffects();
 
-    //addEffect(0);
 });
 
 function initFields(){
