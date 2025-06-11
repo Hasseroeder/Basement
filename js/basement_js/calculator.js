@@ -1,22 +1,14 @@
-function showTimestamps() {
-    const now = new Date();
-    let formattedTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-    
-    document.getElementById("timestamp1").textContent = formattedTime;
-    document.getElementById("timestamp2").textContent = formattedTime;
-}
-
 const petContainer = document.getElementById("petContainer");
+const effectContainer = document.getElementById("effectContainer");
 
 const petButton = document.getElementById("petButton");
 
-petButton.addEventListener("click", function (){
+const statSpan =document.getElementById("statSpan");
 
-    showPets = !showPets;
-    petButton.textContent= showPets? "Mode: Matching Pets" : "Mode: Search Pets";
-
-    updatePetArray();
-});
+const inputLvl = document.getElementById("inputLvl");
+const sliderLvl = document.getElementById("sliderLvl");
+const inputs = Array.from({ length: 6 }, (_, i) => document.getElementById(`input${i + 1}`));
+const outputs = Array.from({ length: 10 }, (_, i) => document.getElementById(`output${i + 1}`));
 
 const neonCache = new Map();
 
@@ -24,14 +16,6 @@ const neonCache = new Map();
 let showPets = true;
 let page = 0;
 let columns=[];
-
-//for Mode: searching pets
-let suggestedPets  = [];    
-let chosenPet      = [];
-let selectedIndex  = -1;    
-let debounceTimer;
-let hideNextSuggestion = false;
-
 const petTypeOrder = {
     "common":   1,
     "uncommon": 2,
@@ -48,7 +32,6 @@ const petTypeOrder = {
     "patreon":  13,
     "cpatreon": 14
 };
-
 const petTypeNames= {
     "common":   "—— Common ——",
     "uncommon": "— Uncommon —",
@@ -64,11 +47,86 @@ const petTypeNames= {
     "special":  "—— Special ——",
     "patreon":  "—— Patreon ——",
     "cpatreon": "—— Custom ——"
+};
+let petArray = [/*[NAME,ANIMATED,EMOJI,ALIAS,TYPE],*/];
+
+//for Mode: searching pets
+let suggestedPets  = [];    
+let chosenPet      = [];
+let selectedIndex  = -1;    
+let debounceTimer;
+let hideNextSuggestion = false;
+
+const neonURL = "https://neonutil.vercel.app/zoo-stats?";
+
+let level = 0;
+
+const stats = [
+    0, //hp
+    0, //wp
+    0, //str
+    0, //mag
+    0, //pr
+    0  //mr
+    // order is differently here from otherwise, because team stat display is rotated 
+    // I'm using team stat display as reference here, instead of pet stat display
+]
+
+let statAmount = 0;
+
+const internalStats = [
+    0, //hp
+    0, //wp
+    0, //str
+    0, //mag
+    0, //iPr
+    0  //iMr
+]
+
+const outsideStats = [
+    0, //hp i=0
+    0, //wp i=1
+    0, //str i=2
+    0, //mag i=3
+    0, //pr i=4
+    0, //mr i=5
+    0, //(pr)ehp i=6
+    0, //(mr)ehp i=7
+    0, //iPR i=8
+    0  //iMR i=9
+]
+
+const effects = [
+    // {"type":0, "quality":100}
+    // {"type":1, "quality":60}
+]
+const imgQualityPrefix ={
+    0:"c_",     //quality starting at 0
+    20:"u_",    //quality starting at 20
+    40:"r_",    //quality starting at ...
+    60:"e_",
+    80:"m_",
+    94:"l_",
+    99:"f_"
 }
 
-let petArray = [
-    // NAME,ANIMATED, EMOJI, ALIAS, TYPE
-];
+const imgTypeSuffix =[
+    "hp",
+    "str",
+    "pr",
+    "wp",
+    "mag",
+    "mr",
+    "rune"
+]  
+
+function showTimestamps() {
+    const now = new Date();
+    let formattedTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+    
+    document.getElementById("timestamp1").textContent = formattedTime;
+    document.getElementById("timestamp2").textContent = formattedTime;
+}
 
 function sortPetArray(){
     petArray.sort((petA, petB) => {
@@ -122,7 +180,6 @@ function outputPetContainer(){
             if (page > 0){page--;}
             displayColumns();
         });
-
         plusButton.addEventListener('click', ()=>{
             if (page < (columns.length/2)-1){page++;}
             displayColumns();
@@ -330,58 +387,6 @@ function highlight(suggestions) {
     });
 }
 
-
-
-const neonURL = "https://neonutil.vercel.app/zoo-stats?";
-
-const inputLvl = document.getElementById("inputLvl");
-const sliderLvl = document.getElementById("sliderLvl");
-const inputs = Array.from({ length: 6 }, (_, i) => document.getElementById(`input${i + 1}`));
-const outputs = Array.from({ length: 10 }, (_, i) => document.getElementById(`output${i + 1}`));
-
-let level = 0;
-
-const stats = [
-    0, //hp
-    0, //wp
-    0, //str
-    0, //mag
-    0, //pr
-    0  //mr
-    // order is differently here from otherwise, because team stat display is rotated 
-    // I'm using team stat display as reference here, instead of pet stat display
-]
-
-const internalStats = [
-    0, //hp
-    0, //wp
-    0, //str
-    0, //mag
-    0, //iPr
-    0  //iMr
-]
-
-const outsideStats = [
-    0, //hp i=0
-    0, //wp i=1
-    0, //str i=2
-    0, //mag i=3
-    0, //pr i=4
-    0, //mr i=5
-    0, //(pr)ehp i=6
-    0, //(mr)ehp i=7
-    0, //iPR i=8
-    0  //iMR i=9
-]
-
-// for outputs 1-4 & 9-10, use a multiplier and base stat amount
-// for outputs 5-6, use 9-10
-// for outputs 7-8, use 1+Res
-
-const statSpan =document.getElementById("statSpan");
-
-let statAmount = 0;
-
 function updateStatSpan(){
     statAmount = stats.reduce((sum, plus) => sum + Number(plus), 0);
     statSpan.textContent=`${statAmount} stats`;
@@ -451,6 +456,31 @@ function updateInternalStats(){
     for (let i = 0; i < internalStats.length; i++) {
         internalStats[i] = base[i] + multi[i] * stats[i] * level;
     }
+
+    // buff types are this order: hp, str, pr,  wp,  mag, mr, rune
+    // internal stats are this;   hp, wp,  str, mag, pr,  mr
+    const statOrder = [0, 2, 4, 1, 3, 5];
+
+                    // hp,   str,  pr,   wp,   mag,  mr,   rune
+    const effectMin = [0.05, 0.05, 0.15, 0.10, 0.05, 0.15, 0.05 ]
+    const effectMax = [0.20, 0.20, 0.35, 0.30, 0.20, 0.35, 0.15 ]
+    const extraStats= [0,0,0,0,0,0];
+
+    effects.forEach((effect,i)=>{
+        let stat = statOrder[effect.type];
+        let range = effectMax[effect.type]-effectMin[effect.type];
+        let boost = effectMin[effect.type] + (range*effect.quality/100);
+
+        if (effect.type<6){
+                extraStats[stat]+=internalStats[stat]*boost;
+        }else{
+            for (let i = 0; i < extraStats.length; i++) {
+                extraStats[i] += internalStats[extraStats[i]] * boost;
+            }
+        }
+    });
+
+    extraStats.forEach((stat,i) => internalStats[i]+=stat);
 
     updateOutsideStats();
 }
@@ -600,6 +630,108 @@ function deleteChildren(element) {
     }
 }
 
+function addAddEffects(){
+    const effectIcons=["f_hp","f_str","f_pr","f_wp","f_mag","f_mr","f_rune"]
+    
+    const wrapper = document.createElement("div");
+    wrapper.style="display: flex; align-items: center; height:2rem;";
+    wrapper.className="tooltip pet-output-wrapper";
+
+    const text = document.createElement("div");
+    text.style="position:fixed;width:inherit; font-family: monospace;font-size: 0.8rem; text-align: center;";
+    text.textContent="add effect";
+
+    const imgContainer = document.createElement("div");
+    imgContainer.style="display:flex; background-color: #303030; justify-content: center; align-items: center; width:100%; z-index: 100;"
+    imgContainer.className="hidden";
+    for (let i = 0; i<effectIcons.length; i++){
+        const owoImg = document.createElement("owo-img");
+        owoImg.textContent=effectIcons[i];
+        owoImg.style="height:1.5rem; display:block;";
+        if(i==6) owoImg.style.height="1.4rem"; 
+        // rune image has to be made smaller simply cus it doesn't have transparent border 
+
+        owoImg.addEventListener('click', e => {
+            addEffect(i);
+        });
+        imgContainer.append(owoImg);
+    }
+    wrapper.append(text,imgContainer);
+    effectContainer.append(wrapper);
+}
+
+function addEffect(type){
+    const effect = {"type": type, "quality": 100};
+    effects.push(effect);
+    const index = effects.indexOf(effect);
+
+
+    const outerWrapper = document.createElement("div");
+    outerWrapper.className="pet-output-wrapper";
+    outerWrapper.style="display: flex; align-items: center; height:2rem";
+
+    const wrapper = document.createElement("div");
+    wrapper.style="display: flex; align-items: center;position:relative;";
+
+    const Img = document.createElement("img");
+    Img.src=`../media/owo_images/${getImageForEffect(effects[index])}.png`;
+    Img.style="height:1.5rem; display:block;";
+    
+    const slider = document.createElement("input");
+    slider.type="range";
+    slider.min=0;
+    slider.max=100;
+    slider.value=100;
+
+    slider.addEventListener('input', e => {
+        if (index !== -1) {
+            effects[index].quality=Number(slider.value);
+        }
+        Img.src=`../media/owo_images/${getImageForEffect(effects[index])}.png`;
+        updateInternalStats();
+    });
+
+
+    const button = document.createElement("button");
+    button.className="exitButtonFromCalculator";
+    button.textContent="X";
+
+    button.addEventListener('click', e => {
+        if (index !== -1) {
+            effects.splice(index, 1);
+        }
+        outerWrapper.remove(wrapper);
+        updateInternalStats();
+
+    });
+
+
+    wrapper.append(Img, slider,button);
+    outerWrapper.append(wrapper);
+    effectContainer.insertBefore(outerWrapper, effectContainer.lastChild);
+
+    updateInternalStats();
+}
+
+function getImageForEffect(effect){
+    myString = getPrefix(effect.quality) + imgTypeSuffix[effect.type]; 
+    return myString;
+}
+
+function getPrefix(quality) {
+    const qualities = Object.keys(imgQualityPrefix).map(Number).sort((a, b) => a - b);
+    let chosenQuality = qualities[0];
+
+    for (let q of qualities) {
+        if (quality > q) {
+            chosenQuality = q;
+        } else {
+            break;
+        }
+    }
+    return imgQualityPrefix[chosenQuality];
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     showTimestamps();
@@ -622,7 +754,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     inputs[0].focus();
 
+    petButton.addEventListener("click", function (){
+        showPets = !showPets;
+        petButton.textContent= showPets? "Mode: Matching Pets" : "Mode: Search Pets";
+        updatePetArray();
+    });
+
     initFields();
+    addAddEffects();
+
+    //addEffect(0);
 });
 
 function initFields(){
