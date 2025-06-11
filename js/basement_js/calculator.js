@@ -387,13 +387,13 @@ async function applyItem(textInput,suggestions) {
         })
         hideNextSuggestion = !!suggestedPets[0];
     }
-
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
 
-    //upper
-    petToStats(chosenPet)
+    if (chosenPet) continueApplyingItem(suggestions);
+}
 
-    //lower
+function continueApplyingItem(suggestions){
+    petToStats(chosenPet)
     outputSmallPetContainer(chosenPet);
     hideSuggestions(suggestions);
 }
