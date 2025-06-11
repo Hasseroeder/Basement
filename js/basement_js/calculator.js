@@ -208,14 +208,6 @@ function outputPetContainerSEARCH(){
     suggestionWrapper.className="suggestions";
     suggestionWrapper.id = "suggestions";
 
-    /*
-    const outputWrapper = document.createElement("div");
-    outputWrapper.className="pet-output-wrapper";
-    outputWrapper.id = "petOutput";
-    */
-
-    outputSmallPetContainer();
-
     textInput.addEventListener('input', () => {
         onInput(textInput,suggestionWrapper);
     });
@@ -233,6 +225,7 @@ function outputPetContainerSEARCH(){
     });
 
     petContainer.append(textInput,suggestionWrapper);
+    outputSmallPetContainer();
     textInput.focus();
 }
 
