@@ -208,27 +208,31 @@ function outputPetContainerSEARCH(){
     suggestionWrapper.className="suggestions";
     suggestionWrapper.id = "suggestions";
 
+    /*
     const outputWrapper = document.createElement("div");
     outputWrapper.className="pet-output-wrapper";
     outputWrapper.id = "petOutput";
+    */
+
+    outputSmallPetContainer();
 
     textInput.addEventListener('input', () => {
-            onInput(textInput,suggestionWrapper,outputWrapper);
+        onInput(textInput,suggestionWrapper);
     });
     textInput.addEventListener('focus', () => {
-        onInputNoDebounce(textInput,suggestionWrapper,outputWrapper);
+        onInputNoDebounce(textInput,suggestionWrapper);
     });
     textInput.addEventListener('click', () => {
-        onInputNoDebounce(textInput,suggestionWrapper,outputWrapper);
+        onInputNoDebounce(textInput,suggestionWrapper);
     });
     textInput.addEventListener('keydown', (event) => {
-        onKeyDown(event,textInput,suggestionWrapper,outputWrapper);
+        onKeyDown(event,textInput,suggestionWrapper);
     });
     textInput.addEventListener('blur', () => {
         hideSuggestions(suggestionWrapper);
     });
 
-    petContainer.append(textInput,suggestionWrapper,outputWrapper);
+    petContainer.append(textInput,suggestionWrapper);
     textInput.focus();
 }
 
@@ -241,24 +245,24 @@ function displayColumns(){
     petContainer.firstChild.append(columns[1+2*page]);
 }
 
-function onInput(textInput,suggestions,petWrapper) {
+function onInput(textInput,suggestions) {
     const q = textInput.value.trim();
     clearTimeout(debounceTimer);
     
     if (!q || q.length<=2){
         debounceTimer = setTimeout(()=>hideSuggestions(suggestions), 200);
     }else {
-        debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,textInput,suggestions,petWrapper), 200);
+        debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,textInput,suggestions), 200);
     }
 }
 
-function onInputNoDebounce(textInput,suggestions,petWrapper){
+function onInputNoDebounce(textInput,suggestions){
     const q = textInput.value.trim();
     if (!q || q.length<=2) return hideSuggestions(suggestions);
-    fetchAndRenderSuggestions(q,textInput,suggestions,petWrapper);
+    fetchAndRenderSuggestions(q,textInput,suggestions);
 }
 
-async function fetchAndRenderSuggestions(query, textInput,suggestions,petWrapper){
+async function fetchAndRenderSuggestions(query, textInput,suggestions){
     suggestedPets.length = 0;
     const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(query));
     tempArray.forEach((_,i)=>{
@@ -268,11 +272,11 @@ async function fetchAndRenderSuggestions(query, textInput,suggestions,petWrapper
         hideNextSuggestion = false;
         return hideSuggestions(suggestions);
     }
-    renderSuggestions(query,textInput,suggestions,petWrapper);
+    renderSuggestions(query,textInput,suggestions);
 }
 
 
-function renderSuggestions(query,textInput,suggestions,petWrapper) {
+function renderSuggestions(query,textInput,suggestions) {
     suggestions.innerHTML = '';
     selectedIndex = -1;
     
@@ -283,7 +287,7 @@ function renderSuggestions(query,textInput,suggestions,petWrapper) {
         div.addEventListener('mousedown', e => {
             e.preventDefault();
             selectedIndex=i;
-            applyItem(textInput,suggestions,petWrapper);
+            applyItem(textInput,suggestions);
         });
         suggestions.appendChild(div);
 
@@ -314,8 +318,17 @@ function hideSuggestions(suggestions) {
     selectedIndex = -1;
 }
 
-function outputSmallPetContainer(wrapper, pet){
-    deleteChildren(wrapper);
+function outputSmallPetContainer(pet){
+    const wrapper = document.getElementById("yourElementID");
+    if (wrapper) {
+        wrapper.remove();
+    }
+    
+    wrapper = document.createElement("div");
+    wrapper.className="pet-output-wrapper";
+    wrapper.id = "petOutput";
+
+    petContainer.append(wrapper);
 
     let imageContainer=document.createElement("img");
     imageContainer.src=pet?  getPetImage(pet,true):
@@ -342,7 +355,7 @@ function outputSmallPetContainer(wrapper, pet){
     }
 }
 
-function onKeyDown(e,textInput,suggestions,petWrapper) {
+function onKeyDown(e,textInput,suggestions) {
     const max = suggestedPets.length - 1;
     console.log(e.key);
     if (e.key === 'ArrowDown') {
@@ -357,7 +370,7 @@ function onKeyDown(e,textInput,suggestions,petWrapper) {
     }
     else if (e.key === 'Enter') {
         e.preventDefault();
-        applyItem(textInput,suggestions,petWrapper);
+        applyItem(textInput,suggestions);
     }
     else if (e.key === 'Escape') {
         e.target.blur();
@@ -368,7 +381,7 @@ function onKeyDown(e,textInput,suggestions,petWrapper) {
     }
 }
 
-async function applyItem(textInput,suggestions,petWrapper) {
+async function applyItem(textInput,suggestions) {
     if (suggestedPets.length==0){
         const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(textInput.value.trim()));
         tempArray.forEach((_,i)=>{
@@ -383,7 +396,7 @@ async function applyItem(textInput,suggestions,petWrapper) {
     petToStats(chosenPet)
 
     //lower
-    outputSmallPetContainer(petWrapper,chosenPet);
+    outputSmallPetContainer(chosenPet);
     hideSuggestions(suggestions);
 }
 
