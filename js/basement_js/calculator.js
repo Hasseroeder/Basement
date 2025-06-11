@@ -313,6 +313,10 @@ function hideSuggestions(suggestions) {
 }
 
 function outputSmallPetContainer(pet){
+    if (!pet){
+        return;
+    }
+
     let wrapper = document.getElementById("petOutput");
     if (wrapper) {
         wrapper.remove();
@@ -336,14 +340,14 @@ function outputSmallPetContainer(pet){
                             font-size:0.75rem`;
 
     let nameContainer=document.createElement("div");
-    nameContainer.innerHTML=pet? pet[0]:"your pet will appear here!";
+    nameContainer.innerHTML=pet[0]? pet[0]:"your pet will appear here!";
     nameContainer.className="discord-code-lite";
     nameContainer.style= `  width: max-content;
                             text-align:unset;
                             font-weight:bold;`;
 
     wrapper.append(imageContainer, nameContainer);
-    if (pet && pet[3][0]){
+    if (pet[3] && pet[3][0]){
         aliasContainer.innerHTML="Aliases: " + pet[3].join(", ");
         wrapper.append(aliasContainer);
     }
