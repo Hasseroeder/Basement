@@ -143,6 +143,7 @@ function sortPetArray(){
 
 function outputPetContainer(){
     deleteChildren(petContainer);
+    console.log(showPets);
     if (showPets){
         outputPetContainerMATCHING();
     }else{
@@ -575,7 +576,7 @@ function displayPet(element, pet, prevPet){
     codeWrapper.style="display:flex; align-items:center; gap:0.1rem;";
 
     const imageElement = document.createElement("img");
-    imageElement.src= getPetImage(pet);           // TODO: decide whether to keep animated=true
+    imageElement.src= getPetImage(pet);           
     imageElement.style ="weight:1rem; height:1rem;";
 
     const codeElement = document.createElement("code");
