@@ -340,7 +340,7 @@ function outputSmallPetContainer(pet){
                             font-size:0.75rem`;
 
     let nameContainer=document.createElement("div");
-    nameContainer.innerHTML=pet[0]? pet[0]:"your pet will appear here!";
+    nameContainer.innerHTML=pet[0]? pet[0]:"type ur pet !!<3";
     nameContainer.className="discord-code-lite";
     nameContainer.style= `  width: max-content;
                             text-align:unset;
