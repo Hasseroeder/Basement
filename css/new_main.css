@@ -365,12 +365,22 @@ body {
   .center-pillar {
     display: none;
   }
+  .landscape-reminder{
+    visibility: visible;
+  }
 }
 
 @media screen and (orientation: landscape) {
   .center-pillar {
     display: block;
   }
+  .landscape-reminder{
+    visibility: hidden;
+  }
+}
+
+.landscape-reminder{
+    visibility: hidden;
 }
 	
 ul {
