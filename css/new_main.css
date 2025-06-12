@@ -293,6 +293,22 @@
   border-color: #909090;
 }
 
+.passiveWrapperFromCalculator {
+
+  border-top: 2px solid #909090;
+  border-left: 2px solid #909090;
+  border-right: 2px solid #606060;
+  border-bottom: 2px solid #606060;
+  
+  border-radius: 0.2rem;  
+  width: 15rem;
+  margin-top: 0.5rem;
+  padding: 0.35rem;
+  display: flex !important; 
+  align-items: center; 
+  height:2rem
+}
+
 .no-arrows {
   -moz-appearance: textfield;
   appearance: textfield;

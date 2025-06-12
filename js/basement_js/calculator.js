@@ -663,8 +663,8 @@ function addAddEffects(){
     const effectIcons=["f_hp","f_str","f_pr","f_wp","f_mag","f_mr","f_rune"]
     
     const wrapper = document.createElement("div");
-    wrapper.style="display: flex; align-items: center; height:2rem;";
-    wrapper.className="tooltip pet-output-wrapper";
+    wrapper.classList.add("tooltip");
+    wrapper.classList.add("passiveWrapperFromCalculator");
 
     const text = document.createElement("div");
     text.style="position:absolute;width:inherit; font-family: monospace;font-size: 0.8rem; text-align: center;";
@@ -694,10 +694,8 @@ function addEffect(type){
     effects.push(effect);
     const index = effects.indexOf(effect);
 
-
     const outerWrapper = document.createElement("div");
-    outerWrapper.className="pet-output-wrapper";
-    outerWrapper.style="display: flex; align-items: center; height:2rem";
+    outerWrapper.className="passiveWrapperFromCalculator";
 
     const wrapper = document.createElement("div");
     wrapper.style="display: flex; align-items: center;position:relative;";
@@ -705,6 +703,20 @@ function addEffect(type){
     const Img = document.createElement("img");
     Img.src=`../media/owo_images/${getImageForEffect(effects[index])}.png`;
     Img.style="height:1.5rem; display:block;";
+
+    const number = document.createElement("input");
+    number.type="number";
+    number.className="discord-code-lite no-arrows grayOnHover";
+    number.min=0;
+    number.max=100;
+    number.value=100;
+    number.style="margin:0.2rem 0.0rem 0.2rem 0.2rem;";
+
+    const text = document.createElement("div");
+    text.textContent="%"
+    text.className="discord-code-lite";
+    text.style.width="0.6rem";
+    text.style.margin="0 0.2rem 0 -0.16rem";
     
     const slider = document.createElement("input");
     slider.type="range";
@@ -713,13 +725,18 @@ function addEffect(type){
     slider.value=100;
 
     slider.addEventListener('input', e => {
-        if (index !== -1) {
-            effects[index].quality=Number(slider.value);
-        }
-        Img.src=`../media/owo_images/${getImageForEffect(effects[index])}.png`;
+        effect.quality=Number(slider.value);
+        number.value = slider.value
+        Img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
         updateInternalStats();
     });
 
+    number.addEventListener('input', e => {
+        effect.quality=Number(number.value);
+        slider.value = number.value
+        Img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
+        updateInternalStats();
+    });
 
     const button = document.createElement("button");
     button.className="exitButtonFromCalculator";
@@ -731,11 +748,9 @@ function addEffect(type){
         }
         outerWrapper.remove(wrapper);
         updateInternalStats();
-
     });
 
-
-    wrapper.append(Img, slider,button);
+    wrapper.append(Img,number,text, slider,button);
     outerWrapper.append(wrapper);
     effectContainer.insertBefore(outerWrapper, effectContainer.lastChild);
 
