@@ -203,6 +203,7 @@ function outputPetContainerSEARCH(){
     textInput.autocomplete="off";
     textInput.className="discord-code-lite";
     textInput.style="width:11.6rem; text-align:unset;";
+    textInput.placeholder="type pet here..."
 
     const suggestionWrapper = document.createElement("div");
     suggestionWrapper.className="suggestions";
@@ -313,7 +314,7 @@ function hideSuggestions(suggestions) {
 }
 
 function outputSmallPetContainer(pet){
-    if (!pet){
+    if (!pet || !pet[0]){
         return;
     }
 
@@ -329,26 +330,25 @@ function outputSmallPetContainer(pet){
     petContainer.append(wrapper);
 
     let imageContainer=document.createElement("img");
-    imageContainer.src=pet[2]?  getPetImage(pet,true):
-                                `../media/owo_images/questionmark.jpg`;
+    imageContainer.src=  getPetImage(pet,true);
     imageContainer.style.width="3rem";                            
 
     let aliasContainer=document.createElement("div");
+    aliasContainer.innerHTML="Aliases: " + pet[3].join(", ");
     aliasContainer.className="discord-code-lite";
     aliasContainer.style= ` display: inline;
                             text-align:unset;
                             font-size:0.75rem`;
 
     let nameContainer=document.createElement("div");
-    nameContainer.innerHTML=pet[0]? pet[0]:"type ur pet !!<3";
+    nameContainer.innerHTML=pet[0];
     nameContainer.className="discord-code-lite";
     nameContainer.style= `  width: max-content;
                             text-align:unset;
                             font-weight:bold;`;
 
     wrapper.append(imageContainer, nameContainer);
-    if (pet[3] && pet[3][0]){
-        aliasContainer.innerHTML="Aliases: " + pet[3].join(", ");
+    if (pet[3][0]){
         wrapper.append(aliasContainer);
     }
 }
