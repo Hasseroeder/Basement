@@ -259,8 +259,8 @@ function onInputNoDebounce(textInput,suggestions){
 }
 
 async function fetchAndRenderSuggestions(query, textInput,suggestions){
-    suggestedPets.length = 0;
     const tempArray = await fetchNeonWithRace("n="+encodeURIComponent(query));
+    suggestedPets.length = 0;
     tempArray.forEach((_,i)=>{
         suggestedPets.push(tempArray[i]);
     })
@@ -275,8 +275,6 @@ async function fetchAndRenderSuggestions(query, textInput,suggestions){
 function renderSuggestions(query,textInput,suggestions) {
     suggestions.innerHTML = '';
     selectedIndex = -1;
-    
-    console.log(suggestedPets);
 
     suggestedPets.forEach((pet, i) => {
         const div = document.createElement('div');
