@@ -752,12 +752,20 @@ function getPrefix(quality) {
 document.addEventListener("DOMContentLoaded", () => {
 
     showTimestamps();
-    inputs.forEach((input,i)=>{
+    inputs.forEach(input=>{
         input.addEventListener("change", function(){    
-            if (event.isTrusted) {
-                updateStats();
-            }
+            //if (event.isTrusted) {
+            //}
+            updateStats();
+            console.log("we're triggering an update stats!")
+            // will see if I don't need this if
         })
+        input.onmousewheel = ev => {
+            input.preventDefault();
+            input.value -= Math.sign(ev.deltaY);
+            updateStats();
+            console.log("we're triggering an update stats!")
+        }
     });
     inputLvl.addEventListener("change", function(){
         if (event.isTrusted) {
