@@ -560,7 +560,6 @@ async function updatePetArray(){
 }
 
 function updateLevelFromNumber(){
-
     level = inputLvl.value;
     sliderLvl.value=level;
     updateInternalStats();
@@ -753,30 +752,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     showTimestamps();
     inputs.forEach(input=>{
-        input.addEventListener("change", function(){    
-            //if (event.isTrusted) {
-            //}
+        input.addEventListener("change",updateStats)
+        input.addEventListener("wheel", ev => {
+            ev.preventDefault();
+            let newValue = Number(input.value) - Math.sign(ev.deltaY);
+            input.value = Math.min(Math.max(newValue, input.min), input.max);
             updateStats();
-            console.log("we're triggering an update stats!")
-            // will see if I don't need this if
-        })
-        input.onmousewheel = ev => {
-            input.preventDefault();
-            input.value -= Math.sign(ev.deltaY);
-            updateStats();
-            console.log("we're triggering an update stats!")
-        }
+        });
     });
-    inputLvl.addEventListener("change", function(){
-        if (event.isTrusted) {
+    inputLvl.addEventListener("change", updateLevelFromNumber);
+    inputLvl.addEventListener("wheel", ev => {
+            ev.preventDefault();
+            inputLvl.value -= Math.sign(ev.deltaY);
             updateLevelFromNumber();
-        }
     });
-    sliderLvl.addEventListener("input", function(){
-        if (event.isTrusted) {
-            updateLevelFromSlider();
-        }
-    });
+    sliderLvl.addEventListener("input", updateLevelFromSlider);
+    
+
     inputs[0].focus();
 
     petButton.addEventListener("click", function (){
