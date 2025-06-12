@@ -470,7 +470,7 @@ function fetchNeonWithRace(query) {
     query = query.toLowerCase();
     currentQuery = query;
 
-    fetchNeonWithCache(query).then(data => {
+    return fetchNeonWithCache(query).then(data => {
         if (query === currentQuery) {
             return data;
         }else{
