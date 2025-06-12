@@ -276,6 +276,8 @@ function renderSuggestions(query,textInput,suggestions) {
     suggestions.innerHTML = '';
     selectedIndex = -1;
     
+    console.log(suggestedPets);
+
     suggestedPets.forEach((pet, i) => {
         const div = document.createElement('div');
         div.className = 'suggestion';
