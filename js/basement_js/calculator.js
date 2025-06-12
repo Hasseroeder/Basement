@@ -11,6 +11,7 @@ const inputs = Array.from({ length: 6 }, (_, i) => document.getElementById(`inpu
 const outputs = Array.from({ length: 10 }, (_, i) => document.getElementById(`output${i + 1}`));
 
 const neonCache = new Map();
+let currentQuery = '';
 
 //for Mode: matching pets
 let showPets = true;
@@ -259,7 +260,7 @@ function onInputNoDebounce(textInput,suggestions){
 
 async function fetchAndRenderSuggestions(query, textInput,suggestions){
     suggestedPets.length = 0;
-    const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(query));
+    const tempArray = await fetchNeonWithRace("n="+encodeURIComponent(query));
     tempArray.forEach((_,i)=>{
         suggestedPets.push(tempArray[i]);
     })
@@ -381,7 +382,7 @@ function onKeyDown(e,textInput,suggestions) {
 
 async function applyItem(textInput,suggestions) {
     if (suggestedPets.length==0){
-        const tempArray = await fetchNeonWithCache("n="+encodeURIComponent(textInput.value.trim()));
+        const tempArray = await fetchNeonWithRace("n="+encodeURIComponent(textInput.value.trim()));
         tempArray.forEach((_,i)=>{
             suggestedPets.push(tempArray[i]);
         })
@@ -453,8 +454,6 @@ function throttle(fn, delay) {
 const fetchNeonThrottled = throttle(fetchNeon, 500);
 
 function fetchNeonWithCache(query) {
-    query = query.toLowerCase();
-
     if (neonCache.has(query)) {
         return Promise.resolve(neonCache.get(query));
     }
@@ -463,7 +462,21 @@ function fetchNeonWithCache(query) {
         .then(data => {
         neonCache.set(query, data);
         return data;
-        });
+    });
+}
+
+function fetchNeonWithRace(query) {
+    // accounts for race condition lol
+    query = query.toLowerCase();
+    currentQuery = query;
+
+    fetchNeonWithCache(query).then(data => {
+        if (query === currentQuery) {
+            return data;
+        }else{
+            return Promise.reject(new Error("Outdated query"));
+        }
+    });
 }
 
 function updateInternalStats(){
@@ -554,7 +567,7 @@ async function updatePetArray(){
     const statOrder = [0, 2, 4, 1, 3, 5];
     const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
 
-    tempArray = await fetchNeonWithCache(query);
+    tempArray = await fetchNeonWithRace(query);
     petArray = Array.isArray(tempArray) ? tempArray:[];
     sortPetArray();
 }
@@ -768,7 +781,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     sliderLvl.addEventListener("input", updateLevelFromSlider);
     
-
     inputs[0].focus();
 
     petButton.addEventListener("click", function (){
