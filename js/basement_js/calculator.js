@@ -698,8 +698,6 @@ function addEffect(type){
     effects.push(effect);
     const index = effects.indexOf(effect);
 
-    let boost = parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1));
-
     const outerWrapper = document.createElement("div");
     outerWrapper.className="passiveWrapperFromCalculator";
 
@@ -715,6 +713,7 @@ function addEffect(type){
 
     const belowImg = document.createElement("div");
     belowImg.style ="font-size:0.5rem;"
+    updateBoostDisplay(belowImg, effect);
 
     const number = document.createElement("input");
     number.type="number";
@@ -740,8 +739,7 @@ function addEffect(type){
         effect.quality=Number(slider.value);
         number.value = slider.value
         img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
-        boost = parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1));
-        belowImg.textContent=`+${boost}%`;
+        updateBoostDisplay(belowImg, effect);
         updateInternalStats();
     });
 
@@ -749,8 +747,7 @@ function addEffect(type){
         effect.quality=Number(number.value);
         slider.value = number.value
         img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
-        boost = parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1));
-        belowImg.textContent=`+${boost}%`;
+        updateBoostDisplay(belowImg, effect);
         updateInternalStats();
     });
 
@@ -772,6 +769,11 @@ function addEffect(type){
     effectContainer.insertBefore(outerWrapper, effectContainer.lastChild);
 
     updateInternalStats();
+}
+
+function updateBoostDisplay(display, effect){
+    boost = parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1));
+    display.textContent=`+${boost}%`;
 }
 
 function getImageForEffect(effect){
