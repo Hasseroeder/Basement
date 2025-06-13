@@ -101,6 +101,10 @@ const effects = [
     // {"type":0, "quality":100}
     // {"type":1, "quality":60}
 ]
+
+const effectMin = [0.05, 0.05, 0.15, 0.10, 0.05, 0.15, 0.05 ]
+const effectMax = [0.20, 0.20, 0.35, 0.30, 0.20, 0.35, 0.15 ]
+
 const imgQualityPrefix ={
     0:"c_",     //quality starting at 0
     20:"u_",    //quality starting at 20
@@ -490,17 +494,11 @@ function updateInternalStats(){
     // buff types are this order: hp, str, pr,  wp,  mag, mr, rune
     // internal stats are this;   hp, wp,  str, mag, pr,  mr
     const statOrder = [0, 2, 4, 1, 3, 5];
-
-                    // hp,   str,  pr,   wp,   mag,  mr,   rune
-    const effectMin = [0.05, 0.05, 0.15, 0.10, 0.05, 0.15, 0.05 ]
-    const effectMax = [0.20, 0.20, 0.35, 0.30, 0.20, 0.35, 0.15 ]
     const extraStats= [0,0,0,0,0,0];
 
     effects.forEach(effect=>{
         let stat = statOrder[effect.type];
-        let range = effectMax[effect.type]-effectMin[effect.type];
-        let boost = effectMin[effect.type] + (range*effect.quality/100);
-
+        let boost = getBoost(effect.type, effect.quality)
 
         if (effect.type<6){
                 extraStats[stat]+=internalStats[stat]*boost;
@@ -514,6 +512,12 @@ function updateInternalStats(){
     extraStats.forEach((stat,i) => internalStats[i]+=stat);
 
     updateOutsideStats();
+}
+
+function getBoost(type, quality){
+    let range = effectMax[type]-effectMin[type];
+    let boost = effectMin[type] + (range*quality/100);
+    return boost;
 }
 
 function updateOutsideStats(){
@@ -700,9 +704,15 @@ function addEffect(type){
     const wrapper = document.createElement("div");
     wrapper.style="display: flex; align-items: center;position:relative;";
 
-    const Img = document.createElement("img");
-    Img.src=`../media/owo_images/${getImageForEffect(effects[index])}.png`;
-    Img.style="height:1.5rem; display:block;";
+    const imgWrapper = document.createElement("div");
+    imgWrapper.style = "align-items: center; display: flex; flex-direction: column; margin-top: 0.15rem; min-width: 28px;";
+
+    const img = document.createElement("img");
+    img.src=`../media/owo_images/${getImageForEffect(effects[index])}.png`;
+    img.style="height:1.5rem; display:block;";
+
+    const belowImg = document.createElement("div");
+    belowImg.style ="font-size:0.5rem;"
 
     const number = document.createElement("input");
     number.type="number";
@@ -727,14 +737,18 @@ function addEffect(type){
     slider.addEventListener('input', e => {
         effect.quality=Number(slider.value);
         number.value = slider.value
-        Img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
+        img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
+        let boost = parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1));
+        belowImg.textContent=`+${boost}%`;
         updateInternalStats();
     });
 
     number.addEventListener('input', e => {
         effect.quality=Number(number.value);
         slider.value = number.value
-        Img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
+        img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
+        let boost = parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1));
+        belowImg.textContent=`+${boost}%`;
         updateInternalStats();
     });
 
@@ -750,7 +764,8 @@ function addEffect(type){
         updateInternalStats();
     });
 
-    wrapper.append(Img,number,text, slider,button);
+    imgWrapper.append(img, belowImg)
+    wrapper.append(imgWrapper,number,text, slider,button);
     outerWrapper.append(wrapper);
     effectContainer.insertBefore(outerWrapper, effectContainer.lastChild);
 
