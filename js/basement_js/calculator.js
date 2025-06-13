@@ -97,13 +97,15 @@ const outsideStats = [
     0  //iMR i=9
 ]
 
-const effects = [
-    // {"type":0, "quality":100}
-    // {"type":1, "quality":60}
+let effects = [
+    // {"id":"0", "type":3, "quality":100}
+    // {"id":"1", "type":2, "quality":60}
 ]
 
 const effectMin = [0.05, 0.05, 0.15, 0.10, 0.05, 0.15, 0.05 ]
 const effectMax = [0.20, 0.20, 0.35, 0.30, 0.20, 0.35, 0.15 ]
+
+let effectCounter = 0;
 
 const imgQualityPrefix ={
     0:"c_",     //quality starting at 0
@@ -694,7 +696,7 @@ function addAddEffects(){
 }
 
 function addEffect(type){
-    const effect = {"type": type, "quality": 100};
+    const effect = {"id": effectCounter++, "type": type, "quality": 100};
     effects.push(effect);
     const index = effects.indexOf(effect);
 
@@ -755,10 +757,8 @@ function addEffect(type){
     button.className="exitButtonFromCalculator";
     button.textContent="X";
 
-    button.addEventListener('click', e => {
-        if (index !== -1) {
-            effects.splice(index, 1);
-        }
+    button.addEventListener('click', event => {
+        effects = effects.filter(e => e.id !== effect.id);
         outerWrapper.remove(wrapper);
         updateInternalStats();
     });
