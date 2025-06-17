@@ -8,17 +8,20 @@
     visibility: hidden;
     background-color: #333;
     color: lightgray;
-    text-align: center;
+    align-items: center;
+    justify-content: center;
     padding: 0.2rem;
-    width:4rem;
+    min-width:4rem;
     border-left: 0.125rem   solid #D3D3D3;
     border-right: 0.125rem   solid #8D8D8D; 
     border-top: 0.125rem   solid #D3D3D3;  
     border-bottom: 0.125rem   solid #8D8D8D;
+    display:flex;
+    font-size:  0.65rem;
 
     /* Position */
     position: absolute;
-    bottom: 125%; 
+    bottom: 123%; 
     left: 110%;
     transform: translateX(-50%);
     
@@ -45,3 +48,8 @@
 .hidden {
     visibility: hidden;
 }
+
+s {
+    margin: 0;
+    padding: 0;
+}/* WHY THE HELL DO I HAVE TO SPECIFY THIS?? */

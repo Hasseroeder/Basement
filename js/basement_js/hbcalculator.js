@@ -220,148 +220,73 @@ function showTimestamps() {
     document.getElementById("timestamp2").textContent = formattedTime;
 }
 
-        
-
 document.addEventListener("DOMContentLoaded", () => {
-    
-    showTimestamps();
-
     for (let i = 0; i < 6; i++) {
         const container = document.getElementById(`inputContainer${i + 1}`);
         
-        if (container) {
-            const wrapper = document.createElement("div");
-            const input = document.createElement("input");
-            input.type = "number";
-            input.value = 0;
-            input.min = 0; 
-            input.max = maxValues[i];
-            input.tabIndex=i+1;
-            input.onchange = function() {
-                modifyValueDirect(i, parseInt(this.value));
-            };
+        const wrapper = document.createElement("div");
+        const input = document.createElement("input");
+        input.type = "number";
+        input.min = 0; 
+        input.max = maxValues[i];
+        input.tabIndex=i+1;
+        input.onchange = () => modifyValueDirect(i, parseInt(input.value));
 
-            input.id = `num${i}`;
-            input.className="discord-code-lite no-arrows";
+        input.id = `num${i}`;
+        input.className="discord-code-lite no-arrows";
 
-            const span =document.createElement("span");
-            span.textContent="Lvl";
-            span.className="calculatorLevel";
+        const span =document.createElement("span");
+        span.textContent="Lvl";
+        span.className="calculatorLevel";
 
-            const tooltip = document.createElement("span");
-            tooltip.innerHTML = getUpgradeCost(i, 0).toLocaleString();
-            tooltip.className="tooltip-text";
+        const btnPlus = document.createElement("button");
+        btnPlus.onclick = () => modifyValueDirect(i, parseInt(input.value)+1);
+        btnPlus.className ="tooltip";
 
-            const btnPlus = document.createElement("button");
-            btnPlus.textContent = ">";
-            btnPlus.onclick = () => modifyValue(i, 1);
-            btnPlus.className ="tooltip";
-            btnPlus.appendChild(tooltip);
+        const btnMinus = document.createElement("button");
+        btnMinus.onclick = () => modifyValueDirect(i, parseInt(input.value)-1);
 
-            const btnMinus = document.createElement("button");
-            btnMinus.textContent = "MIN";
-            btnMinus.onclick = () => modifyValue(i, -1);
+        wrapper.style = "display:flex; align-items:center; padding: 0.3rem 0;";
+        wrapper.append(btnMinus,span,input,btnPlus);
+        container.appendChild(wrapper);
 
-            const minusSpan = document.createElement("span");
-            minusSpan.innerHTML = "&nbsp";
-            minusSpan.style.padding = "0";
-
-            const plusSpan = document.createElement("span");
-            plusSpan.innerHTML = "&nbsp";
-            plusSpan.style.padding = "0";
-
-            wrapper.style.display = "flex";
-            wrapper.style.alignItems= "center";
-
-            wrapper.appendChild(btnMinus);
-            wrapper.appendChild(minusSpan);
-            wrapper.appendChild(span);
-            wrapper.appendChild(input);
-            wrapper.appendChild(plusSpan);
-            wrapper.appendChild(btnPlus);
-            container.appendChild(wrapper);
-        }
+        modifyValueDirect(i,0);
     }
-    
+
+    showTimestamps();
     loadDataCookie();
     drawData();
 });
 
 function modifyValueDirect(index, value) {
     const input = document.getElementById(`num${index}`);
-    const plus_span = input.nextElementSibling;
-    const btnPlus = plus_span.nextElementSibling;
-    const span = input.previousElementSibling;
-    const minus_span = span.previousElementSibling;
-    const btnMinus = minus_span.previousElementSibling;
+    const btnPlus = input.nextElementSibling;
+    const btnMinus = input.previousElementSibling.previousElementSibling;
 
     const tooltip = document.createElement("span");
           tooltip.className="tooltip-text";
 
-
-    if (input) {
-        
-        if (value >= maxValues[index] ) {
-            btnPlus.textContent = "MAX";
-            value = maxValues[index];
-
-            tooltip.innerHTML = "<s>" + getUpgradeCost(index, parseInt(input.value)).toLocaleString() + "</s>";
-
-        } else {
-            btnPlus.textContent = ">";
-            tooltip.innerHTML = getUpgradeCost(index, parseInt(input.value)).toLocaleString();
-
-        }
-
-        if (value <= 0) {
-            btnMinus.textContent = "MIN";
-            value =0;
-        } else {
-            btnMinus.textContent = "<";
-        }
-
-        input.value= value;
-        btnPlus.appendChild(tooltip);
-        updateLevel(index, parseInt(input.value));
-
+    if (value >= input.max ) {
+        btnPlus.textContent = "MAX";
+        value = input.max;
+        tooltip.style.textDecoration="line-through";
+    } else {
+        btnPlus.textContent = ">";
+        tooltip.style.textDecoration="unset";
     }
-}
+    tooltip.innerHTML = `<img style="width: 0.6rem; padding: 0 0.25rem;" src="../media/owo_images/essence.gif"></img>` + 
+                        getUpgradeCost(index, parseInt(value)).toLocaleString();
 
-function modifyValue(index, change) {
-    const input = document.getElementById(`num${index}`);
-    const plus_span = input.nextElementSibling;
-    const btnPlus = plus_span.nextElementSibling;
-    const span = input.previousElementSibling;
-    const minus_span = span.previousElementSibling;
-    const btnMinus = minus_span.previousElementSibling;
-
-    const tooltip = document.createElement("span");
-          tooltip.className="tooltip-text";
-
-    if (input) {
-        let newValue = parseInt(input.value) + change;
-        
-        if (newValue <= input.min) {
-            newValue = input.min;
-            btnMinus.textContent = "MIN";
-        } else {
-            btnMinus.textContent = "<";
-        }
-
-        if (newValue >= input.max) {
-            newValue = input.max;
-            btnPlus.textContent = "MAX";
-            input.value = newValue;
-            tooltip.innerHTML = "<s>" + getUpgradeCost(index, parseInt(input.value)).toLocaleString() + "</s>";
-        } else {
-            btnPlus.textContent = ">";
-            input.value = newValue;
-            tooltip.innerHTML = getUpgradeCost(index, parseInt(input.value)).toLocaleString();
-        }
-        btnPlus.appendChild(tooltip);
-
-        updateLevel(index, parseInt(input.value));
+    if (value <= 0) {
+        btnMinus.textContent = "MIN";
+        value =0;
+    } else {
+        btnMinus.textContent = "<";
     }
+
+    input.value= value;
+    btnPlus.appendChild(tooltip);
+    updateLevel(index, parseInt(input.value));
 }
 
 function updateLevel(index, value){
@@ -376,17 +301,14 @@ function saveDataCookie(){
 }
 
 function loadDataCookie(){
-    let patreonData = cookie.getCookie("Patreon");
-    let levelsData = cookie.getCookie("Levels");
-    let newLevelsData = null;
-
-    if (levelsData){
-        newLevelsData =levelsData.split(",").map(Number);
-        newLevelsData.forEach((element,index) => {
-            modifyValueDirect(index,newLevelsData[index]);
-        });
+    const patreonData = cookie.getCookie("Patreon");
+    const levelsData = cookie.getCookie("Levels");
+    if (levelsData) {
+    levelsData  .split(",")
+                .map(Number)
+                .forEach((value, index) => modifyValueDirect(index, value));
     }
-    
+
     patreon = patreonData === "true";
 }
 
@@ -488,7 +410,7 @@ function extractLevels(text) {
         extractedLevels.push(parseInt(match[1], 10));
     }
 
-    for (i =0; i<6;i++){
+    for (var i =0; i<6;i++){
         if (extractedLevels[i] !== undefined) {
             modifyValueDirect(i, extractedLevels[i]);
         }
