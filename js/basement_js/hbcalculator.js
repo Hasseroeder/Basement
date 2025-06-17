@@ -139,7 +139,7 @@ function getWorth(){
 
 
 function getUpgradeCost(index, level) {
-  const upgradeParams = [
+  const paramsArray = [
     { multiplier: 10, exponent: 1.748 },    //efficiency
     { multiplier: 10, exponent: 1.700 },    //duration
     { multiplier: 1000, exponent: 3.4 },    //cost
@@ -148,10 +148,7 @@ function getUpgradeCost(index, level) {
     { multiplier: 50, exponent: 2.500 },    //radar
   ];
 
-  const params = upgradeParams[index];
-  if (!params) {
-    throw new Error("Invalid index");
-  }
+  const params = paramsArray[index];
   return Math.floor(params.multiplier * Math.pow(level + 1, params.exponent));
 }
 
@@ -255,6 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     showTimestamps();
     loadDataCookie();
+    importFromHash();
     drawData();
 });
 
@@ -294,24 +292,6 @@ function updateLevel(index, value){
     saveDataCookie();
     drawData();
 }
-
-function saveDataCookie(){
-    cookie.setCookie("Patreon",patreon.toString(),30);
-    cookie.setCookie("Levels",levels.join(","),30)
-}
-
-function loadDataCookie(){
-    const patreonData = cookie.getCookie("Patreon");
-    const levelsData = cookie.getCookie("Levels");
-    if (levelsData) {
-    levelsData  .split(",")
-                .map(Number)
-                .forEach((value, index) => modifyValueDirect(index, value));
-    }
-
-    patreon = patreonData === "true";
-}
-
 
 function drawData(){
     
@@ -395,8 +375,6 @@ function numberFixedString(input,fixed){
     return Number(input.toFixed(fixed)).toLocaleString();
 }
 
-// start of HB interpreter
-
 document.addEventListener("paste", (event) => {
     extractLevels(event.clipboardData.getData("text"));
 });
@@ -415,4 +393,32 @@ function extractLevels(text) {
             modifyValueDirect(i, extractedLevels[i]);
         }
     }
+}
+
+function importFromHash(){
+    const hash = window.location.hash;
+    if (hash) {
+        const value = decodeURIComponent(hash.slice(1));
+        stringToLevel(value);
+    }
+}
+
+function saveDataCookie(){
+    cookie.setCookie("Patreon",patreon.toString(),30);
+    cookie.setCookie("Levels",levels.join(","),30)
+}
+
+function loadDataCookie(){
+    const patreonData = cookie.getCookie("Patreon");
+    const levelsData = cookie.getCookie("Levels");
+    if (levelsData) {
+        stringToLevel(levelsData);
+    }
+    patreon = patreonData === "true";
+}
+
+function stringToLevel(levelString){
+    levelString .split(",")
+                .map(Number)
+                .forEach((value, index) => modifyValueDirect(index, value));
 }
