@@ -302,8 +302,9 @@ function modifyValueDirect(index, value) {
 
 function drawData(){
     
-    const labels = ["⏱ Efficiency - ", "⏳ Duration - ", "&nbsp;Cost - ", "🔧 Gain - ", "⚔ Experience - ", "📡 Radar - "];
-    const suffixes = ["/h", "h", " cowoncy", " ess/h", " exp/h", "ppm"];
+    const imgSrc = ["efficiency.png", "duration.png", "cowoncy.png", "gain.png", "exp.png",       "radar.png"];
+    const labels = ["Efficiency - ",  "Duration - ",  "Cost - ",     "Gain - ",  "Experience - ", "Radar - "];
+    const suffixes=[" pets/h",        "h",            " cowoncy",    " ess/h",   " exp/h",        "ppm"];
     const values = [
         levels[0] + 25,                 //efficiency
         levels[1]/10+0.5,               //duration
@@ -314,14 +315,21 @@ function drawData(){
     ];
 
     const upgradeWorth = [
-        getWorth()[0] * 24,
-        600,
-        (isSac[8] ? 0.00000004 * petWorth[8][1] * values[0] * 24 : 0)   // add if bots sacced
-        - (isSac[0] ? petRates()[8] * values[0] * 24 : 0)               // subtract if commons sacced
+        getWorth()[0] * 24,                                             //efficiency
+        600,                                                            //gain
+        (isSac[8] ? 0.00000004 * petWorth[8][1] * values[0] * 24 : 0)   //radar     // add if bots sacced
+        - (isSac[0] ? petRates()[8] * values[0] * 24 : 0)               //radar     // subtract if commons sacced
     ];
 
     headers.forEach((header, index) => {
-        header.innerHTML = labels[index] + values[index] + suffixes[index];
+        header.innerHTML = "";
+        
+        let image = document.createElement("img");
+        image.src = `../media/owo_images/${imgSrc[index]}`;
+        image.style.cssText = "height:1rem;";
+                
+        let textContent = labels[index] + values[index] + suffixes[index];
+        header.append(image, document.createTextNode(textContent));
     });
 
     let maxROIindex = -1;
