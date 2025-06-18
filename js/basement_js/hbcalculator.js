@@ -66,6 +66,11 @@ const radarOutput=[
     document.getElementById("radarOutput2")
 ]
 
+const patreonEmojis=[
+    document.getElementById("patreon1"),
+    document.getElementById("patreon2")
+]
+
 const petWorthSac = document.getElementById("petWorthSac");
 const petWorthSell= document.getElementById("petWorthSell");
 const petWorthProfit= document.getElementById("petWorthProfit");
@@ -205,7 +210,18 @@ document.getElementById("patreonCheck").addEventListener("change", function() {
     patreon=this.checked; 
     saveDataCookie();
     drawData();
+    renderPatreon();
 });
+
+function renderPatreon(){
+    if (patreon){
+        patreonEmojis[0].src="../media/owo_images/patreon.png";
+        patreonEmojis[1].src="../media/owo_images/patreon.gif";
+    }else{
+        patreonEmojis[0].src="../media/owo_images/graypatreon.png";
+        patreonEmojis[1].src="../media/owo_images/graypatreon.gif";
+    }
+}
 
 function showTimestamps() {
     const now = new Date();
@@ -270,7 +286,6 @@ function modifyValueDirect(index, value) {
         tooltip.innerHTML = `<img style="width: 0.6rem; padding: 0 0.25rem;" src="../media/owo_images/essence.gif"></img>` + 
                         getUpgradeCost(index, parseInt(value)).toLocaleString();
         btnPlus.appendChild(tooltip);
-
     }
 
     if (value <= 0) {
@@ -412,6 +427,7 @@ function loadDataCookie(){
         stringToLevel(levelsData);
     }
     patreon = patreonData === "true";
+    renderPatreon();
 }
 
 function stringToLevel(levelString){
