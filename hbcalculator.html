@@ -63,13 +63,15 @@
                                             </div>
                                             <div id="inputContainer3" style="display: flex;align-items: center; padding: 0.3rem 0;"></div>
                                             <ul style="font-size:0.7rem; list-style-type: none; padding-top: 0;margin-top:-0.4rem;">
-                                                <li style="padding-top: 0; padding-bottom: 0;">
-                                                    <owo-img style="width:0.8rem; margin-bottom: -0.4rem;">trashcan</owo-img>
-                                                    <span id="costOutput1"></span> 
+                                                <li style="display:flex; align-items: center; padding:0.1rem 0.3rem;">
+                                                    <owo-img style="width:0.8rem; height:0.8rem; padding:0;">trashcan</owo-img>
+                                                    &nbsp;
+                                                    <span id="costOutput1" style="padding:0;"></span> 
                                                 </li>
-                                                <li style="padding-top: 0; ">
-                                                    <owo-img style="width:0.8rem; margin-bottom: -0.4rem;">trashcan</owo-img>
-                                                    <span id="costOutput2"></span>
+                                                <li style="display:flex; align-items: center; padding:0.1rem 0.3rem;">
+                                                    <owo-img style="width:0.8rem; height:0.8rem; padding:0;">trashcan</owo-img>
+                                                    &nbsp;
+                                                    <span id="costOutput2" style="padding:0;"></span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -250,15 +252,18 @@
                                                     <img class="table-1-img" src="media/owo_images/cowoncy.png" style="width:1rem; margin-bottom:-0.2rem;" draggable=false >
                                                 </div>
                                             </div></th>
-
                                     </table>
 
-                                    <div class="flexContainer" style="margin-bottom:0; gap:0;">
-                                        <div style="margin-left:-1rem; min-width: 12.2rem;">
+                                    <div class="flexContainer" style="margin:0; align-items: baseline;">
+                                        <div>
+                                            <input type="checkbox" id="patreonCheck" style="margin-bottom:-0.2rem">
+                                            <label for="patreonCheck"><strong> Patreon</strong></label>
+                                        </div>
+                                        <div>
                                             <h4>
                                                 Pet Worth:
                                             </h4>
-                                            <ul style="margin-top:-0.8rem; margin-left:-1rem; font-size:0.8rem;">
+                                            <ul style="margin-top:-0.8rem; padding-left: 1.4rem; font-size:0.8rem;">
                                                 <li style="margin-bottom:0.5rem">
                                                     <span id="petWorthSell"> </span>
                                                     <ul style="margin-left:-1.3rem; font-size:0.8rem;">
@@ -268,26 +273,17 @@
                                                 </li>
                                                 <li id="petWorthSac"></li>
                                             </ul>
-
-                                            <div style="margin-bottom: 1rem; margin-left:0;">
-                                                <input type="checkbox" id="patreonCheck" style="margin-bottom:-0.2rem">
-                                                <label for="patreonCheck"><strong> Patreon</strong></label>
-                                            </div>
-
-
                                         </div>
-                                        <div style="align-self:start; min-width: 11rem;">
+                                        <div>
                                             <h4>
                                                 HB Pet Worth:
                                             </h4>
-
-                                            <ul style="margin-top:-0.8rem; margin-left:-1rem; font-size:0.8rem;">
+                                            <ul style="margin-top:-0.8rem; padding-left: 1.4rem; font-size:0.8rem;">
                                                 <li style="margin-bottom:0.5rem">
                                                     <span id="hbWorthSell"></span>
                                                     <ul style="margin-left:-1.3rem; font-size:0.8rem;">
                                                         <li id="hbWorthProfit"></li>
-                                                    </ul>
-                                                    
+                                                    </ul>   
                                                 </li>
                                                 <li id="hbWorthSac"></li>
                                             </ul>

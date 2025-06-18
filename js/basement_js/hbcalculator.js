@@ -202,11 +202,9 @@ function toggleCell(cell,index) {
 }
 
 document.getElementById("patreonCheck").addEventListener("change", function() {
-    if (event.isTrusted) {
-        patreon=this.checked; 
-        saveDataCookie();
-        drawData();
-    }
+    patreon=this.checked; 
+    saveDataCookie();
+    drawData();
 });
 
 function showTimestamps() {
@@ -227,21 +225,21 @@ document.addEventListener("DOMContentLoaded", () => {
         input.min = 0; 
         input.max = maxValues[i];
         input.tabIndex=i+1;
-        input.onchange = () => modifyValueDirect(i, parseInt(input.value));
+        input.onchange = () => modifyValueWithCookie(i, parseInt(input.value));
 
         input.id = `num${i}`;
         input.className="discord-code-lite no-arrows";
 
-        const span =document.createElement("span");
+        const span =document.createElement("div");
         span.textContent="Lvl";
         span.className="calculatorLevel";
 
         const btnPlus = document.createElement("button");
-        btnPlus.onclick = () => modifyValueDirect(i, parseInt(input.value)+1);
+        btnPlus.onclick = () => modifyValueWithCookie(i, parseInt(input.value)+1);
         btnPlus.className ="tooltip";
 
         const btnMinus = document.createElement("button");
-        btnMinus.onclick = () => modifyValueDirect(i, parseInt(input.value)-1);
+        btnMinus.onclick = () => modifyValueWithCookie(i, parseInt(input.value)-1);
 
         wrapper.style = "display:flex; align-items:center; padding: 0.3rem 0;";
         wrapper.append(btnMinus,span,input,btnPlus);
@@ -266,14 +264,14 @@ function modifyValueDirect(index, value) {
 
     if (value >= input.max ) {
         btnPlus.textContent = "MAX";
-        value = input.max;
-        tooltip.style.textDecoration="line-through";
+        value = Number(input.max);
     } else {
         btnPlus.textContent = ">";
-        tooltip.style.textDecoration="unset";
-    }
-    tooltip.innerHTML = `<img style="width: 0.6rem; padding: 0 0.25rem;" src="../media/owo_images/essence.gif"></img>` + 
+        tooltip.innerHTML = `<img style="width: 0.6rem; padding: 0 0.25rem;" src="../media/owo_images/essence.gif"></img>` + 
                         getUpgradeCost(index, parseInt(value)).toLocaleString();
+        btnPlus.appendChild(tooltip);
+
+    }
 
     if (value <= 0) {
         btnMinus.textContent = "MIN";
@@ -283,13 +281,7 @@ function modifyValueDirect(index, value) {
     }
 
     input.value= value;
-    btnPlus.appendChild(tooltip);
-    updateLevel(index, parseInt(input.value));
-}
-
-function updateLevel(index, value){
     levels[index]=value;
-    saveDataCookie();
     drawData();
 }
 
@@ -390,9 +382,14 @@ function extractLevels(text) {
 
     for (var i =0; i<6;i++){
         if (extractedLevels[i] !== undefined) {
-            modifyValueDirect(i, extractedLevels[i]);
+            modifyValueWithCookie(i, extractedLevels[i]);
         }
     }
+}
+
+function modifyValueWithCookie(index, value){
+    modifyValueDirect(index, value);
+    saveDataCookie();
 }
 
 function importFromHash(){

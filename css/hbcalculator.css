@@ -89,14 +89,13 @@ input[type="checkbox"] {
     border-left: 0.125rem   solid #D3D3D3; 
     border-top: 0.125rem   solid #D3D3D3;  
     border-bottom: 0.125rem   solid #8D8D8D; 
-    height: 0.60rem;;
     background-color:#333;
-    font-size: 0.85em;
-    display: inline-block;
-
-    padding-top: 0.05rem;
-    padding-bottom: 0.55rem;
-
+    padding: 0 0 0 0.6rem;
+    display: flex;
+    height: 1.2rem;
+    align-items: center;
+    font-size: 0.8rem;
+    font-family: monospace;
 }
 
 .discord-code-lite{
@@ -104,7 +103,7 @@ input[type="checkbox"] {
   width:2.3rem;
   background-color:#333;
   color:lightgray;
-  font-size: 0.85em;
+  font-size: 0.8rem;
   border-radius:0;
   font-family:monospace;
   text-align:center;
@@ -131,6 +130,10 @@ button {
     height:1.45rem;
     width: 2.5rem;
     margin-right:0;
-    font-size:0.5rem;
+    font-size:0.55rem;
     margin:0 0.15rem;
+}
+
+li {
+  font-size:0.75rem;
 }
