@@ -66,10 +66,33 @@ const radarOutput=[
     document.getElementById("radarOutput2")
 ]
 
-const patreonEmojis=[
-    document.getElementById("patreon1"),
-    document.getElementById("patreon2")
+const patreonGraying=[
+    document.getElementById("patreonGraying1"),
+    document.getElementById("patreonGraying2")
 ]
+
+const switchAllButtons = {
+    sell: document.getElementById("owoButton"),
+    sac:  document.getElementById("sacButton")
+}
+
+switchAllButtons.sac.addEventListener("click", () => {
+    toggleIsSac("sac");
+});
+
+switchAllButtons.sell.addEventListener("click", () => {
+    toggleIsSac("sell");
+});
+
+function toggleIsSac(origin){
+    let togglingTo = origin === "sac"? true: false;
+    
+    for (let i = 0; i < isSac.length; i++) {
+        if (isSac[i] != togglingTo){
+            toggleCell(cells[i],i);
+        }
+    }
+}
 
 const petWorthSac = document.getElementById("petWorthSac");
 const petWorthSell= document.getElementById("petWorthSell");
@@ -215,11 +238,11 @@ document.getElementById("patreonCheck").addEventListener("change", function() {
 
 function renderPatreon(){
     if (patreon){
-        patreonEmojis[0].src="../media/owo_images/patreon.png";
-        patreonEmojis[1].src="../media/owo_images/patreon.gif";
+        patreonGraying[0].style.visibility="hidden";
+        patreonGraying[1].style.visibility="hidden";
     }else{
-        patreonEmojis[0].src="../media/owo_images/graypatreon.png";
-        patreonEmojis[1].src="../media/owo_images/graypatreon.gif";
+        patreonGraying[0].style.visibility="visible";
+        patreonGraying[1].style.visibility="visible";
     }
 }
 
