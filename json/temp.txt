@@ -1,0 +1,9 @@
+preturn:    vban, aegis
+mainturn:   phys, bow, hstaff, rstaff, ffish, rune, gsword, pstaff, awand, lsyth, lrune, gaxe, estaff, pdag, vstaff, csyth, sstaff, ascept, fstaff, crune
+postturn:   flame, pois, celeb (energ, regen)
+
+            freeze could be in Preturn or Mainturn
+
+other tags:
+simple:         taunt, lech, attup, attup+, attup++, crit, sguard, dfup, sprt, mort, enra
+quasiWeapons:   stink, snail, sac, mtap, kkaze, absv, disch, lifesteal, thorns

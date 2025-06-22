@@ -1,62 +1,178 @@
 main();
 async function main(){
     
-    var originalLog;
-    var newlog;
+    var turnlist;
     var enemy;
     var player;
 
     await fetch('../json/log.json')
         .then(response => response.json())
         .then(data => {
-            originalLog = data.logs;
-            newlog = data.logs;
+            turnlist = data.logs;
             enemy = data.battle.enemy;
             player = data.battle.player;
         })
         .catch(error => console.error('Error fetching JSON:', error));
 
-    newlog = addSubturns(newlog);
-    newlog = addWrapper(newlog);
-    console.log(newlog);
+    turnlist = addSubturns(turnlist);
+    turnlist = addWrapper(turnlist);
+    simplifyPets(turnlist);
+    console.log(turnlist);
 
 }
 
-function addSubturns(oldLog){
-    const logWithSubturns = JSON.parse(JSON.stringify(oldLog));
-    logWithSubturns.forEach((newTurn,i) => {
-        newTurn.battleLogs.length = 0;
-        var currentSubTurn=[];
-        oldLog[i].battleLogs.forEach((string,j) =>{
+function addSubturns(oldTurns){
+    const newTurns = clone(oldTurns);
+    newTurns.forEach((turn,i) => {
+        let subTurn = [];
+        let subTurns = turn.battleLogs = [];
+        oldTurns[i].battleLogs.forEach((string,j) =>{
             if (string.at(0)!=" " && j!=0){
-                pushTurnToLog(newTurn, currentSubTurn);
+                subTurns.push(clone(subTurn));
+                subTurn=[];
             }  
-            currentSubTurn.push(string);
+            subTurn.push(string);
         })
-        pushTurnToLog(newTurn, currentSubTurn);
+        subTurns.push(subTurn);
     });
-    return logWithSubturns;
+    return newTurns;
 }
 
-function pushTurnToLog(newTurn, currentTurn){
-    newTurn.battleLogs.push(JSON.parse(JSON.stringify(currentTurn)));
-    currentTurn.length=0;
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
 }
 
-function addWrapper(oldLog){
-    const logWithWrapper = JSON.parse(JSON.stringify(oldLog));
-    logWithWrapper.forEach((Turn,i) => {
+function sumArray(numbers) {
+  return numbers.reduce((accumulator, current) => accumulator + current, 0);
+}
+
+function addWrapper(oldTurns){
+    const wrappedTurns = JSON.parse(JSON.stringify(oldTurns));
+    wrappedTurns.forEach((Turn,i) => {
         Turn.battleLogs.forEach((_, j) => {
             Turn.battleLogs[j] = { 
-                stringsArray : oldLog[i].battleLogs[j]
+                stringArray : oldTurns[i].battleLogs[j]
             }; 
         });
     });
-    return logWithWrapper;
+    return wrappedTurns;
 }
 
-function extractTime(Log){
-    Log.forEach(Turn => {
+function simplifyPets(turnlist){
+    turnlist.forEach(turn =>{
+        const pets = [...turn.enemy, ...turn.player];
+        pets.forEach(pet => simplifyPetsHelper(pet));
+    });
+}
+
+function simplifyPetsHelper(pet){
+    combineAllStats(pet);
+    pet.info ={
+        animal: removeAnimalStats(pet.info.animal),
+        weapon: removeWeaponStats(pet.info.weapon),
+        buffs: pet.info.buffs,
+        nickname: pet.info.nickname,
+        pos: pet.info.pos
+    }
+    delete pet.hp;
+    delete pet.wp;
+}
+
+function makeStatsGood(input){
+    return {
+        current     : input[0],
+        max	        : input[1]+input[3],
+        previous    : input[2]
+    }
+}
+
+function combineAllStats(pet){
+    pet.stats = {
+        hp: makeStatsGood(pet.hp),
+        str: sumArray(pet.info.stats.att),
+        pr: sumArray(pet.info.stats.pr),
+        wp: makeStatsGood(pet.wp),
+        mag: sumArray(pet.info.stats.mag),
+        mr: sumArray(pet.info.stats.mr),
+    };
+}
+
+function removeAnimalStats(input){
+    return {
+        stats: [input.hp, input.att, input.pr, input.wp, input.mag, input.mr],
+        imageUrl : input.imageUrl,
+        names: input.alt,
+        rank: input.rank
+    }
+}
+
+function removeWeaponStats(input){
+    return {
+        buffs: input.buffs,
+        id: formatWeaponID(input.id),
+        imageUrl: getUrl(input.emoji),
+        manaCost: input.manaCost,
+        name: input.name,
+        passives: input.passives.map(removePassiveStats),
+        qualities: input.qualities,
+        qualityList: input.qualityList,
+        stats: input.stats,
+        wid: input.uwid,
+        weaponQuality: input.weaponQuality,
+        wear:input.wear,
+    }
+}
+
+function removePassiveStats(input){
+    return {
+        id: input.id,
+        imageUrl: getUrl(input.emoji),
+        name: input.name,
+        qualities: input.qualities,
+        qualityList: input.qualityList,
+        stats: input.stats,
+        wear: input.wear
+    }
+}
+
+function formatWeaponID(num){
+    var formatted = String(num).padStart(2, '0');
+    formatted = "1"+formatted;
+    
+    return Number(formatted);
+}
+
+function getUrl(emojiString){
+    emojiString = emojiString.split(":").at(-1);
+    emojiString = emojiString.replace(/[>]+/g,'');
+    return `https://cdn.discordapp.com/emojis/${emojiString}.png`;
+}
+
+function addWantsPreturn(turnList){
+    // this ignores freeze for now, I'll do freeze in next step
+    turnList.forEach((turn, i) =>{
+        var prevTurn = turnList[i-1]? turnList[i-1] : null;
+        turn.enemy.forEach((pet, i)=>{
+            var weapon = pet.info.weapon;
+            if (weapon.name== "Defender's Aegis"){
+                console.log("this pet owns a shield!"); 
+            }
+            if (weapon.manaCost<pet.wp[fooBar]){
+                // what the hell is wp[0], wp[1], wp[2], wp[3]
+            }
+        });
+        turn.player.forEach((pet, i)=>{
+            var weapon = pet.info.weapon;
+            if (weapon.name== "Defender's Aegis"){
+                console.log("this pet owns a shield!");   
+            }
+        });
+
+    });
+}
+
+function extractTime(log){
+    log.forEach(Turn => {
         Turn.battleLogs.forEach(subturn => {
             const step1 = subturn.stringsArray[0];
             const step2 = step1.split(" ")[0];
@@ -69,7 +185,7 @@ function extractTime(Log){
                     break;
                 case "phys", "gsword","":
                     // what are the shortened weapon names again?
-
+                    // I'll need to complete extractWantsPreturn() for this, because freeze can be any time
             }
         });
     });
@@ -80,6 +196,7 @@ function extractActer(oldLog){
     logWithWrapper.forEach(Turn => {
         Turn.battleLogs.forEach((_, j) => {
             // I'll need position of said pet, thus needing pre/main/post phase tags 
+            // i need this because pets could have same names
         });
     });
     return logWithWrapper;
@@ -97,7 +214,7 @@ function accountForAOE(originalLog){
     const logWithAOE = JSON.parse(JSON.stringify(oldLog));
 
     logWithAOE.logs.forEach(newTurn => {
-        
+        // I'll need to extract the WP string first, because that's annoying
     });
     return logWithAOE;
 }
