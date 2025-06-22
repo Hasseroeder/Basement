@@ -17,6 +17,7 @@ async function main(){
     turnlist = addSubturns(turnlist);
     turnlist = addWrapper(turnlist);
     simplifyPets(turnlist);
+    addWantsPreturn(turnlist);
     console.log(turnlist);
 
 }
@@ -74,6 +75,7 @@ function simplifyPetsHelper(pet){
         nickname: pet.info.nickname,
         pos: pet.info.pos
     }
+    pet.buffs = pet.buffs.map(getBuff);
     delete pet.hp;
     delete pet.wp;
 }
@@ -142,6 +144,14 @@ function formatWeaponID(num){
     return Number(formatted);
 }
 
+function getBuff(buff){
+    var buffstring = buff.emoji;
+    return {
+        imageUrl: getUrl(buffstring),
+        name: buffstring.split(":")[1]
+    }
+}
+
 function getUrl(emojiString){
     emojiString = emojiString.split(":").at(-1);
     emojiString = emojiString.replace(/[>]+/g,'');
@@ -149,26 +159,41 @@ function getUrl(emojiString){
 }
 
 function addWantsPreturn(turnList){
-    // this ignores freeze for now, I'll do freeze in next step
     turnList.forEach((turn, i) =>{
-        var prevTurn = turnList[i-1]? turnList[i-1] : null;
-        turn.enemy.forEach((pet, i)=>{
-            var weapon = pet.info.weapon;
-            if (weapon.name== "Defender's Aegis"){
-                console.log("this pet owns a shield!"); 
-            }
-            if (weapon.manaCost<pet.wp[fooBar]){
-                // what the hell is wp[0], wp[1], wp[2], wp[3]
-            }
-        });
-        turn.player.forEach((pet, i)=>{
-            var weapon = pet.info.weapon;
-            if (weapon.name== "Defender's Aegis"){
-                console.log("this pet owns a shield!");   
-            }
-        });
+        ['enemy', 'player'].forEach(team => {
+            turn[team].forEach((pet, j) => {
+                var prevTurn = turnList[i-1];
+                const prevBuffs = prevTurn?.[team]?.[j]?.buffs || [];                
+                var weapon = pet.info.weapon;
 
+                if (weapon.name== "Defender's Aegis" &&
+                    enoughHPWP(weapon, pet) &&
+                    !hasbuff(prevBuffs,"taunt")
+                    ){
+                    console.log("pet owns a shield and wants to taunt in turn:" + i);
+                }
+                if(weapon.name== "Vanguard's banner" &&
+                    enoughHPWP(weapon, pet) &&
+                    !hasbuff(prevBuffs,["attup","attup+","attup++"])
+                    ){
+                    console.log("pet owns a banner and wants to taunt");
+                }
+            });
+        });    
     });
+}
+
+function enoughHPWP(weapon, pet){
+    return (  
+        weapon.manaCost<=pet.stats.wp.previous &&
+        pet.stats.hp.previous >= 0
+    )
+}
+
+function hasbuff(buffs, query){
+    const queries = Array.isArray(query) ? query : [query];
+
+    return buffs.some(buff => queries.includes(buff.name));
 }
 
 function extractTime(log){
