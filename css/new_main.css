@@ -370,37 +370,11 @@ td, th{
   padding:0.5rem 0.075rem;
 }
 
-
 body {
 	font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
 	background-color: #101010;
 	color: lightgray;
 	text-rendering: optimizelegibility;
-}
-
-@media screen and (orientation: portrait) {
-  .center-pillar {
-    display: none;
-  }
-  .landscape-reminder{
-    visibility: visible;
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .center-pillar {
-    display: block;
-  }
-  .landscape-reminder{
-    visibility: hidden;
-  }
-}
-.landscape-reminder{
-    position: fixed;
-    width: 100%;
-    z-index: -1;
-    text-align: center;
-    top: 50%;
 }
 
 ul {
