@@ -55,11 +55,10 @@ function updateWeaponDisplay(){
 
     if (currentWeapon == 100){
         //exception for fists, because they don't really have any ID, nor image
-
         weaponDisplay.image.src=        `media/owo_images/fists.png`;
         weaponDisplay.text.textContent= `??? - Fists`;
     }else{
-        weaponDisplay.image.src=        `media/owo_images/f_${weaponName}.png`;
+        weaponDisplay.image.src=        `media/owo_images/f_${weaponName.toLowerCase()}.png`;
         weaponDisplay.text.textContent= `${currentWeapon} - ${weaponName}`;
     }
     fetch(`donatorPages/weapons/${currentWeapon}.html`)
