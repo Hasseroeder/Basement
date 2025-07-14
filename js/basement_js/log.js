@@ -5,7 +5,7 @@ async function main(){
     var enemy;
     var player;
 
-    await fetch('../json/log.json')
+    await fetch('../json/sampleLogs/log.json')
         .then(response => response.json())
         .then(data => {
             turnlist = data.logs;
@@ -168,15 +168,17 @@ function addWantsPreturn(turnList){
 
                 if (weapon.name== "Defender's Aegis" &&
                     enoughHPWP(weapon, pet) &&
-                    !hasbuff(prevBuffs,"taunt")
-                    ){
-                    console.log("pet owns a shield and wants to taunt in turn:" + i);
+                    !hasbuff(prevBuffs,"taunt"))
+                {
+                    console.log("pet owns a shield and wants to taunt");
                 }
-                if(weapon.name== "Vanguard's banner" &&
+                if(weapon.name== "vanguard's banner" &&
                     enoughHPWP(weapon, pet) &&
-                    !hasbuff(prevBuffs,["attup","attup+","attup++"])
-                    ){
-                    console.log("pet owns a banner and wants to taunt");
+                    !hasbuff(prevBuffs,"????"))
+                {
+                    // banner logic is annoyingly complicated
+                    // I'll need to track banner buffs seperately first, before i can try tracking other buffs?
+                    // stop here for now, come back later
                 }
             });
         });    
@@ -191,9 +193,7 @@ function enoughHPWP(weapon, pet){
 }
 
 function hasbuff(buffs, query){
-    const queries = Array.isArray(query) ? query : [query];
-
-    return buffs.some(buff => queries.includes(buff.name));
+    return buffs.some(buff => buff.name === query);
 }
 
 function extractTime(log){

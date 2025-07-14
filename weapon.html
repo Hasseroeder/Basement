@@ -12,8 +12,21 @@
     <div class="landscape-reminder">Please use landscape mode!</div>
     <div class="center-pillar">
         <div id="navbar"></div>
-        <div id="construction"></div>
+        <div>
+            <div class="flexContainer" style="justify-content:center">
+                <button id="previous" style="width:5rem">&lt;&lt;</button>
+                <div style="margin:2rem 0rem; font-size: larger; display:flex; align-items: center; gap: 0.5rem; width:10rem; justify-content: center;">
+                    <img id="weaponImage" style="width:2rem"></img>
+                    <div id="weaponText"></div>
+                </div>
+                <button id="next" style="width:5rem">&gt;&gt;</button>
+            </div>
+            <div id="weaponContainer" class="container"></div>
+        </div>
         
+
+
+        <script src="js/basement_js/weapon.js"></script>
         <script src="js/basement_js/init.js"></script>
     </body>
 </html>
