@@ -1,4 +1,4 @@
-let   currentWeapon = 101;
+let   currentWeapon = 100;
 
 const weaponDisplay ={
     image: document.getElementById("weaponImage"),
@@ -55,12 +55,12 @@ function updateWeaponDisplay(){
 
     if (currentWeapon == 100){
         //exception for fists, because they don't really have any ID, nor image
-        weaponDisplay.image.src=        `media/owo_images/fists.png`;
         weaponDisplay.text.textContent= `??? - Fists`;
     }else{
-        weaponDisplay.image.src=        `media/owo_images/f_${weaponName.toLowerCase()}.png`;
         weaponDisplay.text.textContent= `${currentWeapon} - ${weaponName}`;
     }
+    weaponDisplay.image.src=        `media/owo_images/f_${weaponName.toLowerCase()}.png`;
+
     fetch(`donatorPages/weapons/${currentWeapon}.html`)
         .then(r => r.text())
         .then(html => weaponContainer.innerHTML = html)
@@ -69,11 +69,15 @@ function updateWeaponDisplay(){
 }
 
 function main(){
-    importFromHash();
-    updateWeaponDisplay();
-
+    pageNewLoad();
     buttons.next.addEventListener("click", ()=>swapWeapon(+1));
     buttons.previous.addEventListener("click", ()=>swapWeapon(-1));
+}
+
+function pageNewLoad(){
+
+    importFromHash();
+    updateWeaponDisplay();
 }
 
 function swapWeapon (change){
@@ -85,3 +89,4 @@ function swapWeapon (change){
 }
 
 document.addEventListener("DOMContentLoaded", main);
+window.addEventListener("hashchange", pageNewLoad);

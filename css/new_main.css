@@ -12,9 +12,7 @@
     color: lightgray;
     padding: 0.5rem 0.5rem;
     text-decoration: none;
-    text-align: center;
     margin: 0 5px;
-
 }
 
 .toolbar a:hover {
@@ -29,6 +27,12 @@
 
 .toolbarMenu:hover .toolbarSubMenu{
   visibility:visible;
+}
+
+.toolbarSubMenu a {
+  width: fit-content;
+  display:flex;
+  margin:0;
 }
 
 .center-pillar {
