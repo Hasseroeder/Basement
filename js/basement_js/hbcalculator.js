@@ -231,7 +231,7 @@ function toggleCell(cell,index) {
 
 document.getElementById("patreonCheck").addEventListener("change", function() {
     patreon=this.checked; 
-    saveDataCookie();
+    saveData();
     drawData();
     renderPatreon();
 });
@@ -297,9 +297,12 @@ document.addEventListener("DOMContentLoaded", () => {
         modifyValueDirect(i,0);
     }
 
-    showTimestamps();
+    window.addEventListener('hashchange', importFromHash);
     importFromHash();
+
+    showTimestamps();
     loadDataCookie();
+    saveData();
     drawData();
 });
 
@@ -334,6 +337,8 @@ function modifyValueDirect(index, value) {
 }
 
 function drawData(){
+
+    //updateHash();
     
     const imgSrc = ["efficiency.png", "duration.png", "cowoncy.png", "gain.png", "exp.png",       "radar.png"];
     const labels = ["Efficiency - ",  "Duration - ",  "Cost - ",     "Gain - ",  "Experience - ", "Radar - "];
@@ -445,25 +450,18 @@ function extractLevels(text) {
 
 function modifyValueAndCookie(index, value){
     modifyValueDirect(index, value);
-    updateHash();
-    saveDataCookie();
+    saveData();
 }
 
 function importFromHash(){
-    const hash = window.location.hash;
+    const hash = location.hash;
     if (hash) {
-        console.log("we've got a Hash!");
-        console.log(hash);
-        const value = decodeURIComponent(hash.slice(1));
-        stringToLevel(value);
+        stringToLevel(hash.slice(1));
     }
 }
 
-function updateHash(){
+function saveData(){
     location.hash = levels.join(",");
-}
-
-function saveDataCookie(){
     cookie.setCookie("Patreon",patreon.toString(),30);
     cookie.setCookie("Levels",levels.join(","),30)
 }
