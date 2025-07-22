@@ -265,14 +265,14 @@ document.addEventListener("DOMContentLoaded", () => {
         input.max = maxValues[i];
         input.tabIndex=i+1;
 
-        input.onchange = () => modifyValueWithCookie(i, parseInt(input.value));
+        input.onchange = () => modifyValueAndCookie(i, parseInt(input.value));
 
         input.addEventListener('wheel', (event) => {
             event.preventDefault();
             const step = event.deltaY < 0? 1:-1;
             input.value = Number(input.value) + step;
 
-            modifyValueWithCookie(i, parseInt(input.value));
+            modifyValueAndCookie(i, parseInt(input.value));
         });
 
 
@@ -284,11 +284,11 @@ document.addEventListener("DOMContentLoaded", () => {
         span.className="calculatorLevel";
 
         const btnPlus = document.createElement("button");
-        btnPlus.onclick = () => modifyValueWithCookie(i, parseInt(input.value)+1);
+        btnPlus.onclick = () => modifyValueAndCookie(i, parseInt(input.value)+1);
         btnPlus.className ="tooltip";
 
         const btnMinus = document.createElement("button");
-        btnMinus.onclick = () => modifyValueWithCookie(i, parseInt(input.value)-1);
+        btnMinus.onclick = () => modifyValueAndCookie(i, parseInt(input.value)-1);
 
         wrapper.style = "display:flex; align-items:center; padding: 0.3rem 0;";
         wrapper.append(btnMinus,span,input,btnPlus);
@@ -298,8 +298,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     showTimestamps();
-    loadDataCookie();
     importFromHash();
+    loadDataCookie();
     drawData();
 });
 
@@ -327,8 +327,6 @@ function modifyValueDirect(index, value) {
     } else {
         btnMinus.textContent = "<";
     }
-
-    updateHash();
 
     input.value= value;
     levels[index]=value;
@@ -440,19 +438,22 @@ function extractLevels(text) {
 
     for (var i =0; i<6;i++){
         if (extractedLevels[i] !== undefined) {
-            modifyValueWithCookie(i, extractedLevels[i]);
+            modifyValueAndCookie(i, extractedLevels[i]);
         }
     }
 }
 
-function modifyValueWithCookie(index, value){
+function modifyValueAndCookie(index, value){
     modifyValueDirect(index, value);
+    updateHash();
     saveDataCookie();
 }
 
 function importFromHash(){
     const hash = window.location.hash;
     if (hash) {
+        console.log("we've got a Hash!");
+        console.log(hash);
         const value = decodeURIComponent(hash.slice(1));
         stringToLevel(value);
     }
@@ -460,8 +461,6 @@ function importFromHash(){
 
 function updateHash(){
     location.hash = levels.join(",");
-    //const newHash = levels.join(",");
-    //window.history.replaceState(newHash, document.title, window.location.pathname + window.location.search);
 }
 
 function saveDataCookie(){
@@ -482,5 +481,5 @@ function loadDataCookie(){
 function stringToLevel(levelString){
     levelString .split(",")
                 .map(Number)
-                .forEach((value, index) => modifyValueDirect(index, value));
+                .forEach((value, index) => modifyValueAndCookie(index, value));
 }
