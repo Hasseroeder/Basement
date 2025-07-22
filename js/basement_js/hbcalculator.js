@@ -264,7 +264,17 @@ document.addEventListener("DOMContentLoaded", () => {
         input.min = 0; 
         input.max = maxValues[i];
         input.tabIndex=i+1;
+
         input.onchange = () => modifyValueWithCookie(i, parseInt(input.value));
+
+        input.addEventListener('wheel', (event) => {
+            event.preventDefault();
+            const step = event.deltaY < 0? 1:-1;
+            input.value = Number(input.value) + step;
+
+            modifyValueWithCookie(i, parseInt(input.value));
+        });
+
 
         input.id = `num${i}`;
         input.className="discord-code-lite no-arrows";
@@ -316,6 +326,10 @@ function modifyValueDirect(index, value) {
         value =0;
     } else {
         btnMinus.textContent = "<";
+    }
+
+    if (input.value != value){
+        deleteInaccurateHash();
     }
 
     input.value= value;
@@ -444,6 +458,10 @@ function importFromHash(){
         const value = decodeURIComponent(hash.slice(1));
         stringToLevel(value);
     }
+}
+
+function deleteInaccurateHash(){
+    window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
 }
 
 function saveDataCookie(){
