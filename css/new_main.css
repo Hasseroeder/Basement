@@ -398,3 +398,53 @@ a {
 a:hover {
     color: #70b7cf;
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    background-color: #333;
+    color: lightgray;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem;
+    min-width:4rem;
+    border-left: 0.125rem   solid #D3D3D3;
+    border-right: 0.125rem   solid #8D8D8D; 
+    border-top: 0.125rem   solid #D3D3D3;  
+    border-bottom: 0.125rem   solid #8D8D8D;
+    display:flex;
+    font-size:  0.65rem;
+
+    /* Position */
+    position: absolute;
+    bottom: 123%; 
+    left: 110%;
+    transform: translateX(-50%);
+    
+}
+
+.tooltip .pet-tooltip-text {
+    z-index: 100;
+    width: max-content;
+    padding: 0.1rem;
+    pointer-events: none;
+    border: 2.5px solid rgb(25, 25, 25);
+    font-size: 0.7rem;
+    border-radius: 0.2rem;
+    visibility: hidden;
+    background-color: #333;
+}
+
+
+.tooltip:hover * {
+    visibility: visible;
+    opacity: 1;
+}
+
+.hidden {
+    visibility: hidden;
+}

@@ -299,11 +299,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener('hashchange', importFromHash);
     importFromHash();
+    importFromCookie();
 
-    showTimestamps();
-    loadDataCookie();
     saveData();
     drawData();
+    showTimestamps();
 });
 
 function modifyValueDirect(index, value) {
@@ -336,10 +336,7 @@ function modifyValueDirect(index, value) {
     drawData();
 }
 
-function drawData(){
-
-    //updateHash();
-    
+function drawData(){    
     const imgSrc = ["efficiency.png", "duration.png", "cowoncy.png", "gain.png", "exp.png",       "radar.png"];
     const labels = ["Efficiency - ",  "Duration - ",  "Cost - ",     "Gain - ",  "Experience - ", "Radar - "];
     const suffixes=[" pets/h",        "h",            " cowoncy",    " ess/h",   " exp/h",        "ppm"];
@@ -466,7 +463,7 @@ function saveData(){
     cookie.setCookie("Levels",levels.join(","),30)
 }
 
-function loadDataCookie(){
+function importFromCookie(){
     const patreonData = cookie.getCookie("Patreon");
     const levelsData = cookie.getCookie("Levels");
     if (levelsData) {
