@@ -11,7 +11,7 @@ function createImage(attrs = {}, styles = {}) {
   return img;
 }
 
-function applyContent(el, content, config = {}) {
+function applyContent(el, content) {
   if (typeof content === "string") {
     el.innerHTML = content;
     return;
@@ -19,10 +19,59 @@ function applyContent(el, content, config = {}) {
   el.appendChild(content);
 }
 
+const weapons = [
+  ["???","Fists"],
+  ["101","Sword"],
+  ["102","Hstaff"],
+  ["103","Bow"],
+  ["104","Rune"],
+  ["105","Shield"],
+  ["106","Orb"],
+  ["107","Vstaff"],
+  ["108","Dagger"],
+  ["109","Wand"],
+  ["110","Fstaff"],
+  ["111","Estaff"],
+  ["112","Sstaff"],
+  ["113","Scepter"],
+  ["114","Rstaff"],
+  ["115","Axe"],
+  ["116","Banner"],
+  ["117","Scythe"],
+  ["118","Crune"],
+  ["119","Pstaff"],
+  ["120","Lscythe"],
+  ["121","Ffish"],
+  ["122","Lrune"],
+]
+
 const injectors = [
   {
     selector: "#navbar",
-    load: () => fetch("./donatorPages/navBar.html").then(r => r.text()),
+    load: () => {
+      return fetch("./donatorPages/navBar.html")
+        .then(r => r.text())
+        .then(html => {
+          const container = document.querySelector("#navbar");
+          container.innerHTML = html;
+
+          const weaponContainer = container.querySelector("#menuWeaponContainer");
+
+          weapons.forEach((weapon,id)=>{
+            const a = document.createElement("a");
+            a.href = "/weapon.html#" + (100+id);
+            a.title= `${weapon[0]} ${weapon[1]}`;
+            weaponContainer.append(a);
+
+            const img = document.createElement("img");
+            img.src=`media/owo_images/f_${weapon[1].toLowerCase()}.png`;
+            img.style.width="2.5rem";
+            a.append(img);
+          });
+
+          return container.innerHTML;
+        });
+    },
   },
   {
     selector: "#construction",
@@ -92,8 +141,6 @@ window.addEventListener("DOMContentLoaded", initInjectors);
 class OwOimg extends HTMLElement {
   constructor() {
     super();
-
-    // Attach shadow DOM
     this.attachShadow({ mode: "open" });
 
     // Create template
@@ -171,5 +218,4 @@ class OwOimg extends HTMLElement {
   }
 }
 
-// Define the custom element
 customElements.define("owo-img", OwOimg);

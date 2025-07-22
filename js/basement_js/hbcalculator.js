@@ -328,9 +328,7 @@ function modifyValueDirect(index, value) {
         btnMinus.textContent = "<";
     }
 
-    if (input.value != value){
-        deleteInaccurateHash();
-    }
+    updateHash();
 
     input.value= value;
     levels[index]=value;
@@ -460,8 +458,10 @@ function importFromHash(){
     }
 }
 
-function deleteInaccurateHash(){
-    window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+function updateHash(){
+    location.hash = levels.join(",");
+    //const newHash = levels.join(",");
+    //window.history.replaceState(newHash, document.title, window.location.pathname + window.location.search);
 }
 
 function saveDataCookie(){
