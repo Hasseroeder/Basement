@@ -85,10 +85,10 @@ function smallInjector(container){
     a.append(img);
 
     const tooltip = document.createElement("div");
+
     tooltip.innerHTML=object[0];
-    if (object[1]){
-      tooltip.innerHTML+="<br>"+object[1];
-    }
+    tooltip.innerHTML+= object[1]? "<br>"+object[1]:"";
+
     tooltip.className="navBar-tooltip-text";
     a.append(tooltip);
 
