@@ -21,7 +21,7 @@ function applyContent(el, content) {
 
 const collections = {
   weapon : [
-    ["???","Fists"],
+    ["Fists"],
     ["101","Sword"],
     ["102","Hstaff"],
     ["103","Bow"],
@@ -85,10 +85,8 @@ function smallInjector(container){
     a.append(img);
 
     const tooltip = document.createElement("div");
-
-    tooltip.innerHTML=object[0];
+    tooltip.innerHTML = object[0];
     tooltip.innerHTML+= object[1]? "<br>"+object[1]:"";
-
     tooltip.className="navBar-tooltip-text";
     a.append(tooltip);
 
