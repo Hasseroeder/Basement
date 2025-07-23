@@ -439,6 +439,28 @@ a:hover {
     background-color: #333;
 }
 
+.tooltip .navBar-tooltip-text {
+  border-left: 0.125rem solid #D3D3D3;
+  border-right: 0.125rem solid #8D8D8D;
+  border-top: 0.125rem solid #D3D3D3;
+  border-bottom: 0.125rem solid #8D8D8D;
+  background-color: #333;
+  font-size: 0.65rem;
+  position: absolute;
+  top: 0.66rem; 
+  left: 3.2rem; 
+  bottom:unset; 
+  transform:unset; 
+  z-index:5; 
+  pointer-events: none; 
+  padding:0.2rem 1rem; 
+  min-width:unset; 
+  width:max-content;
+  visibility: hidden;
+  min-height:1.544rem;
+  align-content: center;
+}
+
 
 .tooltip:hover * {
     visibility: visible;

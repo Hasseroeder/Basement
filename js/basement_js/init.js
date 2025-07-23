@@ -21,53 +21,53 @@ function applyContent(el, content) {
 
 const collections = {
   weapon : [
-    ["???","Fists.png"],
-    ["101","Sword.png"],
-    ["102","Hstaff.png"],
-    ["103","Bow.png"],
-    ["104","Rune.png"],
-    ["105","Shield.png"],
-    ["106","Orb.png"],
-    ["107","Vstaff.png"],
-    ["108","Dagger.png"],
-    ["109","Wand.png"],
-    ["110","Fstaff.png"],
-    ["111","Estaff.png"],
-    ["112","Sstaff.png"],
-    ["113","Scepter.png"],
-    ["114","Rstaff.png"],
-    ["115","Axe.png"],
-    ["116","Banner.png"],
-    ["117","Scythe.png"],
-    ["118","Crune.png"],
-    ["119","Pstaff.png"],
-    ["120","Lscythe.png"],
-    ["121","Ffish.png"],
-    ["122","Lrune.png"],
+    ["???","Fists"],
+    ["101","Sword"],
+    ["102","Hstaff"],
+    ["103","Bow"],
+    ["104","Rune"],
+    ["105","Shield"],
+    ["106","Orb"],
+    ["107","Vstaff"],
+    ["108","Dagger"],
+    ["109","Wand"],
+    ["110","Fstaff"],
+    ["111","Estaff"],
+    ["112","Sstaff"],
+    ["113","Scepter"],
+    ["114","Rstaff"],
+    ["115","Axe"],
+    ["116","Banner"],
+    ["117","Scythe"],
+    ["118","Crune"],
+    ["119","Pstaff"],
+    ["120","Lscythe"],
+    ["121","Ffish"],
+    ["122","Lrune"],
   ],
 
   passive : [
-    ["Strength","str.png"],
-    ["Magic","mag.png"],
-    ["Health Point","hp.png"],
-    ["Weapon Point","wp.png"],
-    ["Physical Resistance","pr.png"],
-    ["Magical Resistance","mr.png"],
-    ["Lifestreal","ls.png"],
-    ["Thorns","th.png"],
-    ["Mana Tap","mtap.png"],
-    ["Absolve","absv.png"],
-    ["Safeguard","sg.png"],
-    ["Critical","crit.png"],
-    ["Discharge","dc.png"],
-    ["Kamikaze","kkaze.png"],
-    ["Regeneration","hgen.png"],
-    ["Energize","wgen.png"],
-    ["Sprout","sprout.png"],
-    ["Enrage","enrage.png"],
-    ["Sacrifice","sac.png"],
-    ["Snail","snail.png"],
-    ["Knowledge","kno.png"]
+    ["Strength","Str"],
+    ["Magic","Mag"],
+    ["Health Point","HP"],
+    ["Weapon Point","WP"],
+    ["Physical Resistance","PR"],
+    ["Magical Resistance","MR"],
+    ["Lifestreal","Ls"],
+    ["Thorns"],
+    ["Mana Tap","Mtap"],
+    ["Absolve","Absv"],
+    ["Safeguard","Sg"],
+    ["Critical","Crit"],
+    ["Discharge","Dc"],
+    ["Kamikaze","Kkaze"],
+    ["Regeneration","Hgen"],
+    ["Energize","Wgen"],
+    ["Sprout"],
+    ["Enrage"],
+    ["Sacrifice","Sac"],
+    ["Snail"],
+    ["Knowledge","Kno"]
   ]
 };
 
@@ -80,18 +80,16 @@ function smallInjector(container){
     container.append(a);
 
     const img = document.createElement("img");
-    img.src=`media/owo_images/f_${object[1].toLowerCase()}`;
+    img.src=`media/owo_images/f_${object[object.length-1].toLowerCase()}.png`;
     img.style.width="2.5rem";
     a.append(img);
 
-    const tooltip = document.createElement("span");
-    tooltip.innerHTML=`${object[0]}<br>${object[1]}`;
-    tooltip.className="tooltip-text";
-    tooltip.style="top: 0.7rem; left: 3.2rem; bottom:unset; transform:unset; z-index:5; pointer-events: none;";
-    if(type=="passive"){
-      tooltip.style.width="max-content"
-      // simply because passives like PR and MR are annoyingly long, and would otherwise take 2 lines
+    const tooltip = document.createElement("div");
+    tooltip.innerHTML=object[0];
+    if (object[1]){
+      tooltip.innerHTML+="<br>"+object[1];
     }
+    tooltip.className="navBar-tooltip-text";
     a.append(tooltip);
 
   });
