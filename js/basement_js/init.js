@@ -80,7 +80,8 @@ function smallInjector(container){
     container.append(a);
 
     const img = document.createElement("img");
-    img.src=`media/owo_images/f_${object[object.length-1].toLowerCase()}.png`;
+    img.src=`media/owo_images/f_${object.at(-1).toLowerCase()}.png`;
+
     img.style.width="2.5rem";
     a.append(img);
 

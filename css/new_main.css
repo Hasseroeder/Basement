@@ -461,6 +461,12 @@ a:hover {
   align-content: center;
 }
 
+.cool-border {
+  border-left: 0.125rem solid #D3D3D3;
+  border-right: 0.125rem solid #8D8D8D;
+  border-top: 0.125rem solid #D3D3D3;
+  border-bottom: 0.125rem solid #8D8D8D;
+}
 
 .tooltip:hover * {
     visibility: visible;
@@ -469,4 +475,45 @@ a:hover {
 
 .hidden {
     visibility: hidden;
+}
+
+.wikipedia-stat-row {
+  position: relative;
+}
+
+.wikipedia-stat-row:hover {
+  background-color: #353535;
+}
+
+.wikipedia-header{
+  padding:0.5rem 0rem; 
+  background-color: #353535; 
+  width:100%; 
+  text-align: center; 
+  align-content: center;
+  border: 1px solid gray;
+  min-height: 2.3rem;
+}
+
+.wikipedia-container{
+  width:18rem; 
+  margin-left:2rem; 
+  border: 1px solid gray;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.wikipedia-id{
+  padding:0.5rem 0rem; 
+  background-color: #353535; 
+  width:100%; 
+  border: 1px solid gray; 
+  font-size: 0.9rem;
+}
+
+.wikipedia-stats-header{
+  padding:0.75rem 0 0rem; 
+  margin-bottom: -0.65rem; 
+  font-weight: bold;
 }
