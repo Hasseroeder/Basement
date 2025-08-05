@@ -27,7 +27,7 @@ const weapons = {
         ease:4,
         stats:[
             ["200","100","WP"],
-            ["35%","55%","str"]
+            ["35%","55%","STR"]
         ],
     },
     102:{
@@ -37,7 +37,7 @@ const weapons = {
         ease:2,
         stats:[
             ["225","150","WP"],
-            ["100%","150%","mag"]
+            ["100%","150%","MAG"]
         ],
     },
     103:{
@@ -47,7 +47,7 @@ const weapons = {
         ease:3,
         stats:[
             ["220","120","WP"],
-            ["110%","160%","str"]
+            ["110%","160%","STR"]
         ],
     },
     104:{
@@ -83,7 +83,7 @@ const weapons = {
         ease:2,
         stats:[
             ["200","100","WP"],
-            ["25%","45%","mag"]
+            ["25%","45%","MAG"]
         ],
     },
     108:{
@@ -93,8 +93,8 @@ const weapons = {
         ease:4,
         stats:[
             ["200","100","WP"],
-            ["70%","100%","str"],
-            ["40%","65%","mag","poison"]
+            ["70%","100%","STR"],
+            ["40%","65%","MAG","poison"]
         ],
     },
     109:{
@@ -104,7 +104,7 @@ const weapons = {
         ease:0,
         stats:[
             ["250","150","WP"],
-            ["80%","100%","mag"],
+            ["80%","100%","MAG"],
             ["20%","40%","wp_transfer"]
         ],
     },
@@ -115,9 +115,9 @@ const weapons = {
         ease:2,
         stats:[
             ["200","100","WP"],
-            ["75%","95%","mag"],
-            ["20%","40%","mag","flame"],
-            ["60%","80%","mag","explosion"],
+            ["75%","95%","MAG"],
+            ["20%","40%","MAG","flame"],
+            ["60%","80%","MAG","explosion"],
         ],
     },
     111:{
@@ -127,7 +127,7 @@ const weapons = {
         ease:3,
         stats:[
             ["200","100","WP"],
-            ["35%","65%","mag"],
+            ["35%","65%","MAG"],
         ],
     },
     112:{
@@ -137,7 +137,7 @@ const weapons = {
         ease:4,
         stats:[
             ["225","125","WP"],
-            ["30%","50%","mag"],
+            ["30%","50%","MAG"],
             ["20%","30%","defup"],
         ],
     },
@@ -148,7 +148,7 @@ const weapons = {
         ease:0,
         stats:[
             ["200","125","WP"],
-            ["40%","70%","mag"],
+            ["40%","70%","MAG"],
         ],
     },
     114:{
@@ -158,7 +158,7 @@ const weapons = {
         ease:5,
         stats:[
             ["400","300","WP"],
-            ["50%","80%","mag"],
+            ["50%","80%","MAG"],
         ],
     },
     115:{
@@ -168,7 +168,7 @@ const weapons = {
         ease:2,
         stats:[            
             ["280","180","WP"],
-            ["20%","40%","str"]
+            ["20%","40%","STR"]
         ],
     },
     116:{
@@ -190,7 +190,7 @@ const weapons = {
         ease:2,
         stats:[
             ["200","100","WP"],
-            ["70%","100%","str"],
+            ["70%","100%","STR"],
             ["45%","75%","mort"],
         ],
     },
@@ -212,8 +212,8 @@ const weapons = {
         ease:2,
         stats:[
             ["200","100","WP"],
-            ["50%","100%","str"],
-            ["50%","100%","mag"],    
+            ["50%","100%","STR"],
+            ["50%","100%","MAG"],    
         ],
     },
     120:{
@@ -223,8 +223,8 @@ const weapons = {
         ease:2,
         stats:[
             ["230","130","WP"],
-            ["50%","80%","str"],
-            ["+40%","+60%","str"],
+            ["50%","80%","STR"],
+            ["+40%","+60%","STR"],
             ["30%","60%","leech_hp"],
             ["30%","60%","leech_wp"],
         ],
@@ -236,8 +236,8 @@ const weapons = {
         ease:1,
         stats:[
             ["280","180","WP"],
-            ["50%","80%","str"],
-            ["20%","50%","mag"],
+            ["50%","80%","STR"],
+            ["20%","50%","MAG"],
         ],
     },
     122:{
@@ -266,7 +266,8 @@ function importFromHash(){
 
 function updateWeaponDisplay(){
     const weapon = weapons[currentWeaponID];
-    const weaponShorthand= weapon.aliases[0]? weapon.aliases[0]: weapon.name;
+    var weaponShorthand= weapon.aliases[0]? weapon.aliases[0]: weapon.name;
+    weaponShorthand = weaponShorthand.toLowerCase();
 
     if (currentWeaponID == 100){
         //exception for fists, because they don't really have any ID, nor image
@@ -274,7 +275,8 @@ function updateWeaponDisplay(){
     }else{
         weaponDisplay.text.textContent= `${currentWeaponID} - ${weaponShorthand}`;
     }
-    weaponDisplay.image.src= `media/owo_images/f_${weaponShorthand.toLowerCase()}.png`;
+    weaponDisplay.image.src= `media/owo_images/f_${weaponShorthand}.png`;
+
 
     fetch(`donatorPages/weapons/${currentWeaponID}.html`)
         .then(r => r.text())
