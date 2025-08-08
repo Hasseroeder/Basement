@@ -271,7 +271,7 @@ function updateWeaponDisplay(){
 
     if (currentWeaponID == 100){
         //exception for fists, because they don't really have any ID, nor image
-        weaponDisplay.text.textContent= `??? - Fists`;
+        weaponDisplay.text.textContent= `??? - fists`;
     }else{
         weaponDisplay.text.textContent= `${currentWeaponID} - ${weaponShorthand}`;
     }
@@ -282,58 +282,61 @@ function updateWeaponDisplay(){
         .then(r => r.text())
         .then(html => weaponContainer.innerHTML = html)
         .then(()=>{
-                    
-            const wikipediaContainer = weaponContainer.querySelector("#wikipedia");
-
-            const wikipediaHeader = document.createElement("div");
-            wikipediaHeader.className="wikipedia-header";
-            wikipediaHeader.innerHTML= "<b>"+weapon.name + "</b><br>";
-
-            const wikipediaAliases = document.createElement("span");
-            wikipediaAliases.style="font-size: 0.9rem; color:#999;";
-            if(weapon.aliases[0]) {
-                wikipediaAliases.innerHTML= "aka: " + weapon.aliases.join(", ");
-            }
-            wikipediaHeader.appendChild(wikipediaAliases);
-
-            const wikipediaImage = document.createElement("img");
-            wikipediaImage.src=`media/owo_images/f_${weaponShorthand}.png`;
-            wikipediaImage.style="width:60%; padding: 0.5rem;";
-
-            const wikipediaStars= document.createElement("div");
-            wikipediaStars.style="margin-bottom:0.5rem;";
-            wikipediaStars.innerHTML= `<span style="font-size: 0.85rem;">Viability:</span> `
-            for (var i = 0; i<5; i++){
-                wikipediaStars.innerHTML+= weapon.viability>i?"&starf;":"&star;";
-            }
-            wikipediaStars.innerHTML+= `<br><span style="font-size: 0.85rem;">Ease of use:</span> `
-            for (var i = 0; i<5; i++){
-                wikipediaStars.innerHTML+= weapon.ease>i?"&starf;":"&star;";
-            }
-            
-            const IDwrapper = document.createElement("div");
-            IDwrapper.style="padding: 0 0.5rem;";
-            IDwrapper.innerHTML= "ID: " + 
-                                (currentWeaponID == 100?
-                                "none <br> not actually a weapon":
-                                currentWeaponID);
-            const wikipediaID = document.createElement("div");
-            wikipediaID.className="wikipedia-id";
-            wikipediaID.append(IDwrapper);
-            
-            var wikipediaTable = createWikipediaTable(weapon);
-            if (!weapon.stats[0]){
-                wikipediaTable= document.createElement("div");
-                wikipediaTable.innerHTML+=currentWeaponID==106?"none,<br> but two passives!":"none!";
-                wikipediaTable.style="margin:1rem 0 0.5rem 0;";
-            }
-            
-            const wikipediaStatsHeader = document.createElement("div");
-            wikipediaStatsHeader.className="wikipedia-stats-header";
-            wikipediaStatsHeader.textContent="Stats";
-
-            wikipediaContainer.append(wikipediaHeader, wikipediaImage,wikipediaStars,wikipediaID,wikipediaStatsHeader,wikipediaTable);
+            createWikipediaContainer(weapon,weaponShorthand);
         })
+}
+
+function createWikipediaContainer(weapon,weaponShorthand){
+    const wikipediaContainer = weaponContainer.querySelector("#wikipedia");
+    
+    const wikipediaHeader = document.createElement("div");
+    wikipediaHeader.className="wikipedia-header";
+    wikipediaHeader.innerHTML= "<b>"+weapon.name + "</b><br>";
+
+    const wikipediaAliases = document.createElement("span");
+    wikipediaAliases.style="font-size: 0.9rem; color:#999;";
+    if(weapon.aliases[0]) {
+        wikipediaAliases.innerHTML= "aka: " + weapon.aliases.join(", ");
+    }
+    wikipediaHeader.appendChild(wikipediaAliases);
+
+    const wikipediaImage = document.createElement("img");
+    wikipediaImage.src=`media/owo_images/f_${weaponShorthand}.png`;
+    wikipediaImage.style="width:60%; padding: 0.5rem;";
+
+    const wikipediaStars= document.createElement("div");
+    wikipediaStars.style="margin-bottom:0.5rem;";
+    wikipediaStars.innerHTML= `<span style="font-size: 0.85rem;">Viability:</span> `
+    for (var i = 0; i<5; i++){
+        wikipediaStars.innerHTML+= weapon.viability>i?"&starf;":"&star;";
+    }
+    wikipediaStars.innerHTML+= `<br><span style="font-size: 0.85rem;">Ease of use:</span> `
+    for (var i = 0; i<5; i++){
+        wikipediaStars.innerHTML+= weapon.ease>i?"&starf;":"&star;";
+    }
+    
+    const IDwrapper = document.createElement("div");
+    IDwrapper.style="padding: 0 0.5rem;";
+    IDwrapper.innerHTML= "ID: " + 
+                        (currentWeaponID == 100?
+                        "none <br> not actually a weapon":
+                        currentWeaponID);
+    const wikipediaID = document.createElement("div");
+    wikipediaID.className="wikipedia-id";
+    wikipediaID.append(IDwrapper);
+    
+    var wikipediaTable = createWikipediaTable(weapon);
+    if (!weapon.stats[0]){
+        wikipediaTable= document.createElement("div");
+        wikipediaTable.innerHTML+=currentWeaponID==106?"none,<br> but two passives!":"none!";
+        wikipediaTable.style="margin:1rem 0 0.5rem 0;";
+    }
+    
+    const wikipediaStatsHeader = document.createElement("div");
+    wikipediaStatsHeader.className="wikipedia-stats-header";
+    wikipediaStatsHeader.textContent="Stats";
+
+    wikipediaContainer.append(wikipediaHeader, wikipediaImage,wikipediaStars,wikipediaID,wikipediaStatsHeader,wikipediaTable);
 }
 
 function createWikipediaTable(weapon){
