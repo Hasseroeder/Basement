@@ -594,7 +594,7 @@ a:hover {
   border-bottom: 2px solid currentColor;
   transform: translateY(-65%) rotate(45deg);
   pointer-events: none;
-  transition: transform 120ms ease;
+  transition: transform 70ms ease;
 }
 
 #wearSelect.open .selected::after {
