@@ -515,3 +515,65 @@ a:hover {
   margin-bottom: -0.65rem; 
   font-weight: bold;
 }
+
+/* wrapper */
+.custom-select {
+  position: relative;
+  width: 5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  white-space: unset;
+}
+
+/* button */
+.selected {
+  width: 100%;
+  text-align: left;
+  padding: 0.2rem 0.2rem;
+  border:none;
+  border-radius: 0.2rem;
+  background: #191919;
+  color: lightgray;
+  cursor: pointer;
+  font-family: monospace;
+  height:unset;
+}
+
+.options {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 2px 0 0;
+  padding: 0 0;
+  background: #191919;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  max-height: 220px;
+  overflow: auto;
+  display: none;
+  z-index: 1000;
+}
+
+.custom-select.open .options {
+  display: block;
+}
+
+.option {
+  padding: 0.2rem 0.2rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.option:hover,
+.option.highlighted {
+  background: #454545;
+}
+
+.option[aria-selected="true"]::after {
+  content: "✓";
+  float: right;
+  color: lightgray;
+}
+
+.options:focus {
+  outline: none;
+}

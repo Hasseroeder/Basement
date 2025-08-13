@@ -32,15 +32,43 @@
                                     <strong>ID:</strong> <code class="discord-code" style="font-size: 0.8rem;">8SBPF8</code>
                                     <strong>Shard Value:</strong> 300 selling / 750 buying
                                     <strong>Quality:</strong> 86.7%<img src="media/owo_images/mythic.png" alt=":mythic:" aria-label="mythic" title=":mythic:" class="discord-embed-emote">
-                                    <strong>Wear:</strong> <code class="discord-code" style="font-size: 0.8rem;">WORN</code>
-                                    <strong>WP Cost:</strong> 114<img src="media/owo_images/WP.png" alt=":WP:" aria-label="WP" title=":WP:" class="discord-embed-emote">
+                                    <strong>Wear:</strong> 
+                                </div>
+                                    
+                                <select class="discord-code" style="width:5rem; font-size: 0.8rem; color:lightgray; border:none; font-family: monospace; margin: 1rem 0;" name="wear" id="wear">
+                                    <option value="worn">WORN</option>
+                                    <option value="decent">DECENT</option>
+                                    <option value="fine">FINE</option>
+                                    <option value="pristine">PRISTINE</option>
+                                </select>
+                                
+                                <div class="custom-select" id="wearSelect">
+                                    <button
+                                        class="selected"
+                                        type="button"
+                                        aria-haspopup="listbox"
+                                        aria-expanded="false"
+                                        aria-controls="wearOptions"
+                                        id="wearButton"
+                                    >
+                                    </button>
+                                    <ul class="options" id="wearOptions" role="listbox" tabindex="-1">
+                                        <li class="option" role="option" id="opt-worn"  data-value="worn"  aria-selected="false">WORN</li>
+                                        <li class="option" role="option" id="opt-decent" data-value="decent" aria-selected="false">DECENT</li>
+                                        <li class="option" role="option" id="opt-fine" data-value="fine" aria-selected="false">FINE</li>
+                                        <li class="option" role="option" id="opt-pristine"   data-value="pristine"   aria-selected="false">PRISTINE</li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="myCustomSelect" id="myCustomSelect">
+                                    
+                                <div class="discord-embed-text" style="font-size:0.8rem;"><strong>WP Cost:</strong> 114<img src="media/owo_images/WP.png" alt=":WP:" aria-label="WP" title=":WP:" class="discord-embed-emote">
                                     <strong>Description:</strong> Deals <strong>55%</strong> of your <img src="media/owo_images/STR.png" alt=":STR:" aria-label="STR" title=":STR:" class="discord-embed-emote">STR to all opponents
 
                                     <strong>Passives:</strong> none
                                 </div>
                             </div>
                             <div class="discord-embed-inner">
-                                <img aria-label=":sword:" src="media/owo_images/m_sword.png" alt=":sword:" draggable="false" class="discord-pet-display">
+                                <img aria-label=":sword:" style="border-radius: 0.2rem;"src="media/owo_images/m_sword.png" alt=":sword:" draggable="false" class="discord-pet-display">
                             </div>
                         </div>
                     </div>  
@@ -49,5 +77,6 @@
 
     </div>
     <script src="js/basement_js/init.js"></script>
+    <script src="js/basement_js/weaponCalculator.js"></script>
   </body>
 </html>
