@@ -278,10 +278,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         input.id = `num${i}`;
         input.className="discord-code-lite no-arrows";
+        input.style.borderRadius="0 0.2rem 0.2rem 0";
 
         const span =document.createElement("div");
         span.textContent="Lvl";
         span.className="calculatorLevel";
+        span.addEventListener("click",()=>input.focus());
 
         const btnPlus = document.createElement("button");
         btnPlus.onclick = () => modifyValueAndCookie(i, parseInt(input.value)+1);

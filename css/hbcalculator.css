@@ -94,6 +94,7 @@ input[type="checkbox"] {
     align-items: center;
     font-size: 0.8rem;
     font-family: monospace;
+    border-radius: 0.2rem 0 0 0.2rem;
 }
 
 .discord-code-lite{
@@ -112,7 +113,22 @@ input[type="checkbox"] {
   border-bottom: 0.125rem   solid #8D8D8D;
 }
 
-
+/*
+.hbcalculator-number{
+  border-radius: 0px 0.2rem 0.2rem 0px;
+  font-size: 0.8rem;
+  font-family: monospace;
+  text-align: center;
+  padding: 0;
+  border-right: 0.125rem solid #8D8D8D;
+  border-top: 0.125rem solid #D3D3D3;
+  border-bottom: 0.125rem solid #8D8D8D;
+  border-left:none;
+  height: 1.20rem;
+  width: 2.3rem;
+  color:rgb(225, 225, 225);
+}
+*/
 
 input[type="checkbox"]:checked::before {
     content: "✔"; 
