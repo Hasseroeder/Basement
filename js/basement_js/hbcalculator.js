@@ -267,15 +267,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         input.onchange = () => modifyValueAndCookie(i, parseInt(input.value));
 
-        input.addEventListener('wheel', (event) => {
-            event.preventDefault();
-            const step = event.deltaY < 0? 1:-1;
-            input.value = Number(input.value) + step;
-
-            modifyValueAndCookie(i, parseInt(input.value));
-        });
-
-
         input.id = `num${i}`;
         input.className="discord-code-lite no-arrows";
         input.style.borderRadius="0 0.2rem 0.2rem 0";
@@ -295,6 +286,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const innerWrapper = document.createElement("div");
         innerWrapper.append(span, input);
         innerWrapper.className="numberWrapper";
+
+        innerWrapper.addEventListener('wheel', (event) => {
+            event.preventDefault();
+            const step = event.deltaY < 0? 1:-1;
+            input.value = Number(input.value) + step;
+
+            modifyValueAndCookie(i, parseInt(input.value));
+        });
+
 
         wrapper.style = "display:flex; align-items:center; padding: 0.3rem 0;";
         wrapper.append(btnMinus,innerWrapper,btnPlus);
