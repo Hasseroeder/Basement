@@ -577,3 +577,26 @@ a:hover {
 .options:focus {
   outline: none;
 }
+
+/* ---------------------- */
+#wearSelect .selected {
+  position: relative;
+}
+
+#wearSelect .selected::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.40rem;
+  width: 0.25rem;
+  height: 0.25rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+  transition: transform 120ms ease;
+}
+
+#wearSelect.open .selected::after {
+  transform: translateY(-30%) rotate(-135deg);
+}
