@@ -326,7 +326,7 @@
   position: relative;
 }
 
-.outputFromCalculator::before {
+.arrowBefore::before {
   content: "→";
   position: absolute;
   top: 50%;
