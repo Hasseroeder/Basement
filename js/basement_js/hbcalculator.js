@@ -180,7 +180,7 @@ function getUpgradeCost(index, level) {
   return Math.floor(params.multiplier * Math.pow(level + 1, params.exponent));
 }
 
-const cells = Array.from(document.querySelectorAll("#table-1 th"));
+const cells = Array.from(document.querySelectorAll("#table-1 td"));
 const isSac = cells.map(cell => cell.textContent.trim() === "Sac ");
 
 
@@ -197,7 +197,7 @@ cells.forEach((cell,index) => {
     cell.addEventListener("mousedown", (event) => {
         isDragging = true;
         if (isDragging) {
-            let targetCell = event.target.closest("th");
+            let targetCell = event.target.closest("td");
             if (targetCell) toggleCell(targetCell,index);
         }
     });
@@ -208,7 +208,7 @@ cells.forEach((cell,index) => {
         }
         
         if (isDragging) {
-            let targetCell = event.target.closest("th"); 
+            let targetCell = event.target.closest("td"); 
             if (targetCell) toggleCell(targetCell,index);
         }
     });
@@ -292,8 +292,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const btnMinus = document.createElement("button");
         btnMinus.onclick = () => modifyValueAndCookie(i, parseInt(input.value)-1);
 
+        const innerWrapper = document.createElement("div");
+        innerWrapper.append(span, input);
+        innerWrapper.className="numberWrapper";
+
         wrapper.style = "display:flex; align-items:center; padding: 0.3rem 0;";
-        wrapper.append(btnMinus,span,input,btnPlus);
+        wrapper.append(btnMinus,innerWrapper,btnPlus);
         container.appendChild(wrapper);
 
         modifyValueDirect(i,0);
@@ -310,8 +314,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function modifyValueDirect(index, value) {
     const input = document.getElementById(`num${index}`);
-    const btnPlus = input.nextElementSibling;
-    const btnMinus = input.previousElementSibling.previousElementSibling;
+    const btnPlus = input.parentElement.nextElementSibling;
+    const btnMinus = input.parentElement.previousElementSibling;
 
     const tooltip = document.createElement("span");
           tooltip.className="tooltip-text";

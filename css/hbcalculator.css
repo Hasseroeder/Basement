@@ -11,7 +11,7 @@
 }
 
 .gridContainer > *:hover {
-    background-color: #555555;
+    background-color: #373737;
     color: lightgray;
 }
 
@@ -47,16 +47,23 @@
 .discord-code{
     white-space: pre-wrap;
     font-size:0.7rem;
-    background-color:#222222;
+    background-color:#202020;
 }
 
 .discord-embed-middle{
     max-width: fit-content;
 }
 
-#table-1 th {
+.gray-hover:hover {
+    background-color: #555555;
+}
+.gray-hover {
+    background-color: #202020;
+}
+
+#table-1 td {
     height:2.2rem;
-    border: 1px solid lightgray;
+    border:none;
     font-size:0.8rem;
 }
 
@@ -64,11 +71,9 @@
     min-width: 5.6rem;
 }
 
-
-th:hover {
-    background-color: #555555;
+.table-1 {
+    table-layout: fixed;
 }
-
 
 input[type="checkbox"] {
     width: 1rem; 
@@ -84,51 +89,35 @@ input[type="checkbox"] {
 }
 
 .calculatorLevel{
-    border-left: 0.125rem   solid #D3D3D3; 
-    border-top: 0.125rem   solid #D3D3D3;  
-    border-bottom: 0.125rem   solid #8D8D8D; 
-    background-color:#333;
     padding: 0 0 0 0.6rem;
     display: flex;
-    height: 1.2rem;
+    height: 1.45rem;
     align-items: center;
     font-size: 0.8rem;
     font-family: monospace;
-    border-radius: 0.2rem 0 0 0.2rem;
 }
 
 .discord-code-lite{
-  height:1.20rem;
-  width:2.3rem;
-  background-color:#333;
-  color:lightgray;
-  font-size: 0.8rem;
-  border-radius:0;
-  font-family:monospace;
-  text-align:center;
-  padding:0;  
-
-  border-right: 0.125rem   solid #8D8D8D; 
-  border-top: 0.125rem   solid #D3D3D3;  
-  border-bottom: 0.125rem   solid #8D8D8D;
+    height:1.45rem;
+    width:2.3rem;
+    color:lightgray;
+    font-size: 0.8rem;
+    font-family:monospace;
+    text-align:center;
+    padding:0;  
+    background-color: unset;
 }
 
-/*
-.hbcalculator-number{
-  border-radius: 0px 0.2rem 0.2rem 0px;
-  font-size: 0.8rem;
-  font-family: monospace;
-  text-align: center;
-  padding: 0;
-  border-right: 0.125rem solid #8D8D8D;
-  border-top: 0.125rem solid #D3D3D3;
-  border-bottom: 0.125rem solid #8D8D8D;
-  border-left:none;
-  height: 1.20rem;
-  width: 2.3rem;
-  color:rgb(225, 225, 225);
+.numberWrapper {
+    background-color: #202020;
+    display:flex;
+    padding: 0;
+    border-radius: 0.2rem;
 }
-*/
+
+.numberWrapper:hover {
+    background-color: #555555;
+}
 
 input[type="checkbox"]:checked::before {
     content: "✔"; 
@@ -143,9 +132,14 @@ input[type="checkbox"]:checked::before {
 button {
     height:1.45rem;
     width: 2.5rem;
-    margin-right:0;
+    border: none;
     font-size:0.55rem;
     margin:0 0.15rem;
+    background-color: #202020;
+}
+
+button:hover {
+    background-color: #555555;
 }
 
 li {
