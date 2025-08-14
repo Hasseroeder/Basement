@@ -53,7 +53,7 @@ const collections = {
     ["Weapon Point","WP"],
     ["Physical Resistance","PR"],
     ["Magical Resistance","MR"],
-    ["Lifestreal","Ls"],
+    ["Lifesteal","Ls"],
     ["Thorns"],
     ["Mana Tap","Mtap"],
     ["Absolve","Absv"],
