@@ -627,6 +627,10 @@ a:hover {
 }
 
 /* ---------------------- */
+#wearButton:hover {
+  background: #555555;
+}
+
 #wearSelect .selected {
   position: relative;
 }
@@ -646,4 +650,39 @@ a:hover {
 
 #wearSelect.open .selected::after {
   transform: translateY(-30%) rotate(-135deg);
+}
+
+.lineFromWeaponCalculator {
+  display:flex; 
+  flex-direction: row; 
+  font-size: 0.8rem; 
+  align-items: center;
+  height:1.4rem;
+}
+
+.inputWrapperFromCalculator {
+    background-color: #191919;
+    display:flex;
+    padding: 0;
+    border-radius: 0.2rem;
+    align-items: center;
+    padding-right: 0.1rem;
+}
+
+.inputWrapperFromCalculator:hover {
+    background-color: #555555;
+}
+
+.inputFromWeaponCalculator {
+  border: none;
+  width: 1.5rem;
+  color: rgb(225, 225, 225);
+  font-size: 0.85rem;
+  border-radius: 3px;
+  font-family: monospace;
+  padding: 0.2em;
+  text-align: end;
+  display: block;
+  margin-top: -0.05rem;
+  background-color: transparent;
 }

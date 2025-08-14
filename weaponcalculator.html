@@ -27,13 +27,22 @@
                                     </div>
                                 </span>
                             
-                                <div class="discord-embed-text" style="font-size:0.8rem; line-height: 1.2rem;"><strong>Name:</strong> Great Sword
-                                    <strong>Owner:</strong> @hsse
-                                    <strong>ID:</strong> <code class="discord-code" style="font-size: 0.8rem;">8SBPF8</code>
-                                    <strong>Shard Value:</strong> 300 selling / 750 buying
-                                    <strong>Quality:</strong><img src="media/owo_images/mythic.png" alt=":mythic:" aria-label="mythic" title=":mythic:" class="discord-embed-emote" style="margin-bottom:0.04rem;">86.7%
+                                <div class="lineFromWeaponCalculator" style="margin-top: 0.5rem;">
+                                    <strong>Name:&nbsp;</strong> Great sword
                                 </div>
-                                <div style="display:flex; flex-direction: row; font-size: 0.8rem; align-items: center; ">
+                                <div class="lineFromWeaponCalculator">
+                                    <strong>Owner:&nbsp;</strong> @hsse
+                                </div>
+                                <div class="lineFromWeaponCalculator">
+                                    <strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">8SBPF8</code>
+                                </div>
+                                <div class="lineFromWeaponCalculator">
+                                    <strong>Shard Value:&nbsp;</strong> 300 selling / 750 buying
+                                </div>
+                                <div class="lineFromWeaponCalculator">
+                                    <strong>Quality:&nbsp;</strong><img src="media/owo_images/mythic.png" alt=":mythic:" aria-label="mythic" title=":mythic:" class="discord-embed-emote" style="margin-bottom:0.04rem;">86.7%
+                                </div>
+                                <div class="lineFromWeaponCalculator">
                                     <strong>Wear:&nbsp;</strong>           
                                     <div class="custom-select" id="wearSelect">
                                         <button
@@ -45,7 +54,7 @@
                                             id="wearButton"
                                         >
                                         </button>
-                                        <ul class="options" id="wearOptions" role="listbox" tabindex="-1">
+                                        <ul class="options" id="wearOptions" role="listbox">
                                             <li class="option" role="option" id="opt-worn"  data-value="worn"  aria-selected="false">WORN</li>
                                             <li class="option" role="option" id="opt-decent" data-value="decent" aria-selected="false">DECENT</li>
                                             <li class="option" role="option" id="opt-fine" data-value="fine" aria-selected="false">FINE</li>
@@ -54,15 +63,23 @@
                                     </div>
                                     <input type="hidden" name="myCustomSelect" id="myCustomSelect">
                                 </div>
-                                <div style="display:flex; flex-direction: row; font-size: 0.8rem; align-items: center;">
+                                <div class="lineFromWeaponCalculator">
                                     <strong>WP Cost:&nbsp;</strong>
-                                    <input required class="discord-code-lite no-arrows mediumGrayBackground grayOnHover" type="number" id="input1" min="100" max="200" value="114" tabindex="2">
+                                    <div class="inputWrapperFromCalculator">
+                                        <input required class="inputFromWeaponCalculator no-arrows" type="number" id="input1" min="100" max="200" value="114">
+                                    </div>
                                     <img src="media/owo_images/WP.png" alt=":WP:" aria-label="WP" title=":WP:" class="discord-embed-emote">
                                 </div>
-                                <div class="discord-embed-text" style="font-size:0.8rem; line-height: 1.2rem; margin-top:0rem;">
-                                    <strong>Description:</strong> Deals <strong>55%</strong> of your <img src="media/owo_images/STR.png" alt=":STR:" aria-label="STR" title=":STR:" class="discord-embed-emote">STR to all opponents
-
-                                    <strong>Passives:</strong> none
+                                <div class="lineFromWeaponCalculator">
+                                    <strong>Description:&nbsp;</strong> Deals 
+                                    <div class="inputWrapperFromCalculator" style="margin:0 0.2rem;">
+                                        <input required class="inputFromWeaponCalculator no-arrows" style="width:2rem;" type="number" id="input1" min="30" max="55" value="54.8">
+                                        %
+                                    </div>
+                                    of your <img src="media/owo_images/STR.png" alt=":STR:" aria-label="STR" title=":STR:" class="discord-embed-emote">STR to all opponents
+                                </div>
+                                <div class="lineFromWeaponCalculator" style="margin-top:0.5rem;">
+                                    <strong>Passives:&nbsp;</strong> none
                                 </div>
                             </div>
                             <div class="discord-embed-inner">
