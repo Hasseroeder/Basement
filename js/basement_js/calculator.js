@@ -6,6 +6,7 @@ const petButton = document.getElementById("petButton");
 const statSpan =document.getElementById("statSpan");
 
 const inputLvl = document.getElementById("inputLvl");
+const levelWrapper = document.getElementById("levelWrapper");
 const sliderLvl = document.getElementById("sliderLvl");
 const inputs = Array.from({ length: 6 }, (_, i) => document.getElementById(`input${i + 1}`));
 const outputs = Array.from({ length: 10 }, (_, i) => document.getElementById(`output${i + 1}`));
@@ -813,8 +814,11 @@ document.addEventListener("DOMContentLoaded", () => {
             inputLvl.value -= Math.sign(ev.deltaY);
             updateLevelFromNumber();
     });
+    levelWrapper.addEventListener("click", ()=>inputLvl.focus());
     sliderLvl.addEventListener("input", updateLevelFromSlider);
     
+
+
     inputs[0].focus();
 
     petButton.addEventListener("click", function (){

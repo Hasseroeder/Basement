@@ -214,6 +214,10 @@
   background-color: #303030;
 }
 
+.darkGrayBackground {
+  background-color: #191919;
+}
+
 .grayOnHover:hover{
   background-color: rgba(255,255,255,0.3);
 }
@@ -295,6 +299,17 @@
   left: 99%;
   border-radius: 0.2rem; 
   border-color: #909090;
+}
+
+.levelInputFromCalculator {
+  font-family: monospace; 
+  font-size:0.90rem; 
+  width:1.5rem; 
+  height:1rem; 
+  text-align:start; 
+  border:none; 
+  background-color: transparent; 
+  color:rgb(225, 225, 225);
 }
 
 .passiveWrapperFromCalculator {

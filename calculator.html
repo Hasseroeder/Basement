@@ -36,12 +36,13 @@
                     <div style="
                     grid-row: 1 / 2;
                     grid-column: span 2;
-                    display:flex; justify-content: center;align-items: center;">
-                      <strong>Lvl.</strong> 
-                      <input  class="discord-code-lite no-arrows grayOnHover grayBackground" 
-                              style="font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif; font-size:1rem; width:1.7rem; text-align:start;" 
-                              type="number" id="inputLvl" min="1" max="100" value="20"
-                              tabindex="1">
+                    display:flex; align-items: center;">
+                      <div id="levelWrapper" class="grayOnHover darkGrayBackground" style="display:flex;align-items: center; border-radius: 3px; padding:0.1rem 0.1rem 0.1rem 0.4rem; font-family: monospace; margin-right: 0.2rem;">
+                        Lvl.&nbsp;
+                        <input  class="no-arrows levelInputFromCalculator" 
+                                type="number" id="inputLvl" min="1" max="100" value="20"
+                                tabindex="1">
+                      </div>
                       <input id="sliderLvl" type="range" min="1" max="100" value="20">
                     </div>
                     <div style="display:flex; align-items: center; gap:0.2rem">
