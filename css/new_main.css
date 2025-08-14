@@ -73,7 +73,7 @@
   margin: -0.2em 0px;
   border-radius: 3px;
   background: #191919;
-  font-size: 0.85rem; /*check if this looks decent with rem, used to be em*/
+  font-size: 0.85rem;
   line-height: 1.125rem;
   
   white-space: pre;
@@ -90,6 +90,9 @@
   padding:0.2em;
   text-align:end;
   display:block;
+  
+  /* TODO: remove this again */
+  background-color: #050505;
 }
 
 .discord-message-outer{
@@ -215,7 +218,7 @@
 }
 
 .darkGrayBackground {
-  background-color: #191919;
+  background-color: #050505;
 }
 
 .grayOnHover:hover{
@@ -339,6 +342,9 @@
   text-align:end;
   display:block;
   position: relative;
+  
+/* TODO: remove this again */
+  background-color: #191919;
 }
 
 .arrowBefore::before {
@@ -632,7 +638,6 @@ a:hover {
   border-bottom: 2px solid currentColor;
   transform: translateY(-65%) rotate(45deg);
   pointer-events: none;
-  transition: transform 70ms ease;
 }
 
 #wearSelect.open .selected::after {
