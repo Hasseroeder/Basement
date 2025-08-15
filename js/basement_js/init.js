@@ -116,7 +116,7 @@ const injectors = [
     load: () => {
       const blinkies = [
         ["../media/misc_images/blinkiesCafe-ji.gif"],
-        ["../media/misc_images/blinkiesCafe-7m.gif"],
+        ["../media/misc_images/obs_blinkie.gif","https://discord.gg/owobot"],
         ["../media/misc_images/anydice_blinkie.gif","https://anydice.com/"],
         ["../media/misc_images/neon_blinkie.gif","https://discord.gg/neonutil"],
       ];
