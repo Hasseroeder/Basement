@@ -723,3 +723,16 @@ a:hover {
   cursor: pointer !important;
   border: none !important;
 }
+
+.borderOnHover{
+  padding: 0.75rem 0.75rem 0.75rem 0;
+  margin-top:0.4rem;
+}
+
+.borderOnHover:hover{
+  border-radius: 0.2rem;
+  border-left: 0.125rem solid #D3D3D3;
+  border-right: 0.125rem solid #8D8D8D;
+  border-top: 0.125rem solid #D3D3D3;
+  border-bottom: 0.125rem solid #8D8D8D;
+}

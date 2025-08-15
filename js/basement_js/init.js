@@ -112,6 +112,20 @@ const injectors = [
     },
   },
   {
+    selector: ".center-pillar",
+    load: () => {
+      const wrapper=document.createElement("div");
+      ["../media/misc_images/blinkiesCafe-ji.gif","../media/misc_images/blinkiesCafe-7m.gif"].forEach(path =>{
+        const img =document.createElement("img");
+        img.src= path;
+        img.style.width="50%";
+        wrapper.append(img);
+      });
+      wrapper.style ="margin: 2rem 4rem; gap: 0.5rem; display: flex;"
+      return Promise.resolve(wrapper);
+    },
+  },
+  {
     selector: "#construction",
     load: () => {
       const container = document.createElement("div");
