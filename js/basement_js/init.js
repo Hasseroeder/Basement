@@ -117,7 +117,7 @@ const injectors = [
       const blinkies = [
         ["../media/misc_images/blinkiesCafe-ji.gif"],
         ["../media/misc_images/blinkiesCafe-7m.gif"],
-        ["../media/misc_images/blinkiesCafe-hY.gif"],
+        ["../media/misc_images/anydice_blinkie.gif","https://anydice.com/"],
         ["../media/misc_images/neon_blinkie.gif","https://discord.gg/neonutil"],
       ];
 
@@ -134,7 +134,7 @@ const injectors = [
             display: block;`;
         
         let elementToAppend = img;
-        
+
         if (src[1]) {
           const link = document.createElement("a");
           link.href = src[1];
