@@ -120,15 +120,19 @@ const injectors = [
         "../media/misc_images/blinkiesCafe-hY.gif",
         "../media/misc_images/blinkiesCafe-5U.gif",
       ];
-      const widthPercent = `${100 / blinkies.length}%`;
 
       const wrapper=document.createElement("div");
-      wrapper.style ="margin: 2rem 4rem; gap: 0.5rem; display: flex;";
+      wrapper.style ="margin: 2rem 4rem; gap: 0.5rem; display: flex; flex-wrap: nowrap;";
 
       blinkies.forEach(src => {
         const img = Object.assign(document.createElement("img"), {
           src,
-          style: `width: ${widthPercent}`
+          style:
+            `flex: 1 1 0;   
+            min-width: 0;       
+            height: auto;      
+            max-width: 100%;   
+            display: block;`
         });
         wrapper.append(img);
       });
