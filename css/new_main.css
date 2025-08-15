@@ -519,6 +519,15 @@ a:hover {
     opacity: 1;
 }
 
+.tooltip-lite {
+    position: relative;
+}
+
+.tooltip-lite:hover * {
+    visibility: visible;
+    opacity: 1;
+}
+
 .hidden {
     visibility: hidden;
 }
@@ -685,4 +694,32 @@ a:hover {
   display: block;
   margin-top: -0.05rem;
   background-color: transparent;
+}
+
+.weaponSlider::-webkit-slider-runnable-track {
+  height: 6px;
+  background: #ccc;
+}
+
+.weaponSlider::-moz-range-track {
+  height: 6px;
+  background: #ccc;
+}
+
+.weaponSlider::-moz-range-thumb {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  background: url('../media/misc_images/colon_three.png') no-repeat center center !important;
+  background-size: contain !important;
+  cursor: pointer !important;
+  border: none !important;
+}
+
+.weaponSlider::-webkit-slider-thumb {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  background: url('../media/misc_images/colon_three.png') no-repeat center center !important;
+  background-size: contain !important;
+  cursor: pointer !important;
+  border: none !important;
 }
