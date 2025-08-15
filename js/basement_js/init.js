@@ -115,26 +115,36 @@ const injectors = [
     selector: ".center-pillar",
     load: () => {
       const blinkies = [
-        "../media/misc_images/blinkiesCafe-ji.gif",
-        "../media/misc_images/blinkiesCafe-7m.gif",
-        "../media/misc_images/blinkiesCafe-hY.gif",
-        "../media/misc_images/blinkiesCafe-5U.gif",
+        ["../media/misc_images/blinkiesCafe-ji.gif"],
+        ["../media/misc_images/blinkiesCafe-7m.gif"],
+        ["../media/misc_images/blinkiesCafe-hY.gif"],
+        ["../media/misc_images/neon_blinkie.gif","https://discord.gg/neonutil"],
       ];
 
       const wrapper=document.createElement("div");
       wrapper.style ="margin: 2rem 4rem; gap: 0.5rem; display: flex; flex-wrap: nowrap;";
 
       blinkies.forEach(src => {
-        const img = Object.assign(document.createElement("img"), {
-          src,
-          style:
-            `flex: 1 1 0;   
+        const img = document.createElement("img");
+        img.src = src[0];
+        img.style=`flex: 1 1 0;   
             min-width: 0;       
             height: auto;      
             max-width: 100%;   
-            display: block;`
-        });
-        wrapper.append(img);
+            display: block;`;
+        
+        let elementToAppend = img;
+        
+        if (src[1]) {
+          const link = document.createElement("a");
+          link.href = src[1];
+          link.style.display = "block";       // ensure block context so flex sizing works
+          link.style.flex = "1 1 0";          // optional: if you want the <a> itself to flex
+          link.appendChild(img);
+          elementToAppend = link;
+        }
+
+        wrapper.append(elementToAppend);    
       });
 
       return Promise.resolve(wrapper);
