@@ -118,6 +118,7 @@ const injectors = [
         "../media/misc_images/blinkiesCafe-ji.gif",
         "../media/misc_images/blinkiesCafe-7m.gif",
         "../media/misc_images/blinkiesCafe-hY.gif",
+        "../media/misc_images/blinkiesCafe-5U.gif",
       ];
       const widthPercent = `${100 / blinkies.length}%`;
 
