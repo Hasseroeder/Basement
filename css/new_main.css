@@ -746,3 +746,11 @@ a:hover {
   border-top: 0.125rem solid #D3D3D3;
   border-bottom: 0.125rem solid #8D8D8D;
 }
+
+.blinkie {
+  flex: 1 1 0;   
+  min-width: 0;       
+  height: auto;      
+  max-width: 100%;   
+  display: block;
+}

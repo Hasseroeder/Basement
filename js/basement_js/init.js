@@ -115,35 +115,30 @@ const injectors = [
     selector: ".center-pillar",
     load: () => {
       const blinkies = [
-        ["../media/misc_images/blinkiesCafe-ji.gif"],
+        ["../media/misc_images/advert_blinkie.gif"],
         ["../media/misc_images/obs_blinkie.gif","https://discord.gg/owobot"],
         ["../media/misc_images/anydice_blinkie.gif","https://anydice.com/"],
         ["../media/misc_images/neon_blinkie.gif","https://discord.gg/neonutil"],
       ];
 
+      const myBlinkies = fourRandoms(blinkies);
+
       const wrapper=document.createElement("div");
       wrapper.style ="margin: 2rem 4rem; gap: 0.5rem; display: flex; flex-wrap: nowrap;";
 
-      blinkies.forEach(src => {
+      myBlinkies.forEach(src => {
         const img = document.createElement("img");
         img.src = src[0];
-        img.style=`flex: 1 1 0;   
-            min-width: 0;       
-            height: auto;      
-            max-width: 100%;   
-            display: block;`;
-        
+        img.className="blinkie";
         let elementToAppend = img;
 
         if (src[1]) {
           const link = document.createElement("a");
           link.href = src[1];
-          link.style.display = "block";       // ensure block context so flex sizing works
-          link.style.flex = "1 1 0";          // optional: if you want the <a> itself to flex
-          link.appendChild(img);
+          link.style= "display:block; flex: 1 1 0;";
+          link.append(img);
           elementToAppend = link;
         }
-
         wrapper.append(elementToAppend);    
       });
 
@@ -198,6 +193,14 @@ const injectors = [
   }  
 ];
 
+function fourRandoms(myArray){
+  for (let i = myArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [myArray[i], myArray[j]] = [myArray[j], myArray[i]];
+  }
+  const count = Math.min(4, myArray.length);
+  return myArray.slice(0, count);
+}
 
 function initInjectors() {
   injectors.forEach(({ selector, load }) => {

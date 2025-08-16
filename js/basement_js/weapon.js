@@ -1,5 +1,3 @@
-let   currentWeaponID = 100;
-
 const weaponDisplay ={
     image: document.getElementById("weaponImage"),
     text: document.getElementById("weaponText")
@@ -256,6 +254,9 @@ const weapons = {
     }
 }
 
+const weaponIDs = Object.keys(weapons).map(Number); 
+let currentWeaponID = weaponIDs[0];
+
 function importFromHash(){
     const hash = window.location.hash;
     if (hash) {
@@ -406,12 +407,13 @@ function pageNewLoad(){
     updateWeaponDisplay();
 }
 
-function swapWeapon (change){
-    wantToSwapTo = currentWeaponID + change;
-    if (weapons[wantToSwapTo]){
-        currentWeaponID = wantToSwapTo;
-        updateWeaponDisplay();
-    }
+function swapWeapon(change) {
+  const ids = weaponIDs;
+  const currentIndex = ids.indexOf(currentWeaponID);
+  const newIndex = (currentIndex + change + ids.length) % ids.length;
+  currentWeaponID = ids[newIndex];
+
+  updateWeaponDisplay();
 }
 
 document.addEventListener("DOMContentLoaded", main);
