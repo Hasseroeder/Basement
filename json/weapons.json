@@ -3,8 +3,19 @@
         "name":"Greatsword",
         "aliases":["Sword","Gsword"],
         "stats":[
-            ["200","100","WP"],
-            ["35%","55%","STR"]
+            {
+                "min":"200",
+                "max":"100",
+                "type":"WP-Cost",
+                "stat":"WP"
+            },
+            {
+                "min":"35",
+                "max":"55",
+                "type":"Damage",
+                "stat":"STR",
+                "unit":"%"
+            }
         ]
     }
         
