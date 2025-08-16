@@ -18,6 +18,13 @@
                 "unit":"%"
             }
         ],
+        "description":[
+            { "type": "text",  "value": "Deals " },
+            { "type": "stat" },
+            { "type": "text",  "value": " of your " },
+            { "type": "emoji", "value": "STR" },
+            { "type": "text",  "value": "STR to all opponents" }
+        ],
         "sample":{
             "ID":"AF0F5Y",
             "Owner":{
@@ -114,10 +121,507 @@
         "sample":{
             
         }
+    },
+    "106": {
+        "name":"Orb of Potency",
+        "aliases":["Orb"],
+        "stats":[],
+        "sample":{
+            
+        }
+    },
+    "107": {
+        "name":"Vampiric Staff",
+        "aliases":["Vstaff","Vampstaff"],
+        "stats":[
+            {
+                "min":"200",
+                "max":"100",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"25",
+                "max":"45",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "108": {
+        "name":"Poison Dagger",
+        "aliases":["Dagger","Pdag"],
+        "stats":[
+            {
+                "min":"200",
+                "max":"100",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"70",
+                "max":"100",
+                "type":"",
+                "emoji":"STR",
+                "unit":"%"
+            },
+            {
+                "min":"40",
+                "max":"65",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "109": {
+        "name":"Wand of Absorption",
+        "aliases":["Wand","Awand"],
+        "stats":[
+            {
+                "min":"250",
+                "max":"150",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"80",
+                "max":"100",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            },
+            {
+                "min":"20",
+                "max":"40",
+                "type":"",
+                "emoji":"wp_transfer",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "110": {
+        "name":"Flame Staff",
+        "aliases":["Fstaff"],
+        "stats":[
+            {
+                "min":"200",
+                "max":"100",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"75",
+                "max":"95",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            },
+            {
+                "min":"20",
+                "max":"40",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            },
+            {
+                "min":"60",
+                "max":"80",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "111": {
+        "name":"Energy Staff",
+        "aliases":["Estaff"],
+        "stats":[
+            {
+                "min":"200",
+                "max":"100",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"35",
+                "max":"65",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "112": {
+        "name":"Spirit Staff",
+        "aliases":["Sstaff"],
+        "stats":[
+            {
+                "min":"225",
+                "max":"125",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"30",
+                "max":"50",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            },
+            {
+                "min":"20",
+                "max":"30",
+                "type":"",
+                "emoji":"defup",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "113": {
+        "name":"Arcane Scepter",
+        "aliases":["Scepter","Ascept"],
+        "stats":[
+            {
+                "min":"200",
+                "max":"125",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"40",
+                "max":"70",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "114": {
+        "name":"Resurrection Staff",
+        "aliases":["Rstaff"],
+        "stats":[
+            {
+                "min":"400",
+                "max":"300",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"50",
+                "max":"80",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "115": {
+        "name":"Glacial Axe",
+        "aliases":["Axe","Gaxe"],
+        "stats":[
+            {
+                "min":"280",
+                "max":"180",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"20",
+                "max":"40",
+                "type":"",
+                "emoji":"STR",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "116": {
+        "name":"Vanguard's Banner",
+        "aliases":["Banner","Vban"],
+        "stats":[
+            {
+                "min":"300",
+                "max":"250",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"15",
+                "max":"25",
+                "type":"",
+                "emoji":"attup",
+                "unit":"%"
+            },
+            {
+                "min":"25",
+                "max":"35",
+                "type":"",
+                "emoji":"attup+",
+                "unit":"%"
+            },
+            {
+                "min":"40",
+                "max":"50",
+                "type":"",
+                "emoji":"attup++",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "117": {
+        "name":"Culling Scythe",
+        "aliases":["Scythe","Cscythe"],
+        "stats":[
+            {
+                "min":"200",
+                "max":"100",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"70",
+                "max":"100",
+                "type":"",
+                "emoji":"STR",
+                "unit":"%"
+            },
+            {
+                "min":"45",
+                "max":"75",
+                "type":"",
+                "emoji":"mort",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "118": {
+        "name":"Rune of Celebration",
+        "aliases":["Crune","Roc"],
+        "stats":[
+            {
+                "min":"200",
+                "max":"100",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"20",
+                "max":"50",
+                "type":"",
+                "emoji":"iPR",
+                "unit":"%"
+            },
+            {
+                "min":"15",
+                "max":"40",
+                "type":"",
+                "emoji":"iMR",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "119": {
+        "name":"Staff of Purity",
+        "aliases":["Pstaff"],
+        "stats":[
+            {
+                "min":"200",
+                "max":"100",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"50",
+                "max":"100",
+                "type":"",
+                "emoji":"STR",
+                "unit":"%"
+            },
+            {
+                "min":"50",
+                "max":"100",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "120": {
+        "name":"Leeching Scythe",
+        "aliases":["Lscythe"],
+        "stats":[
+            {
+                "min":"230",
+                "max":"130",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"50",
+                "max":"80",
+                "type":"",
+                "emoji":"STR",
+                "unit":"%"
+            },
+            {
+                "min":"40",
+                "max":"60",
+                "type":"",
+                "emoji":"STR",
+                "unit":"%"
+            },
+            {
+                "min":"30",
+                "max":"60",
+                "type":"",
+                "emoji":"leech",
+                "unit":"%"
+            },
+            {
+                "min":"30",
+                "max":"60",
+                "type":"",
+                "emoji":"leech",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "121": {
+        "name":"Foul Fish",
+        "aliases":["Ffish"],
+        "stats":[
+            {
+                "min":"280",
+                "max":"180",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"50",
+                "max":"80",
+                "type":"",
+                "emoji":"STR",
+                "unit":"%"
+            },
+            {
+                "min":"20",
+                "max":"50",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
+    },
+    "122": {
+        "name":"Rune of Luck",
+        "aliases":["Lrune"],
+        "stats":[
+            {
+                "min":"200",
+                "max":"100",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"1",
+                "max":"40",
+                "type":"",
+                "emoji":"StrMag",
+                "unit":"%"
+            },
+            {
+                "min":"1",
+                "max":"40",
+                "type":"",
+                "emoji":"StrMag",
+                "unit":"%"
+            },
+            {
+                "min":"1",
+                "max":"40",
+                "type":"",
+                "emoji":"StrMag",
+                "unit":"%"
+            },
+            {
+                "min":"1",
+                "max":"40",
+                "type":"",
+                "emoji":"StrMag",
+                "unit":"%"
+            },
+            {
+                "min":"1",
+                "max":"40",
+                "type":"",
+                "emoji":"StrMag",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
     }
-
-        
-
-
-
 }

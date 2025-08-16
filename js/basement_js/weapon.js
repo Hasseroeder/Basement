@@ -228,7 +228,7 @@ const weapons = {
         ],
     },
     121:{
-        name:"Foul fish",
+        name:"Foul Fish",
         aliases:["Ffish"],
         viability:5,
         ease:1,
@@ -413,6 +413,7 @@ function swapWeapon(change) {
   const newIndex = (currentIndex + change + ids.length) % ids.length;
   currentWeaponID = ids[newIndex];
 
+  history.replaceState(null, '', location.pathname);
   updateWeaponDisplay();
 }
 
