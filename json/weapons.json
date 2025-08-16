@@ -1,23 +1,121 @@
 {
     "101": {
-        "name":"Greatsword",
+        "name":"Great Sword",
         "aliases":["Sword","Gsword"],
         "stats":[
             {
                 "min":"200",
                 "max":"100",
                 "type":"WP-Cost",
-                "stat":"WP"
+                "emoji":"WP",
+                "unit":""
             },
             {
                 "min":"35",
                 "max":"55",
-                "type":"Damage",
-                "stat":"STR",
+                "type":"",
+                "emoji":"STR",
                 "unit":"%"
             }
-        ]
+        ],
+        "sample":{
+            "ID":"AF0F5Y",
+            "Owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "Blueprint":{
+                "stats":[18,30],
+                "passive":""
+            }
+        }
+    },
+    "102": {
+        "name":"Healing Staff",
+        "aliases":["Hstaff","Healstaff"],
+        "stats":[
+            {
+                "min":"225",
+                "max":"150",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"100",
+                "max":"150",
+                "type":"",
+                "emoji":"MAG",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+
+        }
+    },
+    "103": {
+        "name":"Bow",
+        "aliases":[],
+        "stats":[
+            {
+                "min":"220",
+                "max":"120",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"110",
+                "max":"160",
+                "type":"",
+                "emoji":"STR",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+
+        }
+    },
+    "104": {
+        "name":"Rune of the Forgotten",
+        "aliases":["Rune"],
+        "stats":[
+            {
+                "min":"5",
+                "max":"15",
+                "type":"",
+                "emoji":"stat_increase",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+
+        }
+    },
+    "105": {
+        "name":"Defender's Aegis",
+        "aliases":["Shield","Aegis"],
+        "stats":[
+            {
+                "min":"250",
+                "max":"150",
+                "type":"WP-Cost",
+                "emoji":"WP",
+                "unit":""
+            },
+            {
+                "min":"30",
+                "max":"50",
+                "type":"",
+                "emoji":"taunt",
+                "unit":"%"
+            }
+        ],
+        "sample":{
+            
+        }
     }
+
         
 
 

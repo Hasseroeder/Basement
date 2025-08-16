@@ -21,7 +21,7 @@ const weapons = {
         stats:[],
     },
     101:{
-        name:"Greatsword",
+        name:"Great Sword",
         aliases:["Sword","Gsword"],
         viability:1,
         ease:4,
@@ -56,7 +56,7 @@ const weapons = {
         viability:4,
         ease:3,
         stats:[
-            ["5%","15%","stat_increase"]
+            ["5%","15%","all_stats","stat_increase"]
         ],
     },
     105:{
@@ -191,7 +191,7 @@ const weapons = {
         stats:[
             ["200","100","WP"],
             ["70%","100%","STR"],
-            ["45%","75%","mort"],
+            ["45%","75%","HP","mort"],
         ],
     },
     118:{
@@ -201,8 +201,8 @@ const weapons = {
         ease:3,
         stats:[
             ["200","100","WP"],
-            ["20%","50%","iPR"],
-            ["15%","40%","iMR"],
+            ["20%","50%","iPR","celeb"],
+            ["15%","40%","iMR","celeb"],
         ],
     },  
     119:{
@@ -225,8 +225,8 @@ const weapons = {
             ["230","130","WP"],
             ["50%","80%","STR"],
             ["+40%","+60%","STR"],
-            ["30%","60%","leech_hp"],
-            ["30%","60%","leech_wp"],
+            ["30%","60%","HP","leech"],
+            ["30%","60%","WP","leech"],
         ],
     },
     121:{
@@ -237,7 +237,7 @@ const weapons = {
         stats:[
             ["280","180","WP"],
             ["50%","80%","STR"],
-            ["20%","50%","MAG"],
+            ["20%","50%","MAG","stinky"],
         ],
     },
     122:{
@@ -370,7 +370,7 @@ function createWikipediaTable(weapon){
         [stat[0],stat[1]].forEach(extreme=>{
             const cell = document.createElement("th");
             const wrapper = document.createElement("div");
-            wrapper.style= "display:flex; justify-content: center; font-weight: normal;";
+            wrapper.style= "display:flex; justify-content: center; align-items: center; font-weight: normal;";
             wrapper.innerHTML = extreme;
             
             [stat[2],stat[3]].forEach(emoji=>{
@@ -378,6 +378,10 @@ function createWikipediaTable(weapon){
                     const image = document.createElement("img");
                     image.style = "width:1rem; height: 1rem;";
                     image.src = `media/owo_images/${emoji}.png`;
+                    image.onerror = function () {
+                        this.onerror = null; 
+                        this.src = `media/owo_images/${emoji}.gif`;
+                    };
                     image.title = emoji;
                     wrapper.append(image);
                 }
