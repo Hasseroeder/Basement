@@ -1,0 +1,14 @@
+{
+    "101": {
+        "name":"Greatsword",
+        "aliases":["Sword","Gsword"],
+        "stats":[
+            ["200","100","WP"],
+            ["35%","55%","STR"]
+        ]
+    }
+        
+
+
+
+}

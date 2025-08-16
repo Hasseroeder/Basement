@@ -523,9 +523,19 @@ a:hover {
     position: relative;
 }
 
-.tooltip-lite:hover * {
+.tooltip-lite-child{
+    z-index: 7;
+}
+
+.tooltip-lite:hover *,
+.tooltip-lite-child:hover {
     visibility: visible;
     opacity: 1;
+}
+
+.tooltip-lite:hover .passivesNone,
+.tooltip-lite:hover .passivesNone *{
+  visibility: hidden;
 }
 
 .hidden {
