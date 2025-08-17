@@ -26,14 +26,20 @@
             { "type": "text",  "value": "STR to all opponents" }
         ],
         "sample":{
-            "ID":"AF0F5Y",
-            "Owner":{
+            "id":"AF0F5Y",
+            "owner":{
                 "name":"@hsse",
                 "displayName":"Heather"
             },
-            "Blueprint":{
+            "blueprint":{
+                "wear":"worn",
                 "stats":[18,30],
-                "passive":""
+                "passive":[
+                    {
+                        "type":"sac",
+                        "stats":[30]
+                    }
+                ]
             }
         }
     },
