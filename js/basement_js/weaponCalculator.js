@@ -325,7 +325,7 @@ function getRarity(quality) {
 				//default to fabled if we have nonsensical input
 	return tier.name;
 }
-
+/*
 function calculateQualities(weapon) {
 	let blueprint = weapon.product.blueprint;
 	const baseStats = Array.isArray(blueprint.stats) ? blueprint.stats : [];
@@ -343,6 +343,39 @@ function calculateQualities(weapon) {
 
 	const total = allStats.reduce((acc, n) => acc + n, 0);
 	blueprint.overallQuality = total / allStats.length;
+}
+*/
+
+function calculateQualities(weapon) {
+    const blueprint = weapon.product.blueprint;
+    const baseStats = Array.isArray(blueprint.stats) ? blueprint.stats : [];
+    const passives  = Array.isArray(blueprint.passive) ? blueprint.passive : [];
+
+    passives.forEach(entry => {
+        const { sumWear, sumNoWear } = entry.stats.reduce((acc, stat) => ({ 
+			sumWear: acc.sumWear     + stat.withWear, 
+			sumNoWear: acc.sumNoWear + stat.noWear
+		}), { sumWear: 0, sumNoWear: 0 });
+
+        entry.qualityWear   = sumWear   / entry.stats.length;
+        entry.qualityNoWear = sumNoWear / entry.stats.length;
+        entry.tier          = getRarity(entry.qualityNoWear);
+    });
+
+    const allStats = [
+        ...baseStats,
+        ...passives.flatMap(entry => entry.stats)
+    ];
+
+	console.log(allStats);
+
+    const { sumWear, sumNoWear } = allStats.reduce((acc, stat) => ({
+        sumWear:   acc.sumWear   + stat.withWear,
+        sumNoWear: acc.sumNoWear + stat.noWear 
+    }), { sumWear: 0, sumNoWear: 0 });
+
+    blueprint.qualityWear = sumWear   / allStats.length;
+    blueprint.qualityNoWear = sumNoWear / allStats.length;
 }
 
 function getWearBonus(){
