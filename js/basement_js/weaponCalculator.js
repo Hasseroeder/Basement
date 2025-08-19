@@ -57,7 +57,6 @@
 				bubbles: true
 			})
 		);
-
 	}
 
 	function setHighlight(index, scrollIntoView = false) {
@@ -266,7 +265,9 @@ const el = {
 	shardValue:		document.getElementById("shardValue"),
 	weaponQuality:	document.getElementById("weaponQuality"),
 	// this one's special v
-	wearSelect: 	document.getElementById('wearSelect')
+	wearSelect: 	document.getElementById("wearSelect"),
+	// I don't think I ended up needing it, lol
+	weaponImage: 	document.getElementById("weaponImage")
 }
 
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
@@ -286,9 +287,7 @@ async function initWeaponCalc(){
 		//TODO: update a bunch of stuff once wear is changed
 	});
 
-	//TODO: move displayBasicInfo into displayInfo
-	displayBasicInfo();
-	
+	displayInfo();
 }
 
 function loadWeaponTypeData(){
@@ -299,7 +298,9 @@ function loadWeaponTypeData(){
 }
 
 function updateWeaponData(){
+	updateWear(currentWeapon);
 	calculateQualities(currentWeapon);
+	displayInfo();
 	console.log(currentWeapon);
 }
 
@@ -325,26 +326,20 @@ function getRarity(quality) {
 				//default to fabled if we have nonsensical input
 	return tier.name;
 }
-/*
-function calculateQualities(weapon) {
+
+function updateWear(weapon){
 	let blueprint = weapon.product.blueprint;
-	const baseStats = Array.isArray(blueprint.stats) ? blueprint.stats : [];
-	const passives  = Array.isArray(blueprint.passive) ? blueprint.passive : [];
 
-	passives.forEach(entry => {
-		const stats = Array.isArray(entry.stats) ? entry.stats : [];
-		const sum   = stats.reduce((acc, n) => acc + n, 0);
-		entry.passiveQuality = sum / stats.length;
-		entry.tier=getRarity(entry.passiveQuality);
+	blueprint.passive.forEach(entry => {
+		entry.stats.forEach(stat => {
+			stat.withWear = stat.noWear + getWearBonus();
+		});
+    });
+
+	blueprint.stats.forEach(stat => {
+		stat.withWear = stat.noWear + getWearBonus();
 	});
-
-	const allPassiveStats = passives.flatMap(entry => entry.stats);
-	const allStats        = [...baseStats, ...allPassiveStats];
-
-	const total = allStats.reduce((acc, n) => acc + n, 0);
-	blueprint.overallQuality = total / allStats.length;
 }
-*/
 
 function calculateQualities(weapon) {
     const blueprint = weapon.product.blueprint;
@@ -357,7 +352,7 @@ function calculateQualities(weapon) {
 			sumNoWear: acc.sumNoWear + stat.noWear
 		}), { sumWear: 0, sumNoWear: 0 });
 
-        entry.qualityWear   = sumWear   / entry.stats.length;
+        entry.qualityWear   = sumWear / entry.stats.length;
         entry.qualityNoWear = sumNoWear / entry.stats.length;
         entry.tier          = getRarity(entry.qualityNoWear);
     });
@@ -367,8 +362,6 @@ function calculateQualities(weapon) {
         ...passives.flatMap(entry => entry.stats)
     ];
 
-	console.log(allStats);
-
     const { sumWear, sumNoWear } = allStats.reduce((acc, stat) => ({
         sumWear:   acc.sumWear   + stat.withWear,
         sumNoWear: acc.sumNoWear + stat.noWear 
@@ -376,6 +369,11 @@ function calculateQualities(weapon) {
 
     blueprint.qualityWear = sumWear   / allStats.length;
     blueprint.qualityNoWear = sumNoWear / allStats.length;
+	blueprint.tier = getRarity(Math.floor(blueprint.qualityWear));
+
+	// TODO: I can now calculate quality with wear
+	// but I can't do anything with the result
+	// nor get the actual output stat yet
 }
 
 function getWearBonus(){
@@ -390,11 +388,99 @@ function getWearBonus(){
 	return wearValues[wear] || 0;
 }
 
+function getShardValue(){
+	const shardValue = {
+		common: 	1,
+		uncommon:   3,
+		rare:   	5,
+		epic:     	25,
+		mythic:  	300,
+		legendary:	1000,
+		fabled: 	5000
+	};
+	const tier  = currentWeapon.product.blueprint.tier;
+	const value = shardValue[tier] || 0;
+	return value + " selling / " + Math.ceil(value*2.5) + " buying"
+}
+
+function getTierEmoji(){
+	const paths = {
+		common: 	"../media/owo_images/common.png",
+		uncommon:   "../media/owo_images/uncommon.png",
+		rare:   	"../media/owo_images/rare.png",
+		epic:     	"../media/owo_images/epic.png",
+		mythic:  	"../media/owo_images/mythic.png",
+		legendary:	"../media/owo_images/legendary.gif",
+		fabled: 	"../media/owo_images/fabled.gif"
+	};
+
+	const tier  = currentWeapon.product.blueprint.tier;
+	const img = document.createElement("img");
+	img.src = paths[tier];
+	img.alt = tier;
+	img.ariaLabel = tier;
+	img.title = `:${tier}:`;
+	img.className = "discord-embed-emote";
+	img.style.marginBottom="0.04rem";
+
+	return img;
+}
+
+function displayInfo(){
+	displayBasicInfo();
+}
+
+function getWeaponShorthand(){
+	const shorthand = currentWeapon.aliases[0]? currentWeapon.aliases[0]: currentWeapon.name;
+	return shorthand.toLowerCase();
+}
+
+function getWeaponImage(){
+	const letters = {
+		common: 	"c",
+		uncommon:   "u",
+		rare:   	"r",
+		epic:     	"e",
+		mythic:  	"m",
+		legendary:	"l",
+		fabled: 	"f"
+	};
+
+	const img = document.createElement("img");
+	const p = getWearBonus()==0?"":"p";
+	const q = letters[currentWeapon.product.blueprint.tier];
+	const w = getWeaponShorthand();
+	img.src = `media/owo_images/${p+q+"_"+w}.png`;
+	img.ariaLabel= getWeaponShorthand();
+	img.alt=":"+getWeaponShorthand()+":";
+	img.style.borderRadius="0.2rem";
+	img.draggable=false;
+	img.className="discord-pet-display";
+
+	return img;
+}
+
+function getWPStat(){
+	const typeStats = currentWeapon.stats;
+	const stats = currentWeapon.product.blueprint.stats;
+
+	const WPindex = typeStats.findIndex(stat => stat.type === 'WP-Cost');
+	const WPstat = stats[WPindex] ?? undefined;
+
+	console.log(WPstat);
+}
+
 function displayBasicInfo(){
 	el.weaponHeader.textContent=currentWeapon.product.owner.displayName+"'s "+currentWeapon.name;
 	el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + currentWeapon.name;
 	el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + currentWeapon.product.owner.name;
 	el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${currentWeapon.product.id}</code>`;
-	//el.shardValue
-	//el.weaponQuality
+	el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue();
+	el.weaponQuality.innerHTML= "<strong>Quality:&nbsp;</strong> ";
+	el.weaponQuality.append(getTierEmoji());
+	el.weaponQuality.innerHTML+= currentWeapon.product.blueprint.qualityWear+"%"
+	el.weaponImage.innerHTML="";
+	el.weaponImage.append(getWeaponImage());
+
+	getWPStat();
 }

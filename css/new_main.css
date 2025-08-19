@@ -525,6 +525,16 @@ a:hover {
 
 .tooltip-lite-child{
     z-index: 7;
+    position: absolute;
+    width: 10rem;
+    top: 1.15rem;
+    background-color: #555;
+    transform: translateX(-50%);
+    left: 50%;
+    padding: 0.21rem;
+    border-radius: 0.2rem;
+    display:flex;
+    align-items: center;
 }
 
 .tooltip-lite:hover *,
