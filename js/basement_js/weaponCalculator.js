@@ -267,7 +267,8 @@ const el = {
 	// this one's special v
 	wearSelect: 	document.getElementById("wearSelect"),
 	// I don't think I ended up needing it, lol
-	weaponImage: 	document.getElementById("weaponImage")
+	weaponImage: 	document.getElementById("weaponImage"),
+	wpCost:			document.getElementById("WP-Cost")
 }
 
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
@@ -293,7 +294,6 @@ async function initWeaponCalc(){
 function loadWeaponTypeData(){
 	// from the .json
 	currentWeapon = weapons[currentWeaponID];
-	currentWeapon.product = currentWeapon.sample;
 	updateWeaponData();
 }
 
@@ -304,28 +304,51 @@ function updateWeaponData(){
 	console.log(currentWeapon);
 }
 
-const Tiers = [
-	{ maxQuality: 20, name: "common" },
-	{ maxQuality: 40, name: "uncommon" },
-	{ maxQuality: 60, name: "rare" },
-	{ maxQuality: 80, name: "epic" },
-	{ maxQuality: 94, name: "mythic" },
-	{ maxQuality: 99, name: "legendary" },
-	{ maxQuality: 105, name: "fabled" }
-	//  -- Annoying stuff in scoot's code: --
-	// 	Weapons and Passives work differently with these values
-	// 	example: 
-	// 	- for weapons, anything 81<=x<95 would be considered mythic
-	//	- for passives, anything 80<x<=94 would be considered mythic
-	// --------------------------------------
-];
-
 function getRarity(quality) {
-	const tier = Tiers.find(t => quality <= t.maxQuality)
-				|| Tiers.at(-1);
+	const tiers = [
+		{ maxQuality: 20, name: "common" },
+		{ maxQuality: 40, name: "uncommon" },
+		{ maxQuality: 60, name: "rare" },
+		{ maxQuality: 80, name: "epic" },
+		{ maxQuality: 94, name: "mythic" },
+		{ maxQuality: 99, name: "legendary" },
+		{ maxQuality: 105, name: "fabled" }
+		//  -- Annoying stuff in scoot's code: --
+		// 	Weapons and Passives work differently with these values
+		// 	example: 
+		// 	- for weapons, anything 81<=x<95 would be considered mythic
+		//	- for passives, anything 80<x<=94 would be considered mythic
+		// --------------------------------------
+	];
+
+	const tier = tiers.find(t => quality <= t.maxQuality)
+				|| tiers.at(-1);
 				//default to fabled if we have nonsensical input
 	return tier.name;
 }
+
+function getTierEmoji(tier){
+	const paths = {
+		common: 	"../media/owo_images/common.png",
+		uncommon:   "../media/owo_images/uncommon.png",
+		rare:   	"../media/owo_images/rare.png",
+		epic:     	"../media/owo_images/epic.png",
+		mythic:  	"../media/owo_images/mythic.png",
+		legendary:	"../media/owo_images/legendary.gif",
+		fabled: 	"../media/owo_images/fabled.gif"
+	};
+
+	const img = document.createElement("img");
+	img.src = paths[tier];
+	img.alt = tier;
+	img.ariaLabel = tier;
+	img.title = `:${tier}:`;
+	img.className = "discord-embed-emote";
+	img.style.marginBottom="0.04rem";
+
+	return img;
+}
+
 
 function updateWear(weapon){
 	let blueprint = weapon.product.blueprint;
@@ -403,29 +426,6 @@ function getShardValue(){
 	return value + " selling / " + Math.ceil(value*2.5) + " buying"
 }
 
-function getTierEmoji(){
-	const paths = {
-		common: 	"../media/owo_images/common.png",
-		uncommon:   "../media/owo_images/uncommon.png",
-		rare:   	"../media/owo_images/rare.png",
-		epic:     	"../media/owo_images/epic.png",
-		mythic:  	"../media/owo_images/mythic.png",
-		legendary:	"../media/owo_images/legendary.gif",
-		fabled: 	"../media/owo_images/fabled.gif"
-	};
-
-	const tier  = currentWeapon.product.blueprint.tier;
-	const img = document.createElement("img");
-	img.src = paths[tier];
-	img.alt = tier;
-	img.ariaLabel = tier;
-	img.title = `:${tier}:`;
-	img.className = "discord-embed-emote";
-	img.style.marginBottom="0.04rem";
-
-	return img;
-}
-
 function displayInfo(){
 	displayBasicInfo();
 }
@@ -460,14 +460,16 @@ function getWeaponImage(){
 	return img;
 }
 
-function getWPStat(){
-	const typeStats = currentWeapon.stats;
-	const stats = currentWeapon.product.blueprint.stats;
+function getStat(keyOrIndex){
+	const idx =
+		typeof keyOrIndex === 'number'
+		? keyOrIndex
+		: currentWeapon.stats.findIndex(stat => stat.type === keyOrIndex);
 
-	const WPindex = typeStats.findIndex(stat => stat.type === 'WP-Cost');
-	const WPstat = stats[WPindex] ?? undefined;
-
-	console.log(WPstat);
+	return [
+		currentWeapon.product.blueprint.stats[idx]?? undefined, 
+		currentWeapon.stats[idx]?? undefined
+	];
 }
 
 function displayBasicInfo(){
@@ -477,10 +479,118 @@ function displayBasicInfo(){
 	el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${currentWeapon.product.id}</code>`;
 	el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue();
 	el.weaponQuality.innerHTML= "<strong>Quality:&nbsp;</strong> ";
-	el.weaponQuality.append(getTierEmoji());
+	el.weaponQuality.append(getTierEmoji(currentWeapon.product.blueprint.tier));
 	el.weaponQuality.innerHTML+= currentWeapon.product.blueprint.qualityWear+"%"
 	el.weaponImage.innerHTML="";
 	el.weaponImage.append(getWeaponImage());
 
-	getWPStat();
+	updateStatInput(); 	// this should actually only happen if wear changes
+						// currently it always happens, and leads leads to every stat input being generated newly when stats are changed
+						// maybe simply remove it from here, 
+						// instead keep it here: in wear change function, in init function, in weapon change function
+}
+
+function updateStatInput(){
+	updateWPInput();
+}
+
+function updateWPInput(){	
+	console.log(getStat("WP-Cost"));
+
+	el.wpCost.innerHTML="<strong>WP Cost:</strong>";
+	const WPStat = getStat("WP-Cost");
+	el.wpCost.append(
+		WPStat[0]
+		? createWeaponStatInput(...WPStat)
+		: "\u00A0none");
+}
+
+
+
+
+const getEffectValueStat = 
+	([{ withWear }, { min, range }]) =>
+  	min + (range * withWear) / 100;
+
+/*
+	config ={
+		max: 55,
+		min: 35,
+		range: 20,
+		step: 0.2,
+		unit: "%"
+	};
+
+	productStat={
+		noWear: 30,​​
+		withWear: 30
+	}
+*/
+
+function createRangedInput(type, {min, max, step}, value) {
+	const input = document.createElement('input');
+
+	if (type === 'range') {
+		input.className = 'weaponSlider';
+		Object.assign(input.style, {
+			margin: '0 0 0 0.2rem',
+			background: '#555',
+			transform: min>max ? 'scaleX(-1)' : '',
+			transformOrigin: min>max ? 'center' : ''
+		});
+	}else if(type=="number"){
+		input.className = 'inputFromWeaponCalculator no-arrows';
+		input.style.width = '2rem';
+	}
+
+	const [nMin, nMax] = min>max ? [max,min] : [min,max];
+	Object.assign(input, {
+		min: nMin,
+		max: nMax,
+		required: true,
+		type, step, value
+	});
+
+	return input;
+}
+
+function createWeaponStatInput(productStat,config /*,id // id should be used for getting the stat index we're using */ ) {
+
+	const initialValue = getEffectValueStat([productStat,config]);
+		
+	// Wrapper
+	const wrapper = document.createElement('div');
+	wrapper.className = 'inputWrapperFromCalculator tooltip-lite';
+	wrapper.style.margin = '0 0.2rem';
+
+	const numberInput = createRangedInput('number', config, initialValue);
+
+	const unitLabel = document.createTextNode(config.unit);
+
+	// Tooltip child container
+	const tooltip = document.createElement('div');
+	tooltip.className = 'hidden tooltip-lite-child';
+
+	// img
+	const img = getTierEmoji(getRarity(productStat.withWear));
+
+	// Range slider
+	const slider = createRangedInput('range',  config, initialValue);
+
+	// Sync slider ↔ number input
+	slider.addEventListener('input', () => {
+		numberInput.value = slider.value;
+	});
+	numberInput.addEventListener('input', () => {
+		slider.value = numberInput.value;
+	});
+
+	// Assemble tooltip
+	tooltip.appendChild(img);
+	tooltip.append(' 99%', slider);
+
+	// Assemble wrapper
+	wrapper.append(numberInput, unitLabel, tooltip);
+
+	return wrapper;
 }
