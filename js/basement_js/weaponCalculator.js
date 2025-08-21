@@ -363,8 +363,6 @@ function getTierEmoji(tier){
 	img.ariaLabel = tier;
 	img.title = `:${tier}:`;
 	img.className = "discord-embed-emote";
-	img.style.marginBottom="0.04rem";
-
 	return img;
 }
 
