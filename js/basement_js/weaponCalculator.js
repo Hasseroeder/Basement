@@ -596,11 +596,18 @@ function createRangedInput(type, {min, max, step}, value) {
 	return input;
 }
 
-function createWeaponStatInput(productStat,config /*,id // id should be used for getting the stat index we're using */ ) {
+function enhanceConfig(config, wearBonus) {
+  const bonus = (config.range / 100) * wearBonus;
+  return {
+    ...config,
+    min: config.min + bonus,
+    max: config.max + bonus
+  };
+}
 
-	wearConfig = {...config};
-	wearConfig.max+= (wearConfig.range/100)*getWearBonus();
-	wearConfig.min+= (wearConfig.range/100)*getWearBonus();
+function createWeaponStatInput(productStat,config) {
+
+	wearConfig = enhanceConfig(config,getWearBonus());
 
 	const initialValue = percentToValue(productStat.noWear,wearConfig);
 		
@@ -640,8 +647,6 @@ function createWeaponStatInput(productStat,config /*,id // id should be used for
 	wrapper.append(numberInput, numberLabel, tooltip);
  
 	syncAll(initialValue);
-	
-	console.log(currentWeapon);
 
 	return wrapper;
 }
