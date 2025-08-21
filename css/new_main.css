@@ -748,6 +748,7 @@ a:hover {
   background-size: contain !important;
   cursor: pointer !important;
   border: none !important;
+  margin-top: -0.55rem;
 }
 
 .borderOnHover{
