@@ -605,28 +605,33 @@ function enhanceConfig(config, wearBonus) {
   };
 }
 
+function createStatWrapper(classNames) {
+	const wrapper = document.createElement('div');
+	wrapper.className = classNames;
+	wrapper.style.margin = '0 0.2rem';
+	return wrapper;
+}
+
+function createStatTooltip(children) {
+  const tip = document.createElement('div');
+  tip.className = 'hidden tooltip-lite-child';
+  children.forEach(node => tip.append(node));
+  return tip;
+}
+
 function createWeaponStatInput(productStat,config) {
 
-	wearConfig = enhanceConfig(config,getWearBonus());
-
+	const wearConfig = enhanceConfig(config,getWearBonus());
 	const initialValue = percentToValue(productStat.noWear,wearConfig);
-		
-	const wrapper = document.createElement('div');
-	wrapper.className = 'inputWrapperFromCalculator tooltip-lite';
-	wrapper.style.margin = '0 0.2rem';
-
+	const wrapper = createStatWrapper("inputWrapperFromCalculator tooltip-lite");
 	const img = getTierEmoji(getRarity(productStat.withWear));
-
 	const numberInput = createRangedInput('number', wearConfig);
 	const numberLabel = document.createTextNode(wearConfig.unit);
-
-	const tooltip = document.createElement('div');
-	tooltip.className = 'hidden tooltip-lite-child';
-
 	const slider = createRangedInput('range',  wearConfig);
-
 	const qualityInput = createRangedInput('number', percentageConfig);
 	const qualityLabel = document.createTextNode(percentageConfig.unit);
+	const tooltipChildren = [ img, qualityInput, qualityLabel, slider ];
+  	const tooltip         = createStatTooltip(tooltipChildren);
 
 	function syncAll(value) {
 		numberInput.value  = value;
@@ -642,8 +647,6 @@ function createWeaponStatInput(productStat,config) {
 		syncAll(percentToValue(Number(qualityInput.value), config));	
 	});
 
-	tooltip.appendChild(img);
-	tooltip.append(qualityInput, qualityLabel, slider);
 	wrapper.append(numberInput, numberLabel, tooltip);
  
 	syncAll(initialValue);
