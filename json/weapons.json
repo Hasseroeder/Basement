@@ -39,24 +39,14 @@
                 "wear":"worn",
                 "stats":[
                     {
-                        "withWear":18,
-                        "noWear":18
+                        "withWear":99,
+                        "noWear":99
                     },{
-                        "withWear":30,
-                        "noWear":30
+                        "withWear":99,
+                        "noWear":99
                     }
                 ],
-                "passive":[
-                    {
-                        "type":"sac",
-                        "stats":[
-                                {
-                                "withWear":30,
-                                "noWear":30
-                            }
-                        ]
-                    }
-                ]
+                "passive":[]
             }
         }
     },

@@ -282,9 +282,7 @@ const el = {
 	weaponID:		document.getElementById("weaponID"),
 	shardValue:		document.getElementById("shardValue"),
 	weaponQuality:	document.getElementById("weaponQuality"),
-	// this one's special v
 	wearSelect: 	document.getElementById("wearSelect"),
-	// I don't think I ended up needing it, lol
 	weaponImage: 	document.getElementById("weaponImage"),
 	wpCost:			document.getElementById("WP-Cost")
 }
@@ -302,11 +300,9 @@ async function initWeaponCalc(){
 
 	el.wearSelect.addEventListener('change', e => {
 		currentWeapon.product.blueprint.wear = e.detail.value;
-		updateWear(currentWeapon);
+		updateWear();
 		//TODO: update a bunch of stuff once wear is changed
 	});
-
-	displayInfo();
 }
 
 function loadWeaponTypeData(){
@@ -316,7 +312,7 @@ function loadWeaponTypeData(){
 }
 
 function completeUpdateWeaponData(){
-	updateWear(currentWeapon);
+	updateWear();
 	updateWeaponData();
 }
 
@@ -377,21 +373,22 @@ function getTierEmojiPath(stringOrQuality){
 	}
 }
 
-function updateWear(weapon){
-	let blueprint = weapon.product.blueprint;
-	blueprint.passive.forEach(entry => {
+function updateWear(){
+	syncWear();
+	calculateQualities(currentWeapon);
+	displayInfo();
+	generateStatInput();
+}
+
+function syncWear(){
+	currentWeapon.product.blueprint.passive.forEach(entry => {
 		entry.stats.forEach(stat => {
 			stat.withWear = stat.noWear + getWearBonus();
 		});
     });
-
-	blueprint.stats.forEach(stat => {
+	currentWeapon.product.blueprint.stats.forEach(stat => {
 		stat.withWear = stat.noWear + getWearBonus();
 	});
-
-	calculateQualities(currentWeapon);
-	displayInfo();
-	generateStatInput();
 }
 
 function calculateQualities(weapon) {
@@ -439,6 +436,18 @@ function getWearBonus(){
 		unknown:  0
 	};
 	return wearValues[wear] || 0;
+}
+
+function getWearName(){
+	var wear = currentWeapon.product.blueprint.wear;
+	const wearValues = {
+		pristine: "Pristine\u00A0",
+		fine:     "Fine\u00A0",
+		decent:   "Decent\u00A0",
+		worn:     "",
+		unknown:  ""
+	};
+	return wearValues[wear] || "";
 }
 
 function getShardValue(){
@@ -503,21 +512,20 @@ function getStat(keyOrIndex){
 }
 
 function displayBasicInfo(){
-	el.weaponHeader.textContent=currentWeapon.product.owner.displayName+"'s "+currentWeapon.name;
+	el.weaponHeader.textContent=currentWeapon.product.owner.displayName+"'s "+getWearName()+currentWeapon.name;
 	el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + currentWeapon.name;
 	el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + currentWeapon.product.owner.name;
 	el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${currentWeapon.product.id}</code>`;
 	el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue();
 	el.weaponQuality.innerHTML= "<strong>Quality:&nbsp;</strong> ";
 	el.weaponQuality.append(getTierEmoji(currentWeapon.product.blueprint.tier));
-	el.weaponQuality.innerHTML+= currentWeapon.product.blueprint.qualityWear+"%"
+	el.weaponQuality.innerHTML+= numberFixedString(currentWeapon.product.blueprint.qualityWear,1)+"%"
 	el.weaponImage.innerHTML="";
 	el.weaponImage.append(getWeaponImage());
+}
 
-	//generateStatInput(); 	// this should actually only happen if wear changes
-						// currently it always happens, and leads leads to every stat input being generated newly when stats are changed
-						// maybe simply remove it from here, 
-						// instead keep it here: in wear change function, in init function, in weapon change function
+function numberFixedString(input,fixed){
+    return Number(input.toFixed(fixed)).toLocaleString();
 }
 
 function generateStatInput(){
@@ -569,7 +577,7 @@ function getStatImage(inputString){
 	return img;
 }
 
-function createRangedInput(type, {min, max, step}, value) {
+function createRangedInput(type, {min, max, step}) {
 	const input = document.createElement('input');
 
 	if (type === 'range') {
@@ -620,25 +628,27 @@ function createStatTooltip(children) {
 }
 
 function createWeaponStatInput(productStat,config) {
-
-	const wearConfig = enhanceConfig(config,getWearBonus());
-	const initialValue = percentToValue(productStat.noWear,wearConfig);
-	const wrapper = createStatWrapper("inputWrapperFromCalculator tooltip-lite");
-	const img = getTierEmoji(getRarity(productStat.withWear));
-	const numberInput = createRangedInput('number', wearConfig);
-	const numberLabel = document.createTextNode(wearConfig.unit);
-	const slider = createRangedInput('range',  wearConfig);
-	const qualityInput = createRangedInput('number', percentageConfig);
-	const qualityLabel = document.createTextNode(percentageConfig.unit);
-	const tooltipChildren = [ img, qualityInput, qualityLabel, slider ];
-  	const tooltip         = createStatTooltip(tooltipChildren);
+	const wearConfig 		= enhanceConfig(config,getWearBonus());
+	const initialValue 		= percentToValue(productStat.noWear,wearConfig);
+	const wrapper 			= createStatWrapper("inputWrapperFromCalculator tooltip-lite");
+	const numberInput 		= createRangedInput('number', wearConfig);
+	const numberLabel 		= document.createTextNode(wearConfig.unit);
+	const img 				= getTierEmoji(getRarity(productStat.withWear));
+	const qualityInput 		= createRangedInput('number', percentageConfig);
+	const qualityLabel 		= document.createTextNode(percentageConfig.unit);
+	const slider 			= createRangedInput('range',  wearConfig);
+	const tooltipChildren 	= [img, qualityInput, qualityLabel, slider];
+  	const tooltip         	= createStatTooltip(tooltipChildren);
 
 	function syncAll(value) {
 		numberInput.value  = value;
 		slider.value       = value;
 		const pct = valueToPercent(value, config);
+		const noWearPtc = valueToPercent(value, wearConfig);
 		qualityInput.value = pct;
 		img.src = getTierEmojiPath(pct);
+		productStat.noWear=noWearPtc;
+		statChange();
 	}
 	[slider, numberInput].forEach(el =>
 		el.addEventListener('input', () => syncAll(Number(el.value)))
@@ -652,4 +662,10 @@ function createWeaponStatInput(productStat,config) {
 	syncAll(initialValue);
 
 	return wrapper;
+}
+
+function statChange(){
+	syncWear();
+	calculateQualities(currentWeapon);
+	displayInfo();
 }
