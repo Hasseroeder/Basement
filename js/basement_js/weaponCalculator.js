@@ -284,7 +284,7 @@ let currentWeaponID;
 const initWeaponID = 101;
 
 async function initWeaponCalc(){
-	currentWeaponID = initWeaponID;
+	initiateFirstID();
 	await loadWeapons();
 	loadWeaponTypeData();
 
@@ -295,10 +295,32 @@ async function initWeaponCalc(){
 	});
 }
 
+function initiateFirstID(){
+	const hash = location.hash.substring(1);
+	currentWeaponID = hash
+		? Number(hash)
+		: initWeaponID;
+}
+
 function loadWeaponTypeData(){
 	// from the .json
 	currentWeapon = weapons[currentWeaponID];
+	fillMissingWeaponInfo();
 	completeUpdateWeaponData();
+}
+
+function fillMissingWeaponInfo(){
+	currentWeapon.product.blueprint.passive.forEach(entry => {
+		entry.stats.forEach(stat => generateMissingStat(stat));
+    });
+	currentWeapon.product.blueprint.stats.forEach(stat => generateMissingStat(stat));
+}
+
+function generateMissingStat(stat){
+	if (!stat.noWear){
+		stat.noWear=Math.floor(Math.random() * 101);
+		console.log(currentWeapon);
+	}
 }
 
 function completeUpdateWeaponData(){
@@ -520,7 +542,7 @@ function numberFixedString(input,fixed){
 
 function generateStatInput(){
 	generateWPInput();
-	el.description.innerHTML="<strong>Description:&nbsp;</strong>";
+	el.description.innerHTML="";
 	el.description.append(generateDescription());
 }
 
@@ -608,7 +630,6 @@ function enhanceConfig(config, wearBonus) {
 function createStatWrapper(classNames) {
 	const wrapper = document.createElement('div');
 	wrapper.className = classNames;
-	wrapper.style.margin = '0 0.2rem';
 	return wrapper;
 }
 
@@ -622,6 +643,7 @@ function createStatTooltip(children) {
 function createWeaponStatInput(productStat,config) {
 	const wearConfig 		= enhanceConfig(config,getWearBonus());
 	const initialValue 		= percentToValue(productStat.noWear,wearConfig);
+	const outerWrapper		= createStatWrapper("outerInputWrapperFromCalculator");
 	const wrapper 			= createStatWrapper("inputWrapperFromCalculator tooltip-lite");
 	const numberInput 		= createRangedInput('number', wearConfig);
 	const numberLabel 		= document.createTextNode(wearConfig.unit);
@@ -650,8 +672,9 @@ function createWeaponStatInput(productStat,config) {
 	});
 
 	wrapper.append(numberInput, numberLabel, tooltip);
+	outerWrapper.append(wrapper);
 	syncAll(initialValue);
-	return wrapper;
+	return outerWrapper;
 }
 
 function statChange(){
@@ -661,30 +684,35 @@ function statChange(){
 }
 
 function generateDescription() {
-  const description = currentWeapon.description;
-  const wrapper = document.createElement("div");
-  wrapper.style.display = "flex";
-  wrapper.style.alignItems = "center";
+	const description = currentWeapon.description;
+	const wrapper = document.createElement("div");
+	wrapper.style.display      = "inline";
+  	wrapper.style.whiteSpace   = "normal";
 
-  let statIndex = 0;
+	let statIndex = 0;
 
-  description.forEach(node => {
-    switch (node.type) {
-      case "text":
-        wrapper.appendChild(document.createTextNode(node.value));
-        break;
-      case "stat":
-        const statContainer = createWeaponStatInput(...getStat(statIndex));
-        wrapper.appendChild(statContainer);
-        statIndex++;
-        break;
-      case "emoji":
-        const img = getStatImage(node.value);
-        img.style.margin = "";      // or whatever spacing you need
-        wrapper.appendChild(img);
-        break;
-    }
-  });
-
-  return wrapper;
+	description.forEach(node => {
+		switch (node.type) {
+		case "text":
+			wrapper.append(document.createTextNode(node.value));
+			break;
+		case "stat":
+			const statContainer = createWeaponStatInput(...getStat(statIndex));
+			statContainer.style.margin="0 -0.2rem";
+			wrapper.append(statContainer);
+			statIndex++;
+			break;
+		case "emoji":
+			const img = getStatImage(node.value);
+			img.style= "margin: 0; display:inline-block; vertical-align: middle;"
+			wrapper.append(img);
+			break;
+		case "strongSpan":
+			const span = document.createElement("span");
+			span.style.fontWeight="bold";
+			span.textContent=node.value;
+			wrapper.append(span);
+		}	
+	});
+	return wrapper;
 }

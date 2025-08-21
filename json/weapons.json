@@ -23,6 +23,7 @@
             }
         ],
         "description":[
+            { "type": "strongSpan", "value":"Description:\u00A0"},
             { "type": "text",  "value": "Deals " },
             { "type": "stat" },
             { "type": "text",  "value": " of your " },
@@ -37,15 +38,7 @@
             },
             "blueprint":{
                 "wear":"worn",
-                "stats":[
-                    {
-                        "withWear":99,
-                        "noWear":99
-                    },{
-                        "withWear":99,
-                        "noWear":99
-                    }
-                ],
+                "stats":[{},{}],
                 "passive":[]
             }
         }
@@ -72,8 +65,27 @@
                 "unit":""
             }
         ],
+        "description":[
+            { "type": "strongSpan", "value":"Description:\u00A0"},
+            { "type": "text",  "value": "Heals " },
+            { "type": "stat" },
+            { "type": "text",  "value": " of your " },
+            { "type": "emoji", "value": "MAG" },
+            { "type": "text",  "value": "MAG to the lowest health ally. This weapon can overheal up to 50% of max " },
+            { "type": "emoji", "value": "HP"},
+            { "type": "text",  "value": "HP."}
+        ],
         "product":{
-
+            "id":"AF0FGR",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{}],
+                "passive":[]
+            }
         }
     },
     "103": {

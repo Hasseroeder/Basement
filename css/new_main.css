@@ -696,6 +696,12 @@ a:hover {
     border-radius: 0.2rem;
     align-items: center;
     padding-right: 0.1rem;
+    width:max-content;
+    margin: 0 0.2rem;
+}
+
+.outerInputWrapperFromCalculator {
+  display:inline-block;
 }
 
 .inputWrapperFromCalculator:hover {
