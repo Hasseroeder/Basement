@@ -547,6 +547,8 @@ function generateStatInput(){
 function generateWPInput(){	
 	el.wpCost.innerHTML="<strong>WP Cost:</strong>";
 	const WPStat = getStat("WP-Cost");
+	const WPimage = getStatImage("WP");
+	WPimage.style.margin="0px 0px -0.01rem -0.2rem";
 	el.wpCost.append(
 		...(WPStat[0]
 			? [createWeaponStatInput(...WPStat), getStatImage("WP")]
@@ -702,8 +704,11 @@ function generateDescription() {
 			break;
 		case "emoji":
 			const img = getStatImage(node.value);
-			img.style= "margin: 0; display:inline-block; vertical-align: middle;"
-			wrapper.append(img);
+			const imgWrapper = document.createElement("div");
+			img.style.margin = "0px 0px -0.07rem 0rem";
+			imgWrapper.style.display="inline-block";
+			imgWrapper.append(img);
+			wrapper.append(imgWrapper);
 			break;
 		case "strongSpan":
 			const span = document.createElement("span");
