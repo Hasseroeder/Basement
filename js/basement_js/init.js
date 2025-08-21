@@ -119,6 +119,7 @@ const injectors = [
         ["../media/misc_images/blinkiesCafe-ji.gif","https://blinkies.cafe/"],
         ["../media/misc_images/blinkiesCafe-5U.gif","https://blinkies.cafe/"],
         ["../media/misc_images/advert_blinkie.gif"],
+        ["../media/misc_images/rbot_blinkie.gif","https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"],
         ["../media/misc_images/obs_blinkie.gif","https://discord.gg/owobot"],
         ["../media/misc_images/anydice_blinkie.gif","https://anydice.com/"],
         ["../media/misc_images/neon_blinkie.gif","https://discord.gg/neonutil"],
@@ -140,6 +141,7 @@ const injectors = [
           link.href = src[1];
           link.style= "display:block; flex: 1 1 0;";
           link.append(img);
+          link.target="_blank";
           elementToAppend = link;
         }
         wrapper.append(elementToAppend);    
