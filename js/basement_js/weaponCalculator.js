@@ -247,6 +247,24 @@ async function loadWeapons() {
     }
 } 
 
+const percentageConfig = {
+  get bonus() {
+    return getWearBonus();
+  },
+  get min() {
+    return this.bonus;
+  },
+  get max() {
+    return 100 + this.bonus;
+  },
+  get range() {
+    return this.max - this.min;
+  },
+  step: 1,
+  unit: "%"
+};
+
+
 /*
 description.map((node, i) => {
 	switch (node.type) {
@@ -284,7 +302,7 @@ async function initWeaponCalc(){
 
 	el.wearSelect.addEventListener('change', e => {
 		currentWeapon.product.blueprint.wear = e.detail.value;
-		updateWeaponData();
+		updateWear(currentWeapon);
 		//TODO: update a bunch of stuff once wear is changed
 	});
 
@@ -294,14 +312,17 @@ async function initWeaponCalc(){
 function loadWeaponTypeData(){
 	// from the .json
 	currentWeapon = weapons[currentWeaponID];
+	completeUpdateWeaponData();
+}
+
+function completeUpdateWeaponData(){
+	updateWear(currentWeapon);
 	updateWeaponData();
 }
 
 function updateWeaponData(){
-	updateWear(currentWeapon);
 	calculateQualities(currentWeapon);
 	displayInfo();
-	console.log(currentWeapon);
 }
 
 function getRarity(quality) {
@@ -328,18 +349,8 @@ function getRarity(quality) {
 }
 
 function getTierEmoji(tier){
-	const paths = {
-		common: 	"../media/owo_images/common.png",
-		uncommon:   "../media/owo_images/uncommon.png",
-		rare:   	"../media/owo_images/rare.png",
-		epic:     	"../media/owo_images/epic.png",
-		mythic:  	"../media/owo_images/mythic.png",
-		legendary:	"../media/owo_images/legendary.gif",
-		fabled: 	"../media/owo_images/fabled.gif"
-	};
-
 	const img = document.createElement("img");
-	img.src = paths[tier];
+	img.src = getTierEmojiPath(tier);
 	img.alt = tier;
 	img.ariaLabel = tier;
 	img.title = `:${tier}:`;
@@ -349,10 +360,25 @@ function getTierEmoji(tier){
 	return img;
 }
 
+function getTierEmojiPath(stringOrQuality){
+	const paths = {
+		common: 	"../media/owo_images/common.png",
+		uncommon:   "../media/owo_images/uncommon.png",
+		rare:   	"../media/owo_images/rare.png",
+		epic:     	"../media/owo_images/epic.png",
+		mythic:  	"../media/owo_images/mythic.png",
+		legendary:	"../media/owo_images/legendary.gif",
+		fabled: 	"../media/owo_images/fabled.gif"
+	};
+	if (typeof stringOrQuality === "string"){
+		return paths[stringOrQuality];
+	}else if(typeof stringOrQuality === "number"){
+		return paths[getRarity(stringOrQuality)];
+	}
+}
 
 function updateWear(weapon){
 	let blueprint = weapon.product.blueprint;
-
 	blueprint.passive.forEach(entry => {
 		entry.stats.forEach(stat => {
 			stat.withWear = stat.noWear + getWearBonus();
@@ -362,6 +388,10 @@ function updateWear(weapon){
 	blueprint.stats.forEach(stat => {
 		stat.withWear = stat.noWear + getWearBonus();
 	});
+
+	calculateQualities(currentWeapon);
+	displayInfo();
+	generateStatInput();
 }
 
 function calculateQualities(weapon) {
@@ -484,33 +514,34 @@ function displayBasicInfo(){
 	el.weaponImage.innerHTML="";
 	el.weaponImage.append(getWeaponImage());
 
-	updateStatInput(); 	// this should actually only happen if wear changes
+	//generateStatInput(); 	// this should actually only happen if wear changes
 						// currently it always happens, and leads leads to every stat input being generated newly when stats are changed
 						// maybe simply remove it from here, 
 						// instead keep it here: in wear change function, in init function, in weapon change function
 }
 
-function updateStatInput(){
-	updateWPInput();
+function generateStatInput(){
+	generateWPInput();
 }
 
-function updateWPInput(){	
-	console.log(getStat("WP-Cost"));
-
+function generateWPInput(){	
 	el.wpCost.innerHTML="<strong>WP Cost:</strong>";
 	const WPStat = getStat("WP-Cost");
 	el.wpCost.append(
-		WPStat[0]
-		? createWeaponStatInput(...WPStat)
-		: "\u00A0none");
+		...(WPStat[0]
+			? [createWeaponStatInput(...WPStat), getStatImage("WP")]
+			: ["\u00A0none"]
+			)
+		);
 }
 
+const percentToValue = 
+	(percent, { min, range }) =>
+  	min + (range * percent) / 100;
 
-
-
-const getEffectValueStat = 
-	([{ withWear }, { min, range }]) =>
-  	min + (range * withWear) / 100;
+const valueToPercent =
+	(value, { min, range}) =>
+	100 * (value - min) / range;
 
 /*
 	config ={
@@ -526,6 +557,17 @@ const getEffectValueStat =
 		withWear: 30
 	}
 */
+
+function getStatImage(inputString){
+	const img = document.createElement("img");
+	img.src = `../media/owo_images/${inputString}.png`;
+	img.alt = `:${inputString}:`;
+	img.ariaLabel = `${inputString}`;
+	img.title = `:${inputString}:`;
+	img.className="discord-embed-emote";
+	img.style="margin: 0 0 -0.01rem -0.2rem;";
+	return img;
+}
 
 function createRangedInput(type, {min, max, step}, value) {
 	const input = document.createElement('input');
@@ -548,7 +590,7 @@ function createRangedInput(type, {min, max, step}, value) {
 		min: nMin,
 		max: nMax,
 		required: true,
-		type, step, value
+		type, step
 	});
 
 	return input;
@@ -556,41 +598,50 @@ function createRangedInput(type, {min, max, step}, value) {
 
 function createWeaponStatInput(productStat,config /*,id // id should be used for getting the stat index we're using */ ) {
 
-	const initialValue = getEffectValueStat([productStat,config]);
+	wearConfig = {...config};
+	wearConfig.max+= (wearConfig.range/100)*getWearBonus();
+	wearConfig.min+= (wearConfig.range/100)*getWearBonus();
+
+	const initialValue = percentToValue(productStat.noWear,wearConfig);
 		
-	// Wrapper
 	const wrapper = document.createElement('div');
 	wrapper.className = 'inputWrapperFromCalculator tooltip-lite';
 	wrapper.style.margin = '0 0.2rem';
 
-	const numberInput = createRangedInput('number', config, initialValue);
+	const img = getTierEmoji(getRarity(productStat.withWear));
 
-	const unitLabel = document.createTextNode(config.unit);
+	const numberInput = createRangedInput('number', wearConfig);
+	const numberLabel = document.createTextNode(wearConfig.unit);
 
-	// Tooltip child container
 	const tooltip = document.createElement('div');
 	tooltip.className = 'hidden tooltip-lite-child';
 
-	// img
-	const img = getTierEmoji(getRarity(productStat.withWear));
+	const slider = createRangedInput('range',  wearConfig);
 
-	// Range slider
-	const slider = createRangedInput('range',  config, initialValue);
+	const qualityInput = createRangedInput('number', percentageConfig);
+	const qualityLabel = document.createTextNode(percentageConfig.unit);
 
-	// Sync slider ↔ number input
-	slider.addEventListener('input', () => {
-		numberInput.value = slider.value;
+	function syncAll(value) {
+		numberInput.value  = value;
+		slider.value       = value;
+		const pct = valueToPercent(value, config);
+		qualityInput.value = pct;
+		img.src = getTierEmojiPath(pct);
+	}
+	[slider, numberInput].forEach(el =>
+		el.addEventListener('input', () => syncAll(Number(el.value)))
+	);
+	qualityInput.addEventListener('input', () => { 
+		syncAll(percentToValue(Number(qualityInput.value), config));	
 	});
-	numberInput.addEventListener('input', () => {
-		slider.value = numberInput.value;
-	});
 
-	// Assemble tooltip
 	tooltip.appendChild(img);
-	tooltip.append(' 99%', slider);
-
-	// Assemble wrapper
-	wrapper.append(numberInput, unitLabel, tooltip);
+	tooltip.append(qualityInput, qualityLabel, slider);
+	wrapper.append(numberInput, numberLabel, tooltip);
+ 
+	syncAll(initialValue);
+	
+	console.log(currentWeapon);
 
 	return wrapper;
 }
