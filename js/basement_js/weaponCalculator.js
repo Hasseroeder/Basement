@@ -683,6 +683,11 @@ function statChange(){
 	displayInfo();
 }
 
+function digitsToRem(digits){
+	const rem = digits*0.5;
+	return `${rem}rem`
+}
+
 function generateDescription() {
 	const description = currentWeapon.description;
 	const wrapper = document.createElement("div");
