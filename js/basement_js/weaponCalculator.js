@@ -248,20 +248,21 @@ async function loadWeapons() {
 } 
 
 const percentageConfig = {
-  get bonus() {
-    return getWearBonus();
-  },
-  get min() {
-    return this.bonus;
-  },
-  get max() {
-    return 100 + this.bonus;
-  },
-  get range() {
-    return this.max - this.min;
-  },
-  step: 1,
-  unit: "%"
+	get bonus() {
+		return getWearBonus();
+	},
+	get min() {
+		return this.bonus;
+	},
+	get max() {
+		return 100 + this.bonus;
+	},
+	get range() {
+		return this.max - this.min;
+	},
+	step: 1,
+	unit: "%",
+	digits:3
 };
 
 const el = {
@@ -472,6 +473,7 @@ function getShardValue(){
 	};
 	const tier  = currentWeapon.product.blueprint.tier;
 	const value = shardValue[tier] || 0;
+	if (currentWeaponID==104){return "UNSELLABLE"};
 	return value + " selling / " + Math.ceil(value*2.5) + " buying"
 }
 
@@ -548,13 +550,8 @@ function generateWPInput(){
 	el.wpCost.innerHTML="<strong>WP Cost:</strong>";
 	const WPStat = getStat("WP-Cost");
 	const WPimage = getStatImage("WP");
-	WPimage.style.margin="0px 0px -0.01rem -0.2rem";
-	el.wpCost.append(
-		...(WPStat[0]
-			? [createWeaponStatInput(...WPStat), getStatImage("WP")]
-			: ["\u00A0none"]
-			)
-		);
+	WPimage.style.margin="0 0 0.05rem -0.2rem";
+	el.wpCost.append(WPStat[0]? createWeaponStatInput(...WPStat): "\u00A00\u00A0",WPimage);
 }
 
 const percentToValue = 
@@ -582,7 +579,11 @@ const valueToPercent =
 
 function getStatImage(inputString){
 	const img = document.createElement("img");
-	img.src = `../media/owo_images/${inputString}.png`;
+	img.src = `../media/owo_images/${inputString}.gif`;
+	img.onerror = function () {
+		this.onerror = null; 
+		this.src = `../media/owo_images/${inputString}.png`;
+	};
 	img.alt = `:${inputString}:`;
 	img.ariaLabel = `${inputString}`;
 	img.title = `:${inputString}:`;
@@ -591,7 +592,7 @@ function getStatImage(inputString){
 	return img;
 }
 
-function createRangedInput(type, {min, max, step}) {
+function createRangedInput(type, {min, max, step, digits}) {
 	const input = document.createElement('input');
 
 	if (type === 'range') {
@@ -604,7 +605,7 @@ function createRangedInput(type, {min, max, step}) {
 		});
 	}else if(type=="number"){
 		input.className = 'inputFromWeaponCalculator no-arrows';
-		input.style.width = '2rem';
+		input.style.width = (digits*0.5)+'rem';
 	}
 
 	const [nMin, nMax] = min>max ? [max,min] : [min,max];
@@ -691,8 +692,9 @@ function digitsToRem(digits){
 function generateDescription() {
 	const description = currentWeapon.description;
 	const wrapper = document.createElement("div");
-	wrapper.style.display      = "inline";
-  	wrapper.style.whiteSpace   = "normal";
+	wrapper.style.display      	= "inline";
+  	wrapper.style.whiteSpace   	= "normal";
+	wrapper.style.lineHeight	= "1.45rem";
 
 	let statIndex = 0;
 
@@ -710,7 +712,7 @@ function generateDescription() {
 		case "emoji":
 			const img = getStatImage(node.value);
 			const imgWrapper = document.createElement("div");
-			img.style.margin = "0px 0px -0.07rem 0rem";
+			img.style.margin = "0 0 0.17rem 0";
 			imgWrapper.style.display="inline-block";
 			imgWrapper.append(img);
 			wrapper.append(imgWrapper);

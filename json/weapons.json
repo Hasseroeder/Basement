@@ -66,7 +66,7 @@
                 "type":"WP-Cost",
                 "emoji":"WP",
                 "unit":"",
-                "digits":5
+                "digits":6
             }
         ],
         "description":[
@@ -103,7 +103,8 @@
                 "step":0.5,
                 "type":"",
                 "emoji":"STR",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },{
                 "min":220,
                 "max":120,
@@ -111,11 +112,29 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
+        "description":[
+            { "type": "strongSpan", "value":"Description:\u00A0"},
+            { "type": "text",  "value": "Deals " },
+            { "type": "stat" },
+            { "type": "text",  "value": " of your " },
+            { "type": "emoji", "value": "STR" },
+            { "type": "text",  "value": "STR to a random opponent." }
+        ],
         "product":{
-
+            "id":"BS2FIO",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{}],
+                "passive":[]
+            }
         }
     },
     "104": {
@@ -129,11 +148,33 @@
                 "step":0.1,
                 "type":"",
                 "emoji":"stat_increase",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             }
         ],
+        "description":[
+            { "type": "strongSpan", "value":"Description:\u00A0"},
+            { "type": "text",  "value": "Increase " },
+            { "type": "emoji",  "value": "all_stats" },
+            { "type": "text",  "value": "ALL stats by  " },
+            { "type": "stat" },
+            { "type": "text",  "value": ", and changes your physical attacks to do 65%" },
+            { "type": "emoji", "value": "STR" },
+            { "type": "text",  "value": "STR and 65%" },
+            { "type": "emoji", "value": "MAG" },
+            { "type": "text",  "value": "MAG as TRUE damage. This weapon does not have an active ability." }
+        ],
         "product":{
-
+            "id":"BS2FIO",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{}],
+                "passive":[]
+            }
         }
     },
     "105": {
@@ -147,7 +188,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"taunt",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":250,
                 "max":150,
@@ -155,7 +197,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -181,7 +224,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":200,
                 "max":100,
@@ -189,7 +233,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -207,7 +252,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"STR",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },
             {
                 "min":40,
@@ -216,7 +262,8 @@
                 "step":0.25,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },{
                 "min":200,
                 "max":100,
@@ -224,7 +271,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -242,7 +290,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },
             {
                 "min":20,
@@ -251,7 +300,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"wp_transfer",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":250,
                 "max":150,
@@ -259,7 +309,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -277,7 +328,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":20,
@@ -286,7 +338,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":60,
@@ -295,7 +348,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":200,
                 "max":100,
@@ -303,7 +357,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -321,7 +376,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":200,
                 "max":100,
@@ -329,7 +385,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -347,7 +404,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":20,
@@ -356,7 +414,8 @@
                 "step":0.1,
                 "type":"",
                 "emoji":"defup",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":225,
                 "max":125,
@@ -364,7 +423,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -382,7 +442,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":200,
                 "max":125,
@@ -390,7 +451,8 @@
                 "step":0.75,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":6
             }
         ],
         "product":{
@@ -408,7 +470,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":400,
                 "max":300,
@@ -416,7 +479,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -434,7 +498,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"STR",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":280,
                 "max":180,
@@ -442,7 +507,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -460,7 +526,8 @@
                 "step":0.1,
                 "type":"",
                 "emoji":"attup",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":25,
@@ -469,7 +536,8 @@
                 "step":0.1,
                 "type":"",
                 "emoji":"attup+",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":40,
@@ -478,7 +546,8 @@
                 "step":0.1,
                 "type":"",
                 "emoji":"attup++",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":300,
                 "max":250,
@@ -486,7 +555,8 @@
                 "step":0.5,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":5
             }
         ],
         "product":{
@@ -504,7 +574,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"STR",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },
             {
                 "min":45,
@@ -513,7 +584,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"mort",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":200,
                 "max":100,
@@ -521,7 +593,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -539,7 +612,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"iPR",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":15,
@@ -548,7 +622,8 @@
                 "step":0.25,
                 "type":"",
                 "emoji":"iMR",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },{
                 "min":200,
                 "max":100,
@@ -556,7 +631,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -574,7 +650,8 @@
                 "step":0.5,
                 "type":"",
                 "emoji":"STR",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },
             {
                 "min":50,
@@ -583,7 +660,8 @@
                 "step":0.5,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },{
                 "min":200,
                 "max":125,
@@ -591,7 +669,8 @@
                 "step":0.75,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":6
             }
         ],
         "product":{
@@ -609,7 +688,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"STR",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":40,
@@ -618,7 +698,8 @@
                 "step":0.2,
                 "type":"",
                 "emoji":"STR",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":30,
@@ -627,7 +708,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"leech",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":30,
@@ -636,7 +718,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"leech",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":230,
                 "max":130,
@@ -644,7 +727,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -662,7 +746,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"STR",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },
             {
                 "min":20,
@@ -671,7 +756,8 @@
                 "step":0.3,
                 "type":"",
                 "emoji":"MAG",
-                "unit":"%"
+                "unit":"%",
+                "digits":4
             },{
                 "min":280,
                 "max":180,
@@ -679,7 +765,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{
@@ -697,7 +784,8 @@
                 "step":0.39,
                 "type":"",
                 "emoji":"StrMag",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },
             {
                 "min":1,
@@ -706,7 +794,8 @@
                 "step":0.39,
                 "type":"",
                 "emoji":"StrMag",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },
             {
                 "min":1,
@@ -715,7 +804,8 @@
                 "step":0.39,
                 "type":"",
                 "emoji":"StrMag",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },
             {
                 "min":1,
@@ -724,7 +814,8 @@
                 "step":0.39,
                 "type":"",
                 "emoji":"StrMag",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },
             {
                 "min":1,
@@ -733,7 +824,8 @@
                 "step":0.39,
                 "type":"",
                 "emoji":"StrMag",
-                "unit":"%"
+                "unit":"%",
+                "digits":5
             },{
                 "min":200,
                 "max":100,
@@ -741,7 +833,8 @@
                 "step":1,
                 "type":"WP-Cost",
                 "emoji":"WP",
-                "unit":""
+                "unit":"",
+                "digits":3
             }
         ],
         "product":{

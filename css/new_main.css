@@ -686,7 +686,7 @@ a:hover {
   flex-direction: row; 
   font-size: 0.8rem; 
   align-items: center;
-  height:1.4rem;
+  height:1.45rem;
 }
 
 .inputWrapperFromCalculator {
@@ -698,6 +698,7 @@ a:hover {
     padding-right: 0.1rem;
     width:max-content;
     margin: 0 0.2rem;
+    max-height: 21px;
 }
 
 .outerInputWrapperFromCalculator {
