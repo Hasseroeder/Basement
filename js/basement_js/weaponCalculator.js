@@ -264,17 +264,6 @@ const percentageConfig = {
   unit: "%"
 };
 
-
-/*
-description.map((node, i) => {
-	switch (node.type) {
-		case "text": return "something";
-		case "stat": return "something";
-		case "emoji": return "something";
-	}
-})
-*/
-
 const el = {
 	weaponHeader:	document.getElementById("weaponHeader"), 
 	weaponName:		document.getElementById("weaponName"),
@@ -284,7 +273,8 @@ const el = {
 	weaponQuality:	document.getElementById("weaponQuality"),
 	wearSelect: 	document.getElementById("wearSelect"),
 	weaponImage: 	document.getElementById("weaponImage"),
-	wpCost:			document.getElementById("WP-Cost")
+	wpCost:			document.getElementById("WP-Cost"),
+	description:	document.getElementById("description")
 }
 
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
@@ -530,6 +520,8 @@ function numberFixedString(input,fixed){
 
 function generateStatInput(){
 	generateWPInput();
+	el.description.innerHTML="<strong>Description:&nbsp;</strong>";
+	el.description.append(generateDescription());
 }
 
 function generateWPInput(){	
@@ -549,7 +541,7 @@ const percentToValue =
 
 const valueToPercent =
 	(value, { min, range}) =>
-	100 * (value - min) / range;
+	Math.round(100 * (value - min) / range);
 
 /*
 	config ={
@@ -605,12 +597,12 @@ function createRangedInput(type, {min, max, step}) {
 }
 
 function enhanceConfig(config, wearBonus) {
-  const bonus = (config.range / 100) * wearBonus;
-  return {
-    ...config,
-    min: config.min + bonus,
-    max: config.max + bonus
-  };
+	const bonus = (config.range / 100) * wearBonus;
+	return {
+		...config,
+		min: config.min + bonus,
+		max: config.max + bonus
+	};
 }
 
 function createStatWrapper(classNames) {
@@ -621,10 +613,10 @@ function createStatWrapper(classNames) {
 }
 
 function createStatTooltip(children) {
-  const tip = document.createElement('div');
-  tip.className = 'hidden tooltip-lite-child';
-  children.forEach(node => tip.append(node));
-  return tip;
+	const tip = document.createElement('div');
+	tip.className = 'hidden tooltip-lite-child';
+	children.forEach(node => tip.append(node));
+	return tip;
 }
 
 function createWeaponStatInput(productStat,config) {
@@ -658,9 +650,7 @@ function createWeaponStatInput(productStat,config) {
 	});
 
 	wrapper.append(numberInput, numberLabel, tooltip);
- 
 	syncAll(initialValue);
-
 	return wrapper;
 }
 
@@ -668,4 +658,33 @@ function statChange(){
 	syncWear();
 	calculateQualities(currentWeapon);
 	displayInfo();
+}
+
+function generateDescription() {
+  const description = currentWeapon.description;
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "flex";
+  wrapper.style.alignItems = "center";
+
+  let statIndex = 0;
+
+  description.forEach(node => {
+    switch (node.type) {
+      case "text":
+        wrapper.appendChild(document.createTextNode(node.value));
+        break;
+      case "stat":
+        const statContainer = createWeaponStatInput(...getStat(statIndex));
+        wrapper.appendChild(statContainer);
+        statIndex++;
+        break;
+      case "emoji":
+        const img = getStatImage(node.value);
+        img.style.margin = "";      // or whatever spacing you need
+        wrapper.appendChild(img);
+        break;
+    }
+  });
+
+  return wrapper;
 }
