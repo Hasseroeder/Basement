@@ -720,7 +720,7 @@ function generateDescription() {
 		case "strongSpan":
 			const span = document.createElement("span");
 			span.style.fontWeight="bold";
-			span.textContent=node.value;
+			span.innerHTML=node.value;
 			wrapper.append(span);
 		}	
 	});

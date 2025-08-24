@@ -25,7 +25,7 @@
             }
         ],
         "description":[
-            { "type": "strongSpan", "value":"Description:\u00A0"},
+            { "type": "strongSpan", "value":"Description: "},
             { "type": "text",  "value": "Deals " },
             { "type": "stat" },
             { "type": "text",  "value": " of your " },
@@ -70,7 +70,7 @@
             }
         ],
         "description":[
-            { "type": "strongSpan", "value":"Description:\u00A0"},
+            { "type": "strongSpan", "value":"Description: "},
             { "type": "text",  "value": "Heals " },
             { "type": "stat" },
             { "type": "text",  "value": " of your " },
@@ -117,7 +117,7 @@
             }
         ],
         "description":[
-            { "type": "strongSpan", "value":"Description:\u00A0"},
+            { "type": "strongSpan", "value":"Description: "},
             { "type": "text",  "value": "Deals " },
             { "type": "stat" },
             { "type": "text",  "value": " of your " },
@@ -153,7 +153,7 @@
             }
         ],
         "description":[
-            { "type": "strongSpan", "value":"Description:\u00A0"},
+            { "type": "strongSpan", "value":"Description: "},
             { "type": "text",  "value": "Increase " },
             { "type": "emoji",  "value": "all_stats" },
             { "type": "text",  "value": "ALL stats by  " },
@@ -165,14 +165,17 @@
             { "type": "text",  "value": "MAG as TRUE damage. This weapon does not have an active ability." }
         ],
         "product":{
-            "id":"BS2FIO",
+            "id":"3MVF",
             "owner":{
-                "name":"@hsse",
-                "displayName":"Heather"
+                "name":"@atransfencer",
+                "displayName":"emma"
             },
             "blueprint":{
-                "wear":"worn",
-                "stats":[{}],
+                "wear":"unknown",
+                "stats":[{
+                    "noWear":20,
+                    "withWear":20
+                }],
                 "passive":[]
             }
         }
@@ -201,16 +204,50 @@
                 "digits":3
             }
         ],
+        "description":[
+            { "type": "strongSpan", "value":"Description: "},
+            { "type": "text",  "value": "Adds a " },
+            { "type": "strongSpan",  "value": "taunt" },
+            { "type": "text",  "value": " buff to your animal for 2 turns" },
+            { "type": "strongSpan",  "value": "<br> <br>" },
+            { "type": "emoji",  "value": "taunt"},
+            { "type": "strongSpan", "value": " Taunt "},
+            { "type": "text", "value":" - Taunts the enemy team and forces all opponents to attack this animal. Reduces incoming damage by "},
+            { "type": "stat"}
+
+        ],
         "product":{
-            
+            "id":"AJGO3Q",
+            "owner":{
+                "name":"@tyjoy",
+                "displayName":"ty"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{}],
+                "passive":[]
+            }
         }
     },
     "106": {
         "name":"Orb of Potency",
         "aliases":["Orb"],
         "stats":[],
+        "description":[
+            { "type": "strongSpan", "value":"Description: "},
+            { "type": "text",  "value": "This weapon has no active ability, but comes with two passives!" }
+        ],
         "product":{
-            
+            "id":"8BAMSV",
+            "owner":{
+                "name":"@wifu",
+                "displayName":"Wifu"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[],
+                "passive":[]
+            }
         }
     },
     "107": {
@@ -237,8 +274,26 @@
                 "digits":3
             }
         ],
+        "description":[
+            { "type": "strongSpan", "value":"Description: "},
+            { "type": "text",  "value": "Deal " },
+            { "type": "stat"},
+            { "type": "text",  "value": " of your " },
+            { "type": "emoji",  "value": "MAG" },
+            { "type": "text",  "value": "MAG to ALL enemies and heal ALL allies by the damage dealt" }
+
+        ],
         "product":{
-            
+            "id":"8BAL7H",
+            "owner":{
+                "name":"@wifu",
+                "displayName":"Wifu"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{}],
+                "passive":[]
+            }
         }
     },
     "108": {
@@ -275,8 +330,35 @@
                 "digits":3
             }
         ],
+        "description":[
+            { "type": "strongSpan", "value":"Description: "},
+            { "type": "text",  "value": "Deals " },
+            { "type": "stat"},
+            { "type": "text",  "value": " of your " },
+            { "type": "emoji",  "value": "STR" },
+            { "type": "text",  "value": "STR to a random enemy and applies " },
+            { "type": "strongSpan", "value": "poison"},
+            { "type": "text", "value": " for 3 turns"},
+            { "type": "strongSpan", "value": "<br> <br>"},
+            { "type": "emoji", "value": "poison"},
+            { "type": "strongSpan", "value": " Poison "},
+            { "type": "text", "value": "- deals "},
+            { "type": "stat"},
+            { "type": "text", "value": " of your "},
+            { "type": "emoji", "value": "MAG"},
+            { "type": "text", "value": "MAG as true damage at the end of the turn"}
+        ],
         "product":{
-            
+            "id":"8BAL7H",
+            "owner":{
+                "name":"@wifu",
+                "displayName":"Wifu"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{}],
+                "passive":[]
+            }
         }
     },
     "109": {
