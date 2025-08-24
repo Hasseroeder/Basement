@@ -531,7 +531,8 @@ a:hover {
     background-color: #555;
     transform: translateX(-50%);
     left: 50%;
-    padding: 0.3rem;
+    height: 1.9rem;
+    padding: 0 0.3rem;
     border-radius: 0.2rem;
     display:flex;
     align-items: center;
@@ -616,6 +617,27 @@ a:hover {
   height:unset;
 }
 
+.selected:focus {
+  outline: none; /* remove default ring */
+  background-image:
+    /* top edge */    linear-gradient(rgba(100, 150, 250, 0.6), rgba(100, 150, 250, 0.6)),
+    /* right edge */  linear-gradient(rgba(100, 150, 250, 0.6), rgba(100, 150, 250, 0.6)),
+    /* bottom edge */ linear-gradient(rgba(100, 150, 250, 0.6), rgba(100, 150, 250, 0.6)),
+    /* left edge */   linear-gradient(rgba(100, 150, 250, 0.6), rgba(100, 150, 250, 0.6));
+  background-repeat: no-repeat;
+  background-size:
+    100% 1px,   /* top */
+    1px 100%,   /* right */
+    100% 1px,   /* bottom */
+    1px 100%;   /* left */
+  background-position:
+    0    0,     /* top-left */
+    100% 0,     /* top-right */
+    0    100%,  /* bottom-left */
+    0    0;     /* top-left again for left edge */
+  background-clip: padding-box;
+}
+
 .options {
   position: absolute;
   left: 0;
@@ -686,7 +708,7 @@ a:hover {
   flex-direction: row; 
   font-size: 0.8rem; 
   align-items: center;
-  height:1.45rem;
+  height:1.4rem;
 }
 
 .inputWrapperFromCalculator {
@@ -695,7 +717,6 @@ a:hover {
     padding: 0;
     border-radius: 0.2rem;
     align-items: center;
-    padding-right: 0.1rem;
     width:max-content;
     margin: 0 0.2rem;
     max-height: 21px;
@@ -722,6 +743,20 @@ a:hover {
   margin-top: -0.05rem;
   background-color: transparent;
 }
+
+.inputFromWeaponCalculator:focus {
+  outline: none; /* remove default ring */
+  background-image:
+    /* top edge */    linear-gradient(rgba(100, 150, 250, 0.6), rgba(100, 150, 250, 0.6)),
+    /* right edge */  linear-gradient(rgba(100, 150, 250, 0.6), rgba(100, 150, 250, 0.6)),
+    /* bottom edge */ linear-gradient(rgba(100, 150, 250, 0.6), rgba(100, 150, 250, 0.6)),
+    /* left edge */   linear-gradient(rgba(100, 150, 250, 0.6), rgba(100, 150, 250, 0.6));
+  background-repeat: no-repeat;
+  background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
+  background-position: 1px 0.5px, 100% 1.5px, 1px 100%, 0px 1px;
+  background-clip: padding-box;
+}
+
 
 .weaponSlider::-webkit-slider-runnable-track {
   height: 6px;

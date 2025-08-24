@@ -592,7 +592,7 @@ function getStatImage(inputString){
 	return img;
 }
 
-function createRangedInput(type, {min, max, step, digits}) {
+function createRangedInput(type, {min, max, step, digits}, percentageInput) {
 	const input = document.createElement('input');
 
 	if (type === 'range') {
@@ -606,6 +606,10 @@ function createRangedInput(type, {min, max, step, digits}) {
 	}else if(type=="number"){
 		input.className = 'inputFromWeaponCalculator no-arrows';
 		input.style.width = (digits*0.5)+'rem';
+	}
+
+	if (percentageInput){
+		input.style.height="1.5rem";
 	}
 
 	const [nMin, nMax] = min>max ? [max,min] : [min,max];
@@ -641,16 +645,23 @@ function createStatTooltip(children) {
 	return tip;
 }
 
+function createUnitSpan(unit){
+	const span = document.createElement("span");
+	span.style.marginRight="0.2rem";
+	span.textContent=unit;
+	return span;
+}
+
 function createWeaponStatInput(productStat,config) {
 	const wearConfig 		= enhanceConfig(config,getWearBonus());
 	const initialValue 		= percentToValue(productStat.noWear,wearConfig);
 	const outerWrapper		= createStatWrapper("outerInputWrapperFromCalculator");
 	const wrapper 			= createStatWrapper("inputWrapperFromCalculator tooltip-lite");
 	const numberInput 		= createRangedInput('number', wearConfig);
-	const numberLabel 		= document.createTextNode(wearConfig.unit);
+	const numberLabel 		= createUnitSpan(wearConfig.unit);
 	const img 				= getTierEmoji(getRarity(productStat.withWear));
-	const qualityInput 		= createRangedInput('number', percentageConfig);
-	const qualityLabel 		= document.createTextNode(percentageConfig.unit);
+	const qualityInput 		= createRangedInput('number', percentageConfig,true);
+	const qualityLabel 		= createUnitSpan(percentageConfig.unit);
 	const slider 			= createRangedInput('range',  wearConfig);
 	const tooltipChildren 	= [img, qualityInput, qualityLabel, slider];
   	const tooltip         	= createStatTooltip(tooltipChildren);
@@ -672,7 +683,10 @@ function createWeaponStatInput(productStat,config) {
 		syncAll(percentToValue(Number(qualityInput.value), config));	
 	});
 
-	wrapper.append(numberInput, numberLabel, tooltip);
+	wrapper.append(
+		numberInput, 
+		...(wearConfig.unit === "" ? [] : [numberLabel]), 
+		tooltip);
 	outerWrapper.append(wrapper);
 	syncAll(initialValue);
 	return outerWrapper;
@@ -694,7 +708,7 @@ function generateDescription() {
 	const wrapper = document.createElement("div");
 	wrapper.style.display      	= "inline";
   	wrapper.style.whiteSpace   	= "normal";
-	wrapper.style.lineHeight	= "1.45rem";
+	wrapper.style.lineHeight	= "1.4rem";
 
 	let statIndex = 0;
 
