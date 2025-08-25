@@ -89,9 +89,9 @@ function move(delta) {
     if (next > count - 1) next = count - 1;
 
     if (open) {
-    setHighlight(next, true);
+        setHighlight(next, true);
     } else {
-    selectIndex(next);
+        selectIndex(next);
     }
 }
 
@@ -117,17 +117,17 @@ function handleTypeahead(char) {
     const idx = match !== -1 ? match : findMatch(typeBuffer, 0); // wrap
 
     if (idx !== -1) {
-    if (open) {
-        setHighlight(idx, true);
-    } else {
-        selectIndex(idx);
-    }
+        if (open) {
+            setHighlight(idx, true);
+        } else {
+            selectIndex(idx);
+        }
     }
 }
 
 function findMatch(prefix, startIndex) {
     for (let i = startIndex; i < options.length; i++) {
-    if (options[i].textContent.trim().toLowerCase().startsWith(prefix)) return i;
+        if (options[i].textContent.trim().toLowerCase().startsWith(prefix)) return i;
     }
     return -1;
 }
@@ -136,35 +136,35 @@ function onButtonKeyDown(e){
     const k = e.key;
 
     if (k === ' ' || k === 'Spacebar') {
-    e.preventDefault();
-    openList();
-    return;
+        e.preventDefault();
+        openList();
+        return;
     }
 
     if (k === 'ArrowDown' || k === 'ArrowRight') {
-    e.preventDefault();
-    move(1);
-    return;
+        e.preventDefault();
+        move(1);
+        return;
     }
     if (k === 'ArrowUp' || k === 'ArrowLeft') {
-    e.preventDefault();
-    move(-1);
-    return;
+        e.preventDefault();
+        move(-1);
+        return;
     }
     if (k === 'PageDown') {
-    e.preventDefault();
-    moveToEnd();
-    return;
+        e.preventDefault();
+        moveToEnd();
+        return;
     }
     if (k === 'PageUp') {
-    e.preventDefault();
-    moveToStart();
-    return;
+        e.preventDefault();
+        moveToStart();
+        return;
     }
 
     if (isTypeChar(e)) {
-    e.preventDefault();
-    handleTypeahead(e.key);
+        e.preventDefault();
+        handleTypeahead(e.key);
     }
 }
 
@@ -172,44 +172,44 @@ function onListboxKeyDown(e){
     const k = e.key;
 
     if (k === 'Escape' || k === 'Esc') {
-    e.preventDefault();
-    closeList();
-    return;
+        e.preventDefault();
+        closeList();
+        return;
     }
 
     if (k === 'Enter') {
-    e.preventDefault();
-    if (highlightedIndex >= 0) selectIndex(highlightedIndex);
-    closeList();
-    return;
+        e.preventDefault();
+        if (highlightedIndex >= 0) selectIndex(highlightedIndex);
+        closeList();
+        return;
     }
 
     if (k === 'ArrowDown' || k === 'ArrowRight') {
-    e.preventDefault();
-    move(1);
-    return;
+        e.preventDefault();
+        move(1);
+        return;
     }
     if (k === 'ArrowUp' || k === 'ArrowLeft') {
-    e.preventDefault();
-    move(-1);
-    return;
+        e.preventDefault();
+        move(-1);
+        return;
     }
 
     if (k === 'PageDown') {
-    e.preventDefault();
-    moveToEnd();
-    return;
+        e.preventDefault();
+        moveToEnd();
+        return;
     }
     if (k === 'PageUp') {
-    e.preventDefault();
-    moveToStart();
-    return;
+        e.preventDefault();
+        moveToStart();
+        return;
     }
 
     if (isTypeChar(e)) {
-    e.preventDefault();
-    handleTypeahead(e.key);
-    return;
+        e.preventDefault();
+        handleTypeahead(e.key);
+        return;
     }
 }
 

@@ -1,5 +1,6 @@
 {
     "101": {
+        "id":"101",
         "name":"Great Sword",
         "aliases":["Sword","Gsword"],
         "stats":[
@@ -39,6 +40,7 @@
         }
     },
     "102": {
+        "id":"102",
         "name":"Healing Staff",
         "aliases":["Hstaff","Healstaff"],
         "stats":[
@@ -77,6 +79,7 @@
         }
     },
     "103": {
+        "id":"103",
         "name":"Bow",
         "aliases":[],
         "stats":[
@@ -115,6 +118,7 @@
         }
     },
     "104": {
+        "id":"104",
         "name":"Rune of the Forgotten",
         "aliases":["Rune"],
         "stats":[
@@ -144,6 +148,7 @@
         }
     },
     "105": {
+        "id":"105",
         "name":"Defender's Aegis",
         "aliases":["Shield","Aegis"],
         "stats":[
@@ -182,6 +187,7 @@
         }
     },
     "106": {
+        "id":"106",
         "name":"Orb of Potency",
         "aliases":["Orb"],
         "stats":[],
@@ -200,6 +206,7 @@
         }
     },
     "107": {
+        "id":"107",
         "name":"Vampiric Staff",
         "aliases":["Vstaff","Vampstaff"],
         "stats":[
@@ -238,6 +245,7 @@
         }
     },
     "108": {
+        "id":"108",
         "name":"Poison Dagger",
         "aliases":["Dagger","Pdag"],
         "stats":[
@@ -286,6 +294,7 @@
         }
     },
     "109": {
+        "id":"109",
         "name":"Wand of Absorption",
         "aliases":["Wand","Awand"],
         "stats":[
@@ -334,6 +343,7 @@
         }
     },
     "110": {
+        "id":"110",
         "name":"Flame Staff",
         "aliases":["Fstaff"],
         "stats":[
@@ -392,6 +402,7 @@
         }
     },
     "111": {
+        "id":"111",
         "name":"Energy Staff",
         "aliases":["Estaff"],
         "stats":[
@@ -430,6 +441,7 @@
         }
     },
     "112": {
+        "id":"112",
         "name":"Spirit Staff",
         "aliases":["Sstaff"],
         "stats":[
@@ -478,6 +490,7 @@
         }
     },
     "113": {
+        "id":"113",
         "name":"Arcane Scepter",
         "aliases":["Scepter","Ascept"],
         "stats":[
@@ -516,6 +529,7 @@
         }
     },
     "114": {
+        "id":"114",
         "name":"Resurrection Staff",
         "aliases":["Rstaff"],
         "stats":[
@@ -554,6 +568,7 @@
         }
     },
     "115": {
+        "id":"115",
         "name":"Glacial Axe",
         "aliases":["Axe","Gaxe"],
         "stats":[
@@ -592,6 +607,7 @@
         }
     },
     "116": {
+        "id":"116",
         "name":"Vanguard's Banner",
         "aliases":["Banner","Vban"],
         "stats":[
@@ -650,6 +666,7 @@
         }
     },
     "117": {
+        "id":"117",
         "name":"Culling Scythe",
         "aliases":["Scythe","Cscythe"],
         "stats":[
@@ -698,6 +715,7 @@
         }
     },
     "118": {
+        "id":"118",
         "name":"Rune of Celebration",
         "aliases":["Crune","Roc"],
         "stats":[
@@ -746,6 +764,7 @@
         }
     },
     "119": {
+        "id":"119",
         "name":"Staff of Purity",
         "aliases":["Pstaff"],
         "stats":[
@@ -794,6 +813,7 @@
         }
     },
     "120": {
+        "id":"120",
         "name":"Leeching Scythe",
         "aliases":["Lscythe"],
         "stats":[
@@ -862,6 +882,7 @@
         }
     },
     "121": {
+        "id":"121",
         "name":"Foul Fish",
         "aliases":["Ffish"],
         "stats":[
@@ -910,6 +931,7 @@
         }
     },
     "122": {
+        "id":"122",
         "name":"Rune of Luck",
         "aliases":["Lrune"],
         "stats":[

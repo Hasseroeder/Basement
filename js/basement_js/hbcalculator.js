@@ -1,4 +1,5 @@
 import * as cookie from "../basement_js/util/cookieUtil.js";
+import { numberFixedString } from "./util/stringUtil.js";
 
 const maxValues = {
     0: 215,
@@ -425,10 +426,6 @@ function drawData(){
     hbWorthSac.textContent  = numberFixedString(worth[0]*hbPets,0) +" ess/hb"; 
  
     document.getElementById("patreonCheck").checked=patreon;
-}
-
-function numberFixedString(input,fixed){
-    return Number(input.toFixed(fixed)).toLocaleString();
 }
 
 document.addEventListener("paste", (event) => {

@@ -1,5 +1,6 @@
 import { initCustomSelect } from '../weaponCalculator/customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
+import { generateDescription,generateWPInput,syncWear,displayInfo } from './weaponCalcMessageGenerator.js';
 
 const el = {
 	weaponHeader:	document.getElementById("weaponHeader"), 
@@ -46,452 +47,42 @@ function loadWeaponTypeData(){
 }
 
 function fillMissingWeaponInfo(){
+	function generateMissingStat(stat){
+		if (!stat.noWear && currentWeaponID == 104){
+			const qualities = [
+				{ quality: 20,  chance: 40},
+				{ quality: 40,  chance: 60},
+				{ quality: 60,  chance: 75},
+				{ quality: 75,  chance: 85},
+				{ quality: 85,  chance: 95},
+				{ quality: 95,  chance: 99},
+				{ quality: 100, chance: 100}
+			];
+			const match = qualities.find(t => Math.floor(Math.random() * 101) <= t.chance);
+			stat.noWear = match.quality;
+			//when we generate a rune stat, it generally shouldn't be at any value
+		}else if (!stat.noWear){
+			stat.noWear=Math.floor(Math.random() * 101);
+		}
+	}
+
 	currentWeapon.product.blueprint.passive.forEach(entry => {
 		entry.stats.forEach(stat => generateMissingStat(stat));
     });
 	currentWeapon.product.blueprint.stats.forEach(stat => generateMissingStat(stat));
 }
 
-function generateMissingStat(stat){
-	if (!stat.noWear && currentWeaponID == 104){
-		const qualities = [
-			{ quality: 20,  chance: 40},
-			{ quality: 40,  chance: 60},
-			{ quality: 60,  chance: 75},
-			{ quality: 75,  chance: 85},
-			{ quality: 85,  chance: 95},
-			{ quality: 95,  chance: 99},
-			{ quality: 100, chance: 100}
-		];
-		const match = qualities.find(t => Math.floor(Math.random() * 101) <= t.chance);
-		stat.noWear = match.quality;
-		//when we generate a rune stat, it generally shouldn't be at any value
-	}else if (!stat.noWear){
-		stat.noWear=Math.floor(Math.random() * 101);
-	}
-}
-
-function getRarity(quality) {
-	const tiers = [
-		{ maxQuality: 20, name: "common" },
-		{ maxQuality: 40, name: "uncommon" },
-		{ maxQuality: 60, name: "rare" },
-		{ maxQuality: 80, name: "epic" },
-		{ maxQuality: 94, name: "mythic" },
-		{ maxQuality: 99, name: "legendary" },
-		{ maxQuality: 105, name: "fabled" }
-		//  -- Annoying stuff in scoot's code: --
-		// 	Weapons and Passives work differently with these values
-		// 	example: 
-		// 	- for weapons, anything 81<=x<95 would be considered mythic
-		//	- for passives, anything 80<x<=94 would be considered mythic
-		// --------------------------------------
-	];
-
-	const tier = tiers.find(t => quality <= t.maxQuality)
-				|| tiers.at(-1);
-				//default to fabled if we have nonsensical input
-	return tier.name;
-}
-
-function getTierEmoji(tier){
-	const img = document.createElement("img");
-	img.src = getTierEmojiPath(tier);
-	img.alt = tier;
-	img.ariaLabel = tier;
-	img.title = `:${tier}:`;
-	img.className = "discord-embed-emote";
-	return img;
-}
-
-function getTierEmojiPath(stringOrQuality){
-	const paths = {
-		common: 	"../media/owo_images/common.png",
-		uncommon:   "../media/owo_images/uncommon.png",
-		rare:   	"../media/owo_images/rare.png",
-		epic:     	"../media/owo_images/epic.png",
-		mythic:  	"../media/owo_images/mythic.png",
-		legendary:	"../media/owo_images/legendary.gif",
-		fabled: 	"../media/owo_images/fabled.gif"
-	};
-	if (typeof stringOrQuality === "string"){
-		return paths[stringOrQuality];
-	}else if(typeof stringOrQuality === "number"){
-		return paths[getRarity(stringOrQuality)];
-	}
-}
-
 function updateWear(){
-	syncWear();
+	syncWear(currentWeapon);
 	generateStatInputs();
 	displayInfo();
 }
 
-function syncWear(){
-	currentWeapon.product.blueprint.passive.forEach(entry => {
-		entry.stats.forEach(stat => {
-			stat.withWear = stat.noWear + getWearBonus();
-		});
-	});
-	currentWeapon.product.blueprint.stats.forEach(stat => {
-		stat.withWear = stat.noWear + getWearBonus();
-	});
-}
-
-function getWearBonus(){
-	var wear = currentWeapon.product.blueprint.wear;
-	const wearValues = {
-		pristine: 5,
-		fine:     3,
-		decent:   1,
-		worn:     0,
-		unknown:  0
-	};
-	return wearValues[wear] || 0;
-}
-
-function getWearName(){
-	var wear = currentWeapon.product.blueprint.wear;
-	const wearValues = {
-		pristine: "Pristine\u00A0",
-		fine:     "Fine\u00A0",
-		decent:   "Decent\u00A0",
-		worn:     "",
-		unknown:  ""
-	};
-	return wearValues[wear] || "";
-}
-
-function getShardValue(){
-	const shardValue = {
-		common: 	1,
-		uncommon:   3,
-		rare:   	5,
-		epic:     	25,
-		mythic:  	300,
-		legendary:	1000,
-		fabled: 	5000
-	};
-	const tier  = currentWeapon.product.blueprint.tier;
-	const value = shardValue[tier] || 0;
-	if (currentWeaponID==104){return "UNSELLABLE"};
-	return value + " selling / " + Math.ceil(value*2.5) + " buying"
-}
-
-function displayInfo(){
-	displayBasicInfo();
-}
-
-function getWeaponImage(){
-	function getWeaponShorthand(){
-		const shorthand = currentWeapon.aliases[0]? currentWeapon.aliases[0]: currentWeapon.name;
-		return shorthand.toLowerCase();
-	}
-	const letters = {
-		common: 	"c",
-		uncommon:   "u",
-		rare:   	"r",
-		epic:     	"e",
-		mythic:  	"m",
-		legendary:	"l",
-		fabled: 	"f"
-	};
-
-	const img = document.createElement("img");
-	const p = getWearBonus()==0?"":"p";
-	const q = letters[currentWeapon.product.blueprint.tier] || "f";
-	const w = getWeaponShorthand();
-	img.src = `media/owo_images/${p+q+"_"+w}.png`;
-	img.ariaLabel= getWeaponShorthand();
-	img.alt=":"+getWeaponShorthand()+":";
-	img.style.borderRadius="0.2rem";
-	img.draggable=false;
-	img.className="discord-pet-display";
-
-	return img;
-}
-
-function getStat(keyOrIndex){
-	const idx =
-		typeof keyOrIndex === 'number'
-		? keyOrIndex
-		: currentWeapon.stats.findIndex(stat => stat.type === keyOrIndex);
-
-	return [
-		currentWeapon.product.blueprint.stats[idx]?? undefined, 
-		currentWeapon.stats[idx]?? undefined
-	];
-}
-
-function displayBasicInfo(){
-	el.weaponHeader.textContent=currentWeapon.product.owner.displayName+"'s "+getWearName()+currentWeapon.name;
-	el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + currentWeapon.name;
-	el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + currentWeapon.product.owner.name;
-	el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${currentWeapon.product.id}</code>`;
-	el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue();
-	el.weaponQuality.innerHTML= "<strong>Quality:&nbsp;</strong> ";
-	el.weaponQuality.append(getTierEmoji(currentWeapon.product.blueprint.tier));
-	el.weaponQuality.innerHTML+= numberFixedString(currentWeapon.product.blueprint.qualityWear,1)+"%"
-	el.weaponImage.innerHTML="";
-	el.weaponImage.append(getWeaponImage());
-}
-
-function numberFixedString(input,fixed){
-    return Number(input.toFixed(fixed)).toLocaleString();
-}
-
 function generateStatInputs(){
-	
-	function generateWPInput(){
-		const wrapper = document.createElement("div");	
-		wrapper.innerHTML="<strong>WP Cost:</strong>";
-		const WPStat = getStat("WP-Cost");
-		const WPimage = getStatImage("WP");
-		WPimage.style.margin="0 0 0.05rem -0.2rem";
-		wrapper.append(WPStat[0]? createWeaponStatInput(...WPStat): "\u00A00\u00A0",WPimage);
-		return wrapper;
-	}
-
-	function generateDescription() {
-		const description = currentWeapon.description;
-		const wrapper     = document.createElement("div");
-
-		Object.assign(wrapper.style, {
-			display:     "inline",
-			whiteSpace:  "normal",
-			lineHeight:  "1.4rem",
-		});
-
-		let statIndex = 0;
-
-		const tokenRegex = /(\[stat\]|:[A-Za-z0-9_+]+:|\*\*[^*]+\*\*|\*[^*]+\*|\r?\n)/g;
-		const parts      = description.split(tokenRegex);
-
-		parts.forEach(part => {
-			if (!part) return;
-			if (/^\r?\n$/.test(part)) {
-				wrapper.appendChild(document.createElement("br"));
-				return;
-			}
-			if (part === "[stat]") {
-				const statContainer = createWeaponStatInput(...getStat(statIndex));
-				statContainer.style.margin = "0 -0.2rem";
-				wrapper.append(statContainer);
-				statIndex++;
-				return;
-			}
-			if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
-				const key        = part.slice(1, -1);
-				const img        = getStatImage(key);
-				const imgWrapper = document.createElement("div");
-				img.style.margin       = "0 0 0.17rem 0";
-				imgWrapper.style.display = "inline-block";
-				imgWrapper.append(img);
-				wrapper.append(imgWrapper);
-				return;
-			}
-			if (/^\*\*([^*]+)\*\*$/.test(part)) {
-				const text = part.slice(2, -2);
-				const span = document.createElement("span");
-				span.style.fontWeight = "bold";
-				span.textContent      = text;
-				wrapper.append(span);
-				return;
-			}
-			if (/^\*([^*]+)\*$/.test(part)) {
-				const text = part.slice(1, -1);
-				const span = document.createElement("span");
-				span.style.fontStyle = "italic";
-				span.textContent = text;
-				wrapper.append(span);
-				return;
-			}
-			wrapper.append(document.createTextNode(part));
-		});
-		return wrapper;
-	}
-
 	el.wpCost.replaceChildren(
-		generateWPInput()
+		generateWPInput(currentWeapon,el)
 	);
 	el.description.replaceChildren(
-    	generateDescription()
+    	generateDescription(currentWeapon,el)
   	);
-}
-
-const percentToValue = 
-	(percent, { min, range }) =>
-  	min + (range * percent) / 100;
-
-const valueToPercent =
-	(value, { min, range}) =>
-	Math.round(100 * (value - min) / range);
-
-function getStatImage(inputString){
-	const img = document.createElement("img");
-	img.src = `../media/owo_images/${inputString}.gif`;
-	img.onerror = function () {
-		this.onerror = null; 
-		this.src = `../media/owo_images/${inputString}.png`;
-	};
-	img.alt = `:${inputString}:`;
-	img.ariaLabel = `${inputString}`;
-	img.title = `:${inputString}:`;
-	img.className="discord-embed-emote";
-	img.style="margin: 0 0 -0.01rem -0.2rem;";
-	return img;
-}
-
-function createWeaponStatInput(productStat,config) {
-	const percentageConfig = {
-		get bonus() {
-			return getWearBonus();
-		},
-		get min() {
-			return this.bonus;
-		},
-		get max() {
-			return 100 + this.bonus;
-		},
-		get range() {
-			return this.max - this.min;
-		},
-		step: 1,
-		unit: "%",
-		digits:3
-	};
-
-	function createUnitSpan(unit){
-		const span = document.createElement("span");
-		span.style.marginRight="0.2rem";
-		span.textContent=unit;
-		return span;
-	}
-
-	function createStatTooltip(children) {
-		const tip = document.createElement('div');
-		tip.className = 'hidden tooltip-lite-child';
-		children.forEach(node => tip.append(node));
-		return tip;
-	}
-
-	function createStatWrapper(classNames) {
-		const wrapper = document.createElement('div');
-		wrapper.className = classNames;
-		return wrapper;
-	}
-		
-	function createRangedInput(type, {min, max, step, digits}, percentageInput) {
-		const input = document.createElement('input');
-
-		if (type === 'range') {
-			input.className = 'weaponSlider';
-			Object.assign(input.style, {
-				margin: '0 0 0 0.2rem',
-				background: '#555',
-				transform: min>max ? 'scaleX(-1)' : '',
-				transformOrigin: min>max ? 'center' : ''
-			});
-		}else if(type=="number"){
-			input.className = 'inputFromWeaponCalculator no-arrows';
-			input.style.width = (digits*0.5)+'rem';
-		}
-
-		if (percentageInput){
-			input.style.height="1.5rem";
-		}
-
-		const [nMin, nMax] = min>max ? [max,min] : [min,max];
-		Object.assign(input, {
-			min: nMin,
-			max: nMax,
-			required: true,
-			type, step
-		});
-
-		return input;
-	}
-		
-	function calculateQualities(weapon) {
-		const blueprint = weapon.product.blueprint;
-		const baseStats = Array.isArray(blueprint.stats) ? blueprint.stats : [];
-		const passives  = Array.isArray(blueprint.passive) ? blueprint.passive : [];
-
-		passives.forEach(entry => {
-			const { sumWear, sumNoWear } = entry.stats.reduce((acc, stat) => ({ 
-				sumWear: acc.sumWear     + stat.withWear, 
-				sumNoWear: acc.sumNoWear + stat.noWear
-			}), { sumWear: 0, sumNoWear: 0 });
-
-			entry.qualityWear   = sumWear / entry.stats.length;
-			entry.qualityNoWear = sumNoWear / entry.stats.length;
-			entry.tier          = getRarity(entry.qualityNoWear);
-		});
-
-		const allStats = [
-			...baseStats,
-			...passives.flatMap(entry => entry.stats)
-		];
-
-		const { sumWear, sumNoWear } = allStats.reduce((acc, stat) => ({
-			sumWear:   acc.sumWear   + stat.withWear,
-			sumNoWear: acc.sumNoWear + stat.noWear 
-		}), { sumWear: 0, sumNoWear: 0 });
-
-		blueprint.qualityWear = sumWear   / allStats.length;
-		blueprint.qualityNoWear = sumNoWear / allStats.length;
-		blueprint.tier = getRarity(Math.floor(blueprint.qualityWear));
-
-	}
-
-	function enhanceConfig(config, wearBonus) {
-		const bonus = (config.range / 100) * wearBonus;
-		return {
-			...config,
-			min: config.min + bonus,
-			max: config.max + bonus
-		};
-	}
-
-	const wearConfig 		= enhanceConfig(config,getWearBonus());
-	const initialValue 		= percentToValue(productStat.noWear,wearConfig);
-	const outerWrapper		= createStatWrapper("outerInputWrapperFromCalculator");
-	const wrapper 			= createStatWrapper("inputWrapperFromCalculator tooltip-lite");
-	const numberInput 		= createRangedInput('number', wearConfig);
-	const numberLabel 		= createUnitSpan(wearConfig.unit);
-	const img 				= getTierEmoji(getRarity(productStat.withWear));
-	const qualityInput 		= createRangedInput('number', percentageConfig,true);
-	const qualityLabel 		= createUnitSpan(percentageConfig.unit);
-	const slider 			= createRangedInput('range',  wearConfig);
-	const tooltipChildren 	= [img, qualityInput, qualityLabel, slider];
-  	const tooltip         	= createStatTooltip(tooltipChildren);
-
-	function syncAll(value) {
-		// this is also called when wear changes and such, it should always be called when any stat changes in any way
-		numberInput.value  = value;
-		slider.value       = value;
-		const pct = valueToPercent(value, config);
-		const noWearPtc = valueToPercent(value, wearConfig);
-		qualityInput.value = pct;
-		img.src = getTierEmojiPath(pct);
-		productStat.noWear=noWearPtc;
-
-		syncWear();
-		calculateQualities(currentWeapon);
-		displayInfo();
-	}
-	[slider, numberInput].forEach(el =>
-		el.addEventListener('input', () => syncAll(Number(el.value)))
-	);
-	qualityInput.addEventListener('input', () => { 
-		syncAll(percentToValue(Number(qualityInput.value), config));	
-	});
-
-	wrapper.append(
-		numberInput, 
-		...(wearConfig.unit === "" ? [] : [numberLabel]), 
-		tooltip);
-	outerWrapper.append(wrapper);
-	syncAll(initialValue);
-	return outerWrapper;
 }
