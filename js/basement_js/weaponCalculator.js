@@ -511,7 +511,7 @@ function getWeaponImage(){
 
 	const img = document.createElement("img");
 	const p = getWearBonus()==0?"":"p";
-	const q = letters[currentWeapon.product.blueprint.tier];
+	const q = letters[currentWeapon.product.blueprint.tier] || "f";
 	const w = getWeaponShorthand();
 	img.src = `media/owo_images/${p+q+"_"+w}.png`;
 	img.ariaLabel= getWeaponShorthand();
@@ -717,38 +717,59 @@ function digitsToRem(digits){
 
 function generateDescription() {
 	const description = currentWeapon.description;
-	const wrapper = document.createElement("div");
-	wrapper.style.display      	= "inline";
-  	wrapper.style.whiteSpace   	= "normal";
-	wrapper.style.lineHeight	= "1.4rem";
+	const wrapper     = document.createElement("div");
+
+	Object.assign(wrapper.style, {
+		display:     "inline",
+		whiteSpace:  "normal",
+		lineHeight:  "1.4rem",
+	});
 
 	let statIndex = 0;
 
-	description.forEach(node => {
-		switch (node.type) {
-		case "text":
-			wrapper.append(document.createTextNode(node.value));
-			break;
-		case "stat":
+	const tokenRegex = /(\[stat\]|:[A-Za-z0-9_+]+:|\*\*[^*]+\*\*|\*[^*]+\*|\r?\n)/g;
+	const parts      = description.split(tokenRegex);
+
+	parts.forEach(part => {
+		if (!part) return;
+		if (/^\r?\n$/.test(part)) {
+			wrapper.appendChild(document.createElement("br"));
+			return;
+		}
+		if (part === "[stat]") {
 			const statContainer = createWeaponStatInput(...getStat(statIndex));
-			statContainer.style.margin="0 -0.2rem";
+			statContainer.style.margin = "0 -0.2rem";
 			wrapper.append(statContainer);
 			statIndex++;
-			break;
-		case "emoji":
-			const img = getStatImage(node.value);
+			return;
+		}
+		if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
+			const key        = part.slice(1, -1);
+			const img        = getStatImage(key);
 			const imgWrapper = document.createElement("div");
-			img.style.margin = "0 0 0.17rem 0";
-			imgWrapper.style.display="inline-block";
+			img.style.margin       = "0 0 0.17rem 0";
+			imgWrapper.style.display = "inline-block";
 			imgWrapper.append(img);
 			wrapper.append(imgWrapper);
-			break;
-		case "strongSpan":
+			return;
+		}
+		if (/^\*\*([^*]+)\*\*$/.test(part)) {
+			const text = part.slice(2, -2);
 			const span = document.createElement("span");
-			span.style.fontWeight="bold";
-			span.innerHTML=node.value;
+			span.style.fontWeight = "bold";
+			span.textContent      = text;
 			wrapper.append(span);
-		}	
+			return;
+		}
+		if (/^\*([^*]+)\*$/.test(part)) {
+			const text = part.slice(1, -1);
+			const span = document.createElement("span");
+			span.style.fontStyle = "italic";
+			span.textContent = text;
+			wrapper.append(span);
+			return;
+		}
+		wrapper.append(document.createTextNode(part));
 	});
 	return wrapper;
 }

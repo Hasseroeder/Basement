@@ -24,14 +24,7 @@
                 "digits":3
             }
         ],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "Deals " },
-            { "type": "stat" },
-            { "type": "text",  "value": " of your " },
-            { "type": "emoji", "value": "STR" },
-            { "type": "text",  "value": "STR to all opponents" }
-        ],
+        "description": "**Description:** Deals [stat] of your :STR:STR to all opponents",
         "product":{
             "id":"AF0F5Y",
             "owner":{
@@ -69,16 +62,7 @@
                 "digits":6
             }
         ],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "Heals " },
-            { "type": "stat" },
-            { "type": "text",  "value": " of your " },
-            { "type": "emoji", "value": "MAG" },
-            { "type": "text",  "value": "MAG to the lowest health ally. This weapon can overheal up to 50% of max " },
-            { "type": "emoji", "value": "HP"},
-            { "type": "text",  "value": "HP."}
-        ],
+        "description": "**Description:** Heals [stat] of your :MAG:MAG to the lowest health ally. This weapon can overheal up to 50% of max :HP:HP.",
         "product":{
             "id":"AF0FGR",
             "owner":{
@@ -116,14 +100,7 @@
                 "digits":3
             }
         ],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "Deals " },
-            { "type": "stat" },
-            { "type": "text",  "value": " of your " },
-            { "type": "emoji", "value": "STR" },
-            { "type": "text",  "value": "STR to a random opponent." }
-        ],
+        "description": "**Description:** Deals [stat] of your :STR:STR to a random opponent.",
         "product":{
             "id":"BS2FIO",
             "owner":{
@@ -152,18 +129,7 @@
                 "digits":4
             }
         ],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "Increase " },
-            { "type": "emoji",  "value": "all_stats" },
-            { "type": "text",  "value": "ALL stats by  " },
-            { "type": "stat" },
-            { "type": "text",  "value": ", and changes your physical attacks to do 65%" },
-            { "type": "emoji", "value": "STR" },
-            { "type": "text",  "value": "STR and 65%" },
-            { "type": "emoji", "value": "MAG" },
-            { "type": "text",  "value": "MAG as TRUE damage. This weapon does not have an active ability." }
-        ],
+        "description": "**Description:** Increase :all_stats:ALL stats by [stat], and changes your physical attacks to do 65%:STR:STR and 65%:MAG:MAG as TRUE damage. This weapon does not have an active ability.",       
         "product":{
             "id":"3MVF",
             "owner":{
@@ -201,18 +167,7 @@
                 "digits":3
             }
         ],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "Adds a " },
-            { "type": "strongSpan",  "value": "taunt" },
-            { "type": "text",  "value": " buff to your animal for 2 turns" },
-            { "type": "strongSpan",  "value": "<br> <br>" },
-            { "type": "emoji",  "value": "taunt"},
-            { "type": "strongSpan", "value": " Taunt "},
-            { "type": "text", "value":" - Taunts the enemy team and forces all opponents to attack this animal. Reduces incoming damage by "},
-            { "type": "stat"}
-
-        ],
+        "description": "**Description:** Adds a **taunt** buff to your animal for 2 turns\n\n:taunt: **Taunt** - Taunts the enemy team and forces all opponents to attack this animal. Reduces incoming damage by [stat]",
         "product":{
             "id":"AJGO3Q",
             "owner":{
@@ -230,10 +185,7 @@
         "name":"Orb of Potency",
         "aliases":["Orb"],
         "stats":[],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "This weapon has no active ability, but comes with two passives!" }
-        ],
+        "description": "**Description:** This weapon has no active ability, but comes with two passives!",
         "product":{
             "id":"8BAMSV",
             "owner":{
@@ -271,15 +223,7 @@
                 "digits":3
             }
         ],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "Deal " },
-            { "type": "stat"},
-            { "type": "text",  "value": " of your " },
-            { "type": "emoji",  "value": "MAG" },
-            { "type": "text",  "value": "MAG to ALL enemies and heal ALL allies by the damage dealt" }
-
-        ],
+        "description": "**Description:** Deal [stat] of your :MAG:MAG to ALL enemies and heal ALL allies by the damage dealt",
         "product":{
             "id":"8BAL7H",
             "owner":{
@@ -327,24 +271,7 @@
                 "digits":3
             }
         ],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "Deals " },
-            { "type": "stat"},
-            { "type": "text",  "value": " of your " },
-            { "type": "emoji",  "value": "STR" },
-            { "type": "text",  "value": "STR to a random enemy and applies " },
-            { "type": "strongSpan", "value": "poison"},
-            { "type": "text", "value": " for 3 turns"},
-            { "type": "strongSpan", "value": "<br> <br>"},
-            { "type": "emoji", "value": "poison"},
-            { "type": "strongSpan", "value": " Poison "},
-            { "type": "text", "value": "- deals "},
-            { "type": "stat"},
-            { "type": "text", "value": " of your "},
-            { "type": "emoji", "value": "MAG"},
-            { "type": "text", "value": "MAG as true damage at the end of the turn"}
-        ],
+        "description": "**Description:** Deals [stat] of your :STR:STR to a random enemy and applies **poison** for 3 turns\n\n:poison: **Poison** - deals [stat] of your :MAG:MAG as true damage at the end of the turn",
         "product":{
             "id":"8HYMEN",
             "owner":{
@@ -392,18 +319,7 @@
                 "digits":3
             }
         ],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "Deal " },
-            { "type": "stat"},
-            { "type": "text",  "value": " of your " },
-            { "type": "emoji",  "value": "MAG" },
-            { "type": "text",  "value": "MAG to a random enemy and transfer their " },
-            { "type": "emoji", "value": "WP"},
-            { "type": "text", "value": "WP to an ally equal to "},
-            { "type": "stat"},
-            { "type": "text", "value": " of the damage done"}
-        ],
+        "description": "**Description:** Deal [stat] of your :MAG:MAG to a random enemy and transfer their :WP:WP to an ally equal to [stat] of the damage done",
         "product":{
             "id":"AF0FFB",
             "owner":{
@@ -461,26 +377,7 @@
                 "digits":3
             }
         ],
-        "description":[
-            { "type": "strongSpan", "value":"Description: "},
-            { "type": "text",  "value": "Deals " },
-            { "type": "stat"},
-            { "type": "text",  "value": " of your " },
-            { "type": "emoji",  "value": "MAG" },
-            { "type": "text",  "value": "MAG to a random enemy and applies " },
-            { "type": "strongSpan", "value": "flame"},
-            { "type": "text", "value": "for 3 turns"},
-            { "type": "strongSpan", "value": "<br> <br>"},
-            { "type": "emoji", "value": "flame"},
-            { "type": "strongSpan", "value": " Flame"},
-            { "type": "text", "value": " - Deals "},
-            { "type": "stat"},
-            { "type": "text", "value": " of your "},
-            { "type": "emoji",  "value": "MAG" },
-            { "type": "text",  "value": "MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal " },
-            { "type": "stat"},
-            { "type": "text", "value": "damage to the target."}    
-        ],
+        "description": "**Description:** Deals [stat] of your :MAG:MAG to a random enemy and applies **flame** for 3 turns\n\n:flame: **Flame** - Deals [stat] of your :MAG:MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal [stat] damage to the target.",
         "product":{
             "id":"7BOOBA",
             "owner":{
@@ -518,8 +415,18 @@
                 "digits":3
             }
         ],
+        "description": "**Description:** Sends a wave of energy and deals [stat] of your :MAG:MAG to all opponents",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{}],
+                "passive":[]
+            }
         }
     },
     "112": {
@@ -556,8 +463,18 @@
                 "digits":3
             }
         ],
+        "description": "**Description:** Heal all allies for [stat] of your :MAG:MAG and applies **Defense Up** for 2 turns\n\n:defup: **Defense Up** - Reduces incoming damage by [stat]. Cannot stack with other Defense Up buffs",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{}],
+                "passive":[]
+            }
         }
     },
     "113": {
@@ -584,8 +501,18 @@
                 "digits":6
             }
         ],
+        "description": "**Description:** Replenish [stat] of your :MAG:MAG as :WP:WP to an ally with the lowest :WP:WP. This weapon can overreplenish up to 50% of max :WP:WP.",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{}],
+                "passive":[]
+            }
         }
     },
     "114": {
@@ -612,8 +539,18 @@
                 "digits":3
             }
         ],
+        "description": "**Description:** Revive a dead ally and heal them for [stat] of your :MAG:MAG",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{}],
+                "passive":[]
+            }
         }
     },
     "115": {
@@ -640,8 +577,18 @@
                 "digits":3
             }
         ],
+        "description": "**Description:** Deals [stat] of your :STR:STR to a random opponent and apply **Freeze** for 2 turns \n\n:freeze: **Freeze** - Freeze an enemy. They can not attack next turn.",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{}],
+                "passive":[]
+            }
         }
     },
     "116": {
@@ -688,8 +635,18 @@
                 "digits":5
             }
         ],
+        "description": "**Description:** Apply **Attack Up** to all allies for 2 turns. If the user has enough WP when the buff expires, the buff will be recasted with a stronger version.\n\n:attup: Attack Up - Increases all damage by [stat]. Cannot stack with other Attack Up buffs\n:attup+: Attack Up+ - Increases all damage by [stat]. Cannot stack with other Attack Up+ buffs\n:attup++: Attack Up++ - Increases all damage by [stat]. Cannot stack with other Attack Up++ buffs",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{},{}],
+                "passive":[]
+            }
         }
     },
     "117": {
@@ -726,8 +683,18 @@
                 "digits":3
             }
         ],
+        "description": "**Description:** Deals [stat] of your :STR:STR to a random enemy and applies **Mortality** for 2 turns\n\n:mort: **Mortality** - Decreases all healing for this animal by [stat]",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{}],
+                "passive":[]
+            }
         }
     },
     "118": {
@@ -764,8 +731,18 @@
                 "digits":3
             }
         ],
+        "description": "**Description:** Apply **Celebration** to an ally with the lowest health for 3 turns.\n\n:celeb: **Celebration** - At the end of every turn, heal [stat] of your :iPR:iPR as :HP:HP and restore [stat] of your :iMR:iMR as :WP:WP.",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{}],
+                "passive":[]
+            }
         }
     },
     "119": {
@@ -802,8 +779,18 @@
                 "digits":6
             }
         ],
+        "description": "**Description:** Remove a buff from an enemy. If successful, deal [stat] of your :MAG:MAG to them. Remove a debuff from an ally. If successful, heal [stat] of your :STR:STR to them.",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{}],
+                "passive":[]
+            }
         }
     },
     "120": {
@@ -860,8 +847,18 @@
                 "digits":3
             }
         ],
+        "description": "**Description:** Deal [stat] of your :STR:STR to a random enemy and apply **Leech** for 3 turns. If the **Leech** debuff is already on the target, deal [stat] more damage.\n\n:leech: **Leech** - User who applied this debuff steals [stat] of incoming heals and [stat] of incoming replenishes.",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{},{},{}],
+                "passive":[]
+            }
         }
     },
     "121": {
@@ -898,8 +895,18 @@
                 "digits":3
             }
         ],
+        "description": "**Description:** Deal [stat] of your :STR:STR to a random enemy and apply **Stinky** for 2 turns.\n\n:stinky: **Stinky** - Prevents any future buffs *AND* debuffs to be applied to this animal. On success, deal [stat] :MAG:MAG to the animal.",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{}],
+                "passive":[]
+            }
         }
     },
     "122": {
@@ -966,8 +973,18 @@
                 "digits":3
             }
         ],
+        "description": "**Description:** Punches a random enemy 5 times. Each punch randomly deals either a percentage of your :STR:STR or :MAG:MAG. Punches deals: [stat], [stat], [stat], [stat], [stat]",
         "product":{
-            
+            "id":"AF0FEF",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{},{},{},{}],
+                "passive":[]
+            }
         }
     }
 }
