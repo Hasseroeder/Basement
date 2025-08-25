@@ -1,7 +1,7 @@
 import { numberFixedString } from '../util/stringUtil.js';
 import { createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan } from '../weaponCalculator/weaponCalcElementHelper.js'
 import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities } from '../weaponCalculator/weaponCalcUtil.js'
-import { clampNumber } from '../util/inputUtil.js';
+import { clampNumber,roundToDecimals } from '../util/inputUtil.js';
 
 
 function generateDescription(weapon,el) {
@@ -146,7 +146,6 @@ function createWeaponStatInput(productStat,config,weapon,el) {
             percentToValue(Number(qualityInput.value),config)
         );
     });
-
     numberInput.addEventListener('change', () =>
         syncWithClamp(
             Number(numberInput.value),
@@ -160,15 +159,12 @@ function createWeaponStatInput(productStat,config,weapon,el) {
         );
     });
 
-
-
-
     wrapper.append(
         numberInput, 
         ...(wearConfig.unit === "" ? [] : [numberLabel]), 
         tooltip);
     outerWrapper.append(wrapper);
-    syncAll(initialValue);
+    syncAll(roundToDecimals(initialValue,6));
     return outerWrapper;
 }
 

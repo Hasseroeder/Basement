@@ -12,3 +12,8 @@ export function clampNumber(min, max, value) {
   if (isNaN(value)) return;
   return Math.min(Math.max(value, min), max);
 }
+
+export function roundToDecimals(value, decimals) {
+  const factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+}
