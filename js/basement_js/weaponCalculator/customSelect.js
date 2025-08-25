@@ -36,7 +36,7 @@ function onDocPointerDown(e) {
     if (!root.contains(e.target)) closeList();
 }
 
-function selectIndex(index) {
+export function selectIndex(index) {
     if (index < 0 || index >= options.length) return;
     // Update selected UI
     options.forEach((opt, i) => {

@@ -1,6 +1,6 @@
-import { initCustomSelect } from '../weaponCalculator/customSelect.js';
+import { initCustomSelect, selectIndex } from '../weaponCalculator/customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
-import { generateDescription,generateWPInput,syncWear,displayInfo } from './weaponCalcMessageGenerator.js';
+import { generateDescription,generateWPInput,displayInfo } from './weaponCalcMessageGenerator.js';
 
 const el = {
 	weaponHeader:	document.getElementById("weaponHeader"), 
@@ -23,10 +23,7 @@ const initWeaponID = 101;
 
 async function initWeaponCalc(){
 	const wearSelectRoot = initCustomSelect();
-	wearSelectRoot.addEventListener('change', e => {
-		currentWeapon.product.blueprint.wear = e.detail.value;
-		updateWear();
-	});
+	wearSelectRoot.addEventListener('change', e => wearWasChanged(e));
 	initiateFirstID();
 	weapons = await loadJson("../json/weapons.json");
 	loadWeaponTypeData();
@@ -39,11 +36,53 @@ function initiateFirstID(){
 		: initWeaponID;
 }
 
+function wearNameToWearID(inputString){
+	const wearValues = {
+		pristine: 3,
+		fine:     2,
+		decent:   1,
+		worn:     0,
+	};
+	return wearValues[inputString] || 0;
+
+}
+
 function loadWeaponTypeData(){
 	// from the .json
 	currentWeapon = weapons[currentWeaponID];
-	fillMissingWeaponInfo();
-	updateWear();
+	fillMissingWeaponInfo();												//fills weapon on init
+	selectIndex(wearNameToWearID(currentWeapon.product.blueprint.wear));	//displays actual wear in outside on init
+}
+
+function wearWasChanged(e){
+	function getWearBonus(wear){
+		const wearValues = {
+			pristine: 5,
+			fine:     3,
+			decent:   1,
+			worn:     0,
+			unknown:  0
+		};
+		return wearValues[wear] || 0;
+	}
+	function getWearName(wear){
+		const wearValues = {
+			pristine: "Pristine\u00A0",
+			fine:     "Fine\u00A0",
+			decent:   "Decent\u00A0",
+			worn:     "",
+			unknown:  ""
+		};
+		return wearValues[wear] || "";
+	}
+
+
+	const blueprint = currentWeapon.product.blueprint;
+	blueprint.wear = e.detail.value;
+	blueprint.wearBonus = getWearBonus(e.detail.value);
+	blueprint.wearName = getWearName(e.detail.value)
+	
+	generateNew();
 }
 
 function fillMissingWeaponInfo(){
@@ -72,10 +111,9 @@ function fillMissingWeaponInfo(){
 	currentWeapon.product.blueprint.stats.forEach(stat => generateMissingStat(stat));
 }
 
-function updateWear(){
-	syncWear(currentWeapon);
+function generateNew(){
 	generateStatInputs();
-	displayInfo();
+	displayInfo(el,currentWeapon);
 }
 
 function generateStatInputs(){

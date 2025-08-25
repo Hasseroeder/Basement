@@ -33,7 +33,7 @@
                 "displayName":"Heather"
             },
             "blueprint":{
-                "wear":"worn",
+                "wear":"fine",
                 "stats":[{},{}],
                 "passive":[]
             }
