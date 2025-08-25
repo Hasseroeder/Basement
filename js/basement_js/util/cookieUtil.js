@@ -1,7 +1,3 @@
-function helloWord(){
-    console.log("HAI HAI HAI !!! UR REALLY COOL");
-}
-
 function setCookie(name,value,daysToLive){
     const date= new Date();
     date.setDate(date.getDate() + daysToLive*24*60*60*1000);
@@ -28,4 +24,4 @@ function getCookie(name){
     return result;
 }
 
-export {getCookie, setCookie, deleteCookie, helloWord};
+export {getCookie, setCookie, deleteCookie};
