@@ -1,5 +1,5 @@
-import { initializeTriangle } from './triangleCharts/triangle.js';
-import { initializeTriangle2 } from './triangleCharts/triangle2.js';
+import { initializeTriangle } from '../triangleCharts/triangle.js';
+import { initializeTriangle2 } from '../triangleCharts/triangle2.js';
 
 window.initializetriangle = initializeTriangle;
 window.initializetriangle2 = initializeTriangle2;
@@ -19,7 +19,7 @@ function handleButtonClick(Name) {
         container.dataset.created = "false";
     } else {
         button.disabled = true; 
-        fetch(`donatorPages/${Name}.html`)
+        fetch(`../donatorPages/${Name}.html`)
             .then(response => {
                 if (!response.ok) throw new Error('Failed to fetch the file');
                 return response.text();
