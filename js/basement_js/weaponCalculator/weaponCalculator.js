@@ -247,24 +247,6 @@ async function loadWeapons() {
     }
 } 
 
-const percentageConfig = {
-	get bonus() {
-		return getWearBonus();
-	},
-	get min() {
-		return this.bonus;
-	},
-	get max() {
-		return 100 + this.bonus;
-	},
-	get range() {
-		return this.max - this.min;
-	},
-	step: 1,
-	unit: "%",
-	digits:3
-};
-
 const el = {
 	weaponHeader:	document.getElementById("weaponHeader"), 
 	weaponName:		document.getElementById("weaponName"),
@@ -665,6 +647,24 @@ function createUnitSpan(unit){
 }
 
 function createWeaponStatInput(productStat,config) {
+	const percentageConfig = {
+		get bonus() {
+			return getWearBonus();
+		},
+		get min() {
+			return this.bonus;
+		},
+		get max() {
+			return 100 + this.bonus;
+		},
+		get range() {
+			return this.max - this.min;
+		},
+		step: 1,
+		unit: "%",
+		digits:3
+	};
+
 	const wearConfig 		= enhanceConfig(config,getWearBonus());
 	const initialValue 		= percentToValue(productStat.noWear,wearConfig);
 	const outerWrapper		= createStatWrapper("outerInputWrapperFromCalculator");
