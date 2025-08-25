@@ -1,5 +1,5 @@
-import { initializeTriangle } from './triangle.js';
-import { initializeTriangle2 } from './triangle2.js';
+import { initializeTriangle } from './triangleCharts/triangle.js';
+import { initializeTriangle2 } from './triangleCharts/triangle2.js';
 
 window.initializetriangle = initializeTriangle;
 window.initializetriangle2 = initializeTriangle2;
