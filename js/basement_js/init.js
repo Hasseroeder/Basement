@@ -1,155 +1,163 @@
 function createImage(attrs = {}, styles = {}) {
-  const img = document.createElement("img");
-  Object.entries(attrs).forEach(([key, val]) => {
-    if ((key === "width" || key === "height") && typeof val === "number") {
-      img[key] = val;
-    } else {
-      img.setAttribute(key, val);
-    }
-  });
-  Object.assign(img.style, styles);
-  return img;
+	const img = document.createElement("img");
+	Object.entries(attrs).forEach(([key, val]) => {
+		if ((key === "width" || key === "height") && typeof val === "number") {
+			img[key] = val;
+		} else {
+			img.setAttribute(key, val);
+		}
+	});
+	Object.assign(img.style, styles);
+	return img;
 }
 
 function applyContent(el, content) {
-  if (typeof content === "string") {
-    el.innerHTML = content;
-    return;
-  }
-  el.appendChild(content);
+	if (typeof content === "string") {
+		el.innerHTML = content;
+		return;
+	}
+	el.appendChild(content);
 }
 
 const collections = {
-  weapon : [
-    ["Fists"],
-    ["101","Sword"],
-    ["102","Hstaff"],
-    ["103","Bow"],
-    ["104","Rune"],
-    ["105","Shield"],
-    ["106","Orb"],
-    ["107","Vstaff"],
-    ["108","Dagger"],
-    ["109","Wand"],
-    ["110","Fstaff"],
-    ["111","Estaff"],
-    ["112","Sstaff"],
-    ["113","Scepter"],
-    ["114","Rstaff"],
-    ["115","Axe"],
-    ["116","Banner"],
-    ["117","Scythe"],
-    ["118","Crune"],
-    ["119","Pstaff"],
-    ["120","Lscythe"],
-    ["121","Ffish"],
-    ["122","Lrune"],
-  ],
+	weapon : [
+		["Fists"],
+		["101","Sword"],
+		["102","Hstaff"],
+		["103","Bow"],
+		["104","Rune"],
+		["105","Shield"],
+		["106","Orb"],
+		["107","Vstaff"],
+		["108","Dagger"],
+		["109","Wand"],
+		["110","Fstaff"],
+		["111","Estaff"],
+		["112","Sstaff"],
+		["113","Scepter"],
+		["114","Rstaff"],
+		["115","Axe"],
+		["116","Banner"],
+		["117","Scythe"],
+		["118","Crune"],
+		["119","Pstaff"],
+		["120","Lscythe"],
+		["121","Ffish"],
+		["122","Lrune"],
+	],
 
-  passive : [
-    ["Strength","Str"],
-    ["Magic","Mag"],
-    ["Health Point","HP"],
-    ["Weapon Point","WP"],
-    ["Physical Resistance","PR"],
-    ["Magical Resistance","MR"],
-    ["Lifesteal","Ls"],
-    ["Thorns"],
-    ["Mana Tap","Mtap"],
-    ["Absolve","Absv"],
-    ["Safeguard","Sg"],
-    ["Critical","Crit"],
-    ["Discharge","Dc"],
-    ["Kamikaze","Kkaze"],
-    ["Regeneration","Hgen"],
-    ["Energize","Wgen"],
-    ["Sprout"],
-    ["Enrage"],
-    ["Sacrifice","Sac"],
-    ["Snail"],
-    ["Knowledge","Kno"]
-  ]
+  	passive : [
+		["Strength","Str"],
+		["Magic","Mag"],
+		["Health Point","HP"],
+		["Weapon Point","WP"],
+		["Physical Resistance","PR"],
+		["Magical Resistance","MR"],
+		["Lifesteal","Ls"],
+		["Thorns"],
+		["Mana Tap","Mtap"],
+		["Absolve","Absv"],
+		["Safeguard","Sg"],
+		["Critical","Crit"],
+		["Discharge","Dc"],
+		["Kamikaze","Kkaze"],
+		["Regeneration","Hgen"],
+		["Energize","Wgen"],
+		["Sprout"],
+		["Enrage"],
+		["Sacrifice","Sac"],
+		["Snail"],
+		["Knowledge","Kno"]
+	]
 };
 
 function smallInjector(container){
-  type = container.getAttribute("type");
-  collections[type].forEach((object,id)=>{
-    const a = document.createElement("a");
-    a.href = `/${type}.html#${100+id}`;
-    a.className="tooltip";
-    container.append(a);
+	const type = container.getAttribute("type");
+	collections[type].forEach((object,id)=>{
+		const link = `/${type}.html#${100+id}`;
+		const path =`media/owo_images/f_${object.at(-1).toLowerCase()}.png`;
+		const text = object[0] + (object[1]? "<br>"+object[1]:"");
+		appendImageLink(container,link,path,text);
+	});
 
-    const img = document.createElement("img");
-    img.src=`media/owo_images/f_${object.at(-1).toLowerCase()}.png`;
+	if (type == "weapon"){
+		appendImageLink(container,"/weaponcalculator.html", "media/misc_images/cogwheel2.png", "Weapon Calculator");
+	}
+}
 
-    img.style.width="2.5rem";
-    a.append(img);
+function appendImageLink(container, link, path, text){
+	const a = document.createElement("a");
+	a.href = link;
+	a.className = "tooltip";
+	container.append(a);
 
-    const tooltip = document.createElement("div");
-    tooltip.innerHTML = object[0];
-    tooltip.innerHTML+= object[1]? "<br>"+object[1]:"";
-    tooltip.className="navBar-tooltip-text";
-    a.append(tooltip);
+	const img = document.createElement("img");
+	img.src = path;
+	img.style.width = "2.5rem";
+	a.append(img);
 
-  });
+	const tooltip = document.createElement("div");
+	tooltip.innerHTML = text;
+	tooltip.className = "navBar-tooltip-text";
+	a.append(tooltip);
 }
 
 const injectors = [
-  {
-    selector: "#navbar",
-    load: () => {
-      return fetch("./donatorPages/navBar.html")
-        .then(r => r.text())
-        .then(html => {
-          const container = document.querySelector("#navbar");
-          container.innerHTML = html;
+  	{
+		selector: "#navbar",
+		load: () => {
+			return fetch("./donatorPages/navBar.html")
+				.then(r => r.text())
+				.then(html => {
+					const container = document.querySelector("#navbar");
+					container.innerHTML = html;
 
-          smallInjector(container.querySelector("#menuWeaponContainer"));
-          smallInjector(container.querySelector("#menuPassiveContainer"));
+					smallInjector(container.querySelector("#menuWeaponContainer"));
+					smallInjector(container.querySelector("#menuPassiveContainer"));
 
-          return container.innerHTML;
-        });
-    },
-  },
-  {
-    selector: ".center-pillar",
-    load: () => {
-      const blinkies = [
-        ["../media/misc_images/blinkiesCafe-7m.gif","https://blinkies.cafe/"],
-        ["../media/misc_images/blinkiesCafe-ji.gif","https://blinkies.cafe/"],
-        ["../media/misc_images/blinkiesCafe-5U.gif","https://blinkies.cafe/"],
-        ["../media/misc_images/advert_blinkie.gif"],
-        ["../media/misc_images/rbot_blinkie.gif","https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"],
-        ["../media/misc_images/obs_blinkie.gif","https://discord.gg/owobot"],
-        ["../media/misc_images/anydice_blinkie.gif","https://anydice.com/"],
-        ["../media/misc_images/neon_blinkie.gif","https://discord.gg/neonutil"],
-      ];
+					return container.innerHTML;
+				});
+		},
+  	},
+	{
+		selector: ".center-pillar",
+		load: () => {
+			const blinkies = [
+				["../media/misc_images/blinkiesCafe-7m.gif","https://blinkies.cafe/"],
+				["../media/misc_images/blinkiesCafe-ji.gif","https://blinkies.cafe/"],
+				["../media/misc_images/blinkiesCafe-5U.gif","https://blinkies.cafe/"],
+				["../media/misc_images/advert_blinkie.gif"],
+				["../media/misc_images/rbot_blinkie.gif","https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"],
+				["../media/misc_images/obs_blinkie.gif","https://discord.gg/owobot"],
+				["../media/misc_images/anydice_blinkie.gif","https://anydice.com/"],
+				["../media/misc_images/neon_blinkie.gif","https://discord.gg/neonutil"],
+			];
 
-      const myBlinkies = fourRandoms(blinkies);
+			const myBlinkies = fourRandoms(blinkies);
 
-      const wrapper=document.createElement("div");
-      wrapper.style ="margin: 2rem 4rem; gap: 0.5rem; display: flex; flex-wrap: nowrap;";
+			const wrapper=document.createElement("div");
+			wrapper.style ="margin: 2rem 4rem; gap: 0.5rem; display: flex; flex-wrap: nowrap;";
 
-      myBlinkies.forEach(src => {
-        const img = document.createElement("img");
-        img.src = src[0];
-        img.className="blinkie";
-        let elementToAppend = img;
+			myBlinkies.forEach(src => {
+				const img = document.createElement("img");
+				img.src = src[0];
+				img.className="blinkie";
+				let elementToAppend = img;
 
-        if (src[1]) {
-          const link = document.createElement("a");
-          link.href = src[1];
-          link.style= "display:block; flex: 1 1 0;";
-          link.append(img);
-          link.target="_blank";
-          elementToAppend = link;
-        }
-        wrapper.append(elementToAppend);    
-      });
+				if (src[1]) {
+					const link = document.createElement("a");
+					link.href = src[1];
+					link.style= "display:block; flex: 1 1 0;";
+					link.append(img);
+					link.target="_blank";
+					elementToAppend = link;
+				}
+				wrapper.append(elementToAppend);    
+			});
 
-      return Promise.resolve(wrapper);
-    },
-  },
+			return Promise.resolve(wrapper);
+		},
+  	},
   {
     selector: "#construction",
     load: () => {

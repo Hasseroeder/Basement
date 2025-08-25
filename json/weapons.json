@@ -172,10 +172,7 @@
             },
             "blueprint":{
                 "wear":"unknown",
-                "stats":[{
-                    "noWear":20,
-                    "withWear":20
-                }],
+                "stats":[{}],
                 "passive":[]
             }
         }
@@ -349,10 +346,10 @@
             { "type": "text", "value": "MAG as true damage at the end of the turn"}
         ],
         "product":{
-            "id":"8BAL7H",
+            "id":"8HYMEN",
             "owner":{
-                "name":"@wifu",
-                "displayName":"Wifu"
+                "name":"@roserejects",
+                "displayName":"RoseRejects"
             },
             "blueprint":{
                 "wear":"worn",
@@ -395,8 +392,29 @@
                 "digits":3
             }
         ],
+        "description":[
+            { "type": "strongSpan", "value":"Description: "},
+            { "type": "text",  "value": "Deal " },
+            { "type": "stat"},
+            { "type": "text",  "value": " of your " },
+            { "type": "emoji",  "value": "MAG" },
+            { "type": "text",  "value": "MAG to a random enemy and transfer their " },
+            { "type": "emoji", "value": "WP"},
+            { "type": "text", "value": "WP to an ally equal to "},
+            { "type": "stat"},
+            { "type": "text", "value": " of the damage done"}
+        ],
         "product":{
-            
+            "id":"AF0FFB",
+            "owner":{
+                "name":"@hsse",
+                "displayName":"Heather"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{}],
+                "passive":[]
+            }
         }
     },
     "110": {
@@ -443,8 +461,37 @@
                 "digits":3
             }
         ],
+        "description":[
+            { "type": "strongSpan", "value":"Description: "},
+            { "type": "text",  "value": "Deals " },
+            { "type": "stat"},
+            { "type": "text",  "value": " of your " },
+            { "type": "emoji",  "value": "MAG" },
+            { "type": "text",  "value": "MAG to a random enemy and applies " },
+            { "type": "strongSpan", "value": "flame"},
+            { "type": "text", "value": "for 3 turns"},
+            { "type": "strongSpan", "value": "<br> <br>"},
+            { "type": "emoji", "value": "flame"},
+            { "type": "strongSpan", "value": " Flame"},
+            { "type": "text", "value": " - Deals "},
+            { "type": "stat"},
+            { "type": "text", "value": " of your "},
+            { "type": "emoji",  "value": "MAG" },
+            { "type": "text",  "value": "MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal " },
+            { "type": "stat"},
+            { "type": "text", "value": "damage to the target."}    
+        ],
         "product":{
-            
+            "id":"7BOOBA",
+            "owner":{
+                "name":"@roserejects",
+                "displayName":"RoseRejects"
+            },
+            "blueprint":{
+                "wear":"worn",
+                "stats":[{},{},{},{}],
+                "passive":[]
+            }
         }
     },
     "111": {
