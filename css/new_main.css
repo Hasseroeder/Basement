@@ -544,9 +544,43 @@ a:hover {
     opacity: 1;
 }
 
-.tooltip-lite:hover .passivesNone,
-.tooltip-lite:hover .passivesNone *{
-  visibility: hidden;
+.passiveContainer:hover {
+  border-radius: 0.2rem;
+  box-shadow: inset 0.125rem 0 0 #D3D3D3, 
+              inset -0.125rem 0 0 #8D8D8D, 
+              inset 0 -0.125rem 0 #8D8D8D, 
+              inset 0 0.125rem 0 #D3D3D3;      
+  justify-content: center;                  
+}
+
+.passiveContainer{
+  padding: 0.75rem 0rem;
+  margin-top:0.4rem;
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+  align-items: center;
+  height: 1.4rem;
+}
+
+.passiveContainer:hover .passivesNone,
+.passiveContainer:hover .passivesNone *{
+  display:none;
+}
+
+.passiveContainer:hover .passivesSome{
+  display: unset;
+}
+
+.passivesSome{
+  display:none;
+}
+
+.passiveGrid{
+  display:grid;
+  grid-template-rows: repeat(2,1rem);
+  grid-auto-flow: column;
+  grid-auto-columns: 1rem;
 }
 
 .hidden {
@@ -759,20 +793,6 @@ a:hover {
   cursor: pointer !important;
   border: none !important;
   margin-top: -0.55rem;
-}
-
-.borderOnHover{
-  padding: 0.75rem 0.75rem 0.75rem 0;
-  margin-top:0.4rem;
-}
-
-.borderOnHover:hover{
-  border-radius: 0.2rem;
-  box-shadow:
-    inset 0.125rem 0 0 #D3D3D3, 
-    inset -0.125rem 0 0 #8D8D8D,
-    inset 0 -0.125rem 0 #8D8D8D,
-    inset 0 0.125rem 0 #D3D3D3; 
 }
 
 .blinkie {
