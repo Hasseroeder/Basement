@@ -705,7 +705,13 @@ function addEffect(type){
     outerWrapper.className="passiveWrapperFromCalculator";
 
     const wrapper = document.createElement("div");
-    wrapper.style="display: flex; align-items: center;position:relative;";
+    wrapper.style="display: flex; align-items: center;position:relative; width: 100%;";
+
+    const numberWrapper = document.createElement("div");
+    numberWrapper.className="grayOnHover number-wrapper-pet-calculator";
+
+    const listeningWrapper = document.createElement("div");
+    listeningWrapper.className="listening-wrapper";
 
     const imgWrapper = document.createElement("div");
     imgWrapper.style = "align-items: center; display: flex; flex-direction: column; margin-top: 0.15rem; min-width: 28px;";
@@ -720,17 +726,14 @@ function addEffect(type){
 
     const number = document.createElement("input");
     number.type="number";
-    number.className="discord-code-lite no-arrows grayOnHover";
+    number.className="passive-number-input no-arrows";
     number.min=0;
     number.max=100;
     number.value=100;
-    number.style="margin:0.2rem 0.0rem 0.2rem 0.2rem;";
 
     const text = document.createElement("div");
     text.textContent="%"
-    text.className="discord-code-lite";
-    text.style.width="0.6rem";
-    text.style.margin="0 0.2rem 0 -0.16rem";
+    text.className="percent-span";
     
     const slider = document.createElement("input");
     slider.type="range";
@@ -764,8 +767,12 @@ function addEffect(type){
         updateInternalStats();
     });
 
-    imgWrapper.append(img, belowImg)
-    wrapper.append(imgWrapper,number,text, slider,button);
+    listeningWrapper.addEventListener("click", () => number.focus());
+
+    imgWrapper.append(img, belowImg);
+    numberWrapper.append(number,text);
+    listeningWrapper.append(numberWrapper)
+    wrapper.append(imgWrapper,listeningWrapper,slider,button);
     outerWrapper.append(wrapper);
     effectContainer.insertBefore(outerWrapper, effectContainer.lastChild);
 
