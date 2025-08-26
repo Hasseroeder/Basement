@@ -74,7 +74,6 @@ function generateWPInput(weapon,el){
 }
 
 function createWeaponStatInput(productStat,config,weapon,el) {
-
     const percentageConfig = {
         get bonus() {
             return weapon.product.blueprint.wearBonus;

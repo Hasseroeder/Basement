@@ -1,4 +1,4 @@
-import { initCustomSelect, selectIndex } from '../weaponCalculator/customSelect.js';
+import { initCustomSelect, selectIndex } from './customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
 import { generateDescription,generateWPInput,displayInfo } from './weaponCalcMessageGenerator.js';
 
