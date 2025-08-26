@@ -824,6 +824,7 @@ a:hover {
   font-size: 0.85rem;
   font-family: monospace;
   background: transparent;
+  text-align: end;
 }
 
 .listening-wrapper{
