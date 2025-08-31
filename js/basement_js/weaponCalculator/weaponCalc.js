@@ -1,6 +1,7 @@
 import { initCustomSelect, selectIndex } from './customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
 import { generateDescription,generateWPInput,displayInfo } from './weaponCalcMessageGenerator.js';
+import { initiatePassiveStuffs } from './weaponCalcPassive.js';
 
 const el = {
 	weaponHeader:	document.getElementById("weaponHeader"), 
@@ -27,6 +28,7 @@ async function initWeaponCalc(){
 	initiateFirstID();
 	weapons = await loadJson("../json/weapons.json");
 	loadWeaponTypeData();
+	initiatePassiveStuffs(currentWeapon);
 }
 
 function initiateFirstID(){

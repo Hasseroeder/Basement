@@ -131,6 +131,7 @@ const injectors = [
 				["../media/misc_images/obs_blinkie.gif","https://discord.gg/owobot"],
 				["../media/misc_images/anydice_blinkie.gif","https://anydice.com/"],
 				["../media/misc_images/neon_blinkie.gif","https://discord.gg/neonutil"],
+				["../media/misc_images/dontasktoask_blinkie.png","https://dontasktoask.com/"]
 			];
 
 			const myBlinkies = fourRandoms(blinkies);
