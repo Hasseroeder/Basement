@@ -14,7 +14,7 @@
                 "digits":5
             }
         ],
-        "description":"Increases your :STR:STR by [stat]"
+        "description":"**Strength** - Increases your :STR:STR by [stat]"
     },"2":{
         "name":"Magic",
         "shorthand":"mag",
@@ -30,7 +30,7 @@
                 "digits":5
             }
         ],
-        "description":"Increases your :MAG:MAG by [stat]"
+        "description":"**Magic** - Increases your :MAG:MAG by [stat]"
     },"3":{
         "name":"Health Point",
         "shorthand":"hp",
@@ -46,7 +46,7 @@
                 "digits":5
             }
         ],
-        "description":"Increases your :HP:HP by [stat]"
+        "description":"**Health Point** - Increases your :HP:HP by [stat]"
     },"4":{
         "name":"Weapon Point",
         "shorthand":"wp",
@@ -62,7 +62,7 @@
                 "digits":4
             }
         ],
-        "description":"Increases your :WP:WP by [stat]"
+        "description":"**Weapon Point** - Increases your :WP:WP by [stat]"
     },"5":{
         "name":"Physical Resistance",
         "shorthand":"pr",
@@ -78,7 +78,7 @@
                 "digits":4
             }
         ],
-        "description":"Increases your :iPR:iPR by [stat]"
+        "description":"**Physical Resistance** - Increases your :iPR:iPR by [stat]"
     },"6":{
         "name":"Magical Resistance",
         "shorthand":"mr",
@@ -94,7 +94,7 @@
                 "digits":4
             }
         ],
-        "description":"Increases your :iMR:iMR by [stat]"
+        "description":"**Magical Resistance** - Increases your :iMR:iMR by [stat]"
     },"7":{
         "name":"Lifesteal",
         "shorthand":"ls",
@@ -110,7 +110,7 @@
                 "digits":4
             }
         ],
-        "description":"All damage you deal heals you for [stat] of the damage dealt!"
+        "description":"**Lifesteal** - All damage you deal heals you for [stat] of the damage dealt!"
     },"8":{
         "name":"Thorns",
         "shorthand":"th",
@@ -126,7 +126,7 @@
                 "digits":4
             }
         ],
-        "description":"Reflect [stat] of the damage dealt to you as true damage"
+        "description":"**Thorns** - Reflect [stat] of the damage dealt to you as true damage"
     },"9":{
         "name":"Mana Tap",
         "shorthand":"mtap",
@@ -142,7 +142,7 @@
                 "digits":5
             }
         ],
-        "description":"All damage you deal replenishes your :WP:WP for [stat] of the damage dealt!"
+        "description":"**Mana Tap** - All damage you deal replenishes your :WP:WP for [stat] of the damage dealt!"
     },"10":{
         "name":"Absolve",
         "shorthand":"absv",
@@ -158,7 +158,7 @@
                 "digits":4
             }
         ],
-        "description":"When healed, deal [stat] of the healed amount to a random enemy as :MAG:MAG damage"
+        "description":"**Absolve** - When healed, deal [stat] of the healed amount to a random enemy as :MAG:MAG damage"
     },"11":{
         "name":"Safeguard",
         "shorthand":"sg",
@@ -174,7 +174,7 @@
                 "digits":4
             }
         ],
-        "description":"Negate [stat] of the damage dealt to you with :WP:WP"
+        "description":"**Safeguard** - Negate [stat] of the damage dealt to you with :WP:WP"
     },"12":{
         "name":"Critical",
         "shorthand":"crit",
@@ -199,7 +199,7 @@
                 "digits":5
             }
         ],
-        "description":"Every attack has a [stat] chance to deal [stat] more damage. This can apply to heals."
+        "description":"**Critical** - Every attack has a [stat] chance to deal [stat] more damage. This can apply to heals."
     },"13":{
         "name":"Discharge",
         "shorthand":"dc",
@@ -215,7 +215,7 @@
                 "digits":5
             }
         ],
-        "description":"When :WP:WP is replenished, deal [stat] of the replenished amount to a random enemy as :MAG:MAG damage"
+        "description":"**Discharge** - When :WP:WP is replenished, deal [stat] of the replenished amount to a random enemy as :MAG:MAG damage"
     },"14":{
         "name":"Kamikaze",
         "shorthand":"kkaze",
@@ -231,7 +231,7 @@
                 "digits":5
             }
         ],
-        "description":"When the animal dies, deal [stat] of its max :HP:HP as :MAG:MAG dmg to the attacker"
+        "description":"**Kamikaze** - When the animal dies, deal [stat] of its max :HP:HP as :MAG:MAG dmg to the attacker"
     },"15":{
         "name":"Regeneration",
         "shorthand":"hgen",
@@ -247,7 +247,7 @@
                 "digits":5
             }
         ],
-        "description":"Heal [stat] of your max :HP:HP after every turn"
+        "description":"**Regeneration** - Heal [stat] of your max :HP:HP after every turn"
     },"16":{
         "name":"Energize",
         "shorthand":"wgen",
@@ -263,7 +263,7 @@
                 "digits":4
             }
         ],
-        "description":"Replenish [stat] :WP:WP after every turn"
+        "description":"**Energize** - Replenish [stat] :WP:WP after every turn"
     },"17":{
         "name":"Sprout",
         "shorthand":"sprout",
@@ -279,7 +279,7 @@
                 "digits":4
             }
         ],
-        "description":"Increase all incoming healing by [stat]"
+        "description":"**Sprout** - Increase all incoming healing by [stat]"
     },"18":{
         "name":"Enrage",
         "shorthand":"enrage",
@@ -295,7 +295,7 @@
                 "digits":4
             }
         ],
-        "description":"Every 10% of missing health gives [stat] extra damage"
+        "description":"**Enrage** - Every 10% of missing health gives [stat] extra damage"
     },"19":{
         "name":"Sacrifice",
         "shorthand":"sac",
@@ -320,7 +320,7 @@
                 "digits":5
             }
         ],
-        "description":"When this animal dies, heal your teammates for [stat] of its Max :HP:HP and replenish for [stat] of its Max :WP:WP"
+        "description":"**Sacrifice** - When this animal dies, heal your teammates for [stat] of its Max :HP:HP and replenish for [stat] of its Max :WP:WP"
     },"20":{
         "name":"Snail",
         "shorthand":"snail",
@@ -336,7 +336,7 @@
                 "digits":4
             }
         ],
-        "description":"Your pet snail fights with you. Whenever you attack an animal, snail will slap a random enemy for [stat] of the damage dealt."
+        "description":"**Snail** - Your pet snail fights with you. Whenever you attack an animal, snail will slap a random enemy for [stat] of the damage dealt."
     },"21":{
         "name":"Knowledge",
         "shorthand":"kno",
@@ -352,6 +352,6 @@
                 "digits":4
             }
         ],
-        "description":"This passive does not do anything in battle. However, it will give this animal [stat] extra xp after each battle."
+        "description":"**Knowledge** - This passive does not do anything in battle. However, it will give this animal [stat] extra xp after each battle."
     }
 }

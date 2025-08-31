@@ -4,9 +4,10 @@ import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWea
 import { clampNumber,roundToDecimals } from '../util/inputUtil.js';
 
 
-function generateDescription(weapon,el) {
-    const description = weapon.description;
+function generateDescription(weaponOrPassive,el) {
+    const description = weaponOrPassive.description;
     const wrapper     = document.createElement("div");
+    console.log(weaponOrPassive);
 
     Object.assign(wrapper.style, {
         display:     "inline",
@@ -26,7 +27,7 @@ function generateDescription(weapon,el) {
             return;
         }
         if (part === "[stat]") {
-            const statContainer = createWeaponStatInput(...getStat(statIndex,weapon),weapon,el);
+            const statContainer = createWeaponStatInput(...getStat(statIndex,weaponOrPassive),weaponOrPassive,el);
             statContainer.style.margin = "0 -0.2rem";
             wrapper.append(statContainer);
             statIndex++;
