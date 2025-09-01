@@ -179,8 +179,9 @@ function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
 }
 
 function changePassiveEmote(passive){
-    if (!passive.objectType == "passive") return;
-    passive.image.src= getWeaponImagePath(passive);
+    if (passive.objectType == "passive"){
+        passive.image.src= getWeaponImagePath(passive);
+    }
 }
 
 function getTierEmoji(tier){
