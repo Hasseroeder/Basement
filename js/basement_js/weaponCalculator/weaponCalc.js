@@ -77,12 +77,13 @@ function wearWasChanged(e){
 		};
 		return wearValues[wear] || "";
 	}
-
-
-	const blueprint = currentWeapon.product.blueprint;
-	blueprint.wear = e.detail.value;
-	blueprint.wearBonus = getWearBonus(e.detail.value);
-	blueprint.wearName = getWearName(e.detail.value)
+	function applyValues(toApply){
+		toApply.wear = e.detail.value;
+		toApply.wearBonus = getWearBonus(e.detail.value);
+		toApply.wearName = getWearName(e.detail.value);
+	}
+	applyValues(currentWeapon.product.blueprint);
+	currentWeapon.product.blueprint.passive.forEach(passive => applyValues(passive));
 	
 	generateNew();
 }
@@ -115,14 +116,17 @@ function fillMissingWeaponInfo(){
 
 function generateNew(){
 	generateStatInputs();
-	displayInfo(el,currentWeapon);
+	displayInfo(currentWeapon);
 }
 
 function generateStatInputs(){
-	el.wpCost.replaceChildren(
-		generateWPInput(currentWeapon,el)
-	);
+	async function updateWPCost() {
+		const inputElement = await generateWPInput(currentWeapon);
+		el.wpCost.replaceChildren(inputElement);
+	}
+
+	updateWPCost();
 	el.description.replaceChildren(
-    	generateDescription(currentWeapon,el)
+    	generateDescription(currentWeapon,currentWeapon)
   	);
 }

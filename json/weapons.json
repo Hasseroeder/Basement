@@ -1,9 +1,10 @@
 {
     "101": {
+        "objectType":"weapon",
         "id":"101",
         "name":"Great Sword",
         "aliases":["Sword","Gsword"],
-        "stats":[
+        "statConfig":[
             {
                 "min":35,
                 "max":55,
@@ -37,7 +38,7 @@
                 "stats":[{},{}],
                 "passive":[
                     {
-                        "id":"1",
+                        "id":"3",
                         "stats":[{}]
                     }
                 ]
@@ -45,10 +46,11 @@
         }
     },
     "102": {
+        "objectType":"weapon",
         "id":"102",
         "name":"Healing Staff",
         "aliases":["Hstaff","Healstaff"],
-        "stats":[
+        "statConfig":[
             {
                 "min":100,
                 "max":150,
@@ -84,10 +86,11 @@
         }
     },
     "103": {
+        "objectType":"weapon",
         "id":"103",
         "name":"Bow",
         "aliases":[],
-        "stats":[
+        "statConfig":[
             {
                 "min":110,
                 "max":160,
@@ -123,10 +126,11 @@
         }
     },
     "104": {
+        "objectType":"weapon",
         "id":"104",
         "name":"Rune of the Forgotten",
         "aliases":["Rune"],
-        "stats":[
+        "statConfig":[
             {
                 "min":5,
                 "max":15,
@@ -153,10 +157,11 @@
         }
     },
     "105": {
+        "objectType":"weapon",
         "id":"105",
         "name":"Defender's Aegis",
         "aliases":["Shield","Aegis"],
-        "stats":[
+        "statConfig":[
             {
                 "min":30,
                 "max":50,
@@ -192,10 +197,11 @@
         }
     },
     "106": {
+        "objectType":"weapon",
         "id":"106",
         "name":"Orb of Potency",
         "aliases":["Orb"],
-        "stats":[],
+        "statConfig":[],
         "description": "**Description:** This weapon has no active ability, but comes with two passives!",
         "product":{
             "id":"8BAMSV",
@@ -211,10 +217,11 @@
         }
     },
     "107": {
+        "objectType":"weapon",
         "id":"107",
         "name":"Vampiric Staff",
         "aliases":["Vstaff","Vampstaff"],
-        "stats":[
+        "statConfig":[
             {
                 "min":25,
                 "max":45,
@@ -250,10 +257,11 @@
         }
     },
     "108": {
+        "objectType":"weapon",
         "id":"108",
         "name":"Poison Dagger",
         "aliases":["Dagger","Pdag"],
-        "stats":[
+        "statConfig":[
             {
                 "min":70,
                 "max":100,
@@ -299,10 +307,11 @@
         }
     },
     "109": {
+        "objectType":"weapon",
         "id":"109",
         "name":"Wand of Absorption",
         "aliases":["Wand","Awand"],
-        "stats":[
+        "statConfig":[
             {
                 "min":80,
                 "max":100,
@@ -348,10 +357,11 @@
         }
     },
     "110": {
+        "objectType":"weapon",
         "id":"110",
         "name":"Flame Staff",
         "aliases":["Fstaff"],
-        "stats":[
+        "statConfig":[
             {
                 "min":75,
                 "max":95,
@@ -407,10 +417,11 @@
         }
     },
     "111": {
+        "objectType":"weapon",
         "id":"111",
         "name":"Energy Staff",
         "aliases":["Estaff"],
-        "stats":[
+        "statConfig":[
             {
                 "min":35,
                 "max":65,
@@ -446,10 +457,11 @@
         }
     },
     "112": {
+        "objectType":"weapon",
         "id":"112",
         "name":"Spirit Staff",
         "aliases":["Sstaff"],
-        "stats":[
+        "statConfig":[
             {
                 "min":30,
                 "max":50,
@@ -495,10 +507,11 @@
         }
     },
     "113": {
+        "objectType":"weapon",
         "id":"113",
         "name":"Arcane Scepter",
         "aliases":["Scepter","Ascept"],
-        "stats":[
+        "statConfig":[
             {
                 "min":40,
                 "max":70,
@@ -534,10 +547,11 @@
         }
     },
     "114": {
+        "objectType":"weapon",
         "id":"114",
         "name":"Resurrection Staff",
         "aliases":["Rstaff"],
-        "stats":[
+        "statConfig":[
             {
                 "min":50,
                 "max":80,
@@ -573,10 +587,11 @@
         }
     },
     "115": {
+        "objectType":"weapon",
         "id":"115",
         "name":"Glacial Axe",
         "aliases":["Axe","Gaxe"],
-        "stats":[
+        "statConfig":[
             {
                 "min":20,
                 "max":40,
@@ -612,10 +627,11 @@
         }
     },
     "116": {
+        "objectType":"weapon",
         "id":"116",
         "name":"Vanguard's Banner",
         "aliases":["Banner","Vban"],
-        "stats":[
+        "statConfig":[
             {
                 "min":15,
                 "max":25,
@@ -671,10 +687,11 @@
         }
     },
     "117": {
+        "objectType":"weapon",
         "id":"117",
         "name":"Culling Scythe",
         "aliases":["Scythe","Cscythe"],
-        "stats":[
+        "statConfig":[
             {
                 "min":70,
                 "max":100,
@@ -720,10 +737,11 @@
         }
     },
     "118": {
+        "objectType":"weapon",
         "id":"118",
         "name":"Rune of Celebration",
         "aliases":["Crune","Roc"],
-        "stats":[
+        "statConfig":[
             {
                 "min":20,
                 "max":50,
@@ -769,10 +787,11 @@
         }
     },
     "119": {
+        "objectType":"weapon",
         "id":"119",
         "name":"Staff of Purity",
         "aliases":["Pstaff"],
-        "stats":[
+        "statConfig":[
             {
                 "min":50,
                 "max":100,
@@ -818,10 +837,11 @@
         }
     },
     "120": {
+        "objectType":"weapon",
         "id":"120",
         "name":"Leeching Scythe",
         "aliases":["Lscythe"],
-        "stats":[
+        "statConfig":[
             {
                 "min":50,
                 "max":80,
@@ -887,10 +907,11 @@
         }
     },
     "121": {
+        "objectType":"weapon",
         "id":"121",
         "name":"Foul Fish",
         "aliases":["Ffish"],
-        "stats":[
+        "statConfig":[
             {
                 "min":50,
                 "max":80,
@@ -936,10 +957,11 @@
         }
     },
     "122": {
+        "objectType":"weapon",
         "id":"122",
         "name":"Rune of Luck",
         "aliases":["Lrune"],
-        "stats":[
+        "statConfig":[
             {
                 "min":1,
                 "max":40,

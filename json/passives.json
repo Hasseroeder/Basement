@@ -1,8 +1,9 @@
 {
     "1":{
+        "objectType":"passive",
         "name":"Strength",
         "shorthand":"str",
-        "stats":[
+        "statConfig":[
             {
                 "min":5,
                 "max":20,
@@ -16,9 +17,10 @@
         ],
         "description":"**Strength** - Increases your :STR:STR by [stat]"
     },"2":{
+        "objectType":"passive",
         "name":"Magic",
         "shorthand":"mag",
-        "stats":[
+        "statConfig":[
             {
                 "min":5,
                 "max":20,
@@ -32,9 +34,10 @@
         ],
         "description":"**Magic** - Increases your :MAG:MAG by [stat]"
     },"3":{
+        "objectType":"passive",
         "name":"Health Point",
         "shorthand":"hp",
-        "stats":[
+        "statConfig":[
             {
                 "min":5,
                 "max":20,
@@ -48,9 +51,10 @@
         ],
         "description":"**Health Point** - Increases your :HP:HP by [stat]"
     },"4":{
+        "objectType":"passive",
         "name":"Weapon Point",
         "shorthand":"wp",
-        "stats":[
+        "statConfig":[
             {
                 "min":10,
                 "max":30,
@@ -64,9 +68,10 @@
         ],
         "description":"**Weapon Point** - Increases your :WP:WP by [stat]"
     },"5":{
+        "objectType":"passive",
         "name":"Physical Resistance",
         "shorthand":"pr",
-        "stats":[
+        "statConfig":[
             {
                 "min":15,
                 "max":35,
@@ -80,9 +85,10 @@
         ],
         "description":"**Physical Resistance** - Increases your :iPR:iPR by [stat]"
     },"6":{
+        "objectType":"passive",
         "name":"Magical Resistance",
         "shorthand":"mr",
-        "stats":[
+        "statConfig":[
             {
                 "min":15,
                 "max":35,
@@ -96,9 +102,10 @@
         ],
         "description":"**Magical Resistance** - Increases your :iMR:iMR by [stat]"
     },"7":{
+        "objectType":"passive",
         "name":"Lifesteal",
         "shorthand":"ls",
-        "stats":[
+        "statConfig":[
             {
                 "min":15,
                 "max":35,
@@ -112,9 +119,10 @@
         ],
         "description":"**Lifesteal** - All damage you deal heals you for [stat] of the damage dealt!"
     },"8":{
+        "objectType":"passive",
         "name":"Thorns",
         "shorthand":"th",
-        "stats":[
+        "statConfig":[
             {
                 "min":15,
                 "max":35,
@@ -128,9 +136,10 @@
         ],
         "description":"**Thorns** - Reflect [stat] of the damage dealt to you as true damage"
     },"9":{
+        "objectType":"passive",
         "name":"Mana Tap",
         "shorthand":"mtap",
-        "stats":[
+        "statConfig":[
             {
                 "min":15,
                 "max":30,
@@ -144,9 +153,10 @@
         ],
         "description":"**Mana Tap** - All damage you deal replenishes your :WP:WP for [stat] of the damage dealt!"
     },"10":{
+        "objectType":"passive",
         "name":"Absolve",
         "shorthand":"absv",
-        "stats":[
+        "statConfig":[
             {
                 "min":60,
                 "max":80,
@@ -160,9 +170,10 @@
         ],
         "description":"**Absolve** - When healed, deal [stat] of the healed amount to a random enemy as :MAG:MAG damage"
     },"11":{
+        "objectType":"passive",
         "name":"Safeguard",
         "shorthand":"sg",
-        "stats":[
+        "statConfig":[
             {
                 "min":20,
                 "max":40,
@@ -176,9 +187,10 @@
         ],
         "description":"**Safeguard** - Negate [stat] of the damage dealt to you with :WP:WP"
     },"12":{
+        "objectType":"passive",
         "name":"Critical",
         "shorthand":"crit",
-        "stats":[
+        "statConfig":[
             {
                 "min":10,
                 "max":30,
@@ -201,9 +213,10 @@
         ],
         "description":"**Critical** - Every attack has a [stat] chance to deal [stat] more damage. This can apply to heals."
     },"13":{
+        "objectType":"passive",
         "name":"Discharge",
         "shorthand":"dc",
-        "stats":[
+        "statConfig":[
             {
                 "min":100,
                 "max":140,
@@ -217,9 +230,10 @@
         ],
         "description":"**Discharge** - When :WP:WP is replenished, deal [stat] of the replenished amount to a random enemy as :MAG:MAG damage"
     },"14":{
+        "objectType":"passive",
         "name":"Kamikaze",
         "shorthand":"kkaze",
-        "stats":[
+        "statConfig":[
             {
                 "min":50,
                 "max":75,
@@ -233,9 +247,10 @@
         ],
         "description":"**Kamikaze** - When the animal dies, deal [stat] of its max :HP:HP as :MAG:MAG dmg to the attacker"
     },"15":{
+        "objectType":"passive",
         "name":"Regeneration",
         "shorthand":"hgen",
-        "stats":[
+        "statConfig":[
             {
                 "min":5,
                 "max":10,
@@ -249,9 +264,10 @@
         ],
         "description":"**Regeneration** - Heal [stat] of your max :HP:HP after every turn"
     },"16":{
+        "objectType":"passive",
         "name":"Energize",
         "shorthand":"wgen",
-        "stats":[
+        "statConfig":[
             {
                 "min":20,
                 "max":40,
@@ -265,9 +281,10 @@
         ],
         "description":"**Energize** - Replenish [stat] :WP:WP after every turn"
     },"17":{
+        "objectType":"passive",
         "name":"Sprout",
         "shorthand":"sprout",
-        "stats":[
+        "statConfig":[
             {
                 "min":20,
                 "max":40,
@@ -281,9 +298,10 @@
         ],
         "description":"**Sprout** - Increase all incoming healing by [stat]"
     },"18":{
+        "objectType":"passive",
         "name":"Enrage",
         "shorthand":"enrage",
-        "stats":[
+        "statConfig":[
             {
                 "min":1,
                 "max":4,
@@ -297,9 +315,10 @@
         ],
         "description":"**Enrage** - Every 10% of missing health gives [stat] extra damage"
     },"19":{
+        "objectType":"passive",
         "name":"Sacrifice",
         "shorthand":"sac",
-        "stats":[
+        "statConfig":[
             {
                 "min":50,
                 "max":75,
@@ -322,9 +341,10 @@
         ],
         "description":"**Sacrifice** - When this animal dies, heal your teammates for [stat] of its Max :HP:HP and replenish for [stat] of its Max :WP:WP"
     },"20":{
+        "objectType":"passive",
         "name":"Snail",
         "shorthand":"snail",
-        "stats":[
+        "statConfig":[
             {
                 "min":5,
                 "max":15,
@@ -338,9 +358,10 @@
         ],
         "description":"**Snail** - Your pet snail fights with you. Whenever you attack an animal, snail will slap a random enemy for [stat] of the damage dealt."
     },"21":{
+        "objectType":"passive",
         "name":"Knowledge",
         "shorthand":"kno",
-        "stats":[
+        "statConfig":[
             {
                 "min":5,
                 "max":15,

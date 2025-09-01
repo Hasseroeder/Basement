@@ -42,15 +42,16 @@ function syncWear(weapon){
     });
 }
 
-function getStat(keyOrIndex,weapon){
+function getStat(keyOrIndex,stats,statConfig){
+        // chance something in here for passives
     const idx =
         typeof keyOrIndex === 'number'
         ? keyOrIndex
-        : weapon.stats.findIndex(stat => stat.type === keyOrIndex);
+        : statConfig.findIndex(stat => stat.type === keyOrIndex);
 
     return [
-        weapon.product.blueprint.stats[idx]?? undefined, 
-        weapon.stats[idx]?? undefined
+        stats[idx]?? undefined, 
+        statConfig[idx]?? undefined
     ];
 }
 

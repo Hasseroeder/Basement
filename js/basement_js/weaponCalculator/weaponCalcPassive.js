@@ -29,7 +29,8 @@ function displayPassives(container,weapon){
     container.innerHTML="";
 
     if (weapon.product.blueprint.passive.length == 0) appendNoPassiveSpan(container);
-    else appendPassive(container, weapon.product.blueprint.passive[0]);
+    else appendPassive(container,weapon, weapon.product.blueprint.passive[0]);
+    // this is simply hardcoded to use a first passive for now, other stuff doesn't work
 
 }
 
@@ -40,10 +41,10 @@ function appendNoPassiveSpan(container){
     // <span><b>Passives:</b> none</span> 
 }
 
-function appendPassive(container, passive){
+function appendPassive(container,weapon, passive){
     const passiveConfig = passives[passive.id];
     Object.assign(passive, passiveConfig);
     console.log(passive);
 
-    container.append(generateDescription(passive,container));
+    container.append(generateDescription(passive,weapon));
 }

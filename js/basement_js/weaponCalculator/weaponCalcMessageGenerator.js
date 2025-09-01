@@ -3,81 +3,102 @@ import { createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan } 
 import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities } from '../weaponCalculator/weaponCalcUtil.js'
 import { clampNumber,roundToDecimals } from '../util/inputUtil.js';
 
+const el = {
+	weaponHeader:	document.getElementById("weaponHeader"), 
+	weaponName:		document.getElementById("weaponName"),
+	ownerID:		document.getElementById("ownerID"),
+	weaponID:		document.getElementById("weaponID"),
+	shardValue:		document.getElementById("shardValue"),
+	weaponQuality:	document.getElementById("weaponQuality"),
+	weaponImage: 	document.getElementById("weaponImage"),
+	wpCost:			document.getElementById("WP-Cost"),
+	description:	document.getElementById("description")
+}
 
-function generateDescription(weaponOrPassive,el) {
+function generateDescription(weaponOrPassive,weapon) {
     const description = weaponOrPassive.description;
     const wrapper     = document.createElement("div");
-    console.log(weaponOrPassive);
+    const tokenRegex = /(\[stat\]|:[A-Za-z0-9_+]+:|\*\*[^*]+\*\*|\*[^*]+\*|\r?\n)/g;
+    const parts      = description.split(tokenRegex);
 
+    async function renderParts(parts, wrapper) {
+        let statIndex = 0;
+        for (const part of parts) {
+            if (!part) continue;
+
+            if (/^\r?\n$/.test(part)) {
+                wrapper.appendChild(document.createElement("br"));
+                continue;
+            }
+
+            if (part === "[stat]") {
+                const mystat = getStat(
+                    statIndex,
+                    weaponOrPassive.objectType === "passive"
+                    ? weaponOrPassive.stats
+                    : weaponOrPassive.product.blueprint.stats,
+                    weaponOrPassive.statConfig
+                );
+                const statContainer = createWeaponStatInput(...mystat, weaponOrPassive, weapon);
+                statContainer.style.margin = "0 -0.2rem";
+                wrapper.append(statContainer);
+                statIndex++;
+                continue;
+            }if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
+                const key = part.slice(1, -1);
+                const img = await getStatImage(key);
+                const imgWrapper = document.createElement("div");
+                img.style.margin = "0 0 0.17rem 0";
+                imgWrapper.style.display = "inline-block";
+                imgWrapper.append(img);
+                wrapper.append(imgWrapper);
+                continue;
+            }if (/^\*\*([^*]+)\*\*$/.test(part)) {
+                const text = part.slice(2, -2);
+                const span = document.createElement("span");
+                span.style.fontWeight = "bold";
+                span.textContent = text;
+                wrapper.append(span);
+                continue;
+            }if (/^\*([^*]+)\*$/.test(part)) {
+                const text = part.slice(1, -1);
+                const span = document.createElement("span");
+                span.style.fontStyle = "italic";
+                span.textContent = text;
+                wrapper.append(span);
+                continue;
+            }
+            wrapper.append(document.createTextNode(part));
+        }
+    }
+    
     Object.assign(wrapper.style, {
         display:     "inline",
         whiteSpace:  "normal",
         lineHeight:  "1.4rem",
     });
-
-    let statIndex = 0;
-
-    const tokenRegex = /(\[stat\]|:[A-Za-z0-9_+]+:|\*\*[^*]+\*\*|\*[^*]+\*|\r?\n)/g;
-    const parts      = description.split(tokenRegex);
-
-    parts.forEach(part => {
-        if (!part) return;
-        if (/^\r?\n$/.test(part)) {
-            wrapper.appendChild(document.createElement("br"));
-            return;
-        }
-        if (part === "[stat]") {
-            const statContainer = createWeaponStatInput(...getStat(statIndex,weaponOrPassive),weaponOrPassive,el);
-            statContainer.style.margin = "0 -0.2rem";
-            wrapper.append(statContainer);
-            statIndex++;
-            return;
-        }
-        if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
-            const key        = part.slice(1, -1);
-            const img        = getStatImage(key);
-            const imgWrapper = document.createElement("div");
-            img.style.margin       = "0 0 0.17rem 0";
-            imgWrapper.style.display = "inline-block";
-            imgWrapper.append(img);
-            wrapper.append(imgWrapper);
-            return;
-        }
-        if (/^\*\*([^*]+)\*\*$/.test(part)) {
-            const text = part.slice(2, -2);
-            const span = document.createElement("span");
-            span.style.fontWeight = "bold";
-            span.textContent      = text;
-            wrapper.append(span);
-            return;
-        }
-        if (/^\*([^*]+)\*$/.test(part)) {
-            const text = part.slice(1, -1);
-            const span = document.createElement("span");
-            span.style.fontStyle = "italic";
-            span.textContent = text;
-            wrapper.append(span);
-            return;
-        }
-        wrapper.append(document.createTextNode(part));
-    });
+    renderParts(parts, wrapper);
     return wrapper;
 }
 
-function generateWPInput(weapon,el){
+async function generateWPInput(weapon){
     const wrapper = document.createElement("div");	
     wrapper.innerHTML="<strong>WP Cost:</strong>";
-    const WPStat = getStat("WP-Cost",weapon);
-    const WPimage = getStatImage("WP");
-    WPimage.style.margin="0 0 0.05rem -0.2rem";
-    wrapper.append(WPStat[0]? createWeaponStatInput(...WPStat,weapon,el): "\u00A00\u00A0",WPimage);
+    const WPStat = getStat("WP-Cost",weapon.product.blueprint.stats,weapon.statConfig);
+    const WPimage = await getStatImage("WP");
+    WPimage.style.margin="0 0 0.11rem -0.2rem";
+    wrapper.append(WPStat[0]? createWeaponStatInput(...WPStat,weapon,weapon): "\u00A00\u00A0",WPimage);
     return wrapper;
 }
 
-function createWeaponStatInput(productStat,config,weapon,el) {
+function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
+    var wearBonus = weaponOrPassive.objectType == "passive" 
+            ? weaponOrPassive.wearBonus
+            : weaponOrPassive.product.blueprint.wearBonus;
+
     const percentageConfig = {
         get bonus() {
-            return weapon.product.blueprint.wearBonus;
+            return wearBonus;
         },
         get min() {
             return this.bonus;
@@ -93,7 +114,7 @@ function createWeaponStatInput(productStat,config,weapon,el) {
         digits:3
     };
 
-    function enhanceConfig(config, wearBonus) {
+    function enhanceConfig(config) {
         const bonus = (config.range / 100) * wearBonus;
         return {
             ...config,
@@ -102,7 +123,7 @@ function createWeaponStatInput(productStat,config,weapon,el) {
         };
     }
 
-    const wearConfig 		= enhanceConfig(config,weapon.product.blueprint.wearBonus);
+    const wearConfig 		= enhanceConfig(config);
     const initialValue 		= percentToValue(productStat.noWear,wearConfig);
     const outerWrapper		= createStatWrapper("outerInputWrapperFromCalculator");
     const wrapper 			= createStatWrapper("inputWrapperFromCalculator tooltip-lite");
@@ -127,17 +148,17 @@ function createWeaponStatInput(productStat,config,weapon,el) {
 
         syncWear(weapon);
         calculateQualities(weapon);
-        displayInfo(el,weapon);
+        displayInfo(weapon);
     }
     function syncWithClamp(value,element) {
         const clamped = clampNumber(element.min, element.max, value);
         syncAll(clamped);
     }
 
-    [slider, numberInput].forEach(el =>
-        el.addEventListener('input', () => 
+    [slider, numberInput].forEach(input =>
+        input.addEventListener('input', () => 
             syncAll(
-                Number(el.value)
+                Number(input.value)
             )
         )
     );
@@ -168,19 +189,31 @@ function createWeaponStatInput(productStat,config,weapon,el) {
     return outerWrapper;
 }
 
-function getStatImage(inputString){
-	const img = document.createElement("img");
-	img.src = `../media/owo_images/${inputString}.gif`;
-	img.onerror = function () {
-		this.onerror = null; 
-		this.src = `../media/owo_images/${inputString}.png`;
-	};
-	img.alt = `:${inputString}:`;
-	img.ariaLabel = `${inputString}`;
-	img.title = `:${inputString}:`;
-	img.className="discord-embed-emote";
-	img.style="margin: 0 0 -0.01rem -0.2rem;";
-	return img;
+async function getStatImage(inputString) {
+  const gifUrl = `../media/owo_images/${inputString}.gif`;
+  const pngUrl = `../media/owo_images/${inputString}.png`;
+
+  const img = document.createElement('img');
+  if (await fileExists(gifUrl)) {
+    img.src = gifUrl;
+  } else {
+    img.src = pngUrl;
+  }
+  img.alt = `:${inputString}:`;
+  img.ariaLabel = inputString;
+  img.title = `:${inputString}:`;
+  img.className = 'discord-embed-emote';
+  img.style = 'margin: 0 0 -0.01rem -0.2rem;';
+  return img;
+}
+
+async function fileExists(url) {
+  try {
+    const res = await fetch(url, { method: 'HEAD' });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 function getTierEmoji(tier){
@@ -240,7 +273,7 @@ function getWeaponImage(weapon){
     return img;
 }
 
-function displayInfo(el,weapon){
+function displayInfo(weapon){
     const blueprint = weapon.product.blueprint;
 
     el.weaponHeader.textContent=weapon.product.owner.displayName+"'s "+blueprint.wearName+weapon.name;
