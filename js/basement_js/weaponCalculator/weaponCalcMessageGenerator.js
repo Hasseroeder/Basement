@@ -78,9 +78,10 @@ function generateDescription(weaponOrPassive,weapon) {
 async function generateWPInput(weapon){
     const wrapper = document.createElement("div");	
     wrapper.innerHTML="<strong>WP Cost:</strong>";
+    wrapper.style= "display: flex; align-items: center;";
     const WPStat = getStat("WP-Cost",weapon.product.blueprint.stats,weapon.statConfig);
     const WPimage = await getStatImage("WP");
-    WPimage.style.margin="0 0 0.11rem -0.2rem";
+    WPimage.style.margin = "0 0 0 -0.2rem";
     wrapper.append(WPStat[0]? createWeaponStatInput(...WPStat,weapon,weapon): "\u00A00\u00A0",WPimage);
     return wrapper;
 }
