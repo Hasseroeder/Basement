@@ -2,6 +2,7 @@ import { initCustomSelect, selectIndex } from './customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
 import { generateDescription,generateWPInput,displayInfo } from './weaponCalcMessageGenerator.js';
 import { initiatePassiveStuffs, displayPassives } from './weaponCalcPassive.js';
+import { fillMissingWeaponInfo } from './weaponCalcUtil.js'
 
 const el = {
 	weaponHeader:	document.getElementById("weaponHeader"), 
@@ -50,9 +51,11 @@ function wearNameToWearID(inputString){
 async function loadWeaponTypeData(){
 	// from the .json
 	currentWeapon = weapons[currentWeaponID];
-	fillMissingWeaponInfo();		
-	await initiatePassiveStuffs(currentWeapon);										
+	fillMissingWeaponInfo(currentWeapon);		
+	await initiatePassiveStuffs(currentWeapon);				
 	selectIndex(wearNameToWearID(currentWeapon.product.blueprint.wear));
+
+	console.log(currentWeapon);
 }
 
 function wearWasChanged(e){
@@ -85,32 +88,6 @@ function wearWasChanged(e){
 	currentWeapon.product.blueprint.passive.forEach(passive => applyValues(passive));
 	
 	generateNew();
-}
-
-function fillMissingWeaponInfo(){
-	function generateMissingStat(stat){
-		if (!stat.noWear && currentWeaponID == 104){
-			const qualities = [
-				{ quality: 20,  chance: 40},
-				{ quality: 40,  chance: 60},
-				{ quality: 60,  chance: 75},
-				{ quality: 75,  chance: 85},
-				{ quality: 85,  chance: 95},
-				{ quality: 95,  chance: 99},
-				{ quality: 100, chance: 100}
-			];
-			const match = qualities.find(t => Math.floor(Math.random() * 101) <= t.chance);
-			stat.noWear = match.quality;
-			//when we generate a rune stat, it generally shouldn't be at any value
-		}else if (!stat.noWear){
-			stat.noWear=Math.floor(Math.random() * 101);
-		}
-	}
-
-	currentWeapon.product.blueprint.passive.forEach(entry => {
-		entry.stats.forEach(stat => generateMissingStat(stat));
-    });
-	currentWeapon.product.blueprint.stats.forEach(stat => generateMissingStat(stat));
 }
 
 function generateNew(){

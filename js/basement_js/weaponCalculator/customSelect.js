@@ -37,8 +37,8 @@ function onDocPointerDown(e) {
 }
 
 export function selectIndex(index) {
+    if (index == undefined) index = selectedIndex;
     if (index < 0 || index >= options.length) return;
-    // Update selected UI
     options.forEach((opt, i) => {
     opt.setAttribute('aria-selected', String(i === index));
     opt.classList.toggle('highlighted', false);

@@ -123,7 +123,7 @@ async function getStatImage(inputString) {
 async function fileExists(url) {
     try {
         const res = await fetch(url, { method: 'HEAD' });
-        return res.ok;
+        return (res.ok && !response.headers.get("Content-Type")?.includes("text/html"));
     } catch {
         return false;
     }
@@ -166,4 +166,30 @@ function getWeaponImagePath(weaponOrPassive){
     return path;
 }
 
-export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath};
+function fillMissingWeaponInfo(weapon){
+	function generateMissingStat(stat){
+		if (!stat.noWear && weapon.id == 104){
+			const qualities = [
+				{ quality: 20,  chance: 40},
+				{ quality: 40,  chance: 60},
+				{ quality: 60,  chance: 75},
+				{ quality: 75,  chance: 85},
+				{ quality: 85,  chance: 95},
+				{ quality: 95,  chance: 99},
+				{ quality: 100, chance: 100}
+			];
+			const match = qualities.find(t => Math.floor(Math.random() * 101) <= t.chance);
+			stat.noWear = match.quality;
+			//when we generate a rune stat, it generally shouldn't be at any value
+		}else if (!stat.noWear){
+			stat.noWear=Math.floor(Math.random() * 101);
+		}
+	}
+
+	weapon.product.blueprint.passive.forEach(entry => {
+		entry.stats.forEach(stat => generateMissingStat(stat));
+    });
+	weapon.product.blueprint.stats.forEach(stat => generateMissingStat(stat));
+}
+
+export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo};

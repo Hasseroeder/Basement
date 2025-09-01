@@ -38,8 +38,8 @@
                 "stats":[{},{}],
                 "passive":[
                     {
-                        "id":"3",
-                        "stats":[{}]
+                        "id":"19",
+                        "stats":[{},{}]
                     }
                 ]
             }
@@ -79,7 +79,7 @@
                 "displayName":"Heather"
             },
             "blueprint":{
-                "wear":"worn",
+                "wear":"pristine",
                 "stats":[{},{}],
                 "passive":[]
             }

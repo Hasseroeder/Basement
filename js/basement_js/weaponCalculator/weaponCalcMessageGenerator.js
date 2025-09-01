@@ -86,6 +86,7 @@ async function generateWPInput(weapon){
 }
 
 function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
+
     const wearBonus = weaponOrPassive.objectType == "passive" 
             ? weaponOrPassive.wearBonus
             : weaponOrPassive.product.blueprint.wearBonus;
@@ -204,7 +205,9 @@ function getTierEmojiPath(stringOrQuality){
 		legendary:	"../media/owo_images/legendary.gif",
 		fabled: 	"../media/owo_images/fabled.gif"
 	};
-	if (typeof stringOrQuality === "string"){
+	if (stringOrQuality == undefined){
+        return paths["fabled"];
+    }else if (typeof stringOrQuality === "string"){
 		return paths[stringOrQuality];
 	}else if(typeof stringOrQuality === "number"){
 		return paths[getRarity(stringOrQuality)];
