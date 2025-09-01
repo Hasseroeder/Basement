@@ -28,7 +28,6 @@ async function initWeaponCalc(){
 	initiateFirstID();
 	weapons = await loadJson("../json/weapons.json");
 	loadWeaponTypeData();
-	initiatePassiveStuffs(currentWeapon);
 }
 
 function initiateFirstID(){
@@ -46,14 +45,14 @@ function wearNameToWearID(inputString){
 		worn:     0,
 	};
 	return wearValues[inputString] || 0;
-
 }
 
-function loadWeaponTypeData(){
+async function loadWeaponTypeData(){
 	// from the .json
 	currentWeapon = weapons[currentWeaponID];
-	fillMissingWeaponInfo();												//fills weapon on init
-	selectIndex(wearNameToWearID(currentWeapon.product.blueprint.wear));	//displays actual wear in outside on init
+	fillMissingWeaponInfo();		
+	await initiatePassiveStuffs(currentWeapon);										
+	selectIndex(wearNameToWearID(currentWeapon.product.blueprint.wear));
 }
 
 function wearWasChanged(e){

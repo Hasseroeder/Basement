@@ -1,6 +1,6 @@
 import { numberFixedString } from '../util/stringUtil.js';
 import { createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan } from '../weaponCalculator/weaponCalcElementHelper.js'
-import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage } from '../weaponCalculator/weaponCalcUtil.js'
+import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath } from '../weaponCalculator/weaponCalcUtil.js'
 import { clampNumber,roundToDecimals } from '../util/inputUtil.js';
 
 const el = {
@@ -43,7 +43,6 @@ function generateDescription(weaponOrPassive,weapon) {
                 const key = part.slice(1, -1);
                 const img = await getStatImage(key);
                 const imgWrapper = document.createElement("div");
-                img.style.margin = "0 0 0.17rem 0";
                 imgWrapper.style.display = "inline-block";
                 imgWrapper.append(img);
                 wrapper.append(imgWrapper);
@@ -87,7 +86,7 @@ async function generateWPInput(weapon){
 }
 
 function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
-    var wearBonus = weaponOrPassive.objectType == "passive" 
+    const wearBonus = weaponOrPassive.objectType == "passive" 
             ? weaponOrPassive.wearBonus
             : weaponOrPassive.product.blueprint.wearBonus;
 
@@ -144,36 +143,31 @@ function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
         syncWear(weapon);
         calculateQualities(weapon);
         displayInfo(weapon);
+        changePassiveEmote(weaponOrPassive);
     }
     function syncWithClamp(value,element) {
         const clamped = clampNumber(element.min, element.max, value);
         syncAll(clamped);
     }
 
-    [slider, numberInput].forEach(input =>
-        input.addEventListener('input', () => 
-            syncAll(
-                Number(input.value)
-            )
-        )
-    );
-    qualityInput.addEventListener('input', () => {
-        syncAll(
-            percentToValue(Number(qualityInput.value),config)
-        );
-    });
-    numberInput.addEventListener('change', () =>
-        syncWithClamp(
-            Number(numberInput.value),
-            numberInput
-        )
-    );
-    qualityInput.addEventListener('change', () => {
-        syncWithClamp(
-            percentToValue(Number(qualityInput.value),config),
-            numberInput
-        );
-    });
+    const handlers = {
+        input: {
+            value: e => syncAll(Number(e.target.value)),
+            quality: e => syncAll(percentToValue(Number(e.target.value), config))
+        },
+        change: {
+            value: e => syncWithClamp(Number(e.target.value), e.target),
+            quality: e => {
+                const val = percentToValue(Number(e.target.value), config);
+                syncWithClamp(val, numberInput);
+            }
+        }
+    };
+    slider.addEventListener('input', handlers.input.value);
+    numberInput.addEventListener('input', handlers.input.value);
+    qualityInput.addEventListener('input', handlers.input.quality);
+    numberInput.addEventListener('change', handlers.change.value);
+    qualityInput.addEventListener('change', handlers.change.quality);
 
     wrapper.append(
         numberInput, 
@@ -182,6 +176,11 @@ function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
     outerWrapper.append(wrapper);
     syncAll(roundToDecimals(initialValue,6));
     return outerWrapper;
+}
+
+function changePassiveEmote(passive){
+    if (!passive.objectType == "passive") return;
+    passive.image.src= getWeaponImagePath(passive);
 }
 
 function getTierEmoji(tier){

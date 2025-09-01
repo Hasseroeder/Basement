@@ -116,7 +116,7 @@ async function getStatImage(inputString) {
     img.ariaLabel = inputString;
     img.title = `:${inputString}:`;
     img.className = 'discord-embed-emote';
-    img.style = 'margin: 0 0 -0.01rem -0.2rem;';
+    img.style.margin = "0 0 0.17rem 0";
     return img;
 }
 
@@ -129,12 +129,21 @@ async function fileExists(url) {
     }
 }
 
-
 function getWeaponImage(weaponOrPassive){
-    function getWeaponShorthand(){
-        const shorthand = weaponOrPassive.aliases[0]? weaponOrPassive.aliases[0]: weaponOrPassive.name;
-        return shorthand.toLowerCase();
-    }
+    const shorthand = weaponOrPassive.aliases[0]? weaponOrPassive.aliases[0]: weaponOrPassive.name;
+    const img = document.createElement("img");
+    img.src = getWeaponImagePath(weaponOrPassive);
+    img.ariaLabel= shorthand.toLowerCase();
+    img.alt=":"+shorthand.toLowerCase()+":";
+    img.style.borderRadius="0.2rem";
+    img.draggable=false;
+    img.className="discord-pet-display";
+
+    return img;
+}
+
+function getWeaponImagePath(weaponOrPassive){
+    const shorthand = weaponOrPassive.aliases[0]? weaponOrPassive.aliases[0]: weaponOrPassive.name;
     const letters = {
         common: 	"c",
         uncommon:   "u",
@@ -144,20 +153,17 @@ function getWeaponImage(weaponOrPassive){
         legendary:	"l",
         fabled: 	"f"
     };
-    const blueprint = weaponOrPassive.product.blueprint;
+    const blueprint = weaponOrPassive.objectType == "passive" 
+        ? weaponOrPassive
+        : weaponOrPassive.product.blueprint;
 
-    const img = document.createElement("img");
-    const p = blueprint.wearBonus==0?"":"p";
+    const p = (blueprint.wearBonus == 0 || weaponOrPassive.objectType == "passive")
+            ? ""
+            : "p";
     const q = letters[blueprint.tier] || "f";
-    const w = getWeaponShorthand();
-    img.src = `media/owo_images/${p+q+"_"+w}.png`;
-    img.ariaLabel= getWeaponShorthand();
-    img.alt=":"+getWeaponShorthand()+":";
-    img.style.borderRadius="0.2rem";
-    img.draggable=false;
-    img.className="discord-pet-display";
-
-    return img;
+    const w = shorthand.toLowerCase();
+    const path = `media/owo_images/${p+q+"_"+w}.png`;
+    return path;
 }
 
-export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage};
+export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath};

@@ -1,5 +1,6 @@
 import { loadJson } from '../util/jsonUtil.js';
 import { generateDescription }  from '../weaponCalculator/weaponCalcMessageGenerator.js'
+import { getWeaponImage } from './weaponCalcUtil.js';
 
 var passives;
 
@@ -43,13 +44,15 @@ function appendNoPassiveSpan(container){
 
 function appendPassive(container,weapon, passive){
     const wrapper = document.createElement("div");
-    wrapper.style.display="flex";
-
-    //const image
-
-
+    wrapper.style="display:flex; align-items: center; gap: 0.1rem;";
     const passiveConfig = passives[passive.id];
     Object.assign(passive, passiveConfig);
 
-    container.append(generateDescription(passive,weapon));
+    const image = getWeaponImage(passive);
+    image.className = 'discord-embed-emote';
+    image.style.margin = "0 0 0.05rem 0";
+    passive.image = image;
+
+    wrapper.append(image,generateDescription(passive,weapon))
+    container.append(wrapper);
 }
