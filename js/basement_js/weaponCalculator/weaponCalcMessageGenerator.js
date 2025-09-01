@@ -24,14 +24,10 @@ function generateDescription(weaponOrPassive,weapon) {
     async function renderParts(parts, wrapper) {
         let statIndex = 0;
         for (const part of parts) {
-            if (!part) continue;
-
             if (/^\r?\n$/.test(part)) {
                 wrapper.appendChild(document.createElement("br"));
                 continue;
-            }
-
-            if (part === "[stat]") {
+            }if (part === "[stat]") {
                 const mystat = getStat(
                     statIndex,
                     weaponOrPassive.objectType === "passive"
@@ -71,7 +67,7 @@ function generateDescription(weaponOrPassive,weapon) {
             wrapper.append(document.createTextNode(part));
         }
     }
-    
+
     Object.assign(wrapper.style, {
         display:     "inline",
         whiteSpace:  "normal",
