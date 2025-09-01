@@ -2,7 +2,7 @@
     "1":{
         "objectType":"passive",
         "name":"Strength",
-        "shorthand":"str",
+        "aliases":["str"],
         "statConfig":[
             {
                 "min":5,
@@ -19,7 +19,7 @@
     },"2":{
         "objectType":"passive",
         "name":"Magic",
-        "shorthand":"mag",
+        "aliases":["mag"],
         "statConfig":[
             {
                 "min":5,
@@ -36,7 +36,7 @@
     },"3":{
         "objectType":"passive",
         "name":"Health Point",
-        "shorthand":"hp",
+        "aliases":["hp"],
         "statConfig":[
             {
                 "min":5,
@@ -53,7 +53,7 @@
     },"4":{
         "objectType":"passive",
         "name":"Weapon Point",
-        "shorthand":"wp",
+        "aliases":["wp"],
         "statConfig":[
             {
                 "min":10,
@@ -70,7 +70,7 @@
     },"5":{
         "objectType":"passive",
         "name":"Physical Resistance",
-        "shorthand":"pr",
+        "aliases":["pr"],
         "statConfig":[
             {
                 "min":15,
@@ -87,7 +87,7 @@
     },"6":{
         "objectType":"passive",
         "name":"Magical Resistance",
-        "shorthand":"mr",
+        "aliases":["mr"],
         "statConfig":[
             {
                 "min":15,
@@ -104,7 +104,7 @@
     },"7":{
         "objectType":"passive",
         "name":"Lifesteal",
-        "shorthand":"ls",
+        "aliases":["ls"],
         "statConfig":[
             {
                 "min":15,
@@ -121,7 +121,7 @@
     },"8":{
         "objectType":"passive",
         "name":"Thorns",
-        "shorthand":"th",
+        "aliases":["th"],
         "statConfig":[
             {
                 "min":15,
@@ -138,7 +138,7 @@
     },"9":{
         "objectType":"passive",
         "name":"Mana Tap",
-        "shorthand":"mtap",
+        "aliases":["mtap"],
         "statConfig":[
             {
                 "min":15,
@@ -155,7 +155,7 @@
     },"10":{
         "objectType":"passive",
         "name":"Absolve",
-        "shorthand":"absv",
+        "aliases":["absv"],
         "statConfig":[
             {
                 "min":60,
@@ -172,7 +172,7 @@
     },"11":{
         "objectType":"passive",
         "name":"Safeguard",
-        "shorthand":"sg",
+        "aliases":["sg"],
         "statConfig":[
             {
                 "min":20,
@@ -189,7 +189,7 @@
     },"12":{
         "objectType":"passive",
         "name":"Critical",
-        "shorthand":"crit",
+        "aliases":["crit"],
         "statConfig":[
             {
                 "min":10,
@@ -215,7 +215,7 @@
     },"13":{
         "objectType":"passive",
         "name":"Discharge",
-        "shorthand":"dc",
+        "aliases":["dc"],
         "statConfig":[
             {
                 "min":100,
@@ -232,7 +232,7 @@
     },"14":{
         "objectType":"passive",
         "name":"Kamikaze",
-        "shorthand":"kkaze",
+        "aliases":["kkaze"],
         "statConfig":[
             {
                 "min":50,
@@ -249,7 +249,7 @@
     },"15":{
         "objectType":"passive",
         "name":"Regeneration",
-        "shorthand":"hgen",
+        "aliases":["hgen"],
         "statConfig":[
             {
                 "min":5,
@@ -266,7 +266,7 @@
     },"16":{
         "objectType":"passive",
         "name":"Energize",
-        "shorthand":"wgen",
+        "aliases":["wgen"],
         "statConfig":[
             {
                 "min":20,
@@ -283,7 +283,7 @@
     },"17":{
         "objectType":"passive",
         "name":"Sprout",
-        "shorthand":"sprout",
+        "aliases":["sprout"],
         "statConfig":[
             {
                 "min":20,
@@ -300,7 +300,7 @@
     },"18":{
         "objectType":"passive",
         "name":"Enrage",
-        "shorthand":"enrage",
+        "aliases":["enrage"],
         "statConfig":[
             {
                 "min":1,
@@ -317,7 +317,7 @@
     },"19":{
         "objectType":"passive",
         "name":"Sacrifice",
-        "shorthand":"sac",
+        "aliases":["sac"],
         "statConfig":[
             {
                 "min":50,
@@ -343,7 +343,7 @@
     },"20":{
         "objectType":"passive",
         "name":"Snail",
-        "shorthand":"snail",
+        "aliases":["snail"],
         "statConfig":[
             {
                 "min":5,
@@ -360,7 +360,7 @@
     },"21":{
         "objectType":"passive",
         "name":"Knowledge",
-        "shorthand":"kno",
+        "aliases":["kno"],
         "statConfig":[
             {
                 "min":5,

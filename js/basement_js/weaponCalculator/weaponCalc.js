@@ -1,7 +1,7 @@
 import { initCustomSelect, selectIndex } from './customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
 import { generateDescription,generateWPInput,displayInfo } from './weaponCalcMessageGenerator.js';
-import { initiatePassiveStuffs } from './weaponCalcPassive.js';
+import { initiatePassiveStuffs, displayPassives } from './weaponCalcPassive.js';
 
 const el = {
 	weaponHeader:	document.getElementById("weaponHeader"), 
@@ -117,6 +117,7 @@ function fillMissingWeaponInfo(){
 function generateNew(){
 	generateStatInputs();
 	displayInfo(currentWeapon);
+	displayPassives(currentWeapon);
 }
 
 function generateStatInputs(){

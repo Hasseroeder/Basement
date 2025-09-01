@@ -11,27 +11,27 @@ export async function initiatePassiveStuffs(weapon){
     Object.entries(passives).forEach(([id, passive]) => {
         const img = document.createElement('img');
         img.className = 'passiveGridImage';
-        img.src = `media/owo_images/f_${passive.shorthand}.png`;
+        img.src = `media/owo_images/f_${passive.aliases[0]}.png`;
         img.dataset.passiveId = id;
-        img.alt = passive.shorthand;
-        img.title = passive.shorthand;
+        img.alt = passive.aliases[0];
+        img.title = passive.aliases[0];
         img.addEventListener('click', () => {
             // something in here
         });
         gridContainer.appendChild(img);
     });
 
-    displayPassives(listContainer, weapon);
+    displayPassives(weapon);
     //console.log(weapon);
 }
 
-function displayPassives(container,weapon){
-    container.innerHTML="";
+export function displayPassives(weapon){
+    const listContainer = document.querySelector('.passiveContainer');
+    listContainer.innerHTML="";
 
-    if (weapon.product.blueprint.passive.length == 0) appendNoPassiveSpan(container);
-    else appendPassive(container,weapon, weapon.product.blueprint.passive[0]);
+    if (weapon.product.blueprint.passive.length == 0) appendNoPassiveSpan(listContainer);
+    else appendPassive(listContainer,weapon, weapon.product.blueprint.passive[0]);
     // this is simply hardcoded to use a first passive for now, other stuff doesn't work
-
 }
 
 function appendNoPassiveSpan(container){
@@ -42,9 +42,14 @@ function appendNoPassiveSpan(container){
 }
 
 function appendPassive(container,weapon, passive){
+    const wrapper = document.createElement("div");
+    wrapper.style.display="flex";
+
+    //const image
+
+
     const passiveConfig = passives[passive.id];
     Object.assign(passive, passiveConfig);
-    console.log(passive);
 
     container.append(generateDescription(passive,weapon));
 }

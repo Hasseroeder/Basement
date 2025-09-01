@@ -43,7 +43,6 @@ function syncWear(weapon){
 }
 
 function getStat(keyOrIndex,stats,statConfig){
-        // chance something in here for passives
     const idx =
         typeof keyOrIndex === 'number'
         ? keyOrIndex
@@ -102,4 +101,63 @@ const valueToPercent =
 	(value, { min, range}) =>
 	Math.round(100 * (value - min) / range);
 
-export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities};
+
+async function getStatImage(inputString) {
+    const gifUrl = `../media/owo_images/${inputString}.gif`;
+    const pngUrl = `../media/owo_images/${inputString}.png`;
+
+    const img = document.createElement('img');
+    if (await fileExists(gifUrl)) {
+        img.src = gifUrl;
+    } else {
+        img.src = pngUrl;
+    }
+    img.alt = `:${inputString}:`;
+    img.ariaLabel = inputString;
+    img.title = `:${inputString}:`;
+    img.className = 'discord-embed-emote';
+    img.style = 'margin: 0 0 -0.01rem -0.2rem;';
+    return img;
+}
+
+async function fileExists(url) {
+    try {
+        const res = await fetch(url, { method: 'HEAD' });
+        return res.ok;
+    } catch {
+        return false;
+    }
+}
+
+
+function getWeaponImage(weaponOrPassive){
+    function getWeaponShorthand(){
+        const shorthand = weaponOrPassive.aliases[0]? weaponOrPassive.aliases[0]: weaponOrPassive.name;
+        return shorthand.toLowerCase();
+    }
+    const letters = {
+        common: 	"c",
+        uncommon:   "u",
+        rare:   	"r",
+        epic:     	"e",
+        mythic:  	"m",
+        legendary:	"l",
+        fabled: 	"f"
+    };
+    const blueprint = weaponOrPassive.product.blueprint;
+
+    const img = document.createElement("img");
+    const p = blueprint.wearBonus==0?"":"p";
+    const q = letters[blueprint.tier] || "f";
+    const w = getWeaponShorthand();
+    img.src = `media/owo_images/${p+q+"_"+w}.png`;
+    img.ariaLabel= getWeaponShorthand();
+    img.alt=":"+getWeaponShorthand()+":";
+    img.style.borderRadius="0.2rem";
+    img.draggable=false;
+    img.className="discord-pet-display";
+
+    return img;
+}
+
+export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage};

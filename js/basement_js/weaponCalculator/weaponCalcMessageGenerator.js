@@ -1,6 +1,6 @@
 import { numberFixedString } from '../util/stringUtil.js';
 import { createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan } from '../weaponCalculator/weaponCalcElementHelper.js'
-import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities } from '../weaponCalculator/weaponCalcUtil.js'
+import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage } from '../weaponCalculator/weaponCalcUtil.js'
 import { clampNumber,roundToDecimals } from '../util/inputUtil.js';
 
 const el = {
@@ -16,10 +16,9 @@ const el = {
 }
 
 function generateDescription(weaponOrPassive,weapon) {
-    const description = weaponOrPassive.description;
-    const wrapper     = document.createElement("div");
+    const wrapper    = document.createElement("div");
     const tokenRegex = /(\[stat\]|:[A-Za-z0-9_+]+:|\*\*[^*]+\*\*|\*[^*]+\*|\r?\n)/g;
-    const parts      = description.split(tokenRegex);
+    const parts      = weaponOrPassive.description.split(tokenRegex);
 
     async function renderParts(parts, wrapper) {
         let statIndex = 0;
@@ -31,8 +30,8 @@ function generateDescription(weaponOrPassive,weapon) {
                 const mystat = getStat(
                     statIndex,
                     weaponOrPassive.objectType === "passive"
-                    ? weaponOrPassive.stats
-                    : weaponOrPassive.product.blueprint.stats,
+                        ? weaponOrPassive.stats
+                        : weaponOrPassive.product.blueprint.stats,
                     weaponOrPassive.statConfig
                 );
                 const statContainer = createWeaponStatInput(...mystat, weaponOrPassive, weapon);
@@ -185,33 +184,6 @@ function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
     return outerWrapper;
 }
 
-async function getStatImage(inputString) {
-  const gifUrl = `../media/owo_images/${inputString}.gif`;
-  const pngUrl = `../media/owo_images/${inputString}.png`;
-
-  const img = document.createElement('img');
-  if (await fileExists(gifUrl)) {
-    img.src = gifUrl;
-  } else {
-    img.src = pngUrl;
-  }
-  img.alt = `:${inputString}:`;
-  img.ariaLabel = inputString;
-  img.title = `:${inputString}:`;
-  img.className = 'discord-embed-emote';
-  img.style = 'margin: 0 0 -0.01rem -0.2rem;';
-  return img;
-}
-
-async function fileExists(url) {
-  try {
-    const res = await fetch(url, { method: 'HEAD' });
-    return res.ok;
-  } catch {
-    return false;
-  }
-}
-
 function getTierEmoji(tier){
 	const img = document.createElement("img");
 	img.src = getTierEmojiPath(tier);
@@ -237,36 +209,6 @@ function getTierEmojiPath(stringOrQuality){
 	}else if(typeof stringOrQuality === "number"){
 		return paths[getRarity(stringOrQuality)];
 	}
-}
-
-function getWeaponImage(weapon){
-    function getWeaponShorthand(){
-        const shorthand = weapon.aliases[0]? weapon.aliases[0]: weapon.name;
-        return shorthand.toLowerCase();
-    }
-    const letters = {
-        common: 	"c",
-        uncommon:   "u",
-        rare:   	"r",
-        epic:     	"e",
-        mythic:  	"m",
-        legendary:	"l",
-        fabled: 	"f"
-    };
-    const blueprint = weapon.product.blueprint;
-
-    const img = document.createElement("img");
-    const p = blueprint.wearBonus==0?"":"p";
-    const q = letters[blueprint.tier] || "f";
-    const w = getWeaponShorthand();
-    img.src = `media/owo_images/${p+q+"_"+w}.png`;
-    img.ariaLabel= getWeaponShorthand();
-    img.alt=":"+getWeaponShorthand()+":";
-    img.style.borderRadius="0.2rem";
-    img.draggable=false;
-    img.className="discord-pet-display";
-
-    return img;
 }
 
 function displayInfo(weapon){
