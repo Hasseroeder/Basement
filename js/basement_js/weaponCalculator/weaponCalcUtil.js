@@ -111,8 +111,7 @@ async function getStatImage(inputString) {
     img.alt = `:${inputString}:`;
     img.ariaLabel = inputString;
     img.title = `:${inputString}:`;
-    img.className = 'discord-embed-emote';
-    img.style.margin = "0 0 0.13rem 0";
+    img.className = 'discord-embed-emote zeroZeroZeroThirteenMargin';
     return img;
 }
 
