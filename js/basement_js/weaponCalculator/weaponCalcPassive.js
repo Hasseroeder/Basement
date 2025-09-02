@@ -29,23 +29,22 @@ export async function initiatePassiveStuffs(weapon){
         });
         gridContainer.appendChild(img);
     });
-    //displayPassives(weapon);
-    //console.log(weapon);
 }
 
-export function displayPassives(weapon){
-    const listContainer = document.querySelector('.passiveContainer');
-    listContainer.innerHTML="";
+export function displayPassives(weapon) {
+    const listContainer = document.querySelector(".passiveContainer");
+    const fragment = document.createDocumentFragment();
 
-    if (weapon.product.blueprint.passive.length == 0) appendNoPassiveSpan(listContainer);
-    else {
-        for (var i = 0; i< weapon.product.blueprint.passive.length; i++){
-            appendPassive(listContainer,weapon, weapon.product.blueprint.passive[i]);
+    if (weapon.product.blueprint.passive.length === 0) {
+        appendNoPassiveSpan(fragment);
+    } else {
+        weapon.product.blueprint.passive.forEach(passive =>
+        appendPassive(fragment, weapon, passive)
+        );
+    }
 
-        }
-    } 
-    // this is simply hardcoded to use a first passive for now, other stuff doesn't work
-
+    listContainer.innerHTML = "";
+    listContainer.appendChild(fragment);
 }
 
 function appendNoPassiveSpan(container){

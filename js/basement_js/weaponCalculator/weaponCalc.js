@@ -101,9 +101,10 @@ function generateStatInputs(){
 		const inputElement = await generateWPInput(currentWeapon);
 		el.wpCost.replaceChildren(inputElement);
 	}
+	function updateDescription(){
+		el.description.replaceChildren(generateDescription(currentWeapon,currentWeapon));
+	}
 
 	updateWPCost();
-	el.description.replaceChildren(
-    	generateDescription(currentWeapon,currentWeapon)
-  	);
+	updateDescription();
 }

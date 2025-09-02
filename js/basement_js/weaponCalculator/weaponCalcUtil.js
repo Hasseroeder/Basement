@@ -107,11 +107,7 @@ async function getStatImage(inputString) {
     const pngUrl = `../media/owo_images/${inputString}.png`;
 
     const img = document.createElement('img');
-    if (await fileExists(gifUrl)) {
-        img.src = gifUrl;
-    } else {
-        img.src = pngUrl;
-    }
+    img.src = (await fileExists(gifUrl)) ? gifUrl : pngUrl;
     img.alt = `:${inputString}:`;
     img.ariaLabel = inputString;
     img.title = `:${inputString}:`;
