@@ -18,22 +18,17 @@ export async function initiatePassiveStuffs(weapon){
         img.alt = passive.aliases[0];
         img.title = passive.aliases[0];
         img.addEventListener('click', () => {
-            //{
-            //  "id":"19",
-            //  "stats":[{},{}]
-            //}
+            const statCount = passives[id].statConfig.length;
             const newPassive = {
                 id: id,
-                stats: [{}]
+                stats: Array.from({ length: statCount }, () => ({}))
             }
             weapon.product.blueprint.passive.push(newPassive);
-            console.log(weapon);
             fillMissingWeaponInfo(weapon);		
             selectIndex();
         });
         gridContainer.appendChild(img);
     });
-
     //displayPassives(weapon);
     //console.log(weapon);
 }
@@ -62,13 +57,13 @@ function appendNoPassiveSpan(container){
 
 function appendPassive(container,weapon, passive){
     const wrapper = document.createElement("div");
-    wrapper.style="display:flex; gap: 0.1rem;";
+    wrapper.style="display:inline;";
     const passiveConfig = passives[passive.id];
     Object.assign(passive, passiveConfig);
 
     const image = getWeaponImage(passive);
     image.className = 'discord-embed-emote';
-    image.style.margin = "0.11rem 0 0 0";
+    image.style.margin = "0 0.1rem 0.15rem 0";
     passive.image = image;
 
     wrapper.append(image,generateDescription(passive,weapon))
