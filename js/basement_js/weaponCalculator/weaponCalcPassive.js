@@ -39,7 +39,7 @@ export function displayPassives(weapon) {
         appendNoPassiveSpan(fragment);
     } else {
         weapon.product.blueprint.passive.forEach(passive =>
-        appendPassive(fragment, weapon, passive)
+            appendPassive(fragment, weapon, passive)
         );
     }
 
