@@ -25,8 +25,7 @@ function generateDescription(weaponOrPassive,weapon) {
         for (const part of parts) {
             if (/^\r?\n$/.test(part)) {
                 wrapper.appendChild(document.createElement("br"));
-                continue;
-            }if (part === "[stat]") {
+            }else if (part === "[stat]") {
                 const mystat = getStat(
                     statIndex,
                     weaponOrPassive.objectType === "passive"
@@ -34,35 +33,32 @@ function generateDescription(weaponOrPassive,weapon) {
                         : weaponOrPassive.product.blueprint.stats,
                     weaponOrPassive.statConfig
                 );
-                const statContainer = new WeaponStat(...mystat, weaponOrPassive, weapon)
-                statContainer.style.margin = "0 -0.2rem";
-                wrapper.append(statContainer);
+                mystat.IO = new WeaponStat(...mystat, weaponOrPassive, weapon)
+                mystat.IO.style.margin = "0 -0.2rem";
+                wrapper.append(mystat.IO);
                 statIndex++;
-                continue;
-            }if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
+            }else if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
                 const key = part.slice(1, -1);
                 const img = await getStatImage(key);
                 const imgWrapper = document.createElement("div");
                 imgWrapper.style.display = "inline-block";
                 imgWrapper.append(img);
                 wrapper.append(imgWrapper);
-                continue;
-            }if (/^\*\*([^*]+)\*\*$/.test(part)) {
+            }else if (/^\*\*([^*]+)\*\*$/.test(part)) {
                 const text = part.slice(2, -2);
                 const span = document.createElement("span");
                 span.style.fontWeight = "bold";
                 span.textContent = text;
                 wrapper.append(span);
-                continue;
-            }if (/^\*([^*]+)\*$/.test(part)) {
+            }else if (/^\*([^*]+)\*$/.test(part)) {
                 const text = part.slice(1, -1);
                 const span = document.createElement("span");
                 span.style.fontStyle = "italic";
                 span.textContent = text;
                 wrapper.append(span);
-                continue;
+            }else{
+                wrapper.append(document.createTextNode(part));
             }
-            wrapper.append(document.createTextNode(part));
         }
     }
 
@@ -80,103 +76,16 @@ async function generateWPInput(weapon){
     wrapper.innerHTML="<strong>WP Cost:</strong>";
     wrapper.style= "display: flex; align-items: center;";
     const WPStat = getStat("WP-Cost",weapon.product.blueprint.stats,weapon.statConfig);
+    if (WPStat[0]){
+        WPStat.IO= new WeaponStat(...WPStat, weapon, weapon)
+        wrapper.append(WPStat.IO);
+    }else{
+        wrapper.append("\u00A0"+"0"+"\u00A0");
+    }
     const WPimage = await getStatImage("WP");
     WPimage.style.margin = "0 0 0 -0.2rem";
-    wrapper.append(WPStat[0]? new WeaponStat(...WPStat, weapon, weapon): "\u00A00\u00A0",WPimage);
+    wrapper.append(WPimage);
     return wrapper;
-}
-
-function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
-    const wearBonus = weaponOrPassive.objectType == "passive" 
-            ? weaponOrPassive.wearBonus
-            : weaponOrPassive.product.blueprint.wearBonus;
-
-    const percentageConfig = {
-        get bonus() {
-            return wearBonus;
-        },
-        get min() {
-            return this.bonus;
-        },
-        get max() {
-            return 100 + this.bonus;
-        },
-        get range() {
-            return this.max - this.min;
-        },
-        step: 1,
-        unit: "%",
-        digits:3
-    };
-
-    function enhanceConfig(config) {
-        const bonus = (config.range / 100) * wearBonus;
-        return {
-            ...config,
-            min: config.min + bonus,
-            max: config.max + bonus
-        };
-    }
-
-    const wearConfig 		= enhanceConfig(config);
-    const initialValue 		= percentToValue(productStat.noWear,wearConfig);
-    const outerWrapper		= createStatWrapper("outerInputWrapperFromCalculator");
-    const wrapper 			= createStatWrapper("inputWrapperFromCalculator tooltip-lite");
-    const numberInput 		= createRangedInput('number', wearConfig);
-    const numberLabel 		= createUnitSpan(wearConfig.unit);
-    const img 				= getTierEmoji(getRarity(productStat.withWear));
-    const qualityInput 		= createRangedInput('number', percentageConfig,true);
-    const qualityLabel 		= createUnitSpan(percentageConfig.unit);
-    const slider 			= createRangedInput('range',  wearConfig);
-    const tooltipChildren 	= [img, qualityInput, qualityLabel, slider];
-    const tooltip         	= createStatTooltip(tooltipChildren);
-
-    function syncAll(value) {
-        // this is also called when wear changes and such, it should always be called when any stat changes in any way
-        numberInput.value  = value;
-        slider.value       = value;
-        const pct = valueToPercent(value, config);
-        const noWearPtc = valueToPercent(value, wearConfig);
-        qualityInput.value = pct;
-        img.src = getTierEmojiPath(pct);
-        productStat.noWear=noWearPtc;
-
-        syncWear(weapon);
-        calculateQualities(weapon);
-        displayInfo(weapon);
-        changePassiveEmote(weaponOrPassive);
-    }
-    function syncWithClamp(value,element) {
-        const clamped = clampNumber(element.min, element.max, value);
-        syncAll(clamped);
-    }
-
-    const handlers = {
-        input: {
-            value: e => syncAll(Number(e.target.value)),
-            quality: e => syncAll(percentToValue(Number(e.target.value), config))
-        },
-        change: {
-            value: e => syncWithClamp(Number(e.target.value), e.target),
-            quality: e => {
-                const val = percentToValue(Number(e.target.value), config);
-                syncWithClamp(val, numberInput);
-            }
-        }
-    };
-    slider.addEventListener('input', handlers.input.value);
-    numberInput.addEventListener('input', handlers.input.value);
-    qualityInput.addEventListener('input', handlers.input.quality);
-    numberInput.addEventListener('change', handlers.change.value);
-    qualityInput.addEventListener('change', handlers.change.quality);
-
-    wrapper.append(
-        numberInput, 
-        ...(wearConfig.unit === "" ? [] : [numberLabel]), 
-        tooltip);
-    outerWrapper.append(wrapper);
-    syncAll(roundToDecimals(initialValue,6));
-    return outerWrapper;
 }
 
 class WeaponStat {

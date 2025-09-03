@@ -54,8 +54,6 @@ async function loadWeaponTypeData(){
 	fillMissingWeaponInfo(currentWeapon);		
 	await initiatePassiveStuffs(currentWeapon);				
 	selectIndex(wearNameToWearID(currentWeapon.product.blueprint.wear));
-
-	console.log(currentWeapon);
 }
 
 function wearWasChanged(e){
