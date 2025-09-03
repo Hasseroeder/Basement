@@ -34,7 +34,7 @@ function generateDescription(weaponOrPassive,weapon) {
                         : weaponOrPassive.product.blueprint.stats,
                     weaponOrPassive.statConfig
                 );
-                const statContainer = createWeaponStatInput(...mystat, weaponOrPassive, weapon);
+                const statContainer = new WeaponStat(...mystat, weaponOrPassive, weapon)
                 statContainer.style.margin = "0 -0.2rem";
                 wrapper.append(statContainer);
                 statIndex++;
@@ -82,12 +82,11 @@ async function generateWPInput(weapon){
     const WPStat = getStat("WP-Cost",weapon.product.blueprint.stats,weapon.statConfig);
     const WPimage = await getStatImage("WP");
     WPimage.style.margin = "0 0 0 -0.2rem";
-    wrapper.append(WPStat[0]? createWeaponStatInput(...WPStat,weapon,weapon): "\u00A00\u00A0",WPimage);
+    wrapper.append(WPStat[0]? new WeaponStat(...WPStat, weapon, weapon): "\u00A00\u00A0",WPimage);
     return wrapper;
 }
 
 function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
-
     const wearBonus = weaponOrPassive.objectType == "passive" 
             ? weaponOrPassive.wearBonus
             : weaponOrPassive.product.blueprint.wearBonus;
@@ -178,6 +177,122 @@ function createWeaponStatInput(productStat,config,weaponOrPassive,weapon) {
     outerWrapper.append(wrapper);
     syncAll(roundToDecimals(initialValue,6));
     return outerWrapper;
+}
+
+class WeaponStat {
+    constructor(stat, config, weaponOrPassive, weapon) {
+        this.stat            = stat;
+        this.config          = config;
+        this.weaponOrPassive = weaponOrPassive;
+        this.weapon          = weapon;
+
+        this.percentageConfig = {
+            get bonus() { return this.owner._getWearBonus(); },
+            get min()   { return this.bonus; },
+            get max()   { return 100 + this.bonus; },
+            get range() { return this.max - this.min; },
+            step: 1, unit: "%", digits: 3,
+            owner: this
+        };
+
+        this._buildDOM();
+        const temp = percentToValue(this.stat.noWear, this._wearConfig());
+        this._syncAll(+temp.toFixed(6));
+
+        return this.outerWrapper;
+    }
+
+    _getWearBonus() {
+        const src = this.weaponOrPassive;
+        return src.objectType === "passive"
+            ? src.wearBonus
+            : src.product.blueprint.wearBonus;
+    }
+
+    _wearConfig() {
+        const bonus = (this.config.range / 100) * this._getWearBonus();
+        return {
+            ...this.config,
+            min: this.config.min + bonus,
+            max: this.config.max + bonus
+        };
+    }
+
+    _buildDOM() {
+        this.outerWrapper = createStatWrapper("outerInputWrapperFromCalculator");
+        this.wrapper      = createStatWrapper("inputWrapperFromCalculator tooltip-lite");
+        this.numberInput  = createRangedInput("number", this._wearConfig());
+        this.numberLabel  = createUnitSpan(this._wearConfig().unit);
+        this.qualityInput = createRangedInput("number", this.percentageConfig, true);
+        this.qualityLabel = createUnitSpan(this.percentageConfig.unit);
+        this.slider       = createRangedInput("range",  this._wearConfig());
+        this.img          = getTierEmoji(getRarity(this.stat.withWear));
+        this.tooltip      = createStatTooltip([ this.img, this.qualityInput, this.qualityLabel, this.slider ]);
+
+        this.wrapper.append(
+            this.numberInput,
+            ...(this._wearConfig().unit ? [this.numberLabel] : []),
+            this.tooltip
+        );
+        this.outerWrapper.append(this.wrapper);
+
+        this._wireEvents();
+    }
+
+    _wireEvents() {
+        const clamp = (val, el) => {
+            const c = clampNumber(el.min, el.max, val);
+            this._syncAll(c);
+        };
+
+        this.numberInput.addEventListener("input",  e => this._syncAll(+e.target.value) );
+        this.slider     .addEventListener("input",  e => this._syncAll(+e.target.value) );
+        this.qualityInput.addEventListener("input", e => {
+            const pct = +e.target.value;
+            this._syncAll(percentToValue(pct, this.config) );
+        });
+
+        this.numberInput.addEventListener("change",  e => clamp(+e.target.value, e.target) );
+        this.qualityInput.addEventListener("change", e => {
+            const val = percentToValue(+e.target.value, this.config);
+            clamp(val, this.numberInput);
+        });
+    }
+
+    _syncAll(value) {
+        this.numberInput.value  = value;
+        this.slider.value       = value;
+
+        const pct       = valueToPercent(value, this.config);
+        const noWearPct = valueToPercent(value, this._wearConfig());
+
+        this.qualityInput.value = pct;
+        this.img.src            = getTierEmojiPath(pct);
+        this.stat.noWear = noWearPct;
+
+        syncWear(this.weapon);
+        calculateQualities(this.weapon);
+        displayInfo(this.weapon);
+        changePassiveEmote(this.weaponOrPassive);
+    }
+
+    update(productStat, config, weaponOrPassive, weapon) {
+        this.stat        = productStat;
+        this.config         = config;
+        this.weaponOrPassive    = weaponOrPassive;
+        this.weapon             = weapon;
+
+        [this.numberInput, this.slider].forEach(el => {
+            el.min   = this._wearConfig().min;
+            el.max   = this._wearConfig().max;
+            el.step  = this._wearConfig().step;
+        });
+        this.qualityInput.min = this.percentageConfig.min;
+        this.qualityInput.max = this.percentageConfig.max;
+
+        const temp = percentToValue(this.stat.noWear, this._wearConfig());
+        this._syncAll(+temp.toFixed(6));
+    }
 }
 
 function changePassiveEmote(passive){
