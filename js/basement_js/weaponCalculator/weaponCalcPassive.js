@@ -31,7 +31,7 @@ export async function initiatePassiveStuffs(weapon){
     });
 }
 
-export function displayPassives(weapon) {
+export function generatePassiveInputs(weapon) {
     const listContainer = document.querySelector(".passiveContainer");
     const fragment = document.createDocumentFragment();
 
@@ -42,7 +42,6 @@ export function displayPassives(weapon) {
             appendPassive(fragment, weapon, passive)
         );
     }
-
     listContainer.innerHTML = "";
     listContainer.appendChild(fragment);
 }

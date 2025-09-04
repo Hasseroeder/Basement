@@ -1,7 +1,8 @@
 import { numberFixedString } from '../util/stringUtil.js';
 import { createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan } from '../weaponCalculator/weaponCalcElementHelper.js'
-import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath } from '../weaponCalculator/weaponCalcUtil.js'
-import { clampNumber,roundToDecimals } from '../util/inputUtil.js';
+import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath } from '../weaponCalculator/weaponCalcUtil.js'
+import { clampNumber } from '../util/inputUtil.js';
+import { generatePassiveInputs } from './weaponCalcPassive.js';
 
 const el = {
 	weaponHeader:	document.getElementById("weaponHeader"), 
@@ -210,35 +211,6 @@ function changePassiveEmote(passive){
     }
 }
 
-function getTierEmoji(tier){
-	const img = document.createElement("img");
-	img.src = getTierEmojiPath(tier);
-	img.alt = tier;
-	img.ariaLabel = tier;
-	img.title = `:${tier}:`;
-	img.className = "discord-embed-emote";
-	return img;
-}
-
-function getTierEmojiPath(stringOrQuality){
-	const paths = {
-		common: 	"../media/owo_images/common.png",
-		uncommon:   "../media/owo_images/uncommon.png",
-		rare:   	"../media/owo_images/rare.png",
-		epic:     	"../media/owo_images/epic.png",
-		mythic:  	"../media/owo_images/mythic.png",
-		legendary:	"../media/owo_images/legendary.gif",
-		fabled: 	"../media/owo_images/fabled.gif"
-	};
-	if (stringOrQuality == undefined){
-        return paths["fabled"];
-    }else if (typeof stringOrQuality === "string"){
-		return paths[stringOrQuality];
-	}else if(typeof stringOrQuality === "number"){
-		return paths[getRarity(stringOrQuality)];
-	}
-}
-
 function displayInfo(weapon){
     const blueprint = weapon.product.blueprint;
 
@@ -254,4 +226,32 @@ function displayInfo(weapon){
     el.weaponImage.append(getWeaponImage(weapon));
 }
 
-export { generateDescription,generateWPInput,displayInfo };
+
+function generateEverything(weapon){
+	generateStatInputs(weapon);
+	displayInfo(weapon);
+	generatePassiveInputs(weapon);
+}
+
+function updateEverything(weapon){
+	updateStatInputs(weapon);
+	displayInfo(weapon);
+}
+
+function generateStatInputs(weapon){
+	async function updateWPCost() {
+		const inputElement = await generateWPInput(weapon);
+		el.wpCost.replaceChildren(inputElement);
+	}
+	function updateDescription(){
+		el.description.replaceChildren(generateDescription(weapon,weapon));
+	}
+	updateWPCost();
+	updateDescription();
+}
+
+function updateStatInputs(weapon){
+
+}
+
+export { generateDescription,updateEverything,generateEverything };

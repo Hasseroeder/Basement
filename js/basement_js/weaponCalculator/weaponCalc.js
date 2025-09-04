@@ -1,20 +1,8 @@
 import { initCustomSelect, selectIndex } from './customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
-import { generateDescription,generateWPInput,displayInfo } from './weaponCalcMessageGenerator.js';
-import { initiatePassiveStuffs, displayPassives } from './weaponCalcPassive.js';
+import { updateEverything,generateEverything } from './weaponCalcMessageGenerator.js';
+import { initiatePassiveStuffs } from './weaponCalcPassive.js';
 import { fillMissingWeaponInfo } from './weaponCalcUtil.js'
-
-const el = {
-	weaponHeader:	document.getElementById("weaponHeader"), 
-	weaponName:		document.getElementById("weaponName"),
-	ownerID:		document.getElementById("ownerID"),
-	weaponID:		document.getElementById("weaponID"),
-	shardValue:		document.getElementById("shardValue"),
-	weaponQuality:	document.getElementById("weaponQuality"),
-	weaponImage: 	document.getElementById("weaponImage"),
-	wpCost:			document.getElementById("WP-Cost"),
-	description:	document.getElementById("description")
-}
 
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
 
@@ -85,24 +73,5 @@ function wearWasChanged(e){
 	applyValues(currentWeapon.product.blueprint);
 	currentWeapon.product.blueprint.passive.forEach(passive => applyValues(passive));
 	
-	generateNew();
-}
-
-function generateNew(){
-	generateStatInputs();
-	displayInfo(currentWeapon);
-	displayPassives(currentWeapon);
-}
-
-function generateStatInputs(){
-	async function updateWPCost() {
-		const inputElement = await generateWPInput(currentWeapon);
-		el.wpCost.replaceChildren(inputElement);
-	}
-	function updateDescription(){
-		el.description.replaceChildren(generateDescription(currentWeapon,currentWeapon));
-	}
-
-	updateWPCost();
-	updateDescription();
+	generateEverything(currentWeapon);
 }

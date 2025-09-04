@@ -29,7 +29,6 @@ function calculateQualities(weapon) {
     blueprint.tier = getRarity(Math.floor(blueprint.qualityWear));
 }
 
-
 function syncWear(weapon){
     const blueprint = weapon.product.blueprint;
     blueprint.passive.forEach(entry => {
@@ -187,4 +186,33 @@ function fillMissingWeaponInfo(weapon){
 	weapon.product.blueprint.stats.forEach(stat => generateMissingStat(stat));
 }
 
-export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo};
+function getTierEmoji(tier){
+    const img = document.createElement("img");
+    img.src = getTierEmojiPath(tier);
+    img.alt = tier;
+    img.ariaLabel = tier;
+    img.title = `:${tier}:`;
+    img.className = "discord-embed-emote";
+    return img;
+}
+
+function getTierEmojiPath(stringOrQuality){
+    const paths = {
+        common: 	"../media/owo_images/common.png",
+        uncommon:   "../media/owo_images/uncommon.png",
+        rare:   	"../media/owo_images/rare.png",
+        epic:     	"../media/owo_images/epic.png",
+        mythic:  	"../media/owo_images/mythic.png",
+        legendary:	"../media/owo_images/legendary.gif",
+        fabled: 	"../media/owo_images/fabled.gif"
+    };
+    if (stringOrQuality == undefined){
+        return paths["fabled"];
+    }else if (typeof stringOrQuality === "string"){
+        return paths[stringOrQuality];
+    }else if(typeof stringOrQuality === "number"){
+        return paths[getRarity(stringOrQuality)];
+    }
+}
+
+export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath};
