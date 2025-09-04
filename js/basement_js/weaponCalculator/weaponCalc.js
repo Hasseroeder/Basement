@@ -40,8 +40,12 @@ async function loadWeaponTypeData(){
 	// from the .json
 	currentWeapon = weapons[currentWeaponID];
 	fillMissingWeaponInfo(currentWeapon);		
-	await initiatePassiveStuffs(currentWeapon);				
+	await initiatePassiveStuffs(currentWeapon);			
 	selectIndex(wearNameToWearID(currentWeapon.product.blueprint.wear));
+	
+	//TODO: remove following lines
+	generateEverything(currentWeapon);	
+
 }
 
 function wearWasChanged(e){

@@ -27,16 +27,17 @@ function generateDescription(weaponOrPassive,weapon) {
             if (/^\r?\n$/.test(part)) {
                 wrapper.appendChild(document.createElement("br"));
             }else if (part === "[stat]") {
-                const mystat = getStat(
+                const [stat, statConfig] = getStat(
                     statIndex,
                     weaponOrPassive.objectType === "passive"
                         ? weaponOrPassive.stats
                         : weaponOrPassive.product.blueprint.stats,
                     weaponOrPassive.statConfig
                 );
-                mystat.IO = new WeaponStat(...mystat, weaponOrPassive, weapon)
-                mystat.IO.style.margin = "0 -0.2rem";
-                wrapper.append(mystat.IO);
+                stat.IO = new WeaponStat(stat, statConfig, weaponOrPassive, weapon);
+                const toAppend = stat.IO.render();
+                toAppend.style.margin = "0 -0.2rem";
+                wrapper.append(toAppend);
                 statIndex++;
             }else if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
                 const key = part.slice(1, -1);
@@ -76,16 +77,21 @@ async function generateWPInput(weapon){
     const wrapper = document.createElement("div");	
     wrapper.innerHTML="<strong>WP Cost:</strong>";
     wrapper.style= "display: flex; align-items: center;";
-    const WPStat = getStat("WP-Cost",weapon.product.blueprint.stats,weapon.statConfig);
-    if (WPStat[0]){
-        WPStat.IO= new WeaponStat(...WPStat, weapon, weapon)
-        wrapper.append(WPStat.IO);
+    const [stat, statConfig] = getStat(
+        "WP-Cost",
+        weapon.product.blueprint.stats,
+        weapon.statConfig
+    );
+    if (stat){
+        stat.IO= new WeaponStat(stat, statConfig, weapon, weapon)
+        wrapper.append(stat.IO.render());
     }else{
         wrapper.append("\u00A0"+"0"+"\u00A0");
     }
     const WPimage = await getStatImage("WP");
     WPimage.style.margin = "0 0 0 -0.2rem";
     wrapper.append(WPimage);
+
     return wrapper;
 }
 
@@ -108,8 +114,6 @@ class WeaponStat {
         this._buildDOM();
         const temp = percentToValue(this.stat.noWear, this._wearConfig());
         this._syncAll(+temp.toFixed(6));
-
-        return this.outerWrapper;
     }
 
     _getWearBonus() {
@@ -203,6 +207,11 @@ class WeaponStat {
         const temp = percentToValue(this.stat.noWear, this._wearConfig());
         this._syncAll(+temp.toFixed(6));
     }
+
+    render() {
+        return this.outerWrapper;
+    }
+
 }
 
 function changePassiveEmote(passive){
@@ -250,8 +259,26 @@ function generateStatInputs(weapon){
 	updateDescription();
 }
 
-function updateStatInputs(weapon){
-
+async function updateStatInputs(weapon){
+    const blueprint = weapon.product.blueprint;
+    blueprint.passive.forEach(passive => {
+        passive.stats.forEach((stat,statIndex) => {
+            const [_, statConfig] = getStat(
+                statIndex,
+                passive.stats,
+                passive.statConfig
+            );
+            stat.IO.update(stat,statConfig, passive, weapon);
+        });
+    });
+    blueprint.stats.forEach((stat,statIndex) => {
+        const [_, statConfig] = getStat(
+                    statIndex,
+                    weapon.product.blueprint.stats,
+                    weapon.statConfig
+                );
+        stat.IO.update(stat,statConfig, weapon, weapon)
+    });
 }
 
 export { generateDescription,updateEverything,generateEverything };
