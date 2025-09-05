@@ -21,7 +21,8 @@ export async function initiatePassiveStuffs(weapon){
             const statCount = passives[id].statConfig.length;
             const newPassive = {
                 id: id,
-                stats: Array.from({ length: statCount }, () => ({}))
+                stats: Array.from({ length: statCount }, () => ({})),
+                ...passives[id]
             }
             weapon.product.blueprint.passive.push(newPassive);
             fillMissingWeaponInfo(weapon);		
