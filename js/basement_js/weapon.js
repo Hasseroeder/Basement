@@ -337,7 +337,14 @@ function createWikipediaContainer(weapon,weaponShorthand){
     wikipediaStatsHeader.className="wikipedia-stats-header";
     wikipediaStatsHeader.textContent="Stats";
 
-    wikipediaContainer.append(wikipediaHeader, wikipediaImage,wikipediaStars,wikipediaID,wikipediaStatsHeader,wikipediaTable);
+    const calcLink = document.createElement("div");
+    if (currentWeaponID!=100){
+        calcLink.style="padding: 0.5rem;";
+        calcLink.innerHTML= `<a href="/weaponcalculator.html#${currentWeaponID}">Calculator</a>`;
+    }
+    
+
+    wikipediaContainer.append(wikipediaHeader, wikipediaImage,wikipediaStars,wikipediaID,wikipediaStatsHeader,wikipediaTable,calcLink);
 }
 
 function createWikipediaTable(weapon){
