@@ -6,7 +6,6 @@ var passives;
 
 export async function initiatePassiveStuffs(weapon){
     const gridContainer = document.querySelector('.passiveGrid');
-    const listContainer = document.querySelector('.passiveContainer');
     passives = await loadJson("../json/passives.json");
 
     Object.entries(passives).forEach(([id, passive]) => {
@@ -17,21 +16,29 @@ export async function initiatePassiveStuffs(weapon){
         img.alt = passive.aliases[0];
         img.title = passive.aliases[0];
         img.addEventListener('click', () => {
-            const statCount = passives[id].statConfig.length;
-            const newPassive = {
-                id: id,
-                stats: Array.from({ length: statCount }, () => ({})),
-                ...passives[id]
-            }
-            weapon.product.blueprint.passive.push(newPassive);
-            fillMissingWeaponInfo(weapon);		
-            applyWearToWeapon(weapon,weapon.product.blueprint.wear);
-            //generateEverything(weapon);
-            displayInfo(weapon);
-            generatePassiveInputs(weapon);
+            generateNewPassive(id,weapon)
         });
         gridContainer.appendChild(img);
     });
+}
+
+function generateNewPassive(id, weapon){
+    const newPassive = giveMeNewPassive(id);
+    weapon.product.blueprint.passive.push(newPassive);
+    fillMissingWeaponInfo(weapon);		
+    applyWearToWeapon(weapon,weapon.product.blueprint.wear);
+    displayInfo(weapon);
+    generatePassiveInputs(weapon);
+}
+
+function giveMeNewPassive(id){
+    const statCount = passives[id].statConfig.length;
+    const newPassive = {
+        id: id,
+        stats: Array.from({ length: statCount }, () => ({})),
+        ...passives[id]
+    }
+    return newPassive;
 }
 
 export function generatePassiveInputs(weapon) {

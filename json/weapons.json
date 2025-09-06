@@ -36,12 +36,7 @@
             "blueprint":{
                 "wear":"fine",
                 "stats":[{},{}],
-                "passive":[
-                    {
-                        "id":"19",
-                        "stats":[{},{}]
-                    }
-                ]
+                "passive":[]
             }
         }
     },

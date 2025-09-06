@@ -41,10 +41,14 @@ async function loadWeaponTypeData(){
 	currentWeapon = weapons[currentWeaponID];
 	fillMissingWeaponInfo(currentWeapon);		
 	await initiatePassiveStuffs(currentWeapon);			
-	selectIndex(wearNameToWearID(currentWeapon.product.blueprint.wear));
-	
-	//TODO: remove following lines
+	//selectIndex(wearNameToWearID(currentWeapon.product.blueprint.wear));
+	applyWearToWeapon(
+		currentWeapon,
+		wearNameToWearID(currentWeapon.product.blueprint.wear)
+	);
 	generateEverything(currentWeapon);	
+
+	//TODO: remove following lines
 
 }
 

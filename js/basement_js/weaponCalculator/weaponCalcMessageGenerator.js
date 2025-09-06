@@ -111,11 +111,7 @@ class WeaponStat {
             owner: this
         };
 
-        //remove half this shit
-        console.log("hey");
         syncWear(this.weapon);
-        console.log(this.weapon);
-
         this._buildDOM();
         const temp = percentToValue(this.stat.noWear, this._wearConfig());
         this._syncAll(+temp.toFixed(6));
@@ -268,6 +264,10 @@ async function updateStatInputs(weapon){
     const blueprint = weapon.product.blueprint;
     blueprint.passive.forEach(passive => {
         passive.stats.forEach((stat,statIndex) => {
+            console.log(passive);
+            console.log(passive.statConfig);
+
+            // stat config doesn't exist
             const [_, statConfig] = getStat(
                 statIndex,
                 passive.stats,
