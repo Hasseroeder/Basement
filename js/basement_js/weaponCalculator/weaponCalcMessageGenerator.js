@@ -111,6 +111,11 @@ class WeaponStat {
             owner: this
         };
 
+        //remove half this shit
+        console.log("hey");
+        syncWear(this.weapon);
+        console.log(this.weapon);
+
         this._buildDOM();
         const temp = percentToValue(this.stat.noWear, this._wearConfig());
         this._syncAll(+temp.toFixed(6));
@@ -281,4 +286,4 @@ async function updateStatInputs(weapon){
     });
 }
 
-export { generateDescription,updateEverything,generateEverything };
+export { generateDescription,updateEverything,generateEverything,displayInfo };

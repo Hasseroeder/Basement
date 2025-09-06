@@ -2,7 +2,7 @@ import { initCustomSelect, selectIndex } from './customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
 import { updateEverything,generateEverything } from './weaponCalcMessageGenerator.js';
 import { initiatePassiveStuffs } from './weaponCalcPassive.js';
-import { fillMissingWeaponInfo } from './weaponCalcUtil.js'
+import { fillMissingWeaponInfo,applyWearToWeapon } from './weaponCalcUtil.js'
 
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
 
@@ -49,33 +49,6 @@ async function loadWeaponTypeData(){
 }
 
 function wearWasChanged(e){
-	function getWearBonus(wear){
-		const wearValues = {
-			pristine: 5,
-			fine:     3,
-			decent:   1,
-			worn:     0,
-			unknown:  0
-		};
-		return wearValues[wear] || 0;
-	}
-	function getWearName(wear){
-		const wearValues = {
-			pristine: "Pristine\u00A0",
-			fine:     "Fine\u00A0",
-			decent:   "Decent\u00A0",
-			worn:     "",
-			unknown:  ""
-		};
-		return wearValues[wear] || "";
-	}
-	function applyValues(toApply){
-		toApply.wear = e.detail.value;
-		toApply.wearBonus = getWearBonus(e.detail.value);
-		toApply.wearName = getWearName(e.detail.value);
-	}
-	applyValues(currentWeapon.product.blueprint);
-	currentWeapon.product.blueprint.passive.forEach(passive => applyValues(passive));
-	
-	generateEverything(currentWeapon);
+	applyWearToWeapon(currentWeapon,e.detail.value);
+	updateEverything(currentWeapon);
 }

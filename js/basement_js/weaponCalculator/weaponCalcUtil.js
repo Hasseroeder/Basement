@@ -179,7 +179,6 @@ function fillMissingWeaponInfo(weapon){
 			stat.noWear=Math.floor(Math.random() * 101);
 		}
 	}
-
 	weapon.product.blueprint.passive.forEach(entry => {
 		entry.stats.forEach(stat => generateMissingStat(stat));
     });
@@ -215,4 +214,34 @@ function getTierEmojiPath(stringOrQuality){
     }
 }
 
-export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath};
+function applyWearToWeapon(weapon,wear){
+	function getWearBonus(wear){
+		const wearValues = {
+			pristine: 5,
+			fine:     3,
+			decent:   1,
+			worn:     0,
+			unknown:  0
+		};
+		return wearValues[wear] || 0;
+	}
+	function getWearName(wear){
+		const wearValues = {
+			pristine: "Pristine\u00A0",
+			fine:     "Fine\u00A0",
+			decent:   "Decent\u00A0",
+			worn:     "",
+			unknown:  ""
+		};
+		return wearValues[wear] || "";
+	}
+	function applyValues(toApply){
+		toApply.wear = wear;
+		toApply.wearBonus = getWearBonus(wear);
+		toApply.wearName = getWearName(wear);
+	}
+	applyValues(weapon.product.blueprint);
+	weapon.product.blueprint.passive.forEach(passive => applyValues(passive));
+}
+
+export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, applyWearToWeapon};

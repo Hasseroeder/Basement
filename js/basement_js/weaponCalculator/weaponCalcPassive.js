@@ -1,7 +1,6 @@
 import { loadJson } from '../util/jsonUtil.js';
-import { generateDescription }  from '../weaponCalculator/weaponCalcMessageGenerator.js'
-import { getWeaponImage,fillMissingWeaponInfo } from './weaponCalcUtil.js';
-import { selectIndex } from './customSelect.js';
+import { generateDescription, generateEverything,displayInfo }  from '../weaponCalculator/weaponCalcMessageGenerator.js'
+import { getWeaponImage,fillMissingWeaponInfo,applyWearToWeapon } from './weaponCalcUtil.js';
 
 var passives;
 
@@ -26,7 +25,10 @@ export async function initiatePassiveStuffs(weapon){
             }
             weapon.product.blueprint.passive.push(newPassive);
             fillMissingWeaponInfo(weapon);		
-            selectIndex();
+            applyWearToWeapon(weapon,weapon.product.blueprint.wear);
+            //generateEverything(weapon);
+            displayInfo(weapon);
+            generatePassiveInputs(weapon);
         });
         gridContainer.appendChild(img);
     });
