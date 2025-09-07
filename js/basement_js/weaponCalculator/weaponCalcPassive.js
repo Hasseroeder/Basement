@@ -15,9 +15,7 @@ export async function initiatePassiveStuffs(weapon){
         img.dataset.passiveId = id;
         img.alt = passive.aliases[0];
         img.title = passive.aliases[0];
-        img.addEventListener('click', () => {
-            generateNewPassive(id,weapon)
-        });
+        img.addEventListener('click', () => generateNewPassive(id,weapon));
         gridContainer.appendChild(img);
     });
 }
@@ -25,20 +23,18 @@ export async function initiatePassiveStuffs(weapon){
 function generateNewPassive(id, weapon){
     const newPassive = giveMeNewPassive(id);
     weapon.product.blueprint.passive.push(newPassive);
-    fillMissingWeaponInfo(weapon);		
+    fillMissingWeaponInfo(weapon);
     applyWearToWeapon(weapon,weapon.product.blueprint.wear);
     displayInfo(weapon);
     generatePassiveInputs(weapon);
 }
 
 function giveMeNewPassive(id){
-    const statCount = passives[id].statConfig.length;
-    const newPassive = {
-        id: id,
-        stats: Array.from({ length: statCount }, () => ({})),
+    return {
+        id,
+        stats: passives[id].statConfig.map(() => ({})),
         ...passives[id]
-    }
-    return newPassive;
+    };
 }
 
 export function generatePassiveInputs(weapon) {
@@ -46,7 +42,7 @@ export function generatePassiveInputs(weapon) {
     const fragment = document.createDocumentFragment();
 
     if (weapon.product.blueprint.passive.length === 0) {
-        appendNoPassiveSpan(fragment);
+        fragment.innerHTML = '<span><b>Passives:</b> none</span>';
     } else {
         weapon.product.blueprint.passive.forEach(passive =>
             appendPassive(fragment, weapon, passive)
@@ -56,24 +52,15 @@ export function generatePassiveInputs(weapon) {
     listContainer.appendChild(fragment);
 }
 
-function appendNoPassiveSpan(container){
-    const span = document.createElement("span");
-    span.innerHTML="<b>Passives:</b> none";
-    container.append(span);
-    // <span><b>Passives:</b> none</span> 
-}
-
 function appendPassive(container,weapon, passive){
     const wrapper = document.createElement("div");
     wrapper.style="display:inline;";
-    const passiveConfig = passives[passive.id];
-    Object.assign(passive, passiveConfig);
+    Object.assign(passive, passives[passive.id]);
 
-    const image = getWeaponImage(passive);
-    image.className = 'discord-embed-emote';
-    image.style.margin = "0 0.1rem 0.15rem 0";
-    passive.image = image;
+    passive.image = getWeaponImage(passive);
+    passive.image.className = 'discord-embed-emote';
+    passive.image.style.margin = "0 0.1rem 0.15rem 0";
 
-    wrapper.append(image,generateDescription(passive,weapon))
+    wrapper.append(passive.image,generateDescription(passive,weapon))
     container.append(wrapper);
 }

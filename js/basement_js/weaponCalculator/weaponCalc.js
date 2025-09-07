@@ -1,4 +1,4 @@
-import { initCustomSelect, selectIndex } from './customSelect.js';
+import { initCustomSelect } from './customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
 import { updateEverything,generateEverything } from './weaponCalcMessageGenerator.js';
 import { initiatePassiveStuffs } from './weaponCalcPassive.js';
@@ -37,18 +37,14 @@ function wearNameToWearID(inputString){
 }
 
 async function loadWeaponTypeData(){
-	// from the .json
 	currentWeapon = weapons[currentWeaponID];
 	fillMissingWeaponInfo(currentWeapon);		
 	await initiatePassiveStuffs(currentWeapon);			
-	//selectIndex(wearNameToWearID(currentWeapon.product.blueprint.wear));
 	applyWearToWeapon(
 		currentWeapon,
 		wearNameToWearID(currentWeapon.product.blueprint.wear)
 	);
 	generateEverything(currentWeapon);	
-
-	//TODO: remove following lines
 
 }
 
