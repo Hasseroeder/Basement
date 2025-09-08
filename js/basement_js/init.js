@@ -1,3 +1,5 @@
+import { smallInjector } from "./util/imageUtil.js";
+
 function createImage(attrs = {}, styles = {}) {
 	const img = document.createElement("img");
 	Object.entries(attrs).forEach(([key, val]) => {
@@ -71,37 +73,6 @@ const collections = {
 	]
 };
 
-function smallInjector(container){
-	const type = container.getAttribute("type");
-	collections[type].forEach((object,id)=>{
-		const link = `/${type}.html#${100+id}`;
-		const path =`media/owo_images/f_${object.at(-1).toLowerCase()}.png`;
-		const text = object[0] + (object[1]? "<br>"+object[1]:"");
-		appendImageLink(container,link,path,text);
-	});
-
-	if (type == "weapon"){
-		appendImageLink(container,"/weaponcalculator.html", "media/misc_images/cogwheel2.png", "Weapon Calculator");
-	}
-}
-
-function appendImageLink(container, link, path, text){
-	const a = document.createElement("a");
-	a.href = link;
-	a.className = "tooltip";
-	container.append(a);
-
-	const img = document.createElement("img");
-	img.src = path;
-	img.style.width = "2.5rem";
-	a.append(img);
-
-	const tooltip = document.createElement("div");
-	tooltip.innerHTML = text;
-	tooltip.className = "navBar-tooltip-text";
-	a.append(tooltip);
-}
-
 const injectors = [
   	{
 		selector: "#navbar",
@@ -112,9 +83,19 @@ const injectors = [
 					const container = document.querySelector("#navbar");
 					container.innerHTML = html;
 
-					smallInjector(container.querySelector("#menuWeaponContainer"));
-					smallInjector(container.querySelector("#menuPassiveContainer"));
-
+					smallInjector({
+						container: container.querySelector('#menuWeaponContainer'),
+						items: collections.weapon,
+						idOffset: 100,
+						baseHref: 'weapon',
+						includeCalculator: true
+					});
+					smallInjector({
+						container: container.querySelector("#menuPassiveContainer"),
+						items: collections.passive,
+						idOffset: 0,
+						baseHref: "passive"
+					});
 					return container.innerHTML;
 				});
 		},
