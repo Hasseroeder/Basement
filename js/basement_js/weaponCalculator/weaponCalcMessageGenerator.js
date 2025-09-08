@@ -192,14 +192,15 @@ class WeaponStat {
     }
 
     update(productStat, config, weaponOrPassive, weapon) {
-        this.stat        = productStat;
-        this.config         = config;
-        this.weaponOrPassive    = weaponOrPassive;
-        this.weapon             = weapon;
+        this.stat            = productStat;
+        this.config          = config;
+        this.weaponOrPassive = weaponOrPassive;
+        this.weapon          = weapon;
 
         [this.numberInput, this.slider].forEach(el => {
-            el.min   = this._wearConfig().min;
-            el.max   = this._wearConfig().max;
+            el.min   = Math.min(this._wearConfig().max,this._wearConfig().min);
+            el.max   = Math.max(this._wearConfig().max,this._wearConfig().min);
+            // we need to look for the min and max here because WP cost has a lower max and higher min
             el.step  = this._wearConfig().step;
         });
         this.qualityInput.min = this.percentageConfig.min;
@@ -207,6 +208,10 @@ class WeaponStat {
 
         const temp = percentToValue(this.stat.noWear, this._wearConfig());
         this._syncAll(+temp.toFixed(6));
+    }
+
+    justUpdateDumbass(){
+        this.update(this.stat,this.config,this.weaponOrPassive,this.weapon);
     }
 
     render() {
@@ -236,7 +241,6 @@ function displayInfo(weapon){
     el.weaponImage.append(getWeaponImage(weapon));
 }
 
-
 function generateEverything(weapon){
 	generateStatInputs(weapon);
 	displayInfo(weapon);
@@ -248,16 +252,12 @@ function updateEverything(weapon){
 	displayInfo(weapon);
 }
 
-function generateStatInputs(weapon){
-	async function updateWPCost() {
-		const inputElement = await generateWPInput(weapon);
-		el.wpCost.replaceChildren(inputElement);
-	}
-	function updateDescription(){
-		el.description.replaceChildren(generateDescription(weapon,weapon));
-	}
-	updateWPCost();
-	updateDescription();
+async function generateStatInputs(weapon){
+    // WP cost & inputs
+	const inputElement = await generateWPInput(weapon);
+	el.wpCost.replaceChildren(inputElement);
+    // Description & inputs
+	el.description.replaceChildren(generateDescription(weapon,weapon));
 }
 
 async function updateStatInputs(weapon){

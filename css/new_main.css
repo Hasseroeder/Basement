@@ -856,3 +856,12 @@ a:hover {
 .zeroZeroZeroThirteenMargin{
   margin: 0 0 0.13rem 0;
 }
+
+.weaponCalc-passive-emote{
+  margin:0 0.1rem 0.15rem 0;
+}
+
+.weaponCalc-passive-emote:hover{
+  background-color: #666;
+  cursor: pointer;
+}

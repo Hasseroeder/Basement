@@ -26,7 +26,7 @@ function generateNewPassive(id, weapon){
     fillMissingWeaponInfo(weapon);
     applyWearToWeapon(weapon,weapon.product.blueprint.wear);
     displayInfo(weapon);
-    generatePassiveInputs(weapon);
+    appendPassiveNode(newPassive, weapon);
 }
 
 function giveMeNewPassive(id){
@@ -37,30 +37,44 @@ function giveMeNewPassive(id){
     };
 }
 
-export function generatePassiveInputs(weapon) {
+function appendPassiveNode(passive, weapon) {
     const listContainer = document.querySelector(".passiveContainer");
-    const fragment = document.createDocumentFragment();
+    const wrapper = document.createElement("div");
+    wrapper.className = "passiveItem";
+    wrapper.dataset.id = passive.id;
 
-    if (weapon.product.blueprint.passive.length === 0) {
-        fragment.innerHTML = '<span><b>Passives:</b> none</span>';
-    } else {
-        weapon.product.blueprint.passive.forEach(passive =>
-            appendPassive(fragment, weapon, passive)
-        );
+    Object.assign(passive, passives[passive.id]);
+    passive.image = getWeaponImage(passive);
+    passive.image.className = 'discord-embed-emote weaponCalc-passive-emote';
+    passive.image.addEventListener("click", () => removePassive(passive, wrapper, weapon));
+    
+    const desc = generateDescription(passive, weapon);
+
+    if( weapon.product.blueprint.passive.length === 1){
+        // we'll need to remove "passives: none" on the first append
+        listContainer.innerHTML="";
     }
-    listContainer.innerHTML = "";
-    listContainer.appendChild(fragment);
+
+    wrapper.append(passive.image, desc);
+    listContainer.appendChild(wrapper);
 }
 
-function appendPassive(container,weapon, passive){
-    const wrapper = document.createElement("div");
-    wrapper.style="display:inline;";
-    Object.assign(passive, passives[passive.id]);
+export function generatePassiveInputs(weapon) {
+    sayNoPassives(weapon);
+    weapon.product.blueprint.passive.forEach(p => appendPassiveNode(p, weapon));
+}
 
-    passive.image = getWeaponImage(passive);
-    passive.image.className = 'discord-embed-emote';
-    passive.image.style.margin = "0 0.1rem 0.15rem 0";
+function sayNoPassives(weapon){
+    const listContainer = document.querySelector(".passiveContainer");
+    if (weapon.product.blueprint.passive.length === 0) {
+        listContainer.innerHTML = '<span><b>Passives:</b> none</span>';
+    } 
+}
 
-    wrapper.append(passive.image,generateDescription(passive,weapon))
-    container.append(wrapper);
+function removePassive(passive, wrapper, weapon) {
+    weapon.product.blueprint.passive =
+        weapon.product.blueprint.passive.filter(p => p !== passive);
+    wrapper.remove();
+    weapon.product.blueprint.stats[0].IO.justUpdateDumbass();
+    sayNoPassives(weapon);
 }
