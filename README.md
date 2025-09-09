@@ -44,7 +44,7 @@ Following other attempts to write guides, this one also won't be able to be kept
   - [Weapons Bot](https://discord.com/oauth2/authorize?client_id=968896356083171328&permissions=274878286912&scope=bot+applications.commands)
 
 ## Technical
-We try to be as close as possible to vanilla JS to keep the entry barrier as low as possible. You don't need any fancy-shmancy NPM or Node to help with this project. We do have some dependencies, but we pull those with CDN script tags, so that's easy peasy.
+We try to be as close as possible to vanilla JS to keep the entry barrier as low as possible, so you don't need any fancy-shmancy NPM or Node to help with this project. We do have some dependencies, but we pull those with CDN script tags, so that's easy peasy.
 - Chart.js v4.5.0
 - chartjs-plugin-annotation v3.1.0
 - MathJax v3
