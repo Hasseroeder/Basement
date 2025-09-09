@@ -86,14 +86,14 @@ const injectors = [
 					smallInjector({
 						container: container.querySelector('#menuWeaponContainer'),
 						items: collections.weapon,
-						idOffset: 100,
+						idOffset: 100, 	// 100 is fist, so we don't need extra offset to get to 101 sword
 						baseHref: 'weapon',
 						includeCalculator: true
 					});
 					smallInjector({
 						container: container.querySelector("#menuPassiveContainer"),
 						items: collections.passive,
-						idOffset: 0,
+						idOffset: 1,	// extra offset to start at 1 STR
 						baseHref: "passive"
 					});
 					return container.innerHTML;
