@@ -53,6 +53,7 @@ const injectors = [
 					gridInjector({
 						container: container.querySelector('#menuWeaponContainer'),
 						items: [beforeWeapons,weapons,afterWeapons],
+            wantIDs: true
 					});
 					gridInjector({
 						container: container.querySelector("#menuPassiveContainer"),

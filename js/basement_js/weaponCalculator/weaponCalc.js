@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded",initWeaponCalc);
 let weapons;
 let currentWeapon;
 let currentWeaponID;
-const initWeaponID = 101;
+const initWeaponID = 101;	// this should basically never be used
 
 async function initWeaponCalc(){
 	const wearSelectRoot = initCustomSelect();

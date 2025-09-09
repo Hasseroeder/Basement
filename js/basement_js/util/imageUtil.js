@@ -1,6 +1,9 @@
 export function gridInjector({
         container,
         items,
+		baseHref,
+		wantIDs,
+		hashType= "id",
 		columns = "repeat(3, 3.4rem)",
 		transform="translate(-2.70rem,1.5%)"
     }){
@@ -17,11 +20,13 @@ export function gridInjector({
 	Object.values(combinedItems).forEach(({ aliases = [], name, path, objectType, id }) => {
 		const shortHand   = aliases[0] ?? name;
 		const imagePath   = path ?? `media/owo_images/f_${shortHand.toLowerCase()}.png`;
-		const link        = `/${objectType}.html${id ? `#${id}` : ''}`;
 
-		const text        = objectType === 'weapon' && id !== "100"
-			? `${name}<br>${id}`
-			: name;
+		var link          = `/${baseHref ?? objectType}.html`;	
+		const v = { id, name, shortHand }[hashType];
+		link += v ? `#${v}` : '';
+
+		var text  = objectType === 		'weapon'? shortHand : name;
+			text += wantIDs && id && id != "100"? "<br>"+id : "";
 
 		container.append(
 			getImageLink(link, imagePath, text)
