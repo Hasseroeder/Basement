@@ -1,4 +1,21 @@
-import { smallInjector } from "./util/imageUtil.js";
+import { gridInjector as gridInjector } from "./util/imageUtil.js";
+import { loadJson } from "./util/jsonUtil.js";
+
+const beforeWeapons = {
+  100: {
+    name: "Fists",
+    objectType: "weapon",
+    id: "100"
+  }
+};
+
+const afterWeapons = {
+  weaponCalculator: {
+    name: "Weapon Calculator",
+    objectType: "weaponcalculator",
+	path:"./media/misc_images/cogwheel2.png"
+  }
+};
 
 function createImage(attrs = {}, styles = {}) {
 	const img = document.createElement("img");
@@ -21,80 +38,25 @@ function applyContent(el, content) {
 	el.appendChild(content);
 }
 
-const collections = {
-	weapon : [
-		["Fists"],
-		["101","Sword"],
-		["102","Hstaff"],
-		["103","Bow"],
-		["104","Rune"],
-		["105","Shield"],
-		["106","Orb"],
-		["107","Vstaff"],
-		["108","Dagger"],
-		["109","Wand"],
-		["110","Fstaff"],
-		["111","Estaff"],
-		["112","Sstaff"],
-		["113","Scepter"],
-		["114","Rstaff"],
-		["115","Axe"],
-		["116","Banner"],
-		["117","Scythe"],
-		["118","Crune"],
-		["119","Pstaff"],
-		["120","Lscythe"],
-		["121","Ffish"],
-		["122","Lrune"],
-	],
-
-  	passive : [
-		["Strength","Str"],
-		["Magic","Mag"],
-		["Health Point","HP"],
-		["Weapon Point","WP"],
-		["Physical Resistance","PR"],
-		["Magical Resistance","MR"],
-		["Lifesteal","Ls"],
-		["Thorns"],
-		["Mana Tap","Mtap"],
-		["Absolve","Absv"],
-		["Safeguard","Sg"],
-		["Critical","Crit"],
-		["Discharge","Dc"],
-		["Kamikaze","Kkaze"],
-		["Regeneration","Hgen"],
-		["Energize","Wgen"],
-		["Sprout"],
-		["Enrage"],
-		["Sacrifice","Sac"],
-		["Snail"],
-		["Knowledge","Kno"]
-	]
-};
-
 const injectors = [
   	{
 		selector: "#navbar",
 		load: () => {
 			return fetch("./donatorPages/navBar.html")
 				.then(r => r.text())
-				.then(html => {
+				.then(async html => {
 					const container = document.querySelector("#navbar");
 					container.innerHTML = html;
+					const weapons = await loadJson("../json/weapons.json");
+					const passives = await loadJson("../json/passives.json");
 
-					smallInjector({
+					gridInjector({
 						container: container.querySelector('#menuWeaponContainer'),
-						items: collections.weapon,
-						idOffset: 100, 	// 100 is fist, so we don't need extra offset to get to 101 sword
-						baseHref: 'weapon',
-						includeCalculator: true
+						items: [beforeWeapons,weapons,afterWeapons],
 					});
-					smallInjector({
+					gridInjector({
 						container: container.querySelector("#menuPassiveContainer"),
-						items: collections.passive,
-						idOffset: 1,	// extra offset to start at 1 STR
-						baseHref: "passive"
+						items: [passives],
 					});
 					return container.innerHTML;
 				});

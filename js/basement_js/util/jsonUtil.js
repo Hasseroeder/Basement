@@ -1,4 +1,4 @@
-async function loadJson(path) {
+export async function loadJson(path) {
     var jsonData;
     try {
         const response = await fetch(path);
@@ -8,5 +8,3 @@ async function loadJson(path) {
     }
     return jsonData;
 } 
-
-export {loadJson};
