@@ -22,13 +22,12 @@ Following other attempts to write guides, this one also won't be able to be kept
             `--'   `--'
     -\=--                               --=/-
  
-
-Contact us through GitHub:
-- https://github.com/Hasseroeder/Basement/
-
-Contact us through Discord:
-- Heather/Hasse - @hsse
-- Coop - @coopw
+## Contact us
+- through GitHub:
+  - https://github.com/Hasseroeder/Basement/
+- through Discord:
+  - Heather/Hasse - @hsse
+  - Coop - @coopw
 
 ## Resources & Links
 - Official Site: https://owo.bwep.net/
