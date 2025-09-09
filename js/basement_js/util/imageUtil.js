@@ -3,8 +3,15 @@ export function smallInjector({
         items,
         idOffset,
         baseHref,
-        includeCalculator = false
+        includeCalculator = false,
+		columns = "repeat(3, 3.4rem)",
+		transform="translate(-2.70rem,1.5%)"
     }){
+	
+	container.className="toolbarSubMenu navbar-grid";
+	container.style.gridTemplateColumns=columns;
+	container.style.transform=transform;
+
 	items.forEach((object,id)=>{
 		const link = `/${baseHref}.html#${idOffset+id}`;
 		const path =`media/owo_images/f_${object.at(-1).toLowerCase()}.png`;

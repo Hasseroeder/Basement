@@ -865,3 +865,10 @@ a:hover {
   background-color: #666;
   cursor: pointer;
 }
+
+.navbar-grid{
+  position:absolute; 
+  display:grid; 
+  background-color: #333; 
+  padding:0.5rem 0.5rem;
+}
