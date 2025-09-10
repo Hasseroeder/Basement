@@ -238,7 +238,7 @@ function displayInfo(weapon){
     el.weaponQuality.append(getTierEmoji(blueprint.tier));
     el.weaponQuality.innerHTML+= numberFixedString(blueprint.qualityWear,1)+"%"
     el.weaponImage.innerHTML="";
-    el.weaponImage.append(getWeaponImage(weapon));
+    el.weaponImage.src=getWeaponImagePath(weapon);
 }
 
 function generateEverything(weapon){
