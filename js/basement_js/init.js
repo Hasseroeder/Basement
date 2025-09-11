@@ -1,14 +1,6 @@
 import { gridInjector as gridInjector } from "./util/imageUtil.js";
 import { loadJson } from "./util/jsonUtil.js";
 
-const beforeWeapons = {
-  100: {
-    name: "Fists",
-    objectType: "weapon",
-    id: "100"
-  }
-};
-
 const afterWeapons = {
   weaponCalculator: {
     name: "Weapon Calculator",
@@ -52,7 +44,7 @@ const injectors = [
 
 					gridInjector({
 						container: container.querySelector('#menuWeaponContainer'),
-						items: [beforeWeapons,weapons,afterWeapons],
+						items: [weapons,afterWeapons],
             wantIDs: true
 					});
 					gridInjector({

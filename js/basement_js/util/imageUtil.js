@@ -21,12 +21,14 @@ export function gridInjector({
 		const shortHand   = aliases[0] ?? name;
 		const imagePath   = path ?? `media/owo_images/f_${shortHand.toLowerCase()}.png`;
 
-		var link          = `/${baseHref ?? objectType}.html`;	
+		var objectTypeNew = objectType=="quasiWeapon"? "weapon": objectType; // fists count as real weapons here
+		var link          = `/${baseHref ?? objectTypeNew}.html`;	
+
 		const v = { id, name, shortHand }[hashType];
 		link += v ? `#${v}` : '';
 
-		var text  = objectType === 		'weapon'? shortHand : name;
-			text += wantIDs && id && id != "100"? "<br>"+id : "";
+		var text  = objectType=='passive' ? name : shortHand
+				  + (wantIDs && objectType==='weapon' ? "<br>"+id : "");
 
 		container.append(
 			getImageLink(link, imagePath, text)
