@@ -13,6 +13,7 @@ const initWeaponID = 101;	// this should basically never be used
 
 async function initWeaponCalc(){
 	const wearSelectRoot = initCustomSelect();
+	initHashSourceDetector();
 	wearSelectRoot.addEventListener('change', e => wearWasChanged(e));
 	initiateFirstID();
 	weapons = await loadJson("../json/weapons.json");

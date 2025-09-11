@@ -1,9 +1,24 @@
 {
+    "100":{
+        "objectType":"quasiWeapon",
+        "name":"Physically Attacking",
+        "id":"100",
+        "aliases":["Fists","Strength Attacking"],
+        "wikiStars": {
+            "viability":0,
+            "ease":0
+        },
+        "statConfig":[]
+    },
     "101": {
         "objectType":"weapon",
         "id":"101",
         "name":"Great Sword",
         "aliases":["Sword","Gsword"],
+        "wikiStars": {
+            "viability":1,
+            "ease":4
+        },
         "statConfig":[
             {
                 "min":35,
@@ -11,7 +26,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"STR",
+                "emoji":["STR"],
                 "unit":"%",
                 "digits":4
 
@@ -21,7 +36,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -45,6 +60,10 @@
         "id":"102",
         "name":"Healing Staff",
         "aliases":["Hstaff","Healstaff"],
+        "wikiStars": {
+            "viability":0,
+            "ease":2
+        },
         "statConfig":[
             {
                 "min":100,
@@ -52,7 +71,7 @@
                 "range":50,
                 "step":0.5,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG"],
                 "unit":"%",
                 "digits":5
             },{
@@ -61,7 +80,7 @@
                 "range":-75,
                 "step":0.75,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":6
             }
@@ -85,6 +104,10 @@
         "id":"103",
         "name":"Bow",
         "aliases":[],
+        "wikiStars": {
+            "viability":4,
+            "ease":3
+        },
         "statConfig":[
             {
                 "min":110,
@@ -92,7 +115,7 @@
                 "range":50,
                 "step":0.5,
                 "type":"",
-                "emoji":"STR",
+                "emoji":["STR"],
                 "unit":"%",
                 "digits":5
             },{
@@ -101,7 +124,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -125,6 +148,10 @@
         "id":"104",
         "name":"Rune of the Forgotten",
         "aliases":["Rune"],
+        "wikiStars": {
+            "viability":4,
+            "ease":3
+        },
         "statConfig":[
             {
                 "min":5,
@@ -132,7 +159,7 @@
                 "range":10,
                 "step":0.1,
                 "type":"",
-                "emoji":"stat_increase",
+                "emoji":["all_stats","stat_increase"],
                 "unit":"%",
                 "digits":4
             }
@@ -156,6 +183,10 @@
         "id":"105",
         "name":"Defender's Aegis",
         "aliases":["Shield","Aegis"],
+        "wikiStars": {
+            "viability":5,
+            "ease":5
+        },
         "statConfig":[
             {
                 "min":30,
@@ -163,7 +194,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"taunt",
+                "emoji":["taunt"],
                 "unit":"%",
                 "digits":4
             },{
@@ -172,7 +203,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -196,6 +227,10 @@
         "id":"106",
         "name":"Orb of Potency",
         "aliases":["Orb"],
+        "wikiStars": {
+            "viability":1,
+            "ease":1
+        },
         "statConfig":[],
         "description": "**Description:** This weapon has no active ability, but comes with two passives!",
         "product":{
@@ -216,6 +251,10 @@
         "id":"107",
         "name":"Vampiric Staff",
         "aliases":["Vstaff","Vampstaff"],
+        "wikiStars": {
+            "viability":1,
+            "ease":2
+        },
         "statConfig":[
             {
                 "min":25,
@@ -223,7 +262,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG"],
                 "unit":"%",
                 "digits":4
             },{
@@ -232,7 +271,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -256,6 +295,10 @@
         "id":"108",
         "name":"Poison Dagger",
         "aliases":["Dagger","Pdag"],
+        "wikiStars": {
+            "viability":4,
+            "ease":4
+        },
         "statConfig":[
             {
                 "min":70,
@@ -263,7 +306,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"STR",
+                "emoji":["STR"],
                 "unit":"%",
                 "digits":5
             },
@@ -273,7 +316,7 @@
                 "range":25,
                 "step":0.25,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG","poison"],
                 "unit":"%",
                 "digits":5
             },{
@@ -282,7 +325,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -306,6 +349,10 @@
         "id":"109",
         "name":"Wand of Absorption",
         "aliases":["Wand","Awand"],
+        "wikiStars": {
+            "viability":4,
+            "ease":0
+        },
         "statConfig":[
             {
                 "min":80,
@@ -313,7 +360,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG"],
                 "unit":"%",
                 "digits":5
             },
@@ -323,7 +370,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"wp_transfer",
+                "emoji":["wp_transfer"],
                 "unit":"%",
                 "digits":4
             },{
@@ -331,7 +378,7 @@
                 "max":150,
                 "range":-100,
                 "step":1,
-                "type":"WP-Cost",
+                "type":["WP-Cost"],
                 "emoji":"WP",
                 "unit":"",
                 "digits":3
@@ -356,6 +403,10 @@
         "id":"110",
         "name":"Flame Staff",
         "aliases":["Fstaff"],
+        "wikiStars": {
+            "viability":1,
+            "ease":2
+        },
         "statConfig":[
             {
                 "min":75,
@@ -363,7 +414,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG"],
                 "unit":"%",
                 "digits":4
             },
@@ -373,7 +424,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG","flame"],
                 "unit":"%",
                 "digits":4
             },
@@ -383,7 +434,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG","explosion"],
                 "unit":"%",
                 "digits":4
             },{
@@ -392,7 +443,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -416,6 +467,10 @@
         "id":"111",
         "name":"Energy Staff",
         "aliases":["Estaff"],
+        "wikiStars": {
+            "viability":4,
+            "ease":3
+        },
         "statConfig":[
             {
                 "min":35,
@@ -423,7 +478,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG"],
                 "unit":"%",
                 "digits":4
             },{
@@ -432,7 +487,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -456,6 +511,10 @@
         "id":"112",
         "name":"Spirit Staff",
         "aliases":["Sstaff"],
+        "wikiStars": {
+            "viability":3,
+            "ease":4
+        },
         "statConfig":[
             {
                 "min":30,
@@ -463,7 +522,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG"],
                 "unit":"%",
                 "digits":4
             },
@@ -473,7 +532,7 @@
                 "range":10,
                 "step":0.1,
                 "type":"",
-                "emoji":"defup",
+                "emoji":["defup"],
                 "unit":"%",
                 "digits":4
             },{
@@ -482,7 +541,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -506,6 +565,10 @@
         "id":"113",
         "name":"Arcane Scepter",
         "aliases":["Scepter","Ascept"],
+        "wikiStars": {
+            "viability":0,
+            "ease":0
+        },
         "statConfig":[
             {
                 "min":40,
@@ -513,7 +576,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG"],
                 "unit":"%",
                 "digits":4
             },{
@@ -522,7 +585,7 @@
                 "range":-75,
                 "step":0.75,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":6
             }
@@ -546,6 +609,10 @@
         "id":"114",
         "name":"Resurrection Staff",
         "aliases":["Rstaff"],
+        "wikiStars": {
+            "viability":5,
+            "ease":5
+        },
         "statConfig":[
             {
                 "min":50,
@@ -553,7 +620,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG"],
                 "unit":"%",
                 "digits":4
             },{
@@ -562,7 +629,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -586,6 +653,10 @@
         "id":"115",
         "name":"Glacial Axe",
         "aliases":["Axe","Gaxe"],
+        "wikiStars": {
+            "viability":2,
+            "ease":2
+        },
         "statConfig":[
             {
                 "min":20,
@@ -593,7 +664,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"STR",
+                "emoji":["STR"],
                 "unit":"%",
                 "digits":4
             },{
@@ -602,7 +673,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -626,6 +697,10 @@
         "id":"116",
         "name":"Vanguard's Banner",
         "aliases":["Banner","Vban"],
+        "wikiStars": {
+            "viability":0,
+            "ease":1
+        },
         "statConfig":[
             {
                 "min":15,
@@ -633,7 +708,7 @@
                 "range":10,
                 "step":0.1,
                 "type":"",
-                "emoji":"attup",
+                "emoji":["attup"],
                 "unit":"%",
                 "digits":4
             },
@@ -643,7 +718,7 @@
                 "range":10,
                 "step":0.1,
                 "type":"",
-                "emoji":"attup+",
+                "emoji":["attup+"],
                 "unit":"%",
                 "digits":4
             },
@@ -653,7 +728,7 @@
                 "range":10,
                 "step":0.1,
                 "type":"",
-                "emoji":"attup++",
+                "emoji":["attup++"],
                 "unit":"%",
                 "digits":4
             },{
@@ -662,7 +737,7 @@
                 "range":-50,
                 "step":0.5,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":5
             }
@@ -686,6 +761,10 @@
         "id":"117",
         "name":"Culling Scythe",
         "aliases":["Scythe","Cscythe"],
+        "wikiStars": {
+            "viability":5,
+            "ease":2
+        },
         "statConfig":[
             {
                 "min":70,
@@ -693,7 +772,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"STR",
+                "emoji":["STR"],
                 "unit":"%",
                 "digits":5
             },
@@ -703,7 +782,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"mort",
+                "emoji":["HP","mort"],
                 "unit":"%",
                 "digits":4
             },{
@@ -712,7 +791,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -736,6 +815,10 @@
         "id":"118",
         "name":"Rune of Celebration",
         "aliases":["Crune","Roc"],
+        "wikiStars": {
+            "viability":5,
+            "ease":2
+        },
         "statConfig":[
             {
                 "min":20,
@@ -743,7 +826,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"iPR",
+                "emoji":["iPR","celeb"],
                 "unit":"%",
                 "digits":4
             },
@@ -753,7 +836,7 @@
                 "range":25,
                 "step":0.25,
                 "type":"",
-                "emoji":"iMR",
+                "emoji":["iMR","celeb"],
                 "unit":"%",
                 "digits":5
             },{
@@ -762,7 +845,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -786,6 +869,10 @@
         "id":"119",
         "name":"Staff of Purity",
         "aliases":["Pstaff"],
+        "wikiStars": {
+            "viability":4,
+            "ease":2
+        },
         "statConfig":[
             {
                 "min":50,
@@ -793,7 +880,7 @@
                 "range":50,
                 "step":0.5,
                 "type":"",
-                "emoji":"STR",
+                "emoji":["STR"],
                 "unit":"%",
                 "digits":5
             },
@@ -803,7 +890,7 @@
                 "range":50,
                 "step":0.5,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG"],
                 "unit":"%",
                 "digits":5
             },{
@@ -812,7 +899,7 @@
                 "range":-75,
                 "step":0.75,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":6
             }
@@ -836,6 +923,10 @@
         "id":"120",
         "name":"Leeching Scythe",
         "aliases":["Lscythe"],
+        "wikiStars": {
+            "viability":5,
+            "ease":2
+        },
         "statConfig":[
             {
                 "min":50,
@@ -843,7 +934,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"STR",
+                "emoji":["STR"],
                 "unit":"%",
                 "digits":4
             },
@@ -853,7 +944,7 @@
                 "range":20,
                 "step":0.2,
                 "type":"",
-                "emoji":"STR",
+                "emoji":["STR"],
                 "unit":"%",
                 "digits":4
             },
@@ -863,7 +954,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"leech",
+                "emoji":["HP","leech"],
                 "unit":"%",
                 "digits":4
             },
@@ -873,7 +964,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"leech",
+                "emoji":["WP","leech"],
                 "unit":"%",
                 "digits":4
             },{
@@ -882,7 +973,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -906,6 +997,10 @@
         "id":"121",
         "name":"Foul Fish",
         "aliases":["Ffish"],
+        "wikiStars": {
+            "viability":5,
+            "ease":1
+        },
         "statConfig":[
             {
                 "min":50,
@@ -913,7 +1008,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"STR",
+                "emoji":["STR"],
                 "unit":"%",
                 "digits":4
             },
@@ -923,7 +1018,7 @@
                 "range":30,
                 "step":0.3,
                 "type":"",
-                "emoji":"MAG",
+                "emoji":["MAG","stinky"],
                 "unit":"%",
                 "digits":4
             },{
@@ -932,7 +1027,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
@@ -956,6 +1051,10 @@
         "id":"122",
         "name":"Rune of Luck",
         "aliases":["Lrune"],
+        "wikiStars": {
+            "viability":0,
+            "ease":1
+        },
         "statConfig":[
             {
                 "min":1,
@@ -963,7 +1062,7 @@
                 "range":39,
                 "step":0.39,
                 "type":"",
-                "emoji":"StrMag",
+                "emoji":["StrMag"],
                 "unit":"%",
                 "digits":5
             },
@@ -973,7 +1072,7 @@
                 "range":39,
                 "step":0.39,
                 "type":"",
-                "emoji":"StrMag",
+                "emoji":["StrMag"],
                 "unit":"%",
                 "digits":5
             },
@@ -983,7 +1082,7 @@
                 "range":39,
                 "step":0.39,
                 "type":"",
-                "emoji":"StrMag",
+                "emoji":["StrMag"],
                 "unit":"%",
                 "digits":5
             },
@@ -993,7 +1092,7 @@
                 "range":39,
                 "step":0.39,
                 "type":"",
-                "emoji":"StrMag",
+                "emoji":["StrMag"],
                 "unit":"%",
                 "digits":5
             },
@@ -1003,7 +1102,7 @@
                 "range":39,
                 "step":0.39,
                 "type":"",
-                "emoji":"StrMag",
+                "emoji":["StrMag"],
                 "unit":"%",
                 "digits":5
             },{
@@ -1012,7 +1111,7 @@
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
-                "emoji":"WP",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }
