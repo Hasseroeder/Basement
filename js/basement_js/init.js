@@ -24,14 +24,6 @@ function createImage(attrs = {}, styles = {}) {
 	return img;
 }
 
-function applyContent(el, content) {
-	if (typeof content === "string") {
-		el.innerHTML = content;
-		return;
-	}
-	el.appendChild(content);
-}
-
 const injectors = [
   {
 		selector: "#navbar",
@@ -39,20 +31,23 @@ const injectors = [
 			return fetch("./donatorPages/navBar.html")
 				.then(r => r.text())
 				.then(async html => {
-					const container = document.querySelector("#navbar");
-					container.innerHTML = html;
+          const template = document.createElement('template');
+          template.innerHTML = html;
+          const fragment = template.content;
+
 					const weapons = await loadJson("../json/weapons.json");
 					const passives = await loadJson("../json/passives.json");
 
 					gridInjector({
-						container: container.querySelector('#menuWeaponContainer'),
-						items: [weapons,afterWeapons],
-					});
+						container: fragment.querySelector('#menuWeaponContainer'),
+					  items: [weapons,afterWeapons],
+            onItemClick: item => { console.log("Clicked item:", item.name); }
+          });
 					gridInjector({
-						container: container.querySelector("#menuPassiveContainer"),
+						container: fragment.querySelector("#menuPassiveContainer"),
 						items: [passives]
 					});
-					return container.innerHTML;
+					return fragment;
 				});
 		},
   },
@@ -80,17 +75,13 @@ const injectors = [
 				const img = document.createElement("img");
 				img.src = src[0];
 				img.className="blinkie";
-				let elementToAppend = img;
-
-				if (src[1]) {
-					const link = document.createElement("a");
-					link.href = src[1];
-					link.style= "display:block; flex: 1 1 0;";
-					link.append(img);
-					link.target="_blank";
-					elementToAppend = link;
-				}
-				wrapper.append(elementToAppend);    
+				const link = document.createElement("a");
+        link.style= "display:block; flex: 1 1 0;";
+        link.append(img);
+        link.target="_blank";
+        link.href = src[1]??"";
+					
+				wrapper.append(link);    
 			});
 
 			return Promise.resolve(wrapper);
@@ -158,11 +149,7 @@ function initInjectors() {
     const el = document.querySelector(selector);
     if (!el) return;
 
-    load()
-      .then(content => applyContent(el, content))
-      .catch(err =>
-        console.error(`Failed to inject ${selector}:`, err)
-      );
+    load().then(child => el.append(child));
   });
 }
 

@@ -388,8 +388,8 @@
                 "max":150,
                 "range":-100,
                 "step":1,
-                "type":["WP-Cost"],
-                "emoji":"WP",
+                "type":"WP-Cost",
+                "emoji":["WP"],
                 "unit":"",
                 "digits":3
             }

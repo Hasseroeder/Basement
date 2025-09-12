@@ -48,3 +48,21 @@ function getImageLink(link, path, text){
 
 	return a;
 }
+
+function getClickableTile(imagePath, text) {
+	const el = document.createElement("button");
+	el.type = "button";
+	el.className = "tooltip";
+	const img = document.createElement("img");
+	img.src = imagePath;
+	img.style.width = "2.5rem";
+	const tip = document.createElement("div");
+	tip.className = "navBar-tooltip-text";
+	tip.innerHTML = text;
+	el.append(img, tip);
+
+	el.addEventListener("click", () => {
+		console.log("hello world");  
+	});
+	return el;
+}
