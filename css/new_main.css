@@ -8,14 +8,14 @@
     margin-right:2.5rem;
 }
 
-.toolbar a {
+.toolbar a,button {
     color: lightgray;
     padding: 0.5rem 0.5rem;
     text-decoration: none;
     margin: 0 5px;
 }
 
-.toolbar a:hover {
+.toolbar a:hover, button:hover{
     background-color: #555555;
     color: lightgray;
 }
@@ -29,7 +29,7 @@
   visibility:visible;
 }
 
-.toolbarSubMenu a {
+.toolbarSubMenu a,button {
   width: fit-content;
   display:flex;
   margin:0;
@@ -505,6 +505,7 @@ a:hover {
   min-height:1.85rem;
   align-content: center;
   font-size: 0.75rem;
+  text-align: left;
 }
 
 .cool-border {
@@ -871,4 +872,13 @@ a:hover {
   display:grid; 
   background-color: #333; 
   padding:0.5rem 0.5rem;
+}
+
+.unset-me{
+  border: unset;
+  height: unset;
+  border-radius: unset;
+  width: fit-content;
+  margin: unset;
+  display: flex;
 }

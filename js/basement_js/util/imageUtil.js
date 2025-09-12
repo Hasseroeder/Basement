@@ -4,8 +4,9 @@ export function gridInjector({
 		baseHref,								// baseHref
 		hashType= "id",							// type of hash the builder should add
 		onItemClick,							// event listener
-		columns = "repeat(3, 3.4rem)",			// custom styles for your grid
-		transform="translate(-2.70rem,1.5%)"	// custom styles for your grid
+		columns = "repeat(3, 3.5rem)",			// custom styles for your grid
+		transform="translate(-2.8rem,1.5%)"		// custom styles for your grid
+
     }){
 	
 	container.className="toolbarSubMenu navbar-grid";
@@ -25,44 +26,27 @@ export function gridInjector({
 		var text  = (item.objectType=='weapon' ? shortHand : item.name)
 				  + (item.showThisID? "<br>"+item.id : "");
 
-
-		const el = onItemClick
-				? getClickableTile(imagePath, text)      
-				: getImageLink(link, imagePath, text);
+		const el = getImageLink(onItemClick, item, link, imagePath, text);
 
 		container.append(el);
 	});
 }
 
-function getImageLink(link, path, text){
-	const a = document.createElement("a");
-	a.href = link;
-	a.className = "tooltip";
+function getImageLink(onClick, item, link, path, text){
+	const el = document.createElement(onClick?"button":"a");
+	el.href = link;
+	el.className = "tooltip unset-me";
 	const img = document.createElement("img");
 	img.src = path;
 	img.style.width = "2.5rem";
 	const tooltip = document.createElement("div");
 	tooltip.innerHTML = text;
 	tooltip.className = "navBar-tooltip-text";
-	a.append(img,tooltip);
+	el.append(img,tooltip);
 
-	return a;
-}
+	if (onClick){
+		el.addEventListener("click", () => onClick(item));
+	}
 
-function getClickableTile(imagePath, text) {
-	const el = document.createElement("button");
-	el.type = "button";
-	el.className = "tooltip";
-	const img = document.createElement("img");
-	img.src = imagePath;
-	img.style.width = "2.5rem";
-	const tip = document.createElement("div");
-	tip.className = "navBar-tooltip-text";
-	tip.innerHTML = text;
-	el.append(img, tip);
-
-	el.addEventListener("click", () => {
-		console.log("hello world");  
-	});
 	return el;
 }
