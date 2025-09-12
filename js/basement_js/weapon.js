@@ -34,12 +34,8 @@ function updateWeaponDisplay(){
     var weaponShorthand= weapon.aliases[0]? weapon.aliases[0]: weapon.name;
     weaponShorthand = weaponShorthand.toLowerCase();
 
-    if (weapon.objectType!="weapon"){
-        //exception for fists, because they don't really have any ID
-        weaponDisplay.text.textContent= `??? - fists`;
-    }else{
-        weaponDisplay.text.textContent= `${currentWeaponID} - ${weaponShorthand}`;
-    }
+    weaponDisplay.text.textContent  = weapon.showThisID? currentWeaponID : "???";
+    weaponDisplay.text.textContent += ` - ${weaponShorthand}`;
     weaponDisplay.image.src= `media/owo_images/f_${weaponShorthand}.png`;
 
     fetch(`donatorPages/weapons/${currentWeaponID}.html`)
