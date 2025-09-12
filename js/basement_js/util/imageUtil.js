@@ -17,18 +17,19 @@ export function gridInjector({
 		{}
 	);
 
-	Object.values(combinedItems).forEach(({ aliases = [], name, path, objectType, id }) => {
+	Object.values(combinedItems).forEach(({aliases = [], name, path, objectType, id, isReal = true }) => {
 		const shortHand   = aliases[0] ?? name;
 		const imagePath   = path ?? `media/owo_images/f_${shortHand.toLowerCase()}.png`;
-
-		var objectTypeNew = objectType=="quasiWeapon"? "weapon": objectType; // fists count as real weapons here
-		var link          = `/${baseHref ?? objectTypeNew}.html`;	
+		var link          = `/${baseHref ?? objectType}.html`;	
 
 		const v = { id, name, shortHand }[hashType];
 		link += v ? `#${v}` : '';
 
-		var text  = objectType=='passive' ? name : shortHand
-				  + (wantIDs && objectType==='weapon' ? "<br>"+id : "");
+		console.log(objectType);
+		console.log(wantIDs && isReal);
+
+		var text  = (objectType=='weapon' ? shortHand : name)
+				  + (wantIDs && isReal? "<br>"+id : "");
 
 		container.append(
 			getImageLink(link, imagePath, text)

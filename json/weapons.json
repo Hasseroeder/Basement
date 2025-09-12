@@ -1,8 +1,9 @@
 {
     "100":{
-        "objectType":"quasiWeapon",
+        "objectType":"weapon",
         "name":"Physically Attacking",
         "id":"100",
+        "isReal":false,
         "aliases":["Fists","Strength Attacking"],
         "wikiStars": {
             "viability":0,
