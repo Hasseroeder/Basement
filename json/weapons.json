@@ -16,7 +16,7 @@
         "id":"101",
         "showThisID":true,
         "name":"Great Sword",
-        "aliases":["Sword","Gsword"],
+        "aliases":["Sword","Gsword","Greatsword"],
         "wikiStars": {
             "viability":1,
             "ease":4
@@ -303,7 +303,7 @@
         "id":"108",
         "showThisID":true,
         "name":"Poison Dagger",
-        "aliases":["Dagger","Pdag"],
+        "aliases":["Dagger","Pdagger","Pdag","Pd"],
         "wikiStars": {
             "viability":4,
             "ease":4
@@ -578,7 +578,7 @@
         "id":"113",
         "showThisID":true,
         "name":"Arcane Scepter",
-        "aliases":["Scepter","Ascept"],
+        "aliases":["Scepter","Arcane","Ascept"],
         "wikiStars": {
             "viability":0,
             "ease":0
@@ -778,7 +778,7 @@
         "id":"117",
         "showThisID":true,
         "name":"Culling Scythe",
-        "aliases":["Scythe","Cscythe"],
+        "aliases":["Scythe","Sythe","Cscythe","Csy","Csyth"],
         "wikiStars": {
             "viability":5,
             "ease":2
@@ -833,7 +833,7 @@
         "id":"118",
         "showThisID":true,
         "name":"Rune of Celebration",
-        "aliases":["Crune","Roc"],
+        "aliases":["Crune","Cel"],
         "wikiStars": {
             "viability":5,
             "ease":2
@@ -943,7 +943,7 @@
         "id":"120",
         "showThisID":true,
         "name":"Leeching Scythe",
-        "aliases":["Lscythe"],
+        "aliases":["Lscythe","Lsyth","Lsy"],
         "wikiStars": {
             "viability":5,
             "ease":2

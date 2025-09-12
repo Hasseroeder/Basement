@@ -50,6 +50,13 @@ const injectors = [
 				});
 		},
   },
+  {
+    slector: "#weaponImageGrid",
+    load: async () => {
+      const weapons = await loadJson("../json/weapons.json");
+      // TODO: make the new grid I'm planning to use for weaponsCalc page
+    }
+  },
 	{
 		selector: ".center-pillar",
 		load: () => {
@@ -95,7 +102,6 @@ const injectors = [
         padding: "2rem 2rem 2rem 2rem",
         margin: "2rem 10rem 2rem 10rem",
         border:"1px solid gray",
-
       });
 
       const gifPromise = fetch("../media/construction/construction-list.json")

@@ -24,6 +24,7 @@ function initiateFirstID(){
 	currentWeaponID = hash
 		? Number(hash)
 		: initWeaponID;
+	//weapons[number].
 }
 
 function wearNameToWearID(inputString){

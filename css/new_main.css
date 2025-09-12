@@ -573,13 +573,14 @@ a:hover {
 }
 
 .wikipedia-header{
-  padding:0.5rem 0rem; 
   background-color: #353535; 
-  width:100%; 
+  padding: 0.5rem 1.5rem;
   text-align: center; 
   align-content: center;
-  border: 1px solid gray;
+  border-bottom: 1px solid gray;
   min-height: 2.3rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .wikipedia-container{

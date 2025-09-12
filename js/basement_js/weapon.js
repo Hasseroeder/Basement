@@ -138,7 +138,7 @@ function createWikipediaTable(weapon){
             const cell = document.createElement("th");
             const wrapper = document.createElement("div");
             wrapper.style= "display:flex; justify-content: center; align-items: center; font-weight: normal;";
-            wrapper.innerHTML = extreme;
+            wrapper.innerHTML = extreme + stat.unit;
             
             stat.emoji.forEach(emoji=>{
                 const image = document.createElement("img");
