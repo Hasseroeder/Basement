@@ -2,6 +2,7 @@
     "1":{
         "objectType":"passive",
         "id":"1",
+        "showThisID":false,
         "name":"Strength",
         "aliases":["str"],
         "statConfig":[
@@ -20,6 +21,7 @@
     },"2":{
         "objectType":"passive",
         "id":"2",
+        "showThisID":false,
         "name":"Magic",
         "aliases":["mag"],
         "statConfig":[
@@ -38,6 +40,7 @@
     },"3":{
         "objectType":"passive",
         "id":"3",
+        "showThisID":false,
         "name":"Health Point",
         "aliases":["hp"],
         "statConfig":[
@@ -56,6 +59,7 @@
     },"4":{
         "objectType":"passive",
         "id":"4",
+        "showThisID":false,
         "name":"Weapon Point",
         "aliases":["wp"],
         "statConfig":[
@@ -74,6 +78,7 @@
     },"5":{
         "objectType":"passive",
         "id":"5",
+        "showThisID":false,
         "name":"Physical Resistance",
         "aliases":["pr"],
         "statConfig":[
@@ -92,6 +97,7 @@
     },"6":{
         "objectType":"passive",
         "id":"6",
+        "showThisID":false,
         "name":"Magical Resistance",
         "aliases":["mr"],
         "statConfig":[
@@ -110,6 +116,7 @@
     },"7":{
         "objectType":"passive",
         "id":"7",
+        "showThisID":false,
         "name":"Lifesteal",
         "aliases":["ls"],
         "statConfig":[
@@ -128,6 +135,7 @@
     },"8":{
         "objectType":"passive",
         "id":"8",
+        "showThisID":false,
         "name":"Thorns",
         "aliases":["th"],
         "statConfig":[
@@ -146,6 +154,7 @@
     },"9":{
         "objectType":"passive",
         "id":"9",
+        "showThisID":false,
         "name":"Mana Tap",
         "aliases":["mtap"],
         "statConfig":[
@@ -164,6 +173,7 @@
     },"10":{
         "objectType":"passive",
         "id":"10",
+        "showThisID":false,
         "name":"Absolve",
         "aliases":["absv"],
         "statConfig":[
@@ -182,6 +192,7 @@
     },"11":{
         "objectType":"passive",
         "id":"11",
+        "showThisID":false,
         "name":"Safeguard",
         "aliases":["sg"],
         "statConfig":[
@@ -200,6 +211,7 @@
     },"12":{
         "objectType":"passive",
         "id":"12",
+        "showThisID":false,
         "name":"Critical",
         "aliases":["crit"],
         "statConfig":[
@@ -227,6 +239,7 @@
     },"13":{
         "objectType":"passive",
         "id":"13",
+        "showThisID":false,
         "name":"Discharge",
         "aliases":["dc"],
         "statConfig":[
@@ -245,6 +258,7 @@
     },"14":{
         "objectType":"passive",
         "id":"14",
+        "showThisID":false,
         "name":"Kamikaze",
         "aliases":["kkaze"],
         "statConfig":[
@@ -263,6 +277,7 @@
     },"15":{
         "objectType":"passive",
         "id":"15",
+        "showThisID":false,
         "name":"Regeneration",
         "aliases":["hgen"],
         "statConfig":[
@@ -281,6 +296,7 @@
     },"16":{
         "objectType":"passive",
         "id":"16",
+        "showThisID":false,
         "name":"Energize",
         "aliases":["wgen"],
         "statConfig":[
@@ -299,6 +315,7 @@
     },"17":{
         "objectType":"passive",
         "id":"17",
+        "showThisID":false,
         "name":"Sprout",
         "aliases":["sprout"],
         "statConfig":[
@@ -317,6 +334,7 @@
     },"18":{
         "objectType":"passive",
         "id":"18",
+        "showThisID":false,
         "name":"Enrage",
         "aliases":["enrage"],
         "statConfig":[
@@ -335,6 +353,7 @@
     },"19":{
         "objectType":"passive",
         "id":"19",
+        "showThisID":false,
         "name":"Sacrifice",
         "aliases":["sac"],
         "statConfig":[
@@ -362,6 +381,7 @@
     },"20":{
         "objectType":"passive",
         "id":"20",
+        "showThisID":false,
         "name":"Snail",
         "aliases":["snail"],
         "statConfig":[
@@ -380,6 +400,7 @@
     },"21":{
         "objectType":"passive",
         "id":"21",
+        "showThisID":false,
         "name":"Knowledge",
         "aliases":["kno"],
         "statConfig":[

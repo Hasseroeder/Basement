@@ -2,10 +2,12 @@ import { gridInjector as gridInjector } from "./util/imageUtil.js";
 import { loadJson } from "./util/jsonUtil.js";
 
 const afterWeapons = {
-  weaponCalculator: {
-    name: "Weapon Calculator",
-    objectType: "weaponcalculator",
-	path:"./media/misc_images/cogwheel2.png"
+  weaponCalculator: { 
+    name: "Weapon Calculator",                // displayName
+    objectType: "weaponcalculator",           // href links to this
+    aliases: [],                              // needed to be consistent with rest of JSON
+    path:"./media/misc_images/cogwheel2.png", // image source
+    showThisID:false                          // id not shown
   }
 };
 
@@ -31,7 +33,7 @@ function applyContent(el, content) {
 }
 
 const injectors = [
-  	{
+  {
 		selector: "#navbar",
 		load: () => {
 			return fetch("./donatorPages/navBar.html")
@@ -45,16 +47,15 @@ const injectors = [
 					gridInjector({
 						container: container.querySelector('#menuWeaponContainer'),
 						items: [weapons,afterWeapons],
-            wantIDs: true
 					});
 					gridInjector({
 						container: container.querySelector("#menuPassiveContainer"),
-						items: [passives],
+						items: [passives]
 					});
 					return container.innerHTML;
 				});
 		},
-  	},
+  },
 	{
 		selector: ".center-pillar",
 		load: () => {

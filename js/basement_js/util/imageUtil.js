@@ -1,39 +1,36 @@
 export function gridInjector({
-        container,
-        items,
-		baseHref,
-		wantIDs,
-		hashType= "id",
-		columns = "repeat(3, 3.4rem)",
-		transform="translate(-2.70rem,1.5%)"
+        container,								// container
+        items,									// array of objects, those objects containing items
+		baseHref,								// baseHref
+		hashType= "id",							// type of hash the builder should add
+		onItemClick,							// event listener
+		columns = "repeat(3, 3.4rem)",			// custom styles for your grid
+		transform="translate(-2.70rem,1.5%)"	// custom styles for your grid
     }){
 	
 	container.className="toolbarSubMenu navbar-grid";
 	container.style.gridTemplateColumns=columns;
 	container.style.transform=transform;
 
-	const combinedItems = items.reduce(
-		(acc, itemMap) => ({ ...acc, ...itemMap }),
-		{}
-	);
+	const combined = items.reduce((acc, m) => ({ ...acc, ...m }), {});
 
-	Object.values(combinedItems).forEach(({aliases = [], name, path, objectType, id, isReal = true }) => {
-		const shortHand   = aliases[0] ?? name;
-		const imagePath   = path ?? `media/owo_images/f_${shortHand.toLowerCase()}.png`;
-		var link          = `/${baseHref ?? objectType}.html`;	
+	Object.values(combined).forEach(item => {
+		const shortHand   = item.aliases[0] ?? item.name;
+		const imagePath   = item.path ?? `media/owo_images/f_${shortHand.toLowerCase()}.png`;
+		var link          = `/${baseHref ?? item.objectType}.html`;	
 
-		const v = { id, name, shortHand }[hashType];
+		const v = { id: item.id, shortHand }[hashType];
 		link += v ? `#${v}` : '';
 
-		console.log(objectType);
-		console.log(wantIDs && isReal);
+		var text  = (item.objectType=='weapon' ? shortHand : item.name)
+				  + (item.showThisID? "<br>"+item.id : "");
 
-		var text  = (objectType=='weapon' ? shortHand : name)
-				  + (wantIDs && isReal? "<br>"+id : "");
 
-		container.append(
-			getImageLink(link, imagePath, text)
-		);
+		const el = onItemClick
+				? getClickableTile(imagePath, text)      
+				: getImageLink(link, imagePath, text);
+
+		container.append(el);
 	});
 }
 
@@ -41,16 +38,13 @@ function getImageLink(link, path, text){
 	const a = document.createElement("a");
 	a.href = link;
 	a.className = "tooltip";
-
 	const img = document.createElement("img");
 	img.src = path;
 	img.style.width = "2.5rem";
-	a.append(img);
-
 	const tooltip = document.createElement("div");
 	tooltip.innerHTML = text;
 	tooltip.className = "navBar-tooltip-text";
-	a.append(tooltip);
+	a.append(img,tooltip);
 
 	return a;
 }
