@@ -214,17 +214,18 @@ function getTierEmojiPath(stringOrQuality){
     }
 }
 
+function getWearBonus(wear){
+    const wearValues = {
+        pristine: 5,
+        fine:     3,
+        decent:   1,
+        worn:     0,
+        unknown:  0
+    };
+    return wearValues[wear] || 0;
+}
+
 function applyWearToWeapon(weapon,wear){
-	function getWearBonus(wear){
-		const wearValues = {
-			pristine: 5,
-			fine:     3,
-			decent:   1,
-			worn:     0,
-			unknown:  0
-		};
-		return wearValues[wear] || 0;
-	}
 	function getWearName(wear){
 		const wearValues = {
 			pristine: "Pristine\u00A0",
@@ -244,4 +245,4 @@ function applyWearToWeapon(weapon,wear){
 	weapon.product.blueprint.passive.forEach(passive => applyValues(passive));
 }
 
-export { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, applyWearToWeapon};
+export { getWearBonus, valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, applyWearToWeapon};

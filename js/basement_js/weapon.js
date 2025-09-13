@@ -35,7 +35,7 @@ function updateWeaponDisplay(){
     weaponShorthand = weaponShorthand.toLowerCase();
 
     weaponDisplay.text.textContent  = weapon.showThisID? currentWeaponID : "???";
-    weaponDisplay.text.textContent += ` - ${weaponShorthand}`;
+    weaponDisplay.text.textContent += " - " + weaponShorthand;
     weaponDisplay.image.src= `media/owo_images/f_${weaponShorthand}.png`;
 
     fetch(`donatorPages/weapons/${currentWeaponID}.html`)
@@ -94,9 +94,9 @@ function createWikipediaContainer(weapon,weaponShorthand){
     wikipediaStatsHeader.textContent="Stats";
 
     const calcLink = document.createElement("div");
-    if (currentWeaponID!=100){
+    if (weapon.showThisID){
         calcLink.style="padding: 0.5rem;";
-        calcLink.innerHTML= `<a href="/weaponcalculator.html#${currentWeaponID}">Calculator</a>`;
+        calcLink.innerHTML= `<a href="/weaponcalculator.html#${weaponShorthand}">Calculator</a>`;
     }
     
     wikipediaContainer.append(wikipediaHeader, wikipediaImage,wikipediaStars,wikipediaID,wikipediaStatsHeader,wikipediaTable,calcLink);

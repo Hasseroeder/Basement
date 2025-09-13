@@ -4,7 +4,7 @@
         "id":"1",
         "showThisID":false,
         "name":"Strength",
-        "aliases":["str"],
+        "aliases":["str","att"],
         "statConfig":[
             {
                 "min":5,
@@ -156,7 +156,7 @@
         "id":"9",
         "showThisID":false,
         "name":"Mana Tap",
-        "aliases":["mtap"],
+        "aliases":["mtap","manatap"],
         "statConfig":[
             {
                 "min":15,
@@ -260,7 +260,7 @@
         "id":"14",
         "showThisID":false,
         "name":"Kamikaze",
-        "aliases":["kkaze"],
+        "aliases":["kkaze","kk"],
         "statConfig":[
             {
                 "min":50,
@@ -279,7 +279,7 @@
         "id":"15",
         "showThisID":false,
         "name":"Regeneration",
-        "aliases":["hgen"],
+        "aliases":["hgen","regen"],
         "statConfig":[
             {
                 "min":5,
@@ -298,7 +298,7 @@
         "id":"16",
         "showThisID":false,
         "name":"Energize",
-        "aliases":["wgen"],
+        "aliases":["wgen","energ"],
         "statConfig":[
             {
                 "min":20,
@@ -317,7 +317,7 @@
         "id":"17",
         "showThisID":false,
         "name":"Sprout",
-        "aliases":["sprout"],
+        "aliases":["sprout","sprt"],
         "statConfig":[
             {
                 "min":20,
