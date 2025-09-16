@@ -1,6 +1,6 @@
 import { numberFixedString } from '../util/stringUtil.js';
 import { createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan } from '../weaponCalculator/weaponCalcElementHelper.js'
-import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath } from '../weaponCalculator/weaponCalcUtil.js'
+import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
 import { clampNumber } from '../util/inputUtil.js';
 import { generatePassiveInputs } from './weaponCalcPassive.js';
 
@@ -102,51 +102,44 @@ class WeaponStat {
         this.weaponOrPassive = weaponOrPassive;
         this.weapon          = weapon;
 
-        this.percentageConfig = {
-            get bonus() { return this.owner._getWearBonus(); },
-            get min()   { return this.bonus; },
-            get max()   { return 100 + this.bonus; },
-            get range() { return this.max - this.min; },
-            step: 1, unit: "%", digits: 3,
-            owner: this
-        };
-
         syncWear(this.weapon);
         this._buildDOM();
-        const temp = percentToValue(this.stat.noWear, this._wearConfig());
+        const temp = percentToValue(this.stat.noWear, getWearConfig(this.config,this.wear));
         this._syncAll(+temp.toFixed(6));
     }
 
-    _getWearBonus() {
-        const src = this.weaponOrPassive;
-        return src.objectType === "passive"
-            ? src.wearBonus
-            : src.product.blueprint.wearBonus;
+    get wearBonus() {
+        return this.weapon.product.blueprint.wearBonus;
+    }
+    
+    get wear() {
+        return this.weapon.product.blueprint.wear;
     }
 
-    _wearConfig() {
-        const bonus = (this.config.range / 100) * this._getWearBonus();
+    get percentageConfig() {
+        const bonus = this.wearBonus;
         return {
-            ...this.config,
-            min: this.config.min + bonus,
-            max: this.config.max + bonus
+            bonus:  bonus,
+            min:    bonus,
+            max:    100 + bonus,
+            range:  100, step: 1, unit: '%', digits: 3
         };
     }
 
     _buildDOM() {
         this.outerWrapper = createStatWrapper("outerInputWrapperFromCalculator");
         this.wrapper      = createStatWrapper("inputWrapperFromCalculator tooltip-lite");
-        this.numberInput  = createRangedInput("number", this._wearConfig());
-        this.numberLabel  = createUnitSpan(this._wearConfig().unit);
+        this.numberInput  = createRangedInput("number", getWearConfig(this.config,this.wear));
+        this.numberLabel  = createUnitSpan(this.config.unit);
         this.qualityInput = createRangedInput("number", this.percentageConfig, true);
-        this.qualityLabel = createUnitSpan(this.percentageConfig.unit);
-        this.slider       = createRangedInput("range",  this._wearConfig());
+        this.qualityLabel = createUnitSpan("%");
+        this.slider       = createRangedInput("range",  getWearConfig(this.config,this.wear));
         this.img          = getTierEmoji(getRarity(this.stat.withWear));
         this.tooltip      = createStatTooltip([ this.img, this.qualityInput, this.qualityLabel, this.slider ]);
 
         this.wrapper.append(
             this.numberInput,
-            ...(this._wearConfig().unit ? [this.numberLabel] : []),
+            this.numberLabel,
             this.tooltip
         );
         this.outerWrapper.append(this.wrapper);
@@ -179,7 +172,7 @@ class WeaponStat {
         this.slider.value       = value;
 
         const pct       = valueToPercent(value, this.config);
-        const noWearPct = valueToPercent(value, this._wearConfig());
+        const noWearPct = valueToPercent(value, getWearConfig(this.config,this.wear));
 
         this.qualityInput.value = pct;
         this.img.src            = getTierEmojiPath(pct);
@@ -198,15 +191,16 @@ class WeaponStat {
         this.weapon          = weapon;
 
         [this.numberInput, this.slider].forEach(el => {
-            el.min   = Math.min(this._wearConfig().max,this._wearConfig().min);
-            el.max   = Math.max(this._wearConfig().max,this._wearConfig().min);
+            const { min, max, step } = getWearConfig(this.config,this.wear);
+            el.min = Math.min(min, max);
+            el.max = Math.max(min, max);
             // we need to look for the min and max here because WP cost has a lower max and higher min
-            el.step  = this._wearConfig().step;
+            el.step  = step;
         });
         this.qualityInput.min = this.percentageConfig.min;
         this.qualityInput.max = this.percentageConfig.max;
 
-        const temp = percentToValue(this.stat.noWear, this._wearConfig());
+        const temp = percentToValue(this.stat.noWear, getWearConfig(this.config,this.wear));
         this._syncAll(+temp.toFixed(6));
     }
 

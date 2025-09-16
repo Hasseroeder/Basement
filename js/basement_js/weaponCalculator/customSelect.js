@@ -226,9 +226,9 @@ function attachEventListeners() {
     listbox.addEventListener('keydown', onListboxKeyDown);
 }
 
-export function initCustomSelect() {
+export function initCustomSelect(firstWearID) {
     const root = document.getElementById('wearSelect');
-    selectIndex(0);
+    selectIndex(firstWearID); // I would need this if I ever initiate without adding index directly afterwards
     attachEventListeners();
     return root;
 }

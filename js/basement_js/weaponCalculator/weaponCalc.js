@@ -1,8 +1,8 @@
-import { initCustomSelect } from './customSelect.js';
+import { initCustomSelect, selectIndex } from './customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
 import { updateEverything,generateEverything } from './weaponCalcMessageGenerator.js';
 import { initiatePassiveStuffs } from './weaponCalcPassive.js';
-import { fillMissingWeaponInfo,applyWearToWeapon,valueToPercent,getWearBonus } from './weaponCalcUtil.js'
+import { fillMissingWeaponInfo,applyWearToWeapon,valueToPercent, getWearConfig } from './weaponCalcUtil.js'
 
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
 
@@ -11,25 +11,29 @@ let currentWeapon;
 const initWeaponID = 101;	// this should basically never be used, TODO: remove it
 
 async function initWeaponCalc(){
-	const wearSelectRoot = initCustomSelect();
-	wearSelectRoot.addEventListener('change', e => wearWasChanged(e));
 	weapons = await loadJson("../json/weapons.json");
 	delete weapons[100]; // gotta get rid of fists
 	initiateFirstWeapon();
 	loadWeaponTypeData();
+
+	const wearSelectRoot = initCustomSelect(
+		wearNameToWearID(currentWeapon.product.blueprint.wear)
+	);
+	wearSelectRoot.addEventListener('change', e => wearWasChanged(e));
+
 	console.log(currentWeapon);
 }
 
-function getWeaponID(weapons, query) {
+function getWeaponID(objectToSearch, query) {
 	// query = ["worn","Bow"] or ["Bow"]
 	const queries = query.map(q => q.toLowerCase());
 
-	for (const id in weapons) {
-		const weapon = weapons[id];
-		const names = namesAndAliases(weapon);
+	for (const id in objectToSearch) {
+		const item = objectToSearch[id];
+		const names = namesAndAliases(item);
 		const matchIndex = queries.findIndex(q => checkArrayForQuery(names, q));
 
-		if (matchIndex !== -1) return { matchIndex: matchIndex, id: weapon.id };
+		if (matchIndex !== -1) return { matchIndex: matchIndex, id: item.id };
 	}
 	return { matchIndex: -1, id: initWeaponID };
 }
@@ -67,15 +71,6 @@ function getWeaponStats(weapons,weapon,array){
 		// assume fabled when stats aren't valid
 		return Array(statAmount).fill({noWear:100});	
 	}
-}
-
-function getWearConfig(config,wear) {
-	const bonus = (config.range / 100) * getWearBonus(wear);
-	return {
-		...config,
-		min: config.min + bonus,
-		max: config.max + bonus
-	};
 }
 
 function isValidJoinedNumbers(str) {

@@ -336,7 +336,7 @@
         "id":"18",
         "showThisID":false,
         "name":"Enrage",
-        "aliases":["enrage"],
+        "aliases":["enrage","enra"],
         "statConfig":[
             {
                 "min":1,
@@ -402,7 +402,7 @@
         "id":"21",
         "showThisID":false,
         "name":"Knowledge",
-        "aliases":["kno"],
+        "aliases":["kno","n"],
         "statConfig":[
             {
                 "min":5,

@@ -1,4 +1,6 @@
 function createUnitSpan(unit){
+    if (!unit) return "";
+
     const span = document.createElement("span");
     span.style.marginRight="0.2rem";
     span.textContent=unit;

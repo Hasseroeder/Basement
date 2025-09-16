@@ -245,4 +245,14 @@ function applyWearToWeapon(weapon,wear){
 	weapon.product.blueprint.passive.forEach(passive => applyValues(passive));
 }
 
-export { getWearBonus, valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, applyWearToWeapon};
+
+function getWearConfig(config,wear) {
+	const bonus = (config.range / 100) * getWearBonus(wear);
+	return {
+		...config,
+		min: config.min + bonus,
+		max: config.max + bonus
+	};
+}
+
+export { getWearConfig, getWearBonus, valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, applyWearToWeapon};
