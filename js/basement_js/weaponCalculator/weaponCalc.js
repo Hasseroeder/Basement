@@ -9,11 +9,13 @@ import { blueprintMain } from './blueprintParser.js';
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
 
 let weapons;
+let passives;
 let currentWeapon;
 
 async function initWeaponCalc(){
 	weapons = await loadJson("../json/weapons.json");
 	delete weapons[100]; // gotta get rid of fists
+	passives = await loadJson("../json/passives.json");
 	initiateFirstWeapon();
 	loadWeaponTypeData();
 
@@ -25,7 +27,7 @@ async function initWeaponCalc(){
 
 function initiateFirstWeapon(){
 	const hash = location.hash.substring(1);
-	const blueprintObject = blueprintMain(hash,weapons); // not the real main yet. This returns basically nothing and logs what it does.
+	const blueprintObject = blueprintMain(hash,weapons,passives); // not the real main yet. This returns basically nothing and logs what it does.
 
 	currentWeapon = weapons[blueprintObject.id];
 }

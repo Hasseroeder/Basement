@@ -1,5 +1,5 @@
 import { loadJson } from '../util/jsonUtil.js';
-import { generateDescription, generateEverything,displayInfo }  from '../weaponCalculator/weaponCalcMessageGenerator.js'
+import { generateDescription, displayInfo }  from '../weaponCalculator/weaponCalcMessageGenerator.js'
 import { getWeaponImage,fillMissingWeaponInfo,applyWearToWeapon } from './weaponCalcUtil.js';
 
 var passives;

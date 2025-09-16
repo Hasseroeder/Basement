@@ -29,82 +29,64 @@ function isOnlyNumbers(str){
 	return !/[^0-9\.,\s-]/.test(str);
 }
 
-function getSeparator(str) {
-	const match = str.match(/\d(\D)\d/);
-	return match ? match[1] : ',';
-}
-
-function namesAndAliases(weapon){
-	return [weapon.name, ...weapon.aliases]
-}
-
 function getWear(array){
-	const wearValues = {
-		unknown:"worn",
-		worn:"worn",
-		decent:"decent",
-		fine:"fine",
-		pristine:"pristine"
-	}
+	const wearValues = { unknown:"worn", worn:"worn", decent:"decent", fine:"fine", pristine:"pristine" };
 	return wearValues[array[0]] || "worn";
 }
 
-
-function checkArrayForQuery(array,query){
-	return array.some(str => str.toLowerCase() === query);
-}
-
-function getWeaponStats(weapons,weapon,array){
-	const toCheck = array[weapon.matchIndex+1];
-	const statConfig = weapons[weapon.id].statConfig;
+function getStats(weaponsOrPassives,item,blueprintArray, { isWeapon=false, wear="worn" } = {}){
+	const toCheck = blueprintArray[item.matchIndex+1];
+	const statConfig = weaponsOrPassives[item.id].statConfig;
 	const statAmount = statConfig.length;
 
 	if (isOnlyNumbers(toCheck) && 
 		isValidJoinedNumbers(toCheck) &&
 		isCorrectStatAmount(toCheck,statAmount)
 	) {
-		const seperator = getSeparator(toCheck);
-		const tempStats = toCheck.split(seperator).map(Number); 
-		var statReturn = []
-		if (seperator!=",") tempStats.push(tempStats.shift());
-			// doing this because WP stat is first in "45-24" display and last in "24,45" display
-		
-		statConfig.forEach((config,i) => {
-			const wearConfig = getWearConfig(config,weapon.wear);
-			var toPush = seperator=="," ?
-				tempStats[i] : 
-				valueToPercent(tempStats[i], wearConfig);
-			toPush = Math.max(0,toPush);
-			toPush = Math.min(100,toPush);
-			statReturn.push({noWear:toPush});
-		});
-		return statReturn;	
+		const separator = toCheck.match(/\d(\D)\d/)?.[1] ?? ',';;
+		const tempStats = toCheck.split(separator).map(Number); 
+        if (separator!="," && isWeapon) tempStats.push(tempStats.shift());
+            // doing this because WP stat is first in "45-24" display and last in "24,45" display
+
+        return statConfig.map((config, i) => {
+            const wearConfig = getWearConfig(config, wear);
+            let toPush = separator === "," 
+                ? tempStats[i] 
+                : valueToPercent(tempStats[i], wearConfig);
+            toPush = Math.max(0, Math.min(100, toPush));
+            return { noWear: toPush };
+        });
+
 	}else{
-		// assume fabled when stats aren't valid
 		return Array(statAmount).fill({noWear:100});	
 	}
 }
 
-function getWeaponID(objectToSearch, query) {
-	// query = ["worn","Bow"] or ["Bow"]
-	const queries = query.map(q => q.toLowerCase());
-
-	for (const id in objectToSearch) {
-		const item = objectToSearch[id];
-		const names = namesAndAliases(item);
-		const matchIndex = queries.findIndex(q => checkArrayForQuery(names, q));
-
-		if (matchIndex !== -1) return { matchIndex: matchIndex, id: item.id };
-	}
-	return { matchIndex: -1, id: initWeaponID };
+function itemIDs(objectToSearch, query) {
+    const queries   = query.map(q => q.toLowerCase());
+    const items     = Object.values(objectToSearch);
+    const results   = queries.flatMap((q, idx) => {
+        return items.filter(item =>
+            [item.name, ...item.aliases].some(n => n.toLowerCase() === q)
+        ).map(item => ({ id: item.id, matchIndex: idx }));
+    });
+    return results;
 }
 
-export function blueprintMain(inputHash, weapons){
-	var blueprintArray = splitHypenSpaces(inputHash);
-	const blueprintObject= getWeaponID(weapons,blueprintArray.slice(0, 2));
-	blueprintObject.wear= getWear(blueprintArray);
-	blueprintObject.stats= getWeaponStats(weapons,blueprintObject,blueprintArray);
+export function blueprintMain(inputHash, weapons, passives){
+    const tokens         = splitHypenSpaces(inputHash);
+    const weapon         = itemIDs(weapons, tokens)[0] ?? { id: initWeaponID, matchIndex: -1 };
+    const wear           = getWear(tokens);
+    const stats          = getStats(weapons, weapon, tokens, { isWeapon: true, wear });
+    const passiveMatches = itemIDs(passives, tokens);
 
-	console.log(blueprintObject);
-    return blueprintObject;
+    return {
+        ...weapon,
+        wear,
+        stats,
+        passives: passiveMatches.map(p => ({
+            ...p,
+            stats: getStats(passives, p, tokens, { wear }),
+        })),
+    };
 }
