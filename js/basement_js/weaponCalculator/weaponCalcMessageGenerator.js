@@ -194,11 +194,10 @@ class WeaponStat {
             const { min, max, step } = getWearConfig(this.config,this.wear);
             el.min = Math.min(min, max);
             el.max = Math.max(min, max);
-            // we need to look for the min and max here because WP cost has a lower max and higher min
             el.step  = step;
         });
-        this.qualityInput.min = this.percentageConfig.min;
-        this.qualityInput.max = this.percentageConfig.max;
+
+        Object.assign(this.qualityInput, this.percentageConfig);
 
         const temp = percentToValue(this.stat.noWear, getWearConfig(this.config,this.wear));
         this._syncAll(+temp.toFixed(6));
@@ -258,10 +257,6 @@ async function updateStatInputs(weapon){
     const blueprint = weapon.product.blueprint;
     blueprint.passive.forEach(passive => {
         passive.stats.forEach((stat,statIndex) => {
-            console.log(passive);
-            console.log(passive.statConfig);
-
-            // stat config doesn't exist
             const [_, statConfig] = getStat(
                 statIndex,
                 passive.stats,

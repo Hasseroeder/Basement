@@ -228,7 +228,7 @@ function attachEventListeners() {
 
 export function initCustomSelect(firstWearID) {
     const root = document.getElementById('wearSelect');
-    selectIndex(firstWearID); // I would need this if I ever initiate without adding index directly afterwards
+    selectIndex(firstWearID ?? 0);
     attachEventListeners();
     return root;
 }
