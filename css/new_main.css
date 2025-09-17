@@ -90,9 +90,7 @@
   padding:0.2em;
   text-align:end;
   display:block;
-  
-  /* TODO: remove this again */
-  background-color: #050505;
+    background-color: #050505;
 }
 
 .discord-message-outer{
@@ -346,8 +344,6 @@
   text-align:end;
   display:block;
   position: relative;
-  
-/* TODO: remove this again */
   background-color: #191919;
 }
 

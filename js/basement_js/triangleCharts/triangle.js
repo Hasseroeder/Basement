@@ -168,7 +168,7 @@ function createLabel(type, percent){
             yValue: getY(103-percent, percent),
             content: `${percent}`,
             color: 'lightgray',
-            rotation: -57.2957795 // TODO: decide whether to rotate this or keep it level
+            rotation: -57.2957795
         };
     }else if (type == 'tank'){
         return {
@@ -177,7 +177,7 @@ function createLabel(type, percent){
             yValue: getY(-3, 103- percent),
             content: `${percent}`,
             color: 'lightgray',
-            rotation: 57.2957795 // TODO: decide whether to rotate this or keep it level
+            rotation: 57.2957795
         };
     }
 }

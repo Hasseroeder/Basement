@@ -28,9 +28,17 @@ async function initWeaponCalc(){
 function wepFromHash(){
 	const hash = location.hash.substring(1);
 	const blueprintObject = blueprintMain(hash,weapons,passives);
-	const { stats, wear, passive } = blueprintObject;
+
 	const weapon = weapons[blueprintObject.id];
-	//Object.assign(weapon.product.blueprint, { stats, wear, passive });
+
+	weapon.product.blueprint = {
+		...weapon.product.blueprint,
+		stats: JSON.parse(JSON.stringify(blueprintObject.stats)),
+		wear: JSON.parse(JSON.stringify(blueprintObject.wear)),
+		passive: JSON.parse(JSON.stringify(blueprintObject.passive))
+		// I HAVE NO IDEA WHY I NEED TO CLONE THIS
+		// BUT ITS THE ONLY WAY TO GET IT WORKING
+	};
 
 	return weapon;
 }
@@ -42,10 +50,6 @@ function wearNameToWearID(inputString){
 
 async function initiateWeapon(weapon){
 	fillMissingWeaponInfo(weapon);		
-
-	// TODO: remove this logging statement
-	console.log(JSON.parse(JSON.stringify(weapon)));
-
 	await initiatePassiveStuffs(weapon);			
 	applyWearToWeapon(
 		weapon,
