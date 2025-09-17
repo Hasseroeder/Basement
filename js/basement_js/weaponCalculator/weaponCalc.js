@@ -16,43 +16,45 @@ async function initWeaponCalc(){
 	weapons = await loadJson("../json/weapons.json");
 	delete weapons[100]; // gotta get rid of fists
 	passives = await loadJson("../json/passives.json");
-	initiateFirstWeapon();
-	loadWeaponTypeData();
+	currentWeapon= wepFromHash();
+	initiateWeapon(currentWeapon);
 
 	const wearSelectRoot = initCustomSelect(
 		wearNameToWearID(currentWeapon.product.blueprint.wear)
 	);
-	wearSelectRoot.addEventListener('change', e => wearWasChanged(e));
+	wearSelectRoot.addEventListener('change', e => wearWasChanged(e,currentWeapon));
 }
 
-function initiateFirstWeapon(){
+function wepFromHash(){
 	const hash = location.hash.substring(1);
-	const blueprintObject = blueprintMain(hash,weapons,passives); // not the real main yet. This returns basically nothing and logs what it does.
+	const blueprintObject = blueprintMain(hash,weapons,passives);
+	const { stats, wear, passive } = blueprintObject;
+	const weapon = weapons[blueprintObject.id];
+	//Object.assign(weapon.product.blueprint, { stats, wear, passive });
 
-	currentWeapon = weapons[blueprintObject.id];
+	return weapon;
 }
 
 function wearNameToWearID(inputString){
-	const wearValues = {
-		pristine: 3,
-		fine:     2,
-		decent:   1,
-		worn:     0,
-	};
+	const wearValues = { pristine: 3, fine: 2, decent: 1, worn: 0, unknown: 0 };
 	return wearValues[inputString] || 0;
 }
 
-async function loadWeaponTypeData(){
-	fillMissingWeaponInfo(currentWeapon);		
-	await initiatePassiveStuffs(currentWeapon);			
+async function initiateWeapon(weapon){
+	fillMissingWeaponInfo(weapon);		
+
+	// TODO: remove this logging statement
+	console.log(JSON.parse(JSON.stringify(weapon)));
+
+	await initiatePassiveStuffs(weapon);			
 	applyWearToWeapon(
-		currentWeapon,
-		currentWeapon.product.blueprint.wear
+		weapon,
+		weapon.product.blueprint.wear
 	);
-	generateEverything(currentWeapon);	
+	generateEverything(weapon);	
 }
 
-function wearWasChanged(e){
-	applyWearToWeapon(currentWeapon,e.detail.value);
-	updateEverything(currentWeapon);
+function wearWasChanged(e,weapon){
+	applyWearToWeapon(weapon,e.detail.value);
+	updateEverything(weapon);
 }

@@ -1,6 +1,6 @@
 import { loadJson } from '../util/jsonUtil.js';
 import { generateDescription, displayInfo }  from '../weaponCalculator/weaponCalcMessageGenerator.js'
-import { getWeaponImage,fillMissingWeaponInfo,applyWearToWeapon } from './weaponCalcUtil.js';
+import { getWeaponImage,applyWearToWeapon } from './weaponCalcUtil.js';
 
 var passives;
 
@@ -23,7 +23,6 @@ export async function initiatePassiveStuffs(weapon){
 function generateNewPassive(id, weapon){
     const newPassive = giveMeNewPassive(id);
     weapon.product.blueprint.passive.push(newPassive);
-    fillMissingWeaponInfo(weapon);
     applyWearToWeapon(weapon,weapon.product.blueprint.wear);
     displayInfo(weapon);
     appendPassiveNode(newPassive, weapon);
@@ -32,7 +31,7 @@ function generateNewPassive(id, weapon){
 function giveMeNewPassive(id){
     return {
         id,
-        stats: passives[id].statConfig.map(() => ({})),
+        stats: passives[id].statConfig.map(() => ({noWear:100})),
         ...passives[id]
     };
 }

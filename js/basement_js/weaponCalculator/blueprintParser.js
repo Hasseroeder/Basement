@@ -56,7 +56,6 @@ function getStats(weaponsOrPassives,item,blueprintArray, { isWeapon=false, wear=
             toPush = Math.max(0, Math.min(100, toPush));
             return { noWear: toPush };
         });
-
 	}else{
 		return Array(statAmount).fill({noWear:100});	
 	}
@@ -81,12 +80,13 @@ export function blueprintMain(inputHash, weapons, passives){
     const passiveMatches = itemIDs(passives, tokens);
 
     return {
-        ...weapon,
+        id: weapon.id,
         wear,
         stats,
-        passives: passiveMatches.map(p => ({
-            ...p,
+        passive: passiveMatches.map(p => ({
+            id: p.id,
             stats: getStats(passives, p, tokens, { wear }),
-        })),
+            ...passives[p.id]
+        }))
     };
 }
