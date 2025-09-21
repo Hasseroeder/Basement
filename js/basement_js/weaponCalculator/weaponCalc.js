@@ -3,7 +3,7 @@ import { loadJson } from '../util/jsonUtil.js';
 import { updateEverything,generateEverything } from './weaponCalcMessageGenerator.js';
 import { initiatePassiveStuffs } from './weaponCalcPassive.js';
 import { fillMissingWeaponInfo,applyWearToWeapon } from './weaponCalcUtil.js'
-import { blueprintMain } from './blueprintParser.js';
+import { blueprintStringToWeapon } from './blueprintParser.js';
 
 
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
@@ -27,7 +27,7 @@ async function initWeaponCalc(){
 
 function wepFromHash(){
 	const hash = location.hash.substring(1);
-	const blueprintObject = blueprintMain(hash,weapons,passives);
+	const blueprintObject = blueprintStringToWeapon(hash,weapons,passives);
 
 	const weapon = weapons[blueprintObject.id];
 

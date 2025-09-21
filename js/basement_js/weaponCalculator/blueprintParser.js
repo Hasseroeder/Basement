@@ -72,7 +72,7 @@ function itemIDs(objectToSearch, query) {
     return results;
 }
 
-export function blueprintMain(inputHash, weapons, passives){
+export function blueprintStringToWeapon(inputHash, weapons, passives){
     const tokens         = splitHypenSpaces(inputHash);
     const weapon         = itemIDs(weapons, tokens)[0] ?? { id: initWeaponID, matchIndex: -1 };
     const wear           = getWear(tokens);
@@ -89,4 +89,29 @@ export function blueprintMain(inputHash, weapons, passives){
             ...passives[p.id]
         }))
     };
+}
+
+export function weaponToBlueprintString(weapon){
+    const formatStats = (stats) => {
+        const fmtStats = stats.every(({ noWear }) => noWear === 100)
+        return fmtStats ? "" : stats.map(({ noWear }) => noWear).join(",")
+    }
+    
+    const { blueprint } = weapon.product;
+    const { aliases,name } = weapon;
+
+    const wear = blueprint.wear !== "worn" ? blueprint.wear : "";
+    const shorthand = (aliases[0]?? name).toLowerCase();
+    const statstring = formatStats(blueprint.stats);  
+
+    const passiveParts = blueprint.passive.flatMap(
+        ({ aliases, name, stats }) => {
+            const shorthand = (aliases[0] ?? name).toLowerCase()
+            const statString = formatStats(stats)
+            return [shorthand, statString]
+        }
+    );
+
+    const parts = [wear, shorthand, statstring, ...passiveParts].filter(Boolean);
+    location.hash=parts.join("-");
 }

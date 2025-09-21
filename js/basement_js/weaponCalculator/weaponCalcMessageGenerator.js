@@ -3,6 +3,7 @@ import { createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan } 
 import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
 import { clampNumber } from '../util/inputUtil.js';
 import { generatePassiveInputs } from './weaponCalcPassive.js';
+import { weaponToBlueprintString } from './blueprintParser.js';
 
 const el = {
 	weaponHeader:	document.getElementById("weaponHeader"), 
@@ -182,6 +183,7 @@ class WeaponStat {
         calculateQualities(this.weapon);
         displayInfo(this.weapon);
         changePassiveEmote(this.weaponOrPassive);
+        weaponToBlueprintString(this.weapon)
     }
 
     update(productStat, config, weaponOrPassive, weapon) {

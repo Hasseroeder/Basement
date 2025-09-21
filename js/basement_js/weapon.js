@@ -1,4 +1,5 @@
 import { loadJson } from "./util/jsonUtil.js";
+import { capitalizeFirstLetter } from "./util/stringUtil.js";
 
 const weaponDisplay ={
     image: document.getElementById("weaponImage"),
@@ -31,14 +32,15 @@ function importFromHash(){
 
 function updateWeaponDisplay(){
     const weapon = weapons[currentWeaponID];
-    var weaponShorthand= weapon.aliases[0]? weapon.aliases[0]: weapon.name;
-    weaponShorthand = weaponShorthand.toLowerCase();
+    const weaponShorthand = (weapon.aliases[0]?? weapon.name)
+                            .toLowerCase();
 
-    weaponDisplay.text.textContent  = weapon.showThisID? currentWeaponID : "???";
-    weaponDisplay.text.textContent += " - " + weaponShorthand;
+    weaponDisplay.text.textContent  = (weapon.showThisID? weapon.id : "???")
+                                    + " - " 
+                                    + capitalizeFirstLetter(weaponShorthand);
     weaponDisplay.image.src= `media/owo_images/f_${weaponShorthand}.png`;
 
-    fetch(`donatorPages/weapons/${currentWeaponID}.html`)
+    fetch(`donatorPages/weapons/${weapon.id}.html`)
         .then(r => r.text())
         .then(html => weaponContainer.innerHTML = html)
         .then(()=>{
