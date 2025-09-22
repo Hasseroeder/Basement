@@ -92,7 +92,7 @@ const injectors = [
 
 			return Promise.resolve(wrapper);
 		},
-  	},
+  },
   {
     selector: "#construction",
     load: () => {
@@ -153,7 +153,6 @@ function initInjectors() {
   injectors.forEach(({ selector, load }) => {
     const el = document.querySelector(selector);
     if (!el) return;
-
     load().then(child => el.append(child));
   });
 }

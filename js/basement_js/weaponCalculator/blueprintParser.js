@@ -77,24 +77,24 @@ export function blueprintStringToWeapon(inputHash, weapons, passives){
     const weapon         = itemIDs(weapons, tokens)[0] ?? { id: initWeaponID, matchIndex: -1 };
     const wear           = getWear(tokens);
     const stats          = getStats(weapons, weapon, tokens, { isWeapon: true, wear });
-    const passiveMatches = itemIDs(passives, tokens);
+    const passive = itemIDs(passives, tokens).map(match => ({
+        id:    match.id,
+        stats: getStats(passives, match, tokens, { wear }),
+        ...passives[match.id]
+    }));
 
     return {
         id: weapon.id,
         wear,
         stats,
-        passive: passiveMatches.map(p => ({
-            id: p.id,
-            stats: getStats(passives, p, tokens, { wear }),
-            ...passives[p.id]
-        }))
+        passive
     };
 }
 
 export function weaponToBlueprintString(weapon){
     const formatStats = (stats) => {
-        const fmtStats = stats.every(({ noWear }) => noWear === 100)
-        return fmtStats ? "" : stats.map(({ noWear }) => noWear).join(",")
+        const isFabled = stats.every(({ noWear }) => noWear === 100)
+        return isFabled ? "" : stats.map(({ noWear }) => noWear).join(",")
     }
     
     const { blueprint } = weapon.product;
@@ -104,13 +104,14 @@ export function weaponToBlueprintString(weapon){
     const shorthand = (aliases[0]?? name).toLowerCase();
     const statstring = formatStats(blueprint.stats);  
 
-    const passiveParts = blueprint.passive.flatMap(
-        ({ aliases, name, stats }) => {
-            const shorthand = (aliases[0] ?? name).toLowerCase()
-            const statString = formatStats(stats)
-            return [shorthand, statString]
-        }
-    );
+    const passiveParts = blueprint.passive.length == 0
+        ? ["none"]
+        : blueprint.passive.flatMap(
+            ({ aliases, name, stats }) => [
+                (aliases[0]?? name).toLowerCase(), 
+                formatStats(stats)
+            ]
+        );
 
     const parts = [wear, shorthand, statstring, ...passiveParts].filter(Boolean);
     location.hash=parts.join("-");
