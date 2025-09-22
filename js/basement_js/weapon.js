@@ -160,13 +160,12 @@ function createWikipediaTable(weapon){
 async function main(){
     weapons = await loadJson("/json/weapons.json");
     weaponIDs = Object.keys(weapons).map(Number); 
-    pageNewLoad();
+    pageLoad();
     buttons.next.addEventListener("click", ()=>swapWeapon(+1));
     buttons.previous.addEventListener("click", ()=>swapWeapon(-1));
 }
 
-function pageNewLoad(){
-
+function pageLoad(){
     importFromHash();
     updateWeaponDisplay();
 }
@@ -182,4 +181,4 @@ function swapWeapon(change) {
 }
 
 document.addEventListener("DOMContentLoaded", main);
-window.addEventListener("hashchange", pageNewLoad);
+window.addEventListener("hashchange", pageLoad);

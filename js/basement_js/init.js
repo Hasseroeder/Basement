@@ -35,8 +35,10 @@ const injectors = [
           template.innerHTML = html;
           const fragment = template.content;
 
-					const weapons = await loadJson("../json/weapons.json");
-					const passives = await loadJson("../json/passives.json");
+          const [weapons, passives] = await Promise.all([
+            loadJson("../json/weapons.json"),
+            loadJson("../json/passives.json")
+          ]);
 
 					gridInjector({
 						container: fragment.querySelector('#menuWeaponContainer'),
