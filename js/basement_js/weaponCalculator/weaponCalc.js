@@ -4,9 +4,11 @@ import { updateEverything,generateEverything } from './weaponCalcMessageGenerato
 import { initiatePassiveStuffs } from './weaponCalcPassive.js';
 import { fillMissingWeaponInfo,applyWearToWeapon } from './weaponCalcUtil.js'
 import { blueprintStringToWeapon } from './blueprintParser.js';
-
+import { gridInjector } from '../util/imageUtil.js';
 
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
+
+const wearIDs = { pristine: 3, fine: 2, decent: 1, worn: 0, unknown: 0 };
 
 let weapons;
 let passives;
@@ -27,7 +29,7 @@ async function initWeaponCalc(){
 	initiateWeapon(currentWeapon);
 
 	const wearSelectRoot = initCustomSelect(
-		wearNameToWearID(currentWeapon.product.blueprint.wear)
+		wearIDs[currentWeapon.product.blueprint.wear]
 	);
 	wearSelectRoot.addEventListener('change', e => wearWasChanged(e,currentWeapon));
 }
@@ -48,11 +50,6 @@ function wepFromHash(){
 	};
 
 	return weapon;
-}
-
-function wearNameToWearID(inputString){
-	const wearValues = { pristine: 3, fine: 2, decent: 1, worn: 0, unknown: 0 };
-	return wearValues[inputString] || 0;
 }
 
 async function initiateWeapon(weapon){

@@ -6,7 +6,6 @@ export function gridInjector({
 		onItemClick,							// event listener
 		columns = "repeat(3, 3.5rem)",			// custom styles for your grid
 		transform="translate(-2.8rem,1.5%)"		// custom styles for your grid
-
     }){
 	
 	container.className="toolbarSubMenu navbar-grid";

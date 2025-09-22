@@ -634,10 +634,10 @@ a:hover {
   position: absolute;
   left: 0;
   right: 0;
-  margin: 2px 0 0;
+  border-radius: 2px;
   padding: 0 0;
   background: #191919;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
   max-height: 220px;
   overflow: auto;
   display: none;
