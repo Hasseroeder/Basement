@@ -13,9 +13,19 @@ let passives;
 let currentWeapon;
 
 async function initWeaponCalc(){
-	weapons = await loadJson("../json/weapons.json");
+	const weaponsPromise = loadJson("../json/weapons.json");
+	const passivesPromise = loadJson("../json/passives.json");
+	const [weaponsData, passivesData] = await Promise.all([
+		weaponsPromise,
+		passivesPromise
+	]);
+
+	weapons = weaponsData;
 	delete weapons[100]; // gotta get rid of fists
-	passives = await loadJson("../json/passives.json");
+	passives = passivesData;
+
+
+
 	currentWeapon= wepFromHash();
 	initiateWeapon(currentWeapon);
 
