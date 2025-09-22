@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded",initWeaponCalc);
 
 let weapons;
 let passives;
-let currentWeapon;
 
 async function initWeaponCalc(){
 	const weaponsPromise = loadJson("../json/weapons.json");
@@ -24,9 +23,7 @@ async function initWeaponCalc(){
 	delete weapons[100]; // gotta get rid of fists
 	passives = passivesData;
 
-
-
-	currentWeapon= wepFromHash();
+	const currentWeapon= wepFromHash();
 	initiateWeapon(currentWeapon);
 
 	const wearSelectRoot = initCustomSelect(
