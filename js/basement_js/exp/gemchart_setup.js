@@ -17,26 +17,45 @@ function w(x,p) { return (c(x,p) + 10*u + 20*r + 400*e + 1000*m+ 400*p1[p] + 200
 
 function F(x,p) { return (1+x)*w(x,p)*(x>=1?2:1) }
 
-const customLabelPlugin = {
-  id: 'customLabel',
-  afterDraw(chart) {
-    const ctx = chart.ctx;
-    chart.data.labels.forEach((label, index) => {
-      const image = new Image();
+const gemImages = [];
+for (let i = 1; i <= 7; i++) {
+  const img = new Image();
+  img.src = i < 6 ? `/media/owo_images/gem${i}1.png` : `/media/owo_images/gem${i}1.gif`;
+  gemImages.push(img);
+}
 
-      const meta = chart.getDatasetMeta(0);
-      if (meta.data[index] && index != 0) {
-        if (index <6){
-          image.src = `/media/owo_images/gem${index}1.png`; 
-        }else{
-          image.src = `/media/owo_images/gem${index}1.gif`; 
-        }  
-      
-        const position = meta.data[index].tooltipPosition();
-        const offset = meta.data[index].height;
-        ctx.drawImage(image, position.x, position.y -15 +offset, 30, 30);
-      }
-    });
+const dataset = {
+  label: 'no Patreon',
+  data: [F(1,0), F(2,0), F(3,0), F(4,0), F(5,0), F(6,0), F(7,0), F(8,0)],
+  type: 'line',           
+  showLine: false,        
+  pointStyle: gemImages,  
+  pointRadius: 12,
+  pointHoverRadius: 14,
+  backgroundColor: 'transparent',
+  borderColor: 'transparent'
+};
+
+const drawImagesPlugin = {
+  id: 'drawImages',
+  afterDatasetsDraw(chart, _) {
+    const ctx = chart.ctx;
+    const meta0 = chart.getDatasetMeta(0);
+    const meta1 = chart.getDatasetMeta(1);
+    const size = 32;
+    const bottom = chart.chartArea.bottom;
+
+    for (let i = 0; i <= meta0.data.length; i++) {
+      const el0 = meta0.data[i+1];
+      const el1 = meta1.data[i+1];
+      const img = gemImages[i];
+      if (!img || !img.complete) continue;
+
+      const x = (el0.x + el1.x) / 2 - size / 2;
+      const y = bottom - (size/2);
+
+      ctx.drawImage(img, x, y, size, size);
+    }
   }
 };
 
@@ -115,7 +134,6 @@ const myChart = new Chart(ctx, {
     },
     options: {
       plugins: {
-            
             customLabel: true,
             tooltip: {
                 usePointStyle: false,
@@ -128,11 +146,6 @@ const myChart = new Chart(ctx, {
                         let roundedValue = Math.round(tooltipItem.raw * 100) / 100;
                         return [tooltipItem.dataset.label, roundedValue+" exp/hunt"];
                     },
-                    title: function(tooltipItem) {
-                        //let temp = String(tooltipItem.dataset.label);
-                      
-                        return "";
-                    },
                     labelColor: () => {
                         return {
                             borderColor: 'transparent',
@@ -144,7 +157,7 @@ const myChart = new Chart(ctx, {
                 }    
             },
             legend: {
-                display: false // This hides the legend
+                display: false
             }
         },
       scales: {
@@ -153,8 +166,8 @@ const myChart = new Chart(ctx, {
                   color:'#404040'
                 },
                 ticks: {
-                  callback: function(value, index) {
-                    return ""; // Replace `desiredIndex` with the index of "May"
+                  callback: function(_,_) {
+                    return "";
                   }
                 } 
             },
@@ -170,5 +183,5 @@ const myChart = new Chart(ctx, {
             }
         }
     },
-    plugins: [customLabelPlugin]
+    plugins: [drawImagesPlugin]
 });
