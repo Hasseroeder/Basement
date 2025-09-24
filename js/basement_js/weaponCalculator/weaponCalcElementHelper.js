@@ -29,7 +29,8 @@ function createRangedInput(type, {min, max, step, digits}, percentageInput) {
             margin: '0 0 0 0.2rem',
             background: '#555',
             transform: min>max ? 'scaleX(-1)' : '',
-            transformOrigin: min>max ? 'center' : ''
+            transformOrigin: min>max ? 'center' : '',
+            pointer: 'var(--cur-pointer)'
         });
     }else if(type=="number"){
         input.className = 'inputFromWeaponCalculator no-arrows';

@@ -467,6 +467,7 @@ input[type="range"] {
   outline: none;
   width:100%;
   height:1rem;
+  cursor: var(--cur-pointer);
 } 
 
 button {
@@ -832,7 +833,6 @@ a:hover {
   height: 1.5rem !important;
   background: url('../media/misc_images/colon_three.png') no-repeat center center !important;
   background-size: contain !important;
-  cursor: var(--cur-pointer) !important;
   border: none !important;
 }
 
