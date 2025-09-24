@@ -58,7 +58,7 @@ const injectors = [
 			const blinkies = [
 				["../media/misc_images/blinkiesCafe-7m.gif","https://blinkies.cafe/"],
 				["../media/misc_images/blinkiesCafe-ji.gif","https://blinkies.cafe/"],
-				["../media/misc_images/blinkiesCafe-5U.gif","https://blinkies.cafe/"],
+				["../media/misc_images/autism_blinkie2.gif",""],
 				["../media/misc_images/advert_blinkie.gif","https://github.com/Hasseroeder/Basement/"],
 				["../media/misc_images/rbot_blinkie.gif","https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"],
 				["../media/misc_images/obs_blinkie.gif","https://discord.gg/owobot"],
