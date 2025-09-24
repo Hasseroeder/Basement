@@ -32,14 +32,22 @@ async function initWeaponCalc(){
 		container: document.querySelector("#weaponImageGrid"),
 		items: [weapons],
 		columns: `repeat(4, 3.5rem)`,
-  		transform: `translate(5.2rem, -6rem)`,
-		gridClasses: ["extra-padding"]
+  		transform: `translate(6.5rem, -6rem)`,
+		gridClasses: ["extra-padding"],
+		onItemClick: handleClick
 	});
 
 	const wearSelectRoot = initCustomSelect(
 		wearIDs[currentWeapon.product.blueprint.wear]
 	);
 	wearSelectRoot.addEventListener('change', e => wearWasChanged(e,currentWeapon));
+}
+
+var timesClicked = 0;
+function handleClick(item) {
+  console.log("clicked on:");
+  console.log(item);
+  console.log("times clicked: ", timesClicked++);
 }
 
 function wepFromHash(){
