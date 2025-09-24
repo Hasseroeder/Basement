@@ -37,7 +37,7 @@ body.tbh {
 }
 
 * {
-  cursor: var(--cur-auto);
+  cursor: inherit;
 }
 
 body, html {
