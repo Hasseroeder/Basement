@@ -6,15 +6,16 @@ import { generatePassiveInputs } from './weaponCalcPassive.js';
 import { weaponToBlueprintString } from './blueprintParser.js';
 
 const el = {
-	weaponHeader:	document.getElementById("weaponHeader"), 
-	weaponName:		document.getElementById("weaponName"),
-	ownerID:		document.getElementById("ownerID"),
-	weaponID:		document.getElementById("weaponID"),
-	shardValue:		document.getElementById("shardValue"),
-	weaponQuality:	document.getElementById("weaponQuality"),
-	weaponImage: 	document.getElementById("weaponImage"),
-	wpCost:			document.getElementById("WP-Cost"),
-	description:	document.getElementById("description")
+	weaponHeader:	    document.getElementById("weaponHeader"), 
+	weaponName:		    document.getElementById("weaponName"),
+	ownerID:		    document.getElementById("ownerID"),
+	weaponID:		    document.getElementById("weaponID"),
+	shardValue:		    document.getElementById("shardValue"),
+	weaponQualityImage: document.getElementById("weaponQualityImage"),
+    weaponQualitySpan:  document.getElementById("weaponQualitySpan"),
+	weaponImage: 	    document.getElementById("weaponImage"),
+	wpCost:			    document.getElementById("WP-Cost"),
+	description:	    document.getElementById("description")
 }
 
 function generateDescription(weaponOrPassive,weapon) {
@@ -229,9 +230,8 @@ function displayInfo(weapon){
     el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + weapon.product.owner.name;
     el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${weapon.product.id}</code>`;
     el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue(weapon);
-    el.weaponQuality.innerHTML= "<strong>Quality:&nbsp;</strong> ";
-    el.weaponQuality.append(getTierEmoji(blueprint.tier));
-    el.weaponQuality.innerHTML+= numberFixedString(blueprint.qualityWear,1)+"%"
+    el.weaponQualityImage.src= getTierEmojiPath(blueprint.tier);
+    el.weaponQualitySpan.textContent= numberFixedString(blueprint.qualityWear,1)+"%"
     el.weaponImage.src=getWeaponImagePath(weapon);
 }
 
