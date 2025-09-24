@@ -6,14 +6,14 @@ export function gridInjector({
 		onItemClick,							// event listener
 		columns = "repeat(3, 3.5rem)",			// custom styles for your grid
 		transform="translate(-2.8rem,1.5%)",	// custom styles for your grid
-		gridClasses								// custom classes for your grid
+		gridClasses=[]							// custom classes for your grid
     }){
 	
 	container.className="toolbarSubMenu navbar-grid";
 	container.style.gridTemplateColumns=columns;
 	container.style.transform=transform;
 
-	container.classList.add(...(gridClasses || []));
+	container.classList.add(...gridClasses);
 
 	const combined = items.reduce((acc, m) => ({ ...acc, ...m }), {});
 
