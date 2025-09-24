@@ -84,7 +84,7 @@ input[type="checkbox"] {
     border: 2px solid lightgray; 
     border-radius: 0; 
 
-    cursor: pointer;
+    /*cursor: pointer;*/
     position: relative; 
 }
 

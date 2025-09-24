@@ -1,3 +1,80 @@
+:root {
+  --cur-auto: auto;
+  --cur-default: default;
+  --cur-pointer: pointer;
+  --cur-text: text;
+  --cur-vertical-text: vertical-text;
+  --cur-crosshair: crosshair;
+  --cur-move: move;
+  --cur-grab: grab;
+  --cur-grabbing: grabbing;
+  --cur-not-allowed: not-allowed;
+  --cur-wait: wait;
+  --cur-progress: progress;
+  --cur-resize-ew: ew-resize;
+  --cur-resize-ns: ns-resize;
+  --cur-resize-nesw: nesw-resize;
+  --cur-resize-nwse: nwse-resize;
+}
+
+body.tbh {
+  --cur-auto: url('../media/tbhCursors/tbh-normal.cur'), auto;
+  --cur-default: url('../media/tbhCursors/tbh-normal.cur'), default;
+  --cur-pointer: url('../media/tbhCursors/tbh-link.cur'), pointer;
+  --cur-text: url('../media/tbhCursors/tbh-text.cur'), text;
+  --cur-vertical-text: url('../media/tbhCursors/tbh-text.cur'), vertical-text;
+  --cur-crosshair: url('../media/tbhCursors/tbh-crosshair.cur'), crosshair;
+  --cur-move: url('../media/tbhCursors/tbh-move.cur'), move;
+  --cur-grab: url('../media/tbhCursors/tbh-crosshair.cur'), grab;
+  --cur-grabbing: url('../media/tbhCursors/tbh-crosshair.cur'), grabbing;
+  --cur-not-allowed: url('../media/tbhCursors/tbh-no.ani'), not-allowed;
+  --cur-wait: url('../media/tbhCursors/tbh-working.ani'), wait;
+  --cur-progress: url('../media/tbhCursors/tbh-busy.ani'), progress;
+  --cur-resize-ew: url('../media/tbhCursors/tbh-horizontal.cur'), ew-resize;
+  --cur-resize-ns: url('../media/tbhCursors/tbh-vertical.cur'), ns-resize;
+  --cur-resize-nesw: url('../media/tbhCursors/tbh-nesw.cur'), nesw-resize;
+  --cur-resize-nwse: url('../media/tbhCursors/tbh-nwse.cur'), nwse-resize;
+}
+
+* {
+  cursor: var(--cur-auto);
+}
+
+body, html {
+  cursor: var(--cur-default);
+}
+
+a, button, [role="button"] {
+  cursor: var(--cur-pointer);
+}
+
+input, textarea, [contenteditable] {
+  cursor: var(--cur-text);
+}
+
+.vertical-text {
+  cursor: var(--cur-vertical-text);
+}
+
+.crosshair {
+  cursor: var(--cur-crosshair);
+}
+
+.move { cursor: var(--cur-move); }
+.grab { cursor: var(--cur-grab); }
+.grabbing { cursor: var(--cur-grabbing); }
+.not-allowed { cursor: var(--cur-not-allowed); }
+
+.wait { cursor: var(--cur-wait); }
+.loading { cursor: var(--cur-progress); }
+
+.resize-ew    { cursor: var(--cur-resize-ew); }
+.resize-ns    { cursor: var(--cur-resize-ns); }
+.resize-nesw  { cursor: var(--cur-resize-nesw); }
+.resize-nwse  { cursor: var(--cur-resize-nwse); }
+
+/* END OF CURSORS */
+
 .toolbar {
     display: flex;
     align-items: center;
@@ -113,7 +190,7 @@
   margin: 0px 1rem;
   border-radius: 50%;
   object-fit: cover;
-  cursor: pointer;
+  cursor: var(--cur-pointer);
   height: 2.5rem; 
 }  
 
@@ -123,7 +200,7 @@
   font-weight: 500;
   color:#eee;
   line-height: 1.375rem;
-  cursor: pointer;
+  cursor: var(--cur-pointer);
 }  
   
 .discord-bot-tag{
@@ -139,7 +216,7 @@
 .discord-timestamp{
   display: inline-block;
   height: 1.25rem;
-  cursor: default;
+  cursor: var(--cur-default);
   color: rgb(148, 155, 164);
   margin-left: 0.25rem;
   font-size: 0.75rem;
@@ -238,7 +315,7 @@
 
 .suggestion {
   padding: 0.3rem;
-  cursor: pointer;
+  cursor: var(--cur-pointer);
 
   width: 15rem;
   display: flex;
@@ -373,13 +450,13 @@ input[type="range"]::-webkit-slider-thumb {
   width: 0.8rem; 
   height: 0.8rem; 
   background: #eee; 
-  cursor: pointer; 
+  cursor: var(--cur-pointer); 
 } 
 input[type="range"]::-moz-range-thumb {
   width: 0.8rem; 
   height: 0.8rem;
   background: #eee;
-  cursor: pointer; 
+  cursor: var(--cur-pointer); 
 }
 
 input[type="range"] {
@@ -401,7 +478,7 @@ button {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  cursor: pointer;
+  cursor: var(--cur-pointer);
   margin-right:10px;
   border-radius: 0.2rem;
 }
@@ -620,7 +697,7 @@ a:hover {
   border-radius: 0.2rem;
   background: #191919;
   color: lightgray;
-  cursor: pointer;
+  cursor: var(--cur-pointer);
   font-family: monospace;
   height:unset;
 }
@@ -651,7 +728,7 @@ a:hover {
 .option {
   padding: 0.2rem 0.2rem;
   line-height: 1.2;
-  cursor: pointer;
+  cursor: var(--cur-pointer);
 }
 
 .option:hover,
@@ -755,7 +832,7 @@ a:hover {
   height: 1.5rem !important;
   background: url('../media/misc_images/colon_three.png') no-repeat center center !important;
   background-size: contain !important;
-  cursor: pointer !important;
+  cursor: var(--cur-pointer) !important;
   border: none !important;
 }
 
@@ -764,7 +841,7 @@ a:hover {
   height: 1.5rem !important;
   background: url('../media/misc_images/colon_three.png') no-repeat center center !important;
   background-size: contain !important;
-  cursor: pointer !important;
+  cursor: var(--cur-pointer) !important;
   border: none !important;
   margin-top: -0.55rem;
 }
@@ -861,7 +938,7 @@ a:hover {
 
 .weaponCalc-passive-emote:hover{
   background-color: #666;
-  cursor: pointer;
+  cursor: var(--cur-pointer);
 }
 
 .navbar-grid{

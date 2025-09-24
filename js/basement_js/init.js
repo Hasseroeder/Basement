@@ -86,12 +86,8 @@ const injectors = [
         }	
         if (blinkie.cookie){
           a.addEventListener("click",()=>{
-            const cookie = cookieUtil.getCookie(blinkie.cookie);
-            cookieUtil.setCookie(
-              blinkie.cookie,       // name
-              !(cookie == "true"),  // value
-              30                    // days to live
-            );
+            const value = !(cookieUtil.getCookie(blinkie.cookie)=="true");
+            cookieUtil.setCookie(blinkie.cookie, value, 30);
           });
         }
 				wrapper.append(a);    
@@ -168,6 +164,9 @@ window.addEventListener("DOMContentLoaded", initInjectors);
 
 
 class OwOimg extends HTMLElement {
+  // im SO close to removing OwOimg, because I think it makes my codebase less readable
+  // but I'd need to rewrite 200 lines if I removed it
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -248,3 +247,17 @@ class OwOimg extends HTMLElement {
 }
 
 customElements.define("owo-img", OwOimg);
+
+cookieStore.addEventListener('change', () => {
+  checkForTBH();
+});
+
+checkForTBH();
+
+function checkForTBH(){
+  if (cookieUtil.getCookie("tbh")=="true"){
+    document.body.classList.add("tbh");
+  }else{
+    document.body.classList.remove('tbh');
+  }
+}
