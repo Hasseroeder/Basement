@@ -48,7 +48,7 @@ a, button, [role="button"] {
   cursor: var(--cur-pointer);
 }
 
-input, textarea, [contenteditable] {
+input, textarea, code, [contenteditable] {
   cursor: var(--cur-text);
 }
 
