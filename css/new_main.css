@@ -450,13 +450,12 @@ input[type="range"]::-webkit-slider-thumb {
   width: 0.8rem; 
   height: 0.8rem; 
   background: #eee; 
-  cursor: var(--cur-pointer); 
 } 
+
 input[type="range"]::-moz-range-thumb {
   width: 0.8rem; 
   height: 0.8rem;
   background: #eee;
-  cursor: var(--cur-pointer); 
 }
 
 input[type="range"] {
@@ -817,7 +816,6 @@ a:hover {
   outline-offset: 0px;
 }
 
-
 .weaponSlider::-webkit-slider-runnable-track {
   height: 6px;
   background: #ccc;
@@ -841,7 +839,6 @@ a:hover {
   height: 1.5rem !important;
   background: url('../media/misc_images/colon_three.png') no-repeat center center !important;
   background-size: contain !important;
-  cursor: var(--cur-pointer) !important;
   border: none !important;
   margin-top: -0.55rem;
 }
