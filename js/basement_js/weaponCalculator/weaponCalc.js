@@ -28,6 +28,14 @@ async function initWeaponCalc(){
 	const currentWeapon= wepFromHash();
 	initiateWeapon(currentWeapon);
 
+	gridInjector({
+		container: document.querySelector("#weaponImageGrid"),
+		items: [weapons],
+		columns: `repeat(4, 3.5rem)`,
+  		transform: `translate(5.2rem, -6rem)`,
+		gridClasses: ["extra-padding"]
+	});
+
 	const wearSelectRoot = initCustomSelect(
 		wearIDs[currentWeapon.product.blueprint.wear]
 	);

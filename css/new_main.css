@@ -87,7 +87,7 @@ input, textarea, code, [contenteditable] {
 
 .toolbar a,button {
     color: lightgray;
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
     text-decoration: none;
     margin: 0 5px;
 }
@@ -110,6 +110,7 @@ input, textarea, code, [contenteditable] {
   width: fit-content;
   display:flex;
   margin:0;
+  padding: 0.5rem;
 }
 
 .center-pillar {
@@ -633,8 +634,26 @@ a:hover {
   grid-auto-columns: 1.4rem;
 }
 
+.weaponImageGridWrapper:hover .toolbarSubMenu  {
+  visibility: visible;
+}
+
+.weaponImageGridWrapper a:hover, button:hover{
+    background-color: #555555;
+    color: lightgray;
+}
+
+.extra-padding::before {
+  content: '';               
+  position: absolute;        
+  top: -8px;                 
+  bottom: -8px;              
+  left: -8px;                
+  right: -8px;               
+}
+
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .wikipedia-stat-row {
@@ -890,6 +909,7 @@ a:hover {
   overflow: hidden;
   position: relative;
   height:1.3rem;
+  cursor: var(--cur-pointer);
 }
 
 .star-wrapper:hover{
@@ -942,7 +962,7 @@ a:hover {
   position:absolute; 
   display:grid; 
   background-color: #333; 
-  padding:0.5rem 0.5rem;
+  padding:0.5rem;
 }
 
 .unset-me{
