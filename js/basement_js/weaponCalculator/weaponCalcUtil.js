@@ -106,6 +106,10 @@ async function getStatImage(inputString) {
     const pngUrl = `../media/owo_images/${inputString}.png`;
 
     const img = document.createElement('img');
+
+    console.log(gifUrl +" exists:")
+    console.log(await fileExists(gifUrl));
+
     img.src = (await fileExists(gifUrl)) ? gifUrl : pngUrl;
     img.alt = `:${inputString}:`;
     img.ariaLabel = inputString;
@@ -117,7 +121,7 @@ async function getStatImage(inputString) {
 async function fileExists(url) {
     try {
         const res = await fetch(url, { method: 'HEAD' });
-        return (res.ok && !response.headers.get("Content-Type")?.includes("text/html"));
+        return (res.ok && !res.headers.get("Content-Type")?.includes("text/html"));
     } catch {
         return false;
     }

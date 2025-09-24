@@ -1,5 +1,6 @@
-import { gridInjector as gridInjector } from "./util/imageUtil.js";
+import { gridInjector } from "./util/imageUtil.js";
 import { loadJson } from "./util/jsonUtil.js";
+import * as cookieUtil from "./util/cookieUtil.js"
 
 const afterWeapons = {
   weaponCalculator: { 
@@ -56,15 +57,15 @@ const injectors = [
 		selector: ".center-pillar",
 		load: () => {
 			const blinkies = [
-				["../media/misc_images/blinkiesCafe-7m.gif","https://blinkies.cafe/"],
-				["../media/misc_images/blinkiesCafe-ji.gif","https://blinkies.cafe/"],
-				["../media/misc_images/autism_blinkie2.gif",""],
-				["../media/misc_images/advert_blinkie.gif","https://github.com/Hasseroeder/Basement/"],
-				["../media/misc_images/rbot_blinkie.gif","https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"],
-				["../media/misc_images/obs_blinkie.gif","https://discord.gg/owobot"],
-				["../media/misc_images/anydice_blinkie.gif","https://anydice.com/"],
-				["../media/misc_images/neon_blinkie.gif","https://discord.gg/neonutil"],
-				["../media/misc_images/dontasktoask_blinkie.png","https://dontasktoask.com/"]
+				{src:"../media/misc_images/blinkiesCafe-7m.gif",href:"https://blinkies.cafe/"},
+				{src:"../media/misc_images/blinkiesCafe-ji.gif",href:"https://blinkies.cafe/"},
+				{src:"../media/misc_images/autism_blinkie2.gif",cookie:"tbh"},
+				{src:"../media/misc_images/advert_blinkie.gif",href:"https://github.com/Hasseroeder/Basement/"},
+				{src:"../media/misc_images/rbot_blinkie.gif",href:"https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"},
+				{src:"../media/misc_images/obs_blinkie.gif",href:"https://discord.gg/owobot"},
+				{src:"../media/misc_images/anydice_blinkie.gif",href:"https://anydice.com/"},
+				{src:"../media/misc_images/neon_blinkie.gif",href:"https://discord.gg/neonutil"},
+				{src:"../media/misc_images/dontasktoask_blinkie.png",href:"https://dontasktoask.com/"}
 			];
 
 			const myBlinkies = fourRandoms(blinkies);
@@ -72,17 +73,28 @@ const injectors = [
 			const wrapper=document.createElement("div");
 			wrapper.style ="margin: 2rem 4rem; gap: 0.5rem; display: flex; flex-wrap: nowrap;";
 
-			myBlinkies.forEach(src => {
+			myBlinkies.forEach(blinkie => {
 				const img = document.createElement("img");
-				img.src = src[0];
+				img.src = blinkie.src;
 				img.className="blinkie";
-				const link = document.createElement("a");
-        link.style= "display:block; flex: 1 1 0;";
-        link.append(img);
-        link.target="_blank";
-        link.href = src[1];
-					
-				wrapper.append(link);    
+				const a = document.createElement("a");
+        a.style= "display:block; flex: 1 1 0;";
+        a.append(img);
+        if (blinkie.href){
+          a.target="_blank";
+          a.href = blinkie.href;
+        }	
+        if (blinkie.cookie){
+          a.addEventListener("click",()=>{
+            const cookie = cookieUtil.getCookie(blinkie.cookie);
+            cookieUtil.setCookie(
+              blinkie.cookie,       // name
+              !(cookie == "true"),  // value
+              30                    // days to live
+            );
+          });
+        }
+				wrapper.append(a);    
 			});
 
 			return Promise.resolve(wrapper);
