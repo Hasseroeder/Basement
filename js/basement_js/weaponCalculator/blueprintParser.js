@@ -126,5 +126,5 @@ export function weaponToBlueprintString(weapon){
         );
 
     const parts = [wear, shorthand, statstring, ...passiveParts].filter(Boolean);
-    location.hash=parts.join("-");
+    history.replaceState(null, '', '#'+parts.join("-"));
 }

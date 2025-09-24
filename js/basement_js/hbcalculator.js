@@ -77,6 +77,31 @@ const switchAllButtons = {
     sac:  document.getElementById("sacButton")
 }
 
+function debounce(fn, wait = 200, immediate = false) {
+    let timeoutId;
+
+    return function debounced(...args) {
+        const context = this;
+        const callNow = immediate && !timeoutId;
+
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            timeoutId = null;
+            if (!immediate) fn.apply(context, args);
+        }, wait);
+
+        if (callNow) fn.apply(context, args);
+    };
+}
+
+const saveDebounced = debounce(saveData);
+
+function saveData(){
+    history.replaceState(null, '', '#'+levels.join(","));
+    cookie.setCookie("Patreon",patreon.toString(),30);
+    cookie.setCookie("Levels",levels.join(","),30)
+}
+
 switchAllButtons.sac.addEventListener("click", () => {
     toggleIsSac("sac");
 });
@@ -165,8 +190,6 @@ function getWorth(){
 
 }
 
-
-
 function getUpgradeCost(index, level) {
   const paramsArray = [
     { multiplier: 10, exponent: 1.748 },    //efficiency
@@ -183,7 +206,6 @@ function getUpgradeCost(index, level) {
 
 const cells = Array.from(document.querySelectorAll("#table-1 td"));
 const isSac = cells.map(cell => cell.textContent.trim() === "Sac ");
-
 
 let isDragging = false;
 
@@ -232,7 +254,7 @@ function toggleCell(cell,index) {
 
 document.getElementById("patreonCheck").addEventListener("change", function() {
     patreon=this.checked; 
-    saveData();
+    saveDebounced();
     drawData();
     renderPatreon();
 });
@@ -278,11 +300,17 @@ document.addEventListener("DOMContentLoaded", () => {
         span.addEventListener("click",()=>input.focus());
 
         const btnPlus = document.createElement("button");
-        btnPlus.onclick = () => modifyValueAndCookie(i, parseInt(input.value)+1);
+        btnPlus.addEventListener("click", e =>{
+            e.preventDefault();
+            modifyValueAndCookie(i, parseInt(input.value)+1);
+        });
         btnPlus.className ="tooltip";
 
         const btnMinus = document.createElement("button");
-        btnMinus.onclick = () => modifyValueAndCookie(i, parseInt(input.value)-1);
+        btnMinus.addEventListener("click", e => {
+            e.preventDefault();
+            modifyValueAndCookie(i, parseInt(input.value)-1);
+        });
 
         const innerWrapper = document.createElement("div");
         innerWrapper.append(span, input);
@@ -308,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
     importFromHash();
     importFromCookie();
 
-    saveData();
+    saveDebounced();
     drawData();
     showTimestamps();
 });
@@ -344,7 +372,6 @@ function modifyValueDirect(index, value) {
 }
 
 function drawData(){    
-    const imgSrc = ["efficiency.png", "duration.png", "cowoncy.png", "gain.png", "exp.png",       "radar.png"];
     const labels = ["Efficiency - ",  "Duration - ",  "Cost - ",     "Gain - ",  "Experience - ", "Radar - "];
     const suffixes=[" pets/h",        "h",            " cowoncy",    " ess/h",   " exp/h",        "ppm"];
     const values = [
@@ -364,14 +391,7 @@ function drawData(){
     ];
 
     headers.forEach((header, index) => {
-        header.innerHTML = "";
-        
-        let image = document.createElement("img");
-        image.src = `../media/owo_images/${imgSrc[index]}`;
-        image.style.cssText = "height:1rem;";
-                
-        let textContent = labels[index] + values[index] + suffixes[index];
-        header.append(image, document.createTextNode(textContent));
+        header.textContent = labels[index] + values[index] + suffixes[index];
     });
 
     let maxROIindex = -1;
@@ -450,7 +470,7 @@ function extractLevels(text) {
 
 function modifyValueAndCookie(index, value){
     modifyValueDirect(index, value);
-    saveData();
+    saveDebounced();
 }
 
 function importFromHash(){
@@ -458,12 +478,6 @@ function importFromHash(){
     if (hash) {
         stringToLevel(hash.slice(1));
     }
-}
-
-function saveData(){
-    location.hash = levels.join(",");
-    cookie.setCookie("Patreon",patreon.toString(),30);
-    cookie.setCookie("Levels",levels.join(","),30)
 }
 
 function importFromCookie(){
