@@ -151,12 +151,6 @@ class WeaponStat {
 
     _wireEvents() {
         const clamp = (val, el) => {
-            console.log(val);
-            if (isNaN(val)) {
-                // do something??
-                console.log("user did the stupid!");
-            };
-
             const min = parseFloat(el.min);
             const max = parseFloat(el.max);
             const step = parseFloat(el.step);
@@ -170,7 +164,9 @@ class WeaponStat {
 
         this.numberInput.addEventListener("input",  e => {
             const num = parseFloat(e.target.value);
-            if (!isNaN(num) && !(e.inputType === "insertText" && e.data === ".")) {
+            if (!isNaN(num) && 
+                !(e.inputType === "insertText" && e.data === ".")
+            ){
                 this._syncAll(num);
             }
         });

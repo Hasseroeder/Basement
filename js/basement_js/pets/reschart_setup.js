@@ -6,102 +6,65 @@ const yThree = Array.from({ length: 90 }, (_, index) => 0.8 * (25+2 * index * 3)
 const yFour = Array.from({ length: 90 }, (_, index) => 0.8 * (25+2 * index * 4) / (125  + 2 * index * 4));
 const yFive = Array.from({ length: 90 }, (_, index) => 0.8 * (25+2 * index * 5) / (125  + 2 * index * 5));
 
-const getOrCreateLegendList = (chart, id) => {
-  const legendContainer = document.getElementById(id);
-  let listContainer = legendContainer.querySelector('ul');
-
-  if (!listContainer) {
-    listContainer = document.createElement('ul');
-    //listContainer.style.display = 'flex';
-    listContainer.style.flexDirection = 'row';
-    listContainer.style.margin = 0;
-    listContainer.style.padding = 0;
-
-    legendContainer.appendChild(listContainer);
-  }
-
-  return listContainer;
-};
-
 const htmlLegendPlugin = {
   id: 'htmlLegend',
-  afterUpdate(chart, args, options) {
-    const ul = getOrCreateLegendList(chart, options.containerID);
+  beforeInit(chart, _, options) {
+    const legendContainer = document.getElementById(options.containerID);
+    const ul = document.createElement('ul');
+    ul.className = 'res-li-container';
+    legendContainer.appendChild(ul);
 
-    // Remove old legend items
-    while (ul.firstChild) {
-      ul.firstChild.remove();
-    }
+    chart.legendText = [];
 
-    // Reuse the built-in legendItems generator
-    const items = chart.options.plugins.legend.labels.generateLabels(chart);
-  
-  
-    items.forEach((item, index)=> {
+    chart.data.datasets.forEach((ds, idx) => {
       const li = document.createElement('li');
-      li.style.position = 'relative';
-      li.style.alignItems = 'center';
-      li.style.cursor = 'var(--cur-pointer)';
-      li.style.display = 'flex';
-      li.style.flexDirection = 'row';
-      li.style.marginLeft = '10px';
-      li.style.marginBottom = '10px';
+      li.className = 'res-li';
 
       li.onclick = () => {
-        const {type} = chart.config;
-        if (type === 'pie' || type === 'doughnut') {
-          // Pie and doughnut charts only have a single dataset and visibility is per item
-          chart.toggleDataVisibility(item.index);
-        } else {
-          chart.setDatasetVisibility(item.datasetIndex, !chart.isDatasetVisible(item.datasetIndex));
-        }
+        chart.setDatasetVisibility(idx, !chart.isDatasetVisible(idx));
         chart.update();
       };
 
-      const image = document.createElement('img');
-      image.src = `media/owo_images/resistance_chart/image_${5-index}.gif`; // Replace this with the image URL or logic to generate the image source dynamically
-      image.alt = item.text; // Add an alt attribute for accessibility
-      image.style.height = '20px'; // Set the image size to match the color box
-      image.style.width = '20px';
-      image.style.marginRight = '10px';
-      image.style.position = 'absolute'; // Position the image absolutely
-      image.style.top = '-1'; // Adjust positioning
-      image.style.left = '0';
+      const img = document.createElement('img');
+      img.src = `media/owo_images/resistance_chart/image_${5 - idx}.gif`;
+      img.alt = ds.label;
+      img.className = 'res-image';
 
+      const box = document.createElement('span');
+      box.className = 'res-box-span';
       
-      // Color box
-       
-      const boxSpan = document.createElement('span');
-      boxSpan.style.background = item.fillStyle;
-      boxSpan.style.borderColor = item.strokeStyle;
-      boxSpan.style.borderWidth = item.lineWidth + 'px';
-      boxSpan.style.display = 'inline-block';
-      boxSpan.style.flexShrink = 0;
-      boxSpan.style.height = '20px';
-      boxSpan.style.marginRight = '10px';
-      boxSpan.style.width = '20px';
-      
-      
-      // Text
-      const textContainer = document.createElement('p');
-    
-      textContainer.style.margin = 0;
-      textContainer.style.padding = 0;
-      textContainer.style.textDecoration = item.hidden ? 'line-through' : '';
+      const p = document.createElement('p');
+      p.className = 'resTextContainer';
+      p.textContent = ds.label;
 
-      const text = document.createTextNode(item.text);
-      textContainer.appendChild(text);
-      
-      li.appendChild(image);
-      li.appendChild(boxSpan);
-      li.appendChild(textContainer);
+      li.append(img, box, p);
       ul.appendChild(li);
+
+      chart.legendText.push(p);
+    });
+  },
+
+  afterUpdate(chart) {
+    chart.legendText.forEach((p, idx) => {
+      p.style.textDecoration = chart.isDatasetVisible(idx)
+        ? ''
+        : 'line-through';
     });
   }
 };
 
 
 function initializeresChart(){    
+  const divs = {
+    0:document.getElementById('percentage-container5'),
+    1:document.getElementById('percentage-container4'),
+    2:document.getElementById('percentage-container3'),
+    3:document.getElementById('percentage-container2'),
+    4:document.getElementById('percentage-container1'),
+    5:document.getElementById('percentage-container0'),
+    lvl: document.getElementById('level-container')
+  }
+
   new Chart("myChart", {
     type: "line",
     data: {
@@ -164,33 +127,19 @@ function initializeresChart(){
     },
     plugins: [htmlLegendPlugin],
     options: {
-      onHover: function(event, chartElement) {
-          // Get the div to update
-          const targetDiv5 = document.getElementById('percentage-container5');
-          const targetDiv4 = document.getElementById('percentage-container4');
-          const targetDiv3 = document.getElementById('percentage-container3');
-          const targetDiv2 = document.getElementById('percentage-container2');
-          const targetDiv1 = document.getElementById('percentage-container1');
-          const targetDiv0 = document.getElementById('percentage-container0');
-          const levelDiv   = document.getElementById('level-container');
-
-          // Check if the mouse is over a chart element
-          if (chartElement.length) {
-              const index = chartElement[0].index; // Hovered index
-              levelDiv.textContent = `Level ${index}`
-              targetDiv5.textContent = `${(this.data.datasets[0].data[index]*100).toFixed(1)}%`;
-              targetDiv4.textContent = `${(this.data.datasets[1].data[index]*100).toFixed(1)}%`;
-              targetDiv3.textContent = `${(this.data.datasets[2].data[index]*100).toFixed(1)}%`;
-              targetDiv2.textContent = `${(this.data.datasets[3].data[index]*100).toFixed(1)}%`;
-              targetDiv1.textContent = `${(this.data.datasets[4].data[index]*100).toFixed(1)}%`;
-              targetDiv0.textContent = `${(this.data.datasets[5].data[index]*100).toFixed(1)}%`;
-              
-          }
+      onHover: function(_, chartElement) {
+        if (chartElement.length) {
+          const index = chartElement[0].index; // Hovered level
+          divs.lvl.textContent = `Level ${index}`
+          this.data.datasets.forEach((ds, i) => {
+            divs[i].textContent = (ds.data[index] * 100).toFixed(1) + '%';
+          });
+        }
       },
       
       hover: {
-        mode: 'index', // 'nearest' or 'index'
-        intersect: false // Allows hovering even if not directly over a point
+        mode: 'index', 
+        intersect: false 
       },
       responsive:true,
       plugins: {
@@ -201,7 +150,6 @@ function initializeresChart(){
           display: false,
         },
         htmlLegend: {
-          // ID of the container to put the legend in
           containerID: 'legend-container',
         },
       },
