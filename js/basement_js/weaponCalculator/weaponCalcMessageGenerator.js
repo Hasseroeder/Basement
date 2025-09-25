@@ -151,15 +151,35 @@ class WeaponStat {
 
     _wireEvents() {
         const clamp = (val, el) => {
-            const c = clampNumber(el.min, el.max, val);
-            this._syncAll(c);
+            console.log(val);
+            if (isNaN(val)) {
+                // do something??
+                console.log("user did the stupid!");
+            };
+
+            const min = parseFloat(el.min);
+            const max = parseFloat(el.max);
+            const step = parseFloat(el.step);
+
+            const offset = (val - min) / step;
+            const snapped = min + Math.round(offset) * step;
+            const clamped = Math.min(max, Math.max(min, snapped));
+
+            this._syncAll(clamped);
         };
 
-        this.numberInput.addEventListener("input",  e => this._syncAll(+e.target.value) );
+        this.numberInput.addEventListener("input",  e => {
+            const num = parseFloat(e.target.value);
+            if (!isNaN(num) && !(e.inputType === "insertText" && e.data === ".")) {
+                this._syncAll(num);
+            }
+        });
         this.slider     .addEventListener("input",  e => this._syncAll(+e.target.value) );
         this.qualityInput.addEventListener("input", e => {
-            const pct = +e.target.value;
-            this._syncAll(percentToValue(pct, this.config) );
+            const pct = parseFloat(e.target.value);
+            if (!isNaN(pct)) {
+                this._syncAll(percentToValue(pct, this.config));
+            }
         });
 
         this.numberInput.addEventListener("change",  e => clamp(+e.target.value, e.target) );

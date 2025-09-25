@@ -89,7 +89,7 @@ export function blueprintStringToWeapon(inputHash, weapons, passives){
     const weapon         = itemIDs(weapons, tokens)[0] ?? { id: initWeaponID, matchIndex: -1 };
     const wear           = ["decent","fine","pristine"].includes(tokens[0]) ? tokens[0] : "worn";
     const stats          = getStats(weapons, weapon, tokens, { isWeapon: true, wear });
-    const passive = itemIDs(passives, tokens).map(match => ({
+    const passive        = itemIDs(passives, tokens).map(match => ({
         id:    match.id,
         stats: getStats(passives, match, tokens, { wear }),
         ...passives[match.id]

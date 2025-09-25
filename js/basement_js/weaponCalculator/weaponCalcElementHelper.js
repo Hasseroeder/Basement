@@ -35,6 +35,7 @@ function createRangedInput(type, {min, max, step, digits}, percentageInput) {
     }else if(type=="number"){
         input.className = 'inputFromWeaponCalculator no-arrows';
         input.style.width = (digits*0.5)+'rem';
+        input.lang="en";
     }
 
     if (percentageInput){
@@ -46,7 +47,7 @@ function createRangedInput(type, {min, max, step, digits}, percentageInput) {
         min: nMin,
         max: nMax,
         required: true,
-        type, step
+        type, step//:"any" // TODO: remove any
     });
 
     return input;

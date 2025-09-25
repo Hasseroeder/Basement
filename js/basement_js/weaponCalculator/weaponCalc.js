@@ -25,9 +25,6 @@ async function initWeaponCalc(){
 	delete weapons[100]; // gotta get rid of fists
 	passives = passivesData;
 
-	const currentWeapon= wepFromHash();
-	initiateWeapon(currentWeapon);
-
 	gridInjector({
 		container: document.querySelector("#weaponImageGrid"),
 		items: [weapons],
@@ -36,6 +33,9 @@ async function initWeaponCalc(){
 		gridClasses: ["extra-padding"],
 		onItemClick: handleClick
 	});
+	
+	const currentWeapon= wepFromHash();
+	initiateWeapon(currentWeapon);
 
 	const wearSelectRoot = initCustomSelect(
 		wearIDs[currentWeapon.product.blueprint.wear]
