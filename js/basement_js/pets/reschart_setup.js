@@ -12,7 +12,7 @@ const htmlLegendPlugin = {
     const legendContainer = document.getElementById(options.containerID);
     const ul = document.createElement('ul');
     ul.className = 'res-li-container';
-    legendContainer.appendChild(ul);
+    legendContainer.insertBefore(ul, legendContainer.firstChild);
 
     chart.legendText = [];
 
@@ -31,13 +31,18 @@ const htmlLegendPlugin = {
       img.className = 'res-image';
 
       const box = document.createElement('span');
-      box.className = 'res-box-span';
+      box.style.background = ds.borderColor; // or backgroundColor/borderColor
+      box.style.borderRadius = "10px";
+      box.style.width="7px";
+      box.style.height="7px";
+      box.style.marginRight="2px";
+      //box.className = 'res-image';
       
       const p = document.createElement('p');
       p.className = 'resTextContainer';
       p.textContent = ds.label;
 
-      li.append(img, box, p);
+      li.append(box, img, p);
       ul.appendChild(li);
 
       chart.legendText.push(p);
@@ -70,57 +75,51 @@ function initializeresChart(){
     data: {
       labels: xValues,
       datasets: [{
-        pointHoverRadius: 7,
+        pointHoverRadius: 7, // koala
         fill: false,
         label:"5 Res",
         lineTension: 0.5,
-        backgroundColor: "RGBA(139, 122, 190, 0.2)",
-        borderColor: "RGBA(139, 122, 190, 1)",
+        borderColor: "rgb(139, 122, 190)",
         pointRadius:0,
         data: yFive
       },{
-        pointHoverRadius: 7,
+        pointHoverRadius: 7, // giraffe
         fill: false,
         label:"4 Res",
         lineTension: 0.5,
-        backgroundColor: "RGBA(149, 149, 149, 0.2)",
-        borderColor: "RGBA(149, 149, 149, 1)",
+        borderColor: "rgb(149, 149, 149)",
         pointRadius:0,
         data: yFour
       },{
-        pointHoverRadius: 7,
+        pointHoverRadius: 7, // owl
         fill: false,
         label:"3 Res",
         lineTension: 0.5,
-        backgroundColor:"RGBA(255, 217, 102, 0.2)",
-        borderColor: "RGBA(255, 217, 102, 1)",
+        borderColor: "rgb(255, 217, 102)",
         pointRadius:0,
         data: yThree
       },{
-        pointHoverRadius: 7,
+        pointHoverRadius: 7, // gorilla
         fill: false,
         label:"2 Res",
         lineTension: 0.5,
-        backgroundColor: "RGBA(111, 168, 220, 0.2)",
-        borderColor: "RGBA(111, 168, 220, 1)",
+        borderColor: "rgb(111, 168, 220)",
         pointRadius:0,
         data: yTwo
       },{
-        pointHoverRadius: 7,
+        pointHoverRadius: 7, // deer
         fill: false,
         label:"1 Res",
         lineTension: 0.5,
-        backgroundColor: "RGBA(255, 217, 102, 0.2)",
-        borderColor: "RGBA(255, 217, 102, 1)",
+        borderColor: "rgb(255, 217, 102)",
         pointRadius:0,
         data: yOne
       },{
-        pointHoverRadius: 7,
+        pointHoverRadius: 7, // spider
         fill: false,
         label:"0 Res",
         lineTension: 0.5,
-        backgroundColor: "RGBA(147, 196, 125, 0.2)",
-        borderColor: "RGBA(147, 196, 125, 1)",
+        borderColor: "rgb(147, 196, 125)",
         pointRadius:0,
         data: yZero
       }]

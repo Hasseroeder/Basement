@@ -1,23 +1,20 @@
-<div style="background-color:#303030;color:lightgray;padding-top:20px;padding-left:20px;margin: 10px 10px 10px;">
+<div style="background-color:#303030;color:lightgray;padding: 20px;margin: 10px 10px 10px;">
   <p style= "margin-top:0;"> Following the calculation for your actual resistance, you'll see that each further point of internal resistance has less and less impact on your resulting percentage. <br>
         Here is a chart that illustrates this nicely:</p>
   <div class="flexContainer" style="align-items:normal;margin:0 0 0;">
-    <canvas id="myChart" style="max-width:70%;max-height:300px;margin-bottom:10px"></canvas>
+    <canvas id="myChart" style="max-width:70%;max-height:300px;"></canvas>
     <div style="margin-top:20px;">
       <div id="level-container" style="color:#aaa; font-size:13px;text-align: end; margin-bottom: 5px; height:20px;">
       </div>
-      <div class="flexContainer" style="margin: 0 0 0;">
-        <div id="legend-container" style="max-width:600px;max-height:300px;"></div>
-        <div style="max-width:600px;max-height:300px;">
-          <ul style="flex-direction: row; margin: 0px; padding: 0px;"> 
-            <li id="percentage-container5" style="margin-bottom: 10px;color:#aaa;"> </li>
-            <li id="percentage-container4" style="margin-bottom: 10px;color:#aaa;"> </li>
-            <li id="percentage-container3" style="margin-bottom: 10px;color:#aaa;"> </li>
-            <li id="percentage-container2" style="margin-bottom: 10px;color:#aaa;"> </li>
-            <li id="percentage-container1" style="margin-bottom: 10px;color:#aaa;"> </li>
-            <li id="percentage-container0" style="margin-bottom: 10px;color:#aaa;"> </li>
-          </ul>
-        </div>
+      <div id="legend-container" class="flexContainer" style="margin: 0 0 0; gap: 1.2rem;">
+        <ul style="list-style: none; margin: 0px; padding: 0px;"> 
+          <li id="percentage-container5" class="res-li" style="color:#aaa;"> </li>
+          <li id="percentage-container4" class="res-li" style="color:#aaa;"> </li>
+          <li id="percentage-container3" class="res-li" style="color:#aaa;"> </li>
+          <li id="percentage-container2" class="res-li" style="color:#aaa;"> </li>
+          <li id="percentage-container1" class="res-li" style="color:#aaa;"> </li>
+          <li id="percentage-container0" class="res-li" style="color:#aaa;"> </li>
+        </ul>
       </div>
     </div>
   </div>

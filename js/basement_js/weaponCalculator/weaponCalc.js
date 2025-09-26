@@ -40,6 +40,9 @@ async function initWeaponCalc(){
 	const wearSelectRoot = initCustomSelect(
 		wearIDs[currentWeapon.product.blueprint.wear]
 	);
+	// remove the wear on init
+	// instead on each new weapon, we manually change the wear with changeIndex
+	
 	wearSelectRoot.addEventListener('change', e => wearWasChanged(e,currentWeapon));
 }
 
