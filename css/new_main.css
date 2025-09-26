@@ -981,19 +981,19 @@ a:hover {
 
 .res-image {
   width : 20px;
+  margin: 0 0.2rem 0 0.125rem;
 }
 
 .res-li {
   align-items : center;
   cursor : var(--cur-pointer);
   display : flex;
-  gap: 0.2rem;
   margin-bottom : 10px;
   height:20px;
 }
 
 .res-li-container {
-  flex-direction : row;
   margin : 0;
   padding : 0;
+  list-style: none;
 }

@@ -1,20 +1,37 @@
 const xValues = Array.from({ length: 90 }, (_, index) => index + 1);
-const yZero = Array.from({ length: 90 }, (_, index) => 0.8 * (25+2 * index * 0) / (125  + 2 * index * 0));
-const yOne = Array.from({ length: 90 }, (_, index) => 0.8 * (25+2 * index * 1) / (125  + 2 * index * 1));
-const yTwo = Array.from({ length: 90 }, (_, index) => 0.8 * (25+2 * index * 2) / (125  + 2 * index * 2));
-const yThree = Array.from({ length: 90 }, (_, index) => 0.8 * (25+2 * index * 3) / (125  + 2 * index * 3));
-const yFour = Array.from({ length: 90 }, (_, index) => 0.8 * (25+2 * index * 4) / (125  + 2 * index * 4));
-const yFive = Array.from({ length: 90 }, (_, index) => 0.8 * (25+2 * index * 5) / (125  + 2 * index * 5));
+
+const makeSeries = (resAmount) =>
+  Array.from({ length: 90 }, (_, i) =>
+    0.8 * (25 + 2 * i * resAmount) / (125 + 2 * i * resAmount)
+  );
+
+const colorPalette = [
+  "rgb(147, 196, 125)", // spider
+  "rgb(255, 217, 102)", // deer
+  "rgb(111, 168, 220)", // gorilla
+  "rgb(175, 85, 82)",   // parrot
+  "rgb(149, 149, 149)", // giraffbot
+  "rgb(139, 122, 190)"  // koala
+]
+
+const datasets = [5,4,3,2,1,0].map((resAmount) => ({
+  label: `${resAmount} Res`,
+  data: makeSeries(resAmount),
+  borderColor: colorPalette[resAmount],
+  pointRadius: 0,           
+  pointHoverRadius: 7,
+}));
 
 const htmlLegendPlugin = {
   id: 'htmlLegend',
-  beforeInit(chart, _, options) {
-    const legendContainer = document.getElementById(options.containerID);
+  beforeInit(chart) {
+    const legendContainer = document.getElementById("legend-container");
     const ul = document.createElement('ul');
     ul.className = 'res-li-container';
-    legendContainer.insertBefore(ul, legendContainer.firstChild);
+    legendContainer.append(ul);
 
     chart.legendText = [];
+    chart.percents   = [];
 
     chart.data.datasets.forEach((ds, idx) => {
       const li = document.createElement('li');
@@ -31,21 +48,24 @@ const htmlLegendPlugin = {
       img.className = 'res-image';
 
       const box = document.createElement('span');
-      box.style.background = ds.borderColor; // or backgroundColor/borderColor
+      box.style.background = ds.borderColor;
       box.style.borderRadius = "10px";
       box.style.width="7px";
       box.style.height="7px";
       box.style.marginRight="2px";
-      //box.className = 'res-image';
       
       const p = document.createElement('p');
       p.className = 'resTextContainer';
       p.textContent = ds.label;
 
-      li.append(box, img, p);
+      const percentSpan = document.createElement('span');
+      percentSpan.style.color="#aaa";
+
+      li.append(box, img, p, percentSpan);
       ul.appendChild(li);
 
-      chart.legendText.push(p);
+      chart.percents.push(percentSpan);
+      chart.legendText.push(li);
     });
   },
 
@@ -60,78 +80,23 @@ const htmlLegendPlugin = {
 
 
 function initializeresChart(){    
-  const divs = {
-    0:document.getElementById('percentage-container5'),
-    1:document.getElementById('percentage-container4'),
-    2:document.getElementById('percentage-container3'),
-    3:document.getElementById('percentage-container2'),
-    4:document.getElementById('percentage-container1'),
-    5:document.getElementById('percentage-container0'),
-    lvl: document.getElementById('level-container')
-  }
+  const lvlDiv = document.getElementById('level-container');
 
   new Chart("myChart", {
     type: "line",
     data: {
       labels: xValues,
-      datasets: [{
-        pointHoverRadius: 7, // koala
-        fill: false,
-        label:"5 Res",
-        lineTension: 0.5,
-        borderColor: "rgb(139, 122, 190)",
-        pointRadius:0,
-        data: yFive
-      },{
-        pointHoverRadius: 7, // giraffe
-        fill: false,
-        label:"4 Res",
-        lineTension: 0.5,
-        borderColor: "rgb(149, 149, 149)",
-        pointRadius:0,
-        data: yFour
-      },{
-        pointHoverRadius: 7, // owl
-        fill: false,
-        label:"3 Res",
-        lineTension: 0.5,
-        borderColor: "rgb(255, 217, 102)",
-        pointRadius:0,
-        data: yThree
-      },{
-        pointHoverRadius: 7, // gorilla
-        fill: false,
-        label:"2 Res",
-        lineTension: 0.5,
-        borderColor: "rgb(111, 168, 220)",
-        pointRadius:0,
-        data: yTwo
-      },{
-        pointHoverRadius: 7, // deer
-        fill: false,
-        label:"1 Res",
-        lineTension: 0.5,
-        borderColor: "rgb(255, 217, 102)",
-        pointRadius:0,
-        data: yOne
-      },{
-        pointHoverRadius: 7, // spider
-        fill: false,
-        label:"0 Res",
-        lineTension: 0.5,
-        borderColor: "rgb(147, 196, 125)",
-        pointRadius:0,
-        data: yZero
-      }]
+      datasets: datasets
     },
     plugins: [htmlLegendPlugin],
     options: {
-      onHover: function(_, chartElement) {
+      onHover: function(_, chartElement,chart) {
         if (chartElement.length) {
-          const index = chartElement[0].index; // Hovered level
-          divs.lvl.textContent = `Level ${index}`
+          const level = chartElement[0].index; 
+          const nbsp  = "\u00A0";
+          lvlDiv.textContent = `Level ${level}`
           this.data.datasets.forEach((ds, i) => {
-            divs[i].textContent = (ds.data[index] * 100).toFixed(1) + '%';
+            chart.percents[i].textContent = nbsp+nbsp+nbsp+(ds.data[level] * 100).toFixed(1) + '%';          
           });
         }
       },
@@ -147,10 +112,7 @@ function initializeresChart(){
         },
         legend: {
           display: false,
-        },
-        htmlLegend: {
-          containerID: 'legend-container',
-        },
+        }
       },
       scales: {
         x: {
