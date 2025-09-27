@@ -58,8 +58,6 @@ export async function initializeTriangle2(){
     const ctx2 = document.getElementById('2myChart');
     const petButton2 = document.getElementById("2petButton");
     const areaButton2 = document.getElementById("2areaButton");
-
-    Chart.register(window['chartjs-plugin-annotation']);
     
     const myChart = new Chart(ctx2, {
         type: 'scatter',

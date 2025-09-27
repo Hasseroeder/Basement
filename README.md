@@ -48,4 +48,3 @@ We try to use vanilla JavaScript to keep the entry barrier as low as possible, s
 - Chart.js v4.5.0
 - chartjs-plugin-annotation v3.1.0
 - MathJax v3
-- merge-images v2.0.0
