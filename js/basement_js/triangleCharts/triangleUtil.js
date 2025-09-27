@@ -1,4 +1,4 @@
-const imageCache = new Map();        // -> Promise<Image>
+const imageCache = new Map(); // -> Promise<Image>
 
 export const polygonPlugin = {
     id: 'polygonPlugin',
@@ -44,6 +44,20 @@ const statImages= [
     "./media/owo_images/MR.png",
 ]; 
 
+export const dataPoints = (pets, getPosition) => pets.map(pet => {
+    const imgEl = new Image();
+    imgEl.src = pet.image;
+    imgEl.height=22;
+    imgEl.width=22;
+    return {
+        x: getX(...getPosition(pet.attributes)),
+        y: getY(...getPosition(pet.attributes)),
+        label: pet.name,
+        imageEl: imgEl,
+        attributes: pet.attributes,
+    };
+});
+
 export const externalTooltipHandler = (context) => {
     const { chart, tooltip } = context;
     let tooltipEl = document.getElementById('chartjs-tooltip');
@@ -87,14 +101,14 @@ export const externalTooltipHandler = (context) => {
     `;  // hardcoded offset is stupid, I know.
 };
 
-export function getX(topStat, rightStat){
+function getX(topStat, rightStat){
     return rightStat + 0.5 * topStat;
 }
-export function getY(topStat,rightStat){
+function getY(topStat,rightStat){
     return topStat;
 }
 
-export async function getLinesAndLabels(stats){
+export async function getLinesAndLabels(bigLabels,polygonLabelArgs){
     const rightRotation = 57.2957795;
     
     const annotations = [
@@ -143,8 +157,8 @@ export async function getLinesAndLabels(stats){
     });
 
     const positions = [[55,-10],[55,55],[-10,55]];
-    stats.forEach(async (stat,i) => {        
-        const src = await createLabelImage(stat);
+    (bigLabels || []).forEach(async (bigLabel,i) => {        
+        const src = await createLabelImage(bigLabel);
         const image = await loadImage(src);
 
         const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 20);
@@ -159,6 +173,9 @@ export async function getLinesAndLabels(stats){
             yValue: getY(...positions[i])
         };
     });
+
+    Object.assign(labels, getPolygonLabels(polygonLabelArgs));
+
     return {lines,labels};
 }
 
@@ -223,9 +240,9 @@ async function createLabelImage(item) {
     return canvas.toDataURL('image/png');
 }
 
-export function getPolygonLabels(polygonLabels, colors){
+function getPolygonLabels({polygonLabels, colors} = {}){
     const labelObject = {};
-    polygonLabels.forEach(({text, coor},i) =>{
+    (polygonLabels || []).forEach(({text, coor, rotation = 0},i) =>{
         labelObject[text+"label"]={
             type:"label",
             content:text,
@@ -235,7 +252,9 @@ export function getPolygonLabels(polygonLabels, colors){
             font: {
                 size: 16,
                 weight:"bold"
-            }
+            },
+            rotation,
+            group: "polygonLabels"
         };
     });
     return labelObject;

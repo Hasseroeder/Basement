@@ -1,5 +1,5 @@
 import { loadJson } from "../util/jsonUtil.js";
-import { polygonPlugin, externalTooltipHandler, getX, getY, getLinesAndLabels, getPolygonLabels } from "./triangleUtil.js";
+import { polygonPlugin, externalTooltipHandler, getLinesAndLabels, dataPoints } from "./triangleUtil.js";
 
 const polygonLabels = [
     {text:"shielded",coor:[55,20]},
@@ -27,11 +27,10 @@ function getPosition(attributes){
 
     let Heal= 100*(attributes[2])/sum;
     let Sustain= 100*(attributes[3]+attributes[5])/sum;
-
     return [Heal, Sustain];
 }
 
-const stats = [
+const bigLabels = [
     {   // topStat
         text: '% of stats in Healing',
         imageSrc:[
@@ -51,38 +50,24 @@ const stats = [
     }  
 ];
 
-const {lines,labels} = await getLinesAndLabels(stats);
+const {lines,labels} = await getLinesAndLabels(bigLabels,{polygonLabels,colors});
 
-const crune = await loadJson("../json/cruneHolders.json");
-const dataPoints = crune.map(item => {
-    const imgEl = new Image();
-    imgEl.src = item.image;
-    imgEl.height=22;
-    imgEl.width=22;
-    return {
-        x: getX(...getPosition(item.attributes)),
-        y: getY(...getPosition(item.attributes)),
-        label: item.name,
-        imageEl: imgEl,
-        attributes: item.attributes,
-    };
-});
+const cruneHolders = await loadJson("../json/cruneHolders.json");
 
 export async function initializeTriangle2(){
     const ctx2 = document.getElementById('2myChart');
-    const areaCtx2 = document.getElementById("2areaCanvas");
-
     const petButton2 = document.getElementById("2petButton");
     const areaButton2 = document.getElementById("2areaButton");
 
     Chart.register(window['chartjs-plugin-annotation']);
     
-    const mainChart = new Chart(ctx2, {
+    const myChart = new Chart(ctx2, {
         type: 'scatter',
+        plugins: [polygonPlugin],
         data: {
             datasets: [{
                 label: 'Pet Stats',
-                data: dataPoints,
+                data: dataPoints(cruneHolders,getPosition),
                 pointStyle: ctx => ctx.raw.imageEl,
                 radius: 10,
                 hoverRadius: 15,
@@ -114,66 +99,9 @@ export async function initializeTriangle2(){
                         ...lines,
                         ...labels
                     }
-                }
-            },
-            scales: {
-                x: {
-                    display: false,
-                    type: 'linear',
-                    position: 'bottom',
-                    title: {
-                        display: false,
-                    },
-                    min: 0,
-                    max: 100,
-                    grid: {
-                        drawOnChartArea: false // Hides square gridlines
-                    }
-                },
-                y: {
-                    display: false,
-                    type: 'linear',
-                    title: {
-                        display: false,
-                    },
-                    min: 0,
-                    max: 100,
-                    grid: {
-                        drawOnChartArea: false // Hides square gridlines
-                    }
-                }
-            }
-        },
-    });
-
-    const polygonChart = new Chart(areaCtx2, {
-        type: 'scatter',
-        plugins:
-            [polygonPlugin],
-        options: {
-            plugins: {
-                tooltip: {
-                    enabled: false,
-                    animation: false, 
-                },
-                legend: {
-                    display: false
-                },
-                polygonPlugin: {
+                },polygonPlugin: {
                     polygons: polygons,
                     colors: polygonColors
-                },
-                annotation: {
-                    clip: false,
-                    annotations:getPolygonLabels(polygonLabels,colors)
-                }
-            },
-            layout: {
-                padding: {
-                    left: 60,
-                    right: 60,
-                    top: 48,
-                    bottom: 48
                 }
             },
             scales: {
@@ -206,34 +134,23 @@ export async function initializeTriangle2(){
         },
     });
 
-    function labelVisibility(){
-        const anns = polygonChart.options.plugins.annotation.annotations;
+    function checkLabelVisibility(group){
+        const anns = myChart.options.plugins.annotation.annotations;
         Object.keys(anns).forEach(id => {
-            anns[id].display = 
-                ds.hidden && !polygonChart.polygons.hidden;
+            if (anns[id].group === group) anns[id].display = ds.hidden && !myChart.polygons.hidden;
         });
-        polygonChart.update();
+        myChart.update();
     }
 
-    const ds = mainChart.data.datasets[0]; // pet images
+    const ds = myChart.data.datasets[0]; // pet images
     petButton2.addEventListener('click', function() {
-        if ( !ds.hidden ){
-            ds.hidden = true;
-        }else{
-            ds.hidden = false;
-        }
-        labelVisibility();
-        mainChart.update();
+        ds.hidden = !ds.hidden;
+        checkLabelVisibility("polygonLabels");
     });
 
     areaButton2.addEventListener('click', function() {
-        if ( polygonChart.polygons.hidden == true){
-            polygonChart.polygons.hidden = false;
-        }else {
-            polygonChart.polygons.hidden = true;
-        }
-        labelVisibility();
+        myChart.polygons.hidden = !myChart.polygons.hidden;
+        checkLabelVisibility("polygonLabels");
     });
-
-    labelVisibility();
+    checkLabelVisibility("polygonLabels");
 }
