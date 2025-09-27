@@ -361,10 +361,8 @@ input, textarea, code, [contenteditable] {
 }
 
 .petButtonFromCalculator {
-  width:max-content; 
   margin: 1rem 1rem 0.3rem 0.3rem; 
   font-size: 0.75rem;
-  height:1.65rem; 
   width:11.3rem;
   border-radius: 0.2rem; 
   border-color: #909090;
@@ -474,7 +472,9 @@ button {
   background-color:#333;
   color:lightgray;
   border-color:lightgray;
-  height: 2rem;
+  /*height: 2rem;*/
+  max-height: min-content;
+  /**/
   width: 2rem;
   text-align: center;
   text-decoration: none;
