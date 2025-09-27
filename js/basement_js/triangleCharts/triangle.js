@@ -384,7 +384,6 @@ export async function initializeTriangle(){
     .then(b64 => tankImage.src= b64);
 
     Chart.register(window['chartjs-plugin-annotation']);
-    //Chart.register(imagePlugin);
     
     new Chart(ctx, {
         type: 'scatter',

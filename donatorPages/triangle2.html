@@ -37,7 +37,8 @@
                     margin-bottom:10px;
                     position: absolute;
                     pointer-events: none;
-                    opacity:1">
+                    opacity:1;
+                    z-index: 0;">
             </canvas>       
             <canvas id="2myChart" 
                 style="
@@ -45,42 +46,23 @@
                     max-width:600px;
                     height:480px;
                     max-height:480px;
-                    margin-bottom:10px">
+                    margin-bottom:10px;
+                    z-index: 1;">
             </canvas>
-            <canvas id="2labelCanvas" 
-                style="
-                    width: 600px;
-                    max-width:600px;
-                    height:480px;
-                    max-height:480px;
-                    margin-bottom:10px;
-                    position: absolute;
-                    pointer-events: none;
-                    opacity:1">
-            </canvas> 
-            <canvas id="2overlayCanvas" 
-                style="
-                    width: 600px;
-                    max-width:600px;
-                    height:480px;
-                    max-height:480px;
-                    margin-bottom:10px;
-                    position: absolute;
-                    pointer-events: none;
-                    opacity:0">
-            </canvas> 
             <button id="2petButton"
                 style="
                 position: absolute;
                 width: 4rem;
-                transform: translate(-275%,175%);">
+                transform: translate(-275%,175%);
+                z-index: 2;">
                 Pets
             </button>
             <button id="2areaButton"
                 style="
                 position: absolute;
                 width: 4rem;
-                transform: translate(-275%,300%);">
+                transform: translate(-275%,300%);
+                z-index: 2;">
                 Area
             </button> 
         </div>
