@@ -1,6 +1,8 @@
+import { loadJson } from "../util/jsonUtil.js";
+
 const imageCache = new Map(); // -> Promise<Image>
 
-export const polygonPlugin = {
+const polygonPlugin = {
     id: 'polygonPlugin',
 
     afterInit: (chart) => {
@@ -44,21 +46,42 @@ const statImages= [
     "./media/owo_images/MR.png",
 ]; 
 
-export const dataPoints = (pets, getPosition) => pets.map(pet => {
+const dataPoints = (pets,top,right,left) => pets.map(pet => {
     const imgEl = new Image();
     imgEl.src = pet.image;
     imgEl.height=22;
     imgEl.width=22;
     return {
-        x: getX(...getPosition(pet.attributes)),
-        y: getY(...getPosition(pet.attributes)),
+        x: getX(...getPosition(
+            top.map(i => pet.attributes[i]),
+            right.map(i => pet.attributes[i]),
+            left.map(i => pet.attributes[i])
+        )),
+        y: getY(...getPosition(
+            top.map(i => pet.attributes[i]),
+            right.map(i => pet.attributes[i]),
+            left.map(i => pet.attributes[i])
+        )),
         label: pet.name,
         imageEl: imgEl,
         attributes: pet.attributes,
     };
 });
 
-export const externalTooltipHandler = (context) => {
+function getPosition(
+    topAttr,
+    rightAttr,
+    leftAttr
+){
+    let sum = [...topAttr,...rightAttr,...leftAttr].reduce((acc, num) => acc + num, 0);
+
+    let right= 100*(rightAttr.reduce((acc, num) => acc + num, 0))/sum;
+    let top=   100*(topAttr.reduce((acc, num) => acc + num, 0))/sum;
+
+    return [top, right];
+}
+
+const externalTooltipHandler = (context) => {
     const { chart, tooltip } = context;
     let tooltipEl = document.getElementById('chartjs-tooltip');
     if (!tooltipEl) {
@@ -108,7 +131,7 @@ export function getY(topStat,rightStat){
     return topStat;
 }
 
-export async function getLinesAndLabels(bigLabels,polygonLabelArgs){
+export async function getLinesAndLabels({bigLabels,areaLabels}={}){
     const rightRotation = 57.2957795;
     
     const annotations = [
@@ -135,10 +158,8 @@ export async function getLinesAndLabels(bigLabels,polygonLabelArgs){
             const [start, end] = linePts(percent);
             lines[Title] = {
                 type: 'line',
-                xMin: getX(...start),
-                yMin: getY(...start),
-                xMax: getX(...end),
-                yMax: getY(...end),
+                xMin: getX(...start), yMin: getY(...start),
+                xMax: getX(...end), yMax: getY(...end),
                 borderWidth: 0.5,
                 color: 'lightgray',
                 drawTime:'beforeDraw'
@@ -160,7 +181,6 @@ export async function getLinesAndLabels(bigLabels,polygonLabelArgs){
     (bigLabels || []).forEach(async (bigLabel,i) => {        
         const src = await createLabelImage(bigLabel);
         const image = await loadImage(src);
-
         const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 20);
 
         labels["BigLabel_"+i] = {
@@ -169,12 +189,11 @@ export async function getLinesAndLabels(bigLabels,polygonLabelArgs){
             width,
             height,
             rotation: [-rightRotation, rightRotation,0][i],
-            xValue: getX(...positions[i]),
-            yValue: getY(...positions[i])
+            xValue: getX(...positions[i]), yValue: getY(...positions[i])
         };
     });
 
-    Object.assign(labels, getPolygonLabels(polygonLabelArgs));
+    Object.assign(labels, getPolygonLabels(areaLabels));
 
     return {lines,labels};
 }
@@ -184,7 +203,7 @@ function scaleToFit(naturalW, naturalH,  maxH) {
     return { width: Math.round(naturalW * ratio), height: Math.round(naturalH * ratio) };
 }
 
-export function loadImage(src) {
+function loadImage(src) {
     if (imageCache.has(src)) return imageCache.get(src);
     const p = new Promise((resolve, reject) => {
         const img = new Image();
@@ -200,7 +219,8 @@ async function createLabelImage(item) {
     const font = '20px system-ui, Arial, sans-serif';
     const imageSize = 24;
 
-    const imgs = await Promise.all(item.imageSrc.map(loadImage));
+    const imageSources = item.images.map(i=>statImages[i]);
+    const imgs = await Promise.all(imageSources.map(loadImage));
 
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -240,9 +260,9 @@ async function createLabelImage(item) {
     return canvas.toDataURL('image/png');
 }
 
-function getPolygonLabels({polygonLabels, colors} = {}){
+function getPolygonLabels({labels, colors} = {}){
     const labelObject = {};
-    (polygonLabels || []).forEach(({text, coor, rotation = 0},i) =>{
+    (labels || []).forEach(({text, coor, rotation = 0},i) =>{
         labelObject[text+"label"]={
             type:"label",
             content:text,
@@ -258,4 +278,179 @@ function getPolygonLabels({polygonLabels, colors} = {}){
         };
     });
     return labelObject;
+}
+
+export async function initializeTriangle({ chartData, ann, pets, statAllocation }){
+    const ctx = document.getElementById(chartData.elNames[0]);
+    const petButton = document.getElementById(chartData.elNames[1]);
+    const areaButton = document.getElementById(chartData.elNames[2]);
+    
+    const myChart = new Chart(ctx, {
+        type: 'scatter',
+        plugins: 
+            [polygonPlugin],
+        data: {
+            datasets: [{
+                label: 'Pet Stats',
+                data: dataPoints(pets, ...statAllocation),
+                pointStyle: ctx => ctx.raw.imageEl,
+                radius: 10, hoverRadius: 15, hidden: false, clip:false
+            }]
+        },
+        options: {
+            layout: {padding: {left: 60, right: 60, top: 48, bottom: 48}},
+            plugins: {
+                tooltip: {
+                    mode: 'nearest', enabled: false, animation: false, 
+                    external: externalTooltipHandler  
+                },
+                legend: {display: false},
+                annotation: {clip: false, annotations: {...ann.lines,...ann.labels}},
+                polygonPlugin: chartData.polygonData
+            },
+            scales: {
+                x: {
+                    display: false, type: 'linear', position: 'bottom',
+                    min: 0, max: 100,
+                    title: {display: false},
+                    grid: {drawOnChartArea: false}
+                },
+                y: {
+                    display: false, type: 'linear',
+                    min: 0, max: 100,
+                    title: {display: false},
+                    grid: {drawOnChartArea: false}
+                }
+            }
+        },
+    });
+
+    function checkLabelVisibility(group,chart){
+        const anns = chart.options.plugins.annotation.annotations;
+        Object.keys(anns).forEach(id => {
+            if (anns[id].group === group) anns[id].display = ds.hidden && !chart.polygons.hidden;
+        });
+        chart.update();
+    }
+
+    const ds = myChart.data.datasets[0];
+    petButton.addEventListener('click', function() {
+        ds.hidden = !ds.hidden;
+        checkLabelVisibility("polygonLabels",myChart);
+    });
+
+    areaButton.addEventListener('click', function() {
+        myChart.polygons.hidden = !myChart.polygons.hidden;
+        checkLabelVisibility("polygonLabels",myChart);
+    });
+    checkLabelVisibility("polygonLabels",myChart);
+}
+
+export async function getTriangleData(){
+    const statAllocation =[
+        [[1,4],[3],[0,2,5]],// top:STR,MAG right:WP    left:HP,PR,MR
+        [[2],[3,5],[0]]     // top:PR      right:WP,MR left:HP
+    ];
+    const chartData = [
+        {
+            areaLabels :{
+                labels : [
+                    {text: 'Gem', coor: [70,25], rotation: 57.2957795},
+                    {text: 'Gemlike', coor: [60,25], rotation: 57.2957795},
+                    {text: 'Attacker', coor: [72.5,7], rotation: -57.2957795},
+                    {text: 'Hybrid', coor: [35.5,7], rotation: -57.2957795},
+                    {text: 'Pure', coor: [7.5,7], rotation: -57.2957795},
+                    {text: 'WP Tank', coor: [7.5,32.5]},
+                    {text: 'WP Hybrid', coor: [23,25.6]},
+                    {text: 'Supporter', coor: [47.5,32.5]},
+                    {text: 'Useless', coor: [15,67.5]}
+                ],colors : [
+                    "rgb(65, 172, 39)",
+                    "rgb(99, 192, 187)",
+                    "rgb(210, 210, 210)",
+                    "rgb(218, 147, 214)",
+                    "rgb(210, 210, 210)",
+                    "rgb(99, 192, 187)",
+                    "rgb(76, 148, 255)",
+                    "rgb(160, 160, 160)",
+                    "rgb(160, 160, 160)",
+                ]
+            },
+            polygonData:{
+                polygons : [
+                    [[100,0],[50,50],[40,50],[90,0]],
+                    [[90,0],[40,50],[30,50],[80,0]],
+                    [[100,0],[85,15],[55,15],[55,0]],
+                    [[55,0],[55,15],[15,15],[15,0]],
+                    [[15,0],[15,15],[0,15],[0,0]],
+                    [[15,15],[15,50],[0,50],[0,15]],
+                    [[15,15],[45,15],[15,45]],
+                    [[45,15],[85,15],[50,50],[15,50],[15,45]]
+                ],colors : [
+                    "rgba(65, 172, 39, 0.25)",
+                    "rgba(99, 192, 187, 0.25)",
+                    "rgba(210, 210, 210, 0.25)",
+                    "rgba(218, 147, 214, 0.25)",
+                    "rgba(210, 210, 210, 0.25)",
+                    "rgba(99, 192, 187, 0.25)",
+                    "rgba(76, 148, 255, 0.25)",
+                    "rgba(160, 160, 160, 0.25)",
+                ]
+            },
+            bigLabels : [
+                {text: '% of stats in Power', images:statAllocation[0][0]},
+                {text: '% of stats in WP', images:statAllocation[0][1]},
+                {text: '% of stats in Tanking', images:statAllocation[0][2]}
+            ],
+            elNames : ['1myChart','1petButton','1areaButton']
+        },
+        {
+            areaLabels :{
+                labels : [
+                    {text:"shielded",coor:[55,20]},
+                    {text:"non-shielded",coor:[30,32.5]}
+                ],
+                colors : [
+                    "rgb(40, 119, 194)",
+                    "rgb(133, 106, 207)"
+                ]
+            },
+            polygonData:{
+                polygons : [
+                    [[70,10],[70,15],[45,40],[45,20],[55,10]],
+                    [[45,40],[40,45],[15,45],[15,25],[20,20],[45,20]]
+                ],
+                colors : [
+                    "rgba(40, 119, 194, 0.25)",
+                    "rgba(133, 106, 207, 0.25)"
+                ]
+            },
+            bigLabels : [
+                {text: '% of stats in Healing', images:statAllocation[1][0]},
+                {text: '% of stats in Sustain', images:statAllocation[1][1]},
+                {text: '% of stats in Health', images:statAllocation[1][2],}  
+            ],
+            elNames : ['2myChart','2petButton','2areaButton']
+        }
+    ];
+    const [pets1, pets2, ann1, ann2] = await Promise.all([
+        loadJson("../json/pets.json"),
+        loadJson("../json/cruneHolders.json"),
+        getLinesAndLabels(chartData[0]),
+        getLinesAndLabels(chartData[1])
+    ]);
+
+    return [
+        {
+            chartData:chartData[0],
+            ann:ann1,
+            pets:pets1,
+            statAllocation:statAllocation[0]
+        },{
+            chartData:chartData[1],
+            ann:ann2,
+            pets:pets2,
+            statAllocation:statAllocation[1]
+        }
+    ]
 }

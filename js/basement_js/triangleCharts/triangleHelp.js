@@ -94,68 +94,34 @@ function reverseXY(x,y){
 }
 
 document.addEventListener("DOMContentLoaded", async function () {    
-
     const myChart = new Chart(ctx, {
         type: 'scatter',
-        plugins: [
-            cursorLinePlugin
-        ],
+        plugins: [cursorLinePlugin],
         options: {
-            layout: {
-                padding: {
-                    left: 60,
-                    right: 60,
-                    top: 48,
-                    bottom: 48
-                }
-            },
+            layout: {padding: {left:60,right:60,top:48,bottom:48}},
             plugins: {
                 cursorLine: true, 
-                tooltip: {
-                    mode: 'nearest',
-                    enabled: false,          
-                    animation: false, 
-                },
-                legend: {
-                    display: false
-                },
-                annotation: {
-                    clip: false,
-                    annotations: {
-                        ...lines,
-                    }
-                }
+                tooltip: {mode: 'nearest',enabled: false,animation: false,},
+                legend: {display: false},
+                annotation: {clip: false, annotations: {...lines}}
             },
             scales: {
                 x: {
-                    display: false,
-                    type: 'linear',
-                    title: {
-                        display: false,
-                    },
-                    min: 0,
-                    max: 100,
-                    grid: {
-                        drawOnChartArea: false // Hides square gridlines
-                    }
+                    display: false, type: 'linear',
+                    title: {display: false},
+                    min: 0, max: 100,
+                    grid: {drawOnChartArea: false}
                 },
                 y: {
-                    display: false,
-                    type: 'linear',
-                    title: {
-                        display: false,
-                    },
-                    min: 0,
-                    max: 100,
-                    grid: {
-                        drawOnChartArea: false // Hides square gridlines
-                    }
+                    display: false, type: 'linear',
+                    title: {display: false},
+                    min: 0, max: 100,
+                    grid: {drawOnChartArea: false}
                 }
             }
         },
     });
-
     ctx.addEventListener('mousemove', () => {
-        myChart.update();  // Forces the chart to rerender
+        myChart.update();
     });
 });

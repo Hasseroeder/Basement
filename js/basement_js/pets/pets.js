@@ -1,10 +1,10 @@
-import { initializeTriangle } from '../triangleCharts/triangle.js';
-import { initializeTriangle2 } from '../triangleCharts/triangle2.js';
+import { initializeTriangle, getTriangleData } from "../triangleCharts/triangleUtil.js"
 
 window.initializetriangle = initializeTriangle;
-window.initializetriangle2 = initializeTriangle2;
 
-const buttonNames = ["resChart","effectiveHP","effectiveStats","triangle", "triangle2"];
+const buttonNames = ["resChart","effectiveHP","effectiveStats","triangle1", "triangle2"];
+
+const triangleData = await getTriangleData();
 
 function handleButtonClick(Name) {
     const button = document.getElementById(`${Name}Button`); 
@@ -31,8 +31,9 @@ function handleButtonClick(Name) {
 
                 container.appendChild(newDiv);
                 container.dataset.created = "true";
-                if (window[`initialize${Name}`]) {
-                    window[`initialize${Name}`]();
+                if (Name.startsWith('triangle')) {
+                    const i = parseInt(Name.slice('triangle'.length));
+                    initializeTriangle(triangleData[i-1]);
                 }
             })
             .catch(error => console.error('Error:', error))
