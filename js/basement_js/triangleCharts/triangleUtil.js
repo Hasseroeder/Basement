@@ -212,7 +212,7 @@ async function createLabelImage(item) {
         (metrics.actualBoundingBoxAscent || 0) + (metrics.actualBoundingBoxDescent || 0) || parseInt(font, 10)
     );
 
-    const scaleFactor = 2;
+    const scaleFactor = 5;
     const cssWidth = textWidth + imgs.length * imageSize;
     const cssHeight = Math.max(textHeight, imageSize);      
 
