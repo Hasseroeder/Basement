@@ -101,10 +101,10 @@ export const externalTooltipHandler = (context) => {
     `;  // hardcoded offset is stupid, I know.
 };
 
-function getX(topStat, rightStat){
+export function getX(topStat, rightStat){
     return rightStat + 0.5 * topStat;
 }
-function getY(topStat,rightStat){
+export function getY(topStat,rightStat){
     return topStat;
 }
 
