@@ -280,10 +280,21 @@ function getPolygonLabels({labels, colors} = {}){
     return labelObject;
 }
 
-export async function initializeTriangle({ chartData, ann, pets, statAllocation }){
-    const ctx = document.getElementById(chartData.elNames[0]);
-    const petButton = document.getElementById(chartData.elNames[1]);
-    const areaButton = document.getElementById(chartData.elNames[2]);
+export async function initializeTriangle({ chartData, ann, pets, statAllocation }, container){
+    //const ctx = document.getElementById(chartData.elNames[0]);
+    //const petButton = document.getElementById(chartData.elNames[1]);
+    //const areaButton = document.getElementById(chartData.elNames[2]);
+    
+    const ctx = document.createElement("canvas");
+    const petButton = document.createElement("button");
+    const areaButton = document.createElement("button");
+
+    container.append(ctx,petButton,areaButton);
+    ctx.style="width: 600px; max-width:600px; height:480px; max-height:480px; margin-bottom:10px;";
+    petButton.style="position: absolute; width: 4rem; transform: translate(-275%,175%);";
+    petButton.textContent="Pets";
+    areaButton.style="position: absolute; width: 4rem; transform: translate(-275%,300%);";
+    areaButton.textContent="Area";
     
     const myChart = new Chart(ctx, {
         type: 'scatter',
@@ -402,7 +413,7 @@ export async function getTriangleData(){
                 {text: '% of stats in WP', images:statAllocation[0][1]},
                 {text: '% of stats in Tanking', images:statAllocation[0][2]}
             ],
-            elNames : ['1myChart','1petButton','1areaButton']
+            jsonPath: "../json/pets.json"
         },
         {
             areaLabels :{
@@ -430,27 +441,18 @@ export async function getTriangleData(){
                 {text: '% of stats in Sustain', images:statAllocation[1][1]},
                 {text: '% of stats in Health', images:statAllocation[1][2],}  
             ],
-            elNames : ['2myChart','2petButton','2areaButton']
+            jsonPath: "../json/cruneHolders.json"
         }
     ];
-    const [pets1, pets2, ann1, ann2] = await Promise.all([
-        loadJson("../json/pets.json"),
-        loadJson("../json/cruneHolders.json"),
-        getLinesAndLabels(chartData[0]),
-        getLinesAndLabels(chartData[1])
-    ]);
+    
+    const annsPromise  = Promise.all(chartData.map(cfg => getLinesAndLabels(cfg)));
+    const petsPromise  = Promise.all(chartData.map(cfg => loadJson(cfg.jsonPath)));
+    const [anns, pets] = await Promise.all([annsPromise, petsPromise]);
 
-    return [
-        {
-            chartData:chartData[0],
-            ann:ann1,
-            pets:pets1,
-            statAllocation:statAllocation[0]
-        },{
-            chartData:chartData[1],
-            ann:ann2,
-            pets:pets2,
-            statAllocation:statAllocation[1]
-        }
-    ]
+    return chartData.map((cfg, i) => ({
+        chartData: cfg,
+        ann: anns[i],
+        pets: pets[i],
+        statAllocation: statAllocation[i]
+    }));
 }

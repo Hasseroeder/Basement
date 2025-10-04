@@ -84,7 +84,7 @@ function getPixelForX(scale,data){
     return scale.left + (data - scale.min) * (scale.width / (scale.max - scale.min));
 }
 
-const {lines} = await getLinesAndLabels();;
+const {lines} = await getLinesAndLabels();
 
 function reverseXY(x,y){
     let Heal= y;

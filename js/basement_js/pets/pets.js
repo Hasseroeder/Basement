@@ -2,7 +2,7 @@ import { initializeTriangle, getTriangleData } from "../triangleCharts/triangleU
 
 window.initializetriangle = initializeTriangle;
 
-const buttonNames = ["resChart","effectiveHP","effectiveStats","triangle1", "triangle2"];
+const buttonNames = ["resChart","effectiveHP","effectiveStats","triangle0", "triangle1"];
 
 const triangleData = await getTriangleData();
 
@@ -31,9 +31,11 @@ function handleButtonClick(Name) {
 
                 container.appendChild(newDiv);
                 container.dataset.created = "true";
-                if (Name.startsWith('triangle')) {
-                    const i = parseInt(Name.slice('triangle'.length));
-                    initializeTriangle(triangleData[i-1]);
+                if (container.dataset.chartNumber) {
+                    initializeTriangle(
+                        triangleData[container.dataset.chartNumber],
+                        container.querySelector("#chartContainer")
+                    );
                 }
             })
             .catch(error => console.error('Error:', error))
