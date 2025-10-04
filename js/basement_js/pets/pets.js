@@ -1,10 +1,18 @@
-import { initializeTriangle, getTriangleData } from "../triangleCharts/triangleUtil.js"
+import { initializeTriangle, getLinesAndLabels } from "../triangleCharts/triangleUtil.js"
+import { loadJson } from "../util/jsonUtil.js";
 
-window.initializetriangle = initializeTriangle;
+
+const rawTriangleData = await loadJson("../json/triangleChartConfigs.json");
+const [anns, pets] = await Promise.all([
+    Promise.all(rawTriangleData.map(cfg => getLinesAndLabels(cfg))),
+    Promise.all(rawTriangleData.map(cfg => loadJson(cfg.jsonPath)))
+]);
+const triangleData = rawTriangleData.map((chartData, i) => ({
+    chartData, ann:anns[i], pets:pets[i]
+})); // maybe this belongs elsewhere lol
+
 
 const buttonNames = ["resChart","effectiveHP","effectiveStats","triangle0", "triangle1"];
-
-const triangleData = await getTriangleData();
 
 function handleButtonClick(Name) {
     const button = document.getElementById(`${Name}Button`); 

@@ -1,5 +1,3 @@
-import { loadJson } from "../util/jsonUtil.js";
-
 const imageCache = new Map(); // -> Promise<Image>
 
 const polygonPlugin = {
@@ -131,7 +129,7 @@ export function getY(topStat,rightStat){
     return topStat;
 }
 
-export async function getLinesAndLabels({bigLabels,areaLabels}={}){
+export async function getLinesAndLabels({bigLabels,areaLabels,statAllocation}={}){
     const rightRotation = 57.2957795;
     
     const annotations = [
@@ -179,7 +177,7 @@ export async function getLinesAndLabels({bigLabels,areaLabels}={}){
 
     const positions = [[55,-10],[55,55],[-10,55]];
     (bigLabels || []).forEach(async (bigLabel,i) => {        
-        const src = await createLabelImage(bigLabel);
+        const src = await createLabelImage(bigLabel,statAllocation[i]);
         const image = await loadImage(src);
         const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 20);
 
@@ -215,11 +213,11 @@ function loadImage(src) {
     return p;
 }
 
-async function createLabelImage(item) {
+async function createLabelImage(item,statIDs) {
     const font = '20px system-ui, Arial, sans-serif';
     const imageSize = 24;
 
-    const imageSources = item.images.map(i=>statImages[i]);
+    const imageSources = statIDs.map(i=>statImages[i]);
     const imgs = await Promise.all(imageSources.map(loadImage));
 
     const canvas = document.createElement('canvas');
@@ -280,7 +278,7 @@ function getPolygonLabels({labels, colors} = {}){
     return labelObject;
 }
 
-export async function initializeTriangle({ chartData, ann, pets, statAllocation }, container){
+export async function initializeTriangle({ chartData, ann, pets }, container){
     const ctx = document.createElement("canvas");
     const petButton = document.createElement("button");
     const areaButton = document.createElement("button");
@@ -300,7 +298,7 @@ export async function initializeTriangle({ chartData, ann, pets, statAllocation 
         data: {
             datasets: [{
                 label: 'Pet Stats',
-                data: dataPoints(pets, ...statAllocation),
+                data: dataPoints(pets, ...chartData.statAllocation),
                 pointStyle: ctx => ctx.raw.imageEl,
                 radius: 10, hoverRadius: 15, hidden: false, clip:false
             }]
@@ -352,104 +350,4 @@ export async function initializeTriangle({ chartData, ann, pets, statAllocation 
         checkLabelVisibility("polygonLabels",myChart);
     });
     checkLabelVisibility("polygonLabels",myChart);
-}
-
-export async function getTriangleData(){
-    const statAllocation =[
-        [[1,4],[3],[0,2,5]],// top:STR,MAG right:WP    left:HP,PR,MR
-        [[2],[3,5],[0]]     // top:PR      right:WP,MR left:HP
-    ];
-    const chartData = [
-        {
-            areaLabels :{
-                labels : [
-                    {text: 'Gem', coor: [70,25], rotation: 57.2957795},
-                    {text: 'Gemlike', coor: [60,25], rotation: 57.2957795},
-                    {text: 'Attacker', coor: [72.5,7], rotation: -57.2957795},
-                    {text: 'Hybrid', coor: [35.5,7], rotation: -57.2957795},
-                    {text: 'Pure', coor: [7.5,7], rotation: -57.2957795},
-                    {text: 'WP Tank', coor: [7.5,32.5]},
-                    {text: 'WP Hybrid', coor: [23,25.6]},
-                    {text: 'Supporter', coor: [47.5,32.5]},
-                    {text: 'Useless', coor: [15,67.5]}
-                ],colors : [
-                    "rgb(65, 172, 39)",
-                    "rgb(99, 192, 187)",
-                    "rgb(210, 210, 210)",
-                    "rgb(218, 147, 214)",
-                    "rgb(210, 210, 210)",
-                    "rgb(99, 192, 187)",
-                    "rgb(76, 148, 255)",
-                    "rgb(160, 160, 160)",
-                    "rgb(160, 160, 160)",
-                ]
-            },
-            polygonData:{
-                polygons : [
-                    [[100,0],[50,50],[40,50],[90,0]],
-                    [[90,0],[40,50],[30,50],[80,0]],
-                    [[100,0],[85,15],[55,15],[55,0]],
-                    [[55,0],[55,15],[15,15],[15,0]],
-                    [[15,0],[15,15],[0,15],[0,0]],
-                    [[15,15],[15,50],[0,50],[0,15]],
-                    [[15,15],[45,15],[15,45]],
-                    [[45,15],[85,15],[50,50],[15,50],[15,45]]
-                ],colors : [
-                    "rgba(65, 172, 39, 0.25)",
-                    "rgba(99, 192, 187, 0.25)",
-                    "rgba(210, 210, 210, 0.25)",
-                    "rgba(218, 147, 214, 0.25)",
-                    "rgba(210, 210, 210, 0.25)",
-                    "rgba(99, 192, 187, 0.25)",
-                    "rgba(76, 148, 255, 0.25)",
-                    "rgba(160, 160, 160, 0.25)",
-                ]
-            },
-            bigLabels : [
-                {text: '% of stats in Power', images:statAllocation[0][0]},
-                {text: '% of stats in WP', images:statAllocation[0][1]},
-                {text: '% of stats in Tanking', images:statAllocation[0][2]}
-            ],
-            jsonPath: "../json/pets.json"
-        },
-        {
-            areaLabels :{
-                labels : [
-                    {text:"shielded",coor:[55,20]},
-                    {text:"non-shielded",coor:[30,32.5]}
-                ],
-                colors : [
-                    "rgb(40, 119, 194)",
-                    "rgb(133, 106, 207)"
-                ]
-            },
-            polygonData:{
-                polygons : [
-                    [[70,10],[70,15],[45,40],[45,20],[55,10]],
-                    [[45,40],[40,45],[15,45],[15,25],[20,20],[45,20]]
-                ],
-                colors : [
-                    "rgba(40, 119, 194, 0.25)",
-                    "rgba(133, 106, 207, 0.25)"
-                ]
-            },
-            bigLabels : [
-                {text: '% of stats in Healing', images:statAllocation[1][0]},
-                {text: '% of stats in Sustain', images:statAllocation[1][1]},
-                {text: '% of stats in Health', images:statAllocation[1][2],}  
-            ],
-            jsonPath: "../json/cruneHolders.json"
-        }
-    ];
-    
-    const annsPromise  = Promise.all(chartData.map(cfg => getLinesAndLabels(cfg)));
-    const petsPromise  = Promise.all(chartData.map(cfg => loadJson(cfg.jsonPath)));
-    const [anns, pets] = await Promise.all([annsPromise, petsPromise]);
-
-    return chartData.map((cfg, i) => ({
-        chartData: cfg,
-        ann: anns[i],
-        pets: pets[i],
-        statAllocation: statAllocation[i]
-    }));
 }

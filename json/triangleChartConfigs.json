@@ -1,0 +1,84 @@
+[
+    {
+        "areaLabels" :{
+            "labels" : [
+                {"text": "Gem", "coor": [70,25], "rotation": 57.2957795},
+                {"text": "Gemlike", "coor": [60,25], "rotation": 57.2957795},
+                {"text": "Attacker", "coor": [72.5,7], "rotation": -57.2957795},
+                {"text": "Hybrid", "coor": [35.5,7], "rotation": -57.2957795},
+                {"text": "Pure", "coor": [7.5,7], "rotation": -57.2957795},
+                {"text": "WP Tank", "coor": [7.5,32.5]},
+                {"text": "WP Hybrid", "coor": [23,25.6]},
+                {"text": "Supporter", "coor": [47.5,32.5]},
+                {"text": "Useless", "coor": [15,67.5]}
+            ],"colors" : [
+                "rgb(65, 172, 39)",
+                "rgb(99, 192, 187)",
+                "rgb(210, 210, 210)",
+                "rgb(218, 147, 214)",
+                "rgb(210, 210, 210)",
+                "rgb(99, 192, 187)",
+                "rgb(76, 148, 255)",
+                "rgb(160, 160, 160)",
+                "rgb(160, 160, 160)"
+            ]
+        },
+        "polygonData":{
+            "polygons" : [
+                [[100,0],[50,50],[40,50],[90,0]],
+                [[90,0],[40,50],[30,50],[80,0]],
+                [[100,0],[85,15],[55,15],[55,0]],
+                [[55,0],[55,15],[15,15],[15,0]],
+                [[15,0],[15,15],[0,15],[0,0]],
+                [[15,15],[15,50],[0,50],[0,15]],
+                [[15,15],[45,15],[15,45]],
+                [[45,15],[85,15],[50,50],[15,50],[15,45]]
+            ],"colors" : [
+                "rgba(65, 172, 39, 0.25)",
+                "rgba(99, 192, 187, 0.25)",
+                "rgba(210, 210, 210, 0.25)",
+                "rgba(218, 147, 214, 0.25)",
+                "rgba(210, 210, 210, 0.25)",
+                "rgba(99, 192, 187, 0.25)",
+                "rgba(76, 148, 255, 0.25)",
+                "rgba(160, 160, 160, 0.25)"
+            ]
+        },
+        "bigLabels" : [
+            {"text": "% of stats in Power"},
+            {"text": "% of stats in WP"},
+            {"text": "% of stats in Tanking"}
+        ],
+        "statAllocation": [[1,4],[3],[0,2,5]],
+        "jsonPath": "../json/pets.json"
+    },
+    {
+        "areaLabels" :{
+            "labels" : [
+                {"text":"shielded","coor":[55,20]},
+                {"text":"non-shielded","coor":[30,32.5]}
+            ],
+            "colors" : [
+                "rgb(40, 119, 194)",
+                "rgb(133, 106, 207)"
+            ]
+        },
+        "polygonData":{
+            "polygons" : [
+                [[70,10],[70,15],[45,40],[45,20],[55,10]],
+                [[45,40],[40,45],[15,45],[15,25],[20,20],[45,20]]
+            ],
+            "colors" : [
+                "rgba(40, 119, 194, 0.25)",
+                "rgba(133, 106, 207, 0.25)"
+            ]
+        },
+        "bigLabels" : [
+            {"text": "% of stats in Healing"},
+            {"text": "% of stats in Sustain"},
+            {"text": "% of stats in Health"}  
+        ],
+        "statAllocation": [[2],[3,5],[0]],
+        "jsonPath": "../json/cruneHolders.json"
+    }
+]
