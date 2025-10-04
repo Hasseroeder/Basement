@@ -281,21 +281,18 @@ function getPolygonLabels({labels, colors} = {}){
 }
 
 export async function initializeTriangle({ chartData, ann, pets, statAllocation }, container){
-    //const ctx = document.getElementById(chartData.elNames[0]);
-    //const petButton = document.getElementById(chartData.elNames[1]);
-    //const areaButton = document.getElementById(chartData.elNames[2]);
-    
     const ctx = document.createElement("canvas");
     const petButton = document.createElement("button");
     const areaButton = document.createElement("button");
 
     container.append(ctx,petButton,areaButton);
-    ctx.style="width: 600px; max-width:600px; height:480px; max-height:480px; margin-bottom:10px;";
+    ctx.style="width: 600px; height:480px; margin-bottom:10px;";
+    // chart.js doesn't allow you to use classes directly, and I'm too lazy to use a wrapper
     petButton.style="position: absolute; width: 4rem; transform: translate(-275%,175%);";
     petButton.textContent="Pets";
     areaButton.style="position: absolute; width: 4rem; transform: translate(-275%,300%);";
     areaButton.textContent="Area";
-    
+
     const myChart = new Chart(ctx, {
         type: 'scatter',
         plugins: 

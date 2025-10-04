@@ -1006,11 +1006,3 @@ a:hover {
   transition : all .1s ease;
   pointer-events : none;
 }
-
-.triangle-canvas {
-  width: 600px;
-  max-width:600px;
-  height:480px;
-  max-height:480px;
-  margin-bottom:10px;
-}

@@ -19,7 +19,6 @@ async function main(){
     simplifyPets(turnlist);
     addWantsPreturn(turnlist);
     console.log(turnlist);
-
 }
 
 function addSubturns(oldTurns){
