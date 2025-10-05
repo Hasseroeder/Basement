@@ -191,7 +191,6 @@ input, textarea, code, [contenteditable] {
   margin: 0px 1rem;
   border-radius: 50%;
   object-fit: cover;
-  cursor: var(--cur-pointer);
   height: 2.5rem; 
 }  
 
@@ -201,7 +200,6 @@ input, textarea, code, [contenteditable] {
   font-weight: 500;
   color:#eee;
   line-height: 1.375rem;
-  cursor: var(--cur-pointer);
 }  
   
 .discord-bot-tag{
