@@ -25,7 +25,7 @@ const datasets = [5,4,3,2,1,0].map((resAmount) => ({
 const htmlLegendPlugin = {
   id: 'htmlLegend',
   beforeInit(chart) {
-    const legendContainer = document.getElementById("legend-container");
+    const legendContainer = chart.options.plugins.htmlLegendPlugin.legendDiv;
     const ul = document.createElement('ul');
     ul.className = 'res-li-container';
     legendContainer.append(ul);
@@ -78,10 +78,12 @@ const htmlLegendPlugin = {
   }
 };
 
-function initializeResChart(){    
-  const lvlDiv = document.getElementById('level-container');
+function initializeResChart(container){    
+  const lvlDiv = container.querySelector('#level-container');
+  const legendDiv = container.querySelector("#legend-container");
+  const ctx = container.querySelector('#myChart');
 
-  new Chart("myChart", {
+  new Chart(ctx, {
     type: "line",
     data: {
       labels: xValues,
@@ -106,23 +108,17 @@ function initializeResChart(){
       },
       responsive:true,
       plugins: {
-        tooltip: {
-          enabled:false,
-        },
-        legend: {
-          display: false,
-        }
+        tooltip: {enabled:false},
+        legend: {display: false},
+        htmlLegendPlugin:{legendDiv: legendDiv}
       },
       scales: {
         x: {
-          beginAtZero:true,
-          grid:{
-            color:'#404040'
-          },
+          grid:{color:'#404040'},
           ticks: { 
             color: 'lightgray',
             callback: function (value, index) {
-            return index % 5 === 0 ? value : null; // Show every fifth tick
+              return index % 5 === 0 ? value : null; // Show every fifth tick
             },
           },
           title: {
@@ -132,9 +128,7 @@ function initializeResChart(){
         },  
         y: {
           beginAtZero:true,
-          grid:{
-            color:'#404040'
-          },
+          grid:{color:'#404040'},
           ticks:{
             color: 'lightgray',
             callback: function(value) {

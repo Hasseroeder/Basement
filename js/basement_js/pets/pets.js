@@ -1,60 +1,41 @@
 import { initializeTriangle, getLinesAndLabels } from "../triangleCharts/triangleUtil.js"
 import { loadJson } from "../util/jsonUtil.js";
 
-const rawTriangleData = await loadJson("../json/triangleChartConfigs.json");
-const [anns, pets] = await Promise.all([
-    Promise.all(rawTriangleData.map(cfg => getLinesAndLabels(cfg))),
-    Promise.all(rawTriangleData.map(cfg => loadJson(cfg.jsonPath)))
-]);
-const triangleData = rawTriangleData.map((chartData, i) => ({
-    chartData, ann:anns[i], pets:pets[i]
-})); // maybe this belongs elsewhere lol
+window.addEventListener('DOMContentLoaded', async () => {
+    const rawTriangleData = await loadJson("../json/triangleChartConfigs.json");
+    const [anns, pets] = await Promise.all([
+        Promise.all(rawTriangleData.map(cfg => getLinesAndLabels(cfg))),
+        Promise.all(rawTriangleData.map(cfg => loadJson(cfg.jsonPath)))
+    ]);
+    const triangleData = rawTriangleData.map((chartData, i) => ({
+        chartData, ann:anns[i], pets:pets[i]
+    }));
+    const extraHtml = [
+        {created: false, name: "resChart", chartID: -1, init: initializeResChart},
+        {created: false, name: "effectiveHP"},
+        {created: false, name: "effectiveStats"},
+        {created: false, name: "triangle0", chartID: 0, init: initializeTriangle}, 
+        {created: false, name: "triangle1", chartID: 1, init: initializeTriangle}
+    ];
 
+    await Promise.all(extraHtml.map(async html => {
+        const response = await fetch(`../donatorPages/${html.name}.html`);
+        const htmlContent = await response.text();
+        html.cachedDiv = document.createElement('div');
+        html.cachedDiv.innerHTML = htmlContent;
 
-const buttonNames = ["resChart","effectiveHP","effectiveStats","triangle0", "triangle1"];
+        const container = document.getElementById(`${html.name}Container`);
+        container.querySelector('button').addEventListener("click", () => {
+            html.created ? container.lastElementChild.remove() 
+                         : container.appendChild(html.cachedDiv);
+            html.created = !html.created;
+        });
 
-function handleButtonClick(Name) {
-    const button = document.getElementById(`${Name}Button`); 
-    const container = document.getElementById(`${Name}Container`);
-    let isCreated = container.dataset.created === "true";
-
-    if (isCreated) {
-        const divToRemove = container.querySelector(`.dynamic-${Name}-div`);
-        if (divToRemove) {
-            container.removeChild(divToRemove);
+        if (html.init){
+            html.init(
+                html.cachedDiv.querySelector("#chartContainer"),
+                triangleData[html.chartID]??[]
+            );
         }
-        container.dataset.created = "false";
-    } else {
-        button.disabled = true; 
-        fetch(`../donatorPages/${Name}.html`)
-            .then(response => {
-                if (!response.ok) throw new Error('Failed to fetch the file');
-                return response.text();
-            })
-            .then(htmlContent => {
-                const newDiv = document.createElement('div');
-                newDiv.innerHTML = htmlContent;
-                newDiv.className = `dynamic-${Name}-div`;
-
-                container.appendChild(newDiv);
-                container.dataset.created = "true";
-
-                if (container.dataset.chartNumber == -1){   // -1 is id for resChart
-                    initializeResChart();
-                }else if (container.dataset.chartNumber >= 0) { // 0 and 1 are the ids for the triangle charts
-                    initializeTriangle(
-                        triangleData[container.dataset.chartNumber],
-                        container.querySelector("#chartContainer")
-                    );
-                }
-            })
-            .catch(error => console.error('Error:', error))
-            .finally(() => button.disabled = false);
-    }
-}
-
-buttonNames.forEach(Name => {
-    document.getElementById(`${Name}Button`).addEventListener("click", () => {
-        handleButtonClick(Name);
-    });
+    }));
 });

@@ -278,18 +278,21 @@ function getPolygonLabels({labels, colors} = {}){
     return labelObject;
 }
 
-export async function initializeTriangle({ chartData, ann, pets }, container){
+export async function initializeTriangle(container, { chartData, ann, pets }){
     const ctx = document.createElement("canvas");
+    const ctxWrapper = document.createElement("div");
     const petButton = document.createElement("button");
     const areaButton = document.createElement("button");
 
-    container.append(ctx,petButton,areaButton);
-    ctx.style="width: 600px; height:480px; margin-bottom:10px;";
-    // chart.js doesn't allow you to use classes directly, and I'm too lazy to use a wrapper
+    ctxWrapper.style="width: 600px; height:480px; margin-bottom:10px;";
+    ctx.width=480*2;    // 2 is a dumb constant, because it probably looks bad on good monitors
+    ctx.height=600*2;
     petButton.style="position: absolute; width: 4rem; transform: translate(-275%,175%);";
     petButton.textContent="Pets";
     areaButton.style="position: absolute; width: 4rem; transform: translate(-275%,300%);";
     areaButton.textContent="Area";
+    ctxWrapper.append(ctx);
+    container.append(ctxWrapper,petButton,areaButton);
 
     const myChart = new Chart(ctx, {
         type: 'scatter',
@@ -304,6 +307,7 @@ export async function initializeTriangle({ chartData, ann, pets }, container){
             }]
         },
         options: {
+            maintainAspectRatio: false,
             layout: {padding: {left: 60, right: 60, top: 48, bottom: 48}},
             plugins: {
                 tooltip: {
@@ -333,8 +337,8 @@ export async function initializeTriangle({ chartData, ann, pets }, container){
 
     function checkLabelVisibility(group,chart){
         const anns = chart.options.plugins.annotation.annotations;
-        Object.keys(anns).forEach(id => {
-            if (anns[id].group === group) anns[id].display = ds.hidden && !chart.polygons.hidden;
+        Object.values(anns).forEach(ann => {
+            if (ann.group === group) ann.display = ds.hidden && !chart.polygons.hidden;
         });
         chart.update();
     }
