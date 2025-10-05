@@ -78,8 +78,7 @@ const htmlLegendPlugin = {
   }
 };
 
-
-function initializeresChart(){    
+function initializeResChart(){    
   const lvlDiv = document.getElementById('level-container');
 
   new Chart("myChart", {

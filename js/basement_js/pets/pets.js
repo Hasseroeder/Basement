@@ -1,7 +1,6 @@
 import { initializeTriangle, getLinesAndLabels } from "../triangleCharts/triangleUtil.js"
 import { loadJson } from "../util/jsonUtil.js";
 
-
 const rawTriangleData = await loadJson("../json/triangleChartConfigs.json");
 const [anns, pets] = await Promise.all([
     Promise.all(rawTriangleData.map(cfg => getLinesAndLabels(cfg))),
@@ -39,7 +38,10 @@ function handleButtonClick(Name) {
 
                 container.appendChild(newDiv);
                 container.dataset.created = "true";
-                if (container.dataset.chartNumber) {
+
+                if (container.dataset.chartNumber == -1){   // -1 is id for resChart
+                    initializeResChart();
+                }else if (container.dataset.chartNumber >= 0) { // 0 and 1 are the ids for the triangle charts
                     initializeTriangle(
                         triangleData[container.dataset.chartNumber],
                         container.querySelector("#chartContainer")
