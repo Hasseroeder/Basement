@@ -1,6 +1,8 @@
-export function numberFixedString(input,fixed){
+export function signedNumberFixedString(input,fixed){
     if (input == undefined || input == NaN) return NaN;
-    return Number(input.toFixed(fixed)).toLocaleString();
+    const formatted = Math.abs(input.toFixed(fixed));
+    const sign = input < 0 ? "-" : "+";
+    return sign + formatted;
 }
 
 export function capitalizeFirstLetter(string){

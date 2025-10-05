@@ -1,5 +1,5 @@
 import * as cookie from "../basement_js/util/cookieUtil.js";
-import { numberFixedString } from "./util/stringUtil.js";
+import { signedNumberFixedString } from "./util/stringUtil.js";
 
 const maxValues = {
     0: 215,
@@ -408,8 +408,8 @@ function drawData(){
         table2.cost[i].textContent = getUpgradeCost(index, levels[index]).toLocaleString();
         table2.rows[i].style.textDecoration = levels[index] === maxValues[index] ? "line-through" : "none";
         table2.rows[i].style.fontWeight="normal";
-        table2.essence[i].textContent = `+${numberFixedString(upgradeWorth[i],1)} ess/day`;
-        table2.ROI[i].textContent= numberFixedString(ROI*100,1) + "%/day"
+        table2.essence[i].textContent = signedNumberFixedString(upgradeWorth[i],1)+` ess/day`;
+        table2.ROI[i].textContent= (ROI*100).toFixed(1) + "%/day"
     });
 
     if (maxROIindex !== -1) {
@@ -436,14 +436,14 @@ function drawData(){
     
     let worth=getWorth();
 
-    petWorthSell.textContent = numberFixedString(worth[1],1) +" owo/pet"; 
-    hbWorthSell.textContent  = numberFixedString(worth[1]*hbPets,0) +" owo/hb"; 
+    petWorthSell.textContent = worth[1].toFixed(1) +" owo/pet"; 
+    hbWorthSell.textContent  = (worth[1]*hbPets).toFixed(0) +" owo/hb"; 
 
-    petWorthProfit.textContent = "Profit: "+numberFixedString(worth[1]-values[2],1) +" owo/pet"; 
-    hbWorthProfit.textContent  = "Profit: "+numberFixedString((worth[1]-values[2])*hbPets,0)+" owo/hb";
+    petWorthProfit.textContent = "Profit: "+(worth[1]-values[2]).toFixed(1) +" owo/pet"; 
+    hbWorthProfit.textContent  = "Profit: "+((worth[1]-values[2])*hbPets).toFixed(0)+" owo/hb";
 
-    petWorthSac.textContent = numberFixedString(worth[0],1) +" ess/pet";      
-    hbWorthSac.textContent  = numberFixedString(worth[0]*hbPets,0) +" ess/hb"; 
+    petWorthSac.textContent = worth[0].toFixed(1) +" ess/pet";      
+    hbWorthSac.textContent  = (worth[0]*hbPets).toFixed(0) +" ess/hb"; 
  
     document.getElementById("patreonCheck").checked=patreon;
 }

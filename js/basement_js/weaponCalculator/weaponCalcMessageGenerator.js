@@ -1,7 +1,5 @@
-import { numberFixedString } from '../util/stringUtil.js';
 import { createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan } from '../weaponCalculator/weaponCalcElementHelper.js'
 import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
-import { clampNumber } from '../util/inputUtil.js';
 import { generatePassiveInputs } from './weaponCalcPassive.js';
 import { weaponToBlueprintString } from './blueprintParser.js';
 
@@ -247,7 +245,7 @@ function displayInfo(weapon){
     el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${weapon.product.id}</code>`;
     el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue(weapon);
     el.weaponQualityImage.src= getTierEmojiPath(blueprint.tier);
-    el.weaponQualitySpan.textContent= numberFixedString(blueprint.qualityWear,1)+"%"
+    el.weaponQualitySpan.textContent= blueprint.qualityWear.toFixed(1)+"%"
     el.weaponImage.src=getWeaponImagePath(weapon);
 }
 
