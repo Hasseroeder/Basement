@@ -1,3 +1,11 @@
+async function loadChartJs() {
+  const url = 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js';
+  const ChartModule = await import(url);
+  const Chart = ChartModule.default;
+  return Chart;
+}
+const chartJsPromise = loadChartJs();
+
 const ctx = document.getElementById('myChart').getContext('2d');
 
 const u = 0.3;
@@ -59,7 +67,7 @@ const drawImagesPlugin = {
   }
 };
 
-
+const ChartJS = await chartJsPromise;
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -166,7 +174,7 @@ const myChart = new Chart(ctx, {
                   color:'#404040'
                 },
                 ticks: {
-                  callback: function(_,_) {
+                  callback: function(_,__) {
                     return "";
                   }
                 } 

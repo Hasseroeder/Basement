@@ -1,117 +1,52 @@
-const streakWorthButton = document.getElementById("streakWorthButton");
-const streakWorthContainer = document.getElementById("streakWorthContainer");
-let isstreakWorthCreated = false;
+let mathJaxLoadPromise = null;
+function loadMathJax(url) {
+    if (mathJaxLoadPromise) return mathJaxLoadPromise;
+    mathJaxLoadPromise =  new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = url;
+        script.async = true;
+        script.onload = () => {
+            const M = window.MathJax;
+            if (!M) return reject(new Error('MathJax did not register global MathJax'));
+            M.startup.promise.then(() => resolve(M), reject);
+        };
+        script.onerror = () => reject(new Error('Failed to load MathJax script'));
+        document.head.appendChild(script);
+    });
+    return mathJaxLoadPromise;
+} // this is what a girl has to do, simply to import MathJax...
 
-const globalButton = document.getElementById("globalButton");
-const globalContainer = document.getElementById("globalContainer");
-let isglobalCreated = false;
+const url = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
 
-const knowledgeButton = document.getElementById("knowledgeButton");
-const knowledgeContainer = document.getElementById("knowledgeContainer");
-let isknowledgeCreated = false;
+window.addEventListener('DOMContentLoaded', async () => {
+    const extraHtml = [
+        {created: false, name: "knowledge"},
+        {created: false, name: "global", mathJax: true},
+        {created: false, name: "streakWorth", mathJax: true}
+    ];
 
-document.addEventListener("DOMContentLoaded", async function () {
-    if (window.location.hash === "#global") {
-        await createGlobalElement(); 
-        globalContainer.scrollIntoView({ behavior: "smooth", block: "start"});
-    }
-});
+    await Promise.all(extraHtml.map(async html => {
+        const response = await fetch(`../donatorPages/${html.name}.html`);
+        const htmlContent = await response.text();
+        html.cachedDiv = document.createElement('div');
+        html.cachedDiv.innerHTML = htmlContent;
 
-globalButton.addEventListener('click', async function() {
-    createGlobalElement();
-});
-
-async function createGlobalElement(){
-        if (isglobalCreated) {
-        const divToRemove = document.querySelector(".dynamic-global-div");
-        if (divToRemove) {
-            globalContainer.removeChild(divToRemove);
+        if (html.mathJax) {
+            const MathJax = await loadMathJax(url);
+            await MathJax.typesetPromise([html.cachedDiv]);
         }
-        isglobalCreated = false;
-    }else{ 
-      try {
-          const response = await fetch('donatorPages/globalExp.html'); 
-          if (!response.ok) {
-              throw new Error('Failed to fetch the file');
-          }
-          const htmlContent = await response.text();
-  
-          const newDiv = document.createElement('div');
-          newDiv.innerHTML = htmlContent;
-          newDiv.className = "dynamic-global-div";
-        
-          document.getElementById('globalContainer').appendChild(newDiv);
-          
-          MathJax.typeset();
-          isglobalCreated = true;
-          
-      } catch (error) {
-          console.error('Error:', error);
-      }
-    }  
-}
 
+        const container = document.getElementById(`${html.name}Container`);
+        container.querySelector('button').addEventListener("click", async () => {
+            html.created ? container.lastElementChild.remove() 
+                         : container.appendChild(html.cachedDiv);
+            html.created = !html.created;
+        });
 
-streakWorthButton.addEventListener('click', async function() {
-    if (isstreakWorthCreated) {
-        const divToRemove = document.querySelector(".dynamic-streak-div");
-        if (divToRemove) {
-            streakWorthContainer.removeChild(divToRemove);
+        if (window.location.hash === "#global" && html.name == "global") {
+            container.appendChild(html.cachedDiv);
+            html.created= true;
+            container.scrollIntoView({ behavior: "smooth", block: "start"});
         }
-        isstreakWorthCreated = false;
-    }else{ 
-      try {
-          const response = await fetch('donatorPages/streakExp.html'); 
-          if (!response.ok) {
-              throw new Error('Failed to fetch the file');
-          }
-          const htmlContent = await response.text();
-  
-          const newDiv = document.createElement('div');
-          newDiv.innerHTML = htmlContent;
-          newDiv.className = "dynamic-streak-div";
-        
-          document.getElementById('streakWorthContainer').appendChild(newDiv);
-          
-          MathJax.typeset();
-          isstreakWorthCreated = true;
-          
-      } catch (error) {
-          console.error('Error:', error);
-      }
-    }  
+    }));
 });
-
-knowledgeButton.addEventListener('click', async function() {
-    if (isknowledgeCreated) {
-        const divToRemove = document.querySelector(".dynamic-knowledge-div");
-        if (divToRemove) {
-            knowledgeContainer.removeChild(divToRemove);
-        }
-        isknowledgeCreated = false; 
-    }else{ 
-      try {
-          const response = await fetch('donatorPages/knowledge.html'); 
-          if (!response.ok) {
-              throw new Error('Failed to fetch the file');
-          }
-          const htmlContent = await response.text();
-  
-          const newDiv = document.createElement('div');
-          newDiv.innerHTML = htmlContent;
-          newDiv.className = "dynamic-knowledge-div";
-        
-          document.getElementById('knowledgeContainer').appendChild(newDiv);
-          
-          isknowledgeCreated = true;
-          
-      } catch (error) {
-          console.error('Error:', error);
-      }
-    }  
-});
-
-
-function copyMedian(){
-  navigator.clipboard.writeText("neonmath \nmedian(x) = log(2)/log(x/(x-1));");
-}
