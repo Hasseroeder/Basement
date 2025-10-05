@@ -32,7 +32,7 @@ async function init(){
     ];
 
     await Promise.all(extraHtml.map(async html => {
-        const response = await fetch(`../donatorPages/${html.name}.html`);
+        const response = await fetch(`../donatorPages/exp/${html.name}.html`);
         const htmlContent = await response.text();
         html.cachedDiv = document.createElement('div');
         html.cachedDiv.innerHTML = htmlContent;
