@@ -1006,3 +1006,9 @@ a:hover {
   transition : all .1s ease;
   pointer-events : none;
 }
+
+.discord-text-emote{
+  height: 18px;
+  width: 18px;
+  vertical-align: text-bottom;
+}
