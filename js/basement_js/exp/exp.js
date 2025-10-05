@@ -18,7 +18,13 @@ function loadMathJax(url) {
 
 const url = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
 
-window.addEventListener('DOMContentLoaded', async () => {
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+async function init(){
     const extraHtml = [
         {created: false, name: "knowledge"},
         {created: false, name: "global", mathJax: true},
@@ -49,4 +55,4 @@ window.addEventListener('DOMContentLoaded', async () => {
             container.scrollIntoView({ behavior: "smooth", block: "start"});
         }
     }));
-});
+}
