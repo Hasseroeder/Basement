@@ -21,7 +21,7 @@ const url = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
-  init();
+  init(); // unsure if I still need this 
 }
 
 async function init(){
