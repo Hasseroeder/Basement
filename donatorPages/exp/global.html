@@ -19,7 +19,6 @@
   </div>  
   <p style="margin: 1rem 2rem 0 2rem; font-size:1rem;">
     We can also calculate your average streak Exp, even considering tierate!
-    Although I do admit this isn't really math, it's more of a glorified for-loop at this point:
   </p>
   <div style="font-size: 0.90rem;text-align: center;">
     <div style="padding:1rem 1rem 1rem 1rem">
@@ -27,41 +26,43 @@
         \displaylines{  
           \mathrm{Multi}(n) =
           \begin{cases}
-            25 & \mathrm{if} \ n\bmod 1000=0,\\
-            10 & \mathrm{if} \ n\bmod 500=0,\\
-            5 & \mathrm{if} \ n\bmod 100=0,\\
-            3 & \mathrm{if} \ n\bmod 50=0,\\
-            1 & \mathrm{if} \ n\bmod 10=0,\\
-            0 & \mathrm{otherwise}
+            25 & \mathrm{if} \ n\bmod 100=0,\\
+            10 & \mathrm{if} \ n\bmod 50=0,\\
+            5 & \mathrm{if} \ n\bmod 10=0,\\
+            3 & \mathrm{if} \ n\bmod 5=0,\\
+            1 & \mathrm{otherwise}
           \end{cases}
+                    
           \\\\
 
-          \mathrm{Exp}_\mathrm{win}(n) = 200 + 
-          \min\Big( 
+          \mathrm{Exp}_\mathrm{bonus}(n) = 
+          \min
+          \Big(
             100000,
-            ⌊\mathrm{Multi}(n) \cdot \left( 10\sqrt{n} +500\right)⌉
+            ⌊\mathrm{Multi}(n) \cdot \left( 10\sqrt{10n} +500\right)⌉
           \Big)
-          
-          
+
           \\\\
+
           \mathrm{Exp}_\mathrm{streak}(s,t)=
-          50+
-          \sum_{n=1}^{\infty} \; 
+          50
+          +200s
+          +\frac{100t\left(s+1\right)}{1-t}
+          +\sum_{n=1}
           \Biggl[
             \bigg(
               \frac{s}{s+1}
-            \bigg)^{n-1}
-            \cdot
-            \frac{100\cdot t}{1-t}
-            +
-            \bigg(
-              \frac{s}{s+1}
-            \bigg)^{n}
+            \bigg)^{10n}
             \cdot 
             \mathrm{Exp}_\mathrm{win}(n)
           \Biggl]
+                    
           \\\\
-          \mathrm{Exp}_\mathrm{battle}(s,t)= \frac{f(s,t)\cdot (1-t)}{s+1}
+
+          \mathrm{Exp}_\mathrm{battle}(s,t)= 
+          \frac
+            {\mathrm{Exp}_\mathrm{streak}(s,t)\cdot (1-t)}
+            {s+1}
         }
         $$
     </div>
