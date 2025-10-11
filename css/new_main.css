@@ -1009,3 +1009,29 @@ a:hover {
   width: 18px;
   vertical-align: text-bottom;
 }
+
+.global-inputs{
+  width:4rem;
+  background-color: #191919;
+  border: none;
+  border-radius: 2px;
+  color:lightgray;
+  font-family: monospace; 
+}
+
+.global-column{
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: monospace; 
+}
+
+.align-child-text-right * {
+  text-align: end;
+}
+
+.global-column * {
+  height: 1rem;
+  padding: 0.1rem 0.2rem;
+}

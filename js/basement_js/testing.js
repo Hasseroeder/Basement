@@ -11,21 +11,85 @@ function bonusXp(n){
   return Math.min(100000, Math.round(bonus));
 }
 
-function battleExp(s, t) {
-  const winChance = s / (s + 1);
-  const lossPart  = 50;
-  const winPart   = 200 * s;
-  let sum = lossPart + winPart;
+function calcBonusXp(streak){
+  const winChance = streak / (streak + 1);
+  const accuracyFactor = 1; // this is basically a config constant, 
+                            // make it higher if you want more accuracy,
+                            // or lower if you want faster execution
 
-  for (let n=1; n<s; n++) {
+  let sum = 0;
+  for (let n=1; n<=streak*accuracyFactor; n++) {
     sum += winChance**(10*n) 
            * bonusXp(n);
   }
+  return sum;
+}
+
+const _xpCache = new Map();
+function cachedBonusXp(streak){
+  const key = String(streak);
+  if (_xpCache.has(key)) return _xpCache.get(key);
+  const result = calcBonusXp(streak);
+  _xpCache.set(key, result);
+  return result;
+}
+
+function battleExp(s, t) {
+  const tieChance = 0.01*t;             // converting from percent to decimal
+  const lossPart  = 50;                 // adding 50xp because each streak will have a loss, giving 50
+  const winPart   = 200 * s;            // average amount of wins in the streak, giving 200
+  const bonusPart = cachedBonusXp(s);
+  const sum = lossPart + winPart + bonusPart;
 
   const battleExp = 
-    sum*(1-t)/(s+1) 
-    + 100*t;
+    sum
+      *(1-tieChance)
+      /(s+1) 
+    + t;
   return battleExp;
 }
 
-console.log(battleExp(700,0.1));
+function attachBattleCalculator(container){
+  const wrapper = container.querySelector('#calcWrapper');
+  const el = (tag, cls) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    return e;
+  };
+
+  const createInput = (opts = {}) => {
+    const i = el('input', 'global-inputs no-arrows');
+    Object.assign(i, opts);
+    i.addEventListener('input', output);
+    return i;
+  };
+
+  function output(){ 
+    outputField.textContent= 
+      battleExp(
+        +streak.value,
+        +tierate.value
+      ).toFixed(2); 
+  }
+
+  const left = el('div', 'global-column align-child-text-right');
+  const right = el('div', 'global-column');
+
+  const streak = createInput({ type: 'number', min: 0, max: 1e6, step: 1, value: 1, lang: 'en' });
+  const tierate = createInput({ type: 'number', min: 0, max: 100, step: 0.01, value: 0, lang: 'en' });
+  const outputField = el('div');
+
+  const label = text => {
+    const d = el('div');
+    d.textContent = text;
+    return d;
+  };
+
+  left.append(streak, tierate, outputField);
+  right.append(label('streak'), label('% tierate'), label('exp/battle'));
+  wrapper.append(left, right);
+
+  output();
+}
+
+attachBattleCalculator(document.getElementById("outerWrapper"));

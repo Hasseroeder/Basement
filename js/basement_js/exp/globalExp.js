@@ -28,4 +28,8 @@ function battleExp(s, t) {
   return battleExp;
 }
 
+function attachBattleCalculator(container){
+  
+}
+
 console.log(battleExp(700,0.1));
