@@ -34,6 +34,14 @@ function cachedBonusXp(streak){
   return result;
 }
 
+await fetch('../csv/bonusXP.csv')
+  .then(r => r.text())
+  .then(txt => txt.split(/\r?\n/).slice(1))
+  .then(lines => lines.forEach(line => {
+    const [key, val] = line.split(',');
+    _xpCache.set(key, +val);
+  }));
+
 function battleExp(s, t) {
   const tieChance = 0.01*t;             // converting from percent to decimal
   const lossPart  = 50;                 // adding 50xp because each streak will have a loss, giving 50
@@ -92,4 +100,54 @@ function attachBattleCalculator(container){
   output();
 }
 
+const tierate = 0; // TODO: handle this better lmao
+
+function attachExpChart(container){
+  const ctx = document.createElement("canvas");
+  container.append(ctx);
+
+  const points = Array.from(_xpCache.keys()).map(k => {
+    const x = +k;                    
+    const y = battleExp(x, tierate);
+    return { x, y };
+  });
+
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      datasets: [{
+        label: "exp",
+        data: points,
+        borderColor: "rgba(75,192,192,1)",
+        fill: true,
+        tension: 0.2
+      }]
+    },
+    options: {
+      hover: {
+        mode: 'index', 
+        intersect: false 
+      },
+      scales: {
+        y: {
+          beginAtZero:true,
+        },
+        x:{
+          type: "hybrid",
+          alpha:0.999998,
+          ticks: {
+            font: { size: 8 },
+            minRotation: 90,
+            maxRotation: 90,
+            callback: function(value) {
+              return Number.isInteger(value) ? String(value) : '';
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
 attachBattleCalculator(document.getElementById("outerWrapper"));
+attachExpChart(document.getElementById("canvasWrapper"));
