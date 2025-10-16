@@ -1,3 +1,5 @@
+import { initGlobal } from "./globalExp.js";
+
 let mathJaxLoadPromise = null;
 function loadMathJax(url) {
     if (mathJaxLoadPromise) return mathJaxLoadPromise;
@@ -27,7 +29,7 @@ if (document.readyState === 'loading') {
 async function init(){
     const extraHtml = [
         {created: false, name: "knowledge"},
-        {created: false, name: "global", mathJax: true},
+        {created: false, name: "global", mathJax: true, init:initGlobal},
         {created: false, name: "streakWorth", mathJax: true}
     ];
 
@@ -48,6 +50,10 @@ async function init(){
                          : container.appendChild(html.cachedDiv);
             html.created = !html.created;
         });
+
+        if (html.init){
+            html.init(html);
+        }
 
         if (window.location.hash === "#global" && html.name == "global") {
             container.appendChild(html.cachedDiv);

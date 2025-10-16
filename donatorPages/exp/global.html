@@ -66,8 +66,15 @@
         }
         $$
     </div>
-    <button style="width: 8rem;" onclick="window.location.href='https://www.desmos.com/3d/zyxhwqx3sj';">
-      <a href="https://www.desmos.com/3d/zyxhwqx3sj">click for Desmos</a>
-    </button> 
+    <div id="calcWrapper" style="padding:1rem; 
+                                  margin:1rem; 
+                                  background-color: #444;
+                                  width: max-content;
+                                  display: flex;">
+    </div>
+    <div id="chartContainer" style="display:flex; background-color: #444; margin: 1rem;">
+      <div id="chartWrapper" style="margin:1rem; aspect-ratio: auto 600 / 300; display:flex; width:100%; min-width: 0;"></div>
+      <div id="sliderWrapper"style="padding-right:1rem; text-align: center; font-size: 0.8rem; color:#707070; display: flex; flex-direction: column; align-items: center;"></div>
+    </div>
   </div>
 </div>

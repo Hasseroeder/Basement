@@ -164,15 +164,11 @@ const myChart = new Chart(ctx, {
                     
                 }    
             },
-            legend: {
-                display: false
-            }
+            legend: {display: false}
         },
       scales: {
             x: {
-                grid:{
-                  color:'#404040'
-                },
+                grid:{color:'#404040'},
                 ticks: {
                   callback: function(_,__) {
                     return "";
@@ -182,12 +178,8 @@ const myChart = new Chart(ctx, {
         
             y: {
                 beginAtZero: true,
-                grid:{
-                  color:'#404040'
-                },
-                ticks: {
-                    color: 'lightgray',
-                }
+                grid: {color:'#404040'},
+                ticks: {color: 'lightgray'}
             }
         }
     },
