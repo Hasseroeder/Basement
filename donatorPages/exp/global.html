@@ -44,10 +44,9 @@
 
           \\\\
 
-          \mathrm{Exp}_\mathrm{streak}(s,t)=
+          \mathrm{Exp}_\mathrm{streak}(s)=
           50
           +200s
-          +\frac{100t\left(s+1\right)}{1-t}
           +\sum_{n=1}
           \Biggl[
             \bigg(
@@ -61,17 +60,13 @@
 
           \mathrm{Exp}_\mathrm{battle}(s,t)= 
           \frac
-            {\mathrm{Exp}_\mathrm{streak}(s,t)\cdot (1-t)}
+            {\mathrm{Exp}_\mathrm{streak}(s)\cdot (1-t)}
             {s+1}
+            +100t
         }
         $$
     </div>
-    <div id="calcWrapper" style="padding:1rem; 
-                                  margin:1rem; 
-                                  background-color: #444;
-                                  width: max-content;
-                                  display: flex;">
-    </div>
+    <div id="calcWrapper" style="padding:1rem; margin:1rem; background-color: #444; width: max-content; display: flex;"></div>
     <div id="chartContainer" style="display:flex; background-color: #444; margin: 1rem;">
       <div id="chartWrapper" style="margin:1rem; aspect-ratio: auto 600 / 300; display:flex; width:100%; min-width: 0;"></div>
       <div id="sliderWrapper"style="padding-right:1rem; text-align: center; font-size: 0.8rem; color:#707070; display: flex; flex-direction: column; align-items: center;"></div>
