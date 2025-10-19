@@ -1034,3 +1034,8 @@ a:hover {
   height: 1rem;
   padding: 0.1rem 0.2rem;
 }
+
+.battles-page-emotes{
+  width:1.05rem; 
+  vertical-align: text-bottom;
+}
