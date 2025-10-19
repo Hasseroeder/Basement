@@ -188,7 +188,7 @@ input, textarea, code, [contenteditable] {
   position: absolute;
   left: 0px;
   top: 0.125rem;
-  margin: 0px 1rem;
+  margin-left: 1.3rem;
   border-radius: 50%;
   object-fit: cover;
   height: 2.5rem; 
@@ -251,7 +251,6 @@ input, textarea, code, [contenteditable] {
 }  
 
 .discord-embed-emote{
-  height: 18px;
   width: 18px; 
   vertical-align: bottom;
   object-fit: contain;
