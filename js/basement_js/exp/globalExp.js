@@ -208,8 +208,9 @@ function attachExpChart(container){
 	});
 }
 
-export function initGlobal(params){
-	const container = params.cachedDiv;
+export function initGlobal(){
+	const container = this.cachedDiv;
+	window.MathJax.typesetPromise([container]);
 	attachBattleCalculator(container.querySelector("#calcWrapper"));
 	attachExpChart(container.querySelector("#chartContainer"));
 }

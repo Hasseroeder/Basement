@@ -1,4 +1,4 @@
-import { gridInjector } from "./util/imageUtil.js";
+import { gridInjector } from "./util/injectionUtil.js";
 import { loadJson } from "./util/jsonUtil.js";
 import * as cookieUtil from "./util/cookieUtil.js"
 

@@ -1,5 +1,6 @@
 import { initializeTriangle, getLinesAndLabels } from "../triangleCharts/triangleUtil.js"
 import { loadJson } from "../util/jsonUtil.js";
+import { createInjectAble } from "../util/injectionUtil.js";
 
 window.addEventListener('DOMContentLoaded', async () => {
     const rawTriangleData = await loadJson("../json/triangleChartConfigs.json");
@@ -11,31 +12,13 @@ window.addEventListener('DOMContentLoaded', async () => {
         chartData, ann:anns[i], pets:pets[i]
     }));
     const extraHtml = [
-        {created: false, name: "resChart", chartID: -1, init: initializeResChart},
+        {created: false, name: "resChart", init: initializeResChart},
         {created: false, name: "effectiveHP"},
         {created: false, name: "effectiveStats"},
-        {created: false, name: "triangle0", chartID: 0, init: initializeTriangle}, 
-        {created: false, name: "triangle1", chartID: 1, init: initializeTriangle}
+        {created: false, name: "triangle0", init: initializeTriangle, data: triangleData[0]}, 
+        {created: false, name: "triangle1", init: initializeTriangle, data: triangleData[1]}
     ];
+    const pathName="../donatorPages/pets/";
 
-    await Promise.all(extraHtml.map(async html => {
-        const response = await fetch(`../donatorPages/pets/${html.name}.html`);
-        const htmlContent = await response.text();
-        html.cachedDiv = document.createElement('div');
-        html.cachedDiv.innerHTML = htmlContent;
-
-        const container = document.getElementById(`${html.name}Container`);
-        container.querySelector('button').addEventListener("click", () => {
-            html.created ? container.lastElementChild.remove() 
-                         : container.appendChild(html.cachedDiv);
-            html.created = !html.created;
-        });
-
-        if (html.init){
-            html.init(
-                html.cachedDiv.querySelector("#chartContainer"),
-                triangleData[html.chartID]??[]
-            );
-        }
-    }));
+    extraHtml.forEach(html => createInjectAble(html,pathName));
 });

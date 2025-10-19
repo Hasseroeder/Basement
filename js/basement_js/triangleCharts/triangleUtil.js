@@ -278,7 +278,10 @@ function getPolygonLabels({labels, colors} = {}){
     return labelObject;
 }
 
-export async function initializeTriangle(container, { chartData, ann, pets }){
+export async function initializeTriangle(){
+    const container = this.cachedDiv.querySelector("#chartContainer");
+    const {chartData, ann, pets} = this.data;
+
     const ctx = document.createElement("canvas");
     const ctxWrapper = document.createElement("div");
     const petButton = document.createElement("button");

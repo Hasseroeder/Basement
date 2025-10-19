@@ -4,7 +4,7 @@ import { updateEverything,generateEverything } from './weaponCalcMessageGenerato
 import { initiatePassiveStuffs } from './weaponCalcPassive.js';
 import { fillMissingWeaponInfo,applyWearToWeapon } from './weaponCalcUtil.js'
 import { blueprintStringToWeapon } from './blueprintParser.js';
-import { gridInjector } from '../util/imageUtil.js';
+import { gridInjector } from '../util/injectionUtil.js';
 
 document.addEventListener("DOMContentLoaded",initWeaponCalc);
 

@@ -52,3 +52,25 @@ function getImageLink(onClick, item, link, path, text){
 
 	return el;
 }
+
+export async function createInjectAble(html,pathName){
+    const response = await fetch(pathName+html.name+".html");
+    const htmlContent = await response.text();
+    html.cachedDiv = document.createElement('div');
+    html.cachedDiv.innerHTML = htmlContent;
+
+    const container = document.getElementById(`${html.name}Container`);
+    container.querySelector('button').addEventListener("click", () => {
+        html.created ? container.lastElementChild.remove() 
+                        : container.appendChild(html.cachedDiv);
+        html.created = !html.created;
+    });
+
+    html.init?.();
+
+    if (window.location.hash === "#"+html.name) {
+        container.appendChild(html.cachedDiv);
+        html.created= true;
+        container.scrollIntoView({ behavior: "smooth", block: "start"});
+    }
+}

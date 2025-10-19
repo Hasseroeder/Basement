@@ -1,64 +1,31 @@
 import { initGlobal } from "./globalExp.js";
+import { createInjectAble } from "../util/injectionUtil.js";
 
-let mathJaxLoadPromise = null;
-function loadMathJax(url) {
-    if (mathJaxLoadPromise) return mathJaxLoadPromise;
-    mathJaxLoadPromise =  new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = url;
-        script.async = true;
-        script.onload = () => {
-            const M = window.MathJax;
-            if (!M) return reject(new Error('MathJax did not register global MathJax'));
-            M.startup.promise.then(() => resolve(M), reject);
-        };
-        script.onerror = () => reject(new Error('Failed to load MathJax script'));
-        document.head.appendChild(script);
-    });
-    return mathJaxLoadPromise;
-} // this is what a girl has to do, simply to import MathJax...
-
-const url = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+async function loadMathJax() {
+	const s = document.createElement('script');
+    s.src= 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+    document.head.appendChild(s);
+    await new Promise(resolve => (s.onload = resolve));
+}
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
+	document.addEventListener('DOMContentLoaded', init);
 } else {
-  init(); // unsure if I still need this 
+	init();
+}
+
+function doMathJax(){
+    window.MathJax.typesetPromise([this.cachedDiv]);
 }
 
 async function init(){
+    await loadMathJax();
+    const pathName="../donatorPages/exp/";
     const extraHtml = [
         {created: false, name: "knowledge"},
-        {created: false, name: "global", mathJax: true, init:initGlobal},
-        {created: false, name: "streakWorth", mathJax: true}
+        {created: false, name: "global", init:initGlobal},
+        {created: false, name: "streakWorth", init:doMathJax}
     ];
 
-    await Promise.all(extraHtml.map(async html => {
-        const response = await fetch(`../donatorPages/exp/${html.name}.html`);
-        const htmlContent = await response.text();
-        html.cachedDiv = document.createElement('div');
-        html.cachedDiv.innerHTML = htmlContent;
-
-        if (html.mathJax) {
-            const MathJax = await loadMathJax(url);
-            await MathJax.typesetPromise([html.cachedDiv]);
-        }
-
-        const container = document.getElementById(`${html.name}Container`);
-        container.querySelector('button').addEventListener("click", async () => {
-            html.created ? container.lastElementChild.remove() 
-                         : container.appendChild(html.cachedDiv);
-            html.created = !html.created;
-        });
-
-        if (html.init){
-            html.init(html);
-        }
-
-        if (window.location.hash === "#global" && html.name == "global") {
-            container.appendChild(html.cachedDiv);
-            html.created= true;
-            container.scrollIntoView({ behavior: "smooth", block: "start"});
-        }
-    }));
+    extraHtml.forEach(html => createInjectAble(html,pathName));
 }

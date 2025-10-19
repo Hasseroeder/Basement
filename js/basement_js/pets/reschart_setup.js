@@ -78,7 +78,8 @@ const htmlLegendPlugin = {
   }
 };
 
-function initializeResChart(container){    
+function initializeResChart(){
+  const container = this.cachedDiv.querySelector("#chartContainer");
   const lvlDiv = container.querySelector('#level-container');
   const legendDiv = container.querySelector("#legend-container");
   const ctx = container.querySelector('#myChart');
