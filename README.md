@@ -8,19 +8,19 @@ This guide will try to give an explanation of the battle system in the game, and
 Following other attempts to write guides, this one also won't be able to be kept up to date completely and will always be work-in-progress. Also please understand that this guide is painted by our bias significantly. While we try to be objective, some of the topics in this game are inherently subjective. To this end, we also accept all feedback or extra info you'd like added to the site!
 
  
-    -/=--                               --=\-    
-            ,-.       _,---._ __  / \
-            /  )    .-'       `./ /   \
-            (  (   ,'            `/    /|
-            \  `-"             \'\   / |
-            `.              ,  \ \ /  |
-            /`.          ,'-`----Y   |
-            (            ;        |   '
-            |  ,-.    ,-'         |  /
-            |  | (   |        hjw | /
-            )  |  \  `.___________|/
-            `--'   `--'
-    -\=--                               --=/-
+    -/=--                                --=\-    
+           ,-.       _,---._ __  / \
+          /  )    .-'       `./ /   \
+         (  (   ,'            `/    /|
+          \  `-"             \'\   / |
+           `.              ,  \ \ /  |
+            /'.          ,'-`----Y   |
+           (            ;        |   '
+           |  ,-.    ,-'         |  /
+           |  | (   |        hjw | /
+           )  |  \  `.___________|/
+           '--'   `--'  
+    -\=--                                --=/-
  
 ## Contact us
 - through GitHub:
