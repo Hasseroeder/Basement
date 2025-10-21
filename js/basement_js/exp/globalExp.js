@@ -254,11 +254,12 @@ function attachLatex(){
 }
 
 export function initGlobal(){
-	window.MathJax.typesetPromise([this.cachedDiv]);
-	const wrapper = this.cachedDiv.querySelector("#tabContainer");
-	const buttonWrapper = document.createElement("div");
-	const contentWrapper = document.createElement("div");
-	buttonWrapper.style="display:flex;"
+	const { cachedDiv } = this;
+	const make = (tag, props = {}) => Object.assign(document.createElement(tag), props);
+	window.MathJax.typesetPromise([cachedDiv]);
+	const wrapper = cachedDiv.querySelector("#tabContainer");
+	const buttonWrapper = make("div", { style: "display:flex;" });
+  	const contentWrapper = make("div");
 	wrapper.append(buttonWrapper,contentWrapper);
 
 	const tabs = [
@@ -268,13 +269,8 @@ export function initGlobal(){
 	]
 
 	tabs.forEach(t =>{
-		t.container = Object.assign(document.createElement("div"),{
-			className:"global-content-container"
-		});
-		t.button = Object.assign(document.createElement("button"), {
-			className: "tab-button",
-			textContent: t.name
-		});
+		t.container = make("div", { className: "global-content-container" });
+    	t.button =    make("button", { className: "tab-button", textContent: t.name });
 		buttonWrapper.append(t.button);
 		t.init();
 		t.button.addEventListener("click", () =>{
