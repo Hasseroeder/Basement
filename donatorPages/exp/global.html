@@ -17,59 +17,10 @@
     <button onClick="navigator.clipboard.writeText('neonmath \nmedian(x) = log(2)/log(x/(x-1));')" style="width: 8rem;">copy to clipboard </button> 
     <br><br>
   </div>  
-  <p style="margin: 1rem 2rem 0 2rem; font-size:1rem;">
+  <p style="margin: 1rem 2rem; font-size:1rem;">
     We can also calculate your average streak Exp, even considering tierate!
   </p>
-  <div style="font-size: 0.90rem;text-align: center;">
-    <div style="padding:1rem 1rem 1rem 1rem">
-        $$
-        \displaylines{  
-          \mathrm{Multi}(n) =
-          \begin{cases}
-            25 & \mathrm{if} \ n\bmod 100=0,\\
-            10 & \mathrm{if} \ n\bmod 50=0,\\
-            5 & \mathrm{if} \ n\bmod 10=0,\\
-            3 & \mathrm{if} \ n\bmod 5=0,\\
-            1 & \mathrm{otherwise}
-          \end{cases}
-                    
-          \\\\
-
-          \mathrm{Exp}_\mathrm{bonus}(n) = 
-          \min
-          \Big(
-            100000,
-            ⌊\mathrm{Multi}(n) \cdot \left( 10\sqrt{10n} +500\right)⌉
-          \Big)
-
-          \\\\
-
-          \mathrm{Exp}_\mathrm{streak}(s)=
-          50
-          +200s
-          +\sum_{n=1}
-          \Biggl[
-            \bigg(
-              \frac{s}{s+1}
-            \bigg)^{10n}
-            \cdot 
-            \mathrm{Exp}_\mathrm{win}(n)
-          \Biggl]
-                    
-          \\\\
-
-          \mathrm{Exp}_\mathrm{battle}(s,t)= 
-          \frac
-            {\mathrm{Exp}_\mathrm{streak}(s)\cdot (1-t)}
-            {s+1}
-            +100t
-        }
-        $$
-    </div>
-    <div id="calcWrapper" style="padding:1rem; margin:1rem; background-color: #444; width: max-content; display: flex;"></div>
-    <div id="chartContainer" style="display:flex; background-color: #444; margin: 1rem;">
-      <div id="chartWrapper" style="margin:1rem; aspect-ratio: auto 600 / 300; display:flex; width:100%; min-width: 0;"></div>
-      <div id="sliderWrapper"style="padding-right:1rem; text-align: center; font-size: 0.8rem; color:#707070; display: flex; flex-direction: column; align-items: center;"></div>
-    </div>
+  <div id="tabContainer" style="font-size: 0.90rem;text-align: center;">
+    
   </div>
 </div>

@@ -36,7 +36,7 @@ function cachedBonusXp(streak){
 
 await fetch('../csv/bonusXP.csv')
 	.then(r => r.text())
-	.then(txt => txt.split(/\r?\n/).slice(1))
+	.then(txt => txt.split(/\r?\n/))
 	.then(lines => lines.forEach(line => {
 		const [key, val] = line.split(',');
 		_xpCache.set(key, +val);
@@ -57,7 +57,7 @@ function battleExp(s, t) {
 	return battleExp;
 }
 
-function attachBattleCalculator(container){
+function attachBattleCalculator(){
 	const el = (tag, cls) => {
 		const e = document.createElement(tag);
 		if (cls) e.className = cls;
@@ -94,20 +94,24 @@ function attachBattleCalculator(container){
 
 	left.append(streak, tierate, outputField);
 	right.append(label('streak'), label('% tierate'), label('exp/battle'));
-	container.append(left, right);
+	this.container.append(left, right);
 
 	output();
 }
 
-function attachExpChart(container){
-	const chartWrapper= container.querySelector("#chartWrapper");
-	const sliderWrapper= container.querySelector("#sliderWrapper");
+function attachExpChart(){
+	const chartWrapper = document.createElement("div");
+	const sliderWrapper = document.createElement("div");
+	this.container.append(chartWrapper,sliderWrapper);
+	chartWrapper.style="aspect-ratio: auto 600 / 300; display:flex; width:100%; min-width: 0;";
+	sliderWrapper.style="padding:0rem 0.5rem; text-align: center; font-size: 0.8rem; color:#707070; display: flex; flex-direction: column; align-items: center;";
+
 	const ctx = document.createElement("canvas");
 	chartWrapper.append(ctx);
 
 	const slider = document.createElement("input");  
 	Object.assign(slider, {
-		style:"writing-mode: vertical-lr; direction: ltr; width: 2rem; height: 20rem; margin: 1.6rem 0 0.6rem 0; flex: max-content; padding-bottom: 0.35rem;",
+		style:"writing-mode: vertical-lr; direction: ltr; width: 2rem; height: 20rem; margin: 0.6rem 0 0 0; flex: max-content; padding-bottom: 0.5rem;",
 		type:"range",
 		min:"0", 
 		max:"100", 
@@ -123,7 +127,7 @@ function attachExpChart(container){
 
 	const textWrapper = document.createElement("div");
 	textWrapper.append(percentText, tierateText);
-	textWrapper.style="height: 4.8rem";
+	textWrapper.style="height: 4.4rem";
 
 	sliderWrapper.append(slider,textWrapper);
 
@@ -166,7 +170,7 @@ function attachExpChart(container){
 						title: function (tooltipData) {
 							return `Streak: ${tooltipData[0].label}`;
 						} 
-				},
+					},
 				}
 			},
 			hover: { mode: 'index', intersect: false },
@@ -208,9 +212,77 @@ function attachExpChart(container){
 	});
 }
 
+function attachLatex(){
+	const rawLatex = String.raw
+	`$$
+	\displaylines{  
+		\mathrm{Multi}(n) =
+		\begin{cases}
+			25 & \mathrm{if} \ n\bmod 100=0,\\
+			10 & \mathrm{if} \ n\bmod 50=0,\\
+			5 & \mathrm{if} \ n\bmod 10=0,\\
+			3 & \mathrm{if} \ n\bmod 5=0,\\
+			1 & \mathrm{otherwise}
+		\end{cases}        
+		\\\\
+		\mathrm{Exp}_\mathrm{bonus}(n) = 
+			\min
+			\biggr(
+				100000,
+				\Bigr\lfloor\mathrm{Multi}(n) \cdot \left( 10\sqrt{10n} +500\right)\Bigr\rceil
+			\biggr)
+		\\\\
+		\mathrm{Exp}_\mathrm{streak}(s)=
+			50
+			+200s
+			+\sum_{n=1}
+			\Biggl[
+				\bigg(\frac{s}{s+1}\bigg)^{10n}
+				\cdot 
+				\mathrm{Exp}_\mathrm{win}(n)
+			\Biggl]
+		\\\\
+		\mathrm{Exp}_\mathrm{battle}(s,t)= 
+		\frac
+			{\mathrm{Exp}_\mathrm{streak}(s)\cdot (1-t)}
+			{s+1}
+			+100t
+		}
+	$$`;
+	this.container.textContent=rawLatex;
+	window.MathJax.typesetPromise([this.container]);
+}
+
 export function initGlobal(){
-	const container = this.cachedDiv;
-	window.MathJax.typesetPromise([container]);
-	attachBattleCalculator(container.querySelector("#calcWrapper"));
-	attachExpChart(container.querySelector("#chartContainer"));
+	window.MathJax.typesetPromise([this.cachedDiv]);
+	const wrapper = this.cachedDiv.querySelector("#tabContainer");
+	const buttonWrapper = document.createElement("div");
+	const contentWrapper = document.createElement("div");
+	buttonWrapper.style="display:flex;"
+	wrapper.append(buttonWrapper,contentWrapper);
+
+	const tabs = [
+		{name:"Function", init:attachLatex},
+		{name:"Calculator", init:attachBattleCalculator},
+		{name:"Graph", init:attachExpChart}
+	]
+
+	tabs.forEach(t =>{
+		t.container = Object.assign(document.createElement("div"),{
+			className:"global-content-container"
+		});
+		t.button = Object.assign(document.createElement("button"), {
+			className: "tab-button",
+			textContent: t.name
+		});
+		buttonWrapper.append(t.button);
+		t.init();
+		t.button.addEventListener("click", () =>{
+			tabs.forEach(tab => tab.button.classList.remove("tab-button-active"))
+			t.button.classList.add("tab-button-active");
+			contentWrapper.replaceChildren(t.container);
+		});
+	});
+
+	tabs[0].button.click();
 }

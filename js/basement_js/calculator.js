@@ -59,7 +59,7 @@ let selectedIndex  = -1;
 let debounceTimer;
 let hideNextSuggestion = false;
 
-const neonURL = "https://neonutil.vercel.app/zoo-stats?";
+const neonURL = "https://neonutil.com/zoo-stats?";
 
 let level = 0;
 

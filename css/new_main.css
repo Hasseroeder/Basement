@@ -1039,3 +1039,25 @@ a:hover {
   width:1.05rem; 
   vertical-align: text-bottom;
 }
+
+.tab-button{
+  flex: auto;
+  margin: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.tab-button-active {
+  background-color: #444;
+  border-bottom-color: #666;
+}
+
+.global-content-container{
+  display:flex; 
+  background-color:#444; 
+  justify-content:center; 
+  padding:1rem;
+  border-bottom: 2px solid #8D8D8D;
+  border-left: 2px solid lightgray;
+  border-right: 2px solid #8D8D8D;
+}
