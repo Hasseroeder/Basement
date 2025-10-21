@@ -10,7 +10,7 @@ Following other attempts to write guides, this one also won't be able to be kept
  
     -/=--                                --=\-    
            ,-.       _,---._ __  / \
-          /  )    .-'       `./ /   \
+          /  )    ./´       `./ /   \
          (  (   ,'            `/    /|
           \  `-"             \'\   / |
            `.              ,  \ \ /  |
@@ -30,18 +30,14 @@ Following other attempts to write guides, this one also won't be able to be kept
   - Coop - @coopw
 
 ## Resources & Links
-- Official Site: https://owo.bwep.net/
-- Relevant Communities
-  - [OwO Bot Support](https://discord.gg/owobot)
-  - [Neon Bot Support](https://discord.gg/NeonUtil)
-- Earlier OwO Guides
-  - [Basement in Discord](https://discord.gg/wA82GZ2rnR)
-  - [Kane's OBBE guide](https://discord.gg/gg-obbe-owo-bot-battle-enthusiasts-748179924749123662)
-  - [The OwO Wiki](https://owobot.fandom.com/wiki/OwO_Bot_Wiki)
-- Utility Bots
-  - [Neon Bot](https://discord.com/oauth2/authorize?client_id=851436490415931422)
-  - [Reaction Bot](https://discord.com/oauth2/authorize?client_id=519287796549156864&permissions=478272&scope=bot+applications.commands)
-  - [Weapons Bot](https://discord.com/oauth2/authorize?client_id=968896356083171328&permissions=274878286912&scope=bot+applications.commands)
+- Basement ( [Website](https://owo.bwep.net/) / [Github](https://github.com/Hasseroeder/Basement/) / [Support Server](https://discord.gg/wA82GZ2rnR))
+- Bots:
+  - OwO herself ( [Invite Bot](https://discordapp.com/oauth2/authorize?client_id=408785106942164992) / [Website](https://owobot.com/) / [Support Server](https://discord.gg/owobot) )
+  - NeonUtil ( [Invite Bot](https://discord.com/oauth2/authorize?client_id=851436490415931422) / [Website](https://neonutil.com/) / [Support Server](https://discord.gg/NeonUtil) )
+  - ReactionBot ( [Invite Bot](https://discord.com/oauth2/authorize?client_id=519287796549156864&permissions=478272&scope=bot+applications.commands) / [Support Server](https://discord.gg/KwfCk7r) )
+- Other Guides: 
+  - OwO Bot Wiki ( [Website](https://owobot.fandom.com/wiki/OwO_Bot_Wiki) )
+  - Kane's OBBE Guide ( [Discord](https://discord.gg/gg-obbe-owo-bot-battle-enthusiasts-748179924749123662) )
 
 ## Technical
 We try to use vanilla JavaScript to keep the entry barrier as low as possible, so you don't need any fancy-shmancy NPM or Node to help with this project, and you could probably even develop in notepad. We do have some dependencies, but we pull those with CDN script tags, so that's easy peasy.

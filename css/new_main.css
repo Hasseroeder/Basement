@@ -1061,3 +1061,8 @@ a:hover {
   border-left: 2px solid lightgray;
   border-right: 2px solid #8D8D8D;
 }
+
+.thinner-header{
+  font-weight: normal;
+  margin:1.2rem 0 0.4rem 0;
+}

@@ -131,8 +131,6 @@ function attachExpChart(){
 
 	sliderWrapper.append(slider,textWrapper);
 
-
-
 	let currentTierate = 0;
 
 	const points = Array.from({ length: 101 }, (_, i) =>
