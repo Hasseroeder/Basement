@@ -57,39 +57,40 @@ const injectors = [
 		selector: ".center-pillar",
 		load: () => {
 			const blinkies = [
-				{src:"../media/misc_images/blinkiesCafe-7m.gif",href:"https://blinkies.cafe/"},
-				{src:"../media/misc_images/blinkiesCafe-ji.gif",href:"https://blinkies.cafe/"},
-				{src:"../media/misc_images/autism_blinkie2.gif",cookie:"tbh"},
-				{src:"../media/misc_images/advert_blinkie.gif",href:"https://github.com/Hasseroeder/Basement/"},
-				{src:"../media/misc_images/rbot_blinkie.gif",href:"https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"},
-				{src:"../media/misc_images/obs_blinkie.gif",href:"https://discord.gg/owobot"},
-				{src:"../media/misc_images/anydice_blinkie.gif",href:"https://anydice.com/"},
-				{src:"../media/misc_images/neon_blinkie.gif",href:"https://discord.gg/neonutil"},
-				{src:"../media/misc_images/dontasktoask_blinkie.png",href:"https://dontasktoask.com/"}
+				{file:"blinkiesCafe-7m.gif" ,href:"https://blinkies.cafe/"},
+				{file:"blinkiesCafe-ji.gif" ,href:"https://blinkies.cafe/"},
+				{file:"autism_blinkie2.gif" ,cookie:"tbh"},
+				{file:"advert_blinkie.gif"  ,href:"https://github.com/Hasseroeder/Basement/"},
+				{file:"rbot_blinkie.gif"    ,href:"https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"},
+				{file:"obs_blinkie.gif"     ,href:"https://discord.gg/owobot"},
+				{file:"anydice_blinkie.gif" ,href:"https://anydice.com/"},
+				{file:"neon_blinkie.gif"    ,href:"https://discord.gg/neonutil"},
+				{file:"dontasktoask_blinkie.png",href:"https://dontasktoask.com/"}
 			];
 
-			const myBlinkies = fourRandoms(blinkies);
+      const onClickFor = cookie => () =>
+        cookieUtil.setCookie(cookie, cookieUtil.getCookie(cookie) !== "true", 30);
 
-			const wrapper=document.createElement("div");
-			wrapper.style ="margin: 2rem 4rem; gap: 0.5rem; display: flex; flex-wrap: nowrap;";
+			const myBlinkies = fourRandoms(blinkies);
+      const make = (tag, props = {}) => Object.assign(document.createElement(tag), props);
+
+      const wrapper = make("div",{
+        style:"margin: 2rem 4rem; gap: 0.5rem; display: flex;"
+      });
 
 			myBlinkies.forEach(blinkie => {
-				const img = document.createElement("img");
-				img.src = blinkie.src;
-				img.className="blinkie";
-				const a = document.createElement("a");
-        a.style= "display:block; flex: 1 1 0;";
-        a.append(img);
-        if (blinkie.href){
-          a.target="_blank";
-          a.href = blinkie.href;
-        }	
-        if (blinkie.cookie){
-          a.addEventListener("click",()=>{
-            const value = !(cookieUtil.getCookie(blinkie.cookie)=="true");
-            cookieUtil.setCookie(blinkie.cookie, value, 30);
-          });
-        }
+				const img = make("img",{
+          src:"../media/blinkies/" + blinkie.file,
+          className:"blinkie"
+        });
+        const a = make("a",{
+          style:"display:block; flex: 1 1 0;",
+          target:"_blank",
+        });
+        if (blinkie.href) a.href = blinkie.href;
+        if (blinkie.cookie) a.onclick = onClickFor(blinkie.cookie);
+
+        a.append(img); 
 				wrapper.append(a);    
 			});
 
