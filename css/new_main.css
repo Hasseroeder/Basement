@@ -1096,3 +1096,16 @@ a:hover {
 .smol-right-margin{
   margin-right: 0.2rem;
 }
+
+.weapon-desc-image{
+  display:inline-block;
+  vertical-align: top;
+}
+
+.italic{
+  font-style: italic;
+}
+
+.bold{
+  font-weight: bold;
+}

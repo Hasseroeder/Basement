@@ -39,7 +39,7 @@ function giveMeNewPassive(id){
     };
 }
 
-function appendPassiveNode(passive, weapon) {
+async function appendPassiveNode(passive, weapon) {
     const listContainer = document.querySelector(".passiveContainer");
     const wrapper = make("div",{className:"passiveItem"});
     wrapper.dataset.id = passive.id;
@@ -48,7 +48,7 @@ function appendPassiveNode(passive, weapon) {
     passive.image = getWeaponImage(passive);
     passive.image.className = 'discord-embed-emote weaponCalc-passive-emote';
     passive.image.onclick = () => removePassive(passive, wrapper, weapon);
-    const desc = generateDescription(passive, weapon);
+    const desc = await generateDescription(passive, weapon);
 
     if( weapon.product.blueprint.passive.length === 1){
         // we'll need to remove "passives: none" on the first append

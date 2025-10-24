@@ -1,6 +1,6 @@
 const make = (tag, props = {}, children) => {
   const el = document.createElement(tag);
-  if (props.style) {
+  if (props.style && typeof props.style == "object") {
     Object.assign(el.style, props.style);
     delete props.style;
   }
@@ -11,7 +11,7 @@ const make = (tag, props = {}, children) => {
 };
 
 function createUnitSpan(unit){
-    if (!unit) return "";
+    if (!unit) return;
     return make("span",{
         style:{marginRight:"0.2rem"},
         textContent:unit

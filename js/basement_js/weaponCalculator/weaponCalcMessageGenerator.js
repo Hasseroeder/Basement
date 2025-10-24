@@ -1,4 +1,4 @@
-import { createRangedInput,createStatTooltip,make } from '../weaponCalculator/weaponCalcElementHelper.js'
+import { createRangedInput,createStatTooltip,createUnitSpan,make } from '../weaponCalculator/weaponCalcElementHelper.js'
 import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
 import { generatePassiveInputs } from './weaponCalcPassive.js';
 import { weaponToBlueprintString } from './blueprintParser.js';
