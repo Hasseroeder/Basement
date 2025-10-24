@@ -1,13 +1,13 @@
 const make = (tag, props = {}, children) => {
-  const el = document.createElement(tag);
-  if (props.style && typeof props.style == "object") {
-    Object.assign(el.style, props.style);
-    delete props.style;
-  }
-  if (children){
-    el.append(...children);
-  }
-  return Object.assign(el, props);
+    const el = document.createElement(tag);
+    if (props.style && typeof props.style == "object") {
+        Object.assign(el.style, props.style);
+        delete props.style;
+    }
+    if (children){
+        el.append(...children);
+    }
+    return Object.assign(el, props);
 };
 
 function createUnitSpan(unit){

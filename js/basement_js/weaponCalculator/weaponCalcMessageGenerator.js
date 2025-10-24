@@ -1,4 +1,4 @@
-import { createRangedInput,createStatTooltip,createUnitSpan,make } from '../weaponCalculator/weaponCalcElementHelper.js'
+import { createRangedInput,createStatTooltip,make } from '../weaponCalculator/weaponCalcElementHelper.js'
 import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
 import { generatePassiveInputs } from './weaponCalcPassive.js';
 import { weaponToBlueprintString } from './blueprintParser.js';
@@ -74,24 +74,25 @@ function generateDescription(weaponOrPassive,weapon) {
 }
 
 async function generateWPInput(weapon){
-    const wrapper = document.createElement("div");	
-    wrapper.innerHTML="<strong>WP Cost:</strong>";
-    wrapper.style= "display: flex; align-items: center;";
     const [stat, statConfig] = getStat(
         "WP-Cost",
         weapon.product.blueprint.stats,
         weapon.statConfig
     );
-    if (stat){
-        stat.IO= new WeaponStat(stat, statConfig, weapon, weapon)
-        wrapper.append(stat.IO.render());
-    }else{
-        wrapper.append("\u00A0"+"0"+"\u00A0");
-    }
+    const child = stat
+        ? (stat.IO = new WeaponStat(stat, statConfig, weapon, weapon), stat.IO.render())
+        : `\u00A0${0}\u00A0`;
+
     const WPimage = await getStatImage("WP");
     WPimage.style.margin = "0 0 0 -0.2rem";
-    wrapper.append(WPimage);
+    const children = [child,WPimage]
 
+
+    const wrapper = make("div",{
+            innerHTML:"<strong>WP Cost:</strong>",
+            style: {display: "flex", alignItems: "center"}
+    });
+    wrapper.append(...children);
     return wrapper;
 }
 
@@ -256,8 +257,8 @@ function displayInfo(weapon){
     el.weaponImage.src=getWeaponImagePath(weapon);
 }
 
-function generateEverything(weapon){
-	generateStatInputs(weapon);
+async function generateEverything(weapon){
+	await generateStatInputs(weapon);
 	displayInfo(weapon);
 	generatePassiveInputs(weapon);
 }
@@ -269,8 +270,7 @@ function updateEverything(weapon){
 
 async function generateStatInputs(weapon){
     // WP cost & inputs
-	const inputElement = await generateWPInput(weapon);
-	el.wpCost.replaceChildren(inputElement);
+	el.wpCost.replaceChildren(await generateWPInput(weapon));
     // Description & inputs
 	el.description.replaceChildren(generateDescription(weapon,weapon));
 }
