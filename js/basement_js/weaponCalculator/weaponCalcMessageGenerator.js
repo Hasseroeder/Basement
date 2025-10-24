@@ -26,11 +26,14 @@ async function generateDescription(weaponOrPassive,weapon) {
     ];
 
     const tokenRegex = new RegExp("(" + TOKEN_SPECS.map(s => s.pattern).join("|") + ")", "g");
+    
+    const NEWLINE_RE = /^\r?\n$/;
     const STAT_TOKEN = "[stat]";
-    const COMPILED = TOKEN_SPECS.reduce((m, s) => {
-        m[s.name] = new RegExp("^" + s.pattern + "$");
-        return m;
-    }, {});
+    const IMAGE_RE = /^:([A-Za-z0-9_+]+):$/;
+    const BOLD_RE = /^\*\*([^*]+)\*\*$/;
+    const ITALIC_RE = /^\*([^*]+)\*$/;
+
+    // This is the opposite of DRY, I am aware, but I have no idea how to fix.
 
     const parts      = weaponOrPassive.description.split(tokenRegex);
     let statIndex = 0;
@@ -41,16 +44,16 @@ async function generateDescription(weaponOrPassive,weapon) {
     );
 
     async function elif(part){
-        if (COMPILED.NEWLINE.test(part)) return document.createElement("br")
+        if (NEWLINE_RE.test(part)) return document.createElement("br")
         if (part === STAT_TOKEN) return getStatNode()
-        const imgMatch = part.match(COMPILED.IMAGE);
+        const imgMatch = part.match(IMAGE_RE);
         if (imgMatch) {
             const img = await getStatImage(imgMatch[1]);
             return make("div",{className: "weapon-desc-image"},[img])
         }
-        const boldMatch = part.match(COMPILED.BOLD);
+        const boldMatch = part.match(BOLD_RE);
         if (boldMatch) return make("span",{style:{fontWeight: "bold"},textContent: boldMatch[1]})
-        const italicMatch = part.match(COMPILED.ITALIC);  
+        const italicMatch = part.match(ITALIC_RE);  
         if (italicMatch) return make("span",{style:{fontStyle: "italic"},textContent: italicMatch[1]})
         return document.createTextNode(part);
     }
