@@ -47,10 +47,7 @@ async function generateDescription(weaponOrPassive,weapon) {
         if (NEWLINE_RE.test(part)) return document.createElement("br")
         if (part === STAT_TOKEN) return getStatNode()
         const imgMatch = part.match(IMAGE_RE);
-        if (imgMatch) {
-            const img = await getStatImage(imgMatch[1]);
-            return make("div",{className: "weapon-desc-image"},[img])
-        }
+        if (imgMatch) return await getStatImage(imgMatch[1],"weapon-desc-image")
         const boldMatch = part.match(BOLD_RE);
         if (boldMatch) return make("span",{style:{fontWeight: "bold"},textContent: boldMatch[1]})
         const italicMatch = part.match(ITALIC_RE);  
@@ -68,7 +65,6 @@ async function generateDescription(weaponOrPassive,weapon) {
         );
         stat.IO = new WeaponStat(stat, statConfig, weaponOrPassive, weapon);
         const toAppend = stat.IO.render();
-        toAppend.style.margin = "0 -0.2rem";
         statIndex++;
         return toAppend;
     }
@@ -86,11 +82,10 @@ async function generateWPInput(weapon){
         : `\u00A0${0}\u00A0`;
 
     const WPimage = await getStatImage("WP");
-    WPimage.style.margin = "0 0 0 -0.2rem";
 
     return make("div",
         {
-            innerHTML:"<strong>WP Cost:</strong>",
+            innerHTML:"<strong>WP Cost:&nbsp;</strong>",
             style: {display: "flex", alignItems: "center"}
         },
         [child,WPimage]

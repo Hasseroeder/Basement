@@ -808,6 +808,7 @@ a:hover {
 
 .outerInputWrapperFromCalculator {
   display:inline-block;
+  margin: 0 -0.2rem;
 }
 
 .inputWrapperFromCalculator:hover {
@@ -1098,8 +1099,9 @@ a:hover {
 }
 
 .weapon-desc-image{
-  display:inline-block;
-  vertical-align: top;
+  vertical-align: text-bottom;
+  display: inline-block;
+  margin-bottom: -1.5px;
 }
 
 .italic{

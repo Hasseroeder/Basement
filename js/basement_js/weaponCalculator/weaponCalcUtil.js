@@ -103,16 +103,17 @@ const valueToPercent =
 	Math.round(100 * (value - min) / range);
 
 
-async function getStatImage(inputString) {
+async function getStatImage(inputString,className) {
     const gifUrl = `../media/owo_images/${inputString}.gif`;
     const pngUrl = `../media/owo_images/${inputString}.png`;
+    const imageClasses =  'discord-embed-emote ' + className??""
 
     return make("img",{
         src: (await fileExists(gifUrl)) ? gifUrl : pngUrl,
         alt: `:${inputString}:`,
         ariaLabel : inputString,
         title : `:${inputString}:`,
-        className: 'discord-embed-emote zeroZeroZeroThirteenMargin'
+        className: imageClasses
     });
 }
 
