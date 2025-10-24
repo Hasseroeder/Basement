@@ -188,13 +188,13 @@ function fillMissingWeaponInfo(weapon){
 }
 
 function getTierEmoji(tier){
-    const img = document.createElement("img");
-    img.src = getTierEmojiPath(tier);
-    img.alt = tier;
-    img.ariaLabel = tier;
-    img.title = `:${tier}:`;
-    img.className = "discord-embed-emote";
-    return img;
+    return make("img",{
+        src: getTierEmojiPath(tier),
+        alt: tier,
+        ariaLabel: tier,
+        title: `:${tier}:`,
+        className: "discord-embed-emote"
+    })
 }
 
 function getTierEmojiPath(stringOrQuality){
