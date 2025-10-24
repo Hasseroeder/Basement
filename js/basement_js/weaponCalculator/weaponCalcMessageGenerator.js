@@ -19,6 +19,9 @@ const el = {
 async function generateDescription(weaponOrPassive,weapon) {
     const tokenRegex = /(\[stat\]|:[A-Za-z0-9_+]+:|\*\*[^*]+\*\*|\*[^*]+\*|\r?\n)/g;
     const parts      = weaponOrPassive.description.split(tokenRegex);
+    let statIndex = 0;
+    const renderParts = parts => Promise.all(parts.map(elif));
+    
     return make("div",
         {
             style:{
@@ -30,54 +33,38 @@ async function generateDescription(weaponOrPassive,weapon) {
         await renderParts(parts)
     );
 
-    async function renderParts(parts, wrapper) {
-        const myArray = [];
-        let statIndex = 0;
-        for (const part of parts) {
-            if (/^\r?\n$/.test(part)) {
-                myArray.push(document.createElement("br"));
-            }else if (part === "[stat]") {
-                const [stat, statConfig] = getStat(
-                    statIndex,
-                    weaponOrPassive.objectType === "passive"
-                        ? weaponOrPassive.stats
-                        : weaponOrPassive.product.blueprint.stats,
-                    weaponOrPassive.statConfig
-                );
-                stat.IO = new WeaponStat(stat, statConfig, weaponOrPassive, weapon);
-                const toAppend = stat.IO.render();
-                toAppend.style.margin = "0 -0.2rem";
-                myArray.push(toAppend);
-                statIndex++;
-            }else if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
-                const key = part.slice(1, -1);
-                const img = await getStatImage(key);
-                myArray.push(
-                    make("div",{className: "weapon-desc-image"},[img])
-                );
-            }else if (/^\*\*([^*]+)\*\*$/.test(part)) {
-                const text = part.slice(2, -2);
-                myArray.push(
-                    make("span",{
-                        style:{fontWeight: "bold"},
-                        textContent: text
-                    })
-                );
-            }else if (/^\*([^*]+)\*$/.test(part)) {
-                const text = part.slice(1, -1);
-                myArray.push(
-                    make("span",{
-                        style:{fontStyle: "italic"},
-                        textContent: text
-                    })
-                );
-            }else{
-                myArray.push(document.createTextNode(part));
-            }
+    async function elif(part){
+        if (/^\r?\n$/.test(part)) {
+            return document.createElement("br");
+        }else if (part === "[stat]") {
+            const [stat, statConfig] = getStat(
+                statIndex,
+                weaponOrPassive.objectType === "passive"
+                    ? weaponOrPassive.stats
+                    : weaponOrPassive.product.blueprint.stats,
+                weaponOrPassive.statConfig
+            );
+            stat.IO = new WeaponStat(stat, statConfig, weaponOrPassive, weapon);
+            const toAppend = stat.IO.render();
+            toAppend.style.margin = "0 -0.2rem";
+            statIndex++;
+            return toAppend;
+        }else if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
+            const key = part.slice(1, -1);
+            const img = await getStatImage(key);
+            return make("div",{className: "weapon-desc-image"},[img])
+        }else if (/^\*\*([^*]+)\*\*$/.test(part)) {
+            const text = part.slice(2, -2);
+            return make("span",{style:{fontWeight: "bold"},textContent: text})
+        }else if (/^\*([^*]+)\*$/.test(part)) {
+            const text = part.slice(1, -1);
+            return make("span",{style:{fontStyle: "italic"},textContent: text})
+        }else{
+            return document.createTextNode(part);
         }
-        return myArray;
     }
 }
+
 
 async function generateWPInput(weapon){
     const [stat, statConfig] = getStat(
@@ -93,13 +80,13 @@ async function generateWPInput(weapon){
     WPimage.style.margin = "0 0 0 -0.2rem";
     const children = [child,WPimage]
 
-
-    const wrapper = make("div",{
+    return make("div",
+        {
             innerHTML:"<strong>WP Cost:</strong>",
             style: {display: "flex", alignItems: "center"}
-    });
-    wrapper.append(...children);
-    return wrapper;
+        },
+        children
+    );
 }
 
 class WeaponStat {
@@ -275,9 +262,7 @@ function updateEverything(weapon){
 }
 
 async function generateStatInputs(weapon){
-    // WP cost & inputs
 	el.wpCost.replaceChildren(await generateWPInput(weapon));
-    // Description & inputs
 	el.description.replaceChildren(await generateDescription(weapon,weapon));
 }
 

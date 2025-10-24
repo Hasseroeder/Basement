@@ -4,10 +4,11 @@ const make = (tag, props = {}, children) => {
         Object.assign(el.style, props.style);
         delete props.style;
     }
+    Object.assign(el, props);
     if (children){
         el.append(...children);
     }
-    return Object.assign(el, props);
+    return el;
 };
 
 function createUnitSpan(unit){
