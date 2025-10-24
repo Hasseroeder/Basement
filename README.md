@@ -22,22 +22,87 @@ Following other attempts to write guides, this one also won't be able to be kept
            '--'   `--'  
     -\=--                                --=/-
  
-## Contact us
-- through GitHub:
-  - https://github.com/Hasseroeder/Basement/
-- through Discord:
-  - Heather/Hasse - @hsse
-  - Coop - @coopw
 
-## Resources & Links
-- Basement ( [Website](https://owo.bwep.net/) / [Github](https://github.com/Hasseroeder/Basement/) / [Support Server](https://discord.gg/wA82GZ2rnR))
-- Bots:
-  - OwO herself ( [Invite Bot](https://discordapp.com/oauth2/authorize?client_id=408785106942164992) / [Website](https://owobot.com/) / [Support Server](https://discord.gg/owobot) )
-  - NeonUtil ( [Invite Bot](https://discord.com/oauth2/authorize?client_id=851436490415931422) / [Website](https://neonutil.com/) / [Support Server](https://discord.gg/NeonUtil) )
-  - ReactionBot ( [Invite Bot](https://discord.com/oauth2/authorize?client_id=519287796549156864&permissions=478272&scope=bot+applications.commands) / [Support Server](https://discord.gg/KwfCk7r) )
-- Other Guides: 
-  - OwO Bot Wiki ( [Website](https://owobot.fandom.com/wiki/OwO_Bot_Wiki) )
-  - Kane's OBBE Guide ( [Discord](https://discord.gg/gg-obbe-owo-bot-battle-enthusiasts-748179924749123662) )
+## Basement
+<div style="display:flex; gap:1.5rem; margin-top:-0.4rem;">
+  <table>
+    <tr style="line-height:1.1rem">
+      <td><a href="https://owo.bwep.net/">Official Website</a></td>
+    </tr>
+    <tr style="line-height:1.1rem">
+      <td><a href="https://github.com/Hasseroeder/Basement/">Github</a></td>
+    </tr>
+    <tr style="line-height:1.1rem">
+      <td><a href="https://discord.gg/wA82GZ2rnR">Support Server</a></td>
+    </tr>
+  </table>
+
+
+  <table style="height:3.3rem;">
+    <tr style="line-height:1.1rem;">
+      <td style="font-size:1.1rem; font-weight:bold;">Our Team</td>
+      <td style="font-size:0.6rem;">Discord</td>
+      <td style="font-size:0.6rem;">Github</td>
+    </tr>
+    <tr style="line-height:1.1rem; height:1.2rem;">
+      <td>Heather</td>
+      <td>
+        <div style="font-size: 0.75rem;">
+          <code>@hsse</code>
+        </div>
+      </td>
+      <td><a href="https://github.com/Hasseroeder">Hasseroeder</a></td>
+    </tr>
+    <tr style="line-height:1.1rem; height:1.2rem;">
+      <td>Coop</td>
+      <td>
+          <div style="font-size: 0.75rem;">
+            <code>@coopw</code>
+          </div>
+        </td>
+      <td><a href="https://github.com/coopw1">coopw1</a></td>
+    </tr>
+  </table>
+</div>
+
+## Friends & Useful Stuff
+<div style="display:flex; gap: 2.5rem; margin-top:-0.7rem;">
+  <div>
+    <h4 style="margin: 0.2rem 0.4rem; font-size: 0.7rem; color:#888;">#Relevant Bots</h4>
+    <table>
+      <tr style="line-height:1.1rem">
+        <td>OwO</td>
+        <td><a href="https://discordapp.com/oauth2/authorize?client_id=408785106942164992">Invite Bot</a></td>
+        <td><a href="https://owobot.com/">Website</a></td>
+        <td><a href="https://discord.gg/wA82GZ2rnR">Support Server</a></td>
+      </tr>
+      <tr style="line-height:1.1rem">
+        <td>NeonUtil</td>
+        <td><a href="https://discord.com/oauth2/authorize?client_id=851436490415931422">Invite Bot</a></td>
+        <td><a href="https://neonutil.com/">Website</a></td>
+        <td><a href="https://discord.gg/NeonUtil">Support Server</a></td>
+      </tr>
+      <tr style="line-height:1.1rem">
+        <td>ReactionBot</td>
+        <td><a href="https://discord.com/oauth2/authorize?client_id=519287796549156864&permissions=478272&scope=bot+applications.commands">Invite Bot</a></td>
+        <td>—</td>
+        <td><a href="https://discord.gg/KwfCk7r">Support Server</a></td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <h4 style="margin: 0.2rem 0.4rem; font-size: 0.7rem; color:#888;">#Other Guides</h4>
+    <table style="height:2.2rem;">
+      <tr style="line-height:1.1rem">
+        <td><a href="https://owobot.fandom.com/wiki/OwO_Bot_Wiki">OwO Bot Wiki</a></td>
+      </tr>
+      <tr style="line-height:1.1rem">
+        <td><a href="https://discord.gg/gg-obbe-owo-bot-battle-enthusiasts-748179924749123662">Kane's OBBE Guide</a></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<br>
 
 ## Technical
 We try to use vanilla JavaScript to keep the entry barrier as low as possible, so you don't need any fancy-shmancy NPM or Node to help with this project, and you could probably even develop in notepad. We do have some dependencies, but we pull those with CDN script tags, so that's easy peasy.

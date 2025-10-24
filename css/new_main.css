@@ -1066,3 +1066,29 @@ a:hover {
   font-weight: normal;
   margin:1.2rem 0 0.4rem 0;
 }
+
+.introduction-table td {
+  line-height: 1rem;
+  text-align: start;
+  border-right:none;
+  border-left:none;
+  padding: 0.5rem 0.8rem;
+}
+
+.introduction-table{
+  border-right:none;
+  border-left:none;
+}
+
+.introduction-section{
+  display: flex; 
+  gap: 3rem; 
+  align-items: center;
+}
+
+.introduction-section-wrapper{
+  display:flex; 
+  flex-direction: column; 
+  gap: 2rem; 
+  padding: 1rem 1rem 0.5rem 0;
+}
