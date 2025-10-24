@@ -132,9 +132,6 @@ function getWeaponImage(weaponOrPassive){
         src : getWeaponImagePath(weaponOrPassive),
         ariaLabel: shorthand.toLowerCase(),
         alt:":"+shorthand.toLowerCase()+":",
-        style:{
-            borderRadius:"0.2rem"
-        },
         draggable:false,
         className:"discord-pet-display"
     });
@@ -178,7 +175,7 @@ function fillMissingWeaponInfo(weapon){
 			];
 			const match = qualities.find(t => Math.floor(Math.random() * 101) <= t.chance);
 			stat.noWear = match.quality;
-			//when we generate a rune stat, it generally shouldn't be at any value
+			//when we generate a rune stat, it shouldn't be at any value
 		}else if (!stat.noWear){
 			stat.noWear=Math.floor(Math.random() * 101);
 		}
