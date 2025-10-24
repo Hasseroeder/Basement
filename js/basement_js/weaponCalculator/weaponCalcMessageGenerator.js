@@ -16,16 +16,26 @@ const el = {
 	description:	    document.getElementById("description")
 }
 
-function generateDescription(weaponOrPassive,weapon) {
-    const wrapper    = document.createElement("div");
+async function generateDescription(weaponOrPassive,weapon) {
     const tokenRegex = /(\[stat\]|:[A-Za-z0-9_+]+:|\*\*[^*]+\*\*|\*[^*]+\*|\r?\n)/g;
     const parts      = weaponOrPassive.description.split(tokenRegex);
+    return make("div",
+        {
+            style:{
+                display:     "inline",
+                whiteSpace:  "normal",
+                lineHeight:  "1.4rem", 
+            }
+        },
+        await renderParts(parts)
+    );
 
     async function renderParts(parts, wrapper) {
+        const myArray = [];
         let statIndex = 0;
         for (const part of parts) {
             if (/^\r?\n$/.test(part)) {
-                wrapper.appendChild(document.createElement("br"));
+                myArray.push(document.createElement("br"));
             }else if (part === "[stat]") {
                 const [stat, statConfig] = getStat(
                     statIndex,
@@ -37,40 +47,36 @@ function generateDescription(weaponOrPassive,weapon) {
                 stat.IO = new WeaponStat(stat, statConfig, weaponOrPassive, weapon);
                 const toAppend = stat.IO.render();
                 toAppend.style.margin = "0 -0.2rem";
-                wrapper.append(toAppend);
+                myArray.push(toAppend);
                 statIndex++;
             }else if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
                 const key = part.slice(1, -1);
                 const img = await getStatImage(key);
-                const imgWrapper = document.createElement("div");
-                imgWrapper.style.display = "inline-block";
-                imgWrapper.append(img);
-                wrapper.append(imgWrapper);
+                myArray.push(
+                    make("div",{className: "weapon-desc-image"},[img])
+                );
             }else if (/^\*\*([^*]+)\*\*$/.test(part)) {
                 const text = part.slice(2, -2);
-                const span = document.createElement("span");
-                span.style.fontWeight = "bold";
-                span.textContent = text;
-                wrapper.append(span);
+                myArray.push(
+                    make("span",{
+                        style:{fontWeight: "bold"},
+                        textContent: text
+                    })
+                );
             }else if (/^\*([^*]+)\*$/.test(part)) {
                 const text = part.slice(1, -1);
-                const span = document.createElement("span");
-                span.style.fontStyle = "italic";
-                span.textContent = text;
-                wrapper.append(span);
+                myArray.push(
+                    make("span",{
+                        style:{fontStyle: "italic"},
+                        textContent: text
+                    })
+                );
             }else{
-                wrapper.append(document.createTextNode(part));
+                myArray.push(document.createTextNode(part));
             }
         }
+        return myArray;
     }
-
-    Object.assign(wrapper.style, {
-        display:     "inline",
-        whiteSpace:  "normal",
-        lineHeight:  "1.4rem",
-    });
-    renderParts(parts, wrapper);
-    return wrapper;
 }
 
 async function generateWPInput(weapon){
@@ -272,7 +278,7 @@ async function generateStatInputs(weapon){
     // WP cost & inputs
 	el.wpCost.replaceChildren(await generateWPInput(weapon));
     // Description & inputs
-	el.description.replaceChildren(generateDescription(weapon,weapon));
+	el.description.replaceChildren(await generateDescription(weapon,weapon));
 }
 
 async function updateStatInputs(weapon){
