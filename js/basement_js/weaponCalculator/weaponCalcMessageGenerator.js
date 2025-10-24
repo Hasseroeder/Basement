@@ -17,51 +17,57 @@ const el = {
 }
 
 async function generateDescription(weaponOrPassive,weapon) {
-    const tokenRegex = /(\[stat\]|:[A-Za-z0-9_+]+:|\*\*[^*]+\*\*|\*[^*]+\*|\r?\n)/g;
+    const TOKEN_SPECS = [
+        { name: "STAT",   pattern: "\\[stat\\]"},         // literal [stat]
+        { name: "IMAGE",  pattern: ":[A-Za-z0-9_+]+:"},   // :emojiName:
+        { name: "BOLD",   pattern: "\\*\\*[^*]+\\*\\*"},  // **bold**
+        { name: "ITALIC", pattern: "\\*[^*]+\\*"},        // *italic*
+        { name: "NEWLINE",pattern: "\\r?\\n"}             // newline
+    ];
+
+    const tokenRegex = new RegExp("(" + TOKEN_SPECS.map(s => s.pattern).join("|") + ")", "g");
+    const STAT_TOKEN = "[stat]";
+    const COMPILED = TOKEN_SPECS.reduce((m, s) => {
+        m[s.name] = new RegExp("^" + s.pattern + "$");
+        return m;
+    }, {});
+
     const parts      = weaponOrPassive.description.split(tokenRegex);
     let statIndex = 0;
-    const renderParts = parts => Promise.all(parts.map(elif));
     
     return make("div",
-        {
-            style:{
-                display:     "inline",
-                whiteSpace:  "normal",
-                lineHeight:  "1.4rem", 
-            }
-        },
-        await renderParts(parts)
+        {style:{ display: "inline", whiteSpace: "normal", lineHeight: "1.4rem"}},
+        await Promise.all(parts.map(elif))
     );
 
     async function elif(part){
-        if (/^\r?\n$/.test(part)) {
-            return document.createElement("br");
-        }else if (part === "[stat]") {
-            const [stat, statConfig] = getStat(
-                statIndex,
-                weaponOrPassive.objectType === "passive"
-                    ? weaponOrPassive.stats
-                    : weaponOrPassive.product.blueprint.stats,
-                weaponOrPassive.statConfig
-            );
-            stat.IO = new WeaponStat(stat, statConfig, weaponOrPassive, weapon);
-            const toAppend = stat.IO.render();
-            toAppend.style.margin = "0 -0.2rem";
-            statIndex++;
-            return toAppend;
-        }else if (/^:[A-Za-z0-9_+]+:$/.test(part)) {
-            const key = part.slice(1, -1);
-            const img = await getStatImage(key);
+        if (COMPILED.NEWLINE.test(part)) return document.createElement("br")
+        if (part === STAT_TOKEN) return getStatNode()
+        const imgMatch = part.match(COMPILED.IMAGE);
+        if (imgMatch) {
+            const img = await getStatImage(imgMatch[1]);
             return make("div",{className: "weapon-desc-image"},[img])
-        }else if (/^\*\*([^*]+)\*\*$/.test(part)) {
-            const text = part.slice(2, -2);
-            return make("span",{style:{fontWeight: "bold"},textContent: text})
-        }else if (/^\*([^*]+)\*$/.test(part)) {
-            const text = part.slice(1, -1);
-            return make("span",{style:{fontStyle: "italic"},textContent: text})
-        }else{
-            return document.createTextNode(part);
         }
+        const boldMatch = part.match(COMPILED.BOLD);
+        if (boldMatch) return make("span",{style:{fontWeight: "bold"},textContent: boldMatch[1]})
+        const italicMatch = part.match(COMPILED.ITALIC);  
+        if (italicMatch) return make("span",{style:{fontStyle: "italic"},textContent: italicMatch[1]})
+        return document.createTextNode(part);
+    }
+
+    function getStatNode(){
+        const [stat, statConfig] = getStat(
+            statIndex,
+            weaponOrPassive.objectType === "passive"
+                ? weaponOrPassive.stats
+                : weaponOrPassive.product.blueprint.stats,
+            weaponOrPassive.statConfig
+        );
+        stat.IO = new WeaponStat(stat, statConfig, weaponOrPassive, weapon);
+        const toAppend = stat.IO.render();
+        toAppend.style.margin = "0 -0.2rem";
+        statIndex++;
+        return toAppend;
     }
 }
 
@@ -78,14 +84,13 @@ async function generateWPInput(weapon){
 
     const WPimage = await getStatImage("WP");
     WPimage.style.margin = "0 0 0 -0.2rem";
-    const children = [child,WPimage]
 
     return make("div",
         {
             innerHTML:"<strong>WP Cost:</strong>",
             style: {display: "flex", alignItems: "center"}
         },
-        children
+        [child,WPimage]
     );
 }
 
