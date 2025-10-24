@@ -1,3 +1,5 @@
+import { make } from "./weaponCalcElementHelper.js";
+
 function calculateQualities(weapon) {
     const blueprint = weapon.product.blueprint;
     const baseStats = Array.isArray(blueprint.stats) ? blueprint.stats : [];
@@ -105,13 +107,13 @@ async function getStatImage(inputString) {
     const gifUrl = `../media/owo_images/${inputString}.gif`;
     const pngUrl = `../media/owo_images/${inputString}.png`;
 
-    const img = document.createElement('img');
-    img.src = (await fileExists(gifUrl)) ? gifUrl : pngUrl;
-    img.alt = `:${inputString}:`;
-    img.ariaLabel = inputString;
-    img.title = `:${inputString}:`;
-    img.className = 'discord-embed-emote zeroZeroZeroThirteenMargin';
-    return img;
+    return make("img",{
+        src: (await fileExists(gifUrl)) ? gifUrl : pngUrl,
+        alt: `:${inputString}:`,
+        ariaLabel : inputString,
+        title : `:${inputString}:`,
+        className: 'discord-embed-emote zeroZeroZeroThirteenMargin'
+    });
 }
 
 async function fileExists(url) {
@@ -125,15 +127,17 @@ async function fileExists(url) {
 
 function getWeaponImage(weaponOrPassive){
     const shorthand = weaponOrPassive.aliases[0]? weaponOrPassive.aliases[0]: weaponOrPassive.name;
-    const img = document.createElement("img");
-    img.src = getWeaponImagePath(weaponOrPassive);
-    img.ariaLabel= shorthand.toLowerCase();
-    img.alt=":"+shorthand.toLowerCase()+":";
-    img.style.borderRadius="0.2rem";
-    img.draggable=false;
-    img.className="discord-pet-display";
 
-    return img;
+    return make("img",{
+        src : getWeaponImagePath(weaponOrPassive),
+        ariaLabel: shorthand.toLowerCase(),
+        alt:":"+shorthand.toLowerCase()+":",
+        style:{
+            borderRadius:"0.2rem"
+        },
+        draggable:false,
+        className:"discord-pet-display"
+    });
 }
 
 function getWeaponImagePath(weaponOrPassive){

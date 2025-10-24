@@ -1,22 +1,25 @@
 import { loadJson } from '../util/jsonUtil.js';
 import { generateDescription, displayInfo }  from '../weaponCalculator/weaponCalcMessageGenerator.js'
 import { getWeaponImage,applyWearToWeapon } from './weaponCalcUtil.js';
+import { make } from './weaponCalcElementHelper.js';
 
-var passives;
+const passivePromise = loadJson("../json/passives.json");
+let passiveData;
 
 export async function initiatePassiveStuffs(weapon){
     const gridContainer = document.querySelector('.passiveGrid');
-    passives = await loadJson("../json/passives.json");
+    passiveData = await passivePromise;
 
-    Object.entries(passives).forEach(([id, passive]) => {
-        const img = document.createElement('img');
-        img.className = 'passiveGridImage';
-        img.src = `media/owo_images/f_${passive.aliases[0]}.png`;
-        img.dataset.passiveId = id;
-        img.alt = passive.aliases[0];
-        img.title = passive.aliases[0];
-        img.addEventListener('click', () => generateNewPassive(id,weapon));
-        gridContainer.appendChild(img);
+    Object.values(passiveData).forEach(passive => {
+        gridContainer.append(
+            make("img",{
+                className:'passiveGridImage',
+                src: `media/owo_images/f_${passive.aliases[0]}.png`,
+                alt: passive.aliases[0],
+                title: passive.aliases[0],
+                onclick: () => generateNewPassive(passive.id,weapon)
+            })
+        );
     });
 }
 
@@ -31,22 +34,20 @@ function generateNewPassive(id, weapon){
 function giveMeNewPassive(id){
     return {
         id,
-        stats: passives[id].statConfig.map(() => ({noWear:100})),
-        ...passives[id]
+        stats: passiveData[id].statConfig.map(() => ({noWear:100})),
+        ...passiveData[id]
     };
 }
 
 function appendPassiveNode(passive, weapon) {
     const listContainer = document.querySelector(".passiveContainer");
-    const wrapper = document.createElement("div");
-    wrapper.className = "passiveItem";
+    const wrapper = make("div",{className:"passiveItem"});
     wrapper.dataset.id = passive.id;
 
-    Object.assign(passive, passives[passive.id]);
+    Object.assign(passive, passiveData[passive.id]);
     passive.image = getWeaponImage(passive);
     passive.image.className = 'discord-embed-emote weaponCalc-passive-emote';
-    passive.image.addEventListener("click", () => removePassive(passive, wrapper, weapon));
-    
+    passive.image.onclick = () => removePassive(passive, wrapper, weapon);
     const desc = generateDescription(passive, weapon);
 
     if( weapon.product.blueprint.passive.length === 1){
@@ -59,21 +60,23 @@ function appendPassiveNode(passive, weapon) {
 }
 
 export function generatePassiveInputs(weapon) {
-    sayNoPassives(weapon);
-    weapon.product.blueprint.passive.forEach(p => appendPassiveNode(p, weapon));
+    const passives = weapon.product.blueprint.passive;
+    sayNoPassives(passives);
+    passives.forEach(p => appendPassiveNode(p, weapon));
 }
 
-function sayNoPassives(weapon){
+function sayNoPassives(passives){
     const listContainer = document.querySelector(".passiveContainer");
-    if (weapon.product.blueprint.passive.length === 0) {
+    if (passives.length === 0) {
         listContainer.innerHTML = '<span><b>Passives:</b> none</span>';
     } 
 }
 
 function removePassive(passive, wrapper, weapon) {
-    weapon.product.blueprint.passive =
-        weapon.product.blueprint.passive.filter(p => p !== passive);
+    const blueprint = weapon.product.blueprint;
+    blueprint.passive =
+        blueprint.passive.filter(p => p !== passive);
     wrapper.remove();
-    weapon.product.blueprint.stats[0].IO.justUpdateDumbass();
-    sayNoPassives(weapon);
+    blueprint.stats[0].IO.justUpdateDumbass();
+    sayNoPassives(blueprint.passive);
 }

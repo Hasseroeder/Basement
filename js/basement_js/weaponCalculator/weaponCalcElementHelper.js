@@ -1,56 +1,56 @@
+const make = (tag, props = {}, children) => {
+  const el = document.createElement(tag);
+  if (props.style) {
+    Object.assign(el.style, props.style);
+    delete props.style;
+  }
+  if (children){
+    el.append(...children);
+  }
+  return Object.assign(el, props);
+};
+
 function createUnitSpan(unit){
     if (!unit) return "";
-
-    const span = document.createElement("span");
-    span.style.marginRight="0.2rem";
-    span.textContent=unit;
-    return span;
+    return make("span",{
+        style:{marginRight:"0.2rem"},
+        textContent:unit
+    });
 }
 
 function createStatTooltip(children) {
-    const tip = document.createElement('div');
-    tip.className = 'hidden tooltip-lite-child';
-    children.forEach(node => tip.append(node));
-    return tip;
-}
-
-function createStatWrapper(classNames) {
-    const wrapper = document.createElement('div');
-    wrapper.className = classNames;
-    return wrapper;
+    return make("div",
+        {className:'hidden tooltip-lite-child'},
+        children
+    );
 }
     
-function createRangedInput(type, {min, max, step, digits}, percentageInput) {
-    const input = document.createElement('input');
+function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
+    const common = { 
+        min: Math.min(max,min), 
+        max: Math.max(max,min), 
+        required: true, 
+        type, step, lang: "en" 
+    };
 
-    if (type === 'range') {
-        input.className = 'weaponSlider';
-        Object.assign(input.style, {
+    const className = type=="range"?'weaponSlider':
+                      type=="number"?'inputFromWeaponCalculator no-arrows':"";
+
+    const variantStyles = 
+        type=="range"?{
             margin: '0 0 0 0.2rem',
             background: '#555',
             transform: min>max ? 'scaleX(-1)' : '',
             transformOrigin: min>max ? 'center' : '',
             pointer: 'var(--cur-pointer)'
-        });
-    }else if(type=="number"){
-        input.className = 'inputFromWeaponCalculator no-arrows';
-        input.style.width = (digits*0.5)+'rem';
-        input.lang="en";
-    }
+        }:
+        type=="number"?{
+            width:(digits*0.5)+'rem'
+        }:{};
 
-    if (percentageInput){
-        input.style.height="1.5rem";
-    }
+    const style = Object.assign({}, extraStyles, variantStyles);
 
-    const [nMin, nMax] = min>max ? [max,min] : [min,max];
-    Object.assign(input, {
-        min: nMin,
-        max: nMax,
-        required: true,
-        type, step//:"any" // TODO: remove any
-    });
-
-    return input;
+    return make("input",{className,style,...common});
 }
 
-export {createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan};
+export {createRangedInput,createStatTooltip,createUnitSpan,make};

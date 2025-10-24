@@ -1,4 +1,4 @@
-import { createRangedInput,createStatTooltip,createStatWrapper,createUnitSpan } from '../weaponCalculator/weaponCalcElementHelper.js'
+import { createRangedInput,createStatTooltip,make } from '../weaponCalculator/weaponCalcElementHelper.js'
 import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
 import { generatePassiveInputs } from './weaponCalcPassive.js';
 import { weaponToBlueprintString } from './blueprintParser.js';
@@ -127,12 +127,19 @@ class WeaponStat {
     }
 
     _buildDOM() {
-        this.outerWrapper = createStatWrapper("outerInputWrapperFromCalculator");
-        this.wrapper      = createStatWrapper("inputWrapperFromCalculator tooltip-lite");
+        this.outerWrapper = make("div",{className:"outerInputWrapperFromCalculator"});
+        this.wrapper      = make("div",{className:"inputWrapperFromCalculator tooltip-lite"});
         this.numberInput  = createRangedInput("number", getWearConfig(this.config,this.wear));
-        this.numberLabel  = createUnitSpan(this.config.unit);
-        this.qualityInput = createRangedInput("number", this.percentageConfig, true);
-        this.qualityLabel = createUnitSpan("%");
+        this.numberLabel  = this.config.unit?
+                            make("span",{
+                                className:"smol-right-margin",
+                                textContent:this.config.unit
+                            }):"";
+        this.qualityInput = createRangedInput("number", this.percentageConfig, {height:"1.5rem"});
+        this.qualityLabel = make("span",{
+                                className:"smol-right-margin",
+                                textContent:"%"
+                            });
         this.slider       = createRangedInput("range",  getWearConfig(this.config,this.wear));
         this.img          = getTierEmoji(getRarity(this.stat.withWear));
         this.tooltip      = createStatTooltip([ this.img, this.qualityInput, this.qualityLabel, this.slider ]);
