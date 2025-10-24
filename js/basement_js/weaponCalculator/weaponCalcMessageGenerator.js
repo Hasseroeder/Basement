@@ -43,11 +43,11 @@ async function generateDescription(weaponOrPassive,weapon) {
         await Promise.all(parts.map(elif))
     );
 
-    async function elif(part){
+    function elif(part){
         if (NEWLINE_RE.test(part)) return document.createElement("br")
         if (part === STAT_TOKEN) return getStatNode()
         const imgMatch = part.match(IMAGE_RE);
-        if (imgMatch) return await getStatImage(imgMatch[1],"weapon-desc-image")
+        if (imgMatch) return getStatImage(imgMatch[1],"weapon-desc-image")
         const boldMatch = part.match(BOLD_RE);
         if (boldMatch) return make("span",{style:{fontWeight: "bold"},textContent: boldMatch[1]})
         const italicMatch = part.match(ITALIC_RE);  
