@@ -527,7 +527,7 @@ function displayPet(pet){
     const children = [
         make("img",{
             src: getPetImage(pet),
-            style:{weight:"1rem;"}
+            className:"one-rem"
         }),
         make("code",{
             textContent:pet[0],

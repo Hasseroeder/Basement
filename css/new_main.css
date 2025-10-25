@@ -1111,3 +1111,8 @@ a:hover {
 .bold{
   font-weight: bold;
 }
+
+.one-rem{
+  width: 1rem;
+  height: 1rem;
+}
