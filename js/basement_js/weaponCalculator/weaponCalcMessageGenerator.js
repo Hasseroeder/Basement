@@ -1,5 +1,5 @@
-import { createRangedInput,createStatTooltip,make } from '../weaponCalculator/weaponCalcElementHelper.js'
-import { valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
+import { createRangedInput,make } from '../weaponCalculator/weaponCalcElementHelper.js'
+import { valueToPercent, percentToValue,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
 import { generatePassiveInputs } from './weaponCalcPassive.js';
 import { weaponToBlueprintString } from './blueprintParser.js';
 
@@ -138,8 +138,12 @@ class WeaponStat {
                                 textContent:"%"
                             });
         this.slider       = createRangedInput("range",  getWearConfig(this.config,this.wear));
-        this.img          = getTierEmoji(getRarity(this.stat.withWear));
-        this.tooltip      = createStatTooltip([ this.img, this.qualityInput, this.qualityLabel, this.slider ]);
+        this.img          = getTierEmoji(this.weaponOrPassive.tier);
+        this.tooltip      = make("div",
+                                {className:'hidden tooltip-lite-child'},
+                                [ this.img, this.qualityInput, this.qualityLabel, this.slider ]
+                            );
+
 
         this.wrapper.append(
             this.numberInput,

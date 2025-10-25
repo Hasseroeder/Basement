@@ -4,28 +4,18 @@ const make = (tag, props = {}, children) => {
         Object.assign(el.style, props.style);
         delete props.style;
     }
+    if (props.dataset && typeof props.dataset === "object") {
+        Object.assign(el.dataset, props.dataset);
+        delete props.dataset;
+    }
+
     Object.assign(el, props);
     if (children){
         el.append(...children);
     }
     return el;
 };
-
-function createUnitSpan(unit){
-    if (!unit) return;
-    return make("span",{
-        style:{marginRight:"0.2rem"},
-        textContent:unit
-    });
-}
-
-function createStatTooltip(children) {
-    return make("div",
-        {className:'hidden tooltip-lite-child'},
-        children
-    );
-}
-    
+ 
 function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
     const common = { 
         min: Math.min(max,min), 
@@ -54,4 +44,4 @@ function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
     return make("input",{className,style,...common});
 }
 
-export {createRangedInput,createStatTooltip,createUnitSpan,make};
+export {createRangedInput,make};

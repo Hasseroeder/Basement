@@ -73,7 +73,7 @@ function wepFromHash(){
 
 async function initiateWeapon(weapon){
 	fillMissingWeaponInfo(weapon);		
-	await initiatePassiveStuffs(weapon);			
+	initiatePassiveStuffs(weapon,passives);			
 	applyWearToWeapon(
 		weapon,
 		weapon.product.blueprint.wear

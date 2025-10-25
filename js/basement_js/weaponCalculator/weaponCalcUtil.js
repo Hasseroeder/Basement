@@ -2,10 +2,9 @@ import { make } from "./weaponCalcElementHelper.js";
 
 function calculateQualities(weapon) {
     const blueprint = weapon.product.blueprint;
-    const baseStats = Array.isArray(blueprint.stats) ? blueprint.stats : [];
-    const passives  = Array.isArray(blueprint.passive) ? blueprint.passive : [];
+    const {stats,passive} = blueprint;
 
-    passives.forEach(entry => {
+    passive.forEach(entry => {
         const { sumWear, sumNoWear } = entry.stats.reduce((acc, stat) => ({ 
             sumWear: acc.sumWear     + stat.withWear, 
             sumNoWear: acc.sumNoWear + stat.noWear
@@ -17,8 +16,8 @@ function calculateQualities(weapon) {
     });
 
     const allStats = [
-        ...baseStats,
-        ...passives.flatMap(entry => entry.stats)
+        ...stats,
+        ...passive.flatMap(entry => entry.stats)
     ];
 
     const { sumWear, sumNoWear } = allStats.reduce((acc, stat) => ({
@@ -49,14 +48,12 @@ function getStat(keyOrIndex,stats,statConfig){
         ? keyOrIndex
         : statConfig.findIndex(stat => stat.type === keyOrIndex);
 
-    return [
-        stats[idx]?? undefined, 
-        statConfig[idx]?? undefined
-    ];
+    return [stats[idx],statConfig[idx]];
 }
 
 function getShardValue(weapon){
-    const shardValue = {
+    const tier  = weapon.product.blueprint.tier;
+    const value = {
         common: 	1,
         uncommon:   3,
         rare:   	5,
@@ -64,9 +61,7 @@ function getShardValue(weapon){
         mythic:  	300,
         legendary:	1000,
         fabled: 	5000
-    };
-    const tier  = weapon.product.blueprint.tier;
-    const value = shardValue[tier] || 0;
+    }[tier];
     if (weapon.id==104){return "UNSELLABLE"};
     return value + " selling / " + Math.ceil(value*2.5) + " buying"
 }
@@ -139,8 +134,13 @@ function getWeaponImage(weaponOrPassive){
 }
 
 function getWeaponImagePath(weaponOrPassive){
-    const shorthand = weaponOrPassive.aliases[0]? weaponOrPassive.aliases[0]: weaponOrPassive.name;
-    const letters = {
+    const blueprint = weaponOrPassive.objectType == "passive" 
+        ? weaponOrPassive
+        : weaponOrPassive.product.blueprint;
+    const p = (blueprint.wearBonus == 0 || weaponOrPassive.objectType == "passive")
+            ? ""
+            : "p";
+    const q = {
         common: 	"c",
         uncommon:   "u",
         rare:   	"r",
@@ -148,18 +148,9 @@ function getWeaponImagePath(weaponOrPassive){
         mythic:  	"m",
         legendary:	"l",
         fabled: 	"f"
-    };
-    const blueprint = weaponOrPassive.objectType == "passive" 
-        ? weaponOrPassive
-        : weaponOrPassive.product.blueprint;
-
-    const p = (blueprint.wearBonus == 0 || weaponOrPassive.objectType == "passive")
-            ? ""
-            : "p";
-    const q = letters[blueprint.tier] || "f";
-    const w = shorthand.toLowerCase();
-    const path = `media/owo_images/${p+q+"_"+w}.png`;
-    return path;
+    }[blueprint.tier];
+    const w = (weaponOrPassive.aliases[0]?? weaponOrPassive.name).toLowerCase();
+    return `media/owo_images/${p+q+"_"+w}.png`;
 }
 
 function fillMissingWeaponInfo(weapon){
@@ -216,16 +207,7 @@ function getTierEmojiPath(stringOrQuality){
     }
 }
 
-function getWearBonus(wear){
-    const wearValues = {
-        pristine: 5,
-        fine:     3,
-        decent:   1,
-        worn:     0,
-        unknown:  0
-    };
-    return wearValues[wear] || 0;
-}
+const getWearBonus = w => ({pristine: 5, fine: 3, decent: 1})[w] ?? 0;
 
 function applyWearToWeapon(weapon,wear){
 	function getWearName(wear){
@@ -257,4 +239,4 @@ function getWearConfig(config,wear) {
 	};
 }
 
-export { getWearConfig, getWearBonus, valueToPercent, percentToValue, getRarity,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, applyWearToWeapon};
+export { getWearConfig, getWearBonus, valueToPercent, percentToValue,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, applyWearToWeapon};

@@ -151,10 +151,10 @@ function sortPetArray(){
 
 function outputPetContainer(){
     if (showPets){
-        deleteChildren(petContainer);
+        petContainer.innerHTML="";
         outputPetContainerMATCHING();
     }else if (!document.getElementById("textInput")){
-        deleteChildren(petContainer);
+        petContainer.innerHTML="";
         outputPetContainerSEARCH();
     }    
 }
@@ -239,14 +239,8 @@ function outputPetContainerSEARCH(){
     textInput.focus();
 }
 
-
-function displayColumns(){
-    deleteChildren(petContainer.firstChild)
-    if (columns[2*page])
-    petContainer.firstChild.append(columns[2*page]);
-    if (columns[1+2*page])
-    petContainer.firstChild.append(columns[1+2*page]);
-}
+const displayColumns = () =>
+  petContainer.firstChild.replaceChildren(...columns.slice(page * 2, page * 2 + 2));
 
 function onInput(textInput,suggestions) {
     const q = textInput.value.trim();
@@ -658,12 +652,6 @@ function createColumn(){
     column.style.flexDirection = "column";
 
     return column;
-}
-
-function deleteChildren(element) {
-    while (element.firstChild) {
-        element.removeChild(element.firstChild);
-    }
 }
 
 function addAddEffects(){
