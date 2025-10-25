@@ -199,7 +199,7 @@ function outputPetContainerMATCHING(){
 
 function outputPetContainerSEARCH(){
     const textInput = make("input",{
-        id:"textInput", tabIndex:"9", className:"discord-code-lite", style:"width:11.6rem; text-align:unset;",
+        id:"textInput", tabIndex:"9", className:"discord-code-lite", style:"width:11.6rem; text-align:unset;", autocomplete:"off",
         placeholder:"type pet here..."
     });
 
