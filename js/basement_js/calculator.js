@@ -1,5 +1,7 @@
 import { loadJson } from "./util/jsonUtil.js";
 
+const timestamps =document.querySelectorAll("#timestamp");
+
 const petContainer = document.getElementById("petContainer");
 const effectContainer = document.getElementById("effectContainer");
 
@@ -59,7 +61,6 @@ let suggestedPets  = [];
 let chosenPet      = [];
 let selectedIndex  = -1;    
 let debounceTimer;
-let hideNextSuggestion = false;
 
 const neonURL = "https://neonutil.com/zoo-stats?";
 
@@ -132,10 +133,8 @@ const imgTypeSuffix =[
 
 function showTimestamps() {
     const now = new Date();
-    let formattedTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-    
-    document.getElementById("timestamp1").textContent = formattedTime;
-    document.getElementById("timestamp2").textContent = formattedTime;
+    const formattedTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+    timestamps.forEach(el => el.textContent = formattedTime);
 }
 
 function sortPetArray(){
@@ -162,13 +161,11 @@ function outputPetContainer(){
 }
 
 function outputPetContainerMATCHING(){
-    let wrapper = document.createElement("div");
+    const wrapper = document.createElement("div");
     wrapper.style.display="flex";
-    petContainer.appendChild(wrapper);
 
-    columns.length=0;
+    columns=[createColumn()];
     page=0;
-    columns.push(createColumn());        
     let headersCreated = 0;
     petArray.forEach((_,i)=>{
         if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
@@ -182,7 +179,7 @@ function outputPetContainerMATCHING(){
 
     let buttonWrapper = document.createElement("div");
     buttonWrapper.style.display="flex";
-    petContainer.appendChild(buttonWrapper);
+    petContainer.append(wrapper,buttonWrapper);
 
     let minusButton = document.createElement("button");
     minusButton.textContent="<";
@@ -262,13 +259,8 @@ function onInputNoDebounce(textInput,suggestions){
 }
 
 async function fetchAndRenderSuggestions(query, textInput,suggestions){
-    const tempArray = await fetchNeonWithRace("n="+encodeURIComponent(query));
-    suggestedPets.length = 0;
-    tempArray.forEach((_,i)=>{
-        suggestedPets.push(tempArray[i]);
-    })
-    if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet?.[0] && hideNextSuggestion)){
-        hideNextSuggestion = false;
+    suggestedPets = await fetchNeonWithRace("n="+encodeURIComponent(query));
+    if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet?.[0])){
         return hideSuggestions(suggestions);
     }
     renderSuggestions(query,textInput,suggestions);
@@ -389,7 +381,6 @@ async function applyItem(textInput,suggestions) {
         tempArray.forEach((_,i)=>{
             suggestedPets.push(tempArray[i]);
         })
-        hideNextSuggestion = !!suggestedPets[0];
     }
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
 
@@ -414,37 +405,37 @@ function updateStatSpan(){
 }
 
 function throttle(fn, delay) {
-  let last = 0,
-      timer = null,
-      pending = null;
+    let last = 0,
+    timer = null,
+    pending = null;
 
-  return function throttled(...args) {
-    const now       = Date.now();
-    const remaining = delay - (now - last);
+    return function throttled(...args) {
+        const now       = Date.now();
+        const remaining = delay - (now - last);
 
-    if (remaining <= 0) {
-      clearTimeout(timer);
-      timer  = null;
-      last   = now;
-      return Promise.resolve(fn.apply(this, args));
-    }
+        if (remaining <= 0) {
+            clearTimeout(timer);
+            timer  = null;
+            last   = now;
+            return Promise.resolve(fn.apply(this, args));
+        }
 
-    if (pending) {
-      return pending;
-    }
+        if (pending) {
+            return pending;
+        }
 
-    pending = new Promise(resolve => {
-      timer = setTimeout(() => {
-        last    = Date.now();
-        timer   = null;
-        const result = fn.apply(this, args);
-        resolve(result);
-        pending = null;
-      }, remaining);
-    });
+        pending = new Promise(resolve => {
+            timer = setTimeout(() => {
+                last    = Date.now();
+                timer   = null;
+                const result = fn.apply(this, args);
+                resolve(result);
+                pending = null;
+            }, remaining);
+        });
 
-    return pending;
-  };
+        return pending;
+    };
 }
 
 const fetchNeonThrottled = throttle(loadJson, 500);
@@ -530,13 +521,9 @@ function updateOutsideStats(){
 
 function updateOutputs(){
     outputs.forEach((output,i )=>{    
-        let temp;
-        if (i==4 || i ==5){
-            temp= ((outsideStats[i]*100).toFixed(1)).toLocaleString()+"%"; 
-        }else{
-            temp= Math.round(outsideStats[i]).toLocaleString();
-        }  
-        output.textContent=temp;       
+        output.textContent=(i==4 || i==5)?
+            (outsideStats[i]*100).toFixed(1)+"%":
+            Math.round(outsideStats[i]);
     });
 }
 
@@ -563,7 +550,6 @@ async function updatePetArray(){
     const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
 
     const tempArray = await fetchNeonWithRace(query);
-    console.log(tempArray);
     petArray = Array.isArray(tempArray) ? tempArray:[];
     sortPetArray();
 }
