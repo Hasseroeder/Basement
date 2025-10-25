@@ -173,8 +173,7 @@ function outputPetContainerMATCHING(){
         if ((i+headersCreated) % 20 == 0){
             columns.push(createColumn());
         }
-
-        displayPet(petArray[i]);
+        columns.at(-1).append(displayPet(petArray[i]));
     });
 
     petContainer.append(
