@@ -13,7 +13,7 @@ function calculateQualities(weapon) {
 
         entry.qualityWear   = sumWear / entry.stats.length;
         entry.qualityNoWear = sumNoWear / entry.stats.length;
-        entry.tier          = getRarity(entry.qualityNoWear);
+        entry.tier          = getRarity(entry.qualityWear);
     });
 
     const allStats = [

@@ -201,7 +201,8 @@ class WeaponStat {
         syncWear(this.weapon);
         calculateQualities(this.weapon);
         displayInfo(this.weapon);
-        changePassiveEmote(this.weaponOrPassive);
+        this.weaponOrPassive.image && (this.weaponOrPassive.image.src= getWeaponImagePath(this.weaponOrPassive));
+
         weaponToBlueprintString(this.weapon)
     }
 
@@ -230,13 +231,6 @@ class WeaponStat {
 
     render() {
         return this.outerWrapper;
-    }
-
-}
-
-function changePassiveEmote(passive){
-    if (passive.objectType == "passive"){
-        passive.image.src= getWeaponImagePath(passive);
     }
 }
 
