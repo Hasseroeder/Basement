@@ -39,21 +39,21 @@ const petTypeOrder = {
     "patreon":  13,
     "cpatreon": 14
 };
-const petTypeNames= {
-    "common":   "—— Common ——",
-    "uncommon": "— Uncommon —",
-    "rare":     "——— Rare ———",
-    "epic":     "——— Epic ———",
-    "mythical": "—— Mythic ——",
-    "legendary":"— Legendary —",
-    "gem":      "——— Gem ———",
-    "bot":      "——— Bot ———",
-    "distorted":"— Distorted —",
-    "fabled":   "—— Fabled ——",
-    "hidden":   "—— Hidden ——",
-    "special":  "—— Special ——",
-    "patreon":  "—— Patreon ——",
-    "cpatreon": "—— Custom ——"
+const petTiers= {
+    "common":   " -----—— Common ——------ ",
+    "uncommon": " -----—— Uncommon —----- ",
+    "rare":     " -----—— Rare ———------- ",
+    "epic":     " -----—— Epic ———------- ",
+    "mythical": " -----—— Mythic ——------ ",
+    "legendary":" -----—— Legendary —---- ",
+    "gem":      " -----—— Gem ———-------- ",
+    "bot":      " -----—— Bot ———-------- ",
+    "distorted":" -----—— Distorted —---- ",
+    "fabled":   " -----—— Fabled ——------ ",
+    "hidden":   " -----—— Hidden ——------ ",
+    "special":  " -----—— Special ——----- ",
+    "patreon":  " -----—— Patreon ——----- ",
+    "cpatreon": " -----—— Custom ——------ "
 };
 let petArray = [/*[NAME,ANIMATED,EMOJI,ALIAS,TYPE],*/];
 
@@ -172,7 +172,11 @@ function outputPetContainerMATCHING(){
         if ((i+headersCreated) % 20 == 0){
             columns.push(createColumn());
         }
-        displayPet(columns.at(-1), petArray[i],petArray[i-1]);            
+        if (!petArray[i-1] || petArray[i]!=petArray[i-1]){
+            columns.at(-1).append(createHeader(petArray[i]));
+        }
+
+        displayPet(petArray[i]);
     });
 
     petContainer.append(
@@ -298,7 +302,7 @@ function outputSmallPetContainer(pet){
             className:"discord-code-lite",
             style: "width: max-content; text-align:unset; font-weight:bold;"
         }), 
-        pet[3][0]&& make("div",{
+        pet[3] && pet[3][0] && make("div",{
             innerHTML:"Aliases: " + pet[3].join(", "),
             className:"discord-code-lite",
             style: "display: inline; text-align:unset; font-size:0.75rem"
@@ -346,11 +350,6 @@ async function applyItem(textInput,suggestions) {
         })
     }
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
-
-    continueApplyingItem(suggestions);
-}
-
-function continueApplyingItem(suggestions){
     if (!chosenPet) return;
     petToStats(chosenPet)
     outputSmallPetContainer(chosenPet);
@@ -522,58 +521,43 @@ function updateLevelFromNumber(){
 }
 
 function updateLevelFromSlider(){
-    level = sliderLvl.value;
-    inputLvl.value=level;
+    inputLvl.value=sliderLvl.value;
     updateInternalStats();
 }
 //end of event listener functions
 
-function displayPet(element, pet, prevPet){
+function displayPet(pet){
+    const children = [
+        make("img",{
+            src: getPetImage(pet),
+            style:"weight:1rem; height:1rem;"
+        }),
+        make("code",{
+            textContent:pet[0],
+            className:"discord-code",
+            style:"font-size: 0.7rem; line-height:unset;"
+        }),
+        make("span",{
+            innerHTML: pet[3].length? pet[3].join(', '): 'no Alias',
+            className:"pet-tooltip-text"
+        })
+    ];
 
-    if (!prevPet || pet[4]!=prevPet[4]){
-        element.appendChild(createHeader(pet));
-    }
-
-    const wrapper = document.createElement("div");
-    wrapper.style = "display:flex; align-items:center; height:1.25rem;"
-
-    const codeWrapper = document.createElement("div");
-    codeWrapper.className="tooltip";
-    codeWrapper.style="display:flex; align-items:center; gap:0.1rem;";
-
-    const imageElement = document.createElement("img");
-    imageElement.src= getPetImage(pet);           
-    imageElement.style ="weight:1rem; height:1rem;";
-
-    const codeElement = document.createElement("code");
-    codeElement.textContent=pet[0];
-    codeElement.className ="discord-code";
-    codeElement.style="font-size: 0.7rem; line-height:unset;";
-
-    const tooltip = document.createElement("span");
-
-    const aliases =(pet[3] || [])         
-        .filter(a => typeof a === 'string' && a.trim()); 
-    tooltip.innerHTML = aliases.length
-        ? aliases.join(', ')
-        : 'no Alias';
-    tooltip.className="pet-tooltip-text";
-
-    codeWrapper.append(imageElement,codeElement,tooltip);
-    wrapper.appendChild(codeWrapper);
-    element.append(wrapper);
+    return make("div",{
+        style:"display:flex; align-items:center; height:1.25rem;"
+    },[
+        make("div",
+            {className:"tooltip",style:"display:flex; align-items:center; gap:0.1rem;"},
+            children
+        )
+    ])
 }
 
 function createHeader(pet){
-    const wrapper = document.createElement("div");
-    const headerElement = document.createElement("div");
-    
-    wrapper.style.width="10.8rem";
-
-    headerElement.textContent   = ` ------${petTypeNames[pet[4]]}------ `;
-    headerElement.className="pet-type-header";
-    wrapper.appendChild(headerElement);
-    return wrapper;
+    return make("div",
+        {style:{width:"10.8rem"}},
+        [make("div",{ textContent: petTiers[pet[4]], className:"pet-type-header"})]
+    )
 }
 
 
@@ -582,18 +566,18 @@ function getPetImage(pet, wantAnimated){
         return `https://cdn.discordapp.com/emojis/${pet[2]}.gif?size=96`;
     }if (petTypeOrder[pet[4]]<=5 || petTypeOrder[pet[4]]==11){
         return `../media/owo_images/${pet[0]}.png`;
-    }else{
-        return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
     }
+    return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
 }
 
 function createColumn(){
-    const column = document.createElement("div");
-    column.style.display = "flex";
-    column.style.width ="12rem";
-    column.style.flexDirection = "column";
-
-    return column;
+    return make("div",{
+        style:{
+            display: "flex",
+            width:"12rem",
+            flexDirection: "column"
+        }
+    });
 }
 
 function addAddEffects(){
