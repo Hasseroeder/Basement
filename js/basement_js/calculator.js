@@ -225,7 +225,7 @@ function outputPetContainerSEARCH(){
     });
 
     petContainer.append(textInput,suggestionWrapper);
-    if (chosenPet) outputSmallPetContainer(chosenPet);
+    if (chosenPet && chosenPet[0]) outputSmallPetContainer(chosenPet);
     textInput.focus();
 }
 
@@ -347,7 +347,7 @@ async function applyItem(textInput,suggestions) {
         })
     }
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
-    if (!chosenPet) return;
+    if (!chosenPet || !chosenPet[0]) return;
     petToStats(chosenPet)
     outputSmallPetContainer(chosenPet);
     suggestions.style.display = 'none'
