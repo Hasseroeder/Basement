@@ -220,7 +220,7 @@ function outputPetContainerSEARCH(){
         onKeyDown(event,textInput,suggestionWrapper);
     });
     textInput.addEventListener('blur', () => {
-        hideSuggestions(suggestionWrapper);
+        suggestions.style.display = 'none';
     });
 
     petContainer.append(textInput,suggestionWrapper);
@@ -236,7 +236,7 @@ function onInput(textInput,suggestions) {
     clearTimeout(debounceTimer);
     
     if (!q || q.length<=2){
-        debounceTimer = setTimeout(()=>hideSuggestions(suggestions), 200);
+        debounceTimer = setTimeout(()=>suggestions.style.display = 'none', 200);
     }else {
         debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,textInput,suggestions), 200);
     }
@@ -244,14 +244,14 @@ function onInput(textInput,suggestions) {
 
 function onInputNoDebounce(textInput,suggestions){
     const q = textInput.value.trim();
-    if (!q || q.length<=2) return hideSuggestions(suggestions);
+    if (!q || q.length<=2) return suggestions.style.display = 'none';
     fetchAndRenderSuggestions(q,textInput,suggestions);
 }
 
 async function fetchAndRenderSuggestions(query, textInput,suggestions){
     suggestedPets = await fetchNeonWithRace("n="+encodeURIComponent(query));
     if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet?.[0])){
-        return hideSuggestions(suggestions);
+        return suggestions.style.display = 'none';
     }
     renderSuggestions(query,textInput,suggestions);
 }
@@ -259,10 +259,11 @@ async function fetchAndRenderSuggestions(query, textInput,suggestions){
 
 function renderSuggestions(query,textInput,suggestions) {
     suggestions.innerHTML = '';
+    suggestions.style.display = 'block';
     selectedIndex = -1;
 
     suggestedPets.forEach((pet, i) => {
-        let aliases = pet[3]
+        const aliases = pet[3]
             .filter(a => a.includes(query));
 
         suggestions.appendChild(
@@ -282,57 +283,35 @@ function renderSuggestions(query,textInput,suggestions) {
             ]
         ));
     });
-    showSuggestions(suggestions);
-}
-
-function showSuggestions(suggestions) {
-    suggestions.style.display = 'block';
-}
-
-function hideSuggestions(suggestions) {
-    suggestions.style.display = 'none';
-    suggestedPets = [];
-    selectedIndex = -1;
 }
 
 function outputSmallPetContainer(pet){
-    if (!pet || !pet[0]){
-        return;
-    }
-
-    let wrapper = document.getElementById("petOutput");
-    if (wrapper) {
-        wrapper.remove();
-    }
+    if (!pet || !pet[0]) return;
+    document.getElementById("petOutput")?.remove();
     
-    wrapper = document.createElement("div");
-    wrapper.className="pet-output-wrapper";
-    wrapper.id = "petOutput";
+    const children = [
+        make("img",{
+            src:getPetImage(pet,true),
+            style:{width:"3rem"}
+        }), 
+        make("div",{
+            innerHTML:pet[0],
+            className:"discord-code-lite",
+            style: "width: max-content; text-align:unset; font-weight:bold;"
+        }), 
+        pet[3][0]&& make("div",{
+            innerHTML:"Aliases: " + pet[3].join(", "),
+            className:"discord-code-lite",
+            style: "display: inline; text-align:unset; font-size:0.75rem"
+        })
+    ]
 
-    petContainer.append(wrapper);
-
-    let imageContainer=document.createElement("img");
-    imageContainer.src=  getPetImage(pet,true);
-    imageContainer.style.width="3rem";                            
-
-    let aliasContainer=document.createElement("div");
-    aliasContainer.innerHTML="Aliases: " + pet[3].join(", ");
-    aliasContainer.className="discord-code-lite";
-    aliasContainer.style= ` display: inline;
-                            text-align:unset;
-                            font-size:0.75rem`;
-
-    let nameContainer=document.createElement("div");
-    nameContainer.innerHTML=pet[0];
-    nameContainer.className="discord-code-lite";
-    nameContainer.style= `  width: max-content;
-                            text-align:unset;
-                            font-weight:bold;`;
-
-    wrapper.append(imageContainer, nameContainer);
-    if (pet[3][0]){
-        wrapper.append(aliasContainer);
-    }
+    petContainer.append(
+        make("div",{
+            className:"pet-output-wrapper",
+            id: "petOutput"
+        },children)
+    );
 }
 
 function onKeyDown(e,textInput,suggestions) {
@@ -376,7 +355,7 @@ async function applyItem(textInput,suggestions) {
 function continueApplyingItem(suggestions){
     petToStats(chosenPet)
     outputSmallPetContainer(chosenPet);
-    hideSuggestions(suggestions);
+    suggestions.style.display = 'none'
 }
 
 function highlight(suggestions) {
@@ -387,7 +366,7 @@ function highlight(suggestions) {
 
 function updateStatSpan(){
     statAmount = stats.reduce((sum, plus) => sum + Number(plus), 0);
-    statSpan.textContent=`${statAmount} stats`;
+    statSpan.textContent= statAmount + " stats";
 }
 
 function throttle(fn, delay) {
@@ -491,15 +470,13 @@ function getBoost(type, quality){
 function updateOutsideStats(){
     outsideStats.forEach((_,i)=>{
         if ( i<=3 ){
-            outsideStats[i]=internalStats[i];
+            outsideStats[i]=internalStats[i]; // hp, str, wp, mag
         }else if (i<=5){
-            outsideStats[i]=  0.8*internalStats[i]
-                / (100+internalStats[i]);
+            outsideStats[i]=  0.8*internalStats[i] / (100+internalStats[i]); // pr mr
         }else if (i<=7){
-            outsideStats[i]=   internalStats[0]
-                / (1-outsideStats[i-2]);
+            outsideStats[i]=   internalStats[0] / (1-outsideStats[i-2]); // ehps
         }else {
-            outsideStats[i]=internalStats[i-4];
+            outsideStats[i]=internalStats[i-4]; //ipr imr
         }
     })
     updateOutputs();
