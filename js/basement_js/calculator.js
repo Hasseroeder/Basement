@@ -1,3 +1,5 @@
+import { loadJson } from "./util/jsonUtil.js";
+
 const petContainer = document.getElementById("petContainer");
 const effectContainer = document.getElementById("effectContainer");
 
@@ -411,13 +413,6 @@ function updateStatSpan(){
     statSpan.textContent=`${statAmount} stats`;
 }
 
-function fetchNeon(query){ 
-    return fetch(neonURL + query) 
-    .then(response => {
-        return response.json();
-    })
-}
-
 function throttle(fn, delay) {
   let last = 0,
       timer = null,
@@ -452,22 +447,21 @@ function throttle(fn, delay) {
   };
 }
 
-const fetchNeonThrottled = throttle(fetchNeon, 500);
+const fetchNeonThrottled = throttle(loadJson, 500);
 
 function fetchNeonWithCache(query) {
     if (neonCache.has(query)) {
         return Promise.resolve(neonCache.get(query));
     }
 
-    return fetchNeonThrottled(query)
+    return fetchNeonThrottled(neonURL + query)
         .then(data => {
-        neonCache.set(query, data);
-        return data;
+            neonCache.set(query, data);
+            return data;
     });
 }
 
 function fetchNeonWithRace(query) {
-    // accounts for race condition lol
     query = query.toLowerCase();
     currentQuery = query;
 
