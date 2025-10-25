@@ -696,8 +696,7 @@ function updateBoostDisplay(display, effect){
 }
 
 function getImageForEffect(effect){
-    myString = getPrefix(effect.quality) + imgTypeSuffix[effect.type]; 
-    return myString;
+    return getPrefix(effect.quality) + imgTypeSuffix[effect.type];
 }
 
 function getPrefix(quality) {
