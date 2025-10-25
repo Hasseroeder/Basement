@@ -555,8 +555,7 @@ async function updatePetArray(){
 }
 
 function updateLevelFromNumber(){
-    level = inputLvl.value;
-    sliderLvl.value=level;
+    sliderLvl.value=inputLvl.value;
     updateInternalStats();
 }
 
@@ -792,8 +791,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     levelWrapper.addEventListener("click", ()=>inputLvl.focus());
     sliderLvl.addEventListener("input", updateLevelFromSlider);
-    
-
 
     inputs[0].focus();
 
@@ -803,12 +800,8 @@ document.addEventListener("DOMContentLoaded", () => {
         updatePetArray();
     });
 
-    initFields();
+    updateStats();
+    updateLevelFromNumber();
     addAddEffects();
 
 });
-
-function initFields(){
-    updateStats();
-    updateLevelFromNumber();
-}

@@ -1,4 +1,4 @@
-import { make } from "./weaponCalcElementHelper.js";
+import { make } from "../util/injectionUtil.js"
 
 function calculateQualities(weapon) {
     const blueprint = weapon.product.blueprint;

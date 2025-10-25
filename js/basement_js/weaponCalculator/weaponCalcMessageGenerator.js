@@ -1,7 +1,7 @@
-import { createRangedInput,make } from '../weaponCalculator/weaponCalcElementHelper.js'
 import { valueToPercent, percentToValue,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
 import { generatePassiveInputs } from './weaponCalcPassive.js';
 import { weaponToBlueprintString } from './blueprintParser.js';
+import { make } from "../util/injectionUtil.js"
 
 const el = {
 	weaponHeader:	    document.getElementById("weaponHeader"), 
@@ -287,6 +287,34 @@ async function updateStatInputs(weapon){
                 );
         stat.IO.update(stat,statConfig, weapon, weapon)
     });
+}
+
+function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
+    const common = { 
+        min: Math.min(max,min), 
+        max: Math.max(max,min), 
+        required: true, 
+        type, step, lang: "en" 
+    };
+
+    const className = type=="range"?'weaponSlider':
+                      type=="number"?'inputFromWeaponCalculator no-arrows':"";
+
+    const variantStyles = 
+        type=="range"?{
+            margin: '0 0 0 0.2rem',
+            background: '#555',
+            transform: min>max ? 'scaleX(-1)' : '',
+            transformOrigin: min>max ? 'center' : '',
+            pointer: 'var(--cur-pointer)'
+        }:
+        type=="number"?{
+            width:(digits*0.5)+'rem'
+        }:{};
+
+    const style = Object.assign({}, extraStyles, variantStyles);
+
+    return make("input",{className,style,...common});
 }
 
 export { generateDescription,updateEverything,generateEverything,displayInfo };

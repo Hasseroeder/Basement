@@ -1,6 +1,6 @@
 import { generateDescription, displayInfo }  from '../weaponCalculator/weaponCalcMessageGenerator.js'
 import { getWeaponImage,applyWearToWeapon } from './weaponCalcUtil.js';
-import { make } from './weaponCalcElementHelper.js';
+import { make } from "../util/injectionUtil.js"
 
 const pList = document.querySelector(".passiveContainer");
 const pGrid = document.querySelector('.passiveGrid');

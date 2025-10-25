@@ -1,4 +1,4 @@
-import { gridInjector } from "./util/injectionUtil.js";
+import { gridInjector,make } from "./util/injectionUtil.js";
 import { loadJson } from "./util/jsonUtil.js";
 import * as cookieUtil from "./util/cookieUtil.js"
 
@@ -72,7 +72,6 @@ const injectors = [
         cookieUtil.setCookie(cookie, cookieUtil.getCookie(cookie) !== "true", 30);
 
 			const myBlinkies = fourRandoms(blinkies);
-      const make = (tag, props = {}) => Object.assign(document.createElement(tag), props);
 
       const wrapper = make("div",{
         style:"margin: 2rem 4rem; gap: 0.5rem; display: flex;"
