@@ -168,12 +168,10 @@ function outputPetContainerMATCHING(){
     petArray.forEach((_,i)=>{
         if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
             headersCreated++;
+            columns.at(-1).append(createHeader(petArray[i]));
         }
         if ((i+headersCreated) % 20 == 0){
             columns.push(createColumn());
-        }
-        if (!petArray[i-1] || petArray[i]!=petArray[i-1]){
-            columns.at(-1).append(createHeader(petArray[i]));
         }
 
         displayPet(petArray[i]);
@@ -530,7 +528,7 @@ function displayPet(pet){
     const children = [
         make("img",{
             src: getPetImage(pet),
-            style:"weight:1rem; height:1rem;"
+            style:"weight:1rem;"
         }),
         make("code",{
             textContent:pet[0],
