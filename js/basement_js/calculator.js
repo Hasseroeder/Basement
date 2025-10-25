@@ -1,4 +1,5 @@
 import { loadJson } from "./util/jsonUtil.js";
+import { make } from "./util/injectionUtil.js"
 
 const timestamps =document.querySelectorAll("#timestamp");
 
@@ -161,9 +162,6 @@ function outputPetContainer(){
 }
 
 function outputPetContainerMATCHING(){
-    const wrapper = document.createElement("div");
-    wrapper.style.display="flex";
-
     columns=[createColumn()];
     page=0;
     let headersCreated = 0;
@@ -177,45 +175,37 @@ function outputPetContainerMATCHING(){
         displayPet(columns.at(-1), petArray[i],petArray[i-1]);            
     });
 
-    let buttonWrapper = document.createElement("div");
-    buttonWrapper.style.display="flex";
-    petContainer.append(wrapper,buttonWrapper);
+    petContainer.append(
+        make("div",{style:{display:"flex"}}),
+        make("div",{style:{display:"flex"}},[   
+            make("button",{
+                textContent:"<", tabIndex:"9", className:"petButtonFromCalculator",
+                onclick:()=>swapPages(page-1)
+            }),
+            make("button",{
+                textContent:">", tabIndex:"10", className:"petButtonFromCalculator",
+                onclick:()=>swapPages(page+1)
+            })
+        ]),
+    );
 
-    let minusButton = document.createElement("button");
-    minusButton.textContent="<";
-    minusButton.tabIndex="9";
-    minusButton.className="petButtonFromCalculator";
-    let plusButton = document.createElement("button");
-    plusButton.textContent=">";
-    plusButton.tabIndex="10";
-    plusButton.className="petButtonFromCalculator";
-    buttonWrapper.append(minusButton,plusButton);
-
-    minusButton.addEventListener('click', ()=>{
-        if (page > 0){page--;}
+    function swapPages(newPage){
+        page = Math.min(Math.max(newPage,0),columns.length/2-1);
         displayColumns();
-    });
-    plusButton.addEventListener('click', ()=>{
-        if (page < (columns.length/2)-1){page++;}
-        displayColumns();
-    });
-
+    }
     displayColumns();
 }
 
 function outputPetContainerSEARCH(){
-    const textInput = document.createElement("input");
-    textInput.id="textInput";
-    textInput.tabIndex="9";
-    textInput.autocomplete="off";
-    textInput.className="discord-code-lite";
-    textInput.style="width:11.6rem; text-align:unset;";
-    textInput.placeholder="type pet here..."
+    const textInput = make("input",{
+        id:"textInput", tabIndex:"9", className:"discord-code-lite", style:"width:11.6rem; text-align:unset;",
+        placeholder:"type pet here..."
+    });
 
-    const suggestionWrapper = document.createElement("div");
-    suggestionWrapper.className="suggestions";
-    suggestionWrapper.id = "suggestions";
-
+    const suggestionWrapper = make("div",{
+        className:"suggestions",
+        id : "suggestions"
+    });
 
     textInput.addEventListener('input', () => {
         onInput(textInput,suggestionWrapper);
@@ -272,16 +262,17 @@ function renderSuggestions(query,textInput,suggestions) {
     selectedIndex = -1;
 
     suggestedPets.forEach((pet, i) => {
-        const div = document.createElement('div');
-        div.className = 'suggestion';
-        div.textContent = pet[0];
-        div.addEventListener('mousedown', e => {
-            e.preventDefault();
-            selectedIndex=i;
-            applyItem(textInput,suggestions);
+        const div = make("div",{
+            className: 'suggestion',
+            textContent: pet[0],
+            onmousedown:(e)=> {
+                e.preventDefault();
+                selectedIndex=i;
+                applyItem(textInput,suggestions);
+            }
         });
-        suggestions.appendChild(div);
 
+        suggestions.appendChild(div);
         const aliasDiv = document.createElement('div');
         aliasDiv.className="suggestionAlias";
 
@@ -289,6 +280,8 @@ function renderSuggestions(query,textInput,suggestions) {
             .filter(a => typeof a === 'string' && a.trim())
             .filter(a => a.includes(query))
             .map(a => `"${a}"`);
+
+        console.log(aliases);
 
         aliasDiv.innerHTML = aliases.length
             ? aliases.join(', ')
