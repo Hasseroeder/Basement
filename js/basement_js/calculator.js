@@ -262,32 +262,25 @@ function renderSuggestions(query,textInput,suggestions) {
     selectedIndex = -1;
 
     suggestedPets.forEach((pet, i) => {
-        const div = make("div",{
-            className: 'suggestion',
-            textContent: pet[0],
-            onmousedown:(e)=> {
-                e.preventDefault();
-                selectedIndex=i;
-                applyItem(textInput,suggestions);
-            }
-        });
+        let aliases = pet[3]
+            .filter(a => a.includes(query));
 
-        suggestions.appendChild(div);
-        const aliasDiv = document.createElement('div');
-        aliasDiv.className="suggestionAlias";
-
-        let aliases = (pet[3] || [])
-            .filter(a => typeof a === 'string' && a.trim())
-            .filter(a => a.includes(query))
-            .map(a => `"${a}"`);
-
-        console.log(aliases);
-
-        aliasDiv.innerHTML = aliases.length
-            ? aliases.join(', ')
-            : '';   
-
-        div.appendChild(aliasDiv);
+        suggestions.appendChild(
+            make("div",{
+                className: 'suggestion',
+                textContent: pet[0],
+                onmousedown:(e)=> {
+                    e.preventDefault();
+                    selectedIndex=i;
+                    applyItem(textInput,suggestions);
+                }
+            },[
+                make("div",{
+                    className:"suggestionAlias",
+                    innerHTML:aliases.join(', ')
+                })
+            ]
+        ));
     });
     showSuggestions(suggestions);
 }
