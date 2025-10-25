@@ -224,7 +224,7 @@ function outputPetContainerSEARCH(){
     });
 
     petContainer.append(textInput,suggestionWrapper);
-    outputSmallPetContainer(chosenPet);
+    if (chosenPet) outputSmallPetContainer(chosenPet);
     textInput.focus();
 }
 
@@ -286,7 +286,6 @@ function renderSuggestions(query,textInput,suggestions) {
 }
 
 function outputSmallPetContainer(pet){
-    if (!pet || !pet[0]) return;
     document.getElementById("petOutput")?.remove();
     
     const children = [
@@ -304,7 +303,7 @@ function outputSmallPetContainer(pet){
             className:"discord-code-lite",
             style: "display: inline; text-align:unset; font-size:0.75rem"
         })
-    ]
+    ].filter(Boolean)
 
     petContainer.append(
         make("div",{
@@ -316,7 +315,6 @@ function outputSmallPetContainer(pet){
 
 function onKeyDown(e,textInput,suggestions) {
     const max = suggestedPets.length - 1;
-    console.log(e.key);
     if (e.key === 'ArrowDown') {
         e.preventDefault();
         selectedIndex = (selectedIndex < max ? selectedIndex + 1 : 0);
@@ -349,10 +347,11 @@ async function applyItem(textInput,suggestions) {
     }
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
 
-    if (chosenPet) continueApplyingItem(suggestions);
+    continueApplyingItem(suggestions);
 }
 
 function continueApplyingItem(suggestions){
+    if (!chosenPet) return;
     petToStats(chosenPet)
     outputSmallPetContainer(chosenPet);
     suggestions.style.display = 'none'
