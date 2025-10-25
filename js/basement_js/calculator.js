@@ -562,7 +562,8 @@ async function updatePetArray(){
     const statOrder = [0, 2, 4, 1, 3, 5];
     const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
 
-    tempArray = await fetchNeonWithRace(query);
+    const tempArray = await fetchNeonWithRace(query);
+    console.log(tempArray);
     petArray = Array.isArray(tempArray) ? tempArray:[];
     sortPetArray();
 }
