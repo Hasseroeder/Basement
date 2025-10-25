@@ -691,8 +691,11 @@ function addEffect(type){
 }
 
 function updateBoostDisplay(display, effect){
-    boost = parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1));
-    display.textContent=`+${boost}%`;
+    display.textContent=
+        "+"
+        +parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1))
+        +"%"
+    ;
 }
 
 function getImageForEffect(effect){
