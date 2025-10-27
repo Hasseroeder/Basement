@@ -366,17 +366,16 @@ input, textarea, code, [contenteditable] {
 }
 
 .exitButtonFromCalculator {
-  margin: 0;
   width: 1rem;
   height: 1rem;
   position: absolute;
   font-size: 0.6rem;
   display: flex;
   justify-content: center;
-  bottom: 75%;
-  left: 99%;
-  border-radius: 0.2rem; 
-  border-color: #909090;
+  bottom: 70%;
+  left: 95%;
+  /*border-color: #909090;*/
+  align-items: center;
 }
 
 .levelInputFromCalculator {
@@ -402,7 +401,12 @@ input, textarea, code, [contenteditable] {
   padding: 0.35rem;
   display: flex !important; 
   align-items: center; 
-  height:2rem
+  height:2rem;
+  position:relative 
+}
+
+.passiveWrapperFromCalculator:hover *{
+  visibility: visible;
 }
 
 .outputFromCalculator {
@@ -1115,4 +1119,30 @@ a:hover {
 .one-rem{
   width: 1rem;
   height: 1rem;
+}
+
+.passive-wrapper-pet-calc{
+  display:flex; 
+  background-color: #303030; 
+  justify-content: center; 
+  align-items: center;
+  visibility: hidden;
+  width:100%; 
+  z-index: 10;
+}
+
+.pimage-wrapper-pet-calc{
+  align-items: center; 
+  display: flex; 
+  flex-direction: column; 
+  margin-top: 0.15rem; 
+  min-width: 28px;
+}
+
+.add-effect-pet-calc{
+  position:absolute;
+  width:inherit; 
+  font-family: monospace;
+  font-size: 0.8rem; 
+  text-align: center;
 }

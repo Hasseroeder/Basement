@@ -1,20 +1,20 @@
 import { loadJson } from "./util/jsonUtil.js";
 import { make } from "./util/injectionUtil.js"
 
-const timestamps =document.querySelectorAll("#timestamp");
+const timestamps =document.querySelectorAll(".discord-timestamp");
 
 const petContainer = document.getElementById("petContainer");
 const effectContainer = document.getElementById("effectContainer");
 
 const petButton = document.getElementById("petButton");
-
 const statSpan =document.getElementById("statSpan");
 
 const inputLvl = document.getElementById("inputLvl");
 const levelWrapper = document.getElementById("levelWrapper");
 const sliderLvl = document.getElementById("sliderLvl");
-const inputs = Array.from({ length: 6 }, (_, i) => document.getElementById(`input${i + 1}`));
-const outputs = Array.from({ length: 10 }, (_, i) => document.getElementById(`output${i + 1}`));
+
+const inputs = Array.from(document.querySelectorAll(".myInputs"));
+const outputs = Array.from(document.querySelectorAll(".myOutputs"));
 
 const neonCache = new Map();
 let currentQuery = '';
@@ -110,18 +110,6 @@ let effects = [
 const effectMin = [0.05, 0.05, 0.15, 0.10, 0.05, 0.15, 0.05 ]
 const effectMax = [0.20, 0.20, 0.35, 0.30, 0.20, 0.35, 0.15 ]
 
-let effectCounter = 0;
-
-const imgQualityPrefix ={
-    0:"c_",     //quality starting at 0
-    20:"u_",    //quality starting at 20
-    40:"r_",    //quality starting at ...
-    60:"e_",
-    80:"m_",
-    94:"l_",
-    99:"f_"
-}
-
 const imgTypeSuffix =[
     "hp",
     "str",
@@ -204,8 +192,7 @@ function outputPetContainerSEARCH(){
     });
 
     const suggestionWrapper = make("div",{
-        className:"suggestions",
-        id : "suggestions"
+        className:"suggestions", id: "suggestions"
     });
 
     textInput.addEventListener('input', () => {
@@ -485,7 +472,6 @@ function updateOutputs(){
     });
 }
 
-//start of event listener functions
 function updateStats(){
     inputs.forEach((input,i) => {
         stats[i]=input?.value;
@@ -521,7 +507,6 @@ function updateLevelFromSlider(){
     inputLvl.value=sliderLvl.value;
     updateInternalStats();
 }
-//end of event listener functions
 
 function displayPet(pet){
     const children = [
@@ -578,123 +563,77 @@ function createColumn(){
 }
 
 function addAddEffects(){
-    const effectIcons=["f_hp","f_str","f_pr","f_wp","f_mag","f_mr","f_rune"]
-    
-    const wrapper = document.createElement("div");
-    wrapper.classList.add("tooltip");
-    wrapper.classList.add("passiveWrapperFromCalculator");
+    const effectIcons  = ["f_hp","f_str","f_pr","f_wp","f_mag","f_mr","f_rune"]
+    const text         = make("div",{className:"add-effect-pet-calc", textContent:"add effect"});
+    const imgContainer = make("div",{className:"passive-wrapper-pet-calc"},
+        [
+            ...effectIcons.map((name, i) =>
+                make("img", {
+                    src: `../media/owo_images/${name}.png`,
+                    style: { height: i == 6 ? "1.4rem" : "1.5rem" },
+                    onclick: () => addEffect(i)
+                })
+            )
+        ]
+    );
 
-    const text = document.createElement("div");
-    text.style="position:absolute;width:inherit; font-family: monospace;font-size: 0.8rem; text-align: center;";
-    text.textContent="add effect";
-
-    const imgContainer = document.createElement("div");
-    imgContainer.style="display:flex; background-color: #303030; justify-content: center; align-items: center; width:100%; z-index: 100;"
-    imgContainer.className="hidden";
-    for (let i = 0; i<effectIcons.length; i++){
-        const Img = document.createElement("img");
-        Img.src=`../media/owo_images/${effectIcons[i]}.png`;
-        Img.style="height:1.5rem;";
-        if(i==6) Img.style.height="1.4rem"; 
-        // rune image has to be made smaller simply cus it doesn't have transparent border 
-
-        Img.addEventListener('click', e => {
-            addEffect(i);
-        });
-        imgContainer.append(Img);
-    }
-    wrapper.append(text,imgContainer);
-    effectContainer.append(wrapper);
+    effectContainer.append(
+        make("div",{className:"passiveWrapperFromCalculator"},[text,imgContainer])
+    );
 }
 
 function addEffect(type){
-    const effect = {"id": effectCounter++, "type": type, "quality": 100};
+    const effect = {"type": type};
     effects.push(effect);
-    const index = effects.indexOf(effect);
 
-    const outerWrapper = document.createElement("div");
-    outerWrapper.className="passiveWrapperFromCalculator";
+    const inputs = [
+        make("input",{type:"number", className:"passive-number-input no-arrows", min:0, max:100}),
+        make("input",{type:"range", min:0, max:100,})
+    ];
+    inputs.forEach(input => input.oninput= () => updateValue(input.value));
 
-    const wrapper = document.createElement("div");
-    wrapper.style="display: flex; align-items: center;position:relative; width: 100%;";
+    const imagechildren = [
+        make("img",{style:"height:1.5rem; display:block;"}),
+        make("div",{style:"font-size:0.5rem;"})
+    ]
 
-    const numberWrapper = document.createElement("div");
-    numberWrapper.className="grayOnHover number-wrapper-pet-calculator";
-
-    const listeningWrapper = document.createElement("div");
-    listeningWrapper.className="listening-wrapper";
-
-    const imgWrapper = document.createElement("div");
-    imgWrapper.style = "align-items: center; display: flex; flex-direction: column; margin-top: 0.15rem; min-width: 28px;";
-
-    const img = document.createElement("img");
-    img.src=`../media/owo_images/${getImageForEffect(effects[index])}.png`;
-    img.style="height:1.5rem; display:block;";
-
-    const belowImg = document.createElement("div");
-    belowImg.style ="font-size:0.5rem;"
-    updateBoostDisplay(belowImg, effect);
-
-    const number = document.createElement("input");
-    number.type="number";
-    number.className="passive-number-input no-arrows";
-    number.min=0;
-    number.max=100;
-    number.value=100;
-
-    const text = document.createElement("div");
-    text.textContent="%"
-    text.className="percent-span";
-    
-    const slider = document.createElement("input");
-    slider.type="range";
-    slider.min=0;
-    slider.max=100;
-    slider.value=100;
-
-    slider.addEventListener('input', e => {
-        effect.quality=Number(slider.value);
-        number.value = slider.value
-        img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
-        updateBoostDisplay(belowImg, effect);
+    function updateValue(value){
+        effect.quality=+value;
+        inputs.forEach(i=>i.value=+value);
+        imagechildren[0].src=`../media/owo_images/${getImageForEffect(effect)}.png`;
+        imagechildren[1].textContent=updateBoostDisplay(effect);
         updateInternalStats();
+    }
+
+    const button = make("button",{
+        className:"exitButtonFromCalculator",
+        textContent:"X",
+        onclick: () => {
+            effects = effects.filter(e => e !== effect);
+            wrapper.remove();
+            updateInternalStats();
+        }
     });
 
-    number.addEventListener('input', e => {
-        effect.quality=Number(number.value);
-        slider.value = number.value
-        img.src=`../media/owo_images/${getImageForEffect(effect)}.png`;
-        updateBoostDisplay(belowImg, effect);
-        updateInternalStats();
-    });
+    const numberWrapper = make("div",{className:"grayOnHover number-wrapper-pet-calculator"},[
+        inputs[0],
+        make("div",{textContent:"%", className:"percent-span"})
+    ]);
 
-    const button = document.createElement("button");
-    button.className="exitButtonFromCalculator";
-    button.textContent="X";
-
-    button.addEventListener('click', event => {
-        effects = effects.filter(e => e.id !== effect.id);
-        outerWrapper.remove(wrapper);
-        updateInternalStats();
-    });
-
-    listeningWrapper.addEventListener("click", () => number.focus());
-
-    imgWrapper.append(img, belowImg);
-    numberWrapper.append(number,text);
-    listeningWrapper.append(numberWrapper)
-    wrapper.append(imgWrapper,listeningWrapper,slider,button);
-    outerWrapper.append(wrapper);
-    effectContainer.insertBefore(outerWrapper, effectContainer.lastChild);
-
-    updateInternalStats();
+    const wrapper = make("div",{className:"passiveWrapperFromCalculator"},[
+        make("div",{className:"pimage-wrapper-pet-calc"},imagechildren),
+        make("div",{className:"listening-wrapper", onclick: () => inputs[0].focus()},[numberWrapper]),
+        inputs[1],
+        button
+    ]);
+    effectContainer.insertBefore(wrapper, effectContainer.lastChild);
+    updateValue(100);
 }
 
-function updateBoostDisplay(display, effect){
-    display.textContent=
-        "+"
-        +parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1))
-        +"%"
+function updateBoostDisplay( effect){
+    return "+"
+            +parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1))
+            +"%"
     ;
 }
 
@@ -703,17 +642,16 @@ function getImageForEffect(effect){
 }
 
 function getPrefix(quality) {
-    const qualities = Object.keys(imgQualityPrefix).map(Number).sort((a, b) => a - b);
-    let chosenQuality = qualities[0];
-
-    for (let q of qualities) {
-        if (quality > q) {
-            chosenQuality = q;
-        } else {
-            break;
-        }
-    }
-    return imgQualityPrefix[chosenQuality];
+    const thresholds = [
+        [-Infinity, "c_"],
+        [20, "u_"],
+        [40, "r_"],
+        [60, "e_"],
+        [80, "m_"],
+        [94, "l_"],
+        [99, "f_"]
+    ];
+    return thresholds.findLast(([t]) => t <= quality)[1];
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -723,7 +661,7 @@ document.addEventListener("DOMContentLoaded", () => {
         input.addEventListener("change",updateStats)
         input.addEventListener("wheel", ev => {
             ev.preventDefault();
-            let newValue = Number(input.value) - Math.sign(ev.deltaY);
+            const newValue = Number(input.value) - Math.sign(ev.deltaY);
             input.value = Math.min(Math.max(newValue, input.min), input.max);
             updateStats();
         });
