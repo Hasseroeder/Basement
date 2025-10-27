@@ -102,7 +102,6 @@ Following other attempts to write guides, this one also won't be able to be kept
     </table>
   </div>
 </div>
-<br>
 
 ## Technical
 We try to use vanilla JavaScript to keep the entry barrier as low as possible, so you don't need any fancy-shmancy NPM or Node to help with this project, and you could probably even develop in notepad. We do have some dependencies, but we pull those with CDN script tags, so that's easy peasy.

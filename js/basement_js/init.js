@@ -73,7 +73,7 @@ const injectors = [
 
 			const myBlinkies = fourRandoms(blinkies);
 
-      const wrapper = make("div",{
+      const wrapper = make("footer",{
         style:"margin: 2rem 4rem; gap: 0.5rem; display: flex;"
       });
 
