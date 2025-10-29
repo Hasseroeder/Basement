@@ -36,9 +36,6 @@ const table2={
     ]
 }
 
-
-
-
 const efficiencyOutput =[
     document.getElementById("efficiencyOutput1"),
     document.getElementById("efficiencyOutput2")
@@ -68,11 +65,10 @@ const graying= Array.from(document.querySelectorAll(".patreon-graying"));
 const renderPatreon = () => graying.forEach(el=>el.hidden=patreon);
 
 document.querySelectorAll('.discord-timestamp').forEach(el=>el.textContent=new Date().toTimeString().slice(0,5));
-
-const switchAllButtons = {
-    sell: document.getElementById("owoButton"),
-    sac:  document.getElementById("sacButton")
-}
+document.getElementById("sacToggles").querySelectorAll("button")
+    .forEach(
+        (b,i)=>b.onclick=()=>toggleAllCells(Boolean(i))
+    );
 
 function debounce(fn, wait = 200, immediate = false) {
     let timeoutId;
@@ -98,9 +94,6 @@ function saveData(){
     cookie.setCookie("Patreon",patreon.toString(),30);
     cookie.setCookie("Levels",levels.join(","),30)
 }
-
-switchAllButtons.sac.addEventListener("click", () => toggleAllCells(true));
-switchAllButtons.sell.addEventListener("click", () => toggleAllCells(false));
 
 function toggleAllCells(boolean){    
     isSac.forEach((tier,i) =>{
@@ -209,12 +202,9 @@ cells.forEach((cell,index) => {
 });
 
 function toggleCell(i) {
-    let targetText = cells[i].querySelector(".table-1-text");
-    let targetImg = cells[i].querySelector(".table-1-img");
     isSac[i]=!isSac[i];
-    targetText.innerHTML = isSac[i]?'Sac':'Sell';
-    targetImg.src = isSac[i]?"media/owo_images/essence.gif":"media/owo_images/cowoncy.png";
-
+    cells[i].querySelector(".table-1-text").innerHTML = isSac[i]?'Sac':'Sell';
+    cells[i].querySelector(".table-1-img").src = isSac[i]?"media/owo_images/essence.gif":"media/owo_images/cowoncy.png";
     drawData();
 }
 
