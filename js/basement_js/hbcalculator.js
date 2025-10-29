@@ -1,5 +1,6 @@
-import * as cookie from "../basement_js/util/cookieUtil.js";
+import * as cookie from "./util/cookieUtil.js";
 import { signedNumberFixedString } from "./util/stringUtil.js";
+import { make } from "./util/injectionUtil.js";
 
 const maxValues = {
     0: 215,
@@ -10,14 +11,7 @@ const maxValues = {
     5: 999
 };
 
-const headers =[
-    document.getElementById("efficiencyHeader"),
-    document.getElementById("durationHeader"),
-    document.getElementById("costHeader"),
-    document.getElementById("gainHeader"),
-    document.getElementById("expHeader"),
-    document.getElementById("radarHeader")
-]
+const headers = Array.from(document.querySelectorAll(".header"));
 
 const table2={
     rows:[
@@ -41,6 +35,9 @@ const table2={
         document.getElementById("radarROI")
     ]
 }
+
+
+
 
 const efficiencyOutput =[
     document.getElementById("efficiencyOutput1"),
@@ -67,10 +64,10 @@ const radarOutput=[
     document.getElementById("radarOutput2")
 ]
 
-const patreonGraying=[
-    document.getElementById("patreonGraying1"),
-    document.getElementById("patreonGraying2")
-]
+const graying= Array.from(document.querySelectorAll(".patreon-graying"));
+const renderPatreon = () => graying.forEach(el=>el.hidden=patreon);
+
+document.querySelectorAll('.discord-timestamp').forEach(el=>el.textContent=new Date().toTimeString().slice(0,5));
 
 const switchAllButtons = {
     sell: document.getElementById("owoButton"),
@@ -102,22 +99,13 @@ function saveData(){
     cookie.setCookie("Levels",levels.join(","),30)
 }
 
-switchAllButtons.sac.addEventListener("click", () => {
-    toggleIsSac("sac");
-});
+switchAllButtons.sac.addEventListener("click", () => toggleAllCells(true));
+switchAllButtons.sell.addEventListener("click", () => toggleAllCells(false));
 
-switchAllButtons.sell.addEventListener("click", () => {
-    toggleIsSac("sell");
-});
-
-function toggleIsSac(origin){
-    let togglingTo = origin === "sac"? true: false;
-    
-    for (let i = 0; i < isSac.length; i++) {
-        if (isSac[i] != togglingTo){
-            toggleCell(cells[i],i);
-        }
-    }
+function toggleAllCells(boolean){    
+    isSac.forEach((tier,i) =>{
+        if (tier != boolean) toggleCell(i);
+    })
 }
 
 const petWorthSac = document.getElementById("petWorthSac");
@@ -205,50 +193,28 @@ function getUpgradeCost(index, level) {
 }
 
 const cells = Array.from(document.querySelectorAll("#table-1 td"));
-const isSac = cells.map(cell => cell.textContent.trim() === "Sac ");
+const isSac = cells.map(() => false);
 
 let isDragging = false;
-
-document.addEventListener("mouseup", () => {
-    isDragging = false;
-});
-document.addEventListener("mousedown", () => {
-    isDragging = true;
-});
+document.addEventListener("mouseup", () => isDragging = false);
+document.addEventListener("mousedown", () => isDragging = true);
 
 cells.forEach((cell,index) => {
-    cell.addEventListener("mousedown", (event) => {
-        isDragging = true;
-        if (isDragging) {
-            let targetCell = event.target.closest("td");
-            if (targetCell) toggleCell(targetCell,index);
-        }
-    });
+    cell.addEventListener("mousedown", () => toggleCell(index));
 
-    cell.addEventListener("mouseenter",(event) => {
-        if (event.relatedTarget && cell.contains(event.relatedTarget)) {
-            return;
-        }
-        
-        if (isDragging) {
-            let targetCell = event.target.closest("td"); 
-            if (targetCell) toggleCell(targetCell,index);
-        }
+    cell.addEventListener("mouseenter",event => {
+        if (event.relatedTarget && cell.contains(event.relatedTarget)) return;
+        if (isDragging) toggleCell(index)
     });
 });
 
-function toggleCell(cell,index) {
-    let targetText = cell.querySelector(".table-1-text");
-    let targetImg = cell.querySelector(".table-1-img");
-    if (targetText.innerHTML === "Sac&nbsp;") {
-        targetText.innerHTML = 'Sell&nbsp;';
-        targetImg.src = "media/owo_images/cowoncy.png";
-        isSac[index]=false;
-    } else {
-        targetText.innerHTML = 'Sac&nbsp;';
-        targetImg.src = "media/owo_images/essence.gif";
-        isSac[index]=true;
-    }
+function toggleCell(i) {
+    let targetText = cells[i].querySelector(".table-1-text");
+    let targetImg = cells[i].querySelector(".table-1-img");
+    isSac[i]=!isSac[i];
+    targetText.innerHTML = isSac[i]?'Sac':'Sell';
+    targetImg.src = isSac[i]?"media/owo_images/essence.gif":"media/owo_images/cowoncy.png";
+
     drawData();
 }
 
@@ -259,75 +225,36 @@ document.getElementById("patreonCheck").addEventListener("change", function() {
     renderPatreon();
 });
 
-function renderPatreon(){
-    if (patreon){
-        patreonGraying[0].style.visibility="hidden";
-        patreonGraying[1].style.visibility="hidden";
-    }else{
-        patreonGraying[0].style.visibility="visible";
-        patreonGraying[1].style.visibility="visible";
-    }
-}
-
-function showTimestamps() {
-    const now = new Date();
-    let formattedTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-    
-    document.getElementById("timestamp1").textContent = formattedTime;
-    document.getElementById("timestamp2").textContent = formattedTime;
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < 6; i++) {
         const container = document.getElementById(`inputContainer${i + 1}`);
         
-        const wrapper = document.createElement("div");
-        const input = document.createElement("input");
-        input.type = "number";
-        input.min = 0; 
-        input.max = maxValues[i];
-        input.tabIndex=i+1;
-
-        input.onchange = () => modifyValueAndCookie(i, parseInt(input.value));
-
-        input.id = `num${i}`;
-        input.className="discord-code-lite no-arrows";
-        input.style.borderRadius="0 0.2rem 0.2rem 0";
-
-        const span =document.createElement("div");
-        span.textContent="Lvl";
-        span.className="calculatorLevel";
-        span.addEventListener("click",()=>input.focus());
-
-        const btnPlus = document.createElement("button");
-        btnPlus.addEventListener("click", e =>{
-            e.preventDefault();
-            modifyValueAndCookie(i, parseInt(input.value)+1);
-        });
-        btnPlus.className ="tooltip";
-
-        const btnMinus = document.createElement("button");
-        btnMinus.addEventListener("click", e => {
-            e.preventDefault();
-            modifyValueAndCookie(i, parseInt(input.value)-1);
+        const input = make("input",{
+            type:"number", min:0, max:maxValues[i], tabIndex:i+1, id:`num${i}`, className:"discord-code-lite no-arrows",
+            style:{borderRadius:"0 0.2rem 0.2rem 0"},
+            onchange:() => modifyValueAndCookie(i, +input.value)
         });
 
-        const innerWrapper = document.createElement("div");
-        innerWrapper.append(span, input);
-        innerWrapper.className="numberWrapper";
-
-        innerWrapper.addEventListener('wheel', (event) => {
-            event.preventDefault();
-            const step = event.deltaY < 0? 1:-1;
-            input.value = Number(input.value) + step;
-
-            modifyValueAndCookie(i, parseInt(input.value));
+        const span = make("div",{
+            textContent:"Lvl", className:"calculatorLevel",
+            onclick:()=>input.focus()
         });
 
+        const children =[
+            make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value-1)}),
+            make("div",{className:"numberWrapper"},[span, input]),
+            make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value+1),className:"tooltip"})
+        ];
 
-        wrapper.style = "display:flex; align-items:center; padding: 0.3rem 0;";
-        wrapper.append(btnMinus,innerWrapper,btnPlus);
-        container.appendChild(wrapper);
+        container.append(
+            make("div",{className:"hb-input-wrapper",
+                onwheel: e =>{
+                    e.preventDefault();
+                    const step = e.deltaY < 0? 1:-1;
+                    modifyValueAndCookie(i, +input.value +step);
+                }
+            },children)
+        );
 
         modifyValueDirect(i,0);
     }
@@ -336,9 +263,9 @@ document.addEventListener("DOMContentLoaded", () => {
     importFromHash();
     importFromCookie();
 
+    toggleAllCells(true);
     saveDebounced();
     drawData();
-    showTimestamps();
 });
 
 function modifyValueDirect(index, value) {
@@ -346,24 +273,18 @@ function modifyValueDirect(index, value) {
     const btnPlus = input.parentElement.nextElementSibling;
     const btnMinus = input.parentElement.previousElementSibling;
 
-    const tooltip = document.createElement("span");
-          tooltip.className="tooltip-text";
+    value = Math.max(0,+value);
+    value = Math.min(input.max,+value);
+    btnMinus.textContent = value==0? "MIN":"<";
+    btnPlus.textContent = value==input.max? "MAX":">";
 
-    if (value >= input.max ) {
-        btnPlus.textContent = "MAX";
-        value = Number(input.max);
-    } else {
-        btnPlus.textContent = ">";
-        tooltip.innerHTML = `<img style="width: 0.6rem; padding: 0 0.25rem;" src="../media/owo_images/essence.gif"></img>` + 
-                        getUpgradeCost(index, parseInt(value)).toLocaleString();
-        btnPlus.appendChild(tooltip);
-    }
-
-    if (value <= 0) {
-        btnMinus.textContent = "MIN";
-        value =0;
-    } else {
-        btnMinus.textContent = "<";
+    if (value < input.max){
+        btnPlus.append(
+            make("span",{className:"tooltip-text"},[
+                make("img",{className:"upgrade-image",src:"../media/owo_images/essence.gif"}),
+                getUpgradeCost(index, value)
+            ])
+        );
     }
 
     input.value= value;
@@ -398,7 +319,7 @@ function drawData(){
     let maxROI = -Infinity;
 
     [0, 3, 5].forEach((index, i) => {
-        let ROI = upgradeWorth[i]/getUpgradeCost(index,levels[index]);
+        const ROI = upgradeWorth[i]/getUpgradeCost(index,levels[index]);
 
         if (ROI > maxROI) {
             maxROI = ROI;
@@ -412,9 +333,7 @@ function drawData(){
         table2.ROI[i].textContent= (ROI*100).toFixed(1) + "%/day"
     });
 
-    if (maxROIindex !== -1) {
-        table2.rows[maxROIindex].style.fontWeight = "bolder";
-    }
+    table2.rows[maxROIindex].style.fontWeight = "bolder";
 
     let dailyPets = values[0]*24;
     let hbPets = Math.floor(values[0]*values[1]);
@@ -448,24 +367,14 @@ function drawData(){
     document.getElementById("patreonCheck").checked=patreon;
 }
 
-document.addEventListener("paste", (event) => {
-    extractLevels(event.clipboardData.getData("text"));
-});
+document.addEventListener("paste", event => extractLevels(event.clipboardData.getData("text")));
 
 function extractLevels(text) {
     const levelPattern = /\bLvl (\d+)\b/g;
-    const extractedLevels = [];
-    let match;
-
-    while ((match = levelPattern.exec(text)) !== null) {
-        extractedLevels.push(parseInt(match[1], 10));
-    }
-
-    for (var i =0; i<6;i++){
-        if (extractedLevels[i] !== undefined) {
-            modifyValueAndCookie(i, extractedLevels[i]);
-        }
-    }
+    const matches = [...text.matchAll(levelPattern)].slice(0, 6);
+    matches.forEach((m, i) => {
+        modifyValueAndCookie(i, m[1]);
+    });
 }
 
 function modifyValueAndCookie(index, value){
@@ -475,17 +384,14 @@ function modifyValueAndCookie(index, value){
 
 function importFromHash(){
     const hash = location.hash;
-    if (hash) {
-        stringToLevel(hash.slice(1));
-    }
+    if (hash) stringToLevel(hash.slice(1));
 }
 
 function importFromCookie(){
-    const patreonData = cookie.getCookie("Patreon");
     const levelsData = cookie.getCookie("Levels");
-    if (levelsData) {
-        stringToLevel(levelsData);
-    }
+    if (levelsData) stringToLevel(levelsData);
+
+    const patreonData = cookie.getCookie("Patreon");
     patreon = patreonData === "true";
     renderPatreon();
 }
