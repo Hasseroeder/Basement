@@ -1,6 +1,6 @@
 import * as cookie from "./util/cookieUtil.js";
 import { signedNumberFixedString } from "./util/stringUtil.js";
-import { make } from "./util/injectionUtil.js";
+import { make, doTimestamps } from "./util/injectionUtil.js";
 
 const maxValues = {
     0: 215,
@@ -64,7 +64,7 @@ const radarOutput=[
 const graying= Array.from(document.querySelectorAll(".patreon-graying"));
 const renderPatreon = () => graying.forEach(el=>el.hidden=patreon);
 
-document.querySelectorAll('.discord-timestamp').forEach(el=>el.textContent=new Date().toTimeString().slice(0,5));
+doTimestamps();
 document.getElementById("sacToggles").querySelectorAll("button")
     .forEach(
         (b,i)=>b.onclick=()=>toggleAllCells(Boolean(i))
@@ -172,17 +172,17 @@ function getWorth(){
 }
 
 function getUpgradeCost(index, level) {
-  const paramsArray = [
-    { multiplier: 10, exponent: 1.748 },    //efficiency
-    { multiplier: 10, exponent: 1.700 },    //duration
-    { multiplier: 1000, exponent: 3.4 },    //cost
-    { multiplier: 10, exponent: 1.800 },    //gain
-    { multiplier: 10, exponent: 1.800 },    //exp
-    { multiplier: 50, exponent: 2.500 },    //radar
-  ];
+    const paramsArray = [
+        { multiplier: 10, exponent: 1.748 },    //efficiency
+        { multiplier: 10, exponent: 1.700 },    //duration
+        { multiplier: 1000, exponent: 3.4 },    //cost
+        { multiplier: 10, exponent: 1.800 },    //gain
+        { multiplier: 10, exponent: 1.800 },    //exp
+        { multiplier: 50, exponent: 2.500 },    //radar
+    ];
 
-  const params = paramsArray[index];
-  return Math.floor(params.multiplier * Math.pow(level + 1, params.exponent));
+    const params = paramsArray[index];
+    return Math.floor(params.multiplier * Math.pow(level + 1, params.exponent));
 }
 
 const cells = Array.from(document.querySelectorAll("#table-1 td"));
@@ -215,6 +215,8 @@ document.getElementById("patreonCheck").addEventListener("change", function() {
     renderPatreon();
 });
 
+const traits = [];
+
 document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < 6; i++) {
         const container = document.getElementById(`inputContainer${i + 1}`);
@@ -230,11 +232,23 @@ document.addEventListener("DOMContentLoaded", () => {
             onclick:()=>input.focus()
         });
 
-        const children =[
-            make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value-1)}),
-            make("div",{className:"numberWrapper"},[span, input]),
-            make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value+1),className:"tooltip"})
-        ];
+        const btnM = {
+            el: make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value-1)})
+        };
+        const tooltipText = make("div")
+        const tooltip = {
+            el: make("span",{className:"tooltip-text"},[
+                    make("img",{className:"upgrade-image",src:"../media/owo_images/essence.gif"}),
+                    tooltipText
+            ]),
+            text:tooltipText
+        }
+        const text = make("div");
+        const btnP = {
+              el:make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value+1), className:"tooltip"},[text,tooltip.el]),
+              tooltip,
+              text
+        };
 
         container.append(
             make("div",{className:"hb-input-wrapper",
@@ -243,8 +257,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     const step = e.deltaY < 0? 1:-1;
                     modifyValueAndCookie(i, +input.value +step);
                 }
-            },children)
+            },[
+                btnM.el,
+                make("div",{className:"numberWrapper"},[span, input]),
+                btnP.el
+            ])
         );
+
+        traits.push({container,input,btnM,btnP});
 
         modifyValueDirect(i,0);
     }
@@ -258,27 +278,17 @@ document.addEventListener("DOMContentLoaded", () => {
     drawData();
 });
 
-function modifyValueDirect(index, value) {
-    const input = document.getElementById(`num${index}`);
-    const btnPlus = input.parentElement.nextElementSibling;
-    const btnMinus = input.parentElement.previousElementSibling;
+function modifyValueDirect(i, value) {
+    const {input,btnM,btnP} = traits[i]
 
-    value = Math.max(0,+value);
-    value = Math.min(input.max,+value);
-    btnMinus.textContent = value==0? "MIN":"<";
-    btnPlus.textContent = value==input.max? "MAX":">";
-
-    if (value < input.max){
-        btnPlus.append(
-            make("span",{className:"tooltip-text"},[
-                make("img",{className:"upgrade-image",src:"../media/owo_images/essence.gif"}),
-                getUpgradeCost(index, value)
-            ])
-        );
-    }
+    value = Math.min(input.max,Math.max(0,+value));
+    btnM.el.textContent = value==0? "MIN":"<";
+    btnP.text.textContent = value==input.max? "MAX":">";
+    btnP.tooltip.el.hidden=value==input.max;
+    btnP.tooltip.text.textContent=getUpgradeCost(i,value);
 
     input.value= value;
-    levels[index]=value;
+    levels[i]= value;
     drawData();
 }
 

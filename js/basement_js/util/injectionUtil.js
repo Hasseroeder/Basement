@@ -92,3 +92,7 @@ export const make = (tag, props = {}, children) => {
     }
     return el;
 };
+
+export function doTimestamps(){
+	document.querySelectorAll('.discord-timestamp').forEach(el=>el.textContent=new Date().toTimeString().slice(0,5));
+}

@@ -29,128 +29,111 @@
                                         HuntBot
                                     </div>
                                 </span>
-                                <div class="discord-embed-text" style="white-space: normal;">
-                                    <div class="gridContainer"> 
-                                        <div class="item-1">
-                                            <div>
-                                                <code class="discord-code">BEEP. BOOP. I AM HUNTBOT. I WILL HUNT FOR YOU MASTER.</code><br>
-                                                Use the command <code class="discord-code">owo autohunt {cowoncy}</code> to get started.<br>
-                                                You can use <code class="discord-code">owo upgrade {trait} {count}</code> to upgrade the traits below.<br>
-                                                To obtain more essence, use <code class="discord-code">owo sacrifice {animal} {count}</code>.
-                                            </div>
-                                            <div class="discord-embed-inner">
-                                                <img class="discord-pet-display" src="media/owo_images/robot.png">
-                                            </div>
+                                <div class="gridContainer"> 
+                                    <div class="item-1">
+                                        <div style="flex:auto">
+                                            <code class="discord-code">BEEP. BOOP. I AM HUNTBOT. I WILL HUNT FOR YOU MASTER.</code><br>
+                                            Use the command <code class="discord-code">owo autohunt {cowoncy}</code> to get started.<br>
+                                            You can use <code class="discord-code">owo upgrade {trait} {count}</code> to upgrade the traits below.<br>
+                                            To obtain more essence, use <code class="discord-code">owo sacrifice {animal} {count}</code>.
                                         </div>
-                                        <div class="item-2">
-                                            <div style="padding:0; display: flex; align-items: center;">
-                                                <img src="../media/owo_images/efficiency.png" style="height: 1rem;">
-                                                <span class="header" style="padding:0"></span>
-                                            </div>
-                                            <div id="inputContainer1" style="display: flex;align-items: center; padding: 0;"></div>
+                                        <img class="discord-pet-display" src="media/owo_images/robot.png">
+                                    </div>
+                                    <div class="item-2">
+                                        <div class="header-wrapper">
+                                            <img src="../media/owo_images/efficiency.png" style="height: 1rem;">
+                                            <span class="header"></span>
+                                        </div>
+                                        <div id="inputContainer1" style="display: flex;align-items: center;"></div>
 
-                                            <ul style="font-size:0.7rem; list-style-type: none; padding-top: 0;">
-                                                <li id="efficiencyOutput1" style="padding-top: 0; padding-bottom: 0;"></li>
-                                                <li id="efficiencyOutput2" style="padding-top: 0; "></li>
-                                            </ul>
+                                        <ul>
+                                            <li id="efficiencyOutput1"></li>
+                                            <li id="efficiencyOutput2"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="item-3">
+                                        <div class="header-wrapper">
+                                            <img src="../media/owo_images/duration.png" style="height: 1rem;">
+                                            <span class="header"></span>
                                         </div>
-                                        <div class="item-3">
-                                            <div style="padding:0; display: flex; align-items: center;">
-                                                <img src="../media/owo_images/duration.png" style="height: 1rem;">
-                                                <span class="header" style="padding:0"></span>
-                                            </div>
-                                            <div id="inputContainer2" style="display: flex;align-items: center; padding: 0;"></div>
+                                        <div id="inputContainer2" style="display: flex;align-items: center;"></div>
+                                    </div>
+                                    <div class="item-4">
+                                        <div class="header-wrapper">
+                                            <img src="../media/owo_images/cowoncy.png" style="height: 1rem;">
+                                            <span class="header"></span>
                                         </div>
-                                        <div class="item-4">
-                                            <div style="padding:0; display: flex; align-items: center;">
-                                                <img src="../media/owo_images/cowoncy.png" style="height: 1rem;">
-                                                <span class="header" style="padding:0"></span>
-                                            </div>
-                                            <div id="inputContainer3" style="display: flex;align-items: center; padding: 0;"></div>
+                                        <div id="inputContainer3" style="display: flex;align-items: center;"></div>
 
-                                            <ul style="font-size:0.7rem; list-style-type: none; padding-top: 0;margin-top:-0.1rem;">
-                                                <li style="display:flex; align-items: center; padding:0.1rem 0.3rem;">
-                                                    <img style="width:0.8rem" src="media/owo_images/trashcan.png">
-                                                    &nbsp;
-                                                    <span id="costOutput1" style="padding:0;"></span> 
-                                                </li>
-                                                <li style="display:flex; align-items: center; padding:0.1rem 0.3rem;">
-                                                    <img style="width:0.8rem" src="media/owo_images/trashcan.png">
-                                                    &nbsp;
-                                                    <span id="costOutput2" style="padding:0;"></span>
-                                                </li>
-                                            </ul>
+                                        <ul>
+                                            <li id="costOutput1"></li>
+                                            <li id="costOutput2"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="item-5">
+                                        <div class="header-wrapper">
+                                            <img src="../media/owo_images/gain.png" style="height: 1rem;">
+                                            <span class="header"></span>
                                         </div>
-                                        <div class="item-5">
-                                            <div style="padding:0; display: flex; align-items: center;">
-                                                <img src="../media/owo_images/gain.png" style="height: 1rem;">
-                                                <span class="header" style="padding:0"></span>
-                                            </div>
-                                            <div id="inputContainer4" style="display: flex;align-items: center; padding: 0;">
-                 
-                                            </div>
-                                            <ul style="font-size:0.7rem; list-style-type: none; padding-top: 0;">
-                                                <li id="gainOutput1" style="padding-top: 0; padding-bottom: 0;"></li>
-                                                <li id="gainOutput2" style="padding-top: 0; "></li>
-                                            </ul>
+                                        <div id="inputContainer4" style="display: flex;align-items: center;">
+                
                                         </div>
-                                        <div class="item-6">
-                                            <div style="padding:0; display: flex; align-items: center;">
-                                                <img src="../media/owo_images/exp.png" style="height: 1rem;">
-                                                <span class="header" style="padding:0"></span>
-                                            </div>
-                                            <div id="inputContainer5"  style="display: flex;align-items: center; padding: 0;">
-                                            </div>
-                                            <ul style="font-size:0.7rem; list-style-type: none; padding-top: 0;">
-                                                <li id="expOutput1" style="padding-top: 0; padding-bottom: 0;"></li>
-                                                <li id="expOutput2" style="padding-top: 0; "></li>
-                                            </ul>
+                                        <ul>
+                                            <li id="gainOutput1"></li>
+                                            <li id="gainOutput2"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="item-6">
+                                        <div class="header-wrapper">
+                                            <img src="../media/owo_images/exp.png" style="height: 1rem;">
+                                            <span class="header"></span>
                                         </div>
-                                        <div class="item-7">
-                                            <div style="padding:0; display: flex; align-items: center;" title="pets per million">
-                                                <img src="../media/owo_images/radar.png" style="height: 1rem;">
-                                                <span class="header" style="padding:0"></span>
-                                            </div>
+                                        <div id="inputContainer5"  style="display: flex;align-items: center;">
+                                        </div>
+                                        <ul>
+                                            <li id="expOutput1"></li>
+                                            <li id="expOutput2"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="item-7">
+                                        <div class="header-wrapper" title="pets per million">
+                                            <img src="../media/owo_images/radar.png" style="height: 1rem;">
+                                            <span class="header"></span>
+                                        </div>
 
-                                            <div id="inputContainer6" style="display: flex;align-items: center; padding: 0;">
-                                            </div>
-                                            <ul style="font-size:0.7rem; list-style-type: none; padding-top: 0;">
-                                                <li id="radarOutput1" style="padding-top: 0; padding-bottom: 0;"></li>
-                                                <li id="radarOutput2" style="padding-top: 0; "></li>
-                                            </ul>
+                                        <div id="inputContainer6" style="display: flex;align-items: center;">
+                                        </div>
+                                        <ul>
+                                            <li id="radarOutput1"></li>
+                                            <li id="radarOutput2"></li>
+                                        </ul>
 
-                                        </div>
-                                        <div class="item-8">
-                                            <div>
-                                                <!-- TODO: add something here, we've got free real estate -->
-                                            </div>
-                                            <div>
-                                                <table class="table-2" id="table-2">
-                                                    <th></th>
-                                                    <th>Cost</th>
-                                                    <th>Essence</th>
-                                                    <th>ROI</th>
-                                                    <tr id="efficiencyRow">
-                                                        <td>Efficiency</td>
-                                                        <td id="efficiencyCost"></td>
-                                                        <td id="efficiencyEssence"></td>
-                                                        <td id="efficiencyROI"></td>
-                                                    </tr>
-                                                    <tr id="gainRow">
-                                                        <td>Gain</td>
-                                                        <td id="gainCost"></td>
-                                                        <td id="gainEssence"></td>
-                                                        <td id="gainROI"></td>
-                                                    </tr>
-                                                    <tr id="radarRow">
-                                                        <td>Radar</td>
-                                                        <td id="radarCost"></td>
-                                                        <td id="radarEssence"></td>
-                                                        <td id="radarROI"></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <div class="item-8">
+                                        <table class="table-2" id="table-2">
+                                            <th></th>
+                                            <th>Cost</th>
+                                            <th>Essence</th>
+                                            <th>ROI</th>
+                                            <tr id="efficiencyRow">
+                                                <td>Efficiency</td>
+                                                <td id="efficiencyCost"></td>
+                                                <td id="efficiencyEssence"></td>
+                                                <td id="efficiencyROI"></td>
+                                            </tr>
+                                            <tr id="gainRow">
+                                                <td>Gain</td>
+                                                <td id="gainCost"></td>
+                                                <td id="gainEssence"></td>
+                                                <td id="gainROI"></td>
+                                            </tr>
+                                            <tr id="radarRow">
+                                                <td>Radar</td>
+                                                <td id="radarCost"></td>
+                                                <td id="radarEssence"></td>
+                                                <td id="radarROI"></td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +149,7 @@
                         <div class="discord-embed-middle">
                             <div class="discord-embed-inner">
                     
-                                <div class="discord-embed-text" style="white-space: normal; width: 39rem;">
+                                <div class="discord-embed-text" style="white-space: normal; width: 36rem;">
                                 
                                     <table class="table-1" id="table-1" style="user-select: none; width:100%" draggable="false">
                                         <td class="gray-hover" draggable="false" style="border-radius: 0.5rem 0 0 0.5rem;">
@@ -241,8 +224,7 @@
                                             </div></td>
                                     </table>
 
-                                    <div class="flexContainer" style="margin:0; align-items: baseline;">
-                                        
+                                    <div style="display: flex;  gap: 1rem;  padding:1rem 0.1rem 0 0.1rem;">
                                         <label class="gray-hover" for="patreonCheck" style="display: flex; height: 2rem; align-items: center; padding: 0 0.7rem 0 0.5rem; border-radius: 0.3rem;">
                                             <input type="checkbox" id="patreonCheck" style="margin-right: 0.5rem;">
                                             <strong>Patreon</strong>
@@ -252,10 +234,10 @@
                                             <h4>
                                                 Pet Worth:
                                             </h4>
-                                            <ul style="margin-top:-0.8rem; padding-left: 1.4rem; font-size:0.8rem;">
+                                            <ul>
                                                 <li style="margin-bottom:0.5rem">
                                                     <span id="petWorthSell"> </span>
-                                                    <ul style="margin-left:-1.3rem; font-size:0.8rem;">
+                                                    <ul>
                                                         <li id="petWorthProfit"></li>
                                                     </ul>
                                                     
@@ -267,10 +249,10 @@
                                             <h4>
                                                 HB Pet Worth:
                                             </h4>
-                                            <ul style="margin-top:-0.8rem; padding-left: 1.4rem; font-size:0.8rem;">
+                                            <ul>
                                                 <li style="margin-bottom:0.5rem">
                                                     <span id="hbWorthSell"></span>
-                                                    <ul style="margin-left:-1.3rem; font-size:0.8rem;">
+                                                    <ul>
                                                         <li id="hbWorthProfit"></li>
                                                     </ul>   
                                                 </li>

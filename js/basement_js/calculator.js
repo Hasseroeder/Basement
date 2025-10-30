@@ -1,7 +1,5 @@
 import { loadJson } from "./util/jsonUtil.js";
-import { make } from "./util/injectionUtil.js"
-
-const timestamps =document.querySelectorAll(".discord-timestamp");
+import { make,doTimestamps } from "./util/injectionUtil.js"
 
 const petContainer = document.getElementById("petContainer");
 const effectContainer = document.getElementById("effectContainer");
@@ -119,12 +117,6 @@ const imgTypeSuffix =[
     "mr",
     "rune"
 ]  
-
-function showTimestamps() {
-    const now = new Date();
-    const formattedTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-    timestamps.forEach(el => el.textContent = formattedTime);
-}
 
 function sortPetArray(){
     petArray.sort((petA, petB) => {
@@ -656,7 +648,7 @@ function getPrefix(quality) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    showTimestamps();
+    doTimestamps();
     inputs.forEach(input=>{
         input.addEventListener("change",updateStats)
         input.addEventListener("wheel", ev => {
