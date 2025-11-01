@@ -41,7 +41,7 @@
     justify-content: end;
 }  
 
-.item-2, .item-3, .item-4, .item-5, .item-6, .item-7{
+.trait-box{
     padding: 0.3rem;
     display: flex;
     flex-direction: column;
@@ -158,6 +158,7 @@ ul {
 
 .upgrade-image{
     width: 0.6rem; 
+    height: 0.6rem;
 }
 
 .hb-input-wrapper{

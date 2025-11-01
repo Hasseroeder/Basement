@@ -11,29 +11,36 @@ const maxValues = {
     5: 999
 };
 
+const traits = [
+    {name:"Efficiency", unit: " pets/h"},
+    {name:"Duration", unit: "h"},
+    {name:"Cost", unit: " cowoncy"},
+    {name:"Gain", unit:" ess/h"},
+    {name:"Experience", unit: " exp/h"},
+    {name:"Radar", unit: "ppm"}
+];
+
 const headers = Array.from(document.querySelectorAll(".header"));
 
-const table2={
-    rows:[
-        document.getElementById("efficiencyRow"),
-        document.getElementById("gainRow"),
-        document.getElementById("radarRow")
-    ],
-    cost: [
-        document.getElementById("efficiencyCost"),
-        document.getElementById("gainCost"),
-        document.getElementById("radarCost")
-    ],
-    essence: [
-        document.getElementById("efficiencyEssence"),
-        document.getElementById("gainEssence"),
-        document.getElementById("radarEssence")
-    ],
-    ROI:[
-        document.getElementById("efficiencyROI"),
-        document.getElementById("gainROI"),
-        document.getElementById("radarROI")
-    ]
+populateITable();
+
+function populateITable(){
+    const table2El=document.getElementById("table2");
+    table2El.innerHTML="<tr><th></th><th>Cost</th><th>Essence</th><th>ROI</th></tr>";
+
+    [0,3,5].forEach(i =>{
+        const trait = traits[i]
+
+        const tLabel = make("td",{textContent:trait.name});
+        const tCost = make("td");
+        const tEssence = make("td");
+        const tRoi = make("td");
+        const tRow = make("tr",{},[tLabel,tCost,tEssence,tRoi]);
+        table2El.append(tRow);
+        Object.assign(trait,{
+            tCost,tEssence,tRoi,tRow
+        })
+    });
 }
 
 const efficiencyOutput =[
@@ -215,10 +222,8 @@ document.getElementById("patreonCheck").addEventListener("change", function() {
     renderPatreon();
 });
 
-const traits = [];
-
 document.addEventListener("DOMContentLoaded", () => {
-    for (let i = 0; i < 6; i++) {
+    traits.forEach((trait,i) => {
         const container = document.getElementById(`inputContainer${i + 1}`);
         
         const input = make("input",{
@@ -232,23 +237,16 @@ document.addEventListener("DOMContentLoaded", () => {
             onclick:()=>input.focus()
         });
 
-        const btnM = {
-            el: make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value-1)})
-        };
-        const tooltipText = make("div")
-        const tooltip = {
-            el: make("span",{className:"tooltip-text"},[
-                    make("img",{className:"upgrade-image",src:"../media/owo_images/essence.gif"}),
-                    tooltipText
-            ]),
-            text:tooltipText
-        }
+        //btnM
+        const btnM = make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value-1)});
+        //btnP & tooltip
+        const ttKids = [make("img",{className:"upgrade-image",src:"../media/owo_images/essence.gif"}),make("div")]
+        const tt = make("span",{className:"tooltip-text"},[
+            make("div",{style:{display:"flex", justifyItems: "center", justifyContent: "center", gap: "0.1rem"}},ttKids)
+        ]);
         const text = make("div");
-        const btnP = {
-              el:make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value+1), className:"tooltip"},[text,tooltip.el]),
-              tooltip,
-              text
-        };
+        const btnP = make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value+1), className:"tooltip"},[text,tt]);
+        const btnData = {text, ttText:ttKids[1],ttEl:tt}
 
         container.append(
             make("div",{className:"hb-input-wrapper",
@@ -258,16 +256,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     modifyValueAndCookie(i, +input.value +step);
                 }
             },[
-                btnM.el,
+                btnM,
                 make("div",{className:"numberWrapper"},[span, input]),
-                btnP.el
+                btnP
             ])
         );
 
-        traits.push({container,input,btnM,btnP});
+        Object.assign(trait,{
+            container,
+            input,
+            btnM,
+            btnP:btnData
+        })
 
         modifyValueDirect(i,0);
-    }
+    });
 
     window.addEventListener('hashchange', importFromHash);
     importFromHash();
@@ -282,10 +285,10 @@ function modifyValueDirect(i, value) {
     const {input,btnM,btnP} = traits[i]
 
     value = Math.min(input.max,Math.max(0,+value));
-    btnM.el.textContent = value==0? "MIN":"<";
+    btnM.textContent = value==0? "MIN":"<";
     btnP.text.textContent = value==input.max? "MAX":">";
-    btnP.tooltip.el.hidden=value==input.max;
-    btnP.tooltip.text.textContent=getUpgradeCost(i,value);
+    btnP.ttEl.hidden=value==input.max;
+    btnP.ttText.textContent=getUpgradeCost(i,value);
 
     input.value= value;
     levels[i]= value;
@@ -293,8 +296,6 @@ function modifyValueDirect(i, value) {
 }
 
 function drawData(){    
-    const labels = ["Efficiency - ",  "Duration - ",  "Cost - ",     "Gain - ",  "Experience - ", "Radar - "];
-    const suffixes=[" pets/h",        "h",            " cowoncy",    " ess/h",   " exp/h",        "ppm"];
     const values = [
         levels[0] + 25,                 //efficiency
         levels[1]/10+0.5,               //duration
@@ -305,38 +306,44 @@ function drawData(){
     ];
 
     const upgradeWorth = [
-        getWorth()[0] * 24,                                             //efficiency
-        600,                                                            //gain
-        (isSac[8] ? 0.00000004 * petWorth[8][1] * values[0] * 24 : 0)   //radar     // add if bots sacced
-        - (isSac[0] ? petRates()[8] * values[0] * 24 : 0)               //radar     // subtract if commons sacced
+        getWorth()[0] * 24,  
+        0,
+        0,                                  
+        600,        
+        0,                                                    
+        (isSac[8] ? 0.00000004 * petWorth[8][1] * values[0] * 24 : 0)  
+        - (isSac[0] ? petRates()[8] * values[0] * 24 : 0)              
     ];
 
     headers.forEach((header, index) => {
-        header.textContent = labels[index] + values[index] + suffixes[index];
+        header.textContent = traits[index].name + " - " + values[index] + traits[index].unit;
     });
 
     let maxROIindex = -1;
     let maxROI = -Infinity;
 
-    [0, 3, 5].forEach((index, i) => {
-        const ROI = upgradeWorth[i]/getUpgradeCost(index,levels[index]);
+    [0, 3, 5].forEach(i => {
+        const trait = traits[i];
+
+        const ROI = upgradeWorth[i]/getUpgradeCost(i,levels[i]);
 
         if (ROI > maxROI) {
             maxROI = ROI;
             maxROIindex = i;
         }
 
-        table2.cost[i].textContent = getUpgradeCost(index, levels[index]).toLocaleString();
-        table2.rows[i].style.textDecoration = levels[index] === maxValues[index] ? "line-through" : "none";
-        table2.rows[i].style.fontWeight="normal";
-        table2.essence[i].textContent = signedNumberFixedString(upgradeWorth[i],1)+` ess/day`;
-        table2.ROI[i].textContent= (ROI*100).toFixed(1) + "%/day"
+        trait.tCost.textContent = getUpgradeCost(i, levels[i]).toLocaleString();
+        trait.tRow.style.textDecoration = levels[i] === maxValues[i] ? "line-through" : "none";
+        trait.tRow.style.fontWeight="normal";
+        trait.tEssence.textContent = signedNumberFixedString(upgradeWorth[i],1)+` ess/day`;
+        trait.tRoi.textContent= (ROI*100).toFixed(1) + "%/day"
     });
 
-    table2.rows[maxROIindex].style.fontWeight = "bolder";
+    traits[maxROIindex].tRow.style.fontWeight = "bolder";
 
     let dailyPets = values[0]*24;
     let hbPets = Math.floor(values[0]*values[1]);
+    let worth=getWorth();
 
     efficiencyOutput[0].textContent=dailyPets.toLocaleString()+" pets/day";
     efficiencyOutput[1].textContent=hbPets.toLocaleString()+" pets/hb";
@@ -352,8 +359,6 @@ function drawData(){
 
     radarOutput[0].textContent="weekly bot: "+(100-100*Math.pow(1 - (0.00000004*levels[5]), dailyPets*7)).toFixed(1)+"%";
     radarOutput[1].textContent="monthly bot: "+(100-100*Math.pow(1 - (0.00000004*levels[5]), dailyPets*30)).toFixed(1)+"%";
-    
-    let worth=getWorth();
 
     petWorthSell.textContent = worth[1].toFixed(1) +" owo/pet"; 
     hbWorthSell.textContent  = (worth[1]*hbPets).toFixed(0) +" owo/hb"; 
@@ -363,7 +368,7 @@ function drawData(){
 
     petWorthSac.textContent = worth[0].toFixed(1) +" ess/pet";      
     hbWorthSac.textContent  = (worth[0]*hbPets).toFixed(0) +" ess/hb"; 
- 
+
     document.getElementById("patreonCheck").checked=patreon;
 }
 
