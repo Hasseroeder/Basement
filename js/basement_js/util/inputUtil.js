@@ -17,3 +17,20 @@ export function roundToDecimals(value, decimals) {
   const factor = Math.pow(10, decimals);
   return Math.round(value * factor) / factor;
 }
+
+export function debounce(fn, wait = 200, immediate = false) {
+    let timeoutId;
+
+    return function debounced(...args) {
+        const context = this;
+        const callNow = immediate && !timeoutId;
+
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            timeoutId = null;
+            if (!immediate) fn.apply(context, args);
+        }, wait);
+
+        if (callNow) fn.apply(context, args);
+    };
+}

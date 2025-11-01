@@ -1,4 +1,5 @@
 import { valueToPercent, getWearConfig } from "./weaponCalcUtil.js";
+import { debounce } from "../util/inputUtil.js";
 
 const initWeaponID = 101;	// start with sword if nothing is given
 
@@ -127,24 +128,6 @@ export function weaponToBlueprintString(weapon){
 
     const parts = [wear, shorthand, statstring, ...passiveParts].filter(Boolean);
     debouncedToHash(parts);
-}
-
-
-function debounce(fn, wait = 200, immediate = false) {
-    let timeoutId;
-
-    return function debounced(...args) {
-        const context = this;
-        const callNow = immediate && !timeoutId;
-
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            timeoutId = null;
-            if (!immediate) fn.apply(context, args);
-        }, wait);
-
-        if (callNow) fn.apply(context, args);
-    };
 }
 
 function toHash(parts){

@@ -1,6 +1,7 @@
 import * as cookie from "./util/cookieUtil.js";
 import { signedNumberFixedString } from "./util/stringUtil.js";
 import { make, doTimestamps } from "./util/injectionUtil.js";
+import { debounce } from "./util/inputUtil.js";
 
 const traits = [
     {
@@ -78,23 +79,6 @@ document.getElementById("sacToggles").querySelectorAll("button")
     .forEach(
         (b,i)=>b.onclick=()=>toggleAllCells(Boolean(i))
     );
-
-function debounce(fn, wait = 200, immediate = false) {
-    let timeoutId;
-
-    return function debounced(...args) {
-        const context = this;
-        const callNow = immediate && !timeoutId;
-
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            timeoutId = null;
-            if (!immediate) fn.apply(context, args);
-        }, wait);
-
-        if (callNow) fn.apply(context, args);
-    };
-}
 
 const saveDebounced = debounce(saveData);
 
