@@ -3,52 +3,125 @@ import { signedNumberFixedString } from "./util/stringUtil.js";
 import { make, doTimestamps } from "./util/injectionUtil.js";
 import { debounce } from "./util/inputUtil.js";
 
+let traitcounter = 1;
+let patreon = false;
+let initialized = false;
+
+const table2El=document.getElementById("table2");
+table2El.innerHTML="<tr><th></th><th>Cost</th><th>Essence</th><th>ROI</th></tr>";
+
+const gridContainer= document.querySelector(".gridContainer");
+
+class Trait{
+    constructor ({name,unit,max,includeInTable,costParams,outputs}){
+        [this.name,this.unit,this.max,this.costParams,this.outputs] = [name,unit,max,costParams,outputs]
+        this.header = make("span");
+        this.emoji = make("img",{src:`../media/owo_images/${this.name.toLowerCase()}.png`, style:{height:"1rem"}});
+
+        const wrappers = [
+            make("div",{className:"header-wrapper"},[this.emoji,this.header]),
+            make("div",{style:{display:"flex", alignItems:"center"}}),
+            make("ul")
+        ];
+        gridContainer.append(make("div",{className:"trait-box"},wrappers));
+
+        if (includeInTable){
+            const cells = [...Array(4)].map(() => make("td"));
+            const row = make("tr",{},cells);
+            table2El.append(row);
+            this.table={cells,row}
+        }
+        
+        this.input = make("input",{
+            type:"number", min:0, max:this.max, tabIndex:traitcounter++, className:"number-input no-arrows",
+            onchange:() => modifyValueAndCookie(this, +this.input.value)
+        });
+
+        const _span = make("div",{
+            textContent:"Lvl", className:"calculatorLevel",
+            onclick:()=>input.focus()
+        });
+
+        //btnM
+        this.btnM = make("button",{onclick: ()=>modifyValueAndCookie(this, +this.input.value-1)});
+        //btnP & tooltip
+        const _ttKids = [make("img",{className:"upgrade-image",src:"../media/owo_images/essence.gif"}),make("div")]
+        const _tt = make("span",{className:"tooltip-text"},[
+            make("div",{style:{display:"flex", justifyItems: "center", justifyContent: "center", gap: "0.1rem"}},_ttKids)
+        ]);
+        const text = make("div");
+        const _btnP = make("button",{onclick: ()=>modifyValueAndCookie(this, +this.input.value+1), className:"tooltip"},[text,_tt]);
+        this.btnP={text, ttText:_ttKids[1],ttEl:_tt};
+
+        wrappers[1].append(
+            make("div",{className:"hb-input-wrapper",
+                onwheel: e =>{
+                    e.preventDefault();
+                    const step = e.deltaY < 0? 1:-1;
+                    modifyValueAndCookie(this, +this.input.value +step);
+                }
+            },[
+                this.btnM,
+                make("div",{className:"numberWrapper"},[_span, this.input]),
+                _btnP
+            ])
+        );
+
+        this.outputs.forEach(output =>{
+            output.el = document.createElement("li");
+            wrappers[2].append(output.el);
+        });
+
+        modifyValueDirect(this,0);
+    }
+}
+
 const traits = [
-    {
-        name:"Efficiency", unit: " pets/h", maxLvl:215, table:{},
-        wrapper: document.querySelector(".item-2"), costParams: { mult: 10, exponent: 1.748 },
+    new Trait({
+        name:"Efficiency", unit: " pets/h", max:215, includeInTable: true, 
+        costParams: { mult: 10, exponent: 1.748 },
         outputs:[
             {text:({dailyPets})=>dailyPets+" pets/day"},
             {text:({hbPets})=>hbPets+" pets/hb"}
         ]
-    },
-    {
-        name:"Duration", unit: "h", maxLvl:235,
-        wrapper: document.querySelector(".item-3"), costParams: { mult: 10, exponent: 1.700 },
+    }),
+    new Trait({
+        name:"Duration", unit: "h", max:235,
+        costParams: { mult: 10, exponent: 1.700 },
         outputs:[]
-    },
-    {
-        name:"Cost", unit: " cowoncy", maxLvl:5,
-        wrapper: document.querySelector(".item-4"), costParams: { mult: 1000, exponent: 3.4 },
+    }),
+    new Trait({
+        name:"Cost", unit: " cowoncy", max:5,
+        costParams: { mult: 1000, exponent: 3.4 },
         outputs:[
             {text:({dailyPets,values})=>"-"+(dailyPets*values[2])+" owo/day"},
             {text:({hbPets,values})=>"-"+(hbPets*values[2])+" owo/hb"}
         ]
-    },
-    {
-        name:"Gain", unit:" ess/h", maxLvl:200, table:{},
-        wrapper: document.querySelector(".item-5"), costParams: { mult: 10, exponent: 1.800 },
+    }),
+    new Trait({
+        name:"Gain", unit:" ess/h", max:200, includeInTable: true,
+        costParams: { mult: 10, exponent: 1.800 },
         outputs:[
             {text:({values})=>(values[3]*24)+" ess/day"},
             {text:({values})=>(Math.floor(values[3]*values[1]))+" ess/hb"}
         ]
-    },
-    {
-        name:"Experience", unit: " exp/h", maxLvl:200,
-        wrapper: document.querySelector(".item-6"), costParams: { mult: 10, exponent: 1.800 },
+    }),
+    new Trait({
+        name:"Experience", unit: " exp/h", max:200,
+        costParams: { mult: 10, exponent: 1.800 },
         outputs:[
             {text:({values})=>(values[4]*24)+" exp/day"},
             {text:({values})=>(Math.floor(values[4]*values[1]))+" exp/hb"}
         ]
-    },
-    {
-        name:"Radar", unit: "ppm", maxLvl:999, table:{},
-        wrapper: document.querySelector(".item-7"), costParams: { mult: 50, exponent: 2.500 },
+    }),
+    new Trait({
+        name:"Radar", unit: "ppm", max:999, includeInTable: true,
+        costParams: { mult: 50, exponent: 2.500 },
         outputs:[
             {text:({dailyPets})=>"weekly bot: "+(100-100*Math.pow(1 - (0.00000004*traits[5].level), dailyPets*7)).toFixed(1)+"%"},
             {text:({dailyPets})=>"monthly bot: "+(100-100*Math.pow(1 - (0.00000004*traits[5].level), dailyPets*30)).toFixed(1)+"%"}
         ]
-    }
+    })
 ];
 
 const graying= Array.from(document.querySelectorAll(".patreon-graying"));
@@ -83,9 +156,6 @@ const petWorthProfit= document.getElementById("petWorthProfit");
 const hbWorthSac = document.getElementById("hbWorthSac");
 const hbWorthSell = document.getElementById("hbWorthSell");
 const hbWorthProfit = document.getElementById("hbWorthProfit");
-
-let patreon = false;
-let initialized = false;
 
 const petWorth = [
 /*[sell,sac]*/
@@ -173,72 +243,6 @@ document.getElementById("patreonCheck").onchange= e =>{
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    const table2El=document.getElementById("table2");
-    table2El.innerHTML="<tr><th></th><th>Cost</th><th>Essence</th><th>ROI</th></tr>";
-
-    traits.forEach((trait,i) => {
-        if (trait.table){
-            const cells = [make("td",{textContent:trait.name}),make("td"),make("td"),make("td")];
-            const row = make("tr",{},cells);
-            table2El.append(row);
-            Object.assign(trait.table,{
-                cost:cells[1],essence:cells[2],roi:cells[3],row
-            })
-        }
-        
-        const input = make("input",{
-            type:"number", min:0, max:trait.maxLvl, tabIndex:i+1, className:"discord-code-lite no-arrows",
-            style:{borderRadius:"0 0.2rem 0.2rem 0"},
-            onchange:() => modifyValueAndCookie(i, +input.value)
-        });
-
-        const span = make("div",{
-            textContent:"Lvl", className:"calculatorLevel",
-            onclick:()=>input.focus()
-        });
-
-        //btnM
-        const btnM = make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value-1)});
-        //btnP & tooltip
-        const ttKids = [make("img",{className:"upgrade-image",src:"../media/owo_images/essence.gif"}),make("div")]
-        const tt = make("span",{className:"tooltip-text"},[
-            make("div",{style:{display:"flex", justifyItems: "center", justifyContent: "center", gap: "0.1rem"}},ttKids)
-        ]);
-        const text = make("div");
-        const btnP = make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value+1), className:"tooltip"},[text,tt]);
-        const btnData = {text, ttText:ttKids[1],ttEl:tt}
-
-        const inputContainer = document.getElementById(`inputContainer${i + 1}`);
-        inputContainer.append(
-            make("div",{className:"hb-input-wrapper",
-                onwheel: e =>{
-                    e.preventDefault();
-                    const step = e.deltaY < 0? 1:-1;
-                    modifyValueAndCookie(i, +input.value +step);
-                }
-            },[
-                btnM,
-                make("div",{className:"numberWrapper"},[span, input]),
-                btnP
-            ])
-        );
-
-        const outputWrapper = trait.wrapper.querySelector(".output-container");
-        trait.outputs.forEach(output =>{
-            output.el = document.createElement("li");
-            outputWrapper.append(output.el);
-        });
-
-        Object.assign(trait,{
-            input,
-            btnM,
-            btnP:btnData,
-            header: trait.wrapper.querySelector(".header"),
-        })
-
-        modifyValueDirect(i,0);
-    });
-
     initialized = true;
 
     importFromHash();
@@ -249,18 +253,17 @@ document.addEventListener("DOMContentLoaded", () => {
     drawData();
 });
 
-function modifyValueDirect(i, value) {
-    const trait = traits[i];
+function modifyValueDirect(trait, value) {
     const {input,btnM,btnP} = trait;
-
     value = Math.min(input.max,Math.max(0,+value));
+    
+    input.value= value;
+    trait.level= value;
+
     btnM.textContent = value==0? "MIN":"<";
     btnP.text.textContent = value==input.max? "MAX":">";
     btnP.ttEl.hidden=value==input.max;
     btnP.ttText.textContent=getUpgradeCost(trait);
-
-    input.value= value;
-    trait.level= value;
     drawData();
 }
 
@@ -306,11 +309,12 @@ function drawData(){
                 maxROI = ROI;
                 maxROIindex = i;
             }
-            trait.table.cost.textContent = getUpgradeCost(trait);
-            trait.table.row.style.textDecoration = trait.level === trait.maxLvl ? "line-through" : "none";
+            trait.table.row.style.textDecoration = trait.level === trait.max ? "line-through" : "none";
             trait.table.row.style.fontWeight="normal";
-            trait.table.essence.textContent = signedNumberFixedString(upgradeWorth[i],1)+` ess/day`;
-            trait.table.roi.textContent= (ROI*100).toFixed(1) + "%/day"
+            trait.table.cells[0].textContent = trait.name;
+            trait.table.cells[1].textContent = getUpgradeCost(trait);
+            trait.table.cells[2].textContent = signedNumberFixedString(upgradeWorth[i],1)+` ess/day`;
+            trait.table.cells[3].textContent = (ROI*100).toFixed(1) + "%/day"
         }
     });
     traits[maxROIindex].table.row.style.fontWeight = "bolder";
@@ -331,12 +335,12 @@ function extractLevels(text) {
     const levelPattern = /\bLvl (\d+)\b/g;
     const matches = [...text.matchAll(levelPattern)].slice(0, 6);
     matches.forEach((m, i) => {
-        modifyValueAndCookie(i, m[1]);
+        modifyValueAndCookie(traits[i], m[1]);
     });
 }
 
-function modifyValueAndCookie(index, value){
-    modifyValueDirect(index, value);
+function modifyValueAndCookie(trait, value){
+    modifyValueDirect(trait, value);
     saveDebounced();
 }
 
@@ -357,5 +361,5 @@ function importFromCookie(){
 function stringToLevel(levelString){
     levelString .split(",")
                 .map(Number)
-                .forEach((value, index) => modifyValueAndCookie(index, value));
+                .forEach((value, index) => modifyValueAndCookie(traits[index], value));
 }
