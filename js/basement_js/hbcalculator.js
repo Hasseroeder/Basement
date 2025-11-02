@@ -5,7 +5,7 @@ import { debounce } from "./util/inputUtil.js";
 
 const traits = [
     {
-        name:"Efficiency", unit: " pets/h", maxLvl:215,
+        name:"Efficiency", unit: " pets/h", maxLvl:215, table:{},
         wrapper: document.querySelector(".item-2"), costParams: { mult: 10, exponent: 1.748 },
         outputs:[
             {text:({dailyPets})=>dailyPets+" pets/day"},
@@ -26,7 +26,7 @@ const traits = [
         ]
     },
     {
-        name:"Gain", unit:" ess/h", maxLvl:200,
+        name:"Gain", unit:" ess/h", maxLvl:200, table:{},
         wrapper: document.querySelector(".item-5"), costParams: { mult: 10, exponent: 1.800 },
         outputs:[
             {text:({values})=>(values[3]*24)+" ess/day"},
@@ -42,7 +42,7 @@ const traits = [
         ]
     },
     {
-        name:"Radar", unit: "ppm", maxLvl:999,
+        name:"Radar", unit: "ppm", maxLvl:999, table:{},
         wrapper: document.querySelector(".item-7"), costParams: { mult: 50, exponent: 2.500 },
         outputs:[
             {text:({dailyPets})=>"weekly bot: "+(100-100*Math.pow(1 - (0.00000004*traits[5].level), dailyPets*7)).toFixed(1)+"%"},
@@ -50,26 +50,6 @@ const traits = [
         ]
     }
 ];
-
-populateITable();
-function populateITable(){
-    const table2El=document.getElementById("table2");
-    table2El.innerHTML="<tr><th></th><th>Cost</th><th>Essence</th><th>ROI</th></tr>";
-
-    [0,3,5].forEach(i =>{
-        const trait = traits[i]
-
-        const label = make("td",{textContent:trait.name});
-        const cost = make("td");
-        const essence = make("td");
-        const roi = make("td");
-        const row = make("tr",{},[label,cost,essence,roi]);
-        table2El.append(row);
-        Object.assign(trait,{
-            table:{cost,essence,roi,row}
-        })
-    });
-}
 
 const graying= Array.from(document.querySelectorAll(".patreon-graying"));
 const renderPatreon = () => graying.forEach(el=>el.hidden=patreon);
@@ -193,8 +173,18 @@ document.getElementById("patreonCheck").onchange= e =>{
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+    const table2El=document.getElementById("table2");
+    table2El.innerHTML="<tr><th></th><th>Cost</th><th>Essence</th><th>ROI</th></tr>";
+
     traits.forEach((trait,i) => {
-        const container = document.getElementById(`inputContainer${i + 1}`);
+        if (trait.table){
+            const cells = [make("td",{textContent:trait.name}),make("td"),make("td"),make("td")];
+            const row = make("tr",{},cells);
+            table2El.append(row);
+            Object.assign(trait.table,{
+                cost:cells[1],essence:cells[2],roi:cells[3],row
+            })
+        }
         
         const input = make("input",{
             type:"number", min:0, max:trait.maxLvl, tabIndex:i+1, className:"discord-code-lite no-arrows",
@@ -218,7 +208,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const btnP = make("button",{onclick: ()=>modifyValueAndCookie(i, +input.value+1), className:"tooltip"},[text,tt]);
         const btnData = {text, ttText:ttKids[1],ttEl:tt}
 
-        container.append(
+        const inputContainer = document.getElementById(`inputContainer${i + 1}`);
+        inputContainer.append(
             make("div",{className:"hb-input-wrapper",
                 onwheel: e =>{
                     e.preventDefault();
