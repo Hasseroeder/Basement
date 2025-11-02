@@ -6,6 +6,7 @@ import { debounce } from "./util/inputUtil.js";
 let traitcounter = 1;
 let patreon = false;
 let initialized = false;
+let isDragging = false;
 
 const table2El=document.getElementById("table2");
 table2El.innerHTML="<tr><th></th><th>Cost</th><th>Essence</th><th>ROI</th></tr>";
@@ -32,39 +33,33 @@ class Trait{
             this.table={cells,row}
         }
         
-        this.input = make("input",{
-            type:"number", min:0, max:this.max, tabIndex:traitcounter++, className:"number-input no-arrows",
-            onchange:() => modifyValueAndCookie(this, +this.input.value)
-        });
+        [this._span, this.input] = [
+            make("div",{
+                textContent:"Lvl", className:"calculatorLevel",
+                onclick:()=>input.focus()
+            }),
+            make("input",{
+                type:"number", min:0, max:this.max, tabIndex:traitcounter++, className:"number-input no-arrows",
+                onchange:() => modifyValueAndCookie(this)
+            })
+        ];
+        const _numberWrapper = make("div",{className:"numberWrapper"},[this._span, this.input]);
 
-        const _span = make("div",{
-            textContent:"Lvl", className:"calculatorLevel",
-            onclick:()=>input.focus()
-        });
-
-        //btnM
-        this.btnM = make("button",{onclick: ()=>modifyValueAndCookie(this, +this.input.value-1)});
-        //btnP & tooltip
         const _ttKids = [make("img",{className:"upgrade-image",src:"../media/owo_images/essence.gif"}),make("div")]
-        const _tt = make("span",{className:"tooltip-text"},[
-            make("div",{style:{display:"flex", justifyItems: "center", justifyContent: "center", gap: "0.1rem"}},_ttKids)
-        ]);
+        const _tt = make("span",{className:"tooltip-text"},_ttKids);
         const text = make("div");
-        const _btnP = make("button",{onclick: ()=>modifyValueAndCookie(this, +this.input.value+1), className:"tooltip"},[text,_tt]);
-        this.btnP={text, ttText:_ttKids[1],ttEl:_tt};
+        const _btnP = make("button",{onclick: ()=>modifyValueAndCookie(this,true), className:"tooltip"},[text,_tt]);
+        const _btnM = make("button",{onclick: ()=>modifyValueAndCookie(this,false)});
+        this.btnM= _btnM;
+        this.btnP= {text, ttText:_ttKids[1],ttEl:_tt};
 
         wrappers[1].append(
             make("div",{className:"hb-input-wrapper",
                 onwheel: e =>{
                     e.preventDefault();
-                    const step = e.deltaY < 0? 1:-1;
-                    modifyValueAndCookie(this, +this.input.value +step);
+                    modifyValueAndCookie(this,e.deltaY < 0);
                 }
-            },[
-                this.btnM,
-                make("div",{className:"numberWrapper"},[_span, this.input]),
-                _btnP
-            ])
+            },[_btnM,_numberWrapper,_btnP])
         );
 
         this.outputs.forEach(output =>{
@@ -73,6 +68,11 @@ class Trait{
         });
 
         modifyValueDirect(this,0);
+    }
+
+    cost(){
+        const params = this.costParams;
+        return Math.floor(params.mult * Math.pow(this.level + 1, params.exponent));
     }
 }
 
@@ -192,28 +192,21 @@ function petRates(){
 }
 
 function getWorth(){
+    const rates = petRates();
     let sacWorth=0;
     let sellWorth=0;
 
-    isSac.forEach((bool, index) => {
-        if (bool) {
-            sacWorth += petRates()[index]*petWorth[index][1];
-        }else{
-            sellWorth += petRates()[index]*petWorth[index][0];
-        }
+    isSac.forEach((is,i) =>{
+        if (is)   sacWorth += rates[i] * petWorth[i][1];
+        else      sellWorth += rates[i] * petWorth[i][0];
     });
-    return [sacWorth, sellWorth];
-}
 
-function getUpgradeCost(trait) {
-    const params = trait.costParams;
-    return Math.floor(params.mult * Math.pow(trait.level + 1, params.exponent));
+    return [sacWorth, sellWorth];
 }
 
 const cells = Array.from(document.querySelectorAll("#table-1 td"));
 const isSac = cells.map(() => false);
 
-let isDragging = false;
 document.addEventListener("mouseup", () => isDragging = false);
 document.addEventListener("mousedown", () => isDragging = true);
 window.addEventListener('hashchange', importFromHash);
@@ -256,14 +249,14 @@ document.addEventListener("DOMContentLoaded", () => {
 function modifyValueDirect(trait, value) {
     const {input,btnM,btnP} = trait;
     value = Math.min(input.max,Math.max(0,+value));
-    
+
     input.value= value;
     trait.level= value;
 
     btnM.textContent = value==0? "MIN":"<";
     btnP.text.textContent = value==input.max? "MAX":">";
     btnP.ttEl.hidden=value==input.max;
-    btnP.ttText.textContent=getUpgradeCost(trait);
+    btnP.ttText.textContent=trait.cost();
     drawData();
 }
 
@@ -304,7 +297,7 @@ function drawData(){
             output.el.textContent=output.text(params);
         });
         if (trait.table){
-            const ROI = upgradeWorth[i]/getUpgradeCost(trait);
+            const ROI = upgradeWorth[i]/trait.cost();
             if (ROI > maxROI) {
                 maxROI = ROI;
                 maxROIindex = i;
@@ -312,7 +305,7 @@ function drawData(){
             trait.table.row.style.textDecoration = trait.level === trait.max ? "line-through" : "none";
             trait.table.row.style.fontWeight="normal";
             trait.table.cells[0].textContent = trait.name;
-            trait.table.cells[1].textContent = getUpgradeCost(trait);
+            trait.table.cells[1].textContent = trait.cost();
             trait.table.cells[2].textContent = signedNumberFixedString(upgradeWorth[i],1)+` ess/day`;
             trait.table.cells[3].textContent = (ROI*100).toFixed(1) + "%/day"
         }
@@ -340,6 +333,9 @@ function extractLevels(text) {
 }
 
 function modifyValueAndCookie(trait, value){
+    if (typeof value === "boolean") value = +trait.input.value + (value?+1:-1); // if boolean, just assume you want to go up/down
+    else if (value === undefined)   value = +trait.input.value;                 // if no value given, take from input
+
     modifyValueDirect(trait, value);
     saveDebounced();
 }

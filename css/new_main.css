@@ -541,6 +541,13 @@ a:hover {
     position: absolute;
     left: 0%;
     top: 120%;
+
+    /*new*/
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:0.1rem;
 }
 
 .tooltip .pet-tooltip-text {

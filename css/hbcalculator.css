@@ -86,7 +86,6 @@ input[type="checkbox"] {
     display: flex;
     height: 1.45rem;
     align-items: center;
-    font-size: 0.8rem;
     font-family: monospace;
 }
 
@@ -192,3 +191,6 @@ ul {
 h4 {
     margin: 0.15rem;
 }
+
+[hidden] { display: none !important; }
+    /* this should be important by default imo */
