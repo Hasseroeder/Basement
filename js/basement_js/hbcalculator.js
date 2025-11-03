@@ -243,7 +243,8 @@ function toggleCell(i) {
     drawData();
 }
 
-document.getElementById("patreonCheck").onchange= e =>{
+const patreonCheck = document.getElementById("patreonCheck");
+patreonCheck.onchange= e =>{
     patreon=e.target.checked; 
     saveDebounced();
     drawData();
@@ -273,8 +274,6 @@ function modifyValueDirect(trait, value) {
 }
 
 function drawData(){    
-    const worth=getWorth();
-
     traits.forEach(trait => {
         trait.header.textContent = trait.name + " - " + roundToDecimals(trait.value(),2) + trait.unit;
         trait.outputs.forEach(output =>output.update());
@@ -282,7 +281,8 @@ function drawData(){
     });
     [Efficiency,Gain,Radar].sort((a, b) => b.ROI() - a.ROI())[0]
         .table.row.style.fontWeight = "bolder";
-
+    
+    const worth=getWorth();
     petWorthEls[0].textContent = worth[1].toFixed(1) +" owo/pet"; 
     hbWorthEls[0].textContent  = (worth[1]*hbPets()).toFixed(0) +" owo/hb"; 
 
@@ -292,7 +292,7 @@ function drawData(){
     petWorthEls[2].textContent = worth[0].toFixed(1) +" ess/pet";      
     hbWorthEls[2].textContent  = (worth[0]*hbPets()).toFixed(0) +" ess/hb"; 
 
-    document.getElementById("patreonCheck").checked=patreon;
+    patreonCheck.checked=patreon;
 }
 
 function extractLevels(text) {
