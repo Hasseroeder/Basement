@@ -1,11 +1,10 @@
 import * as cookie from "./util/cookieUtil.js";
 import { signedNumberFixedString } from "./util/stringUtil.js";
 import { make, doTimestamps } from "./util/injectionUtil.js";
-import { debounce } from "./util/inputUtil.js";
+import { debounce,roundToDecimals } from "./util/inputUtil.js";
 
 let traitcounter = 1;
 let patreon = false;
-let initialized = false;
 let isDragging = false;
 
 const table2El=document.getElementById("table2");
@@ -13,9 +12,12 @@ table2El.innerHTML="<tr><th></th><th>Cost</th><th>Essence</th><th>ROI</th></tr>"
 
 const gridContainer= document.querySelector(".gridContainer");
 
+const dailyPets = ()=>Efficiency.value()*24;
+const hbPets = ()=>Math.floor(Efficiency.value()*Duration.value());
+
 class Trait{
-    constructor ({name,unit,max,includeInTable,costParams,outputs}){
-        [this.name,this.unit,this.max,this.costParams,this.outputs] = [name,unit,max,costParams,outputs]
+    constructor (opts){
+        Object.assign(this, opts);
         this.header = make("span");
         this.emoji = make("img",{src:`../media/owo_images/${this.name.toLowerCase()}.png`, style:{height:"1rem"}});
 
@@ -26,7 +28,7 @@ class Trait{
         ];
         gridContainer.append(make("div",{className:"trait-box"},wrappers));
 
-        if (includeInTable){
+        if (this.upgradeWorth){
             const cells = [...Array(4)].map(() => make("td"));
             const row = make("tr",{},cells);
             table2El.append(row);
@@ -64,65 +66,75 @@ class Trait{
 
         this.outputs.forEach(output =>{
             output.el = document.createElement("li");
+            output.update=()=>output.el.textContent=output.text();
             wrappers[2].append(output.el);
         });
-
-        modifyValueDirect(this,0);
     }
 
     cost(){
-        const params = this.costParams;
-        return Math.floor(params.mult * Math.pow(this.level + 1, params.exponent));
+        const {mult,exponent} = this.costParams;
+        return Math.floor(mult * Math.pow(this.level + 1, exponent));
+    }
+
+    value(){
+        const {mult=1, base=0} = this.valueParams;
+        return mult*this.level + base;
+    }
+
+    ROI(){
+        return this.upgradeWorth()/this.cost();
     }
 }
 
-const traits = [
-    new Trait({
-        name:"Efficiency", unit: " pets/h", max:215, includeInTable: true, 
-        costParams: { mult: 10, exponent: 1.748 },
-        outputs:[
-            {text:({dailyPets})=>dailyPets+" pets/day"},
-            {text:({hbPets})=>hbPets+" pets/hb"}
-        ]
-    }),
-    new Trait({
-        name:"Duration", unit: "h", max:235,
-        costParams: { mult: 10, exponent: 1.700 },
-        outputs:[]
-    }),
-    new Trait({
-        name:"Cost", unit: " cowoncy", max:5,
-        costParams: { mult: 1000, exponent: 3.4 },
-        outputs:[
-            {text:({dailyPets,values})=>"-"+(dailyPets*values[2])+" owo/day"},
-            {text:({hbPets,values})=>"-"+(hbPets*values[2])+" owo/hb"}
-        ]
-    }),
-    new Trait({
-        name:"Gain", unit:" ess/h", max:200, includeInTable: true,
-        costParams: { mult: 10, exponent: 1.800 },
-        outputs:[
-            {text:({values})=>(values[3]*24)+" ess/day"},
-            {text:({values})=>(Math.floor(values[3]*values[1]))+" ess/hb"}
-        ]
-    }),
-    new Trait({
-        name:"Experience", unit: " exp/h", max:200,
-        costParams: { mult: 10, exponent: 1.800 },
-        outputs:[
-            {text:({values})=>(values[4]*24)+" exp/day"},
-            {text:({values})=>(Math.floor(values[4]*values[1]))+" exp/hb"}
-        ]
-    }),
-    new Trait({
-        name:"Radar", unit: "ppm", max:999, includeInTable: true,
-        costParams: { mult: 50, exponent: 2.500 },
-        outputs:[
-            {text:({dailyPets})=>"weekly bot: "+(100-100*Math.pow(1 - (0.00000004*traits[5].level), dailyPets*7)).toFixed(1)+"%"},
-            {text:({dailyPets})=>"monthly bot: "+(100-100*Math.pow(1 - (0.00000004*traits[5].level), dailyPets*30)).toFixed(1)+"%"}
-        ]
-    })
-];
+const Efficiency = new Trait({
+    name:"Efficiency", unit:" pets/h", max:215,
+    costParams: {mult:10, exponent:1.748}, valueParams:{base:25}, upgradeWorth: ()=>getWorth()[0] * 24,
+    outputs:[
+        {text:()=>dailyPets()+" pets/day"},
+        {text:()=>hbPets()+" pets/hb"}
+    ]
+});
+const Duration = new Trait({
+    name:"Duration", unit:"h", max:235,
+    costParams: {mult:10, exponent:1.700}, valueParams:{mult:0.1, base:0.5},
+    outputs:[]
+});
+const Cost = new Trait({
+    name:"Cost", unit:" cowoncy", max:5,
+    costParams: {mult:1000, exponent:3.4}, valueParams:{mult:-1, base:10},
+    outputs:[
+        {text:()=>"-"+(dailyPets()*Cost.value())+" owo/day"},
+        {text:()=>"-"+(hbPets()*Cost.value())+" owo/hb"}
+    ]
+});
+const Gain = new Trait({
+    name:"Gain", unit:" ess/h", max:200,
+    costParams: {mult:10, exponent:1.800}, valueParams:{mult:25}, upgradeWorth: ()=>600,
+    outputs:[
+        {text:()=>(Gain.value()*24)+" ess/day"},
+        {text:()=>(Math.floor(Gain.value()*Duration.value()))+" ess/hb"}
+    ]
+});
+const Experience = new Trait({
+    name:"Experience", unit:" exp/h", max:200,
+    costParams: {mult:10, exponent:1.800}, valueParams:{mult:35},
+    outputs:[
+        {text:()=>(Experience.value()*24)+" exp/day"},
+        {text:()=>(Math.floor(Experience.value()*Duration.value()))+" exp/hb"}
+    ]
+});
+const Radar = new Trait({
+    name:"Radar", unit:"ppm", max:999,
+    costParams: {mult:50, exponent:2.500}, valueParams:{mult:0.04}, upgradeWorth: ()=>{
+        return (isSac[8] ? 0.00000004 * petWorth[8][1] * dailyPets() : 0)  
+        - (isSac[0] ? 0.00000004 * dailyPets() : 0)
+    },
+    outputs:[
+        {text:()=>"weekly bot: "+(100-100*Math.pow(1 - (0.00000004*Radar.level), dailyPets()*7)).toFixed(1)+"%"},
+        {text:()=>"monthly bot: "+(100-100*Math.pow(1 - (0.00000004*Radar.level), dailyPets()*30)).toFixed(1)+"%"}
+    ]
+})
+const traits = [Efficiency,Duration,Cost,Gain,Experience,Radar];
 
 const graying= Array.from(document.querySelectorAll(".patreon-graying"));
 const renderPatreon = () => graying.forEach(el=>el.hidden=patreon);
@@ -149,13 +161,8 @@ function toggleAllCells(boolean){
     })
 }
 
-const petWorthSac = document.getElementById("petWorthSac");
-const petWorthSell= document.getElementById("petWorthSell");
-const petWorthProfit= document.getElementById("petWorthProfit");
-
-const hbWorthSac = document.getElementById("hbWorthSac");
-const hbWorthSell = document.getElementById("hbWorthSell");
-const hbWorthProfit = document.getElementById("hbWorthProfit");
+const hbWorthEls = Array.from(document.querySelectorAll(".hbworth"));
+const petWorthEls= Array.from(document.querySelectorAll(".petworth"));
 
 const petWorth = [
 /*[sell,sac]*/
@@ -174,16 +181,16 @@ const petWorth = [
 
 function petRates(){
     let petRates = [
-        0.3,                        //u
-        0.1,                        //r
-        0.01,                       //e
-        0.001,                      //m
-        patreon? 0.005:0,           //p1
-        patreon? 0.0001:0,          //p2
-        0.0005,                     //l
-        0.00000004*traits[5].level, //b
-        0.00001,                    //f
-        0.000001,                   //h
+        0.3,                    //u
+        0.1,                    //r
+        0.01,                   //e
+        0.001,                  //m
+        patreon? 0.005:0,       //p1
+        patreon? 0.0001:0,      //p2
+        0.0005,                 //l
+        0.00000004*Radar.level, //b
+        0.00001,                //f
+        0.000001,               //h
     
     ]    
     let cRate = petRates.reduce((acc, num) => acc - num, 1);
@@ -209,7 +216,6 @@ const isSac = cells.map(() => false);
 
 document.addEventListener("mouseup", () => isDragging = false);
 document.addEventListener("mousedown", () => isDragging = true);
-window.addEventListener('hashchange', importFromHash);
 document.addEventListener("paste", event => extractLevels(event.clipboardData.getData("text")));
 
 cells.forEach((cell,index) => {
@@ -236,11 +242,8 @@ document.getElementById("patreonCheck").onchange= e =>{
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    initialized = true;
-
-    importFromHash();
     importFromCookie();
-
+    importFromHash();
     toggleAllCells(true);
     saveDebounced();
     drawData();
@@ -261,65 +264,31 @@ function modifyValueDirect(trait, value) {
 }
 
 function drawData(){    
-    if (!initialized) return;
-
-    const values = [
-        traits[0].level + 25,
-        traits[1].level/10+0.5,
-        10 - traits[2].level,
-        traits[3].level * 25,
-        traits[4].level * 35,
-        (traits[5].level * 0.04).toFixed(2)
-    ];
-
-    const upgradeWorth = [
-        getWorth()[0] * 24,
-        0,
-        0,
-        600,
-        0,
-        (isSac[8] ? 0.00000004 * petWorth[8][1] * values[0] * 24 : 0)  
-        - (isSac[0] ? petRates()[8] * values[0] * 24 : 0)              
-    ];
-
-    const dailyPets = values[0]*24;
-    const hbPets = Math.floor(values[0]*values[1]);
     const worth=getWorth();
 
-    const params = {dailyPets,hbPets,values};
-
-    let maxROIindex = -1;
-    let maxROI = -Infinity;
-
     traits.forEach((trait, i) => {
-        trait.header.textContent = trait.name + " - " + values[i] + trait.unit;
-        trait.outputs.forEach(output =>{
-            output.el.textContent=output.text(params);
-        });
+        trait.header.textContent = trait.name + " - " + roundToDecimals(trait.value(),2) + trait.unit;
+        trait.outputs.forEach(output =>output.update());
         if (trait.table){
-            const ROI = upgradeWorth[i]/trait.cost();
-            if (ROI > maxROI) {
-                maxROI = ROI;
-                maxROIindex = i;
-            }
             trait.table.row.style.textDecoration = trait.level === trait.max ? "line-through" : "none";
-            trait.table.row.style.fontWeight="normal";
+            trait.table.row.style.fontWeight = "normal";
             trait.table.cells[0].textContent = trait.name;
             trait.table.cells[1].textContent = trait.cost();
-            trait.table.cells[2].textContent = signedNumberFixedString(upgradeWorth[i],1)+` ess/day`;
-            trait.table.cells[3].textContent = (ROI*100).toFixed(1) + "%/day"
+            trait.table.cells[2].textContent = signedNumberFixedString(trait.upgradeWorth(),1)+` ess/day`;
+            trait.table.cells[3].textContent = (trait.ROI()*100).toFixed(1) + "%/day"
         }
     });
-    traits[maxROIindex].table.row.style.fontWeight = "bolder";
+    [Efficiency,Gain,Radar].sort((a, b) => b.ROI() - a.ROI())[0]
+        .table.row.style.fontWeight = "bolder";
 
-    petWorthSell.textContent = worth[1].toFixed(1) +" owo/pet"; 
-    hbWorthSell.textContent  = (worth[1]*hbPets).toFixed(0) +" owo/hb"; 
+    petWorthEls[0].textContent = worth[1].toFixed(1) +" owo/pet"; 
+    hbWorthEls[0].textContent  = (worth[1]*hbPets()).toFixed(0) +" owo/hb"; 
 
-    petWorthProfit.textContent = "Profit: "+(worth[1]-values[2]).toFixed(1) +" owo/pet"; 
-    hbWorthProfit.textContent  = "Profit: "+((worth[1]-values[2])*hbPets).toFixed(0)+" owo/hb";
+    petWorthEls[1].textContent = "Profit: "+(worth[1]-Cost.value()).toFixed(1) +" owo/pet"; 
+    hbWorthEls[1].textContent  = "Profit: "+((worth[1]-Cost.value())*hbPets()).toFixed(0)+" owo/hb";
 
-    petWorthSac.textContent = worth[0].toFixed(1) +" ess/pet";      
-    hbWorthSac.textContent  = (worth[0]*hbPets).toFixed(0) +" ess/hb"; 
+    petWorthEls[2].textContent = worth[0].toFixed(1) +" ess/pet";      
+    hbWorthEls[2].textContent  = (worth[0]*hbPets()).toFixed(0) +" ess/hb"; 
 
     document.getElementById("patreonCheck").checked=patreon;
 }
@@ -347,15 +316,15 @@ function importFromHash(){
 
 function importFromCookie(){
     const levelsData = cookie.getCookie("Levels");
-    if (levelsData) stringToLevel(levelsData);
+    stringToLevel(levelsData ?? "0,0,0,0,0,0");
 
-    const patreonData = cookie.getCookie("Patreon");
-    patreon = patreonData === "true";
+    patreon = cookie.getCookie("Patreon") === "true";
     renderPatreon();
 }
 
 function stringToLevel(levelString){
+    console.log(levelString);
     levelString .split(",")
                 .map(Number)
-                .forEach((value, index) => modifyValueAndCookie(traits[index], value));
+                .forEach((value, index) => modifyValueAndCookie(traits[index], value||0));
 }
