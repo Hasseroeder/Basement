@@ -31,8 +31,17 @@ class Trait{
         if (this.upgradeWorth){
             const cells = [...Array(4)].map(() => make("td"));
             const row = make("tr",{},cells);
+            this.table={row,
+                update:()=>{
+                    row.style.textDecoration = this.level === this.max ? "line-through" : "none";
+                    row.style.fontWeight = "normal";
+                    cells[0].textContent = this.name;
+                    cells[1].textContent = this.cost();
+                    cells[2].textContent = signedNumberFixedString(this.upgradeWorth(),1)+` ess/day`;
+                    cells[3].textContent = (this.ROI()*100).toFixed(1) + "%/day"
+                }
+            }
             table2El.append(row);
-            this.table={cells,row}
         }
         
         [this._span, this.input] = [
@@ -266,17 +275,10 @@ function modifyValueDirect(trait, value) {
 function drawData(){    
     const worth=getWorth();
 
-    traits.forEach((trait, i) => {
+    traits.forEach(trait => {
         trait.header.textContent = trait.name + " - " + roundToDecimals(trait.value(),2) + trait.unit;
         trait.outputs.forEach(output =>output.update());
-        if (trait.table){
-            trait.table.row.style.textDecoration = trait.level === trait.max ? "line-through" : "none";
-            trait.table.row.style.fontWeight = "normal";
-            trait.table.cells[0].textContent = trait.name;
-            trait.table.cells[1].textContent = trait.cost();
-            trait.table.cells[2].textContent = signedNumberFixedString(trait.upgradeWorth(),1)+` ess/day`;
-            trait.table.cells[3].textContent = (trait.ROI()*100).toFixed(1) + "%/day"
-        }
+        trait.table?.update()
     });
     [Efficiency,Gain,Radar].sort((a, b) => b.ROI() - a.ROI())[0]
         .table.row.style.fontWeight = "bolder";
