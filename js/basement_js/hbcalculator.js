@@ -73,10 +73,10 @@ class Trait{
             },[_btnM,_numberWrapper,_btnP])
         );
 
-        this.outputs.forEach(output =>{
-            output.el = document.createElement("li");
-            output.update=()=>output.el.textContent=output.text();
-            wrappers[2].append(output.el);
+        this.outputs.forEach((output,i) =>{
+            const el = document.createElement("li");
+            wrappers[2].append(el);
+            this.outputs[i] = () => el.textContent = output();
         });
     }
 
@@ -99,8 +99,8 @@ const Efficiency = new Trait({
     name:"Efficiency", unit:" pets/h", max:215,
     costParams: {mult:10, exponent:1.748}, valueParams:{base:25}, upgradeWorth: ()=>getWorth()[0] * 24,
     outputs:[
-        {text:()=>dailyPets()+" pets/day"},
-        {text:()=>hbPets()+" pets/hb"}
+        ()=>dailyPets()+" pets/day",
+        ()=>hbPets()+" pets/hb"
     ]
 });
 const Duration = new Trait({
@@ -112,24 +112,24 @@ const Cost = new Trait({
     name:"Cost", unit:" cowoncy", max:5,
     costParams: {mult:1000, exponent:3.4}, valueParams:{mult:-1, base:10},
     outputs:[
-        {text:()=>"-"+(dailyPets()*Cost.value())+" owo/day"},
-        {text:()=>"-"+(hbPets()*Cost.value())+" owo/hb"}
+        ()=>"-"+(dailyPets()*Cost.value())+" owo/day",
+        ()=>"-"+(hbPets()*Cost.value())+" owo/hb"
     ]
 });
 const Gain = new Trait({
     name:"Gain", unit:" ess/h", max:200,
     costParams: {mult:10, exponent:1.800}, valueParams:{mult:25}, upgradeWorth: ()=>600,
     outputs:[
-        {text:()=>(Gain.value()*24)+" ess/day"},
-        {text:()=>(Math.floor(Gain.value()*Duration.value()))+" ess/hb"}
+        ()=>(Gain.value()*24)+" ess/day",
+        ()=>(Math.floor(Gain.value()*Duration.value()))+" ess/hb"
     ]
 });
 const Experience = new Trait({
     name:"Experience", unit:" exp/h", max:200,
     costParams: {mult:10, exponent:1.800}, valueParams:{mult:35},
     outputs:[
-        {text:()=>(Experience.value()*24)+" exp/day"},
-        {text:()=>(Math.floor(Experience.value()*Duration.value()))+" exp/hb"}
+        ()=>(Experience.value()*24)+" exp/day",
+        ()=>(Math.floor(Experience.value()*Duration.value()))+" exp/hb"
     ]
 });
 const Radar = new Trait({
@@ -139,8 +139,8 @@ const Radar = new Trait({
         - (isSac[0] ? 0.00000004 * dailyPets() : 0)
     },
     outputs:[
-        {text:()=>"weekly bot: "+(100-100*Math.pow(1 - (0.00000004*Radar.level), dailyPets()*7)).toFixed(1)+"%"},
-        {text:()=>"monthly bot: "+(100-100*Math.pow(1 - (0.00000004*Radar.level), dailyPets()*30)).toFixed(1)+"%"}
+        ()=>"weekly bot: "+(100-100*Math.pow(1 - (0.00000004*Radar.level), dailyPets()*7)).toFixed(1)+"%",
+        ()=>"monthly bot: "+(100-100*Math.pow(1 - (0.00000004*Radar.level), dailyPets()*30)).toFixed(1)+"%"
     ]
 })
 const traits = [Efficiency,Duration,Cost,Gain,Experience,Radar];
@@ -276,7 +276,7 @@ function modifyValueDirect(trait, value) {
 function drawData(){    
     traits.forEach(trait => {
         trait.header.textContent = trait.name + " - " + roundToDecimals(trait.value(),2) + trait.unit;
-        trait.outputs.forEach(output =>output.update());
+        trait.outputs.forEach(fn =>fn());
         trait.table?.update()
     });
     [Efficiency,Gain,Radar].sort((a, b) => b.ROI() - a.ROI())[0]
