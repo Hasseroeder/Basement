@@ -38,7 +38,7 @@ class Trait{
         [this._span, this.input] = [
             make("div",{
                 textContent:"Lvl", className:"calculatorLevel",
-                onclick:()=>input.focus()
+                onclick:()=>this.input.focus()
             }),
             make("input",{
                 type:"number", min:0, max:this.max, tabIndex:traitcounter++, className:"number-input no-arrows",
