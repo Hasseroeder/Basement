@@ -316,7 +316,6 @@ function importFromCookie(){
 }
 
 function stringToLevel(levelString){
-    console.log(levelString);
     levelString .split(",")
                 .map(Number)
                 .forEach((value, index) => modifyValueAndCookie(traits[index], value||0));
