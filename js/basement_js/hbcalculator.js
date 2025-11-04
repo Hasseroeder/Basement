@@ -242,13 +242,17 @@ function toggleCell(i) {
     drawData();
 }
 
-const patreonCheck = document.getElementById("patreonCheck");
-patreonCheck.onchange= e =>{
-    patreon=e.target.checked; 
-    saveDebounced();
-    drawData();
-    renderPatreon();
-};
+const   patreonCheckWrapper = document.getElementById("patreonCheck");
+        patreonCheckWrapper.onmousedown = e => {
+            e.preventDefault();
+            patreonCheck.checked = !patreonCheck.checked;
+            patreon=patreonCheck.checked; 
+            saveDebounced();
+            drawData();
+            renderPatreon();
+        }
+const   patreonCheck = patreonCheckWrapper.querySelector("input");
+        patreonCheck.onclick= e => e.preventDefault();
 
 function modifyValueDirect(trait, value) {
     const {input,btnM,btnP} = trait;
@@ -283,7 +287,7 @@ function drawData(){
     petWorthEls[2].textContent = worth[0].toFixed(1) +" ess/pet";      
     hbWorthEls[2].textContent  = (worth[0]*hbPets()).toFixed(0) +" ess/hb"; 
 
-    patreonCheck.checked=patreon;
+    patreonCheckWrapper.checked=patreon;
 }
 
 function extractLevels(text) {

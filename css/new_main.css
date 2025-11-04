@@ -1141,3 +1141,9 @@ a:hover {
   font-size: 0.8rem; 
   text-align: center;
 }
+
+.prevent-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
