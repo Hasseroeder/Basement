@@ -155,7 +155,6 @@ document.getElementById("sacToggles").querySelectorAll("button")
     );
 
 const saveDebounced = debounce(saveData);
-
 function saveData(){
     const tempLevels = traits.map(t => Number(t.level));
 
@@ -251,14 +250,6 @@ patreonCheck.onchange= e =>{
     renderPatreon();
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-    importFromCookie();
-    importFromHash();
-    toggleAllCells(true);
-    saveDebounced();
-    drawData();
-});
-
 function modifyValueDirect(trait, value) {
     const {input,btnM,btnP} = trait;
     value = Math.min(input.max,Math.max(0,+value));
@@ -330,3 +321,7 @@ function stringToLevel(levelString){
                 .map(Number)
                 .forEach((value, index) => modifyValueAndCookie(traits[index], value||0));
 }
+
+importFromCookie();
+importFromHash();
+toggleAllCells(true);
