@@ -157,15 +157,13 @@ class WeaponStat {
 
     _wireEvents() {
         const clamp = (val, el) => {
-            const min = parseFloat(el.min);
-            const max = parseFloat(el.max);
-            const step = parseFloat(el.step);
+            const [min,max,step] = [+el.min, +el.max, +el.step];
 
             const offset = (val - min) / step;
             const snapped = min + Math.round(offset) * step;
             const clamped = Math.min(max, Math.max(min, snapped));
 
-            this._syncAll(clamped);
+            this._syncAll(+clamped.toFixed(6));
         };
 
         this.numberInput.addEventListener("input",  e => {

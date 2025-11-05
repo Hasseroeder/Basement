@@ -16,7 +16,7 @@ export function initiatePassiveStuffs(weapon,passiveData){
                 src: `media/owo_images/f_${passive.aliases[0]}.png`,
                 alt: passive.aliases[0],
                 title: passive.aliases[0],
-                onclick: () => generateNewPassive(passive.id,weapon)
+                onmousedown: () => generateNewPassive(passive.id,weapon)
             })
         );
     });

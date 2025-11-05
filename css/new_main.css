@@ -106,7 +106,7 @@ input, textarea, code, [contenteditable] {
   visibility:visible;
 }
 
-.toolbarSubMenu a {
+.toolbarSubMenu a, .toolbarSubMenu button {
   width: fit-content;
   display:flex;
   margin:0;
