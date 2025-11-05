@@ -25,48 +25,45 @@ export class customSelect{
 
         this._open = false;
         this._selectedIndex = -1;     
-        this._highlightedIndex = -1; 
+        this._highlightedIndex = 0; 
 
-        this._button.addEventListener('click', () => this.openList(!this._open));
+        this._button.addEventListener('click', () => this._openList(!this._open));
         this._options.forEach((opt,i) =>
-            opt.addEventListener('click', () => { this.selectIndex(i); this.openList(false); })
+            opt.addEventListener('click', () => { this._selectIndex(i); this._openList(false); })
         );
 
-        this._button.onkeydown = this.onKeyDown.bind(this);
-        this._ul.onkeydown = this.onKeyDown.bind(this);
+        this._button.onkeydown = this._onKeyDown.bind(this);
+        this._ul.onkeydown = this._onKeyDown.bind(this);
 
         const wearID = { pristine: 3, fine: 2, decent: 1 }[startWear] ?? 0;
-        this.selectIndex(wearID);
+        this._selectIndex(wearID);
 
         document.addEventListener("keydown", e=>{ 
-            if (e.key == "Tab") this.openList(false) 
+            if (e.key == "Tab") this._openList(false) 
         });
         document.addEventListener("pointerdown", e=>{ 
-            if (!wrapper.contains(e.target)) this.openList(false) 
+            if (!wrapper.contains(e.target)) this._openList(false) 
         });
 
         return this._wrapper;
     }
 
-    openList(boolean) {
+    _openList(boolean) {
         if (this._open == boolean) return;
         this._open = boolean;
         this._wrapper.classList.toggle('open', boolean);
 
         if(boolean){
             this._ul.focus();
-            this.setHighlight(this._selectedIndex);
+            this._setHighlight(this._selectedIndex);
         }else{
             this._button.focus();
-            this.clearHighlight();
         }
     }
 
-    selectIndex(index) {
+    _selectIndex(index) {
         if (index == undefined || index < 0 || index >= this._options.length) return;
-        this._options.forEach(opt => {
-            opt.classList.toggle('highlighted', false);
-        });
+        this._options.forEach(opt => opt.classList.remove('highlighted'));
         const opt = this._options[index];
         this._button.textContent = opt.textContent.trim();
         this._selectedIndex = index;
@@ -79,69 +76,64 @@ export class customSelect{
         );
     }
 
-    setHighlight(index) {
+    _setHighlight(index) {
         if (index < 0 || index >= this._options.length) return;
-        if (this._highlightedIndex >= 0) this._options[this._highlightedIndex].classList.remove('highlighted');
+        this._options[this._highlightedIndex].classList.remove('highlighted');
         this._highlightedIndex = index;
         this._options[this._highlightedIndex].classList.add('highlighted');
     }
 
-    clearHighlight() {
-        if (this._highlightedIndex >= 0) this._options[this._highlightedIndex].classList.remove('highlighted');
-        this._highlightedIndex = -1;
-    }
-
-    move(delta) {
+    _move(delta) {
         const last = this._options.length - 1;
-        const base = this._open ? (this._highlightedIndex >= 0 ? this._highlightedIndex : this._selectedIndex) : this._selectedIndex;
+        const base = this._open ? this._highlightedIndex : this._selectedIndex;
         const next = Math.min(Math.max(0, base + delta),last);
 
-        if (this._open) this.setHighlight(next); 
-        else this.selectIndex(next);
+        if (this._open) this._setHighlight(next); 
+        else this._selectIndex(next);
     }
 
-    moveTo(index){
-        if (this._open) this.setHighlight(index);
-        else this.selectIndex(index);
+    _moveTo(index){
+        if (this._open) this._setHighlight(index);
+        else this._selectIndex(index);
     }
 
-    handleTypeahead(char) {
+    _handleTypeahead(char) {
         const idx = this._options.findIndex(o => o.textContent.trim().toLowerCase().startsWith(char));
         if (idx == -1) return;
-        if (this._open) this.setHighlight(idx);
-        else this.selectIndex(idx);
+        if (this._open) this._setHighlight(idx);
+        else this._selectIndex(idx);
     }
 
-    onKeyDown(e){
+    _onKeyDown(e){
         const k = e.key;
 
         if (this._open && (k === 'Escape' || k === 'Esc')) {
             e.preventDefault();
-            this.openList(false);
+            this._openList(false);
         }else if (k === ' ' || k === 'Spacebar' || k === 'Enter') {
             e.preventDefault();
             if(this._open){
-                this.selectIndex(this._highlightedIndex);
-                this.openList(false);
+                this._selectIndex(this._highlightedIndex);
+                this._openList(false);
             }
             else {
-                this.openList(true);
+                this._openList(true);
             }
         }else if (k === 'ArrowDown' || k === 'ArrowRight') {
             e.preventDefault();
-            this.move(1);
+            this._move(1);
         }else if (k === 'ArrowUp' || k === 'ArrowLeft') {
             e.preventDefault();
-            this.move(-1);
+            this._move(-1);
         }else if (k === 'PageDown') {
             e.preventDefault();
-            this.moveTo(this._options.length-1);
+            this._moveTo(this._options.length-1);
         }else if (k === 'PageUp') {
             e.preventDefault();
-            this.moveTo(0);
+            this._moveTo(0);
         }else if (e.key.length === 1) {
             e.preventDefault();
-            this.handleTypeahead(e.key);
+            this._handleTypeahead(e.key);
         }
     }
 }
