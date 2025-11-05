@@ -8,18 +8,16 @@ let passives;
 
 export function initiatePassiveStuffs(weapon,passiveData){
     passives = passiveData;
-
-    Object.values(passiveData).forEach(passive => {
-        pGrid.append(
-            make("img",{
-                className:'passiveGridImage',
-                src: `media/owo_images/f_${passive.aliases[0]}.png`,
-                alt: passive.aliases[0],
-                title: passive.aliases[0],
-                onmousedown: () => generateNewPassive(passive.id,weapon)
-            })
-        );
-    });
+    
+    pGrid.append(...Object.values(passiveData).map(
+        passive=>make("img",{
+            className:'passiveGridImage',
+            src: `media/owo_images/f_${passive.aliases[0]}.png`,
+            alt: passive.aliases[0],
+            title: passive.aliases[0],
+            onmousedown: () => generateNewPassive(passive.id,weapon)
+        })
+    ));
 }
 
 function generateNewPassive(id, weapon){
@@ -45,10 +43,15 @@ async function appendPassiveNode(passive, weapon) {
         dataset:{id:passive.id}
     });
 
-    Object.assign(passive, passives[passive.id]);
-    passive.image = getWeaponImage(passive);
-    passive.image.className = 'discord-embed-emote weaponCalc-passive-emote';
-    passive.image.onclick = () => removePassive(passive, wrapper, blueprint);
+    Object.assign(passive,passives[passive.id]);
+
+    const image = Object.assign(getWeaponImage(passive),{
+        className: 'discord-embed-emote weaponCalc-passive-emote',
+        onclick: () => removePassive(passive, wrapper, blueprint)
+    })
+
+    Object.assign(passive.image,image);
+
     const desc = await generateDescription(passive, weapon);
 
     if(blueprint.passive.length === 1) pList.innerHTML="";
