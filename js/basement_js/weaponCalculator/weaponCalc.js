@@ -25,7 +25,6 @@ gridInjector({
 
 const currentWeapon= wepFromHash();
 initiateWeapon(currentWeapon);
-console.log(currentWeapon);
 
 const wearSelectRoot = initCustomSelect(
 	currentWeapon.product.blueprint.wear

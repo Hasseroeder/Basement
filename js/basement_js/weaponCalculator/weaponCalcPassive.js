@@ -69,5 +69,5 @@ function removePassive(passive, wrapper, blueprint) {
         blueprint.passive.filter(p => p !== passive);
     wrapper.remove();
     blueprint.stats[0].IO.justUpdateDumbass();
-    if (passives.length == 0) pList.innerHTML = '<span><b>Passives:</b> none</span>';
+    if (blueprint.passive.length == 0) pList.innerHTML = '<span><b>Passives:</b> none</span>';
 }
