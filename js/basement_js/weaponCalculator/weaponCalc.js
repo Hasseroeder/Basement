@@ -1,4 +1,4 @@
-import { initCustomSelect } from './customSelect.js';
+import { customSelect } from '../util/customSelect.js';
 import { loadJson } from '../util/jsonUtil.js';
 import { updateEverything,generateEverything } from './weaponCalcMessageGenerator.js';
 import { initiatePassiveStuffs } from './weaponCalcPassive.js';
@@ -26,13 +26,12 @@ gridInjector({
 const currentWeapon= wepFromHash();
 initiateWeapon(currentWeapon);
 
-const wearSelectRoot = initCustomSelect(
-	currentWeapon.product.blueprint.wear
+const wearSelect = new customSelect(
+	currentWeapon.product.blueprint.wear,
+	document.getElementById('wearSelect'),
+	["WORN","DECENT","FINE","PRISTINE"]
 );
-// remove the wear on init
-// instead on each new weapon, we manually change the wear with changeIndex
-
-wearSelectRoot.addEventListener('change', e => wearWasChanged(e,currentWeapon));
+wearSelect.addEventListener('change', e => wearWasChanged(e,currentWeapon));
 
 function handleClick(item) {
   // do something
