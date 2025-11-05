@@ -44,13 +44,10 @@ async function appendPassiveNode(passive, weapon) {
     });
 
     Object.assign(passive,passives[passive.id]);
-
-    const image = Object.assign(getWeaponImage(passive),{
+    passive.image = Object.assign(getWeaponImage(passive),{
         className: 'discord-embed-emote weaponCalc-passive-emote',
         onclick: () => removePassive(passive, wrapper, blueprint)
     })
-
-    Object.assign(passive.image,image);
 
     const desc = await generateDescription(passive, weapon);
 

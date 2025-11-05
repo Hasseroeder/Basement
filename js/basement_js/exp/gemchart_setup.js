@@ -1,8 +1,8 @@
 async function loadChartJs() {
-  const url = 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js';
-  const ChartModule = await import(url);
-  const Chart = ChartModule.default;
-  return Chart;
+	const url = 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js';
+	const ChartModule = await import(url);
+	const Chart = ChartModule.default;
+	return Chart;
 }
 const chartJsPromise = loadChartJs();
 
@@ -27,44 +27,44 @@ function F(x,p) { return (1+x)*w(x,p)*(x>=1?2:1) }
 
 const gemImages = [];
 for (let i = 1; i <= 7; i++) {
-  const img = new Image();
-  img.src = i < 6 ? `/media/owo_images/gem${i}1.png` : `/media/owo_images/gem${i}1.gif`;
-  gemImages.push(img);
+	const img = new Image();
+	img.src = i < 6 ? `/media/owo_images/gem${i}1.png` : `/media/owo_images/gem${i}1.gif`;
+	gemImages.push(img);
 }
 
 const dataset = {
-  label: 'no Patreon',
-  data: [F(1,0), F(2,0), F(3,0), F(4,0), F(5,0), F(6,0), F(7,0), F(8,0)],
-  type: 'line',           
-  showLine: false,        
-  pointStyle: gemImages,  
-  pointRadius: 12,
-  pointHoverRadius: 14,
-  backgroundColor: 'transparent',
-  borderColor: 'transparent'
+	label: 'no Patreon',
+	data: [F(1,0), F(2,0), F(3,0), F(4,0), F(5,0), F(6,0), F(7,0), F(8,0)],
+	type: 'line',           
+	showLine: false,        
+	pointStyle: gemImages,  
+	pointRadius: 12,
+	pointHoverRadius: 14,
+	backgroundColor: 'transparent',
+	borderColor: 'transparent'
 };
 
 const drawImagesPlugin = {
-  id: 'drawImages',
-  afterDatasetsDraw(chart, _) {
-    const ctx = chart.ctx;
-    const meta0 = chart.getDatasetMeta(0);
-    const meta1 = chart.getDatasetMeta(1);
-    const size = 32;
-    const bottom = chart.chartArea.bottom;
+  	id: 'drawImages',
+	afterDatasetsDraw(chart, _) {
+		const ctx = chart.ctx;
+		const meta0 = chart.getDatasetMeta(0);
+		const meta1 = chart.getDatasetMeta(1);
+		const size = 32;
+		const bottom = chart.chartArea.bottom;
 
-    for (let i = 0; i <= meta0.data.length; i++) {
-      const el0 = meta0.data[i+1];
-      const el1 = meta1.data[i+1];
-      const img = gemImages[i];
-      if (!img || !img.complete) continue;
+		for (let i = 0; i <= meta0.data.length; i++) {
+			const el0 = meta0.data[i+1];
+			const el1 = meta1.data[i+1];
+			const img = gemImages[i];
+			if (!img || !img.complete) continue;
 
-      const x = (el0.x + el1.x) / 2 - size / 2;
-      const y = bottom - (size/2);
+			const x = (el0.x + el1.x) / 2 - size / 2;
+			const y = bottom - (size/2);
 
-      ctx.drawImage(img, x, y, size, size);
-    }
-  }
+			ctx.drawImage(img, x, y, size, size);
+		}
+	}
 };
 
 const ChartJS = await chartJsPromise;
@@ -75,15 +75,15 @@ const myChart = new Chart(ctx, {
         datasets: [{
             label: 'no Patreon',
             data: [
-              F(0,0), 
-              F(1,0), 
-              F(2,0), 
-              F(3,0), 
-              F(4,0), 
-              F(5,0),
-              F(6,0),
-              F(7,0)
-              ],
+				F(0,0), 
+				F(1,0), 
+				F(2,0), 
+				F(3,0), 
+				F(4,0), 
+				F(5,0),
+				F(6,0),
+				F(7,0)
+				],
             backgroundColor: [
                 'rgba(160, 160, 160, 0.2)',
                 'rgba(154, 45, 43, 0.2)',
@@ -166,7 +166,7 @@ const myChart = new Chart(ctx, {
             },
             legend: {display: false}
         },
-      scales: {
+      	scales: {
             x: {
                 grid:{color:'#404040'},
                 ticks: {
@@ -175,7 +175,6 @@ const myChart = new Chart(ctx, {
                   }
                 } 
             },
-        
             y: {
                 beginAtZero: true,
                 grid: {color:'#404040'},
