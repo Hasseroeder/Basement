@@ -1,20 +1,19 @@
-const root = document.getElementById('wearSelect');
-const button = root.querySelector('.selected');
-const listbox = root.querySelector('.options');
-const options = Array.from(root.querySelectorAll('.option'));
-const hiddenInput = document.getElementById('myCustomSelect');
+const wrapper = document.getElementById('wearSelect');
+const button  = wrapper.querySelector('.selected');
+const listbox = wrapper.querySelector('.options');
+const options = Array.from(wrapper.querySelectorAll('.option'));
 
 let open = false;
-let selectedIndex = -1;     
-let highlightedIndex = -1; 
+let selectedIndex = -1;
+let highlightedIndex = -1;
 
 document.onkeydown = e => { if (e.key == "Tab") openList(false) };
-document.onpointerdown = e => { if (!root.contains(e.target)) openList(false) };
+document.onpointerdown = e => { if (!wrapper.contains(e.target)) openList(false) };
 
 function openList(boolean) {
     if (open == boolean) return;
     open = boolean;
-    root.classList.toggle('open', boolean);
+    wrapper.classList.toggle('open', boolean);
     button.setAttribute('aria-expanded', String(boolean));
 
     if(boolean){
@@ -33,12 +32,11 @@ function selectIndex(index) {
     });
     const opt = options[index];
     button.textContent = opt.textContent.trim();
-    hiddenInput.value = opt.dataset.value || opt.textContent.trim();
     selectedIndex = index;
 
-    root.dispatchEvent(
+    wrapper.dispatchEvent(
         new CustomEvent('change', {
-            detail: { value: hiddenInput.value },
+            detail: { value: opt.textContent.trim().toLowerCase() },
             bubbles: true
         })
     );
@@ -71,16 +69,10 @@ function moveTo(index){
 }
 
 function handleTypeahead(char) {
-    const idx = findMatch(char);
-    if (idx == undefined) return;
+    const idx = options.findIndex(o => o.textContent.trim().toLowerCase().startsWith(char));
+    if (idx == -1) return;
     if (open) setHighlight(idx);
     else selectIndex(idx);
-}
-
-function findMatch(str) {
-    for (let i = 0; i < options.length; i++) {
-        if (options[i].textContent.trim().toLowerCase().startsWith(str)) return i;
-    }
 }
 
 function onKeyDown(e){
@@ -129,4 +121,41 @@ export function initCustomSelect(inputWear) {
     selectIndex(wearID);
     attachEventListeners();
     return root;
+}
+
+class customSelect{
+    constructor(wrapper,options){                                  // options: ["WORN","DECENT","FINE","PRISTINE"]
+        this._wrapper = document.getElementById('wearWrapper');    //TODO: change this
+        this._wrapper.className = "custom-select";
+
+        this._button = make("button",{
+            className:"selected",
+            type:"button"
+        })
+
+        this._options = options.map(o=>
+            make("li",{
+                className:"option",
+                role:"option",
+            })
+        );
+        this._ul = make("ul",{
+
+        })
+
+        this._open = false;
+        this._selectedIndex = -1;     
+        this._highlightedIndex = -1; 
+    }
+    /*
+    <div class="custom-select" id="wearSelect">
+        <button></button>
+        <ul class="options" id="wearOptions" role="listbox" tabindex="0">
+            <li class="option" role="option" id="opt-worn" data-value="worn"  aria-selected="false">WORN</li>
+            <li class="option" role="option" id="opt-decent" data-value="decent" aria-selected="false">DECENT</li>
+            <li class="option" role="option" id="opt-fine" data-value="fine" aria-selected="false">FINE</li>
+            <li class="option" role="option" id="opt-pristine" data-value="pristine" aria-selected="false">PRISTINE</li>
+        </ul>
+    </div>
+    */
 }
