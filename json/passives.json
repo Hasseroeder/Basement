@@ -5,16 +5,18 @@
         "showThisID":false,
         "name":"Strength",
         "aliases":["str","att"],
-        "statConfig":[
+        "stats":[
             {
-                "min":5,
-                "max":20,
-                "range":15,
-                "step":0.15,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":5,
+                    "max":20,
+                    "range":15,
+                    "step":0.15,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             }
         ],
         "description":"**Strength** - Increases your :STR:STR by [stat]"
@@ -24,16 +26,18 @@
         "showThisID":false,
         "name":"Magic",
         "aliases":["mag"],
-        "statConfig":[
+        "stats":[
             {
-                "min":5,
-                "max":20,
-                "range":15,
-                "step":0.15,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":5,
+                    "max":20,
+                    "range":15,
+                    "step":0.15,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             }
         ],
         "description":"**Magic** - Increases your :MAG:MAG by [stat]"
@@ -43,16 +47,18 @@
         "showThisID":false,
         "name":"Health Point",
         "aliases":["hp"],
-        "statConfig":[
+        "stats":[
             {
-                "min":5,
-                "max":20,
-                "range":15,
-                "step":0.15,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":5,
+                    "max":20,
+                    "range":15,
+                    "step":0.15,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             }
         ],
         "description":"**Health Point** - Increases your :HP:HP by [stat]"
@@ -62,16 +68,18 @@
         "showThisID":false,
         "name":"Weapon Point",
         "aliases":["wp"],
-        "statConfig":[
+        "stats":[
             {
-                "min":10,
-                "max":30,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":10,
+                    "max":30,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Weapon Point** - Increases your :WP:WP by [stat]"
@@ -81,16 +89,18 @@
         "showThisID":false,
         "name":"Physical Resistance",
         "aliases":["pr"],
-        "statConfig":[
+        "stats":[
             {
-                "min":15,
-                "max":35,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":15,
+                    "max":35,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Physical Resistance** - Increases your :iPR:iPR by [stat]"
@@ -100,16 +110,18 @@
         "showThisID":false,
         "name":"Magical Resistance",
         "aliases":["mr"],
-        "statConfig":[
+        "stats":[
             {
-                "min":15,
-                "max":35,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":15,
+                    "max":35,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Magical Resistance** - Increases your :iMR:iMR by [stat]"
@@ -119,16 +131,18 @@
         "showThisID":false,
         "name":"Lifesteal",
         "aliases":["ls"],
-        "statConfig":[
+        "stats":[
             {
-                "min":15,
-                "max":35,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":15,
+                    "max":35,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Lifesteal** - All damage you deal heals you for [stat] of the damage dealt!"
@@ -138,16 +152,18 @@
         "showThisID":false,
         "name":"Thorns",
         "aliases":["th"],
-        "statConfig":[
+        "stats":[
             {
-                "min":15,
-                "max":35,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":15,
+                    "max":35,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Thorns** - Reflect [stat] of the damage dealt to you as true damage"
@@ -157,16 +173,18 @@
         "showThisID":false,
         "name":"Mana Tap",
         "aliases":["mtap","manatap"],
-        "statConfig":[
+        "stats":[
             {
-                "min":15,
-                "max":30,
-                "range":15,
-                "step":0.15,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":15,
+                    "max":30,
+                    "range":15,
+                    "step":0.15,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             }
         ],
         "description":"**Mana Tap** - All damage you deal replenishes your :WP:WP for [stat] of the damage dealt!"
@@ -176,16 +194,18 @@
         "showThisID":false,
         "name":"Absolve",
         "aliases":["absv"],
-        "statConfig":[
+        "stats":[
             {
-                "min":60,
-                "max":80,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":60,
+                    "max":80,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Absolve** - When healed, deal [stat] of the healed amount to a random enemy as :MAG:MAG damage"
@@ -195,16 +215,18 @@
         "showThisID":false,
         "name":"Safeguard",
         "aliases":["sg"],
-        "statConfig":[
+        "stats":[
             {
-                "min":20,
-                "max":40,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":20,
+                    "max":40,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Safeguard** - Negate [stat] of the damage dealt to you with :WP:WP"
@@ -214,25 +236,29 @@
         "showThisID":false,
         "name":"Critical",
         "aliases":["crit"],
-        "statConfig":[
+        "stats":[
             {
-                "min":10,
-                "max":30,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":10,
+                    "max":30,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             },{
-                "min":25,
-                "max":50,
-                "range":25,
-                "step":0.25,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":25,
+                    "max":50,
+                    "range":25,
+                    "step":0.25,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             }
         ],
         "description":"**Critical** - Every attack has a [stat] chance to deal [stat] more damage. This can apply to heals."
@@ -242,16 +268,18 @@
         "showThisID":false,
         "name":"Discharge",
         "aliases":["dc"],
-        "statConfig":[
+        "stats":[
             {
-                "min":100,
-                "max":140,
-                "range":40,
-                "step":0.4,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":100,
+                    "max":140,
+                    "range":40,
+                    "step":0.4,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             }
         ],
         "description":"**Discharge** - When :WP:WP is replenished, deal [stat] of the replenished amount to a random enemy as :MAG:MAG damage"
@@ -261,16 +289,18 @@
         "showThisID":false,
         "name":"Kamikaze",
         "aliases":["kkaze","kk"],
-        "statConfig":[
+        "stats":[
             {
-                "min":50,
-                "max":75,
-                "range":25,
-                "step":0.25,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":50,
+                    "max":75,
+                    "range":25,
+                    "step":0.25,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             }
         ],
         "description":"**Kamikaze** - When the animal dies, deal [stat] of its max :HP:HP as :MAG:MAG dmg to the attacker"
@@ -280,16 +310,18 @@
         "showThisID":false,
         "name":"Regeneration",
         "aliases":["hgen","regen"],
-        "statConfig":[
+        "stats":[
             {
-                "min":5,
-                "max":10,
-                "range":5,
-                "step":0.05,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":5,
+                    "max":10,
+                    "range":5,
+                    "step":0.05,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             }
         ],
         "description":"**Regeneration** - Heal [stat] of your max :HP:HP after every turn"
@@ -299,16 +331,18 @@
         "showThisID":false,
         "name":"Energize",
         "aliases":["wgen","energ"],
-        "statConfig":[
+        "stats":[
             {
-                "min":20,
-                "max":40,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"",
-                "digits":4
+                "noWearConfig":{
+                    "min":20,
+                    "max":40,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"",
+                    "digits":4
+                }
             }
         ],
         "description":"**Energize** - Replenish [stat] :WP:WP after every turn"
@@ -318,16 +352,18 @@
         "showThisID":false,
         "name":"Sprout",
         "aliases":["sprout","sprt"],
-        "statConfig":[
+        "stats":[
             {
-                "min":20,
-                "max":40,
-                "range":20,
-                "step":0.2,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":20,
+                    "max":40,
+                    "range":20,
+                    "step":0.2,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Sprout** - Increase all incoming healing by [stat]"
@@ -337,16 +373,18 @@
         "showThisID":false,
         "name":"Enrage",
         "aliases":["enrage","enra"],
-        "statConfig":[
+        "stats":[
             {
-                "min":1,
-                "max":4,
-                "range":3,
-                "step":0.03,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":1,
+                    "max":4,
+                    "range":3,
+                    "step":0.03,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Enrage** - Every 10% of missing health gives [stat] extra damage"
@@ -356,25 +394,29 @@
         "showThisID":false,
         "name":"Sacrifice",
         "aliases":["sac"],
-        "statConfig":[
+        "stats":[
             {
-                "min":50,
-                "max":75,
-                "range":25,
-                "step":0.25,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":50,
+                    "max":75,
+                    "range":25,
+                    "step":0.25,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             },{
-                "min":50,
-                "max":75,
-                "range":25,
-                "step":0.25,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":5
+                "noWearConfig":{
+                    "min":50,
+                    "max":75,
+                    "range":25,
+                    "step":0.25,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":5
+                }
             }
         ],
         "description":"**Sacrifice** - When this animal dies, heal your teammates for [stat] of its Max :HP:HP and replenish for [stat] of its Max :WP:WP"
@@ -384,16 +426,18 @@
         "showThisID":false,
         "name":"Snail",
         "aliases":["snail"],
-        "statConfig":[
+        "stats":[
             {
-                "min":5,
-                "max":15,
-                "range":10,
-                "step":0.1,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":5,
+                    "max":15,
+                    "range":10,
+                    "step":0.1,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Snail** - Your pet snail fights with you. Whenever you attack an animal, snail will slap a random enemy for [stat] of the damage dealt."
@@ -403,16 +447,18 @@
         "showThisID":false,
         "name":"Knowledge",
         "aliases":["kno","n"],
-        "statConfig":[
+        "stats":[
             {
-                "min":5,
-                "max":15,
-                "range":10,
-                "step":0.1,
-                "type":"",
-                "emoji":"",
-                "unit":"%",
-                "digits":4
+                "noWearConfig":{
+                    "min":5,
+                    "max":15,
+                    "range":10,
+                    "step":0.1,
+                    "type":"",
+                    "emoji":"",
+                    "unit":"%",
+                    "digits":4
+                }
             }
         ],
         "description":"**Knowledge** - This passive does not do anything in battle. However, it will give this animal [stat] extra xp after each battle."

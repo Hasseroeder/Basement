@@ -1,5 +1,4 @@
-import { valueToPercent, getWearConfig } from "./weaponCalcUtil.js";
-import { debounce } from "../util/inputUtil.js";
+import { valueToPercent } from "./weaponCalcUtil.js";
 
 const initWeaponID = 101;	// start with sword if nothing is given
 
@@ -46,92 +45,87 @@ function isOnlyNumbers(str){
 	return /^[\d.,\s-]+$/.test(str);
 }
 
-function getStats(weaponsOrPassives,item,blueprintArray, { isWeapon=false, wear="worn" } = {}){
-	const toCheck = blueprintArray[item.matchIndex+1] || "";
-	const statConfig = weaponsOrPassives[item.id].statConfig;
-	const statAmount = statConfig.length;
-    const separator = toCheck.match(/\d([,\- ])\d/)?.[1] ?? ',';
+function getStats({item,string}){
+	const stats = item.objectType == "passive"
+        ? item.stats
+        : item.statConfig.map(config => ({noWearConfig:config}));
+        // passives have a stat object premade, I need to create it for weapons
+        // TODO: do this better
+    const separator = string.match(/\d([,\- ])\d/)?.[1] ?? ',';
 
-	if (isOnlyNumbers(toCheck) && 
-		isValidJoinedNumbers(toCheck,separator) &&
-		isCorrectStatAmount(toCheck,statAmount)
+	if (isOnlyNumbers(string) && 
+		isValidJoinedNumbers(string,separator) &&
+		isCorrectStatAmount(string,stats.length)
 	) {
-        const cleanedStats = toCheck.replace(/^[\s,-]+|[\s,-]+$/g, "");
-		const stats = cleanedStats.split(separator).map(Number); 
-        if (separator!="," && isWeapon) stats.push(stats.shift());
+        const cleanedStats = string.replace(/^[\s,-]+|[\s,-]+$/g, "");
+		const statInts = cleanedStats.split(separator).map(Number); 
+        if (separator!="," && item.objectType != "passive") statInts.push(statInts.shift());
             // doing this because WP stat is first in "45-24" display and last in "24,45" display
 
-        return statConfig.map((config, i) => {
-            const wearConfig = getWearConfig(config, wear);
+        stats.map((stat, i) => {
             let toPush = separator === "," 
-                ? Math.floor(stats[i])
-                : valueToPercent(stats[i], wearConfig);
+                ? Math.floor(statInts[i])
+                : valueToPercent(statInts[i], stat.wearConfig);
             toPush = Math.max(0, Math.min(100, toPush));
-            return { noWear: toPush };
+            stat.noWear = toPush;
         });
 	}else{
-		return Array(statAmount).fill({noWear:100});	
+		stats.map(stat => stat.noWear=100);	
 	}
+    return stats;
 }
 
-function itemIDs(objectToSearch, query) {
+function getMatches(objectToSearch, query) {
     const queries   = query.map(q => q.toLowerCase());
     const items     = Object.values(objectToSearch);
     const results   = queries.flatMap((q, idx) => {
         return items.filter(item =>
             [item.name, ...item.aliases].some(n => n.toLowerCase() === q)
-        ).map(item => ({ id: item.id, matchIndex: idx }));
+        ).map(item => ({ item, string: query[idx+1] ?? "" }));
     });
     return results;
 }
 
-export function blueprintStringToWeapon(inputHash, weapons, passives){
+export function toWeapon(inputHash, weapons, passives){
     const tokens         = splitHypenSpaces(inputHash);
-    const weapon         = itemIDs(weapons, tokens)[0] ?? { id: initWeaponID, matchIndex: -1 };
+    const weapon         = getMatches(weapons, tokens)[0] ?? { item:weapons[initWeaponID], string:"" };
     const wear           = ["decent","fine","pristine"].includes(tokens[0]) ? tokens[0] : "worn";
-    const stats          = getStats(weapons, weapon, tokens, { isWeapon: true, wear });
-    const passive        = itemIDs(passives, tokens).map(match => ({
-        id:    match.id,
-        stats: getStats(passives, match, tokens, { wear }),
-        ...passives[match.id]
-    }));
+    const stats          = getStats(weapon);
+    const passive = getMatches(passives, tokens).map(({ item, string }) => {
+        getStats({ item, string });
+        item.wear = wear;
+        return item;
+    });
 
     return {
-        id: weapon.id,
+        id: weapon.item.id,
         wear,
         stats,
         passive
     };
 }
 
-export function weaponToBlueprintString(weapon){
+export function toStrings(weapon){
     const formatStats = (stats) => {
         const isFabled = stats.every(({ noWear }) => noWear === 100)
         return isFabled ? "" : stats.map(({ noWear }) => noWear).join(",")
     }
     
-    const { blueprint } = weapon.product;
-    const { aliases,name } = weapon;
+    const { passives,stats,wear } = weapon.instance;
+    const { aliases,name } = weapon.static;
 
-    const wear = blueprint.wear !== "worn" ? blueprint.wear : "";
-    const shorthand = (aliases[0]?? name).toLowerCase();
-    const statstring = formatStats(blueprint.stats);  
+    const wearString = wear !== "worn" ? wear : "";
+    const shorthand  = (aliases[0]?? name).toLowerCase();
+    const statstring = formatStats(stats);  
 
-    const passiveParts = blueprint.passive.length == 0
+    const passiveParts = passives.length == 0
         ? ["none"]
-        : blueprint.passive.flatMap(
+        : passives.flatMap(
             ({ aliases, name, stats }) => [
                 (aliases[0]?? name).toLowerCase(), 
                 formatStats(stats)
             ]
         );
-
-    const parts = [wear, shorthand, statstring, ...passiveParts].filter(Boolean);
-    debouncedToHash(parts);
+    
+    return [wearString, shorthand, statstring, ...passiveParts].filter(Boolean);  
 }
-
-function toHash(parts){
-    history.replaceState(null, '', '#'+parts.join("-"));
-}
-
-const debouncedToHash = debounce(toHash);

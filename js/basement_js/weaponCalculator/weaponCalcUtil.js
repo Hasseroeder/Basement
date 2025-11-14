@@ -1,58 +1,6 @@
 import { make } from "../util/injectionUtil.js"
 
-function calculateQualities(weapon) {
-    const blueprint = weapon.product.blueprint;
-    const {stats,passive} = blueprint;
-
-    passive.forEach(entry => {
-        const { sumWear, sumNoWear } = entry.stats.reduce((acc, stat) => ({ 
-            sumWear: acc.sumWear     + stat.withWear, 
-            sumNoWear: acc.sumNoWear + stat.noWear
-        }), { sumWear: 0, sumNoWear: 0 });
-
-        entry.qualityWear   = sumWear / entry.stats.length;
-        entry.qualityNoWear = sumNoWear / entry.stats.length;
-        entry.tier          = getRarity(entry.qualityWear);
-    });
-
-    const allStats = [
-        ...stats,
-        ...passive.flatMap(entry => entry.stats)
-    ];
-
-    const { sumWear, sumNoWear } = allStats.reduce((acc, stat) => ({
-        sumWear:   acc.sumWear   + stat.withWear,
-        sumNoWear: acc.sumNoWear + stat.noWear 
-    }), { sumWear: 0, sumNoWear: 0 });
-
-    blueprint.qualityWear = sumWear   / allStats.length;
-    blueprint.qualityNoWear = sumNoWear / allStats.length;
-    blueprint.tier = getRarity(Math.floor(blueprint.qualityWear));
-}
-
-function syncWear(weapon){
-    const blueprint = weapon.product.blueprint;
-    blueprint.passive.forEach(entry => {
-        entry.stats.forEach(stat => {
-            stat.withWear = stat.noWear + blueprint.wearBonus;
-        });
-    });
-    blueprint.stats.forEach(stat => {
-        stat.withWear = stat.noWear + blueprint.wearBonus;
-    });
-}
-
-function getStat(keyOrIndex,stats,statConfig){
-    const idx =
-        typeof keyOrIndex === 'number'
-        ? keyOrIndex
-        : statConfig.findIndex(stat => stat.type === keyOrIndex);
-
-    return [stats[idx],statConfig[idx]];
-}
-
 function getShardValue(weapon){
-    const tier  = weapon.product.blueprint.tier;
     const value = {
         common: 	1,
         uncommon:   3,
@@ -61,8 +9,8 @@ function getShardValue(weapon){
         mythic:  	300,
         legendary:	1000,
         fabled: 	5000
-    }[tier];
-    if (weapon.id==104){return "UNSELLABLE"};
+    }[weapon.instance.tier];
+    if (weapon.static.id==104) return "UNSELLABLE"
     return value + " selling / " + Math.ceil(value*2.5) + " buying"
 }
 
@@ -98,18 +46,23 @@ const valueToPercent =
 	Math.round(100 * (value - min) / range);
 
 
-async function getStatImage(inputString,className) {
+function getStatImage(inputString,className) {
     const gifUrl = `../media/owo_images/${inputString}.gif`;
     const pngUrl = `../media/owo_images/${inputString}.png`;
     const imageClasses =  'discord-embed-emote ' + className??""
 
-    return make("img",{
-        src: (await fileExists(gifUrl)) ? gifUrl : pngUrl,
+    const image = make("img",{
         alt: `:${inputString}:`,
         ariaLabel : inputString,
         title : `:${inputString}:`,
         className: imageClasses
     });
+
+    fileExists(gifUrl).then(exists => 
+        image.src = exists ? gifUrl : pngUrl
+    );
+    
+    return image;
 }
 
 async function fileExists(url) {
@@ -134,10 +87,11 @@ function getWeaponImage(weaponOrPassive){
 }
 
 function getWeaponImagePath(weaponOrPassive){
-    const blueprint = weaponOrPassive.objectType == "passive" 
-        ? weaponOrPassive
-        : weaponOrPassive.product.blueprint;
-    const p = (blueprint.wearBonus == 0 || weaponOrPassive.objectType == "passive")
+    const [instance, statiic] =[
+        weaponOrPassive.instance ?? weaponOrPassive, 
+        weaponOrPassive.static ?? weaponOrPassive];
+
+    const p = (instance.wearBonus == 0 || weaponOrPassive.objectType == "passive")
             ? ""
             : "p";
     const q = {
@@ -148,8 +102,9 @@ function getWeaponImagePath(weaponOrPassive){
         mythic:  	"m",
         legendary:	"l",
         fabled: 	"f"
-    }[blueprint.tier];
-    const w = (weaponOrPassive.aliases[0]?? weaponOrPassive.name).toLowerCase();
+    }[instance.tier];
+
+    const w = (statiic.aliases[0]?? statiic.name).toLowerCase();
     return `media/owo_images/${p+q+"_"+w}.png`;
 }
 
@@ -207,36 +162,4 @@ function getTierEmojiPath(stringOrQuality){
     }
 }
 
-const getWearBonus = w => ({pristine: 5, fine: 3, decent: 1})[w] ?? 0;
-
-function applyWearToWeapon(weapon,wear){
-	function getWearName(wear){
-		const wearValues = {
-			pristine: "Pristine\u00A0",
-			fine:     "Fine\u00A0",
-			decent:   "Decent\u00A0",
-			worn:     "",
-			unknown:  ""
-		};
-		return wearValues[wear] || "";
-	}
-	function applyValues(toApply){
-		toApply.wear = wear;
-		toApply.wearBonus = getWearBonus(wear);
-		toApply.wearName = getWearName(wear);
-	}
-	applyValues(weapon.product.blueprint);
-	weapon.product.blueprint.passive.forEach(passive => applyValues(passive));
-}
-
-
-function getWearConfig(config,wear) {
-	const bonus = (config.range / 100) * getWearBonus(wear);
-	return {
-		...config,
-		min: config.min + bonus,
-		max: config.max + bonus
-	};
-}
-
-export { getWearConfig, getWearBonus, valueToPercent, percentToValue,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, applyWearToWeapon};
+export { valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, getRarity};

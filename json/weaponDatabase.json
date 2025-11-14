@@ -1,0 +1,177 @@
+{
+    "101":[
+        {
+            "blueprint":"sword 100,98 str",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"77766Q"
+        },
+        {
+            "blueprint":"sword 98,87 knowledge",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"8GWE8E"
+        }
+    ],
+    "102":[
+        {
+            "blueprint":"decent hstaff 69,71 wgen 65",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"9KXZ81"
+        }
+    ],
+    "103":[
+        {
+            "blueprint":"bow 99,98 att",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"BC7KQZ"
+        },{
+            "blueprint":"bow att",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"9KXYT0"
+        }
+    ],
+    "104":[
+        {
+            "blueprint":"rune 20",
+            "owner":{"id":"@atransfencer","name":"emma"},
+            "weaponID":"3MVF"
+        }
+    ],
+    "105":[
+        {
+            "blueprint":"shield 92,99 none",
+            "owner":{"id":"@tyjoy","name":"ty"},
+            "weaponID":"AJGO3Q"
+        }
+    ],
+    "106":[
+        {
+            "blueprint":"orb none",
+            "owner":{"id":"@wifu","name":"Wifu"},
+            "weaponID":"8BAMSV"
+        },{
+            "blueprint":"orb none",
+            "owner":{"id":"@wifu","name":"Wifu"},
+            "weaponID":"8BAL0Q"
+        },{
+            "blueprint":"orb none",
+            "owner":{"id":"@wifu","name":"Wifu"},
+            "weaponID":"8BAK5Z"
+        },{
+            "blueprint":"orb none",
+            "owner":{"id":"@wifu","name":"Wifu"},
+            "weaponID":"8BAN17"
+        }
+    ],
+    "107":[
+        {
+            "blueprint":"vstaff mag",
+            "owner":{"id":"@____neon____", "name":"NeonSurvivor"},
+            "weaponID":"3XL368"
+        }
+    ],
+    "108":[
+        {
+            "blueprint":"dagger 100,43,100 enrage",
+            "owner":{"id":"@hsse", "name":"Heather"},
+            "weaponID":"7LYFWY"
+        }
+    ],
+    "109":[
+        {
+            "blueprint":"wand 74,65,72 none", 
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"AF0FFB"
+        }
+    ],
+    "110":[
+        {
+            "blueprint":"fstaff 99,93,91,96 mtap 0",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"6PMX9V"
+        }
+    ],
+    "111":[
+        {
+            "blueprint":"fine estaff 99,98 pr 94",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"D149NL"
+        }
+    ],
+    "112":[
+        {
+            "blueprint":"sstaff 98,96,99 mag 91",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"88RBXM"
+        }
+    ],
+    "113":[
+        {
+            "blueprint":"ascept 1,0 none",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"9KGJ50"
+        }
+    ],
+    "114":[
+        {
+            "blueprint":"fine rstaff 95,100 none",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"9KGJ5J"
+        }
+    ],
+    "115":[
+        {
+            "blueprint":"decent axe 98,100 mr 48",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "idweaponID":"AF0GPO"
+        }
+    ],
+    "116":[
+        {
+            "blueprint":"vban 98,97,92,92 enrage 50",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"ACSVCV"
+        }
+    ],
+    "117":[
+        {
+            "blueprint":"sythe 100,95,100 mtap 89",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"A3AJ0R"
+        }
+    ],
+    "118":[
+        {
+            "blueprint":"crune 99,92,100 wgen 97",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"7M9N00"
+        }
+    ],
+    "119":[
+        {
+            "blueprint":"pstaff 95,99,98 thorns 98",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"B2LXL6"
+        }
+    ],
+    "120":[
+        {
+            "blueprint":"lsyth 61,46,44,40,56 none",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"AF0FCE"
+        }
+    ],
+    "121":[
+        {
+            "blueprint":"fine ffish 83,99,77 none",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"AF0FJV"
+        }
+    ],
+    "122":[
+        {
+            "blueprint":"lrune 91,98,65,38,65,48 safeguard 70",
+            "owner":{"id":"@hsse","name":"Heather"},
+            "weaponID":"BZ2TM9"
+        }
+    ]
+}

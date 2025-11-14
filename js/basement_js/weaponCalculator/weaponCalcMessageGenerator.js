@@ -1,6 +1,4 @@
-import { valueToPercent, percentToValue,getStat,getShardValue,syncWear,calculateQualities,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath, getWearConfig } from '../weaponCalculator/weaponCalcUtil.js'
-import { generatePassiveInputs } from './weaponCalcPassive.js';
-import { weaponToBlueprintString } from './blueprintParser.js';
+import { valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath } from '../weaponCalculator/weaponCalcUtil.js'
 import { make } from "../util/injectionUtil.js"
 
 const el = {
@@ -16,7 +14,10 @@ const el = {
 	description:	    document.getElementById("description")
 }
 
-async function generateDescription(weaponOrPassive,weapon) {
+let boundWeapon;
+export const bindWeapon = weapon => boundWeapon = weapon;
+
+function generateDescription(weaponOrPassive) {
     const TOKEN_SPECS = [
         { name: "STAT",   pattern: "\\[stat\\]"},         // literal [stat]
         { name: "IMAGE",  pattern: ":[A-Za-z0-9_+]+:"},   // :emojiName:
@@ -35,12 +36,12 @@ async function generateDescription(weaponOrPassive,weapon) {
 
     // This is the opposite of DRY, I am aware, but I have no idea how to fix.
 
-    const parts      = weaponOrPassive.description.split(tokenRegex);
+    const parts = (weaponOrPassive.description ?? weaponOrPassive.static.description).split(tokenRegex)
     let statIndex = 0;
     
     return make("div",
         {style:{ display: "inline", whiteSpace: "normal", lineHeight: "1.4rem"}},
-        await Promise.all(parts.map(elif))
+        parts.map(elif)
     );
 
     function elif(part){
@@ -56,14 +57,8 @@ async function generateDescription(weaponOrPassive,weapon) {
     }
 
     function getStatNode(){
-        const [stat, statConfig] = getStat(
-            statIndex,
-            weaponOrPassive.objectType === "passive"
-                ? weaponOrPassive.stats
-                : weaponOrPassive.product.blueprint.stats,
-            weaponOrPassive.statConfig
-        );
-        stat.IO = new WeaponStat(stat, statConfig, weaponOrPassive, weapon);
+        const stat = (weaponOrPassive.stats ?? weaponOrPassive.instance.stats)[statIndex];
+        stat.IO = new WeaponStat(stat, weaponOrPassive);
         const toAppend = stat.IO.render();
         statIndex++;
         return toAppend;
@@ -71,49 +66,51 @@ async function generateDescription(weaponOrPassive,weapon) {
 }
 
 
-async function generateWPInput(weapon){
-    const [stat, statConfig] = getStat(
-        "WP-Cost",
-        weapon.product.blueprint.stats,
-        weapon.statConfig
-    );
+function generateWPInput(weapon){
+    const stat = weapon.wpStat;
     const child = stat
-        ? (stat.IO = new WeaponStat(stat, statConfig, weapon, weapon), stat.IO.render())
+        ? (stat.IO = new WeaponStat(stat, weapon), stat.IO.render())
         : `\u00A0${0}\u00A0`;
-
-    const WPimage = await getStatImage("WP");
 
     return make("div",
         {
             innerHTML:"<strong>WP Cost:&nbsp;</strong>",
             style: {display: "flex", alignItems: "center"}
         },
-        [child,WPimage]
+        [child,getStatImage("WP")]
     );
 }
 
-class WeaponStat {
-    constructor(stat, config, weaponOrPassive, weapon) {
-        this.stat            = stat;
-        this.config          = config;
-        this.weaponOrPassive = weaponOrPassive;
-        this.weapon          = weapon;
+const getWearBonus = w => ({pristine: 5, fine: 3, decent: 1})[w] ?? 0;
+const getWearName = w => ({pristine:"Pristine\u00A0", fine:"Fine\u00A0", decent:"Decent\u00A0"})[w] ?? "";
 
-        syncWear(this.weapon);
+class WeaponStat {
+    constructor(stat, parent) {
+        this.stat   = stat;
+        this.parent = parent;
         this._buildDOM();
-        const temp = percentToValue(this.stat.noWear, getWearConfig(this.config,this.wear));
+
+        const temp = percentToValue(this.stat.noWear, this.wearConfig);
         this._syncAll(+temp.toFixed(6));
+        this.initiated = true;
     }
 
-    get wearBonus() {
-        return this.weapon.product.blueprint.wearBonus;
+    _applyWear(){
+        this.wearBonus = getWearBonus(this.wear);
+        this.wearName = getWearName(this.wear);
+        if (this.parent.instance){                                      // TODO: it'd be cooler if we did weapon wear in the weapon loop 
+            this.parent.instance.wearBonus = getWearBonus(this.wear);
+            this.parent.instance.wearName = getWearName(this.wear);
+        }
     }
     
     get wear() {
-        return this.weapon.product.blueprint.wear;
+        return  this.parent.wear ??         // saved like this for passives
+                this.parent.instance.wear;  // saved like this for weapons
     }
 
     get percentageConfig() {
+        this._applyWear();
         const bonus = this.wearBonus;
         return {
             bonus:  bonus,
@@ -123,27 +120,40 @@ class WeaponStat {
         };
     }
 
+    get noWearConfig(){
+        return this.stat.noWearConfig
+    }
+
+    get wearConfig(){
+        this._applyWear();
+        const bonus = (this.noWearConfig.range / 100) * this.wearBonus;
+        return {
+            ...this.noWearConfig,
+            min: this.noWearConfig.min + bonus,
+            max: this.noWearConfig.max + bonus
+        };
+    }
+
     _buildDOM() {
         this.outerWrapper = make("div",{className:"outerInputWrapperFromCalculator"});
         this.wrapper      = make("div",{className:"inputWrapperFromCalculator tooltip-lite"});
-        this.numberInput  = createRangedInput("number", getWearConfig(this.config,this.wear));
-        this.numberLabel  = this.config.unit?
+        this.numberInput  = createRangedInput("number", this.wearConfig);
+        this.numberLabel  = this.noWearConfig.unit?
                             make("span",{
                                 className:"smol-right-margin",
-                                textContent:this.config.unit
+                                textContent:this.noWearConfig.unit
                             }):"";
         this.qualityInput = createRangedInput("number", this.percentageConfig, {height:"1.5rem"});
         this.qualityLabel = make("span",{
                                 className:"smol-right-margin",
                                 textContent:"%"
                             });
-        this.slider       = createRangedInput("range",  getWearConfig(this.config,this.wear));
-        this.img          = getTierEmoji(this.weaponOrPassive.tier);
+        this.slider       = createRangedInput("range",  this.wearConfig);
+        this.img          = getTierEmoji(this.parent.tier);
         this.tooltip      = make("div",
                                 {className:'hidden tooltip-lite-child'},
                                 [ this.img, this.qualityInput, this.qualityLabel, this.slider ]
                             );
-
 
         this.wrapper.append(
             this.numberInput,
@@ -168,23 +178,20 @@ class WeaponStat {
 
         this.numberInput.addEventListener("input",  e => {
             const num = parseFloat(e.target.value);
-            if (!isNaN(num) && 
-                !(e.inputType === "insertText" && e.data === ".")
-            ){
-                this._syncAll(num);
-            }
+            if (isNaN(num) || e.data === "." || e.data === ",") return;
+            this._syncAll(num);
         });
-        this.slider     .addEventListener("input",  e => this._syncAll(+e.target.value) );
+        this.slider     .addEventListener("input",  e => this._syncAll(+e.target.value));
         this.qualityInput.addEventListener("input", e => {
             const pct = parseFloat(e.target.value);
             if (!isNaN(pct)) {
-                this._syncAll(percentToValue(pct, this.config));
+                this._syncAll(percentToValue(pct, this.noWearConfig));
             }
         });
 
         this.numberInput.addEventListener("change",  e => clamp(+e.target.value, e.target) );
         this.qualityInput.addEventListener("change", e => {
-            const val = percentToValue(+e.target.value, this.config);
+            const val = percentToValue(+e.target.value, this.noWearConfig);
             clamp(val, this.numberInput);
         });
     }
@@ -193,29 +200,27 @@ class WeaponStat {
         this.numberInput.value  = value;
         this.slider.value       = value;
 
-        const pct       = valueToPercent(value, this.config);
-        const noWearPct = valueToPercent(value, getWearConfig(this.config,this.wear));
+        const pct       = valueToPercent(value, this.noWearConfig);
+        const noWearPct = valueToPercent(value, this.wearConfig);
 
         this.qualityInput.value = pct;
         this.img.src            = getTierEmojiPath(pct);
-        this.stat.noWear = noWearPct;
+        this.stat.noWear        = noWearPct;
+        this.stat.withWear      = pct;
 
-        syncWear(this.weapon);
-        calculateQualities(this.weapon);
-        displayInfo(this.weapon);
-        this.weaponOrPassive.image && (this.weaponOrPassive.image.src= getWeaponImagePath(this.weaponOrPassive));
-
-        weaponToBlueprintString(this.weapon)
+        this.parent.image && (this.parent.image.src= getWeaponImagePath(this.parent));
+        this.initiated && boundWeapon.updateVars();
     }
 
-    update(productStat, config, weaponOrPassive, weapon) {
-        this.stat            = productStat;
-        this.config          = config;
-        this.weaponOrPassive = weaponOrPassive;
-        this.weapon          = weapon;
+    update(stat) {
+        if (this.wearName == getWearName(this.wear)) {
+            return;     // probably the ugliest way to solve infinite recusion lmao
+                        // and it doesn't even work!!! TODO: fix
+        }
+        this.stat = stat;
 
         [this.numberInput, this.slider].forEach(el => {
-            const { min, max, step } = getWearConfig(this.config,this.wear);
+            const { min, max, step } = this.wearConfig;
             el.min = Math.min(min, max);
             el.max = Math.max(min, max);
             el.step  = step;
@@ -223,12 +228,8 @@ class WeaponStat {
 
         Object.assign(this.qualityInput, this.percentageConfig);
 
-        const temp = percentToValue(this.stat.noWear, getWearConfig(this.config,this.wear));
+        const temp = percentToValue(this.stat.noWear, this.wearConfig);
         this._syncAll(+temp.toFixed(6));
-    }
-
-    justUpdateDumbass(){
-        this.update(this.stat,this.config,this.weaponOrPassive,this.weapon);
     }
 
     render() {
@@ -237,61 +238,27 @@ class WeaponStat {
 }
 
 function displayInfo(weapon){
-    const blueprint = weapon.product.blueprint;
+    const instance = weapon.instance;
 
-    el.weaponHeader.textContent=weapon.product.owner.displayName+"'s "+blueprint.wearName+weapon.name;
-    el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + weapon.name;
-    el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + weapon.product.owner.name;
-    el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${weapon.product.id}</code>`;
+    el.weaponHeader.textContent= instance.owner.name+"'s " +instance.wearName +weapon.static.name;
+    el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + weapon.static.name;
+    el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + instance.owner.id;
+    el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${instance.weaponID}</code>`;
     el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue(weapon);
-    el.weaponQualityImage.src= getTierEmojiPath(blueprint.tier);
-    el.weaponQualitySpan.textContent= blueprint.qualityWear.toFixed(1)+"%"
+    el.weaponQualityImage.src= getTierEmojiPath(instance.tier);
+    el.weaponQualitySpan.textContent= instance.qualityWear.toFixed(1)+"%"
     el.weaponImage.src=getWeaponImagePath(weapon);
 }
 
-async function generateEverything(weapon){
-	await generateStatInputs(weapon);
-	displayInfo(weapon);
-	generatePassiveInputs(weapon);
-}
-
-function updateEverything(weapon){
-	updateStatInputs(weapon);
-	displayInfo(weapon);
-}
-
-async function generateStatInputs(weapon){
-	el.wpCost.replaceChildren(await generateWPInput(weapon));
-	el.description.replaceChildren(await generateDescription(weapon,weapon));
-}
-
-async function updateStatInputs(weapon){
-    const blueprint = weapon.product.blueprint;
-    blueprint.passive.forEach(passive => {
-        passive.stats.forEach((stat,statIndex) => {
-            const [_, statConfig] = getStat(
-                statIndex,
-                passive.stats,
-                passive.statConfig
-            );
-            stat.IO.update(stat,statConfig, passive, weapon);
-        });
-    });
-    blueprint.stats.forEach((stat,statIndex) => {
-        const [_, statConfig] = getStat(
-                    statIndex,
-                    weapon.product.blueprint.stats,
-                    weapon.statConfig
-                );
-        stat.IO.update(stat,statConfig, weapon, weapon)
-    });
+function generateStatInputs(weapon){
+	el.wpCost.replaceChildren(generateWPInput(weapon));
+	el.description.replaceChildren(generateDescription(weapon));
 }
 
 function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
     const common = { 
         min: Math.min(max,min), 
         max: Math.max(max,min), 
-        required: true, 
         type, step, lang: "en" 
     };
 
@@ -315,4 +282,4 @@ function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
     return make("input",{className,style,...common});
 }
 
-export { generateDescription,updateEverything,generateEverything,displayInfo };
+export { generateDescription, displayInfo, generateStatInputs };
