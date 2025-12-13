@@ -1,0 +1,23 @@
+permissions:
+  contents: write
+
+name: Build & Update Construction Manifest
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  update-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate media/construction-list.json
+        run: python3 scripts/generate_construction_manifest.py
+      - name: Commit updated manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet || git commit -am "chore: update media construction-list.json"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
