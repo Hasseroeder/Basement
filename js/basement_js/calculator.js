@@ -539,10 +539,16 @@ function createHeader(pet){
 
 function getPetImage(pet, wantAnimated){
     if( wantAnimated && pet[1] == 1){
+        console.log("option1");
+        console.log(pet)
         return `https://cdn.discordapp.com/emojis/${pet[2]}.gif?size=96`;
     }if (petTypeOrder[pet[4]]<=5 || petTypeOrder[pet[4]]==11){
+        console.log("option2");
+        console.log(pet)
         return `../media/owo_images/${pet[0]}.png`;
     }
+    console.log("option3");
+    console.log(pet)
     return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
 }
 
