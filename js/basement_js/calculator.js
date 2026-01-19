@@ -32,7 +32,7 @@ const petTypeOrder = {
     "bot":      8,
     "distorted":9,
     "fabled":   10,
-    "hidden":  11,
+    "hidden":   11,
     "special":  12,
     "patreon":  13,
     "cpatreon": 14
@@ -492,11 +492,13 @@ async function updatePetArray(){
 
 function updateLevelFromNumber(){
     sliderLvl.value=inputLvl.value;
+    level = inputLvl.value;
     updateInternalStats();
 }
 
 function updateLevelFromSlider(){
     inputLvl.value=sliderLvl.value;
+    level = sliderLvl.value;
     updateInternalStats();
 }
 

@@ -4,9 +4,9 @@ export function gridInjector({
 		baseHref,								// baseHref
 		hashType= "id",							// type of hash the builder should add
 		onItemClick,							// event listener
-		columns = "repeat(3, 3.5rem)",			// custom styles for your grid
-		transform="translate(-2.8rem,1.5%)",	// custom styles for your grid
-		gridClasses=[]							// custom classes for your grid
+		columns = "repeat(3, 3.5rem)",			// custom styles grid
+		transform="translate(-2.8rem,1.5%)",	// custom styles grid
+		gridClasses=[]							// custom classes grid
     }){
 	
 	container.className="toolbarSubMenu navbar-grid";
@@ -35,20 +35,17 @@ export function gridInjector({
 }
 
 function getImageLink(onClick, item, link, path, text){
-	const el = document.createElement(onClick?"button":"a");
-	el.href = link;
-	el.className = "tooltip unset-me";
-	const img = document.createElement("img");
-	img.src = path;
-	img.style.width = "2.5rem";
-	const tooltip = document.createElement("div");
-	tooltip.innerHTML = text;
-	tooltip.className = "navBar-tooltip-text";
-	el.append(img,tooltip);
+	const el = make(onClick?"button":"a",{
+			href: link,
+			className: "tooltip unset-me"
+		},[
+			make("img",{src:path,	   style:{width:"2.5rem"}}),
+			make("div",{innerHTML:text,className:"navBar-tooltip-text"})
+		]
+	);
 
-	if (onClick){
+	if (onClick)
 		el.addEventListener("click", () => onClick(item));
-	}
 
 	return el;
 }
