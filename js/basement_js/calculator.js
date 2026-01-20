@@ -187,21 +187,12 @@ function outputPetContainerSEARCH(){
         className:"suggestions", id: "suggestions"
     });
 
-    textInput.addEventListener('input', () => {
-        onInput(textInput,suggestionWrapper);
-    });
-    textInput.addEventListener('focus', () => {
-        onInputNoDebounce(textInput,suggestionWrapper);
-    });
-    textInput.addEventListener('click', () => {
-        onInputNoDebounce(textInput,suggestionWrapper);
-    });
-    textInput.addEventListener('keydown', (event) => {
-        onKeyDown(event,textInput,suggestionWrapper);
-    });
-    textInput.addEventListener('blur', () => {
-        suggestions.style.display = 'none';
-    });
+    textInput.addEventListener('input', () =>   onInput(textInput,suggestionWrapper));
+    textInput.addEventListener('focus', () =>   onInputNoDebounce(textInput,suggestionWrapper));
+    //textInput.addEventListener('click', () =>   onInputNoDebounce(textInput,suggestionWrapper));
+    // do I need this? it should focus by default
+    textInput.addEventListener('keydown', e =>  onKeyDown(e,textInput,suggestionWrapper));
+    textInput.addEventListener('blur', () =>    suggestions.style.display = 'none');
 
     petContainer.append(textInput,suggestionWrapper);
     if (chosenPet && chosenPet[0]) outputSmallPetContainer(chosenPet);
@@ -490,15 +481,11 @@ async function updatePetArray(){
     sortPetArray();
 }
 
-function updateLevelFromNumber(){
-    sliderLvl.value=inputLvl.value;
-    level = inputLvl.value;
-    updateInternalStats();
-}
-
-function updateLevelFromSlider(){
-    inputLvl.value=sliderLvl.value;
-    level = sliderLvl.value;
+function setLevelTo(value){
+    value           = Math.max(1,value);
+    level           = value;
+    sliderLvl.value = value;
+    inputLvl.value  = value;
     updateInternalStats();
 }
 
@@ -538,18 +525,16 @@ function createHeader(pet){
 
 
 function getPetImage(pet, wantAnimated){
-    if( wantAnimated && pet[1] == 1){
-        console.log("option1");
-        console.log(pet)
+    if( wantAnimated && pet[1] == 1){ 
+        // in search, where we display gifs (eg lizard)
         return `https://cdn.discordapp.com/emojis/${pet[2]}.gif?size=96`;
-    }if (petTypeOrder[pet[4]]<=5 || petTypeOrder[pet[4]]==11){
-        console.log("option2");
-        console.log(pet)
+    }else if (petTypeOrder[pet[4]]<=5 || petTypeOrder[pet[4]]==11){
+        // snail, crocodile, ...
         return `../media/owo_images/${pet[0]}.png`;
+    }else {
+        // everything else displayed as pngs
+        return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
     }
-    console.log("option3");
-    console.log(pet)
-    return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
 }
 
 function createColumn(){
@@ -655,7 +640,6 @@ function getPrefix(quality) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-
     doTimestamps();
     inputs.forEach(input=>{
         input.addEventListener("change",updateStats)
@@ -666,14 +650,13 @@ document.addEventListener("DOMContentLoaded", () => {
             updateStats();
         });
     });
-    inputLvl.addEventListener("change", updateLevelFromNumber);
+    inputLvl.addEventListener("change", ev => setLevelTo(ev.target.value));
     inputLvl.addEventListener("wheel", ev => {
             ev.preventDefault();
-            inputLvl.value -= Math.sign(ev.deltaY);
-            updateLevelFromNumber();
+            setLevelTo(level -= Math.sign(ev.deltaY));
     });
     levelWrapper.addEventListener("click", ()=>inputLvl.focus());
-    sliderLvl.addEventListener("input", updateLevelFromSlider);
+    sliderLvl.addEventListener("input", ev => setLevelTo(ev.target.value));
 
     inputs[0].focus();
 
@@ -684,7 +667,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     updateStats();
-    updateLevelFromNumber();
+    setLevelTo(0);
     addAddEffects();
 
 });
