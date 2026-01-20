@@ -76,7 +76,7 @@ const stats = [
     // I'm using team stat display as reference here, instead of pet stat display
 ]
 
-let statAmount = 0;
+const statAmount = () => stats.reduce((sum, plus) => sum + Number(plus), 0);
 
 const internalStats = [
     0, //hp
@@ -120,13 +120,13 @@ const imgTypeSuffix =[
 
 function sortPetArray(){
     petArray.sort((petA, petB) => {
-        const orderA = petTypeOrder[petA[4]] = petTypeOrder[petA[4]];
-        const orderB = petTypeOrder[petB[4]] = petTypeOrder[petB[4]];
+        const tierPriorityA = petTypeOrder[petA[4]];
+        const tierPriorityB = petTypeOrder[petB[4]];
 
-        if (orderA !== orderB) {
-            return orderA - orderB;
-        }
-        return petA[0].localeCompare(petB[0]);  
+        if (tierPriorityA !== tierPriorityB) 
+            return tierPriorityA - tierPriorityB;
+        else
+            return petA[0].localeCompare(petB[0]);
     });
     outputPetContainer();
 }
@@ -189,8 +189,6 @@ function outputPetContainerSEARCH(){
 
     textInput.addEventListener('input', () =>   onInput(textInput,suggestionWrapper));
     textInput.addEventListener('focus', () =>   onInputNoDebounce(textInput,suggestionWrapper));
-    //textInput.addEventListener('click', () =>   onInputNoDebounce(textInput,suggestionWrapper));
-    // do I need this? it should focus by default
     textInput.addEventListener('keydown', e =>  onKeyDown(e,textInput,suggestionWrapper));
     textInput.addEventListener('blur', () =>    suggestions.style.display = 'none');
 
@@ -329,11 +327,6 @@ function highlight(suggestions) {
     });
 }
 
-function updateStatSpan(){
-    statAmount = stats.reduce((sum, plus) => sum + Number(plus), 0);
-    statSpan.textContent= statAmount + " stats";
-}
-
 function throttle(fn, delay) {
     let last = 0,
     timer = null,
@@ -449,17 +442,17 @@ function updateOutsideStats(){
 
 function updateOutputs(){
     outputs.forEach((output,i )=>{    
-        output.textContent=(i==4 || i==5)?
-            (outsideStats[i]*100).toFixed(1)+"%":
-            Math.round(outsideStats[i]);
+        output.textContent = (i==4 || i==5)
+            ? (outsideStats[i]*100).toFixed(1)+"%"
+            : outsideStats[i].toFixed(0);
     });
 }
 
 function updateStats(){
-    inputs.forEach((input,i) => {
-        stats[i]=input?.value;
-    });
-    updateStatSpan();
+    inputs.forEach((input,i) => 
+        stats[i]=input?.value
+    );
+    statSpan.textContent= statAmount() + " stats";
     updateInternalStats();
     updatePetArray();
 }
