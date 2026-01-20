@@ -888,5 +888,191 @@
             }
         ],
         "description": "**Description:** Punches a random enemy 5 times. Each punch randomly deals either a percentage of your :STR:STR or :MAG:MAG. Punches deals: [stat], [stat], [stat], [stat], [stat]"
+    },
+    "123": {
+        "objectType":"weapon",
+        "id":"123",
+        "showThisID":true,
+        "name":"Staff of Corruption",
+        "aliases":["Cstaff"],
+        "wikiStars": {
+            "viability":0,
+            "ease":0
+        },
+        "statConfig":[
+            {
+                "min":5,
+                "max":25,
+                "range":20,
+                "step":0.2,
+                "type":"Steal Buff",
+                "emoji":[],
+                "unit":"%",
+                "digits":5
+            },
+            {
+                "min":5,
+                "max":25,
+                "range":20,
+                "step":0.2,
+                "type":"Transfer Debuff",
+                "emoji":["StrMag"],
+                "unit":"%",
+                "digits":5
+            },
+	    {
+                "min":250,
+                "max":150,
+                "range":-100,
+                "step":1,
+                "type":"WP-Cost",
+                "emoji":["WP"],
+                "unit":"",
+                "digits":3
+            }
+        ],
+        "description": "**Description:** Steal a buff from a random enemy and give it to a random ally with +[Steal Buff]% effectiveness. Transfers a debuff from a random ally to a random enemy with +[Transfer Debuff]% effectiveness. Any moved buffs or debuffs last an additional 1 turn and calculated based on the original caster's stats."
+    },
+    "124": {
+        "objectType":"weapon",
+        "id":"124",
+        "showThisID":true,
+        "name":"Soul Tithe",
+        "aliases":["Tithe"],
+        "wikiStars": {
+            "viability":0,
+            "ease":0
+        },
+        "statConfig":[
+            {
+                "min":10,
+                "max":20,
+                "range":10,
+                "step":0.1,
+                "type":"Absorb WP",
+                "emoji":["WP"],
+                "unit":"%",
+                "digits":5
+            },
+            {
+                "min":35,
+                "max":45,
+                "range":10,
+                "step":0.1,
+                "type":"MAG damage for WP",
+                "emoji":["MAG", "WP"],
+                "unit":"%",
+                "digits":5
+            },
+	    {
+                "min":100,
+                "max":50,
+                "range":-50,
+                "step":0.5,
+                "type":"WP-Cost",
+                "emoji":["WP"],
+                "unit":"",
+                "digits":3
+            }
+        ],
+        "description": "**Description:** Absorb [Absorb WP] of all allies' current WP to deal damage to an enemy. Deals [MAG damage for WP]% of your MAG for every 100 WP absorbed."
+    },
+    "125": {
+        "objectType":"weapon",
+        "id":"125",
+        "showThisID":true,
+        "name":"Briar-Heart Staff",
+        "aliases":["Bstaff", "Bhstaff"],
+        "wikiStars": {
+            "viability":0,
+            "ease":0
+        },
+        "statConfig":[
+            {
+                "min":20,
+                "max":40,
+                "range":20,
+                "step":0.2,
+                "type":"Damage Absorb",
+                "emoji":[],
+                "unit":"%",
+                "digits":5
+            },
+            {
+                "min":20,
+                "max":30,
+                "range":10,
+                "step":0.1,
+                "type":"Healing Intercept",
+                "emoji":[],
+                "unit":"%",
+                "digits":5
+            },
+            {
+                "min":20,
+                "max":30,
+                "range":10,
+                "step":0.1,
+                "type":"Replenishing Intercept",
+                "emoji":[],
+                "unit":"%",
+                "digits":5
+            },
+	    {
+                "min":250,
+                "max":150,
+                "range":-100,
+                "step":0.1,
+                "type":"WP-Cost",
+                "emoji":["WP"],
+                "unit":"",
+                "digits":3
+            }
+        ],
+        "description": "**Description:** At the start of the turn apply Thorn Tether to your allies for 2 turns. Thorn Tether - Create a tether from the weapon owner to this animal. The owner absorbs [Damage Absorb]% of the incoming damage dealt, but also intercepts [Healing Intercept]% of healing and [Replenishing Intercept]% replenishing from the target."
+    },
+    "126": {
+        "objectType":"weapon",
+        "id":"126",
+        "showThisID":true,
+        "name":"Arbiter's Edge",
+        "aliases":["Arbiter"],
+        "wikiStars": {
+            "viability":0,
+            "ease":0
+        },
+        "statConfig":[
+            {
+                "min":5,
+                "max":10,
+                "range":5,
+                "step":0.05,
+                "type":"Sin",
+                "emoji":[],
+                "unit":"%",
+                "digits":5
+            },
+            {
+                "min":20,
+                "max":30,
+                "range":10,
+                "step":0.1,
+                "type":"Virtue",
+                "emoji":[],
+                "unit":"%",
+                "digits":5
+            },
+	    {
+                "min":225,
+                "max":125,
+                "range":-100,
+                "step":0.1,
+                "type":"WP-Cost",
+                "emoji":["WP"],
+                "unit":"",
+                "digits":3
+            }
+        ],
+        "description": "**Description:** Unleash judgement on an enemy. Consume all stacks of Sin and Virtue. Gain a stack of Sin when an ally deals damage to an animal. Gain a stack of Virtue when an ally heals or replenishes an animal. Sin - When consumed, each stack deal [Sin]% of your highest offensive stat as physical damage to an enemy. Virtue - When consumed, each stack deals [Virtue]% of your lowest offense stat as magical damage to an enemy."
     }
 }
