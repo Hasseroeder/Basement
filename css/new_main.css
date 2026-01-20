@@ -701,7 +701,7 @@ a:hover {
 /* wrapper */
 .custom-select {
   position: relative;
-  width: 5rem;
+  width: 5.2rem;
   font-family: monospace;
   font-size: 0.85rem;
   white-space: unset;
@@ -711,7 +711,7 @@ a:hover {
 .selected {
   width: 100%;
   text-align: left;
-  padding: 0.2rem 0.2rem;
+  padding: 0.1rem 0.2rem;
   border:none;
   border-radius: 0.2rem;
   background: #191919;
@@ -825,7 +825,7 @@ a:hover {
   font-size: 0.85rem;
   border-radius: 3px;
   font-family: monospace;
-  padding: 0.2em;
+  padding: 0.1rem;
   text-align: end;
   display: block;
   background-color: transparent;

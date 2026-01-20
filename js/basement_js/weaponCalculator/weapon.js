@@ -5,14 +5,17 @@ import * as messageHandler from "./weaponCalcMessageGenerator.js"
 import { getRarity } from './weaponCalcUtil.js';
 import { debounce } from "../util/inputUtil.js";
 
-const weaponsPromise = loadJson("../json/weapons.json");
-const weaponDBPromise = loadJson("../json/weaponDatabase.json");
-const passivesPromise = loadJson("../json/passives.json");
 const [weapons, weaponDB, passives] = await Promise.all([
-    weaponsPromise,
-    weaponDBPromise,
-    passivesPromise
+    loadJson("../json/weapons.json"),
+    loadJson("../json/weaponDatabase.json"),
+    loadJson("../json/passives.json")
 ]);
+
+console.log(weapons);
+//weapons.forEach(weapon=>{
+//    console.log(weapon.statConfig);
+//});
+
 delete weapons[100]; // gotta get rid of fists
 passiveHandler.init(passives);
 

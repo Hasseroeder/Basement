@@ -1,12 +1,12 @@
 {
     "101":[
         {
-            "blueprint":"sword 100,98 str",
+            "blueprint":"sword 100,98",
             "owner":{"id":"@hsse","name":"Heather"},
             "weaponID":"77766Q"
         },
         {
-            "blueprint":"sword 98,87 knowledge",
+            "blueprint":"sword 98,87",
             "owner":{"id":"@hsse","name":"Heather"},
             "weaponID":"8GWE8E"
         }
