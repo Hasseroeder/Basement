@@ -402,12 +402,12 @@ function updateInternalStats(){
     const extraStats= [0,0,0,0,0,0];
 
     effects.forEach(effect=>{
-        let stat = statOrder[effect.type];
-        let boost = getBoost(effect.type, effect.quality)
+        const stat = statOrder[effect.type];
+        const boost = getBoost(effect.type, effect.quality)
 
         if (effect.type<6){
                 extraStats[stat]+=internalStats[stat]*boost;
-        }else{
+        }else{ // rune
             for (let i = 0; i < extraStats.length; i++) {
                 extraStats[i] += internalStats[i] * boost;
             }
