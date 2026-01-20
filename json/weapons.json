@@ -236,10 +236,10 @@
                 "digits":5
             },
             {
-                "min":40,
-                "max":65,
-                "range":25,
-                "step":0.25,
+                "min":30,
+                "max":50,
+                "range":20,
+                "step":0.2,
                 "type":"",
                 "emoji":["MAG","poison"],
                 "unit":"%",
@@ -269,10 +269,10 @@
         },
         "statConfig":[
             {
-                "min":80,
-                "max":100,
-                "range":20,
-                "step":0.2,
+                "min":90,
+                "max":120,
+                "range":30,
+                "step":0.3,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -332,10 +332,10 @@
                 "digits":4
             },
             {
-                "min":60,
-                "max":80,
-                "range":20,
-                "step":0.2,
+                "min":80,
+                "max":110,
+                "range":30,
+                "step":0.3,
                 "type":"",
                 "emoji":["MAG","explosion"],
                 "unit":"%",
@@ -417,8 +417,8 @@
                 "unit":"%",
                 "digits":4
             },{
-                "min":225,
-                "max":125,
+                "min":250,
+                "max":150,
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
@@ -441,8 +441,8 @@
         },
         "statConfig":[
             {
-                "min":40,
-                "max":70,
+                "min":60,
+                "max":90,
                 "range":30,
                 "step":0.3,
                 "type":"",
@@ -507,8 +507,8 @@
         },
         "statConfig":[
             {
-                "min":20,
-                "max":40,
+                "min":30,
+                "max":50,
                 "range":20,
                 "step":0.2,
                 "type":"",
@@ -516,8 +516,8 @@
                 "unit":"%",
                 "digits":4
             },{
-                "min":280,
-                "max":180,
+                "min":260,
+                "max":160,
                 "range":-100,
                 "step":1,
                 "type":"WP-Cost",
@@ -698,9 +698,9 @@
                 "unit":"%",
                 "digits":5
             },{
-                "min":200,
-                "max":125,
-                "range":-75,
+                "min":220,
+                "max":150,
+                "range":-70,
                 "step":0.75,
                 "type":"WP-Cost",
                 "emoji":["WP"],
