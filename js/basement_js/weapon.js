@@ -1,5 +1,6 @@
 import { loadJson } from "./util/jsonUtil.js";
 import { capitalizeFirstLetter } from "./util/stringUtil.js";
+import { make } from "./util/injectionUtil.js";
 
 const weaponDisplay ={
     image: document.getElementById("weaponImage"),
@@ -7,8 +8,8 @@ const weaponDisplay ={
 }
 
 const customStatTexts = {
-    106: 'none,<br> but two passives!',
-    100: 'none,<br> not actually a weapon!'
+    "Orb of Potency": 'none,<br> but two passives!',
+    "Fists": 'none,<br> not actually a weapon!'
 };
 
 const weaponContainer= document.getElementById("weaponContainer");
@@ -20,13 +21,14 @@ const buttons ={
 
 var weapons;
 var weaponIDs; 
-var currentWeaponID = 100; // init id
+var currentWeaponID = 1; // init id
 
 function importFromHash(){
     const hash = window.location.hash;
     if (hash) {
-        const value = decodeURIComponent(hash.slice(1));
-        currentWeaponID = Number(value);
+        const newID = Number(hash.slice(1))-100;
+        if (newID>=0 && newID<weapons.length)
+            currentWeaponID = newID;
     }
 }
 
@@ -50,111 +52,82 @@ function updateWeaponDisplay(){
 
 function createWikipediaContainer(weapon,weaponShorthand){
     const wikipediaContainer = weaponContainer.querySelector("#wikipedia");
-    
-    const wikipediaHeader = document.createElement("div");
-    wikipediaHeader.className="wikipedia-header";
-    wikipediaHeader.innerHTML= "<b>"+weapon.name + "</b><br>";
-
-    const wikipediaAliases = document.createElement("span");
-    wikipediaAliases.style="font-size: 0.9rem; color:#999;";
-    if(weapon.aliases[0]) {
-        wikipediaAliases.innerHTML= "aka: " + weapon.aliases.join(", ");
-    }
-    wikipediaHeader.appendChild(wikipediaAliases);
-
-    const wikipediaImage = document.createElement("img");
-    wikipediaImage.src=`media/owo_images/f_${weaponShorthand}.png`;
-    wikipediaImage.style="width:60%; padding: 0.5rem;";
-
     const renderStars = v =>
         [...Array(5)]
             .map((_, i) => (v > i ? "&starf;" : "&star;"))
             .join("");
-    const wikipediaStars = document.createElement("div");
-    wikipediaStars.style.marginBottom = ".5rem";
-    wikipediaStars.innerHTML =
-        `<span style="font-size:.85rem;">Viability:</span> ${renderStars(weapon.wikiStars.viability)}` +
-        `<br><span style="font-size:.85rem;">Ease of use:</span> ${renderStars(weapon.wikiStars.ease)}`;
-    
-    const IDwrapper = document.createElement("div");
-    IDwrapper.style="padding: 0 0.5rem;";
-    IDwrapper.innerHTML= "ID: " + 
-                        (weapon.objectType=="weapon"? currentWeaponID : "none");
-    const wikipediaID = document.createElement("div");
-    wikipediaID.className="wikipedia-id";
-    wikipediaID.append(IDwrapper);
-    
-    var wikipediaTable = createWikipediaTable(weapon);
-    if (customStatTexts[currentWeaponID]){
-        wikipediaTable= document.createElement("div");
-        wikipediaTable.style="margin:1rem 0 0.5rem 0;";
-        wikipediaTable.innerHTML = customStatTexts[currentWeaponID];
-    }
-    
-    const wikipediaStatsHeader = document.createElement("div");
-    wikipediaStatsHeader.className="wikipedia-stats-header";
-    wikipediaStatsHeader.textContent="Stats";
 
-    const calcLink = document.createElement("div");
-    if (weapon.showThisID){
-        calcLink.style="padding: 0.5rem;";
-        calcLink.innerHTML= `<a href="/weaponcalculator.html#${weaponShorthand}">Calculator</a>`;
-    }
+    const makeStarDisplay = statistic =>
+        make("div",{
+            innerHTML:
+                "<span>"+statistic.name+"</span>"
+                +renderStars(statistic.stars)
+        });
     
-    wikipediaContainer.append(wikipediaHeader, wikipediaImage,wikipediaStars,wikipediaID,wikipediaStatsHeader,wikipediaTable,calcLink);
+    const makeAliasString = aliases =>
+        aliases[0]
+            ? "aliases: " + weapon.aliases.join(", ")
+            : "";
+
+    const calcLink = make("div",{
+        className:"wikipedia-calc-link",
+        innerHTML: `<a href="/weaponcalculator.html#${weaponShorthand}">Calculator</a>`
+    });
+
+    wikipediaContainer.append(
+        make("div",{className:"wikipedia-header"},[
+            weapon.name,
+            make("div",{className:"wikipedia-aliases"},[makeAliasString(weapon.aliases)])
+        ]),
+        make("img",{className:"wikipedia-image", src:`media/owo_images/f_${weaponShorthand}.png`}),
+        make("div", {className:"wikipedia-stars"},weapon.wikiStars.map(makeStarDisplay)),
+        make("div",{className:"wikipedia-id"}, [
+            make("div",{innerHTML:"ID: " + (weapon.showThisID? weapon.id : "???")})
+        ]),
+        make("div",{className:"wikipedia-stats-header", textContent:"Stats"}),
+        createWikipediaTable(weapon),
+        weapon.showThisID? calcLink : ""
+    );
 }
 
 function createWikipediaTable(weapon){
-    const wikipediaTable = document.createElement("table");
-    wikipediaTable.style = "width:100%; border-top:none; table-layout: fixed;";
-    const tableBody = document.createElement("tbody");
-    wikipediaTable.append(tableBody);
-    const rankHeader = document.createElement("tr");
-    rankHeader.style= "height: 1rem"
-    tableBody.append(rankHeader);
+    if (customStatTexts[weapon.name]){
+        return make("div",{
+            className:".wikipedia-nostat",
+            innerHTML: customStatTexts[weapon.name]
+        })
+    }
 
-    ["common","fabled"].forEach(rank =>{
-        const cell = document.createElement("th");
-        cell.style = "border:none;";
-        const wrapper = document.createElement("div");
-        wrapper.style= "display:flex; justify-content: center; font-weight: normal; font-size: 0.75rem; margin-bottom: -0.4rem;";
-        const image = document.createElement("img");
-        image.style = "width:0.8rem; height: 0.8rem;";
-        image.src = rank == "common"? "media/owo_images/common.png":"media/owo_images/fabled.gif";
-        rankHeader.append(cell);
-        cell.append(wrapper);
-        wrapper.append(image);
-        wrapper.innerHTML += rank == "common"? "&hairsp; 0%":"&hairsp; 100%";
+    const table = make("div",{className:"wikipedia-table"});
+    const rankHeader = make("div");
+    table.append(rankHeader);
+
+    ["common.png","fabled.gif"].forEach(rank => rankHeader.append(
+        make("div",{className:"wikipedia-stat-header"},[
+            make("img",{src:"media/owo_images/"+rank}),
+            rank == "common.png"? "0%":"100%"
+        ])
+    ));
+
+    const makeImg = emoji => make("img",{
+        src:`media/owo_images/${emoji}.png`, title: emoji,
+        onerror: function () {
+            this.onerror = null; 
+            this.src = `media/owo_images/${emoji}.gif`;
+        }
     });
 
-    weapon.statConfig.forEach(stat=>{
-        const statRow = document.createElement("tr");
-        statRow.class= "wikipedia-stat-row";  
-        tableBody.append(statRow);              
-    
-        [stat.min,stat.max].forEach(extreme=>{
-            const cell = document.createElement("th");
-            const wrapper = document.createElement("div");
-            wrapper.style= "display:flex; justify-content: center; align-items: center; font-weight: normal;";
-            wrapper.innerHTML = extreme + stat.unit;
-            
-            stat.emoji.forEach(emoji=>{
-                const image = document.createElement("img");
-                image.style = "width:1rem; height: 1rem;";
-                image.src = `media/owo_images/${emoji}.png`;
-                image.onerror = function () {
-                    this.onerror = null; 
-                    this.src = `media/owo_images/${emoji}.gif`;
-                };
-                image.title = emoji;
-                wrapper.append(image);
-            });
-
-            statRow.append(cell);
-            cell.append(wrapper);
-        });
-    });
-    return wikipediaTable;
+    weapon.statConfig.forEach(stat=>
+        table.append(make("div",{className:"wikipedia-stat-row"},
+            [stat.min,stat.max].map(extreme=>
+                make("div",
+                    {textContent: extreme + stat.unit},
+                    stat.emoji.map(makeImg)
+                )
+            )
+        )
+    ));
+    return table;
 }
 
 async function main(){

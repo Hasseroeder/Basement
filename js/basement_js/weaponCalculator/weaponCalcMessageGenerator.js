@@ -259,7 +259,9 @@ function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
     const common = { 
         min: Math.min(max,min), 
         max: Math.max(max,min), 
-        type, step, lang: "en" 
+        type, 
+        step: Math.abs(step), 
+        lang: "en" 
     };
 
     const className = type=="range"?'weaponSlider':

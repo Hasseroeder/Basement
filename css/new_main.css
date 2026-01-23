@@ -656,8 +656,15 @@ a:hover {
   visibility: hidden;
 }
 
-.wikipedia-stat-row {
-  position: relative;
+.wikipedia-stat-row div{
+  border-right:1px solid #353535;
+  padding:0.35rem 0;
+  gap: 0.05rem;
+}
+
+.wikipedia-stat-row img {
+  width:1rem; 
+  height: 1rem;
 }
 
 .wikipedia-stat-row:hover {
@@ -673,6 +680,18 @@ a:hover {
   min-height: 2.3rem;
   width: 100%;
   box-sizing: border-box;
+  font-weight: bold;
+}
+
+.wikipedia-aliases{
+  font-size: 0.9rem; 
+  color:#999;
+  font-weight: normal;
+}
+
+.wikipedia-image{
+  width:60%; 
+  padding: 0.5rem;
 }
 
 .wikipedia-container{
@@ -684,6 +703,18 @@ a:hover {
   flex-direction: column;
 }
 
+.wikipedia-id div{
+  padding: 0 0.5rem;
+}
+
+.wikipedia-nostat {
+  margin:1rem 0 0.5rem 0;
+}
+
+.wikipedia-calc-link{
+  padding: 0.5rem;
+}
+
 .wikipedia-id{
   padding:0.5rem 0rem; 
   background-color: #353535; 
@@ -692,10 +723,44 @@ a:hover {
   font-size: 0.9rem;
 }
 
+.wikipedia-stars{
+  margin-bottom: .5rem;
+}
+
+.wikipedia-stars span {
+  font-size: 0.85rem;
+}
+
 .wikipedia-stats-header{
   padding:0.75rem 0 0rem; 
   margin-bottom: -0.65rem; 
   font-weight: bold;
+}
+
+.wikipedia-table{
+  width:100%; 
+}
+
+.wikipedia-table div{
+  display:flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.wikipedia-table > div {
+  border-bottom:1px solid #353535;
+}
+
+.wikipedia-stat-header{
+  font-size: 0.75rem; 
+}
+
+.wikipedia-stat-header img{
+  width:0.8rem; 
+  height: 0.8rem; 
+  margin-right: 0.15rem;
 }
 
 /* wrapper */

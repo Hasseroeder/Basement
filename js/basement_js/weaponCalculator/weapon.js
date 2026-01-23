@@ -10,13 +10,13 @@ const [weapons, weaponDB, passives] = await Promise.all([
     loadJson("../json/weaponDatabase.json"),
     loadJson("../json/passives.json")
 ]);
-
-console.log(weapons);
-//weapons.forEach(weapon=>{
-//    console.log(weapon.statConfig);
-//});
-
-delete weapons[100]; // gotta get rid of fists
+weapons.forEach(weapon=>{
+    weapon.statConfig.forEach(stat=>{
+        stat.range = stat.max - stat.max;
+        stat.step = stat.range/100;
+    })
+});
+// delete weapons[100]; // gotta get rid of fists... somehow
 passiveHandler.init(passives);
 
 function updateHash(weapon){

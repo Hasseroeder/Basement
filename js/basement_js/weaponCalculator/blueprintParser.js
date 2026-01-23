@@ -20,20 +20,17 @@ function splitHypenSpaces(string){
     return parts.filter(Boolean);
 }
 
-function isValidJoinedNumbers(str,separator) {
-    // "5,20,30"   → valid
-    // "5 30 30"   → valid
-    // "5-20-30"   → valid
-    // "5"		   → valid
-    // "5.2-30"    → valid
-    // "5-20,30"   → invalid due to mixed seperator
-    // "5.2,30"    → valid for now, I will round later due to comma
-    // "5.2"       → valid for now, I will round later due to implied comma
-
-    return str
-        .split(separator)
-        .every(part => /^\d+(?:\.\d+)?$/.test(part));
-}
+const isValidJoinedNumbers= (str,separator) =>
+    str.split(separator)
+       .every(part => /^\d+(?:\.\d+)?$/.test(part));
+        // "5,20,30"   → valid
+        // "5 30 30"   → valid
+        // "5-20-30"   → valid
+        // "5"		   → valid
+        // "5.2-30"    → valid
+        // "5-20,30"   → invalid due to mixed seperator
+        // "5.2,30"    → valid for now, I will round later due to comma
+        // "5.2"       → valid for now, I will round later due to implied comma
 
 function isCorrectStatAmount(str, statsNeeded) {
     const matches = str.match(/\d+(?:\.\d+)?/g);
@@ -41,11 +38,10 @@ function isCorrectStatAmount(str, statsNeeded) {
     return amount === statsNeeded;
 }
 
-function isOnlyNumbers(str){
-	return /^[\d.,\s-]+$/.test(str);
-}
+const isOnlyNumbers =
+    str => /^[\d.,\s-]+$/.test(str);
 
-function getStats({item,string}){
+function getStats(item,string){
 	const stats = item.objectType == "passive"
         ? item.stats
         : item.statConfig.map(config => ({noWearConfig:config}));
@@ -88,17 +84,18 @@ function getMatches(objectToSearch, query) {
 
 export function toWeapon(inputHash, weapons, passives){
     const tokens         = splitHypenSpaces(inputHash);
-    const weapon         = getMatches(weapons, tokens)[0] ?? { item:weapons[initWeaponID], string:"" };
+    const {item: weapon, string: weaponStatToken}
+        = getMatches(weapons, tokens)[0] ?? { item:weapons[initWeaponID], string:"" };
     const wear           = ["decent","fine","pristine"].includes(tokens[0]) ? tokens[0] : "worn";
-    const stats          = getStats(weapon);
+    const stats          = getStats(weapon,weaponStatToken);
     const passive = getMatches(passives, tokens).map(({ item, string }) => {
-        getStats({ item, string });
+        getStats(item, string);
         item.wear = wear;
         return item;
     });
 
     return {
-        id: weapon.item.id,
+        id: weapon.id-100, // TODO: I'll need to figure out what internal representation these should have
         wear,
         stats,
         passive

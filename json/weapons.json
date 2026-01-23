@@ -1,32 +1,30 @@
-{
-    "100":{
+[
+    {
         "objectType":"weapon",
         "name":"Physically Attacking",
-        "id":"100",
+        "id":100,
         "showThisID":false,
         "aliases":["Fists","Strength Attacking"],
-        "wikiStars": {
-            "viability":0,
-            "ease":0
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":0},
+            {"name":"Ease of use: ","stars":0}
+        ],
         "statConfig":[]
     },
-    "101": {
+    {
         "objectType":"weapon",
-        "id":"101",
+        "id":101,
         "showThisID":true,
         "name":"Great Sword",
         "aliases":["Sword","Gsword","Greatsword"],
-        "wikiStars": {
-            "viability":1,
-            "ease":4
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":1},
+            {"name":"Ease of use: ","stars":4}
+        ],
         "statConfig":[
             {
                 "min":35,
                 "max":55,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["STR"],
                 "unit":"%",
@@ -35,8 +33,6 @@
             },{
                 "min":200,
                 "max":100,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -45,22 +41,20 @@
         ],
         "description": "**Description:** Deals [stat] of your :STR:STR to all opponents"
     },
-    "102": {
+    {
         "objectType":"weapon",
-        "id":"102",
+        "id":102,
         "showThisID":true,
         "name":"Healing Staff",
         "aliases":["Hstaff","Healstaff"],
-        "wikiStars": {
-            "viability":0,
-            "ease":2
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":0},
+            {"name":"Ease of use: ","stars":2}
+        ],
         "statConfig":[
             {
                 "min":100,
                 "max":150,
-                "range":50,
-                "step":0.5,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -68,8 +62,6 @@
             },{
                 "min":225,
                 "max":150,
-                "range":-75,
-                "step":0.75,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -78,22 +70,20 @@
         ],
         "description": "**Description:** Heals [stat] of your :MAG:MAG to the lowest health ally. This weapon can overheal up to 50% of max :HP:HP."
     },
-    "103": {
+    {
         "objectType":"weapon",
-        "id":"103",
+        "id":103,
         "showThisID":true,
         "name":"Bow",
         "aliases":[],
-        "wikiStars": {
-            "viability":4,
-            "ease":3
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":4},
+            {"name":"Ease of use: ","stars":3}
+        ],
         "statConfig":[
             {
                 "min":110,
                 "max":160,
-                "range":50,
-                "step":0.5,
                 "type":"",
                 "emoji":["STR"],
                 "unit":"%",
@@ -101,8 +91,6 @@
             },{
                 "min":220,
                 "max":120,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -111,22 +99,20 @@
         ],
         "description": "**Description:** Deals [stat] of your :STR:STR to a random opponent."
     },
-    "104": {
+    {
         "objectType":"weapon",
-        "id":"104",
+        "id":104,
         "showThisID":true,
         "name":"Rune of the Forgotten",
         "aliases":["Rune"],
-        "wikiStars": {
-            "viability":4,
-            "ease":3
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":4},
+            {"name":"Ease of use: ","stars":3}
+        ],
         "statConfig":[
             {
                 "min":5,
                 "max":15,
-                "range":10,
-                "step":0.1,
                 "type":"",
                 "emoji":["all_stats","stat_increase"],
                 "unit":"%",
@@ -135,22 +121,20 @@
         ],
         "description": "**Description:** Increase :all_stats:ALL stats by [stat], and changes your physical attacks to do 65%:STR:STR and 65%:MAG:MAG as TRUE damage. This weapon does not have an active ability."
     },
-    "105": {
+    {
         "objectType":"weapon",
-        "id":"105",
+        "id":105,
         "showThisID":true,
         "name":"Defender's Aegis",
         "aliases":["Shield","Aegis"],
-        "wikiStars": {
-            "viability":5,
-            "ease":5
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":5},
+            {"name":"Ease of use: ","stars":5}
+        ],
         "statConfig":[
             {
                 "min":30,
                 "max":50,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["taunt"],
                 "unit":"%",
@@ -158,8 +142,6 @@
             },{
                 "min":250,
                 "max":150,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -168,35 +150,33 @@
         ],
         "description": "**Description:** Adds a **taunt** buff to your animal for 2 turns\n\n:taunt: **Taunt** - Taunts the enemy team and forces all opponents to attack this animal. Reduces incoming damage by [stat]"
     },
-    "106": {
+    {
         "objectType":"weapon",
-        "id":"106",
+        "id":106,
         "showThisID":true,
         "name":"Orb of Potency",
         "aliases":["Orb"],
-        "wikiStars": {
-            "viability":1,
-            "ease":1
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":1},
+            {"name":"Ease of use: ","stars":1}
+        ],
         "statConfig":[],
         "description": "**Description:** This weapon has no active ability, but comes with two passives!"
     },
-    "107": {
+    {
         "objectType":"weapon",
-        "id":"107",
+        "id":107,
         "showThisID":true,
         "name":"Vampiric Staff",
         "aliases":["Vstaff","Vampstaff"],
-        "wikiStars": {
-            "viability":1,
-            "ease":2
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":1},
+            {"name":"Ease of use: ","stars":2}
+        ],
         "statConfig":[
             {
                 "min":25,
                 "max":45,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -204,8 +184,6 @@
             },{
                 "min":200,
                 "max":100,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -214,22 +192,20 @@
         ],
         "description": "**Description:** Deal [stat] of your :MAG:MAG to ALL enemies and heal ALL allies by the damage dealt"
     },
-    "108": {
+    {
         "objectType":"weapon",
-        "id":"108",
+        "id":108,
         "showThisID":true,
         "name":"Poison Dagger",
         "aliases":["Dagger","Pdagger","Pdag","Pd"],
-        "wikiStars": {
-            "viability":4,
-            "ease":4
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":4},
+            {"name":"Ease of use: ","stars":4}
+        ],
         "statConfig":[
             {
                 "min":70,
                 "max":100,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["STR"],
                 "unit":"%",
@@ -238,8 +214,6 @@
             {
                 "min":30,
                 "max":50,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["MAG","poison"],
                 "unit":"%",
@@ -247,8 +221,6 @@
             },{
                 "min":200,
                 "max":100,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -257,22 +229,20 @@
         ],
         "description": "**Description:** Deals [stat] of your :STR:STR to a random enemy and applies **poison** for 3 turns\n\n:poison: **Poison** - deals [stat] of your :MAG:MAG as true damage at the end of the turn"
     },
-    "109": {
+    {
         "objectType":"weapon",
-        "id":"109",
+        "id":109,
         "showThisID":true,
         "name":"Wand of Absorption",
         "aliases":["Wand","Awand"],
-        "wikiStars": {
-            "viability":4,
-            "ease":0
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":4},
+            {"name":"Ease of use: ","stars":0}
+        ],
         "statConfig":[
             {
                 "min":90,
                 "max":120,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -281,8 +251,6 @@
             {
                 "min":20,
                 "max":40,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["wp_transfer"],
                 "unit":"%",
@@ -290,8 +258,6 @@
             },{
                 "min":250,
                 "max":150,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -300,22 +266,20 @@
         ],
         "description": "**Description:** Deal [stat] of your :MAG:MAG to a random enemy and transfer their :WP:WP to an ally equal to [stat] of the damage done"
     },
-    "110": {
+    {
         "objectType":"weapon",
-        "id":"110",
+        "id":110,
         "showThisID":true,
         "name":"Flame Staff",
         "aliases":["Fstaff"],
-        "wikiStars": {
-            "viability":1,
-            "ease":2
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":1},
+            {"name":"Ease of use: ","stars":2}
+        ],
         "statConfig":[
             {
                 "min":75,
                 "max":95,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -324,8 +288,6 @@
             {
                 "min":20,
                 "max":40,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["MAG","flame"],
                 "unit":"%",
@@ -334,8 +296,6 @@
             {
                 "min":80,
                 "max":110,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["MAG","explosion"],
                 "unit":"%",
@@ -343,8 +303,6 @@
             },{
                 "min":200,
                 "max":100,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -353,22 +311,20 @@
         ],
         "description": "**Description:** Deals [stat] of your :MAG:MAG to a random enemy and applies **flame** for 3 turns\n\n:flame: **Flame** - Deals [stat] of your :MAG:MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal [stat] damage to the target."
     },
-    "111": {
+    {
         "objectType":"weapon",
-        "id":"111",
+        "id":111,
         "showThisID":true,
         "name":"Energy Staff",
         "aliases":["Estaff"],
-        "wikiStars": {
-            "viability":4,
-            "ease":3
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":4},
+            {"name":"Ease of use: ","stars":3}
+        ],
         "statConfig":[
             {
                 "min":35,
                 "max":65,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -376,8 +332,6 @@
             },{
                 "min":200,
                 "max":100,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -386,22 +340,20 @@
         ],
         "description": "**Description:** Sends a wave of energy and deals [stat] of your :MAG:MAG to all opponents"
     },
-    "112": {
+    {
         "objectType":"weapon",
-        "id":"112",
+        "id":112,
         "showThisID":true,
         "name":"Spirit Staff",
         "aliases":["Sstaff"],
-        "wikiStars": {
-            "viability":3,
-            "ease":4
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":3},
+            {"name":"Ease of use: ","stars":4}
+        ],
         "statConfig":[
             {
                 "min":30,
                 "max":50,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -410,8 +362,6 @@
             {
                 "min":20,
                 "max":30,
-                "range":10,
-                "step":0.1,
                 "type":"",
                 "emoji":["defup"],
                 "unit":"%",
@@ -419,8 +369,6 @@
             },{
                 "min":250,
                 "max":150,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -429,22 +377,20 @@
         ],
         "description": "**Description:** Heal all allies for [stat] of your :MAG:MAG and applies **Defense Up** for 2 turns\n\n:defup: **Defense Up** - Reduces incoming damage by [stat]. Cannot stack with other Defense Up buffs"
     },
-    "113": {
+    {
         "objectType":"weapon",
-        "id":"113",
+        "id":113,
         "showThisID":true,
         "name":"Arcane Scepter",
         "aliases":["Scepter","Arcane","Ascept"],
-        "wikiStars": {
-            "viability":0,
-            "ease":0
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":0},
+            {"name":"Ease of use: ","stars":0}
+        ],
         "statConfig":[
             {
                 "min":60,
                 "max":90,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -452,8 +398,6 @@
             },{
                 "min":200,
                 "max":125,
-                "range":-75,
-                "step":0.75,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -462,22 +406,20 @@
         ],
         "description": "**Description:** Replenish [stat] of your :MAG:MAG as :WP:WP to an ally with the lowest :WP:WP. This weapon can overreplenish up to 50% of max :WP:WP."
     },
-    "114": {
+    {
         "objectType":"weapon",
-        "id":"114",
+        "id":114,
         "showThisID":true,
         "name":"Resurrection Staff",
         "aliases":["Rstaff"],
-        "wikiStars": {
-            "viability":5,
-            "ease":5
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":5},
+            {"name":"Ease of use: ","stars":4}
+        ],
         "statConfig":[
             {
                 "min":50,
                 "max":80,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -485,8 +427,6 @@
             },{
                 "min":400,
                 "max":300,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -495,22 +435,20 @@
         ],
         "description": "**Description:** Revive a dead ally and heal them for [stat] of your :MAG:MAG"
     },
-    "115": {
+    {
         "objectType":"weapon",
-        "id":"115",
+        "id":115,
         "showThisID":true,
         "name":"Glacial Axe",
         "aliases":["Axe","Gaxe"],
-        "wikiStars": {
-            "viability":2,
-            "ease":2
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":2},
+            {"name":"Ease of use: ","stars":2}
+        ],
         "statConfig":[
             {
                 "min":30,
                 "max":50,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["STR"],
                 "unit":"%",
@@ -518,8 +456,6 @@
             },{
                 "min":260,
                 "max":160,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -528,22 +464,20 @@
         ],
         "description": "**Description:** Deals [stat] of your :STR:STR to a random opponent and apply **Freeze** for 2 turns \n\n:freeze: **Freeze** - Freeze an enemy. They can not attack next turn."
     },
-    "116": {
+    {
         "objectType":"weapon",
-        "id":"116",
+        "id":116,
         "showThisID":true,
         "name":"Vanguard's Banner",
         "aliases":["Banner","Vban"],
-        "wikiStars": {
-            "viability":0,
-            "ease":1
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":1},
+            {"name":"Ease of use: ","stars":1}
+        ],
         "statConfig":[
             {
                 "min":15,
                 "max":25,
-                "range":10,
-                "step":0.1,
                 "type":"",
                 "emoji":["attup"],
                 "unit":"%",
@@ -552,8 +486,6 @@
             {
                 "min":25,
                 "max":35,
-                "range":10,
-                "step":0.1,
                 "type":"",
                 "emoji":["attup+"],
                 "unit":"%",
@@ -562,8 +494,6 @@
             {
                 "min":40,
                 "max":50,
-                "range":10,
-                "step":0.1,
                 "type":"",
                 "emoji":["attup++"],
                 "unit":"%",
@@ -571,8 +501,6 @@
             },{
                 "min":300,
                 "max":250,
-                "range":-50,
-                "step":0.5,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -581,22 +509,20 @@
         ],
         "description": "**Description:** Apply **Attack Up** to all allies for 2 turns. If the user has enough WP when the buff expires, the buff will be recasted with a stronger version.\n\n:attup: Attack Up - Increases all damage by [stat]. Cannot stack with other Attack Up buffs\n:attup+: Attack Up+ - Increases all damage by [stat]. Cannot stack with other Attack Up+ buffs\n:attup++: Attack Up++ - Increases all damage by [stat]. Cannot stack with other Attack Up++ buffs"
     },
-    "117": {
+    {
         "objectType":"weapon",
-        "id":"117",
+        "id":117,
         "showThisID":true,
         "name":"Culling Scythe",
         "aliases":["Scythe","Sythe","Cscythe","Csy","Csyth"],
-        "wikiStars": {
-            "viability":5,
-            "ease":2
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":4},
+            {"name":"Ease of use: ","stars":2}
+        ],
         "statConfig":[
             {
                 "min":70,
                 "max":100,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["STR"],
                 "unit":"%",
@@ -605,8 +531,6 @@
             {
                 "min":45,
                 "max":75,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["HP","mort"],
                 "unit":"%",
@@ -614,8 +538,6 @@
             },{
                 "min":200,
                 "max":100,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -624,22 +546,20 @@
         ],
         "description": "**Description:** Deals [stat] of your :STR:STR to a random enemy and applies **Mortality** for 2 turns\n\n:mort: **Mortality** - Decreases all healing for this animal by [stat]"
     },
-    "118": {
+    {
         "objectType":"weapon",
-        "id":"118",
+        "id":118,
         "showThisID":true,
         "name":"Rune of Celebration",
         "aliases":["Crune","Cel"],
-        "wikiStars": {
-            "viability":5,
-            "ease":2
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":5},
+            {"name":"Ease of use: ","stars":3}
+        ],
         "statConfig":[
             {
                 "min":20,
                 "max":50,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["iPR","celeb"],
                 "unit":"%",
@@ -648,8 +568,6 @@
             {
                 "min":15,
                 "max":40,
-                "range":25,
-                "step":0.25,
                 "type":"",
                 "emoji":["iMR","celeb"],
                 "unit":"%",
@@ -657,8 +575,6 @@
             },{
                 "min":200,
                 "max":100,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -667,22 +583,20 @@
         ],
         "description": "**Description:** Apply **Celebration** to an ally with the lowest health for 3 turns.\n\n:celeb: **Celebration** - At the end of every turn, heal [stat] of your :iPR:iPR as :HP:HP and restore [stat] of your :iMR:iMR as :WP:WP."
     },
-    "119": {
+    {
         "objectType":"weapon",
-        "id":"119",
+        "id":119,
         "showThisID":true,
         "name":"Staff of Purity",
         "aliases":["Pstaff"],
-        "wikiStars": {
-            "viability":4,
-            "ease":2
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":4},
+            {"name":"Ease of use: ","stars":2}
+        ],
         "statConfig":[
             {
                 "min":50,
                 "max":100,
-                "range":50,
-                "step":0.5,
                 "type":"",
                 "emoji":["STR"],
                 "unit":"%",
@@ -691,8 +605,6 @@
             {
                 "min":50,
                 "max":100,
-                "range":50,
-                "step":0.5,
                 "type":"",
                 "emoji":["MAG"],
                 "unit":"%",
@@ -700,8 +612,6 @@
             },{
                 "min":220,
                 "max":150,
-                "range":-70,
-                "step":0.75,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -710,22 +620,20 @@
         ],
         "description": "**Description:** Remove a buff from an enemy. If successful, deal [stat] of your :MAG:MAG to them. Remove a debuff from an ally. If successful, heal [stat] of your :STR:STR to them."
     },
-    "120": {
+    {
         "objectType":"weapon",
-        "id":"120",
+        "id":120,
         "showThisID":true,
         "name":"Leeching Scythe",
         "aliases":["Lscythe","Lsyth","Lsy"],
-        "wikiStars": {
-            "viability":5,
-            "ease":2
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":5},
+            {"name":"Ease of use: ","stars":2}
+        ],
         "statConfig":[
             {
                 "min":50,
                 "max":80,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["STR"],
                 "unit":"%",
@@ -734,8 +642,6 @@
             {
                 "min":40,
                 "max":60,
-                "range":20,
-                "step":0.2,
                 "type":"",
                 "emoji":["STR"],
                 "unit":"%",
@@ -744,8 +650,6 @@
             {
                 "min":30,
                 "max":60,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["HP","leech"],
                 "unit":"%",
@@ -754,8 +658,6 @@
             {
                 "min":30,
                 "max":60,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["WP","leech"],
                 "unit":"%",
@@ -763,8 +665,6 @@
             },{
                 "min":230,
                 "max":130,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -773,22 +673,20 @@
         ],
         "description": "**Description:** Deal [stat] of your :STR:STR to a random enemy and apply **Leech** for 3 turns. If the **Leech** debuff is already on the target, deal [stat] more damage.\n\n:leech: **Leech** - User who applied this debuff steals [stat] of incoming heals and [stat] of incoming replenishes."
     },
-    "121": {
+    {
         "objectType":"weapon",
-        "id":"121",
+        "id":121,
         "showThisID":true,
         "name":"Foul Fish",
         "aliases":["Ffish"],
-        "wikiStars": {
-            "viability":5,
-            "ease":1
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":5},
+            {"name":"Ease of use: ","stars":3}
+        ],
         "statConfig":[
             {
                 "min":50,
                 "max":80,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["STR"],
                 "unit":"%",
@@ -797,8 +695,6 @@
             {
                 "min":20,
                 "max":50,
-                "range":30,
-                "step":0.3,
                 "type":"",
                 "emoji":["MAG","stinky"],
                 "unit":"%",
@@ -806,8 +702,6 @@
             },{
                 "min":280,
                 "max":180,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -816,22 +710,20 @@
         ],
         "description": "**Description:** Deal [stat] of your :STR:STR to a random enemy and apply **Stinky** for 2 turns.\n\n:stinky: **Stinky** - Prevents any future buffs *AND* debuffs to be applied to this animal. On success, deal [stat] :MAG:MAG to the animal."
     },
-    "122": {
+    {
         "objectType":"weapon",
-        "id":"122",
+        "id":122,
         "showThisID":true,
         "name":"Rune of Luck",
         "aliases":["Lrune"],
-        "wikiStars": {
-            "viability":0,
-            "ease":1
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":0},
+            {"name":"Ease of use: ","stars":0}
+        ],
         "statConfig":[
             {
                 "min":1,
                 "max":40,
-                "range":39,
-                "step":0.39,
                 "type":"",
                 "emoji":["StrMag"],
                 "unit":"%",
@@ -840,8 +732,6 @@
             {
                 "min":1,
                 "max":40,
-                "range":39,
-                "step":0.39,
                 "type":"",
                 "emoji":["StrMag"],
                 "unit":"%",
@@ -850,8 +740,6 @@
             {
                 "min":1,
                 "max":40,
-                "range":39,
-                "step":0.39,
                 "type":"",
                 "emoji":["StrMag"],
                 "unit":"%",
@@ -860,8 +748,6 @@
             {
                 "min":1,
                 "max":40,
-                "range":39,
-                "step":0.39,
                 "type":"",
                 "emoji":["StrMag"],
                 "unit":"%",
@@ -870,8 +756,6 @@
             {
                 "min":1,
                 "max":40,
-                "range":39,
-                "step":0.39,
                 "type":"",
                 "emoji":["StrMag"],
                 "unit":"%",
@@ -879,8 +763,6 @@
             },{
                 "min":200,
                 "max":100,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -889,22 +771,20 @@
         ],
         "description": "**Description:** Punches a random enemy 5 times. Each punch randomly deals either a percentage of your :STR:STR or :MAG:MAG. Punches deals: [stat], [stat], [stat], [stat], [stat]"
     },
-    "123": {
+    {
         "objectType":"weapon",
-        "id":"123",
+        "id":123,
         "showThisID":true,
         "name":"Staff of Corruption",
         "aliases":["Cstaff"],
-        "wikiStars": {
-            "viability":0,
-            "ease":0
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":0},
+            {"name":"Ease of use: ","stars":0}
+        ],
         "statConfig":[
             {
                 "min":5,
                 "max":25,
-                "range":20,
-                "step":0.2,
                 "type":"Steal Buff",
                 "emoji":[],
                 "unit":"%",
@@ -913,8 +793,6 @@
             {
                 "min":5,
                 "max":25,
-                "range":20,
-                "step":0.2,
                 "type":"Transfer Debuff",
                 "emoji":["StrMag"],
                 "unit":"%",
@@ -923,8 +801,6 @@
 	    {
                 "min":250,
                 "max":150,
-                "range":-100,
-                "step":1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -933,22 +809,20 @@
         ],
         "description": "**Description:** Steal a buff from a random enemy and give it to a random ally with +[Steal Buff]% effectiveness. Transfers a debuff from a random ally to a random enemy with +[Transfer Debuff]% effectiveness. Any moved buffs or debuffs last an additional 1 turn and calculated based on the original caster's stats."
     },
-    "124": {
+    {
         "objectType":"weapon",
-        "id":"124",
+        "id":124,
         "showThisID":true,
         "name":"Soul Tithe",
         "aliases":["Tithe"],
-        "wikiStars": {
-            "viability":0,
-            "ease":0
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":0},
+            {"name":"Ease of use: ","stars":0}
+        ],
         "statConfig":[
             {
                 "min":10,
                 "max":20,
-                "range":10,
-                "step":0.1,
                 "type":"Absorb WP",
                 "emoji":["WP"],
                 "unit":"%",
@@ -957,8 +831,6 @@
             {
                 "min":35,
                 "max":45,
-                "range":10,
-                "step":0.1,
                 "type":"MAG damage for WP",
                 "emoji":["MAG", "WP"],
                 "unit":"%",
@@ -967,8 +839,6 @@
 	    {
                 "min":100,
                 "max":50,
-                "range":-50,
-                "step":0.5,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -977,22 +847,20 @@
         ],
         "description": "**Description:** Absorb [Absorb WP] of all allies' current WP to deal damage to an enemy. Deals [MAG damage for WP]% of your MAG for every 100 WP absorbed."
     },
-    "125": {
+    {
         "objectType":"weapon",
-        "id":"125",
+        "id":125,
         "showThisID":true,
         "name":"Briar-Heart Staff",
         "aliases":["Bstaff", "Bhstaff"],
-        "wikiStars": {
-            "viability":0,
-            "ease":0
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":0},
+            {"name":"Ease of use: ","stars":0}
+        ],
         "statConfig":[
             {
                 "min":20,
                 "max":40,
-                "range":20,
-                "step":0.2,
                 "type":"Damage Absorb",
                 "emoji":[],
                 "unit":"%",
@@ -1001,8 +869,6 @@
             {
                 "min":20,
                 "max":30,
-                "range":10,
-                "step":0.1,
                 "type":"Healing Intercept",
                 "emoji":[],
                 "unit":"%",
@@ -1011,8 +877,6 @@
             {
                 "min":20,
                 "max":30,
-                "range":10,
-                "step":0.1,
                 "type":"Replenishing Intercept",
                 "emoji":[],
                 "unit":"%",
@@ -1021,8 +885,6 @@
 	    {
                 "min":250,
                 "max":150,
-                "range":-100,
-                "step":0.1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -1031,22 +893,20 @@
         ],
         "description": "**Description:** At the start of the turn apply Thorn Tether to your allies for 2 turns. Thorn Tether - Create a tether from the weapon owner to this animal. The owner absorbs [Damage Absorb]% of the incoming damage dealt, but also intercepts [Healing Intercept]% of healing and [Replenishing Intercept]% replenishing from the target."
     },
-    "126": {
+    {
         "objectType":"weapon",
-        "id":"126",
+        "id":126,
         "showThisID":true,
         "name":"Arbiter's Edge",
         "aliases":["Arbiter"],
-        "wikiStars": {
-            "viability":0,
-            "ease":0
-        },
+        "wikiStars": [
+            {"name":"Viability: ", "stars":0},
+            {"name":"Ease of use: ","stars":0}
+        ],
         "statConfig":[
             {
                 "min":5,
                 "max":10,
-                "range":5,
-                "step":0.05,
                 "type":"Sin",
                 "emoji":[],
                 "unit":"%",
@@ -1055,8 +915,6 @@
             {
                 "min":20,
                 "max":30,
-                "range":10,
-                "step":0.1,
                 "type":"Virtue",
                 "emoji":[],
                 "unit":"%",
@@ -1065,8 +923,6 @@
 	    {
                 "min":225,
                 "max":125,
-                "range":-100,
-                "step":0.1,
                 "type":"WP-Cost",
                 "emoji":["WP"],
                 "unit":"",
@@ -1075,4 +931,4 @@
         ],
         "description": "**Description:** Unleash judgement on an enemy. Consume all stacks of Sin and Virtue. Gain a stack of Sin when an ally deals damage to an animal. Gain a stack of Virtue when an ally heals or replenishes an animal. Sin - When consumed, each stack deal [Sin]% of your highest offensive stat as physical damage to an enemy. Virtue - When consumed, each stack deals [Virtue]% of your lowest offense stat as magical damage to an enemy."
     }
-}
+]

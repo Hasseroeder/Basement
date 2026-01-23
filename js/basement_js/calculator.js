@@ -21,38 +21,7 @@ let currentQuery = '';
 let showPets = true;
 let page = 0;
 let columns=[];
-const petTypeOrder = {
-    "common":   1,
-    "uncommon": 2,
-    "rare":     3,
-    "epic":     4,
-    "mythical": 5,
-    "legendary":6,
-    "gem":      7,
-    "bot":      8,
-    "distorted":9,
-    "fabled":   10,
-    "hidden":   11,
-    "special":  12,
-    "patreon":  13,
-    "cpatreon": 14
-};
-const petTiers= {
-    "common":   " -----—— Common ——------ ",
-    "uncommon": " -----—— Uncommon —----- ",
-    "rare":     " -----—— Rare ———------- ",
-    "epic":     " -----—— Epic ———------- ",
-    "mythical": " -----—— Mythic ——------ ",
-    "legendary":" -----—— Legendary —---- ",
-    "gem":      " -----—— Gem ———-------- ",
-    "bot":      " -----—— Bot ———-------- ",
-    "distorted":" -----—— Distorted —---- ",
-    "fabled":   " -----—— Fabled ——------ ",
-    "hidden":   " -----—— Hidden ——------ ",
-    "special":  " -----—— Special ——----- ",
-    "patreon":  " -----—— Patreon ——----- ",
-    "cpatreon": " -----—— Custom ——------ "
-};
+
 let petArray = [/*[NAME,ANIMATED,EMOJI,ALIAS,TYPE],*/];
 
 //for Mode: searching pets
@@ -119,9 +88,12 @@ const imgTypeSuffix =[
 ]  
 
 function sortPetArray(){
+    const tiers = [
+        "common","uncommon","rare","epic","mythical","legendary","gem","bot","distorted","fabled","hidden","special","patreon","cpatreon"
+    ];
     petArray.sort((petA, petB) => {
-        const tierPriorityA = petTypeOrder[petA[4]];
-        const tierPriorityB = petTypeOrder[petB[4]];
+        const tierPriorityA = tiers.indexOf(petA[4]);
+        const tierPriorityB = tiers.indexOf(petB[4]);
 
         if (tierPriorityA !== tierPriorityB) 
             return tierPriorityA - tierPriorityB;
@@ -510,18 +482,34 @@ function displayPet(pet){
 }
 
 function createHeader(pet){
+    const tierTexts= {
+        "common":   " -----—— Common ——------ ",
+        "uncommon": " -----—— Uncommon —----- ",
+        "rare":     " -----—— Rare ———------- ",
+        "epic":     " -----—— Epic ———------- ",
+        "mythical": " -----—— Mythic ——------ ",
+        "legendary":" -----—— Legendary —---- ",
+        "gem":      " -----—— Gem ———-------- ",
+        "bot":      " -----—— Bot ———-------- ",
+        "distorted":" -----—— Distorted —---- ",
+        "fabled":   " -----—— Fabled ——------ ",
+        "hidden":   " -----—— Hidden ——------ ",
+        "special":  " -----—— Special ——----- ",
+        "patreon":  " -----—— Patreon ——----- ",
+        "cpatreon": " -----—— Custom ——------ "
+    };
+
     return make("div",
         {style:{width:"10.8rem"}},
-        [make("div",{ textContent: petTiers[pet[4]], className:"pet-type-header"})]
+        [make("div",{ textContent: tierTexts[pet[4]], className:"pet-type-header"})]
     )
 }
-
 
 function getPetImage(pet, wantAnimated){
     if( wantAnimated && pet[1] == 1){ 
         // in search, where we display gifs (eg lizard)
         return `https://cdn.discordapp.com/emojis/${pet[2]}.gif?size=96`;
-    }else if (petTypeOrder[pet[4]]<=5 || petTypeOrder[pet[4]]==11){
+    }else if (["common","uncommon","rare","epic","mythic","hidden"].includes(pet[4])){
         // snail, crocodile, ...
         return `../media/owo_images/${pet[0]}.png`;
     }else {

@@ -3,8 +3,8 @@ import { loadJson } from '../util/jsonUtil.js';
 import { gridInjector } from '../util/injectionUtil.js';
 import { Weapon } from './weapon.js';
 
-const weapons = await loadJson("../json/weapons.json");
-delete weapons[100]; // gotta get rid of fists
+//const weapons = await loadJson("../json/weapons.json");
+//delete weapons[100]; // gotta get rid of fists // somehow??
 
 /*
 gridInjector({
