@@ -9,7 +9,7 @@ const weaponDisplay ={
 
 const customStatTexts = {
     "Orb of Potency": 'none,<br> but two passives!',
-    "Fists": 'none,<br> not actually a weapon!'
+    "Physically Attacking": 'none,<br> not actually a weapon!'
 };
 
 const weaponContainer= document.getElementById("weaponContainer");
