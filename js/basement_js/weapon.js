@@ -93,7 +93,7 @@ function createWikipediaContainer(weapon,weaponShorthand){
 function createWikipediaTable(weapon){
     if (customStatTexts[weapon.name]){
         return make("div",{
-            className:".wikipedia-nostat",
+            className:"wikipedia-nostat",
             innerHTML: customStatTexts[weapon.name]
         })
     }
