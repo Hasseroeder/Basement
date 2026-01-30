@@ -1,9 +1,6 @@
 [
     {
-        "objectType":"weapon",
         "name":"Physically Attacking",
-        "id":100,
-        "showThisID":false,
         "aliases":["Fists","Strength Attacking"],
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
@@ -14,7 +11,6 @@
     {
         "objectType":"weapon",
         "id":101,
-        "showThisID":true,
         "name":"Great Sword",
         "aliases":["Sword","Gsword","Greatsword"],
         "wikiStars": [
@@ -44,7 +40,6 @@
     {
         "objectType":"weapon",
         "id":102,
-        "showThisID":true,
         "name":"Healing Staff",
         "aliases":["Hstaff","Healstaff"],
         "wikiStars": [
@@ -73,7 +68,6 @@
     {
         "objectType":"weapon",
         "id":103,
-        "showThisID":true,
         "name":"Bow",
         "aliases":[],
         "wikiStars": [
@@ -102,7 +96,6 @@
     {
         "objectType":"weapon",
         "id":104,
-        "showThisID":true,
         "name":"Rune of the Forgotten",
         "aliases":["Rune"],
         "wikiStars": [
@@ -124,7 +117,6 @@
     {
         "objectType":"weapon",
         "id":105,
-        "showThisID":true,
         "name":"Defender's Aegis",
         "aliases":["Shield","Aegis"],
         "wikiStars": [
@@ -153,7 +145,6 @@
     {
         "objectType":"weapon",
         "id":106,
-        "showThisID":true,
         "name":"Orb of Potency",
         "aliases":["Orb"],
         "wikiStars": [
@@ -166,7 +157,6 @@
     {
         "objectType":"weapon",
         "id":107,
-        "showThisID":true,
         "name":"Vampiric Staff",
         "aliases":["Vstaff","Vampstaff"],
         "wikiStars": [
@@ -195,7 +185,6 @@
     {
         "objectType":"weapon",
         "id":108,
-        "showThisID":true,
         "name":"Poison Dagger",
         "aliases":["Dagger","Pdagger","Pdag","Pd"],
         "wikiStars": [
@@ -232,7 +221,6 @@
     {
         "objectType":"weapon",
         "id":109,
-        "showThisID":true,
         "name":"Wand of Absorption",
         "aliases":["Wand","Awand"],
         "wikiStars": [
@@ -269,7 +257,6 @@
     {
         "objectType":"weapon",
         "id":110,
-        "showThisID":true,
         "name":"Flame Staff",
         "aliases":["Fstaff"],
         "wikiStars": [
@@ -314,7 +301,6 @@
     {
         "objectType":"weapon",
         "id":111,
-        "showThisID":true,
         "name":"Energy Staff",
         "aliases":["Estaff"],
         "wikiStars": [
@@ -343,7 +329,6 @@
     {
         "objectType":"weapon",
         "id":112,
-        "showThisID":true,
         "name":"Spirit Staff",
         "aliases":["Sstaff"],
         "wikiStars": [
@@ -380,7 +365,6 @@
     {
         "objectType":"weapon",
         "id":113,
-        "showThisID":true,
         "name":"Arcane Scepter",
         "aliases":["Scepter","Arcane","Ascept"],
         "wikiStars": [
@@ -409,7 +393,6 @@
     {
         "objectType":"weapon",
         "id":114,
-        "showThisID":true,
         "name":"Resurrection Staff",
         "aliases":["Rstaff"],
         "wikiStars": [
@@ -438,7 +421,6 @@
     {
         "objectType":"weapon",
         "id":115,
-        "showThisID":true,
         "name":"Glacial Axe",
         "aliases":["Axe","Gaxe"],
         "wikiStars": [
@@ -467,7 +449,6 @@
     {
         "objectType":"weapon",
         "id":116,
-        "showThisID":true,
         "name":"Vanguard's Banner",
         "aliases":["Banner","Vban"],
         "wikiStars": [
@@ -512,7 +493,6 @@
     {
         "objectType":"weapon",
         "id":117,
-        "showThisID":true,
         "name":"Culling Scythe",
         "aliases":["Scythe","Sythe","Cscythe","Csy","Csyth"],
         "wikiStars": [
@@ -549,7 +529,6 @@
     {
         "objectType":"weapon",
         "id":118,
-        "showThisID":true,
         "name":"Rune of Celebration",
         "aliases":["Crune","Cel"],
         "wikiStars": [
@@ -586,7 +565,6 @@
     {
         "objectType":"weapon",
         "id":119,
-        "showThisID":true,
         "name":"Staff of Purity",
         "aliases":["Pstaff"],
         "wikiStars": [
@@ -623,7 +601,6 @@
     {
         "objectType":"weapon",
         "id":120,
-        "showThisID":true,
         "name":"Leeching Scythe",
         "aliases":["Lscythe","Lsyth","Lsy"],
         "wikiStars": [
@@ -676,7 +653,6 @@
     {
         "objectType":"weapon",
         "id":121,
-        "showThisID":true,
         "name":"Foul Fish",
         "aliases":["Ffish"],
         "wikiStars": [
@@ -713,7 +689,6 @@
     {
         "objectType":"weapon",
         "id":122,
-        "showThisID":true,
         "name":"Rune of Luck",
         "aliases":["Lrune"],
         "wikiStars": [
@@ -774,7 +749,6 @@
     {
         "objectType":"weapon",
         "id":123,
-        "showThisID":true,
         "name":"Staff of Corruption",
         "aliases":["Cstaff"],
         "wikiStars": [
@@ -812,9 +786,8 @@
     {
         "objectType":"weapon",
         "id":124,
-        "showThisID":true,
         "name":"Soul Tithe",
-        "aliases":["Tithe"],
+        "aliases":["Stithe","Tithe"],
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
@@ -850,7 +823,6 @@
     {
         "objectType":"weapon",
         "id":125,
-        "showThisID":true,
         "name":"Briar-Heart Staff",
         "aliases":["Bstaff", "Bhstaff"],
         "wikiStars": [
@@ -896,9 +868,8 @@
     {
         "objectType":"weapon",
         "id":126,
-        "showThisID":true,
         "name":"Arbiter's Edge",
-        "aliases":["Arbiter"],
+        "aliases":["Aedge","Edge"],
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}

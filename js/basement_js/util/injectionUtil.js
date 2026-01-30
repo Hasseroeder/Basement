@@ -1,8 +1,7 @@
 export function gridInjector({
         container,								// container
-        items,									// array of objects, those objects containing items
-		baseHref,								// baseHref
-		hashType= "id",							// type of hash the builder should add
+        items,									// array of items
+		baseLink,								// baseLink
 		onItemClick,							// event listener
 		columns = "repeat(3, 3.5rem)",			// custom styles grid
 		transform="translate(-2.8rem,1.5%)",	// custom styles grid
@@ -15,20 +14,17 @@ export function gridInjector({
 
 	container.classList.add(...gridClasses);
 
-	const combined = items.reduce((acc, m) => ({ ...acc, ...m }), {});
-
-	Object.values(combined).forEach(item => {
+	items.forEach(item => {
 		const shortHand   = item.aliases[0] ?? item.name;
-		const imagePath   = item.path ?? `media/owo_images/f_${shortHand.toLowerCase()}.png`;
-		var link          = `/${baseHref ?? item.objectType}.html`;	
-
-		const v = { id: item.id, shortHand }[hashType];
-		link += v ? `#${v}` : '';
+		const imagePath   = `media/owo_images/f_${shortHand.toLowerCase()}.png`;
+		const link        = baseLink  + "#" + shortHand;	
 
 		var text  = (item.objectType=='weapon' ? shortHand : item.name)
-				  + (item.showThisID? "<br>"+item.id : "");
+				  + (item.id ? "<br>"+item.id : "");
 
-		const el = getImageLink(onItemClick, item, link, imagePath, text);
+		const el = getImageLink(onItemClick, item, 
+			link, 
+			imagePath, text);
 
 		container.append(el);
 	});
@@ -83,7 +79,11 @@ export const make = (tag, props = {}, children) => {
         delete props.dataset;
     }
 
-    Object.assign(el, props);
+	for (const [key, value] of Object.entries(props)) {
+		if (value === undefined) continue;
+		el[key] = value;
+	}
+	
     if (children){
         el.append(...children);
     }

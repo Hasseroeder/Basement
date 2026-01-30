@@ -20,29 +20,29 @@ const buttons ={
 }
 
 var weapons;
-var weaponIDs; 
 var currentWeaponID = 1; // init id
 
 function importFromHash(){
     const hash = window.location.hash;
     if (hash) {
-        const newID = Number(hash.slice(1))-100;
-        if (newID>=0 && newID<weapons.length)
-            currentWeaponID = newID;
+        const idx = weapons.findIndex(
+            weapon => [weapon.name, ...weapon.aliases].some(str => str == hash.slice(1))
+        );
+        if (idx>=0) currentWeaponID = idx
     }
 }
 
 function updateWeaponDisplay(){
     const weapon = weapons[currentWeaponID];
     const weaponShorthand = (weapon.aliases[0]?? weapon.name)
-                            .toLowerCase();
+    history.replaceState(null, "", "#"+weaponShorthand);
 
-    weaponDisplay.text.textContent  = (weapon.showThisID? weapon.id : "???")
+    weaponDisplay.text.textContent  = (weapon.id ?? "???")
                                     + " - " 
-                                    + capitalizeFirstLetter(weaponShorthand);
-    weaponDisplay.image.src= `media/owo_images/f_${weaponShorthand}.png`;
+                                    + weaponShorthand;
+    weaponDisplay.image.src= `media/owo_images/f_${weaponShorthand.toLowerCase()}.png`;
 
-    fetch(`donatorPages/weapons/${weapon.id}.html`)
+    fetch(`donatorPages/weapons/${currentWeaponID+100}.html`)
         .then(r => r.text())
         .then(html => weaponContainer.innerHTML = html)
         .then(()=>{
@@ -51,6 +51,7 @@ function updateWeaponDisplay(){
 }
 
 function createWikipediaContainer(weapon,weaponShorthand){
+    weaponShorthand = weaponShorthand.toLowerCase();
     const wikipediaContainer = weaponContainer.querySelector("#wikipedia");
     const renderStars = v =>
         [...Array(5)]
@@ -64,14 +65,15 @@ function createWikipediaContainer(weapon,weaponShorthand){
                 +renderStars(statistic.stars)
         });
     
-    const makeAliasString = aliases =>
-        aliases[0]
-            ? "aliases: " + weapon.aliases.join(", ")
-            : "";
+    const makeAliasString = aliases => aliases[0]
+        ? "aliases: " + weapon.aliases.join(", ")
+        : "";
 
     const calcLink = make("div",{
         className:"wikipedia-calc-link",
-        innerHTML: `<a href="/weaponcalculator.html#${weaponShorthand}">Calculator</a>`
+        innerHTML: weapon.objectType == "weapon"
+            ?`<a href="/weaponcalculator.html#${weaponShorthand}">Calculator</a>`
+            :""
     });
 
     wikipediaContainer.append(
@@ -86,7 +88,7 @@ function createWikipediaContainer(weapon,weaponShorthand){
         ]),
         make("div",{className:"wikipedia-stats-header", textContent:"Stats"}),
         createWikipediaTable(weapon),
-        weapon.showThisID? calcLink : ""
+        calcLink
     );
 }
 
@@ -132,7 +134,6 @@ function createWikipediaTable(weapon){
 
 async function main(){
     weapons = await loadJson("/json/weapons.json");
-    weaponIDs = Object.keys(weapons).map(Number); 
     pageLoad();
     buttons.next.addEventListener("click", ()=>swapWeapon(+1));
     buttons.previous.addEventListener("click", ()=>swapWeapon(-1));
@@ -144,13 +145,8 @@ function pageLoad(){
 }
 
 function swapWeapon(change) {
-  const ids = weaponIDs;
-  const currentIndex = ids.indexOf(currentWeaponID);
-  const newIndex = (currentIndex + change + ids.length) % ids.length;
-  currentWeaponID = ids[newIndex];
-
-  history.replaceState(null, '', location.pathname);
-  updateWeaponDisplay();
+    currentWeaponID = (currentWeaponID + change + weapons.length) % weapons.length;
+    updateWeaponDisplay();
 }
 
 document.addEventListener("DOMContentLoaded", main);

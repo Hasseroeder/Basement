@@ -2,156 +2,76 @@ import { gridInjector,make } from "./util/injectionUtil.js";
 import { loadJson } from "./util/jsonUtil.js";
 import * as cookieUtil from "./util/cookieUtil.js"
 
-const afterWeapons = {
-	weaponCalculator: { 
-		name: "Weapon Calculator",                // displayName
-		objectType: "weaponcalculator",           // href links to this
-		aliases: [],                              // needed to be consistent with rest of JSON
-		path:"./media/misc_images/cogwheel2.png", // image source
-		showThisID:false                          // id not shown
-	}
-};
-
-function createImage(attrs = {}, styles = {}) {
-	const img = document.createElement("img");
-	Object.entries(attrs).forEach(([key, val]) => {
-		if ((key === "width" || key === "height") && typeof val === "number") {
-			img[key] = val;
-		} else {
-			img.setAttribute(key, val);
-		}
-	});
-	Object.assign(img.style, styles);
-	return img;
-}
-
 const injectors = [
   	{
 		selector: "#navbar",
-		load: () => {
-			return fetch("./donatorPages/navBar.html")
-				.then(r => r.text())
-				.then(async html => {
-					const template = document.createElement('template');
-					template.innerHTML = html;
-					const fragment = template.content;
+		load: async () => {
+			const res = await fetch("./donatorPages/navBar.html"); 
+			const html = await res.text();
+			const fragment = document.createRange().createContextualFragment(html);
 
-					const [weapons, passives] = await Promise.all([
-						loadJson("../json/weapons.json"),
-						loadJson("../json/passives.json")
-					]);
+			await Promise.all([
+				loadJson("../json/weapons.json").then(items =>
+					gridInjector({container: fragment.querySelector('#menuWeaponContainer'),baseLink:"/weapon.html",items})
+				),
+				loadJson("../json/passives.json").then(items =>
+					gridInjector({container: fragment.querySelector("#menuPassiveContainer"),baseLink:"/passive.html",items})
+				)
+			]);
 
-					gridInjector({
-						container: fragment.querySelector('#menuWeaponContainer'),
-					  	items: [weapons,afterWeapons]
-          			});
-					gridInjector({
-						container: fragment.querySelector("#menuPassiveContainer"),
-						items: [passives]
-					});
-					return fragment;
-				});
-		},
+			return fragment;
+		}
   	},
 	{
 		selector: ".center-pillar",
-		load: () => {
-			const blinkies = [
-				{file:"blinkiesCafe-7m.gif" ,href:"https://blinkies.cafe/"},
-				{file:"blinkiesCafe-ji.gif" ,href:"https://blinkies.cafe/"},
-				{file:"autism_blinkie2.gif" ,cookie:"tbh"},
-				{file:"advert_blinkie.gif"  ,href:"https://github.com/Hasseroeder/Basement/"},
-				{file:"rbot_blinkie.gif"    ,href:"https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"},
-				{file:"obs_blinkie.gif"     ,href:"https://discord.gg/owobot"},
-				{file:"anydice_blinkie.gif" ,href:"https://anydice.com/"},
-				{file:"neon_blinkie.gif"    ,href:"https://discord.gg/neonutil"},
-				{file:"dontasktoask_blinkie.png",href:"https://dontasktoask.com/"}
-			];
+		load: async () => {
+			const blinkies = randomElements(4,
+				[
+					{file:"blinkiesCafe-7m.gif" ,href:"https://blinkies.cafe/"},
+					{file:"blinkiesCafe-ji.gif" ,href:"https://blinkies.cafe/"},
+					{file:"autism_blinkie2.gif" ,fn: () => cookieUtil.setCookie("tbh", cookieUtil.getCookie("tbh") !== "true", 30)},
+					{file:"advert_blinkie.gif"  ,href:"https://github.com/Hasseroeder/Basement/"},
+					{file:"rbot_blinkie.gif"    ,href:"https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200"},
+					{file:"obs_blinkie.gif"     ,href:"https://discord.gg/owobot"},
+					{file:"anydice_blinkie.gif" ,href:"https://anydice.com/"},
+					{file:"neon_blinkie.gif"    ,href:"https://discord.gg/neonutil"},
+					{file:"dontasktoask_blinkie.png",href:"https://dontasktoask.com/"}
+				]
+			);
+			const createBlinkie = blinkie => 
+				make("a",{target:"_blank", href: blinkie.href, onclick: blinkie.fn },[
+					make("img",{className:"blinkie", src:"../media/blinkies/" + blinkie.file})
+				]);
 
-			const myBlinkies = fourRandoms(blinkies);
-
-			const wrapper = make("footer",{
-				style:"margin: 2rem 4rem; gap: 0.5rem; display: flex;"
-			});
-
-			myBlinkies.forEach(blinkie => {
-				const img = make("img",{
-					src:"../media/blinkies/" + blinkie.file,
-					className:"blinkie"
-				});
-				const a = make("a",{
-					style:"display:block; flex: 1 1 0;",
-					target:"_blank",
-				});
-        		if (blinkie.href) a.href = blinkie.href;
-        		if (blinkie.cookie) a.onclick = () =>
-					cookieUtil.setCookie(
-						blinkie.cookie, 
-						cookieUtil.getCookie(blinkie.cookie) !== "true", 
-						30
-					);
-
-				a.append(img); 
-				wrapper.append(a);    
-			});
-			return Promise.resolve(wrapper);
+			return make("footer",{className:"blinkie-footer"},blinkies.map(createBlinkie));
 		},
 	},
 	{
 		selector: "#construction",
-		load: () => {
-			const container = document.createElement("div");
+		load: async () => {
+			const container = make("div",{className:"construction-container"});
 
-			Object.assign(container.style, {
-				padding: "2rem 2rem 2rem 2rem",
-				margin: "2rem 10rem 2rem 10rem",
-				border:"1px solid gray",
-			});
+			const [json,html] = await Promise.all([
+				fetch("../media/construction/construction-list.json").then(r => r.json()),
+				fetch("../donatorPages/underConstruction.html").then(r => r.text())
+			])
 
-			const gifPromise = fetch("../media/construction/construction-list.json")
-				.then(res => res.json())
-				.then(files =>{
-					const gifFiles = files.filter(f => f.endsWith(".gif"));
-					const idx = Math.floor(Math.random()*gifFiles.length);
-					const img = createImage(
-						{
-							src: `../media/construction/${gifFiles[idx]}`,
-							alt:"Under construction...",
-							height: 150 
-						},{
-							display: "block",
-							margin: "0 auto"
-						}
-					);
-					container.appendChild(img);
-					return img;
-				});
+			const giflist = json.filter(f => f.endsWith(".gif"));
+			const idx = Math.floor(Math.random() * giflist.length);
 
-			gifPromise
-				.then(()=> fetch("../donatorPages/underConstruction.html"))
-				.then(res => {
-					if (!res.ok) throw new Error("HTML not found");
-					return res.text();
-				})
-				.then(htmlString => {
-					const wrapper = document.createElement("div");
-					wrapper.innerHTML = htmlString;
-					container.appendChild(wrapper);
-				});
+			container.append(
+				make("img", {
+					src: `../media/construction/${giflist[idx]}`,
+					alt: "Under construction...",
+					className: "construction-image"
+				}),
+				make("div", { innerHTML: html })
+			);
 
-			return gifPromise.then(() => container);
+			return container;
 		}
 	}
 ];
-
-function fourRandoms(myArray){
- 	for (let i = myArray.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[myArray[i], myArray[j]] = [myArray[j], myArray[i]];
-  	}
-  	const count = Math.min(4, myArray.length);
-  	return myArray.slice(0, count);
-}
 
 function initInjectors() {
   	injectors.forEach(({ selector, load }) => {
@@ -163,16 +83,22 @@ function initInjectors() {
 
 window.addEventListener("DOMContentLoaded", initInjectors);
 
-cookieStore.addEventListener('change', () => {
-  	checkForTBH();
-});
+function randomElements(n,inputArray){
+	const clone = [...inputArray]
+ 	for (let i = clone.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[clone[i], clone[j]] = [clone[j], clone[i]];
+  	}
+  	const count = Math.min(n, clone.length);
+  	return clone.slice(0, count);
+}
 
+cookieStore.addEventListener('change', checkForTBH);
 checkForTBH();
 
 function checkForTBH(){
-	if (cookieUtil.getCookie("tbh")=="true"){
-		document.body.classList.add("tbh");
-	}else{
-		document.body.classList.remove('tbh');
-	}
+	document.body.classList.toggle(
+		"tbh",
+		cookieUtil.getCookie("tbh")=="true"
+	)
 }

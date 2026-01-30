@@ -71,11 +71,10 @@ function getStats(item,string){
     return stats;
 }
 
-function getMatches(objectToSearch, query) {
+function getMatches(arrayToSearch, query) {
     const queries   = query.map(q => q.toLowerCase());
-    const items     = Object.values(objectToSearch);
     const results   = queries.flatMap((q, idx) => {
-        return items.filter(item =>
+        return arrayToSearch.filter(item =>
             [item.name, ...item.aliases].some(n => n.toLowerCase() === q)
         ).map(item => ({ item, string: query[idx+1] ?? "" }));
     });

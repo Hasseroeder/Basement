@@ -14,9 +14,14 @@ weapons.forEach(weapon=>{
     weapon.statConfig.forEach(stat=>{
         stat.range = stat.max - stat.min;
         stat.step = stat.range/100;
-        console.log(stat);
     })
 });
+passives.forEach(passive=>{
+    passive.stats.forEach(stat=>{
+
+    })
+})
+
 // delete weapons[100]; // gotta get rid of fists... somehow
 passiveHandler.init(passives);
 
