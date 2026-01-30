@@ -20,11 +20,11 @@ gridInjector({
 const currentWeapon= Weapon.fromDatabase(101);
 
 const wearSelect = new customSelect(
-	currentWeapon.instance.wear,
+	currentWeapon.wear,
 	document.getElementById('wearSelect'),
 	["WORN","DECENT","FINE","PRISTINE"]
 );
 wearSelect.addEventListener('change', e => {
-	currentWeapon.instance.wear = e.detail.value;
+	currentWeapon.wear = e.detail.value;
 	currentWeapon.updateVars();
 });

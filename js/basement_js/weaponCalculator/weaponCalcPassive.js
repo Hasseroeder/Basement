@@ -22,18 +22,15 @@ export function init(passiveData){
 }
 
 function generateNewPassive(passive){
-    const i = boundWeapon.instance;
-    const newPassive = {...passive, wear:i.wear};
+    const newPassive = {...passive, wear:boundWeapon.wear};
     newPassive.stats.map(stat => stat.noWear=100);
     newPassive.remove = ()=>{
-        i.passives = i.passives.filter(p => p !== passive);
-        if (i.passives.length == 0) pList.innerHTML = '<span><b>Passives:</b> none</span>';
+        boundWeapon.passives = boundWeapon.passives.filter(p => p !== passive);
+        if (boundWeapon.passives.length == 0) pList.innerHTML = '<span><b>Passives:</b> none</span>';
         boundWeapon.updateVars();
     }
 
-    i.passives.push(newPassive);
-    
-    console.log(JSON.parse(JSON.stringify(newPassive)));
+    boundWeapon.passives.push(newPassive);
     appendPassiveNode(newPassive);
     displayInfo(boundWeapon);
 }
@@ -47,7 +44,7 @@ function appendPassiveNode(passive) {
     Object.assign(passive,passives[passive.id]);
     const desc = generateDescription(passive);
 
-    if(boundWeapon.instance.passives.length === 1) pList.innerHTML="";
+    if(boundWeapon.passives.length === 1) pList.innerHTML="";
         // we'll need to remove "passives: none" on the first append
     boundWeapon.updateVars();
 
@@ -60,10 +57,6 @@ function appendPassiveNode(passive) {
 }
 
 export function generatePassiveInputs() {
-    const passives = boundWeapon.instance.passives;
-    if (passives.length == 0) pList.innerHTML = '<span><b>Passives:</b> none</span>';
-    passives.forEach(p => {
-        console.log(JSON.parse(JSON.stringify(p)));
-        appendPassiveNode(p)
-    });
+    if (boundWeapon.passives.length == 0) pList.innerHTML = '<span><b>Passives:</b> none</span>';
+    boundWeapon.passives.forEach(p => appendPassiveNode(p));
 }

@@ -36,7 +36,7 @@ function generateDescription(weaponOrPassive) {
 
     // This is the opposite of DRY, I am aware, but I have no idea how to fix.
 
-    const parts = (weaponOrPassive.description ?? weaponOrPassive.static.description).split(tokenRegex)
+    const parts = weaponOrPassive.description.split(tokenRegex)
     let statIndex = 0;
     
     return make("div",
@@ -57,7 +57,7 @@ function generateDescription(weaponOrPassive) {
     }
 
     function getStatNode(){
-        const stat = (weaponOrPassive.stats ?? weaponOrPassive.instance.stats)[statIndex];
+        const stat = weaponOrPassive.stats[statIndex];
         stat.IO = new WeaponStat(stat, weaponOrPassive);
         const toAppend = stat.IO.render();
         statIndex++;
@@ -98,15 +98,13 @@ class WeaponStat {
     _applyWear(){
         this.wearBonus = getWearBonus(this.wear);
         this.wearName = getWearName(this.wear);
-        if (this.parent.instance){                                      // TODO: it'd be cooler if we did weapon wear in the weapon loop 
-            this.parent.instance.wearBonus = getWearBonus(this.wear);
-            this.parent.instance.wearName = getWearName(this.wear);
-        }
+        // TODO: it'd be cooler if we did weapon wear in the weapon loop 
+        this.parent.wearBonus = getWearBonus(this.wear);
+        this.parent.wearName = getWearName(this.wear);
     }
     
     get wear() {
-        return  this.parent.wear ??         // saved like this for passives
-                this.parent.instance.wear;  // saved like this for weapons
+        return  this.parent.wear
     }
 
     get percentageConfig() {
@@ -238,15 +236,13 @@ class WeaponStat {
 }
 
 function displayInfo(weapon){
-    const instance = weapon.instance;
-
-    el.weaponHeader.textContent= instance.owner.name+"'s " +instance.wearName +weapon.static.name;
-    el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + weapon.static.name;
-    el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + instance.owner.id;
-    el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${instance.weaponID}</code>`;
+    el.weaponHeader.textContent= weapon.owner.name+"'s " +weapon.wearName +weapon.typeName;
+    el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + weapon.typeName;
+    el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + weapon.owner.id;
+    el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${weapon.weaponID}</code>`;
     el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue(weapon);
-    el.weaponQualityImage.src= getTierEmojiPath(instance.tier);
-    el.weaponQualitySpan.textContent= instance.qualityWear.toFixed(1)+"%"
+    el.weaponQualityImage.src= getTierEmojiPath(weapon.tier);
+    el.weaponQualitySpan.textContent= weapon.qualityWear.toFixed(1)+"%"
     el.weaponImage.src=getWeaponImagePath(weapon);
 }
 

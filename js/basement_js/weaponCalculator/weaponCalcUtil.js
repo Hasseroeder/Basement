@@ -9,8 +9,8 @@ function getShardValue(weapon){
         mythic:  	300,
         legendary:	1000,
         fabled: 	5000
-    }[weapon.instance.tier];
-    if (weapon.static.id==104) return "UNSELLABLE"
+    }[weapon.tier];
+    if (weapon.typeID==104) return "UNSELLABLE"
     return value + " selling / " + Math.ceil(value*2.5) + " buying"
 }
 
@@ -87,11 +87,7 @@ function getWeaponImage(weaponOrPassive){
 }
 
 function getWeaponImagePath(weaponOrPassive){
-    const [instance, statiic] =[
-        weaponOrPassive.instance ?? weaponOrPassive, 
-        weaponOrPassive.static ?? weaponOrPassive];
-
-    const p = (instance.wearBonus == 0 || weaponOrPassive.objectType == "passive")
+    const p = (weaponOrPassive.wearBonus == 0 || weaponOrPassive.objectType == "passive")
             ? ""
             : "p";
     const q = {
@@ -102,9 +98,9 @@ function getWeaponImagePath(weaponOrPassive){
         mythic:  	"m",
         legendary:	"l",
         fabled: 	"f"
-    }[instance.tier];
+    }[weaponOrPassive.tier];
 
-    const w = (statiic.aliases[0]?? statiic.name).toLowerCase();
+    const w = (weaponOrPassive.aliases[0]?? weaponOrPassive.name).toLowerCase();
     return `media/owo_images/${p+q+"_"+w}.png`;
 }
 

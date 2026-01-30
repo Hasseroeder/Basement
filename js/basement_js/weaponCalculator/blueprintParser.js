@@ -22,7 +22,7 @@ function splitHypenSpaces(string){
 
 const isValidJoinedNumbers= (str,separator) =>
     str.split(separator)
-       .every(part => /^\d+(?:\.\d+)?$/.test(part));
+        .every(part => /^\d+(?:\.\d+)?$/.test(part));
         // "5,20,30"   → valid
         // "5 30 30"   → valid
         // "5-20-30"   → valid
@@ -107,19 +107,16 @@ export function toStrings(weapon){
         return isFabled ? "" : stats.map(({ noWear }) => noWear).join(",")
     }
     
-    const { passives,stats,wear } = weapon.instance;
-    const { aliases,name } = weapon.static;
+    const wearString = weapon.wear !== "worn" ? weapon.wear : "";
+    const shorthand  = (weapon.aliases[0]?? weapon.name).toLowerCase();
+    const statstring = formatStats(weapon.stats);  
 
-    const wearString = wear !== "worn" ? wear : "";
-    const shorthand  = (aliases[0]?? name).toLowerCase();
-    const statstring = formatStats(stats);  
-
-    const passiveParts = passives.length == 0
+    const passiveParts = weapon.passives.length == 0
         ? ["none"]
-        : passives.flatMap(
-            ({ aliases, name, stats }) => [
-                (aliases[0]?? name).toLowerCase(), 
-                formatStats(stats)
+        : weapon.passives.flatMap(
+            passive => [
+                (passive.aliases[0] ?? passive.name).toLowerCase(), 
+                formatStats(passive.stats)
             ]
         );
     

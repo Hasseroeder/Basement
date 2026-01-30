@@ -36,14 +36,15 @@ export class Weapon{
         owner,             // {id:"hsse",name:"Heather"}
         weaponID,          // "664DFC"
     }={}){
-        this.static=weapons[blueprintObject.id];
-        this.instance={
-            owner,
-            weaponID, 
-            passives: blueprintObject.passive,
-            stats: blueprintObject.stats,
-            wear: blueprintObject.wear
-        };
+        this.owner= owner;
+        this.weaponID = weaponID;
+        this.passives = blueprintObject.passive;
+        this.stats = blueprintObject.stats;
+        this.wear = blueprintObject.wear;
+        this.typeID = blueprintObject.id;
+        this.tier = "fabled"; // default, will change later hopefully
+        this.wearName = "worn"; // default, will change later hopefully
+
         passiveHandler.bindWeapon(this);
         passiveHandler.generatePassiveInputs();
         messageHandler.bindWeapon(this);
@@ -79,18 +80,32 @@ export class Weapon{
         return new Weapon({...randWeapon, blueprintObject});
     }
 
-    get wear(){
-        return this.instance.wear;
+    static bigArray = weapons;
+
+    get staticData(){
+        return this.constructor.bigArray[this.typeID]
+    }
+
+    get typeName(){
+        return this.staticData.name
+    }
+
+    get aliases(){
+        return this.staticData.aliases
+    }
+
+    get description(){
+        return this.staticData.description
     }
 
     get wpStat(){
-        return this.instance.stats.find(stat => stat.noWearConfig.type =="WP-Cost");
+        return this.stats.find(stat => stat.noWearConfig.type =="WP-Cost");
     }
 
     updateVars(){
         const allStats = [
-            ...this.instance.stats,
-            ...this.instance.passives.flatMap(p => p.stats)
+            ...this.stats,
+            ...this.passives.flatMap(p => p.stats)
         ];
 
         
@@ -101,14 +116,14 @@ export class Weapon{
                 (acc, {withWear,noWear}) => [acc[0]+withWear,  acc[1]+noWear], [0,0]
             ).map(v => v / statArray.length);
 
-        this.instance.passives.forEach(passive => {
+        this.passives.forEach(passive => {
             [passive.qualityWear, passive.qualityNoWear] = calculateQualities(passive.stats);
             passive.wear  = this.wear;
             passive.tier  = getRarity(passive.qualityWear);
         });
         
-        [this.instance.qualityWear, this.instance.qualityNoWear] = calculateQualities(allStats);
-        this.instance.tier = getRarity(Math.floor(this.instance.qualityWear));
+        [this.qualityWear, this.qualityNoWear] = calculateQualities(allStats);
+        this.tier = getRarity(Math.floor(this.qualityWear));
 
         messageHandler.displayInfo(this);
         debouncedHash(this);
