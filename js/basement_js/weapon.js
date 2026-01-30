@@ -1,5 +1,4 @@
 import { loadJson } from "./util/jsonUtil.js";
-import { capitalizeFirstLetter } from "./util/stringUtil.js";
 import { make } from "./util/injectionUtil.js";
 
 const weaponDisplay ={
@@ -19,35 +18,46 @@ const buttons ={
     next:    document.getElementById("next")
 }
 
-var weapons;
-var currentWeaponID = 1; // init id
+const weapons = await loadJson("/json/weapons.json");
+var currentWeaponID = fromHash();
 
-function importFromHash(){
+if (document.readyState==="loading")
+    document.addEventListener("DOMContentLoaded", main);
+else 
+    main();
+
+window.addEventListener("hashchange", ()=>{
+    currentWeaponID = fromHash();
+    updateWeaponDisplay();
+});
+
+function main(){
+    updateWeaponDisplay();
+    buttons.next.addEventListener("click", ()=>swapWeapon(+1));
+    buttons.previous.addEventListener("click", ()=>swapWeapon(-1));
+}
+
+function fromHash(){
     const hash = window.location.hash;
-    if (hash) {
-        const idx = weapons.findIndex(
-            weapon => [weapon.name, ...weapon.aliases].some(str => str == hash.slice(1))
-        );
-        if (idx>=0) currentWeaponID = idx
-    }
+    const idx = weapons.findIndex(
+        weapon => [weapon.name, ...weapon.aliases].some(str => str == hash.slice(1))
+    );
+    return idx == -1 ? 1 : idx;
 }
 
 function updateWeaponDisplay(){
     const weapon = weapons[currentWeaponID];
-    const weaponShorthand = (weapon.aliases[0]?? weapon.name)
+    const weaponShorthand = weapon.aliases[0]?? weapon.name;
     history.replaceState(null, "", "#"+weaponShorthand);
 
-    weaponDisplay.text.textContent  = (weapon.id ?? "???")
-                                    + " - " 
-                                    + weaponShorthand;
-    weaponDisplay.image.src= `media/owo_images/f_${weaponShorthand.toLowerCase()}.png`;
+    weaponDisplay.text.textContent = (weapon.id ?? "???") + " - "+ weaponShorthand;
+    weaponDisplay.image.src = `media/owo_images/f_${weaponShorthand.toLowerCase()}.png`;
 
     fetch(`donatorPages/weapons/${currentWeaponID+100}.html`)
-        .then(r => r.text())
-        .then(html => weaponContainer.innerHTML = html)
-        .then(()=>{
+        .then(async r => {
+            weaponContainer.innerHTML = await r.text();
             createWikipediaContainer(weapon,weaponShorthand);
-        })
+        })    
 }
 
 function createWikipediaContainer(weapon,weaponShorthand){
@@ -132,22 +142,7 @@ function createWikipediaTable(weapon){
     return table;
 }
 
-async function main(){
-    weapons = await loadJson("/json/weapons.json");
-    pageLoad();
-    buttons.next.addEventListener("click", ()=>swapWeapon(+1));
-    buttons.previous.addEventListener("click", ()=>swapWeapon(-1));
-}
-
-function pageLoad(){
-    importFromHash();
-    updateWeaponDisplay();
-}
-
 function swapWeapon(change) {
     currentWeaponID = (currentWeaponID + change + weapons.length) % weapons.length;
     updateWeaponDisplay();
 }
-
-document.addEventListener("DOMContentLoaded", main);
-window.addEventListener("hashchange", pageLoad);
