@@ -12,8 +12,9 @@ const [weapons, weaponDB, passives] = await Promise.all([
 ]);
 weapons.forEach(weapon=>{
     weapon.statConfig.forEach(stat=>{
-        stat.range = stat.max - stat.max;
+        stat.range = stat.max - stat.min;
         stat.step = stat.range/100;
+        console.log(stat);
     })
 });
 // delete weapons[100]; // gotta get rid of fists... somehow
