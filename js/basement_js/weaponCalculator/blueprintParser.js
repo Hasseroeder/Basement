@@ -78,7 +78,7 @@ function getMatches(arrayToSearch, query) {
     const queries   = query.map(q => q.toLowerCase());
     const results   = queries.flatMap((q, idx) => {
         return arrayToSearch.filter(item =>
-            [item.name, ...item.aliases].some(n => n.toLowerCase() === q)
+            [item.name, item.slug, ...item.aliases].some(n => n.toLowerCase() === q)
         ).map(item => ({ item, statToken: query[idx+1] ?? "" }));
     });
     return results;
@@ -111,17 +111,13 @@ export function toStrings(weapon){
     }
     
     const wearString = weapon.wear !== "worn" ? weapon.wear : "";
-    const shorthand  = (weapon.aliases[0]?? weapon.name).toLowerCase();
     const statstring = formatStats(weapon.stats);  
 
     const passiveParts = weapon.passives.length == 0
         ? ["none"]
         : weapon.passives.flatMap(
-            passive => [
-                (passive.aliases[0] ?? passive.name).toLowerCase(), 
-                formatStats(passive.stats)
-            ]
+            passive => [ passive.slug, formatStats(passive.stats) ]
         );
     
-    return [wearString, shorthand, statstring, ...passiveParts].filter(Boolean);  
+    return [wearString, weapon.slug, statstring, ...passiveParts].filter(Boolean);  
 }

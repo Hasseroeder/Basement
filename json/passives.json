@@ -3,6 +3,7 @@
         "objectType":"passive",
         "name":"Strength",
         "aliases":["str","att"],
+        "slug":"str",
         "stats":[
             {
                 "noWearConfig":{
@@ -21,6 +22,7 @@
         "objectType":"passive",
         "name":"Magic",
         "aliases":["mag"],
+        "slug":"mag",
         "stats":[
             {
                 "noWearConfig":{
@@ -39,6 +41,7 @@
         "objectType":"passive",
         "name":"Health Point",
         "aliases":["hp"],
+        "slug":"hp",
         "stats":[
             {
                 "noWearConfig":{
@@ -57,6 +60,7 @@
         "objectType":"passive",
         "name":"Weapon Point",
         "aliases":["wp"],
+        "slug":"wp",
         "stats":[
             {
                 "noWearConfig":{
@@ -75,6 +79,7 @@
         "objectType":"passive",
         "name":"Physical Resistance",
         "aliases":["pr"],
+        "slug":"pr",
         "stats":[
             {
                 "noWearConfig":{
@@ -93,6 +98,7 @@
         "objectType":"passive",
         "name":"Magical Resistance",
         "aliases":["mr"],
+        "slug":"mr",
         "stats":[
             {
                 "noWearConfig":{
@@ -111,6 +117,7 @@
         "objectType":"passive",
         "name":"Lifesteal",
         "aliases":["ls"],
+        "slug":"ls",
         "stats":[
             {
                 "noWearConfig":{
@@ -129,6 +136,7 @@
         "objectType":"passive",
         "name":"Thorns",
         "aliases":["th"],
+        "slug":"th",
         "stats":[
             {
                 "noWearConfig":{
@@ -147,6 +155,7 @@
         "objectType":"passive",
         "name":"Mana Tap",
         "aliases":["mtap","manatap"],
+        "slug":"mtap",
         "stats":[
             {
                 "noWearConfig":{
@@ -165,6 +174,7 @@
         "objectType":"passive",
         "name":"Absolve",
         "aliases":["absv"],
+        "slug":"absv",
         "stats":[
             {
                 "noWearConfig":{
@@ -183,6 +193,7 @@
         "objectType":"passive",
         "name":"Safeguard",
         "aliases":["sg"],
+        "slug":"sg",
         "stats":[
             {
                 "noWearConfig":{
@@ -201,6 +212,7 @@
         "objectType":"passive",
         "name":"Critical",
         "aliases":["crit"],
+        "slug":"crit",
         "stats":[
             {
                 "noWearConfig":{
@@ -228,6 +240,7 @@
         "objectType":"passive",
         "name":"Discharge",
         "aliases":["dc"],
+        "slug":"dc",
         "stats":[
             {
                 "noWearConfig":{
@@ -246,6 +259,7 @@
         "objectType":"passive",
         "name":"Kamikaze",
         "aliases":["kkaze","kk"],
+        "slug":"kkaze",
         "stats":[
             {
                 "noWearConfig":{
@@ -264,6 +278,7 @@
         "objectType":"passive",
         "name":"Regeneration",
         "aliases":["hgen","regen"],
+        "slug":"hgen",
         "stats":[
             {
                 "noWearConfig":{
@@ -282,6 +297,7 @@
         "objectType":"passive",
         "name":"Energize",
         "aliases":["wgen","energ"],
+        "slug":"wgen",
         "stats":[
             {
                 "noWearConfig":{
@@ -299,7 +315,8 @@
     {
         "objectType":"passive",
         "name":"Sprout",
-        "aliases":["sprout","sprt"],
+        "aliases":["sprt"],
+        "slug":"sprout",
         "stats":[
             {
                 "noWearConfig":{
@@ -317,7 +334,8 @@
     {
         "objectType":"passive",
         "name":"Enrage",
-        "aliases":["enrage","enra"],
+        "aliases":["enra"],
+        "slug":"enrage",
         "stats":[
             {
                 "noWearConfig":{
@@ -336,6 +354,7 @@
         "objectType":"passive",
         "name":"Sacrifice",
         "aliases":["sac"],
+        "slug":"sac",
         "stats":[
             {
                 "noWearConfig":{
@@ -362,7 +381,8 @@
     {
         "objectType":"passive",
         "name":"Snail",
-        "aliases":["snail"],
+        "aliases":[],
+        "slug":"snail",
         "stats":[
             {
                 "noWearConfig":{
@@ -381,6 +401,7 @@
         "objectType":"passive",
         "name":"Knowledge",
         "aliases":["kno","n"],
+        "slug":"kno",
         "stats":[
             {
                 "noWearConfig":{

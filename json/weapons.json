@@ -2,6 +2,7 @@
     {
         "name":"Physically Attacking",
         "aliases":["Fists","Strength Attacking"],
+        "slug":"fists",
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
@@ -13,6 +14,7 @@
         "id":101,
         "name":"Great Sword",
         "aliases":["Sword","Gsword","Greatsword"],
+        "slug":"sword",
         "wikiStars": [
             {"name":"Viability: ", "stars":1},
             {"name":"Ease of use: ","stars":4}
@@ -42,6 +44,7 @@
         "id":102,
         "name":"Healing Staff",
         "aliases":["Hstaff","Healstaff"],
+        "slug":"hstaff",
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":2}
@@ -70,6 +73,7 @@
         "id":103,
         "name":"Bow",
         "aliases":[],
+        "slug":"bow",
         "wikiStars": [
             {"name":"Viability: ", "stars":4},
             {"name":"Ease of use: ","stars":3}
@@ -98,6 +102,7 @@
         "id":104,
         "name":"Rune of the Forgotten",
         "aliases":["Rune"],
+        "slug":"rune",
         "wikiStars": [
             {"name":"Viability: ", "stars":4},
             {"name":"Ease of use: ","stars":3}
@@ -119,6 +124,7 @@
         "id":105,
         "name":"Defender's Aegis",
         "aliases":["Shield","Aegis"],
+        "slug":"shield",
         "wikiStars": [
             {"name":"Viability: ", "stars":5},
             {"name":"Ease of use: ","stars":5}
@@ -147,6 +153,7 @@
         "id":106,
         "name":"Orb of Potency",
         "aliases":["Orb"],
+        "slug":"orb",
         "wikiStars": [
             {"name":"Viability: ", "stars":1},
             {"name":"Ease of use: ","stars":1}
@@ -159,6 +166,7 @@
         "id":107,
         "name":"Vampiric Staff",
         "aliases":["Vstaff","Vampstaff"],
+        "slug":"vstaff",
         "wikiStars": [
             {"name":"Viability: ", "stars":1},
             {"name":"Ease of use: ","stars":2}
@@ -187,6 +195,7 @@
         "id":108,
         "name":"Poison Dagger",
         "aliases":["Dagger","Pdagger","Pdag","Pd"],
+        "slug":"dagger",
         "wikiStars": [
             {"name":"Viability: ", "stars":4},
             {"name":"Ease of use: ","stars":4}
@@ -223,6 +232,7 @@
         "id":109,
         "name":"Wand of Absorption",
         "aliases":["Wand","Awand"],
+        "slug":"wand",
         "wikiStars": [
             {"name":"Viability: ", "stars":4},
             {"name":"Ease of use: ","stars":0}
@@ -259,6 +269,7 @@
         "id":110,
         "name":"Flame Staff",
         "aliases":["Fstaff"],
+        "slug":"fstaff",
         "wikiStars": [
             {"name":"Viability: ", "stars":1},
             {"name":"Ease of use: ","stars":2}
@@ -303,6 +314,7 @@
         "id":111,
         "name":"Energy Staff",
         "aliases":["Estaff"],
+        "slug":"estaff",
         "wikiStars": [
             {"name":"Viability: ", "stars":4},
             {"name":"Ease of use: ","stars":3}
@@ -331,6 +343,7 @@
         "id":112,
         "name":"Spirit Staff",
         "aliases":["Sstaff"],
+        "slug":"sstaff",
         "wikiStars": [
             {"name":"Viability: ", "stars":3},
             {"name":"Ease of use: ","stars":4}
@@ -367,6 +380,7 @@
         "id":113,
         "name":"Arcane Scepter",
         "aliases":["Scepter","Arcane","Ascept"],
+        "slug":"scepter",
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
@@ -395,6 +409,7 @@
         "id":114,
         "name":"Resurrection Staff",
         "aliases":["Rstaff"],
+        "slug":"rstaff",
         "wikiStars": [
             {"name":"Viability: ", "stars":5},
             {"name":"Ease of use: ","stars":4}
@@ -423,6 +438,7 @@
         "id":115,
         "name":"Glacial Axe",
         "aliases":["Axe","Gaxe"],
+        "slug":"axe",
         "wikiStars": [
             {"name":"Viability: ", "stars":2},
             {"name":"Ease of use: ","stars":2}
@@ -451,6 +467,7 @@
         "id":116,
         "name":"Vanguard's Banner",
         "aliases":["Banner","Vban"],
+        "slug":"banner",
         "wikiStars": [
             {"name":"Viability: ", "stars":1},
             {"name":"Ease of use: ","stars":1}
@@ -495,6 +512,7 @@
         "id":117,
         "name":"Culling Scythe",
         "aliases":["Scythe","Sythe","Cscythe","Csy","Csyth"],
+        "slug":"scythe",
         "wikiStars": [
             {"name":"Viability: ", "stars":4},
             {"name":"Ease of use: ","stars":2}
@@ -531,6 +549,7 @@
         "id":118,
         "name":"Rune of Celebration",
         "aliases":["Crune","Cel"],
+        "slug":"crune",
         "wikiStars": [
             {"name":"Viability: ", "stars":5},
             {"name":"Ease of use: ","stars":3}
@@ -567,6 +586,7 @@
         "id":119,
         "name":"Staff of Purity",
         "aliases":["Pstaff"],
+        "slug":"pstaff",
         "wikiStars": [
             {"name":"Viability: ", "stars":4},
             {"name":"Ease of use: ","stars":2}
@@ -603,6 +623,7 @@
         "id":120,
         "name":"Leeching Scythe",
         "aliases":["Lscythe","Lsyth","Lsy"],
+        "slug":"lscythe",
         "wikiStars": [
             {"name":"Viability: ", "stars":5},
             {"name":"Ease of use: ","stars":2}
@@ -655,6 +676,7 @@
         "id":121,
         "name":"Foul Fish",
         "aliases":["Ffish"],
+        "slug":"ffish",
         "wikiStars": [
             {"name":"Viability: ", "stars":5},
             {"name":"Ease of use: ","stars":3}
@@ -691,6 +713,7 @@
         "id":122,
         "name":"Rune of Luck",
         "aliases":["Lrune"],
+        "slug":"lrune",
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
@@ -751,6 +774,7 @@
         "id":123,
         "name":"Staff of Corruption",
         "aliases":["Cstaff"],
+        "slug":"cstaff",
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
@@ -788,6 +812,7 @@
         "id":124,
         "name":"Soul Tithe",
         "aliases":["Stithe","Tithe"],
+        "slug":"stithe",
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
@@ -825,6 +850,7 @@
         "id":125,
         "name":"Briar-Heart Staff",
         "aliases":["Bhstaff","Bstaff"],
+        "slug":"bhstaff",
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
@@ -870,6 +896,7 @@
         "id":126,
         "name":"Arbiter's Edge",
         "aliases":["Aedge","Edge"],
+        "slug":"aedge",
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}

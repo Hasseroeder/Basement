@@ -40,28 +40,26 @@ function main(){
 function fromHash(){
     const hash = window.location.hash;
     const idx = weapons.findIndex(
-        weapon => [weapon.name, ...weapon.aliases].some(str => str == hash.slice(1))
+        weapon => weapon.slug == hash.slice(1)
     );
     return idx == -1 ? 1 : idx;
 }
 
 function updateWeaponDisplay(){
     const weapon = weapons[currentWeaponID];
-    const weaponShorthand = weapon.aliases[0]?? weapon.name;
-    history.replaceState(null, "", "#"+weaponShorthand);
+    history.replaceState(null, "", "#"+weapon.slug);
 
-    weaponDisplay.text.textContent = (weapon.id ?? "???") + " - "+ weaponShorthand;
-    weaponDisplay.image.src = `media/owo_images/f_${weaponShorthand.toLowerCase()}.png`;
+    weaponDisplay.text.textContent = (weapon.id ?? "???") + " - "+ (weapon.aliases[0] ?? weapon.name);
+    weaponDisplay.image.src = `media/owo_images/f_${weapon.slug}.png`;
 
-    fetch(`donatorPages/weapons/${currentWeaponID+100}.html`)
+    fetch(`donatorPages/weapons/${weapon.slug}.html`)
         .then(async r => {
             weaponContainer.innerHTML = await r.text();
-            createWikipediaContainer(weapon,weaponShorthand);
+            createWikipediaContainer(weapon);
         })    
 }
 
-function createWikipediaContainer(weapon,weaponShorthand){
-    weaponShorthand = weaponShorthand.toLowerCase();
+function createWikipediaContainer(weapon){
     const wikipediaContainer = weaponContainer.querySelector("#wikipedia");
     const renderStars = v =>
         [...Array(5)]
@@ -82,7 +80,7 @@ function createWikipediaContainer(weapon,weaponShorthand){
     const calcLink = make("div",{
         className:"wikipedia-calc-link",
         innerHTML: weapon.objectType == "weapon"
-            ?`<a href="/weaponcalculator.html#${weaponShorthand}">Calculator</a>`
+            ?`<a href="/weaponcalculator.html#${weapon.slug}">Calculator</a>`
             :""
     });
 
@@ -91,10 +89,10 @@ function createWikipediaContainer(weapon,weaponShorthand){
             weapon.name,
             make("div",{className:"wikipedia-aliases"},[makeAliasString(weapon.aliases)])
         ]),
-        make("img",{className:"wikipedia-image", src:`media/owo_images/f_${weaponShorthand}.png`}),
+        make("img",{className:"wikipedia-image", src:`media/owo_images/f_${weapon.slug}.png`}),
         make("div", {className:"wikipedia-stars"},weapon.wikiStars.map(makeStarDisplay)),
         make("div",{className:"wikipedia-id"}, [
-            make("div",{innerHTML:"ID: " + (weapon.showThisID? weapon.id : "???")})
+            make("div",{innerHTML:"ID: " + (weapon.id ?? "???")})
         ]),
         make("div",{className:"wikipedia-stats-header", textContent:"Stats"}),
         createWikipediaTable(weapon),

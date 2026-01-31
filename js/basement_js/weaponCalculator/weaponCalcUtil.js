@@ -74,17 +74,14 @@ async function fileExists(url) {
     }
 }
 
-function getWeaponImage(weaponOrPassive){
-    const shorthand = weaponOrPassive.aliases[0]? weaponOrPassive.aliases[0]: weaponOrPassive.name;
-
-    return make("img",{
+const getWeaponImage = weaponOrPassive => 
+    make("img",{
         src : getWeaponImagePath(weaponOrPassive),
-        ariaLabel: shorthand.toLowerCase(),
-        alt:":"+shorthand.toLowerCase()+":",
+        ariaLabel: weaponOrPassive.slug,
+        alt:":"+weaponOrPassive.slug+":",
         draggable:false,
         className:"discord-pet-display"
     });
-}
 
 function getWeaponImagePath(weaponOrPassive){
     const p = (weaponOrPassive.wearBonus == 0 || weaponOrPassive.objectType == "passive")
