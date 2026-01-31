@@ -12,8 +12,8 @@ table2El.innerHTML="<tr><th></th><th>Cost</th><th>Essence</th><th>ROI</th></tr>"
 
 const gridContainer= document.querySelector(".gridContainer");
 
-const dailyPets = ()=>Efficiency.value()*24;
-const hbPets = ()=>Math.floor(Efficiency.value()*Duration.value());
+const dailyPets = ()=>Efficiency.value*24;
+const hbPets = ()=>Math.floor(Efficiency.value*Duration.value);
 
 class Trait{
     constructor (opts){
@@ -36,9 +36,9 @@ class Trait{
                     row.style.textDecoration = this.level === this.max ? "line-through" : "none";
                     row.style.fontWeight = "normal";
                     cells[0].textContent = this.name;
-                    cells[1].textContent = this.cost();
+                    cells[1].textContent = this.cost;
                     cells[2].textContent = signedNumberFixedString(this.upgradeWorth(),1)+` ess/day`;
-                    cells[3].textContent = (this.ROI()*100).toFixed(1) + "%/day"
+                    cells[3].textContent = (this.ROI*100).toFixed(1) + "%/day"
                 }
             }
             table2El.append(row);
@@ -80,18 +80,18 @@ class Trait{
         });
     }
 
-    cost(){
+    get cost() {
         const {mult,exponent} = this.costParams;
         return Math.floor(mult * Math.pow(this.level + 1, exponent));
     }
 
-    value(){
+    get value(){
         const {mult=1, base=0} = this.valueParams;
         return mult*this.level + base;
     }
 
-    ROI(){
-        return this.upgradeWorth()/this.cost();
+    get ROI(){
+        return this.upgradeWorth()/this.cost;
     }
 }
 
@@ -112,24 +112,24 @@ const Cost = new Trait({
     name:"Cost", unit:" cowoncy", max:5,
     costParams: {mult:1000, exponent:3.4}, valueParams:{mult:-1, base:10},
     outputs:[
-        ()=>"-"+(dailyPets()*Cost.value())+" owo/day",
-        ()=>"-"+(hbPets()*Cost.value())+" owo/hb"
+        ()=>"-"+(dailyPets()*Cost.value)+" owo/day",
+        ()=>"-"+(hbPets()*Cost.value)+" owo/hb"
     ]
 });
 const Gain = new Trait({
     name:"Gain", unit:" ess/h", max:200,
     costParams: {mult:10, exponent:1.800}, valueParams:{mult:25}, upgradeWorth: ()=>600,
     outputs:[
-        ()=>(Gain.value()*24)+" ess/day",
-        ()=>(Math.floor(Gain.value()*Duration.value()))+" ess/hb"
+        ()=>(Gain.value*24)+" ess/day",
+        ()=>(Math.floor(Gain.value*Duration.value))+" ess/hb"
     ]
 });
 const Experience = new Trait({
     name:"Experience", unit:" exp/h", max:200,
     costParams: {mult:10, exponent:1.800}, valueParams:{mult:35},
     outputs:[
-        ()=>(Experience.value()*24)+" exp/day",
-        ()=>(Math.floor(Experience.value()*Duration.value()))+" exp/hb"
+        ()=>(Experience.value*24)+" exp/day",
+        ()=>(Math.floor(Experience.value*Duration.value))+" exp/hb"
     ]
 });
 const Radar = new Trait({
@@ -220,7 +220,7 @@ function getWorth(){
 }
 
 const cells = Array.from(document.querySelectorAll("#table-1 td"));
-const isSac = cells.map(() => false);
+const isSac = new Array(cells.length).fill(undefined);
 
 document.addEventListener("mouseup", () => isDragging = false);
 document.addEventListener("mousedown", () => isDragging = true);
@@ -264,25 +264,25 @@ function modifyValueDirect(trait, value) {
     btnM.textContent = value==0? "MIN":"<";
     btnP.text.textContent = value==input.max? "MAX":">";
     btnP.ttEl.hidden=value==input.max;
-    btnP.ttText.textContent=trait.cost();
+    btnP.ttText.textContent=trait.cost;
     drawData();
 }
 
 function drawData(){    
     traits.forEach(trait => {
-        trait.header.textContent = trait.name + " - " + roundToDecimals(trait.value(),2) + trait.unit;
+        trait.header.textContent = trait.name + " - " + roundToDecimals(trait.value,2) + trait.unit;
         trait.outputs.forEach(fn =>fn());
         trait.table?.update()
     });
-    [Efficiency,Gain,Radar].sort((a, b) => b.ROI() - a.ROI())[0]
+    [Efficiency,Gain,Radar].sort((a, b) => b.ROI - a.ROI)[0]
         .table.row.style.fontWeight = "bolder";
     
     const worth=getWorth();
     petWorthEls[0].textContent = worth[1].toFixed(1) +" owo/pet"; 
     hbWorthEls[0].textContent  = (worth[1]*hbPets()).toFixed(0) +" owo/hb"; 
 
-    petWorthEls[1].textContent = "Profit: "+(worth[1]-Cost.value()).toFixed(1) +" owo/pet"; 
-    hbWorthEls[1].textContent  = "Profit: "+((worth[1]-Cost.value())*hbPets()).toFixed(0)+" owo/hb";
+    petWorthEls[1].textContent = "Profit: "+(worth[1]-Cost.value).toFixed(1) +" owo/pet"; 
+    hbWorthEls[1].textContent  = "Profit: "+((worth[1]-Cost.value)*hbPets()).toFixed(0)+" owo/hb";
 
     petWorthEls[2].textContent = worth[0].toFixed(1) +" ess/pet";      
     hbWorthEls[2].textContent  = (worth[0]*hbPets()).toFixed(0) +" ess/hb"; 
@@ -306,11 +306,6 @@ function modifyValueAndCookie(trait, value){
     saveDebounced();
 }
 
-function importFromHash(){
-    const hash = location.hash;
-    if (hash) stringToLevel(hash.slice(1));
-}
-
 function importFromCookie(){
     const levelsData = cookie.getCookie("Levels");
     stringToLevel(levelsData ?? "0,0,0,0,0,0");
@@ -319,12 +314,11 @@ function importFromCookie(){
     renderPatreon();
 }
 
-function stringToLevel(levelString){
-    levelString .split(",")
-                .map(Number)
-                .forEach((value, index) => modifyValueAndCookie(traits[index], value||0));
-}
+const stringToLevel = levelString => levelString
+    .split(",")
+    .map(Number)
+    .forEach((value, index) => modifyValueAndCookie(traits[index], value||0));
 
 importFromCookie();
-importFromHash();
+if (location.hash) stringToLevel(location.hash.slice(1));
 toggleAllCells(true);
