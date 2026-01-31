@@ -11,40 +11,29 @@ export function gridInjector({
 	container.className="toolbarSubMenu navbar-grid";
 	container.style.gridTemplateColumns=columns;
 	container.style.transform=transform;
-
 	container.classList.add(...gridClasses);
-
-	items.forEach(item => {
-		const shortHand   = item.aliases[0] ?? item.name;
-		const imagePath   = `media/owo_images/f_${shortHand.toLowerCase()}.png`;
-		const link        = baseLink  + "#" + shortHand;	
-
-		var text  = (item.objectType=='weapon' ? shortHand : item.name)
-				  + (item.id ? "<br>"+item.id : "");
-
-		const el = getImageLink(onItemClick, item, 
-			link, 
-			imagePath, text);
-
-		container.append(el);
-	});
+	container.append(...items.map(
+		item=>makeGridItem(
+			onItemClick,
+			baseLink  + "#" + item.slug,
+			`media/owo_images/f_${item.slug}.png`,
+			item.name + (item.id ? "<br>"+item.id : "")
+		)
+	));
 }
 
-function getImageLink(onClick, item, link, path, text){
-	const el = make(onClick?"button":"a",{
+const makeGridItem = (onClick, link, path, text) =>
+	make(
+		onClick?"button":"a",
+		{
 			href: link,
-			className: "tooltip unset-me"
+			className: "tooltip unset-me",
+			onClick
 		},[
 			make("img",{src:path,	   style:{width:"2.5rem"}}),
 			make("div",{innerHTML:text,className:"navBar-tooltip-text"})
 		]
-	);
-
-	if (onClick)
-		el.addEventListener("click", () => onClick(item));
-
-	return el;
-}
+	)
 
 export async function createInjectAble(html,pathName){
     const response = await fetch(pathName+html.name+".html");
@@ -61,7 +50,7 @@ export async function createInjectAble(html,pathName){
 
     html.init?.();
 
-    if (window.location.hash === "#"+html.name) {
+    if (location.hash === "#"+html.name) {
         container.appendChild(html.cachedDiv);
         html.created= true;
         container.scrollIntoView({ behavior: "smooth", block: "start"});
