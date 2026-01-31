@@ -149,10 +149,9 @@ const graying= Array.from(document.querySelectorAll(".patreon-graying"));
 const renderPatreon = () => graying.forEach(el=>el.hidden=patreon);
 
 doTimestamps();
-document.getElementById("sacToggles").querySelectorAll("button")
-    .forEach(
-        (b,i)=>b.onclick=()=>toggleAllCells(Boolean(i))
-    );
+const toggleAllButtons = document.getElementById("sacToggles").querySelectorAll("button");
+toggleAllButtons[0].onclick = () => toggleAllCells(false);
+toggleAllButtons[1].onclick = () => toggleAllCells(true);
 
 const saveDebounced = debounce(saveData);
 function saveData(){
@@ -161,12 +160,6 @@ function saveData(){
     history.replaceState(null, '', '#'+tempLevels.join(","));
     cookie.setCookie("Patreon",patreon.toString(),30);
     cookie.setCookie("Levels",tempLevels.join(","),30);
-}
-
-function toggleAllCells(boolean){    
-    isSac.forEach((tier,i) =>{
-        if (tier != boolean) toggleCell(i);
-    })
 }
 
 const hbWorthEls = Array.from(document.querySelectorAll(".hbworth"));
@@ -221,6 +214,7 @@ function getWorth(){
 
 const cells = Array.from(document.querySelectorAll("#table-1 td"));
 const isSac = new Array(cells.length).fill(undefined);
+const toggleAllCells = boolean => cells.forEach((_,i) =>toggleCell(i, boolean))
 
 document.addEventListener("mouseup", () => isDragging = false);
 document.addEventListener("mousedown", () => isDragging = true);
@@ -235,8 +229,8 @@ cells.forEach((cell,index) => {
     });
 });
 
-function toggleCell(i) {
-    isSac[i]=!isSac[i];
+function toggleCell(i, boolOverride) {
+    isSac[i]= boolOverride ?? !isSac[i];
     cells[i].querySelector(".table-1-text").innerHTML = isSac[i]?'Sac':'Sell';
     cells[i].querySelector(".table-1-img").src = isSac[i]?"media/owo_images/essence.gif":"media/owo_images/cowoncy.png";
     drawData();
@@ -290,17 +284,15 @@ function drawData(){
     patreonCheckWrapper.checked=patreon;
 }
 
-function extractLevels(text) {
-    const levelPattern = /\bLvl (\d+)\b/g;
-    const matches = [...text.matchAll(levelPattern)].slice(0, 6);
-    matches.forEach((m, i) => {
-        modifyValueAndCookie(traits[i], m[1]);
-    });
-}
+const extractLevels = text =>
+    [...text.matchAll(/\bLvl (\d+)\b/g)]
+        .slice(0, 6)
+        .forEach((m, i) => modifyValueAndCookie(traits[i], m[1]));
 
 function modifyValueAndCookie(trait, value){
-    if (typeof value === "boolean") value = +trait.input.value + (value?+1:-1); // if boolean, just assume you want to go up/down
-    else if (value === undefined)   value = +trait.input.value;                 // if no value given, take from input
+    if (value === undefined)   value = +trait.input.value;                              // if no value given, take from input
+    else if (typeof value === "boolean") value = +trait.input.value + (value?+1:-1);    // if boolean, just assume you want to go up/down
+    else if (typeof value === "string") {}                                              // modifyValueDirect() recognizes strings as numbers, no need to convert
 
     modifyValueDirect(trait, value);
     saveDebounced();
@@ -316,7 +308,6 @@ function importFromCookie(){
 
 const stringToLevel = levelString => levelString
     .split(",")
-    .map(Number)
     .forEach((value, index) => modifyValueAndCookie(traits[index], value||0));
 
 importFromCookie();
