@@ -19,7 +19,7 @@ const buttons ={
 }
 
 const weapons = await loadJson("/json/weapons.json");
-var currentWeaponID = fromHash();
+var currentWeaponID = fromWeaponString(location.hash.slice(1));
 
 if (document.readyState==="loading")
     document.addEventListener("DOMContentLoaded", main);
@@ -27,22 +27,20 @@ else
     main();
 
 window.addEventListener("hashchange", ()=>{
-    currentWeaponID = fromHash();
+    currentWeaponID = fromWeaponString(location.hash.slice(1));
     updateWeaponDisplay();
 });
+
+function fromWeaponString(query){
+    const defaultWeaponID = 1;
+    const idx = weapons.findIndex(weapon => weapon.slug == query);
+    return idx == -1 ? defaultWeaponID : idx;
+}
 
 function main(){
     updateWeaponDisplay();
     buttons.next.addEventListener("click", ()=>swapWeapon(+1));
     buttons.previous.addEventListener("click", ()=>swapWeapon(-1));
-}
-
-function fromHash(){
-    const hash = window.location.hash;
-    const idx = weapons.findIndex(
-        weapon => weapon.slug == hash.slice(1)
-    );
-    return idx == -1 ? 1 : idx;
 }
 
 function updateWeaponDisplay(){
