@@ -3,14 +3,18 @@ import { getWeaponImage} from './weaponCalcUtil.js';
 import { make } from "../util/injectionUtil.js"
 
 const pList = document.querySelector(".passiveContainer");
-let passives;
-let boundWeapon;
-export const bindWeapon = weapon => boundWeapon = weapon;
+let passives, weapons, boundWeapon;
 
-export function init(passiveData){
-    passives = passiveData;
+export const bindWeapon = weapon => {
+    boundWeapon = weapon;
+    boundWeapon.passives.forEach(p => appendPassiveNode(p));
+};
+
+export function init(weaponArray, passiveArray){
+    weapons  = weaponArray;
+    passives = passiveArray;
     const pGrid = document.querySelector('.passiveGrid');
-    pGrid.append(...Object.values(passives).map(
+    pGrid.append(passives.map(
         passive=>make("img",{
             className:'passiveGridImage',
             src: `media/owo_images/f_${passive.aliases[0]}.png`,
@@ -26,7 +30,6 @@ function generateNewPassive(passive){
     newPassive.stats.map(stat => stat.noWear=100);
     newPassive.remove = ()=>{
         boundWeapon.passives = boundWeapon.passives.filter(p => p !== passive);
-        if (boundWeapon.passives.length == 0) pList.innerHTML = '<span><b>Passives:</b> none</span>';
         boundWeapon.updateVars();
     }
 
@@ -43,9 +46,6 @@ function appendPassiveNode(passive) {
 
     Object.assign(passive,passives[passive.id]);
     const desc = generateDescription(passive);
-
-    if(boundWeapon.passives.length === 1) pList.innerHTML="";
-        // we'll need to remove "passives: none" on the first append
     boundWeapon.updateVars();
 
     passive.image = Object.assign(getWeaponImage(passive),{
@@ -54,9 +54,4 @@ function appendPassiveNode(passive) {
     })
     wrapper.append(passive.image, desc);
     pList.appendChild(wrapper);
-}
-
-export function generatePassiveInputs() {
-    if (boundWeapon.passives.length == 0) pList.innerHTML = '<span><b>Passives:</b> none</span>';
-    boundWeapon.passives.forEach(p => appendPassiveNode(p));
 }

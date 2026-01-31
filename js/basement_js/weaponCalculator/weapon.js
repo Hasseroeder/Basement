@@ -5,9 +5,8 @@ import * as messageHandler from "./weaponCalcMessageGenerator.js"
 import { getRarity } from './weaponCalcUtil.js';
 import { debounce } from "../util/inputUtil.js";
 
-const [weapons, weaponDB, passives] = await Promise.all([
+const [weapons, passives] = await Promise.all([
     loadJson("../json/weapons.json"),
-    loadJson("../json/weaponDatabase.json"),
     loadJson("../json/passives.json")
 ]);
 weapons.forEach(weapon=>{
@@ -23,7 +22,9 @@ passives.forEach(passive=>{
 })
 
 // delete weapons[100]; // gotta get rid of fists... somehow
-passiveHandler.init(passives);
+passiveHandler.init(weapons, passives);
+blueprinter.init(weapons, passives);
+
 
 function updateHash(weapon){
     history.replaceState(null,'','#'+blueprinter.toStrings(weapon).join("-"));
@@ -46,20 +47,10 @@ export class Weapon{
         this.wearName = "worn"; // default, will change later hopefully
 
         passiveHandler.bindWeapon(this);
-        passiveHandler.generatePassiveInputs();
         messageHandler.bindWeapon(this);
         messageHandler.generateStatInputs(this);
         this.updateVars();
         debouncedHash(this);
-    }
-
-    static fromDatabase(id){
-        const weaponArray = weaponDB[id];
-        const randWeapon = weaponArray[
-            Math.floor(Math.random()*weaponArray.length)
-        ]
-        randWeapon.blueprintObject = blueprinter.toWeapon(randWeapon.blueprint,weapons,passives);
-        return new Weapon(randWeapon);
     }
 
     static fromRandom(id,settings={
@@ -72,12 +63,12 @@ export class Weapon{
     }
 
     static fromHash(){
-        const blueprintObject = blueprinter.toWeapon(location.hash,weapons,passives);
-        const weaponArray = weaponDB[blueprintObject.id];
-        const randWeapon = weaponArray[  
-            Math.floor(Math.random()*weaponArray.length)
-        ];
-        return new Weapon({...randWeapon, blueprintObject});
+        const blueprintObject = blueprinter.toWeapon(location.hash.slice(1));
+        return new Weapon({
+            owner: {id:"hsse",name:"Heather"},  // TODO: figure out what kind of user's I want to feature?
+            weaponID:"664DFC",                  // TODO: and IDs?
+            blueprintObject
+        });
     }
 
     static bigArray = weapons;
@@ -127,5 +118,6 @@ export class Weapon{
 
         messageHandler.displayInfo(this);
         debouncedHash(this);
+        console.log(this);
     }
 }

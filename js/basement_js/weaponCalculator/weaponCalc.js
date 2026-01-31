@@ -17,7 +17,7 @@ gridInjector({
 });
 */
 
-const currentWeapon= Weapon.fromDatabase(101);
+const currentWeapon= Weapon.fromHash();
 
 const wearSelect = new customSelect(
 	currentWeapon.wear,

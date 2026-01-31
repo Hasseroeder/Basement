@@ -1,6 +1,9 @@
 import { valueToPercent } from "./weaponCalcUtil.js";
 
-const initWeaponID = 101;	// start with sword if nothing is given
+const initWeaponID = 1;	// start with sword if nothing is given
+
+var weapons, passives;
+export const init = (weaponData,passiveData) => [weapons,passives] = [weaponData,passiveData]
 
 function splitHypenSpaces(string){
     const normalized = string
@@ -41,19 +44,19 @@ function isCorrectStatAmount(str, statsNeeded) {
 const isOnlyNumbers =
     str => /^[\d.,\s-]+$/.test(str);
 
-function getStats(item,string){
+function getStats(item,statToken){
 	const stats = item.objectType == "passive"
         ? item.stats
         : item.statConfig.map(config => ({noWearConfig:config}));
         // passives have a stat object premade, I need to create it for weapons
         // TODO: do this better
-    const separator = string.match(/\d([,\- ])\d/)?.[1] ?? ',';
+    const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ',';
 
-	if (isOnlyNumbers(string) && 
-		isValidJoinedNumbers(string,separator) &&
-		isCorrectStatAmount(string,stats.length)
+	if (isOnlyNumbers(statToken) && 
+		isValidJoinedNumbers(statToken,separator) &&
+		isCorrectStatAmount(statToken,stats.length)
 	) {
-        const cleanedStats = string.replace(/^[\s,-]+|[\s,-]+$/g, "");
+        const cleanedStats = statToken.replace(/^[\s,-]+|[\s,-]+$/g, "");
 		const statInts = cleanedStats.split(separator).map(Number); 
         if (separator!="," && item.objectType != "passive") statInts.push(statInts.shift());
             // doing this because WP stat is first in "45-24" display and last in "24,45" display
@@ -76,19 +79,19 @@ function getMatches(arrayToSearch, query) {
     const results   = queries.flatMap((q, idx) => {
         return arrayToSearch.filter(item =>
             [item.name, ...item.aliases].some(n => n.toLowerCase() === q)
-        ).map(item => ({ item, string: query[idx+1] ?? "" }));
+        ).map(item => ({ item, statToken: query[idx+1] ?? "" }));
     });
     return results;
 }
 
-export function toWeapon(inputHash, weapons, passives){
+export function toWeapon(inputHash){
     const tokens         = splitHypenSpaces(inputHash);
-    const {item: weapon, string: weaponStatToken}
-        = getMatches(weapons, tokens)[0] ?? { item:weapons[initWeaponID], string:"" };
+    const {item: weapon, statToken}
+        = getMatches(weapons, tokens)[0] ?? { item:weapons[initWeaponID], statToken:"" };
     const wear           = ["decent","fine","pristine"].includes(tokens[0]) ? tokens[0] : "worn";
-    const stats          = getStats(weapon,weaponStatToken);
-    const passive = getMatches(passives, tokens).map(({ item, string }) => {
-        getStats(item, string);
+    const stats          = getStats(weapon,statToken);
+    const passive = getMatches(passives, tokens).map(({ item, statToken }) => {
+        getStats(item, statToken);
         item.wear = wear;
         return item;
     });
