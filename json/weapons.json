@@ -824,7 +824,7 @@
         "objectType":"weapon",
         "id":125,
         "name":"Briar-Heart Staff",
-        "aliases":["Bstaff", "Bhstaff"],
+        "aliases":["Bhstaff","Bstaff"],
         "wikiStars": [
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
