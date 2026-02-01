@@ -14,7 +14,7 @@ export function init(weaponArray, passiveArray){
     weapons  = weaponArray;
     passives = passiveArray;
     const pGrid = document.querySelector('.passiveGrid');
-    pGrid.append(passives.map(
+    pGrid.append(...passives.map(
         passive=>make("img",{
             className:'passiveGridImage',
             src: `media/owo_images/f_${passive.slug}.png`,
