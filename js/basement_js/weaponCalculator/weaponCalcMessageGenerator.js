@@ -221,7 +221,7 @@ class WeaponStat {
             const { min, max, step } = this.wearConfig;
             el.min = Math.min(min, max);
             el.max = Math.max(min, max);
-            el.step  = step;
+            el.step  = Math.abs(step);
         });
 
         Object.assign(this.qualityInput, this.percentageConfig);
@@ -235,7 +235,7 @@ class WeaponStat {
     }
 }
 
-function displayInfo(weapon){
+function displayInfo(){
     el.weaponHeader.textContent= boundWeapon.owner.name+"'s " +boundWeapon.wearName +boundWeapon.typeName;
     el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + boundWeapon.typeName;
     el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + boundWeapon.owner.id;
