@@ -1,41 +1,28 @@
 import { make } from "../util/injectionUtil.js";
 
-const u = 0.3;
-const r = 0.1;
-const e = 0.01;
-const m = 0.001;
-const p1 = 0.005;
-const p2 = 0.0001;
-const l  = 0.0005;
-const g  = tier => 0.00001*tier 
-const f  = 0.00001;
-const h  = 0.000001;
+const wwp = (tier, patreon) => {
+    const rest = [
+        {rate:0.3,                  value: 10},     //uncommon
+        {rate:0.1,                  value: 20},     //rare
+        {rate:0.01,                 value: 400},    //epic
+        {rate:0.001,                value: 1000},   //mythic
+        {rate:patreon ? 0.005 : 0,  value: 400},    //patreon
+        {rate:patreon ? 0.0001 : 0, value: 2000},   //custom patreon
+        {rate:0.0005,               value: 2000},   //legendary
+        {rate:0.00001 * tier,       value: 5000},   //gem
+        {rate:0.00001,              value: 100000}, //fabled
+        {rate:0.000001,             value: 300000}  //hidden
+    ];
 
-const c = (tier,patreon) =>
-    1
-    -u
-    -r
-    -e
-    -m
-    -(patreon? p1:0)
-    -(patreon? p2:0)
-    -l
-    -g(tier)
-    -f
-    -h
+    const common = {
+        rate: 1 - rest.reduce((s, v) => s + v.rate, 0),
+        value: 1
+    };
 
-const wwp = (tier,patreon) => 
-    1*c(tier,patreon) + 
-    10*u + 
-    20*r + 
-    400*e + 
-    1000*m+ 
-    (patreon? 400*p1:0) + 
-    (patreon? 2000*p2:0) + 
-    2000*l + 
-    5000*g(tier) + 
-    100000*f + 
-    300000*h
+    const allTiers = [common, ...rest];
+
+    return allTiers.reduce((s,v)=>s + v.rate * v.value,0);
+};
 
 const F = (tier,patreon) =>
     ([1,2,4,5,6,7,8,10][tier])  // pets with hunting gem
