@@ -1102,7 +1102,7 @@ a:hover {
   margin: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  border-color:gray;
+  border-color:#666;
 }
 .tab-button:hover{
   background-color: #262626;
@@ -1122,7 +1122,7 @@ a:hover {
   background-color:#222; 
   justify-content:center; 
   padding:1rem;
-  border: 2px outset gray;
+  border: 2px outset #666;
   border-top:unset
 }
 

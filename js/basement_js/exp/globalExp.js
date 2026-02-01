@@ -44,6 +44,7 @@ await fetch('../csv/bonusXP.csv')
 	}));
 
 function battleExp(s, t) {
+	[s,t]=[Number(s),Number(t)];
 	const tieChance = 0.01*t;             // converting from percent to decimal
 	const lossPart  = 50;                 // adding 50xp because each streak will have a loss, giving 50
 	const winPart   = 200 * s;            // average amount of wins in the streak, giving 200
@@ -60,7 +61,7 @@ function battleExp(s, t) {
 
 function attachBattleCalculator(){
 	const output = () => outputField.textContent= 
-		battleExp(+streak.value,+tierate.value).toFixed(2); 
+		battleExp(streak.value,tierate.value).toFixed(2); 
 
 	const streak = make('input',{ 
 		className:'global-inputs no-arrows', 
@@ -104,13 +105,10 @@ function attachExpChart(){
 	let currentTierate = 0;
 
 	const points = Array.from({ length: 101 }, (_, i) =>
-		Array.from(_xpCache.keys(), k => {
-			const x = +k;
-			return {
-				x, 
-				y: +battleExp(x, i).toFixed(1) 
-			};
-		})
+		[..._xpCache.keys()].map(k => ({
+			x: k,
+			y: battleExp(k, i).toFixed(1)
+		}))
 	);
 
 	const streakExpChart = new Chart(ctx, {
@@ -130,34 +128,26 @@ function attachExpChart(){
 					mode: 'index',
 					intersect: false,
 					displayColors:false,
-					callbacks: {
-						title: function (tooltipData) {
-							return `Streak: ${tooltipData[0].label}`;
-						} 
-					},
+					callbacks: { title: tooltipData => "Streak: "+ tooltipData[0].label}
 				}
 			},
 			hover: { mode: 'index', intersect: false },
 			scales: {
-				y: { min:0, max:1400, 
-					title: {
-						display: true,
-						text: 'Exp/Battle',
-						font: {size: 13},
-					}
+				y: { 
+					min:0, 
+					max:1400, 
+					title: { display: true, text: 'Exp/Battle', font: {size: 13} },
+					grid: {color:'#333'},
 				},
 				x:{
-					title: {
-						display:true,
-						text: 'average Streak',
-						font: {size: 13},
-					},
+					title: { display:true, text: 'average Streak', font: {size: 13} },
 					type: "logarithmic",
+					grid: {color:'#333'},
 					ticks: {
-						font: {size: 10},
-						minRotation: 90,
-						maxRotation: 90,
-						callback: value => value
+						font: {size: 10}, 
+						minRotation: 90, 
+						maxRotation: 90, 
+						callback: t => t
 					}
 				}
 			}

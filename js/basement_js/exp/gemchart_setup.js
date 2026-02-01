@@ -90,36 +90,20 @@ new Chart(document.getElementById('myChart'), {
       plugins: {
             customLabel: true,
             tooltip: {
-                usePointStyle: false,
-                xAlign:'center',
-                yAlign:'bottom',
-                
-                displayColors: false ,
+                xAlign:'center', yAlign:'bottom',
+                displayColors: false,
+                titleFont: { weight: "normal" },
                 callbacks: {
-                    label: function(tooltipItem) {
-                        let roundedValue = Math.round(tooltipItem.raw * 100) / 100;
-                        return [tooltipItem.dataset.label, roundedValue+" exp/hunt"];
-                    },
-                    labelColor: () => {
-                        return {
-                            borderColor: 'transparent',
-                            backgroundColor: 'transparent'
-                        };
-                    }
-                    
-                    
+                    title: tooltipItem => [tooltipItem[0].label+ " - " + tooltipItem[0].dataset.label],
+                    label: tooltipItem => [tooltipItem.raw.toFixed(2)+" exp/hunt"]
                 }    
             },
-            legend: {display: false}
+            legend: { display: false }
         },
       	scales: {
             x: {
                 grid:{color:'#404040'},
-                ticks: {
-                  callback: function(_,__) {
-                    return "";
-                  }
-                } 
+                ticks: {callback: () => ""} 
             },
             y: {
                 beginAtZero: true,
