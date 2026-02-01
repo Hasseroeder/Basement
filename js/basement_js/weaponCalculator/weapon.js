@@ -43,12 +43,12 @@ export class Weapon{
         this.stats = blueprintObject.stats;
         this.wear = blueprintObject.wear;
         this.typeID = blueprintObject.id;
-        this.tier = "fabled"; // default, will change later hopefully
-        this.wearName = "worn"; // default, will change later hopefully
+        this.tier = "fabled"; // default, will change later
+        this.wearName = "worn"; // default, will change later
 
         passiveHandler.bindWeapon(this);
         messageHandler.bindWeapon(this);
-        messageHandler.generateStatInputs(this);
+        messageHandler.generateStatInputs();
         this.updateVars();
         debouncedHash(this);
     }

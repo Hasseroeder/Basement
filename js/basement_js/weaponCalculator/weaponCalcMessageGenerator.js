@@ -246,9 +246,9 @@ function displayInfo(weapon){
     el.weaponImage.src=getWeaponImagePath(weapon);
 }
 
-function generateStatInputs(weapon){
-	el.wpCost.replaceChildren(generateWPInput(weapon));
-	el.description.replaceChildren(generateDescription(weapon));
+function generateStatInputs(){
+	el.wpCost.replaceChildren(generateWPInput(boundWeapon));
+	el.description.replaceChildren(generateDescription(boundWeapon));
 }
 
 function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
