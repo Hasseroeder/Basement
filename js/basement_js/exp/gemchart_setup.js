@@ -40,6 +40,19 @@ const tiers = [
     {imageType:".gif", label:"Fabled Gems",       background: 'rgba(150, 220, 250, 0.2)', border:'rgb(181, 234, 248)'}
 ];
 
+const makeDataset = (label, { patreon }) => ({
+    label,
+    data: tiers.map((_, i) => F(i, patreon)),
+    backgroundColor: tiers.map(t => t.background),
+    borderColor: tiers.map(t => t.border),
+    borderWidth: 1
+});
+
+const datasets = [
+    makeDataset('no Patreon', { patreon: false }),
+    makeDataset('Patreon', { patreon: true })
+];
+
 const gemImages = [1,2,3,4,5,6,7].map(i=>
     make("img",{
         src: `/media/owo_images/gem${i}1${tiers[i].imageType}`
@@ -72,19 +85,7 @@ new Chart(document.getElementById('myChart'), {
     type: 'bar',
     data: {
         labels: tiers.map(t=>t.label),
-        datasets: [{
-            label: 'no Patreon',
-            data: tiers.map((_,i)=>F(i,false)),
-            backgroundColor: tiers.map(t=>t.background),
-            borderColor: tiers.map(t=>t.border),
-            borderWidth: 1
-        },{
-            label: 'Patreon',
-            data: tiers.map((_,i)=>F(i,true)),
-            backgroundColor: tiers.map(t=>t.background),
-            borderColor: tiers.map(t=>t.border),
-            borderWidth: 1
-        }]
+        datasets: datasets
     },
     options: {
       plugins: {
