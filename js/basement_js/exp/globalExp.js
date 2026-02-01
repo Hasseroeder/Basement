@@ -1,3 +1,5 @@
+import { make } from "../util/injectionUtil.js";
+
 const multiTable = new Array(100).fill(1); 
 for (let i = 0; i < 100; i += 5) multiTable[i] = 3; 
 for (let i = 0; i < 100; i += 10) multiTable[i] = 5; 
@@ -36,8 +38,7 @@ function cachedBonusXp(streak){
 
 await fetch('../csv/bonusXP.csv')
 	.then(r => r.text())
-	.then(txt => txt.split(/\r?\n/))
-	.then(lines => lines.forEach(line => {
+	.then(txt => txt.split(/\r?\n/).forEach(line => {
 		const [key, val] = line.split(',');
 		_xpCache.set(key, +val);
 	}));
@@ -58,85 +59,54 @@ function battleExp(s, t) {
 }
 
 function attachBattleCalculator(){
-	const el = (tag, cls) => {
-		const e = document.createElement(tag);
-		if (cls) e.className = cls;
-		return e;
-	};
+	const output = () => outputField.textContent= 
+		battleExp(+streak.value,+tierate.value).toFixed(2); 
 
-	const createInput = (opts = {}) => {
-		const i = el('input', 'global-inputs no-arrows');
-		Object.assign(i, opts);
-		i.addEventListener('input', output);
-		return i;
-	};
+	const streak = make('input',{ 
+		className:'global-inputs no-arrows', 
+		type: 'number', min: 0, max: 1e6, step: 1, value: 1, lang: 'en',
+		oninput:output
+	});
+	const tierate = make('input',{ 
+		className:'global-inputs no-arrows', 
+		type: 'number', min: 0,	max: 100, step: 0.01, value: 0,	lang: 'en',
+		oninput:output
+	});
+	const outputField = make('div');
 
-	function output(){ 
-		outputField.textContent= 
-		battleExp(
-			+streak.value,
-			+tierate.value
-		).toFixed(2); 
-	}
-
-	const left = el('div', 'global-column align-child-text-right');
-	const right = el('div', 'global-column');
-
-	const streak = createInput({ type: 'number', min: 0, max: 1e6, step: 1, value: 1, lang: 'en' });
-	const tierate = createInput({ type: 'number', min: 0, max: 100, step: 0.01, value: 0, lang: 'en' });
-	const outputField = el('div');
-
-	const label = text => {
-		const d = el('div');
-		d.textContent = text;
-		return d;
-	};
-
-	left.append(streak, tierate, outputField);
-	right.append(label('streak'), label('% tierate'), label('exp/battle'));
-	this.container.append(left, right);
+	this.container.append(
+		make('div', {className: 'global-column align-child-text-right'},[streak, tierate, outputField]), 
+		make('div',  {className: 'global-column' },[
+			make('div', {textContent:"streak"}), 
+			make('div', {textContent:"% tierate"}), 
+			make('div', {textContent:"exp/battle"})
+		])
+	);
 
 	output();
 }
 
 function attachExpChart(){
-	const chartWrapper = document.createElement("div");
-	const sliderWrapper = document.createElement("div");
-	this.container.append(chartWrapper,sliderWrapper);
-	chartWrapper.style="aspect-ratio: auto 600 / 300; display:flex; width:100%; min-width: 0;";
-	sliderWrapper.style="padding:0rem 0.5rem; text-align: center; font-size: 0.8rem; color:#707070; display: flex; flex-direction: column; align-items: center;";
-
-	const ctx = document.createElement("canvas");
-	chartWrapper.append(ctx);
-
-	const slider = document.createElement("input");  
-	Object.assign(slider, {
-		style:"writing-mode: vertical-lr; direction: ltr; width: 2rem; height: 20rem; margin: 0.6rem 0 0 0; flex: max-content; padding-bottom: 0.5rem;",
-		type:"range",
-		min:"0", 
-		max:"100", 
-		step:"1",
-		value:"0"
+	const ctx = make("canvas");
+	const slider = make("input",{
+		className:"global-tierate-slider", type:"range", min:"0", max:"100", step:"1", value:"0"
 	});
 
+	const percentText = make("div",{innerHTML:"0%"});
+	const tierateText = make("div",{innerHTML:"tierate"});
+	const textWrapper = make("div",{style:"height: 4.4rem"},[percentText,tierateText]);
 
-	const percentText = document.createElement("div");
-	percentText.innerHTML="0%";
-	const tierateText = document.createElement("div");
-	tierateText.innerHTML = "Tierate";
-
-	const textWrapper = document.createElement("div");
-	textWrapper.append(percentText, tierateText);
-	textWrapper.style="height: 4.4rem";
-
-	sliderWrapper.append(slider,textWrapper);
+	this.container.append(
+		make("div",{className:"global-chart-wrapper"},[ctx]),
+		make("div",{className:"global-slider-wrapper"},[slider,textWrapper])
+	);
 
 	let currentTierate = 0;
 
 	const points = Array.from({ length: 101 }, (_, i) =>
 		Array.from(_xpCache.keys(), k => {
 			const x = +k;
-			return { 
+			return {
 				x, 
 				y: +battleExp(x, i).toFixed(1) 
 			};
@@ -149,17 +119,13 @@ function attachExpChart(){
 			datasets: [{
 				label: "Exp/Battle",
 				data: points[currentTierate],
-				borderColor: "rgba(75,192,192,1)",
-				fill: true,
-				parsing:false
+				borderColor: "rgba(154, 213, 213, 1)",
 			}]
 		},
 		options: {
 			animation: false,
 			plugins:{
-				legend: {
-					display: false
-				},
+				legend: { display: false },
 				tooltip: {
 					mode: 'index',
 					intersect: false,
@@ -173,9 +139,7 @@ function attachExpChart(){
 			},
 			hover: { mode: 'index', intersect: false },
 			scales: {
-				y: { 
-					min:0, 
-					max:1400, 
+				y: { min:0, max:1400, 
 					title: {
 						display: true,
 						text: 'Exp/Battle',
@@ -193,9 +157,7 @@ function attachExpChart(){
 						font: {size: 10},
 						minRotation: 90,
 						maxRotation: 90,
-						callback: function(value) {
-							return Number.isInteger(value) ? String(value) : '';
-						}
+						callback: value => value
 					}
 				}
 			}
@@ -253,7 +215,6 @@ function attachLatex(){
 
 export function initGlobal(){
 	const { cachedDiv } = this;
-	const make = (tag, props = {}) => Object.assign(document.createElement(tag), props);
 	window.MathJax.typesetPromise([cachedDiv]);
 	const wrapper = cachedDiv.querySelector("#tabContainer");
 	const buttonWrapper = make("div", { style: "display:flex;" });
@@ -261,21 +222,24 @@ export function initGlobal(){
 	wrapper.append(buttonWrapper,contentWrapper);
 
 	const tabs = [
-		{name:"Function", init:attachLatex},
-		{name:"Calculator", init:attachBattleCalculator},
-		{name:"Graph", init:attachExpChart}
+		{name:"Function", 	init:attachLatex 			/*, button, container */},
+		{name:"Calculator", init:attachBattleCalculator /*, button, container */},
+		{name:"Graph", 		init:attachExpChart 		/*, button, container */}
 	]
 
 	tabs.forEach(t =>{
 		t.container = make("div", { className: "global-content-container" });
-    	t.button =    make("button", { className: "tab-button", textContent: t.name });
+    	t.button =    make("button", { 
+			className: "tab-button", 
+			textContent: t.name,
+			onclick: e =>{
+				tabs.forEach(tab => tab.button.classList.remove("tab-button-active"))
+				e.target.classList.add("tab-button-active");
+				contentWrapper.replaceChildren(t.container);
+			}
+		});
 		buttonWrapper.append(t.button);
 		t.init();
-		t.button.addEventListener("click", () =>{
-			tabs.forEach(tab => tab.button.classList.remove("tab-button-active"))
-			t.button.classList.add("tab-button-active");
-			contentWrapper.replaceChildren(t.container);
-		});
 	});
 
 	tabs[0].button.click();

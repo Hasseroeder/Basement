@@ -1126,6 +1126,32 @@ a:hover {
   border-top:unset
 }
 
+.global-tierate-slider[type="range"]{
+  writing-mode: vertical-lr; 
+  direction: ltr; 
+  width: 2rem; 
+  height: 20rem; 
+  margin: 0.6rem 0 0 0; 
+  flex: max-content; 
+  padding-bottom: 0.5rem; 
+  background-color:#333
+}
+
+.global-slider-wrapper {
+  padding:0rem 0.5rem; 
+  text-align: center; 
+  font-size: 0.8rem; 
+  color:#707070; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+}
+
+.global-chart-wrapper{
+  aspect-ratio: auto 600 / 300;
+  width:100%;
+}
+
 .thinner-header{
   font-weight: normal;
   margin:1.2rem 0 0.4rem 0;

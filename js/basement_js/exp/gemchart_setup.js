@@ -1,48 +1,63 @@
-async function loadChartJs() {
-	const url = 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js';
-	const ChartModule = await import(url);
-	const Chart = ChartModule.default;
-	return Chart;
-}
-const chartJsPromise = loadChartJs();
-
-const ctx = document.getElementById('myChart').getContext('2d');
+import { make } from "../util/injectionUtil.js";
 
 const u = 0.3;
 const r = 0.1;
 const e = 0.01;
 const m = 0.001;
-const p1 = [0,0.005];
-const p2 = [0,0.0001];
+const p1 = 0.005;
+const p2 = 0.0001;
 const l  = 0.0005;
-function g(x) { return 0.00001*x} 
+const g  = tier => 0.00001*tier 
 const f  = 0.00001;
 const h  = 0.000001;
 
-function c(x,p) { return 1 - (u+r+e+m+p1[p]+p2[p]+l+g(x)+f+h);}
+const c = (tier,patreon) =>
+    1
+    -u
+    -r
+    -e
+    -m
+    -(patreon? p1:0)
+    -(patreon? p2:0)
+    -l
+    -g(tier)
+    -f
+    -h
 
-function w(x,p) { return (c(x,p) + 10*u + 20*r + 400*e + 1000*m+ 400*p1[p] + 2000*p2[p] + 2000*l + 5000*g(x) + 100000*f + 300000*h); }
+const wwp = (tier,patreon) => 
+    1*c(tier,patreon) + 
+    10*u + 
+    20*r + 
+    400*e + 
+    1000*m+ 
+    (patreon? 400*p1:0) + 
+    (patreon? 2000*p2:0) + 
+    2000*l + 
+    5000*g(tier) + 
+    100000*f + 
+    300000*h
 
-function F(x,p) { return (1+x)*w(x,p)*(x>=1?2:1) }
+const F = (tier,patreon) =>
+    ([1,2,4,5,6,7,8,10][tier])  // pets with hunting gem
+    *(tier>0? 2:1)              // empowering gem mult
+    *wwp(tier,patreon)          // worth per pet
 
-const gemImages = [];
-for (let i = 1; i <= 7; i++) {
-	const img = new Image();
-	img.src = i < 6 ? `/media/owo_images/gem${i}1.png` : `/media/owo_images/gem${i}1.gif`;
-	gemImages.push(img);
-}
+const tiers = [
+    {                  label:"No Gems",           background: 'rgba(160, 160, 160, 0.2)', border:'rgb(200, 200, 200)'},
+    {imageType:".png", label:"Common Gems",       background: 'rgba(154, 45, 43, 0.2)',   border:'rgb(168, 94, 93)'},
+    {imageType:".png", label:"Uncommon Gems",     background: 'rgba(42, 137, 154, 0.2)',  border:'rgb(81, 151, 164)'},
+    {imageType:".png", label:"Rare Gems",         background: 'rgba(217, 168, 61, 0.2)',  border:'rgb(219, 177, 85)'},
+    {imageType:".png", label:"Epic Gems",         background: 'rgba(51, 77, 234, 0.2)',   border:'rgb(81, 103, 232)'},
+    {imageType:".png", label:"Mythic Gems",       background: 'rgba(142, 73, 244, 0.2)',  border:'rgb(163, 108, 247)'},
+    {imageType:".gif", label:"Legendary Gems",    background: 'rgba(251, 241, 61, 0.2)',  border:'rgb(234, 228, 105)'},
+    {imageType:".gif", label:"Fabled Gems",       background: 'rgba(150, 220, 250, 0.2)', border:'rgb(181, 234, 248)'}
+];
 
-const dataset = {
-	label: 'no Patreon',
-	data: [F(1,0), F(2,0), F(3,0), F(4,0), F(5,0), F(6,0), F(7,0), F(8,0)],
-	type: 'line',           
-	showLine: false,        
-	pointStyle: gemImages,  
-	pointRadius: 12,
-	pointHoverRadius: 14,
-	backgroundColor: 'transparent',
-	borderColor: 'transparent'
-};
+const gemImages = [1,2,3,4,5,6,7].map(i=>
+    make("img",{
+        src: `/media/owo_images/gem${i}1${tiers[i].imageType}`
+    }
+)); 
 
 const drawImagesPlugin = {
   	id: 'drawImages',
@@ -58,7 +73,6 @@ const drawImagesPlugin = {
 			const el1 = meta1.data[i+1];
 			const img = gemImages[i];
 			if (!img || !img.complete) continue;
-
 			const x = (el0.x + el1.x) / 2 - size / 2;
 			const y = bottom - (size/2);
 
@@ -67,76 +81,21 @@ const drawImagesPlugin = {
 	}
 };
 
-const ChartJS = await chartJsPromise;
-const myChart = new Chart(ctx, {
+new Chart(document.getElementById('myChart'), {
     type: 'bar',
     data: {
-        labels: ['no Gems', 'Common Gems', 'Uncommon Gems', 'Rare Gems', 'Epic Gems', 'Mythic Gems', 'Legendary Gems', 'Fabled Gems'],
+        labels: tiers.map(t=>t.label),
         datasets: [{
             label: 'no Patreon',
-            data: [
-				F(0,0), 
-				F(1,0), 
-				F(2,0), 
-				F(3,0), 
-				F(4,0), 
-				F(5,0),
-				F(6,0),
-				F(7,0)
-				],
-            backgroundColor: [
-                'rgba(160, 160, 160, 0.2)',
-                'rgba(154, 45, 43, 0.2)',
-                'rgba(42, 137, 154, 0.2)',
-                'rgba(217, 168, 61, 0.2)',
-                'rgba(51, 77, 234, 0.2)',
-                'rgba(142, 73, 244, 0.2)',
-                'rgba(251, 241, 61, 0.2)',
-                'rgba(150, 220, 250, 0.2)'
-            ],
-            borderColor: [
-                'rgba(200, 200, 200, 1)',
-                'rgba(168, 94, 93, 1)',
-                'rgba(81, 151, 164, 1)',
-                'rgba(219, 177, 85, 1)',
-                'rgba(81, 103, 232, 1)',
-                'rgba(163, 108, 247, 1)',
-                'rgba(251, 244, 116, 1)',
-                'rgba(248,252,253, 1)'
-            ],
+            data: tiers.map((_,i)=>F(i,false)),
+            backgroundColor: tiers.map(t=>t.background),
+            borderColor: tiers.map(t=>t.border),
             borderWidth: 1
         },{
             label: 'Patreon',
-            data: [
-              F(0,1), 
-              F(1,1), 
-              F(2,1), 
-              F(3,1), 
-              F(4,1), 
-              F(5,1),
-              F(6,1),
-              F(7,1)
-              ],
-            backgroundColor: [
-                'rgba(160, 160, 160, 0.2)',
-                'rgba(154, 45, 43, 0.2)',
-                'rgba(42, 137, 154, 0.2)',
-                'rgba(217, 168, 61, 0.2)',
-                'rgba(51, 77, 234, 0.2)',
-                'rgba(142, 73, 244, 0.2)',
-                'rgba(251, 241, 61, 0.2)',
-                'rgba(150, 220, 250, 0.2)'
-            ],
-            borderColor: [
-                'rgba(200, 200, 200, 1)',
-                'rgba(168, 94, 93, 1)',
-                'rgba(81, 151, 164, 1)',
-                'rgba(219, 177, 85, 1)',
-                'rgba(81, 103, 232, 1)',
-                'rgba(163, 108, 247, 1)',
-                'rgba(251, 244, 116, 1)',
-                'rgba(248,252,253, 1)'
-            ],
+            data: tiers.map((_,i)=>F(i,true)),
+            backgroundColor: tiers.map(t=>t.background),
+            borderColor: tiers.map(t=>t.border),
             borderWidth: 1
         }]
     },
