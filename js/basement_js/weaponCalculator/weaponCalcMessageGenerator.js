@@ -236,14 +236,14 @@ class WeaponStat {
 }
 
 function displayInfo(weapon){
-    el.weaponHeader.textContent= weapon.owner.name+"'s " +weapon.wearName +weapon.typeName;
-    el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + weapon.typeName;
-    el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + weapon.owner.id;
-    el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${weapon.weaponID}</code>`;
-    el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue(weapon);
-    el.weaponQualityImage.src= getTierEmojiPath(weapon.tier);
-    el.weaponQualitySpan.textContent= weapon.qualityWear.toFixed(1)+"%"
-    el.weaponImage.src=getWeaponImagePath(weapon);
+    el.weaponHeader.textContent= boundWeapon.owner.name+"'s " +boundWeapon.wearName +boundWeapon.typeName;
+    el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + boundWeapon.typeName;
+    el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + boundWeapon.owner.id;
+    el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${boundWeapon.weaponID}</code>`;
+    el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue(boundWeapon);
+    el.weaponQualityImage.src= getTierEmojiPath(boundWeapon.tier);
+    el.weaponQualitySpan.textContent= boundWeapon.qualityWear.toFixed(1)+"%"
+    el.weaponImage.src=getWeaponImagePath(boundWeapon);
 }
 
 function generateStatInputs(){

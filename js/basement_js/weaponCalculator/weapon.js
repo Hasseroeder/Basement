@@ -81,6 +81,10 @@ export class Weapon{
         return this.staticData.name
     }
 
+    get slug(){
+        return this.staticData.slug
+    }
+
     get aliases(){
         return this.staticData.aliases
     }
@@ -116,7 +120,7 @@ export class Weapon{
         [this.qualityWear, this.qualityNoWear] = calculateQualities(allStats);
         this.tier = getRarity(Math.floor(this.qualityWear));
 
-        messageHandler.displayInfo(this);
+        messageHandler.displayInfo();
         debouncedHash(this);
         console.log(this);
     }

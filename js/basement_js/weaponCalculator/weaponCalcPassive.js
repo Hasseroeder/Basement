@@ -1,4 +1,4 @@
-import { generateDescription, displayInfo }  from '../weaponCalculator/weaponCalcMessageGenerator.js'
+import * as messageHandler from "./weaponCalcMessageGenerator.js"
 import { getWeaponImage} from './weaponCalcUtil.js';
 import { make } from "../util/injectionUtil.js"
 
@@ -35,7 +35,7 @@ function generateNewPassive(passive){
 
     boundWeapon.passives.push(newPassive);
     appendPassiveNode(newPassive);
-    displayInfo(boundWeapon);
+    messageHandler.displayInfo();
 }
 
 function appendPassiveNode(passive) {
@@ -45,7 +45,7 @@ function appendPassiveNode(passive) {
     });
 
     Object.assign(passive,passives[passive.id]);
-    const desc = generateDescription(passive);
+    const desc = messageHandler.generateDescription(passive);
     boundWeapon.updateVars();
 
     passive.image = Object.assign(getWeaponImage(passive),{
