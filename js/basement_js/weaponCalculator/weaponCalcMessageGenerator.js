@@ -58,10 +58,8 @@ function generateDescription(weaponOrPassive) {
 
     function getStatNode(){
         const stat = weaponOrPassive.stats[statIndex];
-        stat.IO = new WeaponStat(stat, weaponOrPassive);
-        const toAppend = stat.IO.render();
         statIndex++;
-        return toAppend;
+        return (stat.IO = new WeaponStat(stat, weaponOrPassive), stat.IO.wrapper);
     }
 }
 
@@ -69,7 +67,7 @@ function generateDescription(weaponOrPassive) {
 function generateWPInput(weapon){
     const stat = weapon.wpStat;
     const child = stat
-        ? (stat.IO = new WeaponStat(stat, weapon), stat.IO.render())
+        ? (stat.IO = new WeaponStat(stat, weapon), stat.IO.wrapper)
         : `\u00A0${0}\u00A0`;
 
     return make("div",
@@ -133,8 +131,7 @@ class WeaponStat {
     }
 
     _buildDOM() {
-        this.outerWrapper = make("div",{className:"outerInputWrapperFromCalculator"});
-        this.wrapper      = make("div",{className:"inputWrapperFromCalculator tooltip-lite"});
+        this.wrapper      = make("div",{className:"outerInputWrapperFromCalculator"});
         this.numberInput  = createRangedInput("number", this.wearConfig);
         this.numberLabel  = this.noWearConfig.unit?
                             make("span",{
@@ -154,11 +151,12 @@ class WeaponStat {
                             );
 
         this.wrapper.append(
-            this.numberInput,
-            this.numberLabel,
-            this.tooltip
+            make("div",{className:"inputWrapperFromCalculator tooltip-lite"},[
+                this.numberInput,
+                this.numberLabel,
+                this.tooltip
+            ])
         );
-        this.outerWrapper.append(this.wrapper);
 
         this._wireEvents();
     }
@@ -229,10 +227,6 @@ class WeaponStat {
         const temp = percentToValue(this.stat.noWear, this.wearConfig);
         this._syncAll(+temp.toFixed(6));
     }
-
-    render() {
-        return this.outerWrapper;
-    }
 }
 
 function displayInfo(){
@@ -252,18 +246,10 @@ function generateStatInputs(){
 }
 
 function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
-    const common = { 
-        min: Math.min(max,min), 
-        max: Math.max(max,min), 
-        type, 
-        step: Math.abs(step), 
-        lang: "en" 
-    };
-
     const className = type=="range"?'weaponSlider':
                       type=="number"?'inputFromWeaponCalculator no-arrows':"";
 
-    const variantStyles = 
+    const style = 
         type=="range"?{
             margin: '0 0 0 0.2rem',
             background: '#555',
@@ -275,9 +261,17 @@ function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
             width:(digits*0.5)+'rem'
         }:{};
 
-    const style = Object.assign({}, extraStyles, variantStyles);
+    Object.assign(style, extraStyles);
 
-    return make("input",{className,style,...common});
+    return make("input",{
+        className,
+        style,
+        min: Math.min(max,min), 
+        max: Math.max(max,min), 
+        type, 
+        step: Math.abs(step), 
+        lang: "en" 
+    });
 }
 
 export { generateDescription, displayInfo, generateStatInputs };
