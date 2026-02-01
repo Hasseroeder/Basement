@@ -1,12 +1,5 @@
 import { initGlobal } from "./globalExp.js";
-import { createInjectAble } from "../util/injectionUtil.js";
-
-async function loadMathJax() {
-	const s = document.createElement('script');
-    s.src= 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-    document.head.appendChild(s);
-    await new Promise(resolve => (s.onload = resolve));
-}
+import { make, createInjectAble } from "../util/injectionUtil.js";
 
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', init);
@@ -19,7 +12,6 @@ function doMathJax(){
 }
 
 async function init(){
-    await loadMathJax();
     const pathName="../donatorPages/exp/";
     const extraHtml = [
         {created: false, name: "knowledge"},
