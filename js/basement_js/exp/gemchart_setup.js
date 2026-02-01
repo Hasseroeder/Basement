@@ -21,7 +21,7 @@ const wwp = (tier, patreon) => {
 
     const allTiers = [common, ...rest];
 
-    return allTiers.reduce((s,v)=>s + v.rate * v.value,0);
+    return allTiers.reduce((s,v)=>console.log(v)/*s + v.rate * v.value*/,0);
 };
 
 const F = (tier,patreon) =>
