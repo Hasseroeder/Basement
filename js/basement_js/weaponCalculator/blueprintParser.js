@@ -61,15 +61,14 @@ function getStats(item,statToken){
         if (separator!="," && item.objectType != "passive") statInts.push(statInts.shift());
             // doing this because WP stat is first in "45-24" display and last in "24,45" display
 
-        stats.map((stat, i) => {
-            let toPush = separator === "," 
+        stats.forEach((stat, i) => {
+            const toPush = separator === "," 
                 ? Math.floor(statInts[i])
                 : valueToPercent(statInts[i], stat.wearConfig);
-            toPush = Math.max(0, Math.min(100, toPush));
-            stat.noWear = toPush;
+            stat.noWear = Math.max(0, Math.min(100, toPush));
         });
 	}else{
-		stats.map(stat => stat.noWear=100);	
+		stats.forEach(stat => stat.noWear=100);	
 	}
     return stats;
 }
