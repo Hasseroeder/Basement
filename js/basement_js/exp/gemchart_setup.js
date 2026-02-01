@@ -1,6 +1,6 @@
 import { make } from "../util/injectionUtil.js";
 
-const wwp = (tier, patreon) => {
+const wpp = (tier, patreon) => {
     const rest = [
         {rate:0.3,                  value: 10},     //uncommon
         {rate:0.1,                  value: 20},     //rare
@@ -21,13 +21,13 @@ const wwp = (tier, patreon) => {
 
     const allTiers = [common, ...rest];
 
-    return allTiers.reduce((s,v)=>console.log(v)/*s + v.rate * v.value*/,0);
+    return allTiers.reduce((s,v)=>s + v.rate * v.value,0);
 };
 
 const F = (tier,patreon) =>
     ([1,2,4,5,6,7,8,10][tier])  // pets with hunting gem
     *(tier>0? 2:1)              // empowering gem mult
-    *wwp(tier,patreon)          // worth per pet
+    *wpp(tier,patreon)          // worth per pet
 
 const tiers = [
     {                  label:"No Gems",           background: 'rgba(160, 160, 160, 0.2)', border:'rgb(200, 200, 200)'},
