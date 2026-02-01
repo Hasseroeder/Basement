@@ -75,12 +75,12 @@ function getStats(item,statToken){
 
 function getMatches(arrayToSearch, query) {
     const queries   = query.map(q => q.toLowerCase());
-    const results   = queries.flatMap((q, idx) => {
-        return arrayToSearch.filter(item =>
-            [item.name, item.slug, ...item.aliases].some(n => n.toLowerCase() === q)
-        ).map(item => ({ item, statToken: query[idx+1] ?? "" }));
-    });
-    return results;
+    const checkItemMatch = (item,q) => [item.name, item.slug, ...item.aliases].some(n => n.toLowerCase() == q);
+
+    return queries.flatMap((q, idx) => 
+        arrayToSearch.filter(item => checkItemMatch(item,q))
+        .map(item => ({ item, statToken: query[idx+1] ?? "" }))
+    );
 }
 
 export function toWeapon(inputHash){
