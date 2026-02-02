@@ -112,7 +112,7 @@ class WeaponStat {
             bonus:  bonus,
             min:    bonus,
             max:    100 + bonus,
-            range:  100, step: 1, unit: '%', digits: 3
+            range:  100, step: 1, unit: '%', digits: 3.5
         };
     }
 
@@ -159,42 +159,39 @@ class WeaponStat {
     }
 
     _wireEvents() {
-        const clamped_syncAll = val => {
-            const {min,max,step} = this.wearConfig;
-
-            const offset = (val - min) / step;
+        const clamp = val => {
+            const {min, max, step} = this.wearConfig;
+            val = parseFloat(val);      // because we might get a string as input
+            if (isNaN(val)) val = min;  // because we might get a stupid string as input
+            const offset  = (val - min) / step;
             const snapped = min + Math.round(offset) * step;
-            const clamped = Math.min(max, Math.max(min, snapped));
-
-            this._syncAll(+clamped.toFixed(6));
+            return Math.min(max, Math.max(min, snapped));
         };
 
-        // these fire when the user inputs anything:
-        this.numberInput.addEventListener("input",  e => {
-            console.log(e.target.value);
-            if (e.target.value == "" || e.data === "." || e.data === ",") return;
-            this._syncAll(parseFloat(e.target.value));
-        });
-        this.slider     .addEventListener("input",  e => this._syncAll(e.target.value));
-        this.qualityInput.addEventListener("input", e => {
-            if (e.target.value == "" || e.data === "." || e.data === ",") return;
-            const pct = parseFloat(e.target.value);
-            this._syncAll(percentToValue(pct, this.noWearConfig));
-        });
-        
-        // these fire when the user confirms:
-        this.numberInput.addEventListener("change",  e => clamped_syncAll(e.target.value) );
-        this.qualityInput.addEventListener("change", e => 
-            clamped_syncAll(
-                percentToValue(+e.target.value, this.noWearConfig)
-            )
-        );
+        const wire = (input, valueType) => {
+            input.addEventListener("input", e => {
+                if (e.target.value === "" || e.data === "." || e.data === ",") return;
+                const val = valueType == "percent"
+                    ?percentToValue(e.target.value, this.noWearConfig)
+                    :e.target.value;
+                if (isNaN(val)) return;
+                this._syncAll(val);
+            });
+
+            input.addEventListener("change", e => {
+                const val = valueType == "percent"
+                    ?percentToValue(e.target.value, this.noWearConfig)
+                    :e.target.value;
+                this._syncAll(clamp(val));
+            });
+        };
+
+        wire(this.numberInput, "raw");
+        wire(this.qualityInput,"percent");
+        wire(this.slider,      "raw");
     }
 
     _syncAll(value) {
-        value = Number(value);
-        if (isNaN(value)) value = Number(this.wearConfig.min)
-
         this.numberInput.value  = value;
         this.slider.value       = value;
 
