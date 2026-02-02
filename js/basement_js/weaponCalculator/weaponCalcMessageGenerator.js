@@ -131,18 +131,15 @@ class WeaponStat {
     }
 
     _buildDOM() {
+        const makeUnitLabel = config => config.unit
+            ? make("span",{ className:"smol-right-margin", textContent:config.unit })
+            :"";
+
         this.wrapper      = make("div",{className:"outerInputWrapperFromCalculator"});
         this.numberInput  = createRangedInput("number", this.wearConfig);
-        this.numberLabel  = this.noWearConfig.unit?
-                            make("span",{
-                                className:"smol-right-margin",
-                                textContent:this.noWearConfig.unit
-                            }):"";
+        this.numberLabel  = makeUnitLabel(this.noWearConfig);
         this.qualityInput = createRangedInput("number", this.percentageConfig, {height:"1.5rem"});
-        this.qualityLabel = make("span",{
-                                className:"smol-right-margin",
-                                textContent:"%"
-                            });
+        this.qualityLabel = makeUnitLabel(this.percentageConfig);
         this.slider       = createRangedInput("range",  this.wearConfig);
         this.img          = getTierEmoji(this.parent.tier);
         this.tooltip      = make("div",
@@ -162,8 +159,8 @@ class WeaponStat {
     }
 
     _wireEvents() {
-        const clamp = (val, el) => {
-            const [min,max,step] = [+el.min, +el.max, +el.step];
+        const clamped_syncAll = val => {
+            const {min,max,step} = this.wearConfig;
 
             const offset = (val - min) / step;
             const snapped = min + Math.round(offset) * step;
@@ -172,27 +169,32 @@ class WeaponStat {
             this._syncAll(+clamped.toFixed(6));
         };
 
+        // these fire when the user inputs anything:
         this.numberInput.addEventListener("input",  e => {
-            const num = parseFloat(e.target.value);
-            if (isNaN(num) || e.data === "." || e.data === ",") return;
-            this._syncAll(num);
+            console.log(e.target.value);
+            if (e.target.value == "" || e.data === "." || e.data === ",") return;
+            this._syncAll(parseFloat(e.target.value));
         });
-        this.slider     .addEventListener("input",  e => this._syncAll(+e.target.value));
+        this.slider     .addEventListener("input",  e => this._syncAll(e.target.value));
         this.qualityInput.addEventListener("input", e => {
+            if (e.target.value == "" || e.data === "." || e.data === ",") return;
             const pct = parseFloat(e.target.value);
-            if (!isNaN(pct)) {
-                this._syncAll(percentToValue(pct, this.noWearConfig));
-            }
+            this._syncAll(percentToValue(pct, this.noWearConfig));
         });
-
-        this.numberInput.addEventListener("change",  e => clamp(+e.target.value, e.target) );
-        this.qualityInput.addEventListener("change", e => {
-            const val = percentToValue(+e.target.value, this.noWearConfig);
-            clamp(val, this.numberInput);
-        });
+        
+        // these fire when the user confirms:
+        this.numberInput.addEventListener("change",  e => clamped_syncAll(e.target.value) );
+        this.qualityInput.addEventListener("change", e => 
+            clamped_syncAll(
+                percentToValue(+e.target.value, this.noWearConfig)
+            )
+        );
     }
 
     _syncAll(value) {
+        value = Number(value);
+        if (isNaN(value)) value = Number(this.wearConfig.min)
+
         this.numberInput.value  = value;
         this.slider.value       = value;
 
