@@ -158,16 +158,16 @@ class WeaponStat {
         this._wireEvents();
     }
 
-    _wireEvents() {
-        const clamp = val => {
-            const {min, max, step} = this.wearConfig;
-            val = parseFloat(val);      // because we might get a string as input
-            if (isNaN(val)) val = min;  // because we might get a stupid string as input
-            const offset  = (val - min) / step;
-            const snapped = min + Math.round(offset) * step;
-            return Math.min(max, Math.max(min, snapped));
-        };
+    _clamp = val => {
+        const {min, max, step} = this.wearConfig;
+        val = parseFloat(val);      // because we might get a string as input
+        if (isNaN(val)) val = min;  // because we might get a stupid string as input
+        const offset  = (val - min) / step;
+        const snapped = min + Math.round(offset) * step;
+        return Math.min(max, Math.max(min, snapped));
+    };
 
+    _wireEvents() {
         const wire = (input, valueType) => {
             input.addEventListener("input", e => {
                 if (e.target.value === "" || e.data === "." || e.data === ",") return;
@@ -182,7 +182,7 @@ class WeaponStat {
                 const val = valueType == "percent"
                     ?percentToValue(e.target.value, this.noWearConfig)
                     :e.target.value;
-                this._syncAll(clamp(val));
+                this._syncAll(this._clamp(val));
             });
         };
 
