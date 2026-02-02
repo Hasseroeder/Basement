@@ -97,7 +97,7 @@ function getWeaponImagePath(weaponOrPassive){
         fabled: 	"f"
     }[weaponOrPassive.tier];
 
-    const w = (weaponOrPassive.aliases[0]?? weaponOrPassive.name).toLowerCase();
+    const w = weaponOrPassive.slug.toLowerCase();
     return `media/owo_images/${p+q+"_"+w}.png`;
 }
 

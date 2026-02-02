@@ -16,8 +16,9 @@ weapons.forEach(weapon=>{
     })
 });
 passives.forEach(passive=>{
-    passive.stats.forEach(stat=>{
-
+    passive.statConfig.forEach(stat=>{
+        stat.range = stat.max - stat.min;
+        stat.step = stat.range/100;
     })
 })
 

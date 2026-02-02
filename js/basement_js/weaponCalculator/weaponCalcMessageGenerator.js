@@ -198,6 +198,9 @@ class WeaponStat {
         const pct       = valueToPercent(value, this.noWearConfig);
         const noWearPct = valueToPercent(value, this.wearConfig);
 
+        // percentToValue() 100% -> Sword 55% STR
+        // valueToPercent() Sword 55% STR -> 100%
+
         this.qualityInput.value = pct;
         this.img.src            = getTierEmojiPath(pct);
         this.stat.noWear        = noWearPct;
