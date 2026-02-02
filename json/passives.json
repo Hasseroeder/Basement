@@ -4,16 +4,14 @@
         "name":"Strength",
         "aliases":["str","att"],
         "slug":"str",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":5,
-                    "max":20,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":5,
+                "max":20,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             }
         ],
         "description":"**Strength** - Increases your :STR:STR by [stat]"
@@ -23,16 +21,14 @@
         "name":"Magic",
         "aliases":["mag"],
         "slug":"mag",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":5,
-                    "max":20,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":5,
+                "max":20,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             }
         ],
         "description":"**Magic** - Increases your :MAG:MAG by [stat]"
@@ -42,16 +38,14 @@
         "name":"Health Point",
         "aliases":["hp"],
         "slug":"hp",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":5,
-                    "max":20,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":5,
+                "max":20,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             }
         ],
         "description":"**Health Point** - Increases your :HP:HP by [stat]"
@@ -61,16 +55,14 @@
         "name":"Weapon Point",
         "aliases":["wp"],
         "slug":"wp",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":10,
-                    "max":30,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":10,
+                "max":30,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Weapon Point** - Increases your :WP:WP by [stat]"
@@ -80,16 +72,14 @@
         "name":"Physical Resistance",
         "aliases":["pr"],
         "slug":"pr",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":15,
-                    "max":35,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":15,
+                "max":35,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Physical Resistance** - Increases your :iPR:iPR by [stat]"
@@ -99,16 +89,14 @@
         "name":"Magical Resistance",
         "aliases":["mr"],
         "slug":"mr",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":15,
-                    "max":35,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":15,
+                "max":35,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Magical Resistance** - Increases your :iMR:iMR by [stat]"
@@ -118,16 +106,14 @@
         "name":"Lifesteal",
         "aliases":["ls"],
         "slug":"ls",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":15,
-                    "max":35,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":15,
+                "max":35,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Lifesteal** - All damage you deal heals you for [stat] of the damage dealt!"
@@ -137,16 +123,14 @@
         "name":"Thorns",
         "aliases":["th"],
         "slug":"th",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":15,
-                    "max":35,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":15,
+                "max":35,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Thorns** - Reflect [stat] of the damage dealt to you as true damage"
@@ -156,16 +140,14 @@
         "name":"Mana Tap",
         "aliases":["mtap","manatap"],
         "slug":"mtap",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":15,
-                    "max":30,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":15,
+                "max":30,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             }
         ],
         "description":"**Mana Tap** - All damage you deal replenishes your :WP:WP for [stat] of the damage dealt!"
@@ -175,16 +157,14 @@
         "name":"Absolve",
         "aliases":["absv"],
         "slug":"absv",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":60,
-                    "max":80,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":60,
+                "max":80,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Absolve** - When healed, deal [stat] of the healed amount to a random enemy as :MAG:MAG damage"
@@ -194,16 +174,14 @@
         "name":"Safeguard",
         "aliases":["sg"],
         "slug":"sg",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":20,
-                    "max":40,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":20,
+                "max":40,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Safeguard** - Negate [stat] of the damage dealt to you with :WP:WP"
@@ -213,25 +191,21 @@
         "name":"Critical",
         "aliases":["crit"],
         "slug":"crit",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":10,
-                    "max":30,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":10,
+                "max":30,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             },{
-                "noWearConfig":{
-                    "min":25,
-                    "max":50,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":25,
+                "max":50,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             }
         ],
         "description":"**Critical** - Every attack has a [stat] chance to deal [stat] more damage. This can apply to heals."
@@ -241,16 +215,14 @@
         "name":"Discharge",
         "aliases":["dc"],
         "slug":"dc",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":120,
-                    "max":150,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":120,
+                "max":150,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             }
         ],
         "description":"**Discharge** - When :WP:WP is replenished, deal [stat] of the replenished amount to a random enemy as :MAG:MAG damage"
@@ -260,16 +232,14 @@
         "name":"Kamikaze",
         "aliases":["kkaze","kk"],
         "slug":"kkaze",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":50,
-                    "max":75,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":50,
+                "max":75,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             }
         ],
         "description":"**Kamikaze** - When the animal dies, deal [stat] of its max :HP:HP as :MAG:MAG dmg to the attacker"
@@ -279,16 +249,14 @@
         "name":"Regeneration",
         "aliases":["hgen","regen"],
         "slug":"hgen",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":5,
-                    "max":10,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":5,
+                "max":10,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             }
         ],
         "description":"**Regeneration** - Heal [stat] of your max :HP:HP after every turn"
@@ -298,16 +266,14 @@
         "name":"Energize",
         "aliases":["wgen","energ"],
         "slug":"wgen",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":20,
-                    "max":40,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"",
-                    "digits":4
-                }
+                "min":20,
+                "max":40,
+                "type":"",
+                "emoji":"",
+                "unit":"",
+                "digits":4
             }
         ],
         "description":"**Energize** - Replenish [stat] :WP:WP after every turn"
@@ -317,16 +283,14 @@
         "name":"Sprout",
         "aliases":["sprt"],
         "slug":"sprout",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":20,
-                    "max":40,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":20,
+                "max":40,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Sprout** - Increase all incoming healing by [stat]"
@@ -336,16 +300,14 @@
         "name":"Enrage",
         "aliases":["enra"],
         "slug":"enrage",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":1,
-                    "max":4,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":1,
+                "max":4,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Enrage** - Every 10% of missing health gives [stat] extra damage"
@@ -355,25 +317,21 @@
         "name":"Sacrifice",
         "aliases":["sac"],
         "slug":"sac",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":25,
-                    "max":50,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":25,
+                "max":50,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             },{
-                "noWearConfig":{
-                    "min":15,
-                    "max":35,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":5
-                }
+                "min":15,
+                "max":35,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":5
             }
         ],
         "description":"**Sacrifice** - When this animal dies, heal your teammates for [stat] of its Max :HP:HP and replenish for [stat] of its Max :WP:WP"
@@ -383,16 +341,14 @@
         "name":"Snail",
         "aliases":[],
         "slug":"snail",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":5,
-                    "max":15,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":5,
+                "max":15,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Snail** - Your pet snail fights with you. Whenever you attack an animal, snail will slap a random enemy for [stat] of the damage dealt."
@@ -402,16 +358,14 @@
         "name":"Knowledge",
         "aliases":["kno","n"],
         "slug":"kno",
-        "stats":[
+        "statConfig":[
             {
-                "noWearConfig":{
-                    "min":5,
-                    "max":15,
-                    "type":"",
-                    "emoji":"",
-                    "unit":"%",
-                    "digits":4
-                }
+                "min":5,
+                "max":15,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
             }
         ],
         "description":"**Knowledge** - This passive does not do anything in battle. However, it will give this animal [stat] extra xp after each battle."
