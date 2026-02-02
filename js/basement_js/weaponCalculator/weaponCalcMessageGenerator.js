@@ -82,6 +82,15 @@ function generateWPInput(weapon){
 const getWearBonus = w => ({pristine: 5, fine: 3, decent: 1})[w] ?? 0;
 const getWearName = w => ({pristine:"Pristine\u00A0", fine:"Fine\u00A0", decent:"Decent\u00A0"})[w] ?? "";
 
+clamp = (val, config) => {
+    const {min, max, step} = config;
+    val = parseFloat(val);      // because we might get a string as input
+    if (isNaN(val)) val = min;  // because we might get a stupid string as input
+    const offset  = (val - min) / step;
+    const snapped = min + Math.round(offset) * step;
+    return Math.min(max, Math.max(min, snapped));
+};
+
 class WeaponStat {
     constructor(stat, parent) {
         this.stat   = stat;
@@ -158,15 +167,6 @@ class WeaponStat {
         this._wireEvents();
     }
 
-    _clamp = val => {
-        const {min, max, step} = this.wearConfig;
-        val = parseFloat(val);      // because we might get a string as input
-        if (isNaN(val)) val = min;  // because we might get a stupid string as input
-        const offset  = (val - min) / step;
-        const snapped = min + Math.round(offset) * step;
-        return Math.min(max, Math.max(min, snapped));
-    };
-
     _wireEvents() {
         const wire = (input, valueType) => {
             input.addEventListener("input", e => {
@@ -182,7 +182,7 @@ class WeaponStat {
                 const val = valueType == "percent"
                     ?percentToValue(e.target.value, this.noWearConfig)
                     :e.target.value;
-                this._syncAll(this._clamp(val));
+                this._syncAll(clamp(val,this.wearConfig));
             });
         };
 
