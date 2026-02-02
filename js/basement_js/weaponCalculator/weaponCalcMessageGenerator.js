@@ -82,7 +82,7 @@ function generateWPInput(weapon){
 const getWearBonus = w => ({pristine: 5, fine: 3, decent: 1})[w] ?? 0;
 const getWearName = w => ({pristine:"Pristine\u00A0", fine:"Fine\u00A0", decent:"Decent\u00A0"})[w] ?? "";
 
-clamp = (val, config) => {
+const clamp = (val, config) => {
     const {min, max, step} = config;
     val = parseFloat(val);      // because we might get a string as input
     if (isNaN(val)) val = min;  // because we might get a stupid string as input
