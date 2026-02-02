@@ -856,6 +856,12 @@ a:hover {
   transform: translateY(-30%) rotate(-135deg);
 }
 
+.lineFromWeaponCalculator .weapon-id{
+  font-size: 0.8rem; 
+  height: 1rem; 
+  line-height: 1rem;
+}
+
 .lineFromWeaponCalculator {
   display:flex; 
   flex-direction: row; 

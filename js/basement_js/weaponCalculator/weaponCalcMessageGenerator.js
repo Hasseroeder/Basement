@@ -232,7 +232,7 @@ function displayInfo(){
     el.weaponHeader.textContent= boundWeapon.owner.name+"'s " +boundWeapon.wearName +boundWeapon.typeName;
     el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + boundWeapon.typeName;
     el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + boundWeapon.owner.id;
-    el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code" style="font-size: 0.8rem; height: 1rem; line-height: 1rem;">${boundWeapon.weaponID}</code>`;
+    el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code weapon-id">${boundWeapon.weaponID}</code>`;
     el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue(boundWeapon);
     el.weaponQualityImage.src= getTierEmojiPath(boundWeapon.tier);
     el.weaponQualitySpan.textContent= boundWeapon.qualityWear.toFixed(1)+"%"
