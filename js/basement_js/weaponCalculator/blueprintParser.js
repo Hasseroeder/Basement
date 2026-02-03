@@ -1,4 +1,4 @@
-import { valueToPercent } from "./weaponCalcUtil.js";
+import { valueToPercent } from "./util.js";
 
 const initWeaponID = 1;	// start with sword if nothing is given
 

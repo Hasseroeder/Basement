@@ -1,8 +1,8 @@
 import { loadJson } from '../util/jsonUtil.js';
 import * as blueprinter from './blueprintParser.js';
-import * as passiveHandler from './weaponCalcPassive.js';
-import * as messageHandler from "./weaponCalcMessageGenerator.js"
-import { getRarity } from './weaponCalcUtil.js';
+import * as passiveHandler from './passiveHandler.js';
+import * as messageHandler from "./messageHandler.js"
+import { getRarity } from './util.js';
 import { debounce } from "../util/inputUtil.js";
 
 const [weapons, passives] = await Promise.all([

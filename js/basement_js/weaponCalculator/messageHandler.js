@@ -1,4 +1,4 @@
-import { valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath } from '../weaponCalculator/weaponCalcUtil.js'
+import { valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath } from './util.js'
 import { make } from "../util/injectionUtil.js"
 
 const el = {

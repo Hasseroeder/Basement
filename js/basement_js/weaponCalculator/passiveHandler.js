@@ -1,5 +1,5 @@
-import * as messageHandler from "./weaponCalcMessageGenerator.js"
-import { getWeaponImage} from './weaponCalcUtil.js';
+import * as messageHandler from "./messageHandler.js"
+import { getWeaponImage} from './util.js';
 import { make } from "../util/injectionUtil.js"
 import { Passive } from "./passive.js";
 

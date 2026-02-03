@@ -1,4 +1,4 @@
-import { getWearBonus, getWearName } from "./weaponCalcUtil.js";
+import { getWearBonus, getWearName } from "./util.js";
 
 export class Passive {
     constructor(config, boundWeapon) {
@@ -9,7 +9,7 @@ export class Passive {
         
         this.stats = this.statConfig.map(stat => {
             const noWear = 100;
-            // gonna need more stats here
+            // gonna need more params
         });
     }
 
