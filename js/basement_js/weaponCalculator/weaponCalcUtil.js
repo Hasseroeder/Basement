@@ -155,4 +155,18 @@ function getTierEmojiPath(stringOrQuality){
     }
 }
 
-export { valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, getRarity};
+const getWearName = w =>
+    ({
+        pristine:"Pristine\u00A0", 
+        fine:"Fine\u00A0", 
+        decent:"Decent\u00A0"
+    })[w] ?? ""
+
+const getWearBonus = w =>
+    ({
+        pristine: 5, 
+        fine: 3, 
+        decent: 1
+    })[this.wear] ?? 0
+
+export { getWearBonus, getWearName, valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, getRarity};

@@ -24,7 +24,6 @@ const wearSelect = new customSelect(
 	document.getElementById('wearSelect'),
 	["WORN","DECENT","FINE","PRISTINE"]
 );
-wearSelect.addEventListener('change', e => {
-	currentWeapon.wear = e.detail.value;
-	currentWeapon.updateVars();
-});
+wearSelect.addEventListener('change', e => 
+	currentWeapon.wear = e.detail.value
+);

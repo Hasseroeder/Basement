@@ -5,6 +5,9 @@ const initWeaponID = 1;	// start with sword if nothing is given
 var weapons, passives;
 export const init = (weaponData,passiveData) => [weapons,passives] = [weaponData,passiveData]
 
+let boundWeapon;
+export const bindWeapon = weapon => boundWeapon = weapon;
+
 function splitHypenSpaces(string){
     const normalized = string
         .replace(/-+/g, '-')     // "---" → "-"
@@ -103,20 +106,20 @@ export function toWeapon(inputHash){
     };
 }
 
-export function toStrings(weapon){
+export function toStrings(){
     const formatStats = (stats) => {
         const isFabled = stats.every(({ noWear }) => noWear === 100)
         return isFabled ? "" : stats.map(({ noWear }) => noWear).join(",")
     }
     
-    const wearString = weapon.wear !== "worn" ? weapon.wear : "";
-    const statstring = formatStats(weapon.stats);  
+    const wearString = boundWeapon.wear !== "worn" ? boundWeapon.wear : "";
+    const statstring = formatStats(boundWeapon.stats);  
 
-    const passiveParts = weapon.passives.length == 0
+    const passiveParts = boundWeapon.passives.length == 0
         ? ["none"]
-        : weapon.passives.flatMap(
+        : boundWeapon.passives.flatMap(
             passive => [ passive.slug, formatStats(passive.stats) ]
         );
     
-    return [wearString, weapon.slug, statstring, ...passiveParts].filter(Boolean);  
+    return [wearString, boundWeapon.slug, statstring, ...passiveParts].filter(Boolean);  
 }

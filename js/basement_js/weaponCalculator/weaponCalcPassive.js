@@ -1,6 +1,7 @@
 import * as messageHandler from "./weaponCalcMessageGenerator.js"
 import { getWeaponImage} from './weaponCalcUtil.js';
 import { make } from "../util/injectionUtil.js"
+import { Passive } from "./passive.js";
 
 const pList = document.querySelector(".passiveContainer");
 let passives, weapons, boundWeapon;
@@ -25,18 +26,14 @@ export function init(weaponArray, passiveArray){
     ));
 }
 
-function generateNewPassive(passive){
-    const newPassive = {...passive, wear:boundWeapon.wear};
-    newPassive.stats.map(stat => stat.noWear=100);
-    newPassive.remove = ()=>{
-        boundWeapon.passives = boundWeapon.passives.filter(p => p !== passive);
-        boundWeapon.updateVars();
-    }
+function generateNewPassive(passiveConfig) {
+    const newPassive = new Passive(passiveConfig, boundWeapon);
 
     boundWeapon.passives.push(newPassive);
     appendPassiveNode(newPassive);
     messageHandler.displayInfo();
 }
+
 
 function appendPassiveNode(passive) {
     const wrapper = make("div",{
@@ -46,7 +43,7 @@ function appendPassiveNode(passive) {
 
     Object.assign(passive,passives[passive.id]);
     const desc = messageHandler.generateDescription(passive);
-    boundWeapon.updateVars();
+    boundWeapon.updateQualities();
 
     passive.image = Object.assign(getWeaponImage(passive),{
         className: 'discord-embed-emote weaponCalc-passive-emote',

@@ -63,7 +63,6 @@ function generateDescription(weaponOrPassive) {
     }
 }
 
-
 function generateWPInput(weapon){
     const stat = weapon.wpStat;
     const child = stat
@@ -78,9 +77,6 @@ function generateWPInput(weapon){
         [child,getStatImage("WP")]
     );
 }
-
-const getWearBonus = w => ({pristine: 5, fine: 3, decent: 1})[w] ?? 0;
-const getWearName = w => ({pristine:"Pristine\u00A0", fine:"Fine\u00A0", decent:"Decent\u00A0"})[w] ?? "";
 
 const clamp = (val, config) => {
     const {min, max, step} = config;
@@ -97,28 +93,22 @@ class WeaponStat {
         this.parent = parent;
         this._buildDOM();
 
-        const temp = percentToValue(this.stat.noWear, this.wearConfig);
-        this._syncAll(+temp.toFixed(6));
-        this.initiated = true;
-    }
-
-    _applyWear(){
-        this.wearBonus = getWearBonus(this.wear);
-        this.wearName = getWearName(this.wear);
-        // TODO: it'd be cooler if we did weapon wear in the weapon loop 
-        this.parent.wearBonus = getWearBonus(this.wear);
-        this.parent.wearName = getWearName(this.wear);
+        this._syncAll(100/*this.stat.noWear*/);
     }
     
     get wear() {
         return  this.parent.wear
     }
+    get wearBonus(){
+        return this.parent.wearBonus
+    }
+    get wearName(){
+        return this.parent.wearName
+    }
 
     get percentageConfig() {
-        this._applyWear();
         const bonus = this.wearBonus;
         return {
-            bonus:  bonus,
             min:    bonus,
             max:    100 + bonus,
             range:  100, step: 1, unit: '%', digits: 3.5
@@ -130,7 +120,6 @@ class WeaponStat {
     }
 
     get wearConfig(){
-        this._applyWear();
         const bonus = (this.noWearConfig.range / 100) * this.wearBonus;
         return {
             ...this.noWearConfig,
@@ -172,17 +161,17 @@ class WeaponStat {
             input.addEventListener("input", e => {
                 if (e.target.value === "" || e.data === "." || e.data === ",") return;
                 const val = valueType == "percent"
-                    ?percentToValue(e.target.value, this.noWearConfig)
-                    :e.target.value;
+                    ?e.target.value
+                    :valueToPercent(e.target.value, this.noWearConfig);
                 if (isNaN(val)) return;
                 this._syncAll(val);
             });
 
             input.addEventListener("change", e => {
                 const val = valueType == "percent"
-                    ?percentToValue(e.target.value, this.noWearConfig)
-                    :e.target.value;
-                this._syncAll(clamp(val,this.wearConfig));
+                    ?e.target.value
+                    :valueToPercent(e.target.value, this.noWearConfig);
+                this._syncAll(clamp(val,this.percentageConfig));
             });
         };
 
@@ -191,12 +180,12 @@ class WeaponStat {
         wire(this.slider,      "raw");
     }
 
-    _syncAll(value) {
-        this.numberInput.value  = value;
-        this.slider.value       = value;
-
-        const pct       = valueToPercent(value, this.noWearConfig);
-        const noWearPct = valueToPercent(value, this.wearConfig);
+    _syncAll(pct) {
+        const noWearPct = pct - this.wearBonus;
+        const rawValue  = percentToValue(pct, this.noWearConfig);
+        
+        this.numberInput.value  = rawValue;
+        this.slider.value       = rawValue;
 
         // percentToValue() 100% -> Sword 55% STR
         // valueToPercent() Sword 55% STR -> 100%
@@ -206,28 +195,24 @@ class WeaponStat {
         this.stat.noWear        = noWearPct;
         this.stat.withWear      = pct;
 
-        this.parent.image && (this.parent.image.src= getWeaponImagePath(this.parent));
-        this.initiated && boundWeapon.updateVars();
+        if (this.parent.objectType == "passive") 
+            this.parent.image.src = getWeaponImagePath(this.parent);
+
+        boundWeapon.updateQualities();
     }
 
-    update(stat) {
-        if (this.wearName == getWearName(this.wear)) {
-            return;     // probably the ugliest way to solve infinite recusion lmao
-                        // and it doesn't even work!!! TODO: fix
-        }
-        this.stat = stat;
-
-        [this.numberInput, this.slider].forEach(el => {
-            const { min, max, step } = this.wearConfig;
-            el.min = Math.min(min, max);
-            el.max = Math.max(min, max);
-            el.step  = Math.abs(step);
+    updateWear() {
+        [
+            { el: this.numberInput, config: this.wearConfig },
+            { el: this.slider, config: this.wearConfig },
+            { el: this.qualityInput, config: this.percentageConfig },
+        ].forEach(input => {
+            const { min, max } = input.config;
+            input.el.min = Math.min(min, max);
+            input.el.max = Math.max(min, max);
         });
 
-        Object.assign(this.qualityInput, this.percentageConfig);
-
-        const temp = percentToValue(this.stat.noWear, this.wearConfig);
-        this._syncAll(+temp.toFixed(6));
+        this._syncAll(this.stat.noWear+this.wearBonus);
     }
 }
 
