@@ -31,7 +31,7 @@ function generateNewPassive(passiveConfig) {
 
     boundWeapon.passives.push(newPassive);
     appendPassiveNode(newPassive);
-    messageHandler.displayInfo();
+    //messageHandler.displayInfo();
 }
 
 

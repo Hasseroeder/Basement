@@ -23,15 +23,9 @@ function getRarity(quality) {
 		{ maxQuality: 94, name: "mythic" },
 		{ maxQuality: 99, name: "legendary" },
 		{ maxQuality: 105, name: "fabled" }
-		//  -- Annoying stuff in scoot's code: --
-		// 	Weapons and Passives work differently with these values
-		// 	example: 
-		// 	- for weapons, anything 81<=x<95 would be considered mythic
-		//	- for passives, anything 80<x<=94 would be considered mythic
-		// --------------------------------------
 	];
 
-	const tier = tiers.find(t => quality <= t.maxQuality)
+	const tier = tiers.find(t => Math.floor(quality) <= t.maxQuality)
 				|| tiers.at(-1);
 				//default to fabled if we have nonsensical input
 	return tier.name;

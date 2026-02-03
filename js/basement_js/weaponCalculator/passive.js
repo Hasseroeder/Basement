@@ -6,7 +6,7 @@ export class Passive {
 
         this.boundWeapon = boundWeapon;
         this._wear = boundWeapon.wear;
-        
+
         this.stats = this.statConfig.map(stat => {
             const noWear = 100;
             // gonna need more params
@@ -14,7 +14,7 @@ export class Passive {
     }
 
     get tier() {
-        return getRarity(Math.floor(this.qualityWear));
+        return getRarity(this.qualityWear);
     }
 
     get wear(){

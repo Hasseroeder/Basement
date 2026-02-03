@@ -120,7 +120,7 @@ export class Weapon{
     }
 
     get tier(){
-        return getRarity(Math.floor(this.qualityWear));
+        return getRarity(this.qualityWear);
     }
 
     get allStats(){
