@@ -6,10 +6,7 @@ import { Passive } from "./passive.js";
 const pList = document.querySelector(".passiveContainer");
 let passives, weapons, boundWeapon;
 
-export const bindWeapon = weapon => {
-    boundWeapon = weapon;
-    boundWeapon.passives.forEach(p => appendPassiveNode(p));
-};
+export const bindWeapon = weapon => boundWeapon = weapon;
 
 export function init(weaponArray, passiveArray){
     weapons  = weaponArray;
@@ -31,17 +28,15 @@ function generateNewPassive(passiveConfig) {
 
     boundWeapon.passives.push(newPassive);
     appendPassiveNode(newPassive);
-    //messageHandler.displayInfo();
 }
 
 
-function appendPassiveNode(passive) {
+export function appendPassiveNode(passive) {
     const wrapper = make("div",{
         className:"passiveItem",
         dataset:{id:passive.id}
     });
 
-    Object.assign(passive,passives[passive.id]);
     const desc = messageHandler.generateDescription(passive);
     boundWeapon.updateQualities();
 

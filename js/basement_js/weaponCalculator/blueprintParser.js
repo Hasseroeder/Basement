@@ -48,11 +48,8 @@ const isOnlyNumbers =
     str => /^[\d.,\s-]+$/.test(str);
 
 function getStats(item,statToken){
-	const stats = item.objectType == "passive"
-        ? item.stats
-        : item.statConfig.map(config => ({noWearConfig:config}));
-        // passives have a stat object premade, I need to create it for weapons
-        // TODO: do this better
+	const stats = item.statConfig.map(config => ({noWearConfig:config}));
+    
     const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ',';
 
 	if (isOnlyNumbers(statToken) && 

@@ -161,6 +161,6 @@ const getWearBonus = w =>
         pristine: 5, 
         fine: 3, 
         decent: 1
-    })[this.wear] ?? 0
+    })[w] ?? 0
 
 export { getWearBonus, getWearName, valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, getRarity};

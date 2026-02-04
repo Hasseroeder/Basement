@@ -1,4 +1,6 @@
 import { getWearBonus, getWearName } from "./util.js";
+import { getRarity } from './util.js';
+
 
 export class Passive {
     constructor(config, boundWeapon) {
@@ -7,8 +9,11 @@ export class Passive {
         this.boundWeapon = boundWeapon;
         this._wear = boundWeapon.wear;
 
-        this.stats = this.statConfig.map(stat => {
-            const noWear = 100;
+        this.stats = this.statConfig.map(statConfig => {
+            return {
+                noWearConfig: statConfig, 
+                noWear : 100
+            }
             // gonna need more params
         });
     }
@@ -21,10 +26,10 @@ export class Passive {
         return this._wear;
     }
     get wearName(){
-        return getWearName(this._wear)
+        return getWearName(this.wear)
     }
     get wearBonus(){
-        return getWearBonus(this._wear)
+        return getWearBonus(this.wear)
     }
 
     remove() {

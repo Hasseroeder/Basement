@@ -2,7 +2,7 @@ import { loadJson } from '../util/jsonUtil.js';
 import * as blueprinter from './blueprintParser.js';
 import * as passiveHandler from './passiveHandler.js';
 import * as messageHandler from "./messageHandler.js"
-import { getRarity } from './util.js';
+import { getRarity, getWeaponImagePath } from './util.js';
 import { debounce } from "../util/inputUtil.js";
 
 const [weapons, passives] = await Promise.all([
@@ -41,11 +41,13 @@ export class Weapon{
         this.passives = blueprintObject.passive;
         this.stats = blueprintObject.stats;
         this.typeID = blueprintObject.id;
+        this.image = document.getElementById("weaponImage");
         this._wear = null;
 
         passiveHandler.bindWeapon(this);
         messageHandler.bindWeapon(this);
         blueprinter.bindWeapon(this);
+        this.passives.forEach(p => passiveHandler.appendPassiveNode(p));
         messageHandler.generateStatInputs();
         this.updateQualities();
 
@@ -141,8 +143,13 @@ export class Weapon{
                 (acc, {withWear,noWear}) => [acc[0]+withWear,  acc[1]+noWear], [0,0]
             ).map(v => v / statArray.length);
 
-        [this, ...this.passives].forEach(statHaver=>{
-            [statHaver.qualityWear, statHaver.qualityNoWear] = calculateQualities(statHaver.stats)
+        [this.qualityWear, this.qualityNoWear] = calculateQualities(this.allStats);
+        this.image.src = getWeaponImagePath(this)
+
+        this.passives.forEach(passive=>{
+            [passive.qualityWear, passive.qualityNoWear] = calculateQualities(passive.stats);
+            if (passive.image) 
+                passive.image.src = getWeaponImagePath(passive);
         })
 
         this.render();

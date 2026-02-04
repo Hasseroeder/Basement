@@ -1,4 +1,4 @@
-import { valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImagePath,getTierEmoji, getTierEmojiPath } from './util.js'
+import { valueToPercent, percentToValue,getShardValue,getStatImage,getTierEmoji, getTierEmojiPath } from './util.js'
 import { make } from "../util/injectionUtil.js"
 
 const el = {
@@ -181,6 +181,7 @@ class WeaponStat {
     }
 
     _syncAll(pct) {
+        pct = Number(pct);
         const noWearPct = pct - this.wearBonus;
         const rawValue  = percentToValue(pct, this.noWearConfig);
         
@@ -194,9 +195,6 @@ class WeaponStat {
         this.img.src            = getTierEmojiPath(pct);
         this.stat.noWear        = noWearPct;
         this.stat.withWear      = pct;
-
-        if (this.parent.objectType == "passive") 
-            this.parent.image.src = getWeaponImagePath(this.parent);
 
         boundWeapon.updateQualities();
     }
@@ -224,7 +222,6 @@ function displayInfo(){
     el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue(boundWeapon);
     el.weaponQualityImage.src= getTierEmojiPath(boundWeapon.tier);
     el.weaponQualitySpan.textContent= boundWeapon.qualityWear.toFixed(1)+"%"
-    el.weaponImage.src=getWeaponImagePath(boundWeapon);
 }
 
 function generateStatInputs(){
