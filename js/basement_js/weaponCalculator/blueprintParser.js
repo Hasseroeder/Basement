@@ -1,4 +1,5 @@
 import { valueToPercent } from "./util.js";
+import { Passive } from "./passive.js";
 
 const initWeaponID = 1;	// start with sword if nothing is given
 
@@ -47,7 +48,7 @@ function isCorrectStatAmount(str, statsNeeded) {
 const isOnlyNumbers =
     str => /^[\d.,\s-]+$/.test(str);
 
-function getStats(item,statToken){
+function getStats({item,statToken}){
 	const stats = item.statConfig.map(config => ({noWearConfig:config}));
     
     const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ',';
@@ -85,21 +86,19 @@ function getMatches(arrayToSearch, query) {
 
 export function toWeapon(inputHash){
     const tokens         = splitHypenSpaces(inputHash);
-    const {item: weapon, statToken}
-        = getMatches(weapons, tokens)[0] ?? { item:weapons[initWeaponID], statToken:"" };
+    const weaponMatch    = getMatches(weapons, tokens)[0] ?? { item:weapons[initWeaponID], statToken:"" };
     const wear           = ["decent","fine","pristine"].includes(tokens[0]) ? tokens[0] : "worn";
-    const stats          = getStats(weapon,statToken);
-    const passive = getMatches(passives, tokens).map(({ item, statToken }) => {
-        getStats(item, statToken);
-        item.wear = wear;
-        return item;
-    });
-
+    const stats          = getStats(weaponMatch);
+    const passiveGenParams = getMatches(passives, tokens).map(passiveMatch => ({
+        staticData: passiveMatch.item,
+        statOverride: getStats(passiveMatch).map(match=>match.noWear)
+    }));  
+        
     return {
-        id: weapon.id-100, // TODO: I'll need to figure out what internal representation these should have
+        id: weaponMatch.item.id-100, // TODO: I'll need to figure out what internal representation these should have
         wear,
         stats,
-        passive
+        passiveGenParams
     };
 }
 

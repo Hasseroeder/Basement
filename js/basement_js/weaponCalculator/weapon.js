@@ -38,7 +38,6 @@ export class Weapon{
     }={}){
         this.owner= owner;
         this.weaponID = weaponID;
-        this.passives = blueprintObject.passive;
         this.stats = blueprintObject.stats;
         this.typeID = blueprintObject.id;
         this.image = document.getElementById("weaponImage");
@@ -47,7 +46,12 @@ export class Weapon{
         passiveHandler.bindWeapon(this);
         messageHandler.bindWeapon(this);
         blueprinter.bindWeapon(this);
-        this.passives.forEach(p => passiveHandler.appendPassiveNode(p));
+        
+        this.passives = [];
+        blueprintObject.passiveGenParams.forEach(passiveParams=>
+            passiveHandler.generateNewPassive(passiveParams.staticData, passiveParams.statOverride)
+        );
+
         messageHandler.generateStatInputs();
         this.updateQualities();
 
@@ -75,7 +79,7 @@ export class Weapon{
     static bigArray = weapons;
 
     set wear(v){
-        [this, ...this.passives].forEach(wearHaver=>wearHaver._wear=v)
+        this._wear = v;
         this.allStats.forEach(stat => stat.IO.updateWear());
         this.updateQualities();
     }

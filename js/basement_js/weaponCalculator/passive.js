@@ -3,18 +3,15 @@ import { getRarity } from './util.js';
 
 
 export class Passive {
-    constructor(config, boundWeapon) {
+    constructor(config, boundWeapon, statOverride = []) {
         Object.assign(this, config);
-
         this.boundWeapon = boundWeapon;
-        this._wear = boundWeapon.wear;
 
-        this.stats = this.statConfig.map(statConfig => {
+        this.stats = this.statConfig.map((statConfig,i) => {
             return {
                 noWearConfig: statConfig, 
-                noWear : 100
+                noWear: statOverride[i] ?? 100
             }
-            // gonna need more params
         });
     }
 
@@ -23,7 +20,7 @@ export class Passive {
     }
 
     get wear(){
-        return this._wear;
+        return this.boundWeapon.wear;
     }
     get wearName(){
         return getWearName(this.wear)

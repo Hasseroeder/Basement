@@ -92,8 +92,8 @@ class WeaponStat {
         this.stat   = stat;
         this.parent = parent;
         this._buildDOM();
-
-        this._syncAll(100/*this.stat.noWear*/);
+        this._syncAll(this.stat.noWear + this.wearBonus);
+        // initiate initial stats
     }
     
     get wear() {

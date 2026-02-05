@@ -23,8 +23,8 @@ export function init(weaponArray, passiveArray){
     ));
 }
 
-function generateNewPassive(passiveConfig) {
-    const newPassive = new Passive(passiveConfig, boundWeapon);
+export function generateNewPassive(passiveConfig, statOverride) {
+    const newPassive = new Passive(passiveConfig, boundWeapon, statOverride);
 
     boundWeapon.passives.push(newPassive);
     appendPassiveNode(newPassive);
