@@ -805,7 +805,7 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Steal a buff from a random enemy and give it to a random ally with +[Steal Buff]% effectiveness. Transfers a debuff from a random ally to a random enemy with +[Transfer Debuff]% effectiveness. Any moved buffs or debuffs last an additional 1 turn and calculated based on the original caster's stats."
+        "description": "**Description:** Steal a buff from a random enemy and give it to a random ally with +[stat]% effectiveness. Transfers a debuff from a random ally to a random enemy with +[stat]% effectiveness. Any moved buffs or debuffs last an additional 1 turn and calculated based on the original caster's stats."
     },
     {
         "objectType":"weapon",
@@ -843,7 +843,7 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Absorb [Absorb WP] of all allies' current WP to deal damage to an enemy. Deals [MAG damage for WP]% of your MAG for every 100 WP absorbed."
+        "description": "**Description:** Absorb [stat] of all allies' current WP to deal damage to an enemy. Deals [stat]% of your MAG for every 100 WP absorbed."
     },
     {
         "objectType":"weapon",
@@ -889,7 +889,7 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** At the start of the turn apply Thorn Tether to your allies for 2 turns. Thorn Tether - Create a tether from the weapon owner to this animal. The owner absorbs [Damage Absorb]% of the incoming damage dealt, but also intercepts [Healing Intercept]% of healing and [Replenishing Intercept]% replenishing from the target."
+        "description": "**Description:** At the start of the turn apply Thorn Tether to your allies for 2 turns. Thorn Tether - Create a tether from the weapon owner to this animal. The owner absorbs [stat]% of the incoming damage dealt, but also intercepts [stat]% of healing and [stat]% replenishing from the target."
     },
     {
         "objectType":"weapon",
@@ -927,6 +927,6 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Unleash judgement on an enemy. Consume all stacks of Sin and Virtue. Gain a stack of Sin when an ally deals damage to an animal. Gain a stack of Virtue when an ally heals or replenishes an animal. Sin - When consumed, each stack deal [Sin]% of your highest offensive stat as physical damage to an enemy. Virtue - When consumed, each stack deals [Virtue]% of your lowest offense stat as magical damage to an enemy."
+        "description": "**Description:** Unleash judgement on an enemy. Consume all stacks of Sin and Virtue. Gain a stack of Sin when an ally deals damage to an animal. Gain a stack of Virtue when an ally heals or replenishes an animal. Sin - When consumed, each stack deal [stat]% of your highest offensive stat as physical damage to an enemy. Virtue - When consumed, each stack deals [stat]% of your lowest offense stat as magical damage to an enemy."
     }
 ]
