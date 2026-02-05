@@ -1,5 +1,4 @@
 import { valueToPercent } from "./util.js";
-import { Passive } from "./passive.js";
 
 const initWeaponID = 1;	// start with sword if nothing is given
 
@@ -48,30 +47,28 @@ function isCorrectStatAmount(str, statsNeeded) {
 const isOnlyNumbers =
     str => /^[\d.,\s-]+$/.test(str);
 
-function getStats({item,statToken}){
-	const stats = item.statConfig.map(config => ({noWearConfig:config}));
+function getStats(dataArray, {id,statToken}){
+    const item = dataArray[id];
     
     const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ',';
 
 	if (isOnlyNumbers(statToken) && 
 		isValidJoinedNumbers(statToken,separator) &&
-		isCorrectStatAmount(statToken,stats.length)
+		isCorrectStatAmount(statToken,item.statConfig.length)
 	) {
         const cleanedStats = statToken.replace(/^[\s,-]+|[\s,-]+$/g, "");
 		const statInts = cleanedStats.split(separator).map(Number); 
         if (separator!="," && item.objectType != "passive") statInts.push(statInts.shift());
             // doing this because WP stat is first in "45-24" display and last in "24,45" display
 
-        stats.forEach((stat, i) => {
+        return item.statConfig.map((stat, i) => {
             const toPush = separator === "," 
                 ? Math.floor(statInts[i])
                 : valueToPercent(statInts[i], stat.wearConfig);
-            stat.noWear = Math.max(0, Math.min(100, toPush));
+            return Math.max(0, Math.min(100, toPush));
         });
-	}else{
-		stats.forEach(stat => stat.noWear=100);	
 	}
-    return stats;
+	return item.statConfig.map(_=>100)
 }
 
 function getMatches(arrayToSearch, query) {
@@ -80,24 +77,27 @@ function getMatches(arrayToSearch, query) {
 
     return queries.flatMap((q, idx) => 
         arrayToSearch.filter(item => checkItemMatch(item,q))
-        .map(item => ({ item, statToken: query[idx+1] ?? "" }))
+            .map(item => ({ 
+                id: arrayToSearch.indexOf(item), 
+                statToken: query[idx+1] ?? "" 
+            }))
     );
 }
 
 export function toWeapon(inputHash){
     const tokens         = splitHypenSpaces(inputHash);
-    const weaponMatch    = getMatches(weapons, tokens)[0] ?? { item:weapons[initWeaponID], statToken:"" };
+    const weaponMatch    = getMatches(weapons, tokens)[0] ?? { id:initWeaponID, statToken:"" };
     const wear           = ["decent","fine","pristine"].includes(tokens[0]) ? tokens[0] : "worn";
-    const stats          = getStats(weaponMatch);
+    const statOverride   = getStats(weapons ,weaponMatch);
     const passiveGenParams = getMatches(passives, tokens).map(passiveMatch => ({
-        staticData: passiveMatch.item,
-        statOverride: getStats(passiveMatch).map(match=>match.noWear)
+        id: passiveMatch.id,
+        statOverride: getStats(passives, passiveMatch)
     }));  
         
     return {
-        id: weaponMatch.item.id-100, // TODO: I'll need to figure out what internal representation these should have
+        id: weaponMatch.id,
         wear,
-        stats,
+        statOverride,
         passiveGenParams
     };
 }

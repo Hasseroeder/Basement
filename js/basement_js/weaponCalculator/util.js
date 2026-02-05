@@ -95,31 +95,6 @@ function getWeaponImagePath(weaponOrPassive){
     return `media/owo_images/${p+q+"_"+w}.png`;
 }
 
-function fillMissingWeaponInfo(weapon){
-	function generateMissingStat(stat){
-		if (!stat.noWear && weapon.id == 104){
-			const qualities = [
-				{ quality: 20,  chance: 40},
-				{ quality: 40,  chance: 60},
-				{ quality: 60,  chance: 75},
-				{ quality: 75,  chance: 85},
-				{ quality: 85,  chance: 95},
-				{ quality: 95,  chance: 99},
-				{ quality: 100, chance: 100}
-			];
-			const match = qualities.find(t => Math.floor(Math.random() * 101) <= t.chance);
-			stat.noWear = match.quality;
-			//when we generate a rune stat, it shouldn't be at any value
-		}else if (!stat.noWear){
-			stat.noWear=Math.floor(Math.random() * 101);
-		}
-	}
-	weapon.product.blueprint.passive.forEach(entry => {
-		entry.stats.forEach(stat => generateMissingStat(stat));
-    });
-	weapon.product.blueprint.stats.forEach(stat => generateMissingStat(stat));
-}
-
 function getTierEmoji(tier){
     return make("img",{
         src: getTierEmojiPath(tier),
@@ -149,18 +124,4 @@ function getTierEmojiPath(stringOrQuality){
     }
 }
 
-const getWearName = w =>
-    ({
-        pristine:"Pristine\u00A0", 
-        fine:"Fine\u00A0", 
-        decent:"Decent\u00A0"
-    })[w] ?? ""
-
-const getWearBonus = w =>
-    ({
-        pristine: 5, 
-        fine: 3, 
-        decent: 1
-    })[w] ?? 0
-
-export { getWearBonus, getWearName, valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImage,getWeaponImagePath, fillMissingWeaponInfo, getTierEmoji, getTierEmojiPath, getRarity};
+export { valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImage,getWeaponImagePath, getTierEmoji, getTierEmojiPath, getRarity};

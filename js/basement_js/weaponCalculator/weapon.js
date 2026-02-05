@@ -1,7 +1,7 @@
 import { loadJson } from '../util/jsonUtil.js';
 import * as blueprinter from './blueprintParser.js';
 import * as passiveHandler from './passiveHandler.js';
-import * as messageHandler from "./messageHandler.js"
+import * as messageHandler from "./messageHandler.js";
 import { getRarity, getWeaponImagePath } from './util.js';
 import { debounce } from "../util/inputUtil.js";
 
@@ -32,30 +32,32 @@ const updateHash = debounce(()=>
 
 export class Weapon{
     constructor({
-        blueprintObject,   // id:101,102, stats:{}, passives:[],wear:"worn"
         owner,             // {id:"hsse",name:"Heather"}
         weaponID,          // "664DFC"
+        id,                // 101
+        wear,              // "worn"
+        statOverride,
+        passiveGenParams   // []
     }={}){
-        this.owner= owner;
+        this.owner = owner;
         this.weaponID = weaponID;
-        this.stats = blueprintObject.stats;
-        this.typeID = blueprintObject.id;
+        this.typeID = id;
+        this.stats = statOverride.map((override,i)=>({
+            noWearConfig: this.staticData.statConfig[i],
+            noWear: override ?? 100
+        }));
         this.image = document.getElementById("weaponImage");
-        this._wear = null;
+        this._wear; 
 
         passiveHandler.bindWeapon(this);
         messageHandler.bindWeapon(this);
         blueprinter.bindWeapon(this);
         
         this.passives = [];
-        blueprintObject.passiveGenParams.forEach(passiveParams=>
-            passiveHandler.generateNewPassive(passiveParams.staticData, passiveParams.statOverride)
-        );
+        passiveGenParams.forEach(params=> new passiveHandler.Passive(params));
 
         messageHandler.generateStatInputs();
-        this.updateQualities();
-
-        this.wear = blueprintObject.wear;
+        this.wear = wear;
     }
 
     static fromRandom(id,settings={
@@ -68,11 +70,14 @@ export class Weapon{
     }
 
     static fromHash(){
-        const blueprintObject = blueprinter.toWeapon(location.hash.slice(1));
+        const {id, wear, statOverride, passiveGenParams } = blueprinter.toWeapon(location.hash.slice(1));
         return new Weapon({
             owner: {id:"hsse",name:"Heather"},  // TODO: figure out what kind of user's I want to feature?
             weaponID:"664DFC",                  // TODO: and IDs?
-            blueprintObject
+            id,
+            wear,
+            statOverride,
+            passiveGenParams
         });
     }
 
@@ -147,13 +152,13 @@ export class Weapon{
                 (acc, {withWear,noWear}) => [acc[0]+withWear,  acc[1]+noWear], [0,0]
             ).map(v => v / statArray.length);
 
-        [this.qualityWear, this.qualityNoWear] = calculateQualities(this.allStats);
-        this.image.src = getWeaponImagePath(this)
-
-        this.passives.forEach(passive=>{
-            [passive.qualityWear, passive.qualityNoWear] = calculateQualities(passive.stats);
-            if (passive.image) 
-                passive.image.src = getWeaponImagePath(passive);
+        const StatHavers= [
+            {obj: this, stats: this.allStats},
+            ...this.passives.map(passive=>({obj:passive, stats: passive.stats}))
+        ]
+        StatHavers.forEach(haver=>{
+            [haver.obj.qualityWear, haver.obj.qualityNoWear] = calculateQualities(haver.stats);
+            haver.obj.image.src = getWeaponImagePath(haver.obj);
         })
 
         this.render();
