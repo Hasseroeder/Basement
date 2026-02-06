@@ -41,8 +41,8 @@ const valueToPercent =
 
 
 function getStatImage(inputString,className) {
-    const gifUrl = `../media/owo_images/${inputString}.gif`;
-    const pngUrl = `../media/owo_images/${inputString}.png`;
+    const gifUrl = `../media/owo_images/battleEmojis/${inputString}.gif`;
+    const pngUrl = `../media/owo_images/battleEmojis/${inputString}.png`;
     const imageClasses =  'discord-embed-emote ' + className??""
 
     const image = make("img",{
@@ -92,7 +92,7 @@ function getWeaponImagePath(weaponOrPassive){
     }[weaponOrPassive.tier];
 
     const w = weaponOrPassive.slug.toLowerCase();
-    return `media/owo_images/${p+q+"_"+w}.png`;
+    return `media/owo_images/battleEmojis/${p+q+"_"+w}.png`;
 }
 
 function getTierEmoji(tier){
@@ -107,13 +107,13 @@ function getTierEmoji(tier){
 
 function getTierEmojiPath(stringOrQuality){
     const paths = {
-        common: 	"../media/owo_images/common.png",
-        uncommon:   "../media/owo_images/uncommon.png",
-        rare:   	"../media/owo_images/rare.png",
-        epic:     	"../media/owo_images/epic.png",
-        mythic:  	"../media/owo_images/mythic.png",
-        legendary:	"../media/owo_images/legendary.gif",
-        fabled: 	"../media/owo_images/fabled.gif"
+        common: 	"../media/owo_images/tiers/common.png",
+        uncommon:   "../media/owo_images/tiers/uncommon.png",
+        rare:   	"../media/owo_images/tiers/rare.png",
+        epic:     	"../media/owo_images/tiers/epic.png",
+        mythic:  	"../media/owo_images/tiers/mythic.png",
+        legendary:	"../media/owo_images/tiers/legendary.gif",
+        fabled: 	"../media/owo_images/tiers/fabled.gif"
     };
     if (stringOrQuality == undefined){
         return paths["fabled"];

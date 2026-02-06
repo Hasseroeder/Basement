@@ -24,7 +24,7 @@
                 "min":35,
                 "max":55,
                 "type":"",
-                "emoji":["STR"],
+                "emoji":["STR.png"],
                 "unit":"%",
                 "digits":4
 
@@ -32,7 +32,7 @@
                 "min":200,
                 "max":100,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -54,14 +54,14 @@
                 "min":100,
                 "max":150,
                 "type":"",
-                "emoji":["MAG"],
+                "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":5
             },{
                 "min":225,
                 "max":150,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":6
             }
@@ -83,14 +83,14 @@
                 "min":110,
                 "max":160,
                 "type":"",
-                "emoji":["STR"],
+                "emoji":["STR.png"],
                 "unit":"%",
                 "digits":5
             },{
                 "min":220,
                 "max":120,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -112,7 +112,7 @@
                 "min":5,
                 "max":15,
                 "type":"",
-                "emoji":["all_stats","stat_increase"],
+                "emoji":["all_stats.gif","stat_increase.png"],
                 "unit":"%",
                 "digits":4
             }
@@ -134,14 +134,14 @@
                 "min":30,
                 "max":50,
                 "type":"",
-                "emoji":["taunt"],
+                "emoji":["taunt.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":250,
                 "max":150,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -176,14 +176,14 @@
                 "min":25,
                 "max":45,
                 "type":"",
-                "emoji":["MAG"],
+                "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":200,
                 "max":100,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -205,7 +205,7 @@
                 "min":70,
                 "max":100,
                 "type":"",
-                "emoji":["STR"],
+                "emoji":["STR.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -213,14 +213,14 @@
                 "min":30,
                 "max":50,
                 "type":"",
-                "emoji":["MAG","poison"],
+                "emoji":["MAG.png","poison.png"],
                 "unit":"%",
                 "digits":5
             },{
                 "min":200,
                 "max":100,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -242,7 +242,7 @@
                 "min":90,
                 "max":120,
                 "type":"",
-                "emoji":["MAG"],
+                "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -250,14 +250,14 @@
                 "min":20,
                 "max":40,
                 "type":"",
-                "emoji":["wp_transfer"],
+                "emoji":["wp_transfer.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":250,
                 "max":150,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -279,7 +279,7 @@
                 "min":75,
                 "max":95,
                 "type":"",
-                "emoji":["MAG"],
+                "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -287,7 +287,7 @@
                 "min":20,
                 "max":40,
                 "type":"",
-                "emoji":["MAG","flame"],
+                "emoji":["MAG.png","flame.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -295,14 +295,14 @@
                 "min":80,
                 "max":110,
                 "type":"",
-                "emoji":["MAG","explosion"],
+                "emoji":["MAG.png","explosion.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":200,
                 "max":100,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -324,14 +324,14 @@
                 "min":35,
                 "max":65,
                 "type":"",
-                "emoji":["MAG"],
+                "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":200,
                 "max":100,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -353,7 +353,7 @@
                 "min":30,
                 "max":50,
                 "type":"",
-                "emoji":["MAG"],
+                "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -361,14 +361,14 @@
                 "min":20,
                 "max":30,
                 "type":"",
-                "emoji":["defup"],
+                "emoji":["defup.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":250,
                 "max":150,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -390,14 +390,14 @@
                 "min":60,
                 "max":90,
                 "type":"",
-                "emoji":["MAG"],
+                "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":200,
                 "max":125,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":6
             }
@@ -419,14 +419,14 @@
                 "min":50,
                 "max":80,
                 "type":"",
-                "emoji":["MAG"],
+                "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":400,
                 "max":300,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -448,14 +448,14 @@
                 "min":30,
                 "max":50,
                 "type":"",
-                "emoji":["STR"],
+                "emoji":["STR.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":260,
                 "max":160,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -477,7 +477,7 @@
                 "min":15,
                 "max":25,
                 "type":"",
-                "emoji":["attup"],
+                "emoji":["attup.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -485,7 +485,7 @@
                 "min":25,
                 "max":35,
                 "type":"",
-                "emoji":["attup+"],
+                "emoji":["attup+.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -493,14 +493,14 @@
                 "min":40,
                 "max":50,
                 "type":"",
-                "emoji":["attup++"],
+                "emoji":["attup++.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":300,
                 "max":250,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":5
             }
@@ -522,7 +522,7 @@
                 "min":70,
                 "max":100,
                 "type":"",
-                "emoji":["STR"],
+                "emoji":["STR.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -530,14 +530,14 @@
                 "min":45,
                 "max":75,
                 "type":"",
-                "emoji":["HP","mort"],
+                "emoji":["HP.png","mort.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":200,
                 "max":100,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -559,7 +559,7 @@
                 "min":20,
                 "max":50,
                 "type":"",
-                "emoji":["iPR","celeb"],
+                "emoji":["iPR.png","celeb.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -567,14 +567,14 @@
                 "min":15,
                 "max":40,
                 "type":"",
-                "emoji":["iMR","celeb"],
+                "emoji":["iMR.png","celeb.png"],
                 "unit":"%",
                 "digits":5
             },{
                 "min":200,
                 "max":100,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -596,7 +596,7 @@
                 "min":50,
                 "max":100,
                 "type":"",
-                "emoji":["STR"],
+                "emoji":["STR.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -604,14 +604,14 @@
                 "min":50,
                 "max":100,
                 "type":"",
-                "emoji":["MAG"],
+                "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":5
             },{
                 "min":220,
                 "max":150,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":6
             }
@@ -633,7 +633,7 @@
                 "min":50,
                 "max":80,
                 "type":"",
-                "emoji":["STR"],
+                "emoji":["STR.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -641,7 +641,7 @@
                 "min":40,
                 "max":60,
                 "type":"",
-                "emoji":["STR"],
+                "emoji":["STR.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -649,7 +649,7 @@
                 "min":30,
                 "max":60,
                 "type":"",
-                "emoji":["HP","leech"],
+                "emoji":["HP.png","leech.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -657,14 +657,14 @@
                 "min":30,
                 "max":60,
                 "type":"",
-                "emoji":["WP","leech"],
+                "emoji":["WP.png","leech.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":230,
                 "max":130,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -686,7 +686,7 @@
                 "min":50,
                 "max":80,
                 "type":"",
-                "emoji":["STR"],
+                "emoji":["STR.png"],
                 "unit":"%",
                 "digits":4
             },
@@ -694,14 +694,14 @@
                 "min":20,
                 "max":50,
                 "type":"",
-                "emoji":["MAG","stinky"],
+                "emoji":["MAG.png","stinky.png"],
                 "unit":"%",
                 "digits":4
             },{
                 "min":280,
                 "max":180,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -723,7 +723,7 @@
                 "min":1,
                 "max":40,
                 "type":"",
-                "emoji":["StrMag"],
+                "emoji":["StrMag.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -731,7 +731,7 @@
                 "min":1,
                 "max":40,
                 "type":"",
-                "emoji":["StrMag"],
+                "emoji":["StrMag.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -739,7 +739,7 @@
                 "min":1,
                 "max":40,
                 "type":"",
-                "emoji":["StrMag"],
+                "emoji":["StrMag.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -747,7 +747,7 @@
                 "min":1,
                 "max":40,
                 "type":"",
-                "emoji":["StrMag"],
+                "emoji":["StrMag.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -755,14 +755,14 @@
                 "min":1,
                 "max":40,
                 "type":"",
-                "emoji":["StrMag"],
+                "emoji":["StrMag.png"],
                 "unit":"%",
                 "digits":5
             },{
                 "min":200,
                 "max":100,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -792,7 +792,7 @@
                 "min":5,
                 "max":25,
                 "type":"Transfer Debuff",
-                "emoji":["StrMag"],
+                "emoji":["StrMag.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -800,7 +800,7 @@
                 "min":250,
                 "max":150,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -822,7 +822,7 @@
                 "min":10,
                 "max":20,
                 "type":"Absorb WP",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -830,7 +830,7 @@
                 "min":35,
                 "max":45,
                 "type":"MAG damage for WP",
-                "emoji":["MAG", "WP"],
+                "emoji":["MAG.png", "WP.png"],
                 "unit":"%",
                 "digits":5
             },
@@ -838,7 +838,7 @@
                 "min":100,
                 "max":50,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -884,7 +884,7 @@
                 "min":250,
                 "max":150,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }
@@ -922,7 +922,7 @@
                 "min":225,
                 "max":125,
                 "type":"WP-Cost",
-                "emoji":["WP"],
+                "emoji":["WP.png"],
                 "unit":"",
                 "digits":3
             }

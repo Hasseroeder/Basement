@@ -14,7 +14,7 @@ export function init(weaponArray, passiveArray){
     pGrid.append(...passives.map(
         (passive,id)=>make("img",{
             className:'passiveGridImage',
-            src: `media/owo_images/f_${passive.slug}.png`,
+            src: `media/owo_images/battleEmojis/f_${passive.slug}.png`,
             alt: passive.slug,
             title: passive.slug,
             onmousedown: () => new Passive({id})

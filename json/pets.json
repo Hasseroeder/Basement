@@ -1,141 +1,141 @@
 [
     {
-        "image": "../media/owo_images/day.gif",
+        "image": "../media/owo_images/pets/day.gif",
         "name": "Day",
         "attributes": [7, 1, 1, 9, 1, 1]
     },
     {
-        "image": "../media/owo_images/love.gif",
+        "image": "../media/owo_images/pets/love.gif",
         "name": "Love",
         "attributes": [9, 1, 1, 7, 1, 1]
     },
     {
-        "image": "../media/owo_images/night.gif",
+        "image": "../media/owo_images/pets/night.gif",
         "name": "Night",
         "attributes": [12, 1, 1, 5, 1, 1]
     },
     {
-        "image": "../media/owo_images/lovebunny.gif",
+        "image": "../media/owo_images/pets/lovebunny.gif",
         "name": "Lovebunny",
         "attributes": [8, 1, 1, 8, 1, 1]
     },
     {
-        "image": "../media/owo_images/angelowo.gif",
+        "image": "../media/owo_images/pets/angelowo.gif",
         "name": "Angelowo",
         "attributes": [2, 1, 1, 7, 8, 1]
     },
     {
-        "image": "../media/owo_images/spider.gif",
+        "image": "../media/owo_images/pets/spider.gif",
         "name": "Spider",
         "attributes": [0, 19, 0, 1, 0, 0]
     },
     {
-        "image": "../media/owo_images/camel.gif",
+        "image": "../media/owo_images/pets/camel.gif",
         "name": "Camel",
         "attributes": [1, 0, 0, 5, 14, 0]
     },
     {
-        "image": "../media/owo_images/shrimp.gif",
+        "image": "../media/owo_images/pets/shrimp.gif",
         "name": "Shrimp",
         "attributes": [0, 0, 0, 10, 10, 0]
     },
     {
-        "image": "../media/owo_images/panda.gif",
+        "image": "../media/owo_images/pets/panda.gif",
         "name": "Panda",
         "attributes": [1, 10, 0, 9, 0, 0]
     },
     {
-        "image": "../media/owo_images/fox.gif",
+        "image": "../media/owo_images/pets/fox.gif",
         "name": "Fox",
         "attributes": [4, 9, 1, 3, 1, 2]
     },
     {
-        "image": "../media/owo_images/slothbot.gif",
+        "image": "../media/owo_images/pets/slothbot.gif",
         "name": "Slothbot",
         "attributes": [9, 0, 2, 8, 0, 2]
     },
     {
-        "image": "../media/owo_images/lobbot.gif",
+        "image": "../media/owo_images/pets/lobbot.gif",
         "name": "Lobbot",
         "attributes": [14, 0, 3, 1, 0, 3]
     },
     {
-        "image": "../media/owo_images/dinobot.gif",
+        "image": "../media/owo_images/pets/dinobot.gif",
         "name": "Dinobot",
         "attributes": [13, 0, 2, 4, 0, 2]
     },
     {
-        "image": "../media/owo_images/may.gif",
+        "image": "../media/owo_images/pets/may.gif",
         "name": "May",
         "attributes": [15, 1, 1, 1, 1, 1]
     },
     {
-        "image": "../media/owo_images/gorilla.gif",
+        "image": "../media/owo_images/pets/gorilla.gif",
         "name": "Gorilla",
         "attributes": [8, 7, 2, 1, 1, 2]  
     },
     {
-        "image": "../media/owo_images/spoopy.gif",
+        "image": "../media/owo_images/pets/spoopy.gif",
         "name": "Spoopy",
         "attributes": [9, 6, 2, 1, 1, 2]
     },
     {
-        "image": "../media/owo_images/squid.gif",
+        "image": "../media/owo_images/pets/squid.gif",
         "name": "Squid",
         "attributes": [3, 1, 2, 6, 6, 2]
     },
     {
-        "image": "../media/owo_images/deer.gif",
+        "image": "../media/owo_images/pets/deer.gif",
         "name": "Deer",
         "attributes": [3, 1, 1, 3, 11, 1]
     },
     {
-        "image": "../media/owo_images/lion.gif",
+        "image": "../media/owo_images/pets/lion.gif",
         "name": "Lion",
         "attributes": [7, 7, 2, 1, 1, 2]
     },
     {
-        "image": "../media/owo_images/zebra.gif",
+        "image": "../media/owo_images/pets/zebra.gif",
         "name": "Zebra",
         "attributes": [3, 1, 2, 8, 5, 2]
     },
     {
-        "image": "../media/owo_images/eagle.gif",
+        "image": "../media/owo_images/pets/eagle.gif",
         "name": "Eagle",
         "attributes": [2, 13, 2, 1, 1, 2]
     },
     {
-        "image": "../media/owo_images/bitter.png",
+        "image": "../media/owo_images/pets/bitter.png",
         "name": "Bitter",
         "attributes": [1, 15, 1, 1, 1, 1]
     },
     {
-        "image": "../media/owo_images/vampire.gif",
+        "image": "../media/owo_images/pets/vampire.gif",
         "name": "Vampire",
         "attributes": [2, 1, 1, 1, 14, 1]
     },
     {
-        "image": "../media/owo_images/pastel.gif",
+        "image": "../media/owo_images/pets/pastel.gif",
         "name": "Pastel",
         "attributes": [11, 3, 3, 1, 1, 1]
     },
     {
-        "image": "../media/owo_images/snail.png",
+        "image": "../media/owo_images/pets/snail.png",
         "name": "Snail",
         "attributes": [8, 1, 2, 3, 5, 1]
     },
     {
-        "image": "../media/owo_images/boar.gif",
+        "image": "../media/owo_images/pets/boar.gif",
         "name": "Boar",
         "attributes": [7, 5, 2, 4, 1, 2]
     },
     {
-        "image": "../media/owo_images/new_owo.png",
+        "image": "../media/owo_images/pets/new_owo.png",
         "name": "new_owo",
         "attributes": [4, 1, 1, 4, 11, 1]
     },
     {
-        "image": "../media/owo_images/candydeer.gif",
+        "image": "../media/owo_images/pets/candydeer.gif",
         "name": "Candydeer",
         "attributes": [7, 1, 1, 1, 9, 1]
     }

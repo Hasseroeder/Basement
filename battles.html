@@ -39,27 +39,22 @@
         <h4 style="margin-bottom:-0.6rem;">Pre-Phase</h4>
         <p style="margin-bottom:-0.6rem;">
           Firstly <i>canAttack</i> gets checked, which will determine whether your pets will be able to act this turn. <br>
-          This returns false for dead pets and for pets with the <img class="battles-page-emotes" src="media/owo_images/freeze.png"> freeze debuff applied. <br>
+          This returns false for dead pets and for pets with the <img class="battles-page-emotes" src="media/owo_images/battleEmojis/freeze.png"> freeze debuff applied. <br>
           <i>canAttack</i> getting determined this early in the turn, means that even if your pet is un-frozen or revived later in the turn, it still won't be able to act.
         </p>
         <p>
           Then, during the pre-phase only, pets holding a 
-          <img class="battles-page-emotes" src="media/owo_images/105shield.png">
-          Shield or 
-          <img class="battles-page-emotes" src="media/owo_images/116banner.png">
-          Banner might act.<br>
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/f_shield.png">Shield or 
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/f_banner.png">Banner might act.<br>
           If a pet is holding a 
-          <img class="battles-page-emotes" src="media/owo_images/105shield.png">
-          Shield but has no active 
-          <img class="battles-page-emotes" src="media/owo_images/taunt.png">
-          Taunt Buff, then the pet will use its shield, casting said buff.<br>
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/f_shield.png">Shield but has no active 
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/taunt.png">Taunt Buff, then the pet will use its shield, casting said buff.<br>
           For 
-          <img class="battles-page-emotes" src="media/owo_images/116banner.png">
-          Banner the logic is slightly different, it will cast if it has no AttackUp Buff or if the AttackUp it has, were to expire after this turn. <br>
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/f_banner.png">Banner the logic is slightly different, it will cast if it has no AttackUp Buff or if the AttackUp it has, were to expire after this turn. <br>
         </p>
         <h4 style="margin-bottom:-0.6rem;">Main-Phase</h4>
         <p style="margin-bottom:-0.6rem;"> 
-          This is where the real magic happens! Damage is dealt, health is healed, and more!<img class="battles-page-emotes" src="media/owo_images/woah.png">
+          This is where the real magic happens! Damage is dealt, health is healed, and more!<img class="battles-page-emotes" src="media/misc_images/woah.png">
         </p>
         <p>
           During the main phase, all pets act in alternating turns: First your pet in position 1, then the enemy pet in position 1, then your pet in position 2, etc. - if a pet is dead or its <i>canAttack</i> is false, its turn is skipped, but the order will stay the same, i.e., two pets of one team might act after one another.<br>
@@ -72,9 +67,9 @@
         </p>
         <p style="margin-bottom:0.4rem;">  
           During the end phase, post-turn buffs will trigger: 
-          <img class="battles-page-emotes" src="media/owo_images/poison.png"> Poison, 
-          <img class="battles-page-emotes" src="media/owo_images/flame.png"> Flame, 
-          <img class="battles-page-emotes" src="media/owo_images/celeb.png"> Celebration.<br>
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/poison.png"> Poison, 
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/flame.png"> Flame, 
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/celeb.png"> Celebration.<br>
         </p>
         <ul>
           <li>
@@ -86,24 +81,24 @@
         </ul>
         <p style="margin-bottom:-0.6rem;"">
           the other Buffs also lose duration: 
-          <img class="battles-page-emotes" src="media/owo_images/mort.png">
-          <img class="battles-page-emotes" src="media/owo_images/leech.png">
-          <img class="battles-page-emotes" src="media/owo_images/stinky.png">
-          <img class="battles-page-emotes" src="media/owo_images/taunt.png">
-          <img class="battles-page-emotes" src="media/owo_images/attup++.png">
-          <img class="battles-page-emotes" src="media/owo_images/defup.png">
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/mort.png">
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/leech.png">
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/stinky.png">
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/taunt.png">
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/attup++.png">
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/defup.png">
           (but 
-          <img class="battles-page-emotes" src="media/owo_images/freeze.png">
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/freeze.png">
           duration is reduced elsewhere) <br>
           Buffs also have a "just created" tag on creation, this tag is removed now.
           Only now, after all buffs went through their thing, a "clean up" is performed, and any that are at 0 duration (ie. marked for removal) are removed.
           
         </p>
         <p>  
-          <img class="battles-page-emotes" src="media/owo_images/hgen.png"> Hgen and 
-          <img class="battles-page-emotes" src="media/owo_images/wgen.png"> Wgen 
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/f_hgen.png">Hgen and 
+          <img class="battles-page-emotes" src="media/owo_images/battleEmojis/f_wgen.png">Wgen 
           afterwards also trigger, and heal/replenish their pets. <br>
-          I.e. when a <img class="battles-page-emotes" src="media/owo_images/mort.png"> Mortality Debuff ends in, say, turn 10, then Hgen will work again at full power in that turn.
+          I.e. when a <img class="battles-page-emotes" src="media/owo_images/battleEmojis/mort.png"> Mortality Debuff ends in, say, turn 10, then Hgen will work again at full power in that turn.
         </p>
 
         <h1 style="margin-bottom:-0.6rem;">Notes on reading logs</h1>
@@ -112,8 +107,8 @@
         </p>
         <p >
           Example:
-          You'd think my Tank didn't have <img class="battles-page-emotes" src="media/owo_images/taunt.png"> this turn, but that's incorrect.<br>
-          It had <img class="battles-page-emotes" src="media/owo_images/taunt.png"> throughout the whole turn, but only after the turn has ended, does OwO show the Battle Snapshot.
+          You'd think my Tank didn't have <img class="battles-page-emotes" src="media/owo_images/battleEmojis/taunt.png"> this turn, but that's incorrect.<br>
+          It had <img class="battles-page-emotes" src="media/owo_images/battleEmojis/taunt.png"> throughout the whole turn, but only after the turn has ended, does OwO show the Battle Snapshot.
         </p>
       
       </div>

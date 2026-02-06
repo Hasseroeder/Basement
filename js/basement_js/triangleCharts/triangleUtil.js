@@ -36,12 +36,12 @@ const polygonPlugin = {
 };
 
 const statImages= [
-    "./media/owo_images/HP.png",
-    "./media/owo_images/STR.png",
-    "./media/owo_images/PR.png",
-    "./media/owo_images/WP.png",
-    "./media/owo_images/MAG.png",
-    "./media/owo_images/MR.png",
+    "./media/owo_images/battleEmojis/HP.png",
+    "./media/owo_images/battleEmojis/STR.png",
+    "./media/owo_images/battleEmojis/PR.png",
+    "./media/owo_images/battleEmojis/WP.png",
+    "./media/owo_images/battleEmojis/MAG.png",
+    "./media/owo_images/battleEmojis/MR.png",
 ]; 
 
 const dataPoints = (pets,top,right,left) => pets.map(pet => {

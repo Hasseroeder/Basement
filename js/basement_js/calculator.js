@@ -511,7 +511,7 @@ function getPetImage(pet, wantAnimated){
         return `https://cdn.discordapp.com/emojis/${pet[2]}.gif?size=96`;
     }else if (["common","uncommon","rare","epic","mythic","hidden"].includes(pet[4])){
         // snail, crocodile, ...
-        return `../media/owo_images/${pet[0]}.png`;
+        return `../media/owo_images/pets/${pet[0]}.png`;
     }else {
         // everything else displayed as pngs
         return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
@@ -529,13 +529,21 @@ function createColumn(){
 }
 
 function addAddEffects(){
-    const effectIcons  = ["f_hp","f_str","f_pr","f_wp","f_mag","f_mr","f_rune"]
+    const effectIcons  = [
+        "f_hp.png",
+        "f_str.png",
+        "f_pr.png",
+        "f_wp.png",
+        "f_mag.png",
+        "f_mr.png",
+        "f_rune.png"
+    ]
     const text         = make("div",{className:"add-effect-pet-calc", textContent:"add effect"});
     const imgContainer = make("div",{className:"passive-wrapper-pet-calc"},
         [
             ...effectIcons.map((name, i) =>
                 make("img", {
-                    src: `../media/owo_images/${name}.png`,
+                    src: "../media/owo_images/battleEmojis/" + name,
                     style: { height: i == 6 ? "1.4rem" : "1.5rem" },
                     onclick: () => addEffect(i)
                 })
@@ -566,7 +574,7 @@ function addEffect(type){
     function updateValue(value){
         effect.quality=+value;
         inputs.forEach(i=>i.value=+value);
-        imagechildren[0].src=`../media/owo_images/${getImageForEffect(effect)}.png`;
+        imagechildren[0].src=`../media/owo_images/battleEmojis/${getImageForEffect(effect)}.png`;
         imagechildren[1].textContent=updateBoostDisplay(effect);
         updateInternalStats();
     }

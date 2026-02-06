@@ -55,7 +55,7 @@ const datasets = [
 
 const gemImages = [1,2,3,4,5,6,7].map(i=>
     make("img",{
-        src: `/media/owo_images/gem${i}1${tiers[i].imageType}`
+        src: `/media/owo_images/gems/gem${i}1${tiers[i].imageType}`
     }
 )); 
 

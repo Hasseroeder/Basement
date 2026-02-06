@@ -48,7 +48,7 @@ function updateWeaponDisplay(){
     history.replaceState(null, "", "#"+weapon.slug);
 
     weaponDisplay.text.textContent = (weapon.id ?? "???") + " - "+ (weapon.aliases[0] ?? weapon.name);
-    weaponDisplay.image.src = `media/owo_images/${weapon.slug}.png`;
+    weaponDisplay.image.src = `media/owo_images/battleEmojis/${weapon.slug}.png`;
 
     fetch(`donatorPages/weapons/${weapon.slug}.html`)
         .then(async r => {
@@ -87,7 +87,7 @@ function createWikipediaContainer(weapon){
             weapon.name,
             make("div",{className:"wikipedia-aliases"},[makeAliasString(weapon.aliases)])
         ]),
-        make("img",{className:"wikipedia-image", src:`media/owo_images/${weapon.slug}.png`}),
+        make("img",{className:"wikipedia-image", src:`media/owo_images/battleEmojis/${weapon.slug}.png`}),
         make("div", {className:"wikipedia-stars"},weapon.wikiStars.map(makeStarDisplay)),
         make("div",{className:"wikipedia-id"}, [
             make("div",{innerHTML:"ID: " + (weapon.id ?? "???")})
@@ -112,17 +112,14 @@ function createWikipediaTable(weapon){
 
     ["common.png","fabled.gif"].forEach(rank => rankHeader.append(
         make("div",{className:"wikipedia-stat-header"},[
-            make("img",{src:"media/owo_images/"+rank}),
+            make("img",{src:"media/owo_images/tiers/"+rank}),
             rank == "common.png"? "0%":"100%"
         ])
     ));
 
     const makeImg = emoji => make("img",{
-        src:`media/owo_images/${emoji}.png`, title: emoji,
-        onerror: function () {
-            this.onerror = null; 
-            this.src = `media/owo_images/${emoji}.gif`;
-        }
+        src:"media/owo_images/battleEmojis/"+emoji,
+        title: emoji,
     });
 
     weapon.statConfig.forEach(stat=>

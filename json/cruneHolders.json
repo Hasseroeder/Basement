@@ -1,31 +1,31 @@
 [
     {
-        "image": "../media/owo_images/giraffbot.gif",
+        "image": "../media/owo_images/pets/giraffbot.gif",
         "name": "Giraffbot",
         "attributes": [12, 0, 4, 1, 0, 4]
     },
     {
-        "image": "../media/owo_images/capybara.gif",
+        "image": "../media/owo_images/pets/capybara.gif",
         "name": "Capybara",
         "attributes": [4, 1, 10, 1, 1, 3]
     },
     {
-        "image": "../media/owo_images/easter.gif",
+        "image": "../media/owo_images/pets/easter.gif",
         "name": "Easter",
         "attributes": [4, 1, 11, 1, 1, 2]
     },
     {
-        "image": "../media/owo_images/fastelavn.gif",
+        "image": "../media/owo_images/pets/fastelavn.gif",
         "name": "Fastelavn",
         "attributes": [4, 1, 9, 1, 1, 4]
     },
     {
-        "image": "../media/owo_images/hedgebot.gif",
+        "image": "../media/owo_images/pets/hedgebot.gif",
         "name": "Hedgebot",
         "attributes": [7, 0, 6, 2, 0, 6]
     },
     {
-        "image": "../media/owo_images/accelpadoru.png",
+        "image": "../media/owo_images/pets/accelpadoru.png",
         "name": "Accelpadoru",
         "attributes": [5, 1, 9, 1, 1, 3]
     }

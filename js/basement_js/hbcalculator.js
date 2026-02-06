@@ -19,7 +19,7 @@ class Trait{
     constructor (opts){
         Object.assign(this, opts);
         this.header = make("span");
-        this.emoji = make("img",{src:`../media/owo_images/${this.name.toLowerCase()}.png`, style:{height:"1rem"}});
+        this.emoji = make("img",{src:`../media/owo_images/huntbot/${this.name.toLowerCase()}.png`, style:{height:"1rem"}});
 
         const wrappers = [
             make("div",{className:"header-wrapper"},[this.emoji,this.header]),
