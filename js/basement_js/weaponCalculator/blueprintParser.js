@@ -49,7 +49,6 @@ const isOnlyNumbers =
 
 function getStats(dataArray, {id,statToken}){
     const item = dataArray[id];
-    
     const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ',';
 
 	if (isOnlyNumbers(statToken) && 
@@ -61,12 +60,11 @@ function getStats(dataArray, {id,statToken}){
         if (separator!="," && item.objectType != "passive") statInts.push(statInts.shift());
             // doing this because WP stat is first in "45-24" display and last in "24,45" display
 
-        return item.statConfig.map((stat, i) => {
-            const toPush = separator === "," 
-                ? Math.floor(statInts[i])
-                : valueToPercent(statInts[i], stat.wearConfig);
-            return Math.max(0, Math.min(100, toPush));
-        });
+        return item.statConfig.map((stat, i) => 
+            separator === "," 
+                ? statInts[i]
+                : valueToPercent(statInts[i], stat.wearConfig)
+        );
 	}
 	return item.statConfig.map(_=>100)
 }
