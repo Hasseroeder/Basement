@@ -9,7 +9,6 @@ const el = {
 	shardValue:		    document.getElementById("shardValue"),
 	weaponQualityImage: document.getElementById("weaponQualityImage"),
     weaponQualitySpan:  document.getElementById("weaponQualitySpan"),
-	weaponImage: 	    document.getElementById("weaponImage"),
 	wpCost:			    document.getElementById("WP-Cost"),
 	description:	    document.getElementById("description")
 }
