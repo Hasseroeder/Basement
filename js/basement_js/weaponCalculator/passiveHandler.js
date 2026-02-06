@@ -58,6 +58,8 @@ export class Passive {
         appendPassiveNode(this);
     }
 
+    get prefix() { return "" }
+
     get tier() {
         return getRarity(this.qualityWear);
     }

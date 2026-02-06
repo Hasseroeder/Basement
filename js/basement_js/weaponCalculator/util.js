@@ -78,10 +78,8 @@ const getWeaponImage = weaponOrPassive =>
     });
 
 function getWeaponImagePath(weaponOrPassive){
-    const p = (weaponOrPassive.wearBonus == 0 || weaponOrPassive.objectType == "passive")
-            ? ""
-            : "p";
-    const q = {
+    const prefix = weaponOrPassive.prefix;
+    const tier = {
         common: 	"c",
         uncommon:   "u",
         rare:   	"r",
@@ -91,8 +89,8 @@ function getWeaponImagePath(weaponOrPassive){
         fabled: 	"f"
     }[weaponOrPassive.tier];
 
-    const w = weaponOrPassive.slug.toLowerCase();
-    return `media/owo_images/battleEmojis/${p+q+"_"+w}.png`;
+    const slug = weaponOrPassive.slug;
+    return `media/owo_images/battleEmojis/${prefix+tier+"_"+slug}.png`;
 }
 
 function getTierEmoji(tier){

@@ -37,7 +37,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deals [stat] of your :STR:STR to all opponents"
+        "description": "**Description:** Deals [stat] of your :STR:STR to all opponents",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -66,7 +67,8 @@
                 "digits":6
             }
         ],
-        "description": "**Description:** Heals [stat] of your :MAG:MAG to the lowest health ally. This weapon can overheal up to 50% of max :HP:HP."
+        "description": "**Description:** Heals [stat] of your :MAG:MAG to the lowest health ally. This weapon can overheal up to 50% of max :HP:HP.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -95,7 +97,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deals [stat] of your :STR:STR to a random opponent."
+        "description": "**Description:** Deals [stat] of your :STR:STR to a random opponent.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -117,7 +120,8 @@
                 "digits":4
             }
         ],
-        "description": "**Description:** Increase :all_stats:ALL stats by [stat], and changes your physical attacks to do 65%:STR:STR and 65%:MAG:MAG as TRUE damage. This weapon does not have an active ability."
+        "description": "**Description:** Increase :all_stats:ALL stats by [stat], and changes your physical attacks to do 65%:STR:STR and 65%:MAG:MAG as TRUE damage. This weapon does not have an active ability.",
+        "normalPassiveAmount":0
     },
     {
         "objectType":"weapon",
@@ -146,7 +150,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Adds a **taunt** buff to your animal for 2 turns\n\n:taunt: **Taunt** - Taunts the enemy team and forces all opponents to attack this animal. Reduces incoming damage by [stat]"
+        "description": "**Description:** Adds a **taunt** buff to your animal for 2 turns\n\n:taunt: **Taunt** - Taunts the enemy team and forces all opponents to attack this animal. Reduces incoming damage by [stat]",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -159,7 +164,8 @@
             {"name":"Ease of use: ","stars":1}
         ],
         "statConfig":[],
-        "description": "**Description:** This weapon has no active ability, but comes with two passives!"
+        "description": "**Description:** This weapon has no active ability, but comes with two passives!",
+        "normalPassiveAmount":2
     },
     {
         "objectType":"weapon",
@@ -188,7 +194,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deal [stat] of your :MAG:MAG to ALL enemies and heal ALL allies by the damage dealt"
+        "description": "**Description:** Deal [stat] of your :MAG:MAG to ALL enemies and heal ALL allies by the damage dealt",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -225,7 +232,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deals [stat] of your :STR:STR to a random enemy and applies **poison** for 3 turns\n\n:poison: **Poison** - deals [stat] of your :MAG:MAG as true damage at the end of the turn"
+        "description": "**Description:** Deals [stat] of your :STR:STR to a random enemy and applies **poison** for 3 turns\n\n:poison: **Poison** - deals [stat] of your :MAG:MAG as true damage at the end of the turn",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -262,7 +270,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deal [stat] of your :MAG:MAG to a random enemy and transfer their :WP:WP to an ally equal to [stat] of the damage done"
+        "description": "**Description:** Deal [stat] of your :MAG:MAG to a random enemy and transfer their :WP:WP to an ally equal to [stat] of the damage done",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -307,7 +316,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deals [stat] of your :MAG:MAG to a random enemy and applies **flame** for 3 turns\n\n:flame: **Flame** - Deals [stat] of your :MAG:MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal [stat] damage to the target."
+        "description": "**Description:** Deals [stat] of your :MAG:MAG to a random enemy and applies **flame** for 3 turns\n\n:flame: **Flame** - Deals [stat] of your :MAG:MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal [stat] damage to the target.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -336,7 +346,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Sends a wave of energy and deals [stat] of your :MAG:MAG to all opponents"
+        "description": "**Description:** Sends a wave of energy and deals [stat] of your :MAG:MAG to all opponents",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -373,7 +384,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Heal all allies for [stat] of your :MAG:MAG and applies **Defense Up** for 2 turns\n\n:defup: **Defense Up** - Reduces incoming damage by [stat]. Cannot stack with other Defense Up buffs"
+        "description": "**Description:** Heal all allies for [stat] of your :MAG:MAG and applies **Defense Up** for 2 turns\n\n:defup: **Defense Up** - Reduces incoming damage by [stat]. Cannot stack with other Defense Up buffs",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -402,7 +414,8 @@
                 "digits":6
             }
         ],
-        "description": "**Description:** Replenish [stat] of your :MAG:MAG as :WP:WP to an ally with the lowest :WP:WP. This weapon can overreplenish up to 50% of max :WP:WP."
+        "description": "**Description:** Replenish [stat] of your :MAG:MAG as :WP:WP to an ally with the lowest :WP:WP. This weapon can overreplenish up to 50% of max :WP:WP.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -431,7 +444,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Revive a dead ally and heal them for [stat] of your :MAG:MAG"
+        "description": "**Description:** Revive a dead ally and heal them for [stat] of your :MAG:MAG",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -460,7 +474,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deals [stat] of your :STR:STR to a random opponent and apply **Freeze** for 2 turns \n\n:freeze: **Freeze** - Freeze an enemy. They can not attack next turn."
+        "description": "**Description:** Deals [stat] of your :STR:STR to a random opponent and apply **Freeze** for 2 turns \n\n:freeze: **Freeze** - Freeze an enemy. They can not attack next turn.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -505,7 +520,8 @@
                 "digits":5
             }
         ],
-        "description": "**Description:** Apply **Attack Up** to all allies for 2 turns. If the user has enough WP when the buff expires, the buff will be recasted with a stronger version.\n\n:attup: Attack Up - Increases all damage by [stat]. Cannot stack with other Attack Up buffs\n:attup+: Attack Up+ - Increases all damage by [stat]. Cannot stack with other Attack Up+ buffs\n:attup++: Attack Up++ - Increases all damage by [stat]. Cannot stack with other Attack Up++ buffs"
+        "description": "**Description:** Apply **Attack Up** to all allies for 2 turns. If the user has enough WP when the buff expires, the buff will be recasted with a stronger version.\n\n:attup: Attack Up - Increases all damage by [stat]. Cannot stack with other Attack Up buffs\n:attup+: Attack Up+ - Increases all damage by [stat]. Cannot stack with other Attack Up+ buffs\n:attup++: Attack Up++ - Increases all damage by [stat]. Cannot stack with other Attack Up++ buffs",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -542,7 +558,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deals [stat] of your :STR:STR to a random enemy and applies **Mortality** for 2 turns\n\n:mort: **Mortality** - Decreases all healing for this animal by [stat]"
+        "description": "**Description:** Deals [stat] of your :STR:STR to a random enemy and applies **Mortality** for 2 turns\n\n:mort: **Mortality** - Decreases all healing for this animal by [stat]",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -579,7 +596,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Apply **Celebration** to an ally with the lowest health for 3 turns.\n\n:celeb: **Celebration** - At the end of every turn, heal [stat] of your :iPR:iPR as :HP:HP and restore [stat] of your :iMR:iMR as :WP:WP."
+        "description": "**Description:** Apply **Celebration** to an ally with the lowest health for 3 turns.\n\n:celeb: **Celebration** - At the end of every turn, heal [stat] of your :iPR:iPR as :HP:HP and restore [stat] of your :iMR:iMR as :WP:WP.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -616,7 +634,8 @@
                 "digits":6
             }
         ],
-        "description": "**Description:** Remove a buff from an enemy. If successful, deal [stat] of your :MAG:MAG to them. Remove a debuff from an ally. If successful, heal [stat] of your :STR:STR to them."
+        "description": "**Description:** Remove a buff from an enemy. If successful, deal [stat] of your :MAG:MAG to them. Remove a debuff from an ally. If successful, heal [stat] of your :STR:STR to them.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -669,7 +688,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deal [stat] of your :STR:STR to a random enemy and apply **Leech** for 3 turns. If the **Leech** debuff is already on the target, deal [stat] more damage.\n\n:leech: **Leech** - User who applied this debuff steals [stat] of incoming heals and [stat] of incoming replenishes."
+        "description": "**Description:** Deal [stat] of your :STR:STR to a random enemy and apply **Leech** for 3 turns. If the **Leech** debuff is already on the target, deal [stat] more damage.\n\n:leech: **Leech** - User who applied this debuff steals [stat] of incoming heals and [stat] of incoming replenishes.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -706,7 +726,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Deal [stat] of your :STR:STR to a random enemy and apply **Stinky** for 2 turns.\n\n:stinky: **Stinky** - Prevents any future buffs *AND* debuffs to be applied to this animal. On success, deal [stat] :MAG:MAG to the animal."
+        "description": "**Description:** Deal [stat] of your :STR:STR to a random enemy and apply **Stinky** for 2 turns.\n\n:stinky: **Stinky** - Prevents any future buffs *AND* debuffs to be applied to this animal. On success, deal [stat] :MAG:MAG to the animal.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -767,7 +788,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Punches a random enemy 5 times. Each punch randomly deals either a percentage of your :STR:STR or :MAG:MAG. Punches deals: [stat], [stat], [stat], [stat], [stat]"
+        "description": "**Description:** Punches a random enemy 5 times. Each punch randomly deals either a percentage of your :STR:STR or :MAG:MAG. Punches deals: [stat], [stat], [stat], [stat], [stat]",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -805,7 +827,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Steal a buff from a random enemy and give it to a random ally with +[stat]% effectiveness. Transfers a debuff from a random ally to a random enemy with +[stat]% effectiveness. Any moved buffs or debuffs last an additional 1 turn and calculated based on the original caster's stats."
+        "description": "**Description:** Steal a buff from a random enemy and give it to a random ally with +[stat]% effectiveness. Transfers a debuff from a random ally to a random enemy with +[stat]% effectiveness. Any moved buffs or debuffs last an additional 1 turn and calculated based on the original caster's stats.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -843,7 +866,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Absorb [stat] of all allies' current WP to deal damage to an enemy. Deals [stat]% of your MAG for every 100 WP absorbed."
+        "description": "**Description:** Absorb [stat] of all allies' current WP to deal damage to an enemy. Deals [stat]% of your MAG for every 100 WP absorbed.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -889,7 +913,8 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** At the start of the turn apply Thorn Tether to your allies for 2 turns. Thorn Tether - Create a tether from the weapon owner to this animal. The owner absorbs [stat]% of the incoming damage dealt, but also intercepts [stat]% of healing and [stat]% replenishing from the target."
+        "description": "**Description:** At the start of the turn apply Thorn Tether to your allies for 2 turns. Thorn Tether - Create a tether from the weapon owner to this animal. The owner absorbs [stat]% of the incoming damage dealt, but also intercepts [stat]% of healing and [stat]% replenishing from the target.",
+        "normalPassiveAmount":1
     },
     {
         "objectType":"weapon",
@@ -927,6 +952,7 @@
                 "digits":3
             }
         ],
-        "description": "**Description:** Unleash judgement on an enemy. Consume all stacks of Sin and Virtue. Gain a stack of Sin when an ally deals damage to an animal. Gain a stack of Virtue when an ally heals or replenishes an animal. Sin - When consumed, each stack deal [stat]% of your highest offensive stat as physical damage to an enemy. Virtue - When consumed, each stack deals [stat]% of your lowest offense stat as magical damage to an enemy."
+        "description": "**Description:** Unleash judgement on an enemy. Consume all stacks of Sin and Virtue. Gain a stack of Sin when an ally deals damage to an animal. Gain a stack of Virtue when an ally heals or replenishes an animal. Sin - When consumed, each stack deal [stat]% of your highest offensive stat as physical damage to an enemy. Virtue - When consumed, each stack deals [stat]% of your lowest offense stat as magical damage to an enemy.",
+        "normalPassiveAmount":1
     }
 ]

@@ -83,6 +83,15 @@ export class Weapon{
 
     static bigArray = weapons;
 
+    get prefix() {
+        if (this.passives.length > this.staticData.normalPassiveAmount)
+            return "b"
+        else if (this.wear != "worn")
+            return "p"
+        else 
+            return ""
+    }
+
     set wear(v){
         this._wear = v;
         this.allStats.forEach(stat => stat.IO.updateWear());
