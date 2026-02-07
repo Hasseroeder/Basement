@@ -870,14 +870,47 @@ a:hover {
   height:1.4rem;
 }
 
+.lineFromWeaponCalculator.description{
+  height:unset;
+}
+
+.lineFromWeaponCalculator.description > div{
+  display: inline;
+  white-space: normal; 
+  line-height: 1.4rem;
+}
+
+.lineFromWeaponCalculator.description blockquote{
+  position: relative;
+  margin:0.2rem 0 0 1rem;
+}
+
+.lineFromWeaponCalculator.description blockquote::before{
+  content: ""; 
+  position: absolute; 
+  left: -1rem; 
+  top: 0.25rem; 
+  bottom: 0.25rem; 
+  width: 4px; 
+  background: #777; 
+  border-radius: 999px;
+}
+
+.lineFromWeaponCalculator.header{
+  font-weight: bolder;
+  font-size: 0.9rem;
+  margin: 1.2rem 0 0.4rem 0;
+  text-decoration: underline;
+}
+
 .inputWrapperFromCalculator {
-    background-color: #191919;
-    display:flex;
-    padding: 0;
-    border-radius: 0.2rem;
-    align-items: center;
-    width:max-content;
-    margin: 0 0.2rem;
+  background-color: #191919;
+  display:flex;
+  padding: 0;
+  border-radius: 0.2rem;
+  align-items: center;
+  width:max-content;
+  margin: 0 0.2rem;
 }
 
 .outerInputWrapperFromCalculator {

@@ -18,46 +18,78 @@ export const bindWeapon = weapon => boundWeapon = weapon;
 
 function generateDescription(weaponOrPassive) {
     const TOKEN_SPECS = [
-        { name: "STAT",   pattern: "\\[stat\\]"},         // literal [stat]
-        { name: "IMAGE",  pattern: ":[A-Za-z0-9_+]+:"},   // :emojiName:
-        { name: "BOLD",   pattern: "\\*\\*[^*]+\\*\\*"},  // **bold**
-        { name: "ITALIC", pattern: "\\*[^*]+\\*"},        // *italic*
-        { name: "NEWLINE",pattern: "\\r?\\n"}             // newline
+        { name: "STAT",     pattern:"\\[stat\\]"},
+        { name: "IMAGE",    pattern: ":[A-Za-z0-9_+]+:" },
+        { name: "BOLD",     pattern: "\\*\\*[^*]+\\*\\*" },
+        { name: "ITALIC",   pattern: "\\*[^*]+\\*" },
+        { name: "NEWLINE",  pattern: "\\r?\\n" },
+        { name: "BQ_OPEN",  pattern: ">" },
+        { name: "BQ_CLOSE", pattern: "<" }
     ];
 
     const tokenRegex = new RegExp("(" + TOKEN_SPECS.map(s => s.pattern).join("|") + ")", "g");
-    
+
     const NEWLINE_RE = /^\r?\n$/;
     const STAT_TOKEN = "[stat]";
     const IMAGE_RE = /^:([A-Za-z0-9_+]+):$/;
     const BOLD_RE = /^\*\*([^*]+)\*\*$/;
     const ITALIC_RE = /^\*([^*]+)\*$/;
 
-    // This is the opposite of DRY, I am aware, but I have no idea how to fix.
-
-    const parts = weaponOrPassive.description.split(tokenRegex)
+    const parts = weaponOrPassive.description.split(tokenRegex);
     let statIndex = 0;
-    
-    return make("div",
-        {style:{ display: "inline", whiteSpace: "normal", lineHeight: "1.4rem"}},
-        parts.map(elif)
-    );
 
-    function elif(part){
-        if (NEWLINE_RE.test(part)) return document.createElement("br")
-        if (part === STAT_TOKEN) return getStatNode()
+    const root = make("div");
+
+    let currentParent = root;
+    const bqStack = [];
+
+    for (const part of parts) handlePart(part);
+
+    return root;
+
+    function handlePart(part) {
+        if (part === ">") {
+            const bq = document.createElement("blockquote");
+            currentParent.appendChild(bq);
+            bqStack.push(currentParent);
+            currentParent = bq;
+            return;
+        }
+
+        if (part === "<") {
+            if (bqStack.length > 0) {
+                currentParent = bqStack.pop();
+            }
+            return;
+        }
+
+        currentParent.appendChild(elif(part));
+    }
+
+    function elif(part) {
+        if (NEWLINE_RE.test(part)) return document.createElement("br");
+        if (part === STAT_TOKEN) return getStatNode();
+
         const imgMatch = part.match(IMAGE_RE);
-        if (imgMatch) return getStatImage(imgMatch[1],"weapon-desc-image")
+        if (imgMatch) return getStatImage(imgMatch[1], "weapon-desc-image");
+
         const boldMatch = part.match(BOLD_RE);
-        if (boldMatch) return make("span",{style:{fontWeight: "bold"},textContent: boldMatch[1]})
-        const italicMatch = part.match(ITALIC_RE);  
-        if (italicMatch) return make("span",{style:{fontStyle: "italic"},textContent: italicMatch[1]})
+        if (boldMatch) return make("span", {
+            style: { fontWeight: "bold" },
+            textContent: boldMatch[1]
+        });
+
+        const italicMatch = part.match(ITALIC_RE);
+        if (italicMatch) return make("span", {
+            style: { fontStyle: "italic" },
+            textContent: italicMatch[1]
+        });
+
         return document.createTextNode(part);
     }
 
-    function getStatNode(){
-        const stat = weaponOrPassive.stats[statIndex];
-        statIndex++;
+    function getStatNode() {
+        const stat = weaponOrPassive.stats[statIndex++];
         return (stat.IO = new WeaponStat(stat, weaponOrPassive), stat.IO.wrapper);
     }
 }
