@@ -232,7 +232,7 @@
                 "digits":3
             }
         ],
-        "description": "Deals [stat] of your :STR:STR to a random enemy and applies **poison** for 3 turns\n>:poison: **Poison** - deals [stat] of your :MAG:MAG as true damage at the end of the turn<",
+        "description": "Deals [stat] of your :STR:STR to a random enemy and applies **poison** for 3 turns\n:poison: **Poison** - deals [stat] of your :MAG:MAG as true damage at the end of the turn",
         "normalPassiveAmount":1
     },
     {
@@ -520,7 +520,7 @@
                 "digits":5
             }
         ],
-        "description": "Apply **Attack Up** to all allies for 2 turns. If the user has enough WP when the buff expires, the buff will be recasted with a stronger version.\n>:attup: **Attack Up** - Increases all damage by [stat]. Cannot stack with other Attack Up buffs.<>:attup+: **Attack Up+** - Increases all damage by [stat]. Cannot stack with other Attack Up+ buffs.<>:attup++: **Attack Up++** - Increases all damage by [stat]. Cannot stack with other Attack Up++ buffs.<",
+        "description": "Apply **Attack Up** to all allies for 2 turns. If the user has enough WP when the buff expires, the buff will be recasted with a stronger version.\n:attup: **Attack Up** - Increases all damage by [stat]. Cannot stack with other Attack Up buffs.\n:attup+: **Attack Up+** - Increases all damage by [stat]. Cannot stack with other Attack Up+ buffs.\n:attup++: **Attack Up++** - Increases all damage by [stat]. Cannot stack with other Attack Up++ buffs.",
         "normalPassiveAmount":1
     },
     {

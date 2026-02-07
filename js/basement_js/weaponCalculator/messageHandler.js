@@ -22,9 +22,7 @@ function generateDescription(weaponOrPassive) {
         { name: "IMAGE",    pattern: ":[A-Za-z0-9_+]+:" },
         { name: "BOLD",     pattern: "\\*\\*[^*]+\\*\\*" },
         { name: "ITALIC",   pattern: "\\*[^*]+\\*" },
-        { name: "NEWLINE",  pattern: "\\r?\\n" },
-        { name: "BQ_OPEN",  pattern: ">" },
-        { name: "BQ_CLOSE", pattern: "<" }
+        { name: "NEWLINE",  pattern: "\\r?\\n" }
     ];
 
     const tokenRegex = new RegExp("(" + TOKEN_SPECS.map(s => s.pattern).join("|") + ")", "g");
@@ -38,33 +36,7 @@ function generateDescription(weaponOrPassive) {
     const parts = weaponOrPassive.description.split(tokenRegex);
     let statIndex = 0;
 
-    const root = make("div");
-
-    let currentParent = root;
-    const bqStack = [];
-
-    for (const part of parts) handlePart(part);
-
-    return root;
-
-    function handlePart(part) {
-        if (part === ">") {
-            const bq = document.createElement("blockquote");
-            currentParent.appendChild(bq);
-            bqStack.push(currentParent);
-            currentParent = bq;
-            return;
-        }
-
-        if (part === "<") {
-            if (bqStack.length > 0) {
-                currentParent = bqStack.pop();
-            }
-            return;
-        }
-
-        currentParent.appendChild(elif(part));
-    }
+    return make("div",{},parts.map(elif));
 
     function elif(part) {
         if (NEWLINE_RE.test(part)) return document.createElement("br");
