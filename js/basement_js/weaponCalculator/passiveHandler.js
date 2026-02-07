@@ -23,10 +23,7 @@ export function init(weaponArray, passiveArray){
 }
 
 export function appendPassiveNode(passive) {
-    const wrapper = make("div",{
-        className:"passiveItem",
-        dataset:{id:passive.id}
-    });
+    const wrapper = make("div",{className:"passive-item"});
 
     passive.image = getWeaponImage(passive);
     passive.image.className = 'discord-embed-emote weaponCalc-passive-emote';

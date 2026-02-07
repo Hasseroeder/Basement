@@ -870,11 +870,11 @@ a:hover {
   height:1.4rem;
 }
 
-.lineFromWeaponCalculator.description{
+.lineFromWeaponCalculator.description, .passive-item{
   height:unset;
 }
 
-.lineFromWeaponCalculator.description > div{
+.lineFromWeaponCalculator.description > div, .passive-item > *{
   display: inline;
   white-space: normal; 
   line-height: 1.4rem;
