@@ -14,7 +14,8 @@
                 "digits":5
             }
         ],
-        "description":"**Strength** - Increases your :STR:STR by [stat]"
+        "buffSlugs":[],
+        "description":" **Strength** - Increases your :STR:STR by [stat]"
     },
     {
         "objectType":"passive",
@@ -31,7 +32,8 @@
                 "digits":5
             }
         ],
-        "description":"**Magic** - Increases your :MAG:MAG by [stat]"
+        "buffSlugs":[],
+        "description":" **Magic** - Increases your :MAG:MAG by [stat]"
     },
     {
         "objectType":"passive",
@@ -48,7 +50,8 @@
                 "digits":5
             }
         ],
-        "description":"**Health Point** - Increases your :HP:HP by [stat]"
+        "buffSlugs":[],
+        "description":" **Health Point** - Increases your :HP:HP by [stat]"
     },
     {
         "objectType":"passive",
@@ -65,7 +68,8 @@
                 "digits":4
             }
         ],
-        "description":"**Weapon Point** - Increases your :WP:WP by [stat]"
+        "buffSlugs":[],
+        "description":" **Weapon Point** - Increases your :WP:WP by [stat]"
     },
     {
         "objectType":"passive",
@@ -82,7 +86,8 @@
                 "digits":4
             }
         ],
-        "description":"**Physical Resistance** - Increases your :iPR:iPR by [stat]"
+        "buffSlugs":[],
+        "description":" **Physical Resistance** - Increases your :iPR:iPR by [stat]"
     },
     {
         "objectType":"passive",
@@ -99,7 +104,8 @@
                 "digits":4
             }
         ],
-        "description":"**Magical Resistance** - Increases your :iMR:iMR by [stat]"
+        "buffSlugs":[],
+        "description":" **Magical Resistance** - Increases your :iMR:iMR by [stat]"
     },
     {
         "objectType":"passive",
@@ -116,7 +122,8 @@
                 "digits":4
             }
         ],
-        "description":"**Lifesteal** - All damage you deal heals you for [stat] of the damage dealt!"
+        "buffSlugs":[],
+        "description":" **Lifesteal** - All damage you deal heals you for [stat] of the damage dealt!"
     },
     {
         "objectType":"passive",
@@ -133,7 +140,8 @@
                 "digits":4
             }
         ],
-        "description":"**Thorns** - Reflect [stat] of the damage dealt to you as true damage"
+        "buffSlugs":[],
+        "description":" **Thorns** - Reflect [stat] of the damage dealt to you as true damage"
     },
     {
         "objectType":"passive",
@@ -150,7 +158,8 @@
                 "digits":5
             }
         ],
-        "description":"**Mana Tap** - All damage you deal replenishes your :WP:WP for [stat] of the damage dealt!"
+        "buffSlugs":[],
+        "description":" **Mana Tap** - All damage you deal replenishes your :WP:WP for [stat] of the damage dealt!"
     },
     {
         "objectType":"passive",
@@ -167,7 +176,8 @@
                 "digits":4
             }
         ],
-        "description":"**Absolve** - When healed, deal [stat] of the healed amount to a random enemy as :MAG:MAG damage"
+        "buffSlugs":[],
+        "description":" **Absolve** - When healed, deal [stat] of the healed amount to a random enemy as :MAG:MAG damage"
     },
     {
         "objectType":"passive",
@@ -184,7 +194,8 @@
                 "digits":4
             }
         ],
-        "description":"**Safeguard** - Negate [stat] of the damage dealt to you with :WP:WP"
+        "buffSlugs":[],
+        "description":" **Safeguard** - Negate [stat] of the damage dealt to you with :WP:WP"
     },
     {
         "objectType":"passive",
@@ -208,7 +219,8 @@
                 "digits":5
             }
         ],
-        "description":"**Critical** - Every attack has a [stat] chance to deal [stat] more damage. This can apply to heals."
+        "buffSlugs":[],
+        "description":" **Critical** - Every attack has a [stat] chance to deal [stat] more damage. This can apply to heals."
     },
     {
         "objectType":"passive",
@@ -225,7 +237,8 @@
                 "digits":5
             }
         ],
-        "description":"**Discharge** - When :WP:WP is replenished, deal [stat] of the replenished amount to a random enemy as :MAG:MAG damage"
+        "buffSlugs":[],
+        "description":" **Discharge** - When :WP:WP is replenished, deal [stat] of the replenished amount to a random enemy as :MAG:MAG damage"
     },
     {
         "objectType":"passive",
@@ -242,7 +255,8 @@
                 "digits":5
             }
         ],
-        "description":"**Kamikaze** - When the animal dies, deal [stat] of its max :HP:HP as :MAG:MAG dmg to the attacker"
+        "buffSlugs":[],
+        "description":" **Kamikaze** - When the animal dies, deal [stat] of its max :HP:HP as :MAG:MAG dmg to the attacker"
     },
     {
         "objectType":"passive",
@@ -259,7 +273,8 @@
                 "digits":5
             }
         ],
-        "description":"**Regeneration** - Heal [stat] of your max :HP:HP after every turn"
+        "buffSlugs":[],
+        "description":" **Regeneration** - Heal [stat] of your max :HP:HP after every turn"
     },
     {
         "objectType":"passive",
@@ -276,7 +291,8 @@
                 "digits":4
             }
         ],
-        "description":"**Energize** - Replenish [stat] :WP:WP after every turn"
+        "buffSlugs":[],
+        "description":" **Energize** - Replenish [stat] :WP:WP after every turn"
     },
     {
         "objectType":"passive",
@@ -293,7 +309,8 @@
                 "digits":4
             }
         ],
-        "description":"**Sprout** - Increase all incoming healing by [stat]"
+        "buffSlugs":[],
+        "description":" **Sprout** - Increase all incoming healing by [stat]"
     },
     {
         "objectType":"passive",
@@ -310,7 +327,8 @@
                 "digits":4
             }
         ],
-        "description":"**Enrage** - Every 10% of missing health gives [stat] extra damage"
+        "buffSlugs":[],
+        "description":" **Enrage** - Every 10% of missing health gives [stat] extra damage"
     },
     {
         "objectType":"passive",
@@ -334,7 +352,8 @@
                 "digits":5
             }
         ],
-        "description":"**Sacrifice** - When this animal dies, heal your teammates for [stat] of its Max :HP:HP and replenish for [stat] of its Max :WP:WP"
+        "buffSlugs":[],
+        "description":" **Sacrifice** - When this animal dies, heal your teammates for [stat] of its Max :HP:HP and replenish for [stat] of its Max :WP:WP"
     },
     {
         "objectType":"passive",
@@ -351,7 +370,8 @@
                 "digits":4
             }
         ],
-        "description":"**Snail** - Your pet snail fights with you. Whenever you attack an animal, snail will slap a random enemy for [stat] of the damage dealt."
+        "buffSlugs":[],
+        "description":" **Snail** - Your pet snail fights with you. Whenever you attack an animal, snail will slap a random enemy for [stat] of the damage dealt."
     },
     {
         "objectType":"passive",
@@ -368,6 +388,7 @@
                 "digits":4
             }
         ],
-        "description":"**Knowledge** - This passive does not do anything in battle. However, it will give this animal [stat] extra xp after each battle."
+        "buffSlugs":[],
+        "description":" **Knowledge** - This passive does not do anything in battle. However, it will give this animal [stat] extra xp after each battle."
     }
 ]

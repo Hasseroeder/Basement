@@ -24,10 +24,22 @@
                                 <span class="discord-embed-header">
                                     <div id="weaponHeader" class="discord-text-bolder"></div>
                                 </span>
-                                <div id="weaponName" class="lineFromWeaponCalculator" style="margin-top: 0.5rem;"></div>
-                                <div id="ownerID"class="lineFromWeaponCalculator"></div>
-                                <div id="weaponID" class="lineFromWeaponCalculator"></div>
-                                <div id="shardValue" class="lineFromWeaponCalculator"></div>
+                                <div class="lineFromWeaponCalculator" style="margin-top: 0.5rem;">
+                                    <strong>Name:&nbsp;</strong>
+                                    <div id="weaponName"></div>
+                                </div>
+                                <div class="lineFromWeaponCalculator">
+                                    <strong>Owner:&nbsp;</strong>
+                                    <div id="ownerID"></div>
+                                </div>
+                                <div class="lineFromWeaponCalculator">
+                                    <strong>ID:&nbsp;</strong> 
+                                    <code id="weaponID" class="discord-code weapon-id"></code>
+                                </div>
+                                <div class="lineFromWeaponCalculator">
+                                    <strong>Shard Value:&nbsp;</strong> 
+                                    <div id="shardValue"></div>
+                                </div>
                                 <div class="lineFromWeaponCalculator">
                                     <strong>Quality:&nbsp;</strong> 
                                     <img id="weaponQualityImage" class="discord-embed-emote">
@@ -37,9 +49,17 @@
                                     <strong>Wear:&nbsp;</strong>                                   
                                     <div id="wearSelect"></div>                                        
                                 </div>
-                                <div id="WP-Cost" class="lineFromWeaponCalculator"></div>
+                                <div class="lineFromWeaponCalculator">
+                                    <div style="display: flex; align-items: center;">
+                                        <strong>WP Cost:&nbsp;</strong>
+                                        <div id="WP-Cost"></div>
+                                        <img alt=":WP:" aria-label="WP" title=":WP:" class="discord-embed-emote" src="../media/owo_images/battleEmojis/WP.png">
+                                    </div>
+
+                                </div>
                                 <div class="lineFromWeaponCalculator header">Description:</div>
                                 <div id="description" class="lineFromWeaponCalculator description"></div>
+                                <div class="buffContainer"></div>
                                 <div class="passiveContainer"></div>
                                 <div class="add-passive-wrapper">
                                     <div class="text original">+ add passive</div>

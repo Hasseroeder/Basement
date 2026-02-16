@@ -1,15 +1,16 @@
 import * as messageHandler from "./messageHandler.js"
-import { getWeaponImage, getRarity } from './util.js';
+import { getRarity } from './util.js';
 import { make } from "../util/injectionUtil.js"
 
 const pList = document.querySelector(".passiveContainer");
-let passives, weapons, boundWeapon;
+let passives, weapons, buffs, boundWeapon;
 
 export const bindWeapon = weapon => boundWeapon = weapon;
 
-export function init(weaponArray, passiveArray){
-    weapons  = weaponArray;
-    passives = passiveArray;
+export function init(weaponData,passiveData,buffData){
+    weapons  = weaponData;
+    passives = passiveData;
+    buffs = buffData;
     const pGrid = document.querySelector('.passiveGrid');
     pGrid.append(...passives.map(
         (passive,id)=>make("img",{
@@ -17,7 +18,7 @@ export function init(weaponArray, passiveArray){
             src: `media/owo_images/battleEmojis/f_${passive.slug}.png`,
             alt: passive.slug,
             title: passive.slug,
-            onmousedown: () => new Passive({id})
+            onmousedown: () => new Passive({slug: passive.slug})
         })
     ));
 }
@@ -25,10 +26,13 @@ export function init(weaponArray, passiveArray){
 export function appendPassiveNode(passive) {
     const wrapper = make("div",{className:"passive-item"});
 
-    passive.image = getWeaponImage(passive);
-    passive.image.className = 'discord-embed-emote weaponCalc-passive-emote';
-    passive.image.onclick = () => {passive.remove(); wrapper.remove();};
-
+    passive.image = make("img",{
+        ariaLabel: passive.slug,
+        alt:":"+passive.slug+":",
+        draggable:false,
+        className:"discord-embed-emote weapon-desc-image",
+        onclick: () => {passive.remove(); wrapper.remove();},
+    });
     boundWeapon.updateQualities();
 
     wrapper.append(
@@ -40,19 +44,44 @@ export function appendPassiveNode(passive) {
 
 export class Passive {
     constructor({
-        id, 
+        slug, 
         statOverride = []}
     ){
-        Object.assign(this, passives[id]); // I probably don't need all these params...
+        Object.assign(
+            this, 
+            passives.find(passive => passive.slug == slug)
+        );
         this.boundWeapon = boundWeapon;
+        this.slug = slug;
 
         this.stats = this.statConfig.map((statConfig,i) => ({
             noWearConfig: statConfig, 
             noWear: statOverride[i] ?? 100
         }));
 
+        const buffGenParams = this.buffSlugs.map((slug,i) => ({
+            slug,
+            statOverride: statOverride.buff[i]
+        }));
+        this.buffs = [];
+        buffGenParams.forEach(params => new buffHandler.Buff(params));
+
         boundWeapon.passives.push(this);
         appendPassiveNode(this);
+    }
+
+    get allStats(){
+        return [
+            ...this.stats,
+            ...this.buffs.flatMap(b => b.stats)
+        ].filter(Boolean)
+    }
+
+    get selfStats(){
+        return [
+            ...this.stats,
+            ...this.buffs.flatMap(b => b.stats)
+        ].filter(Boolean)
     }
 
     get prefix() { return "" }
@@ -69,6 +98,16 @@ export class Passive {
     }
     get wearBonus(){
         return this.boundWeapon.wearBonus;
+    }
+
+    updateImage(){
+        this.image.src = 
+            "media/owo_images/battleEmojis/"
+            + this.prefix
+            + this.tier.at(0)
+            + "_"
+            + this.slug
+            + ".png"
     }
 
     remove() {

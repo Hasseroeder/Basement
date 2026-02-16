@@ -1,0 +1,272 @@
+[
+    {
+        "name": "Taunt",
+        "description": "Taunts the enemy team and forces all opponents to attack this animal. Reduces incoming damage by [stat].",
+        "slug": "taunt",
+        "maxStack": 1,
+        "defensive": true,
+        "statConfig":[
+            {
+                "min":30,
+                "max":50,
+                "emoji":["taunt.png"],
+                "unit":"%",
+                "digits":4
+            }
+        ]
+    },
+    {
+        "name": "Poison",
+        "description": "Deals [stat] of your :MAG:MAG as true damage at the end of the turn.",
+        "slug": "poison",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[{
+            "min":30,
+            "max":50,
+            "emoji":["MAG.png","poison.png"],
+            "unit":"%",
+            "digits":5
+        }]
+    },
+    {
+        "name": "Flame",
+        "description": "Deals [stat] of your :MAG:MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal [stat] damage to the target.",
+        "slug": "flame",
+        "defensive": false,
+        "statConfig":[
+            {
+                "min":20,
+                "max":40,
+                "emoji":["MAG.png","flame.png"],
+                "unit":"%",
+                "digits":4
+            },
+            {
+                "min":80,
+                "max":110,
+                "emoji":["MAG.png","explosion.png"],
+                "unit":"%",
+                "digits":4
+            }
+        ]
+    },
+    {
+        "name": "Defense Up",
+        "description": "Reduces incoming damage by [stat].",
+        "slug": "defup",
+        "maxStack": 1,
+        "defensive": true,
+        "statConfig":[{
+            "min":20,
+            "max":30,
+            "emoji":["defup.png"],
+            "unit":"%",
+            "digits":4
+        }]
+    },
+    {
+        "name": "Freeze",
+        "description": "Next turn, prevent the target from attacking. Remove a stack after triggering.",
+        "slug": "freeze",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[]
+    },
+    {
+        "name": "Attack Up",
+        "description": "Increases all damage by [stat]. Cannot stack with other Attack Up buffs.",
+        "slug": "attup",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[{
+            "min":15,
+            "max":25,
+            "emoji":["attup.png"],
+            "unit":"%",
+            "digits":4
+        }]
+    },
+    {
+        "name": "Attack Up+",
+        "description": "Increases all damage by [stat]. Cannot stack with other Attack Up+ buffs.",
+        "slug": "attup+",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[{
+            "min":25,
+            "max":35,
+            "emoji":["attup+.png"],
+            "unit":"%",
+            "digits":4
+        }]
+    },
+    {
+        "name": "Attack Up++",
+        "description": "Increases all damage by [stat]. Cannot stack with other Attack Up++ buffs.",
+        "slug": "attup++",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[{
+            "min":40,
+            "max":50,
+            "emoji":["attup++.png"],
+            "unit":"%",
+            "digits":4
+        }]
+    },
+    {
+        "name": "Mortality",
+        "description": "Decreases all healing for this animal by [stat].",
+        "slug": "mort",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[{
+            "min":45,
+            "max":75,
+            "emoji":["HP.png","mort.png"],
+            "unit":"%",
+            "digits":4
+        }]
+    },
+    {
+        "name": "Celebration",
+        "description": "At the end of every turn, heal [stat] of your :iPR:iPR as :HP:HP and replenish [stat] of your :iMR:iMR as :WP:WP.",
+        "slug": "celeb",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[{
+            "min":20,
+            "max":50,
+            "emoji":["iPR.png","celeb.png"],
+            "unit":"%",
+            "digits":4
+        },{
+            "min":15,
+            "max":40,
+            "emoji":["iMR.png","celeb.png"],
+            "unit":"%",
+            "digits":5
+        }]
+    },
+    {
+        "name": "Leech",
+        "description": "The caster who applied this debuff steals [stat] of incoming heals and [stat] of incoming replenishes.",
+        "slug": "leech",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[{
+            "min":30,
+            "max":60,
+            "emoji":["leech_hp.png"],
+            "unit":"%",
+            "digits":4
+        },{
+            "min":30,
+            "max":60,
+            "emoji":["leech_wp.png"],
+            "unit":"%",
+            "digits":4
+        }]
+    },
+    {
+        "name": "Stinky",
+        "description": "Prevents any future buffs *AND* debuffs from being applied to this animal. On success, deal [stat] :MAG:MAG to the animal. Stinky can be applied to stinky animals.",
+        "slug": "stinky",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[{
+            "min":20,
+            "max":50,
+            "emoji":["MAG.png","stinky.png"],
+            "unit":"%",
+            "digits":4
+        }]
+    },
+    {
+        "name": "Stoneskin",
+        "description": "Reduces incoming Physical damage by [stat] per stack. Remove all stacks upon taking damage of other types.",
+        "slug": "stoneskin",
+        "maxStack": 5,
+        "defensive": false,
+        "statConfig":[]
+    },
+    {
+        "name": "Spellskin",
+        "description": "Reduces incoming Magical damage by [stat] per stack. Remove all stacks upon taking damage of other types.",
+        "slug": "spellskin",
+        "maxStack": 5,
+        "defensive": false,
+        "statConfig":[]
+    },
+    {
+        "name": "Pest",
+        "description": "At the end of the turn, each stack of pests will deal [stat] of your :MAG:MAG as magical damage to the target. Pests will leave after they deal damage.",
+        "slug": "pest",
+        "maxStack": 1,
+        "defensive": false,
+        "statConfig":[{
+            "min":20,
+            "max":40,
+            "emoji":[],
+            "unit":"%",
+            "digits":5
+        }]
+    },
+    {
+        "name": "Thorn Tether",
+        "description": "Create a tether from the weapon owner to this animal. The owner absorbs [stat] of the incoming damage dealt, but also intercepts [stat] of healing and [stat] replenishing from the target.",
+        "slug": "tether",
+        "maxStack": 1,
+        "defensive": true,
+        "statConfig":[{
+            "min":20,
+            "max":40,
+            "emoji":[],
+            "unit":"%",
+            "digits":5
+        },
+        {
+            "min":20,
+            "max":30,
+            "emoji":[],
+            "unit":"%",
+            "digits":5
+        },
+        {
+            "min":20,
+            "max":30,
+            "emoji":[],
+            "unit":"%",
+            "digits":5
+        }]
+    },
+    {
+        "name": "Sin",
+        "description": "When consumed, each stack deals [stat] of your :StrMag: **highest** offense stat as physical damage to an enemy.",
+        "slug": "sin",
+        "maxStack": 10,
+        "defensive": false,
+        "statConfig":[{
+            "min":5,
+            "max":10,
+            "emoji":[],
+            "unit":"%",
+            "digits":5
+        }]
+    },
+    {
+        "name": "Virtue",
+        "description": "When consumed, each stack deals [stat] of your :StrMag: **lowest** offense stat as magical damage to an enemy.",
+        "slug": "virtue",
+        "maxStack": 10,
+        "defensive": false,
+        "statConfig":[{
+            "min":20,
+            "max":30,
+            "emoji":[],
+            "unit":"%",
+            "digits":5
+        }]
+    }
+]

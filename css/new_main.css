@@ -627,6 +627,10 @@ a:hover {
   font-size: 0.8rem;
 }
 
+.buffContainer{
+  font-size: 0.8rem;
+}
+
 .passiveGrid{
   display:grid;
   grid-template-rows: repeat(2,1.4rem);
@@ -870,11 +874,11 @@ a:hover {
   height:1.4rem;
 }
 
-.lineFromWeaponCalculator.description, .passive-item{
+.lineFromWeaponCalculator.description, .passive-item, .buff-item{
   height:unset;
 }
 
-.lineFromWeaponCalculator.description > div, .passive-item > *{
+.lineFromWeaponCalculator.description > div, .passive-item > *, .buff-item > *{
   display: inline;
   white-space: normal; 
   line-height: 1.4rem;
@@ -1043,11 +1047,7 @@ a:hover {
   width:100%;
 }
 
-.weaponCalc-passive-emote{
-  margin:0 0.1rem 0.15rem 0;
-}
-
-.weaponCalc-passive-emote:hover{
+.passive-item .discord-embed-emote:hover{
   background-color: #666;
   cursor: var(--cur-pointer);
 }

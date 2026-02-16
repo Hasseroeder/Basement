@@ -7,6 +7,7 @@
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
         ],
+        "buffSlugs":[],
         "statConfig":[]
     },
     {
@@ -23,20 +24,20 @@
             {
                 "min":35,
                 "max":55,
-                "type":"",
                 "emoji":["STR.png"],
                 "unit":"%",
-                "digits":4
+                "digits":4.5
 
-            },{
-                "min":200,
-                "max":100,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
+        "wpStatConfig":{
+            "min":200,
+            "max":100,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":[],
         "description": "Deals [stat] of your :STR:STR to all opponents",
         "normalPassiveAmount":1
     },
@@ -54,19 +55,19 @@
             {
                 "min":100,
                 "max":150,
-                "type":"",
                 "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":5
-            },{
-                "min":225,
-                "max":150,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":6
             }
         ],
+        "wpStatConfig":{
+            "min":225,
+            "max":150,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":6
+        },
+        "buffSlugs":[],
         "description": "Heals [stat] of your :MAG:MAG to the lowest health ally. This weapon can overheal up to 50% of max :HP:HP.",
         "normalPassiveAmount":1
     },
@@ -84,19 +85,19 @@
             {
                 "min":110,
                 "max":160,
-                "type":"",
                 "emoji":["STR.png"],
                 "unit":"%",
                 "digits":5
-            },{
-                "min":220,
-                "max":120,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
+        "wpStatConfig":{
+            "min":220,
+            "max":120,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":[],
         "description": "Deals [stat] of your :STR:STR to a random opponent.",
         "normalPassiveAmount":1
     },
@@ -114,12 +115,12 @@
             {
                 "min":5,
                 "max":15,
-                "type":"",
                 "emoji":["all_stats.gif","stat_increase.png"],
                 "unit":"%",
                 "digits":4
             }
         ],
+        "buffSlugs":[],
         "description": "Increase :all_stats:ALL stats by [stat], and changes your physical attacks to do 65%:STR:STR and 65%:MAG:MAG as TRUE damage. This weapon does not have an active ability.",
         "normalPassiveAmount":0
     },
@@ -133,24 +134,16 @@
             {"name":"Viability: ", "stars":5},
             {"name":"Ease of use: ","stars":5}
         ],
-        "statConfig":[
-            {
-                "min":30,
-                "max":50,
-                "type":"",
-                "emoji":["taunt.png"],
-                "unit":"%",
-                "digits":4
-            },{
-                "min":250,
-                "max":150,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
-            }
-        ],
-        "description": "Adds a **taunt** buff to your animal for 2 turns\n\n:taunt: **Taunt** - Taunts the enemy team and forces all opponents to attack this animal. Reduces incoming damage by [stat]",
+        "statConfig":[],
+        "wpStatConfig":{
+            "min":250,
+            "max":150,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["taunt"],
+        "description": "Adds a **taunt** buff to your animal for 2 turns.",
         "normalPassiveAmount":1
     },
     {
@@ -164,6 +157,7 @@
             {"name":"Ease of use: ","stars":1}
         ],
         "statConfig":[],
+        "buffSlugs":[],
         "description": "This weapon has no active ability, but comes with two passives!",
         "normalPassiveAmount":2
     },
@@ -181,19 +175,19 @@
             {
                 "min":25,
                 "max":45,
-                "type":"",
                 "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
-            },{
-                "min":200,
-                "max":100,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
+        "wpStatConfig":{
+            "min":200,
+            "max":100,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":[],
         "description": "Deal [stat] of your :MAG:MAG to ALL enemies and heal ALL allies by the damage dealt",
         "normalPassiveAmount":1
     },
@@ -211,28 +205,20 @@
             {
                 "min":70,
                 "max":100,
-                "type":"",
                 "emoji":["STR.png"],
                 "unit":"%",
                 "digits":5
-            },
-            {
-                "min":30,
-                "max":50,
-                "type":"",
-                "emoji":["MAG.png","poison.png"],
-                "unit":"%",
-                "digits":5
-            },{
-                "min":200,
-                "max":100,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
-        "description": "Deals [stat] of your :STR:STR to a random enemy and applies **poison** for 3 turns\n:poison: **Poison** - deals [stat] of your :MAG:MAG as true damage at the end of the turn",
+        "wpStatConfig":{
+            "min":200,
+            "max":100,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["poison"],
+        "description": "Deals [stat] of your :STR:STR to a random enemy and applies **poison** for 3 turns.",
         "normalPassiveAmount":1
     },
     {
@@ -249,7 +235,6 @@
             {
                 "min":90,
                 "max":120,
-                "type":"",
                 "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":5
@@ -257,19 +242,19 @@
             {
                 "min":20,
                 "max":40,
-                "type":"",
                 "emoji":["wp_transfer.png"],
                 "unit":"%",
                 "digits":4
-            },{
-                "min":250,
-                "max":150,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
+        "wpStatConfig":{
+            "min":250,
+            "max":150,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":[],
         "description": "Deal [stat] of your :MAG:MAG to a random enemy and transfer their :WP:WP to an ally equal to [stat] of the damage done",
         "normalPassiveAmount":1
     },
@@ -287,36 +272,20 @@
             {
                 "min":75,
                 "max":95,
-                "type":"",
                 "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
-            },
-            {
-                "min":20,
-                "max":40,
-                "type":"",
-                "emoji":["MAG.png","flame.png"],
-                "unit":"%",
-                "digits":4
-            },
-            {
-                "min":80,
-                "max":110,
-                "type":"",
-                "emoji":["MAG.png","explosion.png"],
-                "unit":"%",
-                "digits":4
-            },{
-                "min":200,
-                "max":100,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
-        "description": "Deals [stat] of your :MAG:MAG to a random enemy and applies **flame** for 3 turns\n\n:flame: **Flame** - Deals [stat] of your :MAG:MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal [stat] damage to the target.",
+        "wpStatConfig":{
+            "min":200,
+            "max":100,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["flame"],
+        "description": "Deals [stat] of your :MAG:MAG to a random enemy and applies **flame** for 3 turns.",
         "normalPassiveAmount":1
     },
     {
@@ -333,19 +302,19 @@
             {
                 "min":35,
                 "max":65,
-                "type":"",
                 "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
-            },{
-                "min":200,
-                "max":100,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
+        "wpStatConfig":{
+            "min":200,
+            "max":100,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":[],
         "description": "Sends a wave of energy and deals [stat] of your :MAG:MAG to all opponents",
         "normalPassiveAmount":1
     },
@@ -363,28 +332,20 @@
             {
                 "min":30,
                 "max":50,
-                "type":"",
                 "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
-            },
-            {
-                "min":20,
-                "max":30,
-                "type":"",
-                "emoji":["defup.png"],
-                "unit":"%",
-                "digits":4
-            },{
-                "min":250,
-                "max":150,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
-        "description": "Heal all allies for [stat] of your :MAG:MAG and applies **Defense Up** for 2 turns\n\n:defup: **Defense Up** - Reduces incoming damage by [stat]. Cannot stack with other Defense Up buffs",
+        "wpStatConfig":{
+            "min":250,
+            "max":150,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["defup"],
+        "description": "Heal all allies for [stat] of your :MAG:MAG and applies **Defense Up** for 2 turns.",
         "normalPassiveAmount":1
     },
     {
@@ -401,19 +362,19 @@
             {
                 "min":60,
                 "max":90,
-                "type":"",
                 "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
-            },{
-                "min":200,
-                "max":125,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":6
             }
         ],
+        "wpStatConfig":{
+            "min":200,
+            "max":125,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":6
+        },
+        "buffSlugs":[],
         "description": "Replenish [stat] of your :MAG:MAG as :WP:WP to an ally with the lowest :WP:WP. This weapon can overreplenish up to 50% of max :WP:WP.",
         "normalPassiveAmount":1
     },
@@ -431,19 +392,19 @@
             {
                 "min":50,
                 "max":80,
-                "type":"",
                 "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":4
-            },{
-                "min":400,
-                "max":300,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
+        "wpStatConfig":{
+            "min":400,
+            "max":300,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":[],
         "description": "Revive a dead ally and heal them for [stat] of your :MAG:MAG",
         "normalPassiveAmount":1
     },
@@ -461,20 +422,20 @@
             {
                 "min":30,
                 "max":50,
-                "type":"",
                 "emoji":["STR.png"],
                 "unit":"%",
                 "digits":4
-            },{
-                "min":260,
-                "max":160,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
-        "description": "Deals [stat] of your :STR:STR to a random opponent and apply **Freeze** for 2 turns \n\n:freeze: **Freeze** - Freeze an enemy. They can not attack next turn.",
+        "wpStatConfig":{
+            "min":260,
+            "max":160,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["freeze"],
+        "description": "Deals [stat] of your :STR:STR to a random opponent and apply **Freeze** for 2 turns.",
         "normalPassiveAmount":1
     },
     {
@@ -487,40 +448,16 @@
             {"name":"Viability: ", "stars":1},
             {"name":"Ease of use: ","stars":1}
         ],
-        "statConfig":[
-            {
-                "min":15,
-                "max":25,
-                "type":"",
-                "emoji":["attup.png"],
-                "unit":"%",
-                "digits":4
-            },
-            {
-                "min":25,
-                "max":35,
-                "type":"",
-                "emoji":["attup+.png"],
-                "unit":"%",
-                "digits":4
-            },
-            {
-                "min":40,
-                "max":50,
-                "type":"",
-                "emoji":["attup++.png"],
-                "unit":"%",
-                "digits":4
-            },{
-                "min":300,
-                "max":250,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":5
-            }
-        ],
-        "description": "Apply **Attack Up** to all allies for 2 turns. If the user has enough WP when the buff expires, the buff will be recasted with a stronger version.\n:attup: **Attack Up** - Increases all damage by [stat]. Cannot stack with other Attack Up buffs.\n:attup+: **Attack Up+** - Increases all damage by [stat]. Cannot stack with other Attack Up+ buffs.\n:attup++: **Attack Up++** - Increases all damage by [stat]. Cannot stack with other Attack Up++ buffs.",
+        "statConfig":[],
+        "wpStatConfig":{
+            "min":300,
+            "max":250,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":5
+        },
+        "buffSlugs":["attup","attup+","attup++"],
+        "description": "Apply **Attack Up** to all allies for 2 turns. If the user has enough WP when the buff expires, the buff will be recasted with a stronger version.",
         "normalPassiveAmount":1
     },
     {
@@ -537,28 +474,20 @@
             {
                 "min":70,
                 "max":100,
-                "type":"",
                 "emoji":["STR.png"],
                 "unit":"%",
                 "digits":5
-            },
-            {
-                "min":45,
-                "max":75,
-                "type":"",
-                "emoji":["HP.png","mort.png"],
-                "unit":"%",
-                "digits":4
-            },{
-                "min":200,
-                "max":100,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
-        "description": "Deals [stat] of your :STR:STR to a random enemy and applies **Mortality** for 2 turns\n\n:mort: **Mortality** - Decreases all healing for this animal by [stat]",
+        "wpStatConfig":{
+            "min":200,
+            "max":100,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["mort"],
+        "description": "Deals [stat] of your :STR:STR to a random enemy and applies **Mortality** for 2 turns.",
         "normalPassiveAmount":1
     },
     {
@@ -571,32 +500,16 @@
             {"name":"Viability: ", "stars":5},
             {"name":"Ease of use: ","stars":3}
         ],
-        "statConfig":[
-            {
-                "min":20,
-                "max":50,
-                "type":"",
-                "emoji":["iPR.png","celeb.png"],
-                "unit":"%",
-                "digits":4
-            },
-            {
-                "min":15,
-                "max":40,
-                "type":"",
-                "emoji":["iMR.png","celeb.png"],
-                "unit":"%",
-                "digits":5
-            },{
-                "min":200,
-                "max":100,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
-            }
-        ],
-        "description": "Apply **Celebration** to an ally with the lowest health for 3 turns.\n\n:celeb: **Celebration** - At the end of every turn, heal [stat] of your :iPR:iPR as :HP:HP and restore [stat] of your :iMR:iMR as :WP:WP.",
+        "statConfig":[],
+        "wpStatConfig":{
+            "min":200,
+            "max":100,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["celeb"],
+        "description": "Apply **Celebration** to an ally with the lowest health for 3 turns.",
         "normalPassiveAmount":1
     },
     {
@@ -613,7 +526,6 @@
             {
                 "min":50,
                 "max":100,
-                "type":"",
                 "emoji":["STR.png"],
                 "unit":"%",
                 "digits":5
@@ -621,19 +533,19 @@
             {
                 "min":50,
                 "max":100,
-                "type":"",
                 "emoji":["MAG.png"],
                 "unit":"%",
                 "digits":5
-            },{
-                "min":220,
-                "max":150,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":6
             }
         ],
+        "wpStatConfig":{
+            "min":220,
+            "max":150,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":6
+        },
+        "buffSlugs":[],
         "description": "Remove a buff from an enemy. If successful, deal [stat] of your :MAG:MAG to them. Remove a debuff from an ally. If successful, heal [stat] of your :STR:STR to them.",
         "normalPassiveAmount":1
     },
@@ -651,7 +563,6 @@
             {
                 "min":50,
                 "max":80,
-                "type":"",
                 "emoji":["STR.png"],
                 "unit":"%",
                 "digits":4
@@ -659,36 +570,20 @@
             {
                 "min":40,
                 "max":60,
-                "type":"",
                 "emoji":["STR.png"],
                 "unit":"%",
                 "digits":4
-            },
-            {
-                "min":30,
-                "max":60,
-                "type":"",
-                "emoji":["HP.png","leech.png"],
-                "unit":"%",
-                "digits":4
-            },
-            {
-                "min":30,
-                "max":60,
-                "type":"",
-                "emoji":["WP.png","leech.png"],
-                "unit":"%",
-                "digits":4
-            },{
-                "min":230,
-                "max":130,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
-        "description": "Deal [stat] of your :STR:STR to a random enemy and apply **Leech** for 3 turns. If the **Leech** debuff is already on the target, deal [stat] more damage.\n\n:leech: **Leech** - User who applied this debuff steals [stat] of incoming heals and [stat] of incoming replenishes.",
+        "wpStatConfig":{
+            "min":230,
+            "max":130,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["leech"],
+        "description": "Deal [stat] of your :STR:STR to a random enemy and apply **Leech** for 3 turns. If the **Leech** debuff is already on the target, deal [stat] more damage.",
         "normalPassiveAmount":1
     },
     {
@@ -705,28 +600,20 @@
             {
                 "min":50,
                 "max":80,
-                "type":"",
                 "emoji":["STR.png"],
                 "unit":"%",
                 "digits":4
-            },
-            {
-                "min":20,
-                "max":50,
-                "type":"",
-                "emoji":["MAG.png","stinky.png"],
-                "unit":"%",
-                "digits":4
-            },{
-                "min":280,
-                "max":180,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
-        "description": "Deal [stat] of your :STR:STR to a random enemy and apply **Stinky** for 2 turns.\n\n:stinky: **Stinky** - Prevents any future buffs *AND* debuffs to be applied to this animal. On success, deal [stat] :MAG:MAG to the animal.",
+        "wpStatConfig":{
+            "min":280,
+            "max":180,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["stinky"],
+        "description": "Deal [stat] of your :STR:STR to a random enemy and apply **Stinky** for 2 turns.",
         "normalPassiveAmount":1
     },
     {
@@ -743,51 +630,43 @@
             {
                 "min":1,
                 "max":40,
-                "type":"",
-                "emoji":["StrMag.png"],
-                "unit":"%",
-                "digits":5
-            },
-            {
-                "min":1,
-                "max":40,
-                "type":"",
-                "emoji":["StrMag.png"],
-                "unit":"%",
-                "digits":5
-            },
-            {
-                "min":1,
-                "max":40,
-                "type":"",
-                "emoji":["StrMag.png"],
-                "unit":"%",
-                "digits":5
-            },
-            {
-                "min":1,
-                "max":40,
-                "type":"",
-                "emoji":["StrMag.png"],
-                "unit":"%",
-                "digits":5
-            },
-            {
-                "min":1,
-                "max":40,
-                "type":"",
                 "emoji":["StrMag.png"],
                 "unit":"%",
                 "digits":5
             },{
-                "min":200,
-                "max":100,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
+                "min":1,
+                "max":40,
+                "emoji":["StrMag.png"],
+                "unit":"%",
+                "digits":5
+            },{
+                "min":1,
+                "max":40,
+                "emoji":["StrMag.png"],
+                "unit":"%",
+                "digits":5
+            },{
+                "min":1,
+                "max":40,
+                "emoji":["StrMag.png"],
+                "unit":"%",
+                "digits":5
+            },{
+                "min":1,
+                "max":40,
+                "emoji":["StrMag.png"],
+                "unit":"%",
+                "digits":5
             }
         ],
+        "wpStatConfig":{
+            "min":200,
+            "max":100,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":[],
         "description": "Punches a random enemy 5 times. Each punch randomly deals either a percentage of your :STR:STR or :MAG:MAG. Punches deals: [stat], [stat], [stat], [stat], [stat]",
         "normalPassiveAmount":1
     },
@@ -805,28 +684,25 @@
             {
                 "min":5,
                 "max":25,
-                "type":"Steal Buff",
                 "emoji":[],
                 "unit":"%",
                 "digits":5
-            },
-            {
+            },{
                 "min":5,
                 "max":25,
-                "type":"Transfer Debuff",
                 "emoji":["StrMag.png"],
                 "unit":"%",
                 "digits":5
-            },
-	    {
-                "min":250,
-                "max":150,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
+        "wpStatConfig":{
+            "min":250,
+            "max":150,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":[],
         "description": "Steal a buff from a random enemy and give it to a random ally with +[stat]% effectiveness. Transfers a debuff from a random ally to a random enemy with +[stat]% effectiveness. Any moved buffs or debuffs last an additional 1 turn and calculated based on the original caster's stats.",
         "normalPassiveAmount":1
     },
@@ -844,7 +720,6 @@
             {
                 "min":10,
                 "max":20,
-                "type":"Absorb WP",
                 "emoji":["WP.png"],
                 "unit":"%",
                 "digits":5
@@ -852,20 +727,19 @@
             {
                 "min":35,
                 "max":45,
-                "type":"MAG damage for WP",
                 "emoji":["MAG.png", "WP.png"],
                 "unit":"%",
                 "digits":5
-            },
-	    {
-                "min":100,
-                "max":50,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
             }
         ],
+        "wpStatConfig":{
+            "min":100,
+            "max":50,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":[],
         "description": "Absorb [stat] of all allies' current WP to deal damage to an enemy. Deals [stat]% of your MAG for every 100 WP absorbed.",
         "normalPassiveAmount":1
     },
@@ -879,41 +753,16 @@
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
         ],
-        "statConfig":[
-            {
-                "min":20,
-                "max":40,
-                "type":"Damage Absorb",
-                "emoji":[],
-                "unit":"%",
-                "digits":5
-            },
-            {
-                "min":20,
-                "max":30,
-                "type":"Healing Intercept",
-                "emoji":[],
-                "unit":"%",
-                "digits":5
-            },
-            {
-                "min":20,
-                "max":30,
-                "type":"Replenishing Intercept",
-                "emoji":[],
-                "unit":"%",
-                "digits":5
-            },
-	    {
-                "min":250,
-                "max":150,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
-            }
-        ],
-        "description": "At the start of the turn apply Thorn Tether to your allies for 2 turns. Thorn Tether - Create a tether from the weapon owner to this animal. The owner absorbs [stat]% of the incoming damage dealt, but also intercepts [stat]% of healing and [stat]% replenishing from the target.",
+        "statConfig":[],
+        "wpStatConfig":{
+            "min":250,
+            "max":150,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["tether"],
+        "description": "At the start of the turn apply Thorn Tether to your allies for 2 turns.",
         "normalPassiveAmount":1
     },
     {
@@ -926,33 +775,16 @@
             {"name":"Viability: ", "stars":0},
             {"name":"Ease of use: ","stars":0}
         ],
-        "statConfig":[
-            {
-                "min":5,
-                "max":10,
-                "type":"Sin",
-                "emoji":[],
-                "unit":"%",
-                "digits":5
-            },
-            {
-                "min":20,
-                "max":30,
-                "type":"Virtue",
-                "emoji":[],
-                "unit":"%",
-                "digits":5
-            },
-	    {
-                "min":225,
-                "max":125,
-                "type":"WP-Cost",
-                "emoji":["WP.png"],
-                "unit":"",
-                "digits":3
-            }
-        ],
-        "description": "Unleash judgement on an enemy. Consume all stacks of Sin and Virtue. Gain a stack of Sin when an ally deals damage to an animal. Gain a stack of Virtue when an ally heals or replenishes an animal. Sin - When consumed, each stack deal [stat]% of your highest offensive stat as physical damage to an enemy. Virtue - When consumed, each stack deals [stat]% of your lowest offense stat as magical damage to an enemy.",
+        "statConfig":[],
+        "wpStatConfig":{
+            "min":225,
+            "max":125,
+            "emoji":["WP.png"],
+            "unit":"",
+            "digits":3
+        },
+        "buffSlugs":["sin","virtue"],
+        "description": "Unleash judgement on an enemy. Consume all stacks of Sin and Virtue. Gain a stack of Sin when an ally deals damage to an animal. Gain a stack of Virtue when an ally heals or replenishes an animal.",
         "normalPassiveAmount":1
     }
 ]

@@ -1,4 +1,4 @@
-import { valueToPercent, percentToValue,getShardValue,getStatImage,getTierEmoji, getTierEmojiPath } from './util.js'
+import { valueToPercent, percentToValue,getStatImage,getTierEmoji, getTierEmojiPath } from './util.js'
 import { make } from "../util/injectionUtil.js"
 
 const el = {
@@ -66,19 +66,11 @@ function generateDescription(weaponOrPassive) {
     }
 }
 
-function generateWPInput(weapon){
-    const stat = weapon.wpStat;
-    const child = stat
-        ? (stat.IO = new WeaponStat(stat, weapon), stat.IO.wrapper)
+function generateWPInput(){
+    const stat = boundWeapon.wpStat;
+    return stat
+        ? (stat.IO = new WeaponStat(stat, boundWeapon), stat.IO.wrapper)
         : `\u00A0${0}\u00A0`;
-
-    return make("div",
-        {
-            innerHTML:"<strong>WP Cost:&nbsp;</strong>",
-            style: {display: "flex", alignItems: "center"}
-        },
-        [child,getStatImage("WP")]
-    );
 }
 
 const clamp = (val, config) => {
@@ -219,17 +211,21 @@ class WeaponStat {
 
 function displayInfo(){
     el.weaponHeader.textContent= boundWeapon.owner.name+"'s " +boundWeapon.wearName +boundWeapon.typeName;
-    el.weaponName.innerHTML="<strong>Name:&nbsp;</strong> " + boundWeapon.typeName;
-    el.ownerID.innerHTML="<strong>Owner:&nbsp;</strong> " + boundWeapon.owner.id;
-    el.weaponID.innerHTML=`<strong>ID:&nbsp;</strong> <code class="discord-code weapon-id">${boundWeapon.weaponID}</code>`;
-    el.shardValue.innerHTML= "<strong>Shard Value:&nbsp;</strong> " + getShardValue(boundWeapon);
+    el.weaponName.textContent= boundWeapon.typeName;
+    el.ownerID.textContent= boundWeapon.owner.id;
+    el.weaponID.textContent= boundWeapon.weaponID;
+    const wsValue = boundWeapon.shardValue;
+    const shardString = wsValue
+        ? wsValue + " selling / " + wsValue * 2.5 + " buying"
+        : "UNSELLABLE"
+    el.shardValue.textContent= shardString;
     el.weaponQualityImage.src= getTierEmojiPath(boundWeapon.tier);
     el.weaponQualitySpan.textContent= boundWeapon.qualityWear.toFixed(1)+"%"
 }
 
 function generateStatInputs(){
-	el.wpCost.replaceChildren(generateWPInput(boundWeapon));
-	el.description.replaceChildren(generateDescription(boundWeapon));
+	el.wpCost.append(generateWPInput());
+	el.description.append(generateDescription(boundWeapon));
 }
 
 function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {

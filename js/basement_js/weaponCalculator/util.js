@@ -1,19 +1,5 @@
 import { make } from "../util/injectionUtil.js"
 
-function getShardValue(weapon){
-    const value = {
-        common: 	1,
-        uncommon:   3,
-        rare:   	5,
-        epic:     	25,
-        mythic:  	300,
-        legendary:	1000,
-        fabled: 	5000
-    }[weapon.tier];
-    if (weapon.typeID==104) return "UNSELLABLE"
-    return value + " selling / " + Math.ceil(value*2.5) + " buying"
-}
-
 function getRarity(quality) {
 	const tiers = [
 		{ maxQuality: 20, name: "common" },
@@ -27,7 +13,7 @@ function getRarity(quality) {
 
 	const tier = tiers.find(t => Math.floor(quality) <= t.maxQuality)
 				|| tiers.at(-1);
-				//default to fabled if we have nonsensical input
+				//default to fabled
 	return tier.name;
 }
 
@@ -68,31 +54,6 @@ async function fileExists(url) {
     }
 }
 
-const getWeaponImage = weaponOrPassive => 
-    make("img",{
-        src : getWeaponImagePath(weaponOrPassive),
-        ariaLabel: weaponOrPassive.slug,
-        alt:":"+weaponOrPassive.slug+":",
-        draggable:false,
-        className:"discord-pet-display"
-    });
-
-function getWeaponImagePath(weaponOrPassive){
-    const prefix = weaponOrPassive.prefix;
-    const tier = {
-        common: 	"c",
-        uncommon:   "u",
-        rare:   	"r",
-        epic:     	"e",
-        mythic:  	"m",
-        legendary:	"l",
-        fabled: 	"f"
-    }[weaponOrPassive.tier];
-
-    const slug = weaponOrPassive.slug;
-    return `media/owo_images/battleEmojis/${prefix+tier+"_"+slug}.png`;
-}
-
 function getTierEmoji(tier){
     return make("img",{
         src: getTierEmojiPath(tier),
@@ -122,4 +83,4 @@ function getTierEmojiPath(stringOrQuality){
     }
 }
 
-export { valueToPercent, percentToValue,getShardValue,getStatImage,getWeaponImage,getWeaponImagePath, getTierEmoji, getTierEmojiPath, getRarity};
+export { valueToPercent, percentToValue,getStatImage, getTierEmoji, getTierEmojiPath, getRarity};

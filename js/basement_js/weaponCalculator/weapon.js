@@ -1,60 +1,74 @@
 import { loadJson } from '../util/jsonUtil.js';
 import * as blueprinter from './blueprintParser.js';
 import * as passiveHandler from './passiveHandler.js';
+import * as buffHandler from "./buffHandler.js";
 import * as messageHandler from "./messageHandler.js";
-import { getRarity, getWeaponImagePath } from './util.js';
+import { getRarity } from './util.js';
 import { debounce } from "../util/inputUtil.js";
 
-const [weapons, passives] = await Promise.all([
+const [weapons, passives, buffs] = await Promise.all([
     loadJson("../json/weapons.json"),
-    loadJson("../json/passives.json")
+    loadJson("../json/passives.json"),
+    loadJson("../json/buffs.json")
 ]);
-weapons.forEach(weapon=>{
-    weapon.statConfig.forEach(stat=>{
-        stat.range = stat.max - stat.min;
-        stat.step = stat.range/100;
-    })
-});
-passives.forEach(passive=>{
-    passive.statConfig.forEach(stat=>{
+
+[...weapons,...passives,...buffs].forEach(StatHaver=>{
+    [ ...StatHaver.statConfig , StatHaver.wpStatConfig ]
+    .filter(Boolean)
+    .forEach(stat=>{
         stat.range = stat.max - stat.min;
         stat.step = stat.range/100;
     })
 })
 
 // delete weapons[100]; // gotta get rid of fists... somehow
-passiveHandler.init(weapons, passives);
-blueprinter.init(weapons, passives);
+passiveHandler.init(weapons, passives, buffs);
+blueprinter.init(weapons, passives, buffs);
+buffHandler.init(weapons, passives, buffs);
 
 const updateHash = debounce(()=>
-    history.replaceState(null,'','#'+blueprinter.toStrings().join("-"))
+    history.replaceState(null,'','#'+blueprinter.toString())
 );
 
 export class Weapon{
     constructor({
         owner,             // {id:"hsse",name:"Heather"}
         weaponID,          // "664DFC"
-        id,                // 101
+        slug,              // 1
         wear,              // "worn"
-        statOverride,
+        statOverride,      // { buff: [], base: [ 55 ], wpStat: 55 }
         passiveGenParams   // []
     }={}){
         this.owner = owner;
         this.weaponID = weaponID;
-        this.typeID = id;
-        this.stats = statOverride.map((override,i)=>({
+        this.slug = slug;
+        this.stats = statOverride.base.map((override,i)=>({
             noWearConfig: this.staticData.statConfig[i],
-            noWear: override ?? 100
+            noWear: override
         }));
+
+        if (statOverride.wpStat)
+            this.wpStat = {
+                noWearConfig: this.staticData.wpStatConfig,
+                noWear: statOverride.wpStat
+            }
+
         this.image = document.getElementById("weaponImage");
         this._wear; 
 
         passiveHandler.bindWeapon(this);
         messageHandler.bindWeapon(this);
         blueprinter.bindWeapon(this);
-        
+        buffHandler.bindWeapon(this);
+
         this.passives = [];
+        this.buffs = [];
         passiveGenParams.forEach(params=> new passiveHandler.Passive(params));
+        const buffGenParams = this.buffSlugs.map((slug,i) => ({
+            slug,
+            statOverride: statOverride.buff[i]
+        }));
+        buffGenParams.forEach(params => new buffHandler.Buff(params));
 
         messageHandler.generateStatInputs();
         this.wear = wear;
@@ -70,11 +84,11 @@ export class Weapon{
     }
 
     static fromHash(){
-        const {id, wear, statOverride, passiveGenParams } = blueprinter.toWeapon(location.hash.slice(1));
+        const {slug, wear, statOverride, passiveGenParams } = blueprinter.toWeapon(location.hash.slice(1));
         return new Weapon({
-            owner: {id:"hsse",name:"Heather"},  // TODO: figure out what kind of user's I want to feature?
+            owner: {id:"@hsse",name:"Heather"},  // TODO: figure out what kind of user's I want to feature?
             weaponID:"664DFC",                  // TODO: and IDs?
-            id,
+            slug,
             wear,
             statOverride,
             passiveGenParams
@@ -90,6 +104,25 @@ export class Weapon{
             return "p"
         else 
             return ""
+    }
+
+    get shardValue() {
+        if (this.slug=="rune") return
+        var value = {
+            common: 	1,
+            uncommon:   3,
+            rare:   	5,
+            epic:     	25,
+            mythic:  	300,
+            legendary:	1000,
+            fabled: 	5000
+        }[this.tier];
+        if (this.prefix == "b") value = 1.5 * value;
+        return value
+    }
+
+    get buffSlugs(){
+        return this.staticData.buffSlugs
     }
 
     set wear(v){
@@ -116,15 +149,13 @@ export class Weapon{
     }
 
     get staticData(){
-        return this.constructor.bigArray[this.typeID]
+        return this.constructor.bigArray.find(
+            weaponStatics => weaponStatics.slug == this.slug
+        )
     }
 
     get typeName(){
         return this.staticData.name
-    }
-
-    get slug(){
-        return this.staticData.slug
     }
 
     get aliases(){
@@ -135,10 +166,6 @@ export class Weapon{
         return this.staticData.description
     }
 
-    get wpStat(){
-        return this.stats.find(stat => stat.noWearConfig.type =="WP-Cost");
-    }
-
     get tier(){
         return getRarity(this.qualityWear);
     }
@@ -146,13 +173,33 @@ export class Weapon{
     get allStats(){
         return [
             ...this.stats,
-            ...this.passives.flatMap(p => p.stats)
-        ]
+            ...this.buffs.flatMap(b => b.stats),
+            this.wpStat,
+            ...this.passives.flatMap(p => p.allStats)
+        ].filter(Boolean)
+    }
+
+    get selfStats(){
+        return [
+            ...this.stats,
+            ...this.buffs.flatMap(b => b.stats),
+            this.wpStat
+        ].filter(Boolean)
     }
 
     render(){
         messageHandler.displayInfo();
         updateHash(this);
+    }
+
+    updateImage(){
+        this.image.src = 
+            "media/owo_images/battleEmojis/" 
+            + this.prefix 
+            + this.tier.at(0) 
+            + "_" 
+            + this.slug 
+            + ".png"
     }
 
     updateQualities(){
@@ -161,13 +208,9 @@ export class Weapon{
                 (acc, {withWear,noWear}) => [acc[0]+withWear,  acc[1]+noWear], [0,0]
             ).map(v => v / statArray.length);
 
-        const StatHavers= [
-            {obj: this, stats: this.allStats},
-            ...this.passives.map(passive=>({obj:passive, stats: passive.stats}))
-        ]
-        StatHavers.forEach(haver=>{
-            [haver.obj.qualityWear, haver.obj.qualityNoWear] = calculateQualities(haver.stats);
-            haver.obj.image.src = getWeaponImagePath(haver.obj);
+        [this, ...this.passives].forEach(statHaver=>{
+            [statHaver.qualityWear, statHaver.qualityNoWear] = calculateQualities(statHaver.allStats);
+            statHaver.updateImage();
         })
 
         this.render();

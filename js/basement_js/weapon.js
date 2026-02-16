@@ -18,7 +18,12 @@ const buttons ={
     next:    document.getElementById("next")
 }
 
-const weapons = await loadJson("/json/weapons.json");
+const [weapons, passives, buffs] = await Promise.all([
+    loadJson("../json/weapons.json"),
+    loadJson("../json/passives.json"),
+    loadJson("../json/buffs.json")
+]);
+
 var currentWeaponID = fromWeaponString(location.hash.slice(1));
 
 if (document.readyState==="loading")
@@ -122,7 +127,17 @@ function createWikipediaTable(weapon){
         title: emoji,
     });
 
-    weapon.statConfig.forEach(stat=>
+    const buffStats = weapon.buffSlugs
+        .map(slug => buffs.find(buff => buff.slug == slug))
+        .flatMap(buffStatic => buffStatic.statConfig);
+
+    const displayStats = [
+        ...weapon.statConfig,
+        ...buffStats,
+        weapon.wpStatConfig
+    ].filter(Boolean)
+
+    displayStats.forEach(stat=>
         table.append(make("div",{className:"wikipedia-stat-row"},
             [stat.min,stat.max].map(extreme=>
                 make("div",
