@@ -229,7 +229,7 @@
         "slug":"dc",
         "statConfig":[
             {
-                "min":120,
+                "min":110,
                 "max":150,
                 "type":"",
                 "emoji":"",

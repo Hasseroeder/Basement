@@ -43,8 +43,8 @@
                 "digits":4
             },
             {
-                "min":80,
-                "max":110,
+                "min":70,
+                "max":100,
                 "emoji":["MAG.png","explosion.png"],
                 "unit":"%",
                 "digits":5
