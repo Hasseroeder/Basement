@@ -49,8 +49,13 @@ export function appendBuffNode(buff) {
         className:"discord-embed-emote weapon-desc-image",
     });
 
+    const title = make("strong",{
+        innerHTML: "&nbsp;"+buff.name+"&nbsp;"
+    })
+
     wrapper.append(
         image, 
+        title,
         messageHandler.generateDescription(buff)
     );
     bList.appendChild(wrapper);

@@ -881,23 +881,23 @@ a:hover {
 .lineFromWeaponCalculator.description > div, .passive-item > *, .buff-item > *{
   display: inline;
   white-space: normal; 
-  line-height: 1.4rem;
+  line-height: 1.2rem;
 }
 
-.lineFromWeaponCalculator.description blockquote{
+.buff-item{
   position: relative;
   margin:0.2rem 0 0 1rem;
   color:#aaa
 }
 
-.lineFromWeaponCalculator.description blockquote::before{
+.buff-item::before{
   content: ""; 
   position: absolute; 
   left: -1rem; 
   top: 0.25rem; 
   bottom: 0.25rem; 
   width: 4px; 
-  background: #777; 
+  background: #555; 
   border-radius: 999px;
 }
 
@@ -930,8 +930,8 @@ a:hover {
 .inputFromWeaponCalculator {
   border: none;
   width: 1.5rem;
-  color: rgb(225, 225, 225);
-  font-size: 0.85rem;
+  color: inherit;
+  font-size: 0.8rem;
   border-radius: 3px;
   font-family: monospace;
   padding: 0.1rem;

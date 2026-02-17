@@ -47,7 +47,7 @@
                 "max":110,
                 "emoji":["MAG.png","explosion.png"],
                 "unit":"%",
-                "digits":4
+                "digits":5
             }
         ]
     },
