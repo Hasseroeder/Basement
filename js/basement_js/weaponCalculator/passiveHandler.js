@@ -30,7 +30,7 @@ export function appendPassiveNode(passive) {
         ariaLabel: passive.slug,
         alt:":"+passive.slug+":",
         draggable:false,
-        className:"discord-embed-emote weapon-desc-image",
+        className:"discord-embed-emote weapon-desc-image passive-emote",
         onclick: () => {passive.remove(); wrapper.remove();},
     });
     boundWeapon.updateQualities();

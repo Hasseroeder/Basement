@@ -1047,7 +1047,7 @@ a:hover {
   width:100%;
 }
 
-.passive-item .discord-embed-emote:hover{
+.passive-item .passive-emote:hover{
   background-color: #666;
   cursor: var(--cur-pointer);
 }
