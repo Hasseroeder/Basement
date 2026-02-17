@@ -1,6 +1,7 @@
 import { valueToPercent } from "./util.js";
 
 const initWeaponSlug = "sword";	// start with sword if nothing is given
+const fabledPercent = 100;      // default to this quality if can't read stats
 
 var weapons, passives, buffs;
 export const init = (weaponData,passiveData,buffData) => [weapons,passives,buffs] = [weaponData,passiveData,buffData]
@@ -51,16 +52,14 @@ function getStats(dataArray, wear, {slug,statToken}){
     const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ',';
 
     const itemStatics = dataArray.find(itemStatics => itemStatics.slug == slug);     
-    const buffStats = itemStatics.buffSlugs
-        .map(slug => buffs.find(buff => buff.slug == slug))
-        .flatMap(buff=>buff.statConfig);
+    const buffArray = itemStatics.buffSlugs
+        .map(slug => buffs.find(buff => buff.slug == slug));
 
-    // this naively presses down [10,20] from buff1 and [30,40] from buff2 into the same array
-    // TODO: this is like super important to fix, but I can't be bothered so I'm just gonna push today
+    const buffStatLength = buffArray.flatMap(buff=> buff.statConfig).length;
+    const itemStatLength = itemStatics.statConfig.length
+    const wpStatLength = itemStatics.wpStatConfig ? 1 : 0; 
 
-    const statLength = [ ...itemStatics.statConfig, ...buffStats, itemStatics.wpStatConfig ]
-        .filter(Boolean)
-        .length;
+    const statLength = buffStatLength + itemStatLength + wpStatLength;
 
 	if (isOnlyNumbers(statToken) && 
 		isValidJoinedNumbers(statToken,separator) &&
@@ -91,17 +90,19 @@ function getStats(dataArray, wear, {slug,statToken}){
         }
 
         statOverrides.base = itemStatics.statConfig.map(read);
-        statOverrides.buff = buffStats.map(read);
-
-        console.log(statOverrides);
+        statOverrides.buff = buffArray.map(buff =>
+            buff.statConfig.map(read)
+        );
 
         return statOverrides
 	}
 	return {
-        base: itemStatics.statConfig.map(_=>100),
-        buff: buffStats.map(_=>100),
+        base: itemStatics.statConfig.map(_=>fabledPercent),
+        buff: buffArray.map(buff =>
+            buff.statConfig.map(_=>fabledPercent)
+        ),
         wpStat: itemStatics.wpStatConfig
-            ? 100 
+            ? fabledPercent 
             : undefined
     }
 }
