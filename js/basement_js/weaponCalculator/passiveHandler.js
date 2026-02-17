@@ -13,7 +13,7 @@ export function init(weaponData,passiveData,buffData){
     buffs = buffData;
     const pGrid = document.querySelector('.passiveGrid');
     pGrid.append(...passives.map(
-        (passive,id)=>make("img",{
+        (passive)=>make("img",{
             className:'passiveGridImage',
             src: `media/owo_images/battleEmojis/f_${passive.slug}.png`,
             alt: passive.slug,
