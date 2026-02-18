@@ -155,7 +155,7 @@ class WeaponStat {
         const wire = (input, valueType) => {
             input.addEventListener("input", e => {
                 if (e.target.value === "" || e.data === "." || e.data === ",") return;
-                const val = valueType == "percent"
+                const val = valueType === "percent"
                     ?e.target.value
                     :valueToPercent(e.target.value, this.noWearConfig);
                 if (isNaN(val)) return;
@@ -163,7 +163,7 @@ class WeaponStat {
             });
 
             input.addEventListener("change", e => {
-                const val = valueType == "percent"
+                const val = valueType === "percent"
                     ?e.target.value
                     :valueToPercent(e.target.value, this.noWearConfig);
                 this._syncAll(clamp(val,this.percentageConfig));
@@ -230,18 +230,18 @@ function generateStatInputs(){
 }
 
 function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {
-    const className = type=="range"?'weaponSlider':
-                      type=="number"?'inputFromWeaponCalculator no-arrows':"";
+    const className = type==="range"?'weaponSlider':
+                      type==="number"?'inputFromWeaponCalculator no-arrows':"";
 
     const style = 
-        type=="range"?{
+        type==="range"?{
             margin: '0 0 0 0.2rem',
             background: '#555',
             transform: min>max ? 'scaleX(-1)' : '',
             transformOrigin: min>max ? 'center' : '',
             pointer: 'var(--cur-pointer)'
         }:
-        type=="number"?{
+        type==="number"?{
             width:(digits*0.5)+'rem'
         }:{};
 

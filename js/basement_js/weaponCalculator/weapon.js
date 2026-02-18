@@ -3,7 +3,7 @@ import * as blueprinter from './blueprintParser.js';
 import * as passiveHandler from './passiveHandler.js';
 import * as buffHandler from "./buffHandler.js";
 import * as messageHandler from "./messageHandler.js";
-import { getRarity } from './util.js';
+import { getRarity, wpEmojiPath } from './util.js';
 import { debounce } from "../util/inputUtil.js";
 
 const [weapons, passives, buffs] = await Promise.all([
@@ -64,7 +64,7 @@ export class Weapon{
         passiveGenParams.forEach(params=> new passiveHandler.Passive(params));
         const buffGenParams = this.buffSlugs.map((slug,i) => ({
             parent: this,
-            staticData: buffs.find(buff => buff.slug == slug),
+            staticData: buffs.find(buff => buff.slug === slug),
             statOverride: statOverride.buff[i]
         }));
         buffGenParams.forEach(params => new buffHandler.Buff(params));
@@ -106,7 +106,7 @@ export class Weapon{
     }
 
     get shardValue() {
-        if (this.slug=="rune") return
+        if (this.slug==="rune") return
         var value = {
             common: 	1,
             uncommon:   3,
@@ -116,7 +116,7 @@ export class Weapon{
             legendary:	1000,
             fabled: 	5000
         }[this.tier];
-        if (this.prefix == "b") value = 1.5 * value;
+        if (this.prefix === "b") value = 1.5 * value;
         return value
     }
 
@@ -149,7 +149,7 @@ export class Weapon{
 
     get staticData(){
         return this.constructor.bigArray.find(
-            weaponStatics => weaponStatics.slug == this.slug
+            weaponStatics => weaponStatics.slug === this.slug
         )
     }
 
@@ -191,15 +191,7 @@ export class Weapon{
         updateHash(this);
     }
 
-    updateImage(){
-        this.image.src = 
-            "media/owo_images/battleEmojis/" 
-            + this.prefix 
-            + this.tier.at(0) 
-            + "_" 
-            + this.slug 
-            + ".png"
-    }
+    updateImage(){ this.image.src = wpEmojiPath(this) }
 
     updateQualities(){
         const calculateQualities= statArray =>

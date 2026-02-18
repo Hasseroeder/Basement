@@ -53,7 +53,7 @@ function getStats(wear, {item,statToken}){
 
     const itemStatics = item;
     const buffArray = itemStatics.buffSlugs
-        .map(slug => buffs.find(buff => buff.slug == slug));
+        .map(slug => buffs.find(buff => buff.slug === slug));
 
     const buffStatLength = buffArray.flatMap(buff=> buff.statConfig).length;
     const itemStatLength = itemStatics.statConfig.length
@@ -139,7 +139,7 @@ export function toWeapon(inputHash){
 }
 
 export function toString(){
-    const formatStats = (stats) => {
+    const formatStats = stats => {
         const isFabled = stats.every(({ noWear }) => noWear === 100)
         return isFabled ? "" : stats.map(({ noWear }) => noWear).join(",")
     }
@@ -147,10 +147,10 @@ export function toString(){
     const wearString = boundWeapon.wear !== "worn" ? boundWeapon.wear : "";
     const statstring = formatStats(boundWeapon.selfStats);  
 
-    const passiveParts = boundWeapon.passives.length == 0
+    const passiveParts = boundWeapon.passives.length === 0
         ? ["none"]
         : boundWeapon.passives.flatMap(
-            passive => [ passive.slug, formatStats(passive.selfStats) ]
+            passive => [ passive.slug, formatStats(passive.allStats) ]
         );
     
     return [wearString, boundWeapon.slug, statstring, ...passiveParts]

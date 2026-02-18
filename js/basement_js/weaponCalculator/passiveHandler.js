@@ -1,6 +1,6 @@
 import * as messageHandler from "./messageHandler.js"
 import * as buffHandler from "./buffHandler.js";
-import { getRarity } from './util.js';
+import { getRarity, wpEmojiPath } from './util.js';
 import { make } from "../util/injectionUtil.js"
 
 const pList = document.querySelector(".passiveContainer");
@@ -63,7 +63,7 @@ export class Passive {
             statOverride = {
                 base: this.statConfig.map(_=>100),
                 buff: this.buffSlugs.map(slug=>
-                    buffs.find(buff => buff.slug == slug).statConfig.map(_=>100)
+                    buffs.find(buff => buff.slug === slug).statConfig.map(_=>100)
                 )
             }
 
@@ -74,7 +74,7 @@ export class Passive {
 
         const buffGenParams = this.buffSlugs.map((slug,i) => ({
             parent: this,
-            staticData: buffs.find(buff => buff.slug == slug),
+            staticData: buffs.find(buff => buff.slug === slug),
             statOverride: statOverride.buff[i]
         }));
         this.buffs = [];
@@ -85,13 +85,6 @@ export class Passive {
     }
 
     get allStats(){
-        return [
-            ...this.stats,
-            ...this.buffs.flatMap(b => b.stats)
-        ].filter(Boolean)
-    }
-
-    get selfStats(){
         return [
             ...this.stats,
             ...this.buffs.flatMap(b => b.stats)
@@ -114,15 +107,7 @@ export class Passive {
         return this.parent.wearBonus;
     }
 
-    updateImage(){
-        this.image.src = 
-            "media/owo_images/battleEmojis/"
-            + this.prefix
-            + this.tier.at(0)
-            + "_"
-            + this.slug
-            + ".png"
-    }
+    updateImage(){ this.image.src = wpEmojiPath(this) }
 
     remove() {
         this.parent.passives =

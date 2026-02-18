@@ -74,7 +74,7 @@ function getTierEmojiPath(stringOrQuality){
         legendary:	"../media/owo_images/tiers/legendary.gif",
         fabled: 	"../media/owo_images/tiers/fabled.gif"
     };
-    if (stringOrQuality == undefined){
+    if (stringOrQuality === undefined){
         return paths["fabled"];
     }else if (typeof stringOrQuality === "string"){
         return paths[stringOrQuality];
@@ -83,4 +83,7 @@ function getTierEmojiPath(stringOrQuality){
     }
 }
 
-export { valueToPercent, percentToValue,getStatImage, getTierEmoji, getTierEmojiPath, getRarity};
+const wpEmojiPath = wp =>
+    "media/owo_images/battleEmojis/" + wp.prefix + wp.tier.at(0) + "_" + wp.slug + ".png"
+
+export { wpEmojiPath, valueToPercent, percentToValue,getStatImage, getTierEmoji, getTierEmojiPath, getRarity};
