@@ -48,10 +48,10 @@ function isCorrectStatAmount(str, statsNeeded) {
 const isOnlyNumbers =
     str => /^[\d.,\s-]+$/.test(str);
 
-function getStats(dataArray, wear, {slug,statToken}){
+function getStats(wear, {item,statToken}){
     const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ',';
 
-    const itemStatics = dataArray.find(itemStatics => itemStatics.slug == slug);     
+    const itemStatics = item;
     const buffArray = itemStatics.buffSlugs
         .map(slug => buffs.find(buff => buff.slug == slug));
 
@@ -114,7 +114,7 @@ function getMatches(arrayToSearch, query) {
     return queries.flatMap((q, idx) => 
         arrayToSearch.filter(item => checkItemMatch(item,q))
             .map(item => ({ 
-                slug: item.slug, 
+                item,
                 statToken: query[idx+1] ?? "" 
             }))
     );
@@ -124,14 +124,14 @@ export function toWeapon(inputHash){
     const tokens         = splitHypenSpaces(inputHash);
     const weaponMatch    = getMatches(weapons, tokens)[0] ?? { slug:initWeaponSlug, statToken:"" };
     const wear           = ["decent","fine","pristine"].includes(tokens[0]) ? tokens[0] : "worn";
-    const statOverride   = getStats(weapons , wear, weaponMatch);
+    const statOverride   = getStats(wear, weaponMatch);
     const passiveGenParams = getMatches(passives, tokens).map(passiveMatch => ({
-        slug: passiveMatch.slug,
-        statOverride: getStats(passives, wear, passiveMatch)
+        staticData: passiveMatch.item,
+        statOverride: getStats(wear, passiveMatch)
     }));  
         
     return {
-        slug: weaponMatch.slug,
+        slug: weaponMatch.item.slug,
         wear,
         statOverride,
         passiveGenParams

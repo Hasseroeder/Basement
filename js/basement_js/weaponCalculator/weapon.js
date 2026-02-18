@@ -21,10 +21,8 @@ const [weapons, passives, buffs] = await Promise.all([
     })
 })
 
-// delete weapons[100]; // gotta get rid of fists... somehow
-passiveHandler.init(weapons, passives, buffs);
+passiveHandler.init(passives, buffs);
 blueprinter.init(weapons, passives, buffs);
-buffHandler.init(weapons, passives, buffs);
 
 const updateHash = debounce(()=>
     history.replaceState(null,'','#'+blueprinter.toString())
@@ -66,7 +64,7 @@ export class Weapon{
         passiveGenParams.forEach(params=> new passiveHandler.Passive(params));
         const buffGenParams = this.buffSlugs.map((slug,i) => ({
             parent: this,
-            slug,
+            staticData: buffs.find(buff => buff.slug == slug),
             statOverride: statOverride.buff[i]
         }));
         buffGenParams.forEach(params => new buffHandler.Buff(params));

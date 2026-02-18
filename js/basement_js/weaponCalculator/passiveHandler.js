@@ -4,23 +4,21 @@ import { getRarity } from './util.js';
 import { make } from "../util/injectionUtil.js"
 
 const pList = document.querySelector(".passiveContainer");
-let passives, weapons, buffs, boundWeapon;
+let buffs, boundWeapon;
 
 export const bindWeapon = weapon => boundWeapon = weapon;
 
-export function init(weaponData,passiveData,buffData){
-    weapons  = weaponData;
-    passives = passiveData;
+export function init(passiveData,buffData){
     buffs = buffData;
     const pGrid = document.querySelector('.passiveGrid');
-    pGrid.append(...passives.map(
+    pGrid.append(...passiveData.map(
         passive=>make("img",{
             className:'passiveGridImage',
             src: `media/owo_images/battleEmojis/f_${passive.slug}.png`,
             alt: passive.slug,
             title: passive.slug,
             draggable: false,
-            onmousedown: () => new Passive({slug: passive.slug})
+            onmousedown: () => new Passive({staticData: passive})
         })
     ));
 }
@@ -47,15 +45,11 @@ export function appendPassiveNode(passive) {
 
 export class Passive {
     constructor({
-        slug, 
+        staticData,
         statOverride
     }){
-        Object.assign(
-            this, 
-            passives.find(passive => passive.slug == slug)
-        );
+        Object.assign(this, staticData);
         this.parent = boundWeapon;
-        this.slug = slug;
         this.image = make("img",{
             ariaLabel: this.slug,
             alt:":"+this.slug+":",
@@ -80,7 +74,7 @@ export class Passive {
 
         const buffGenParams = this.buffSlugs.map((slug,i) => ({
             parent: this,
-            slug,
+            staticData: buffs.find(buff => buff.slug == slug),
             statOverride: statOverride.buff[i]
         }));
         this.buffs = [];

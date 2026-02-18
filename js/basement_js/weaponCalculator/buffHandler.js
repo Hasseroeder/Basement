@@ -1,20 +1,13 @@
 import { make } from "../util/injectionUtil.js"
 import * as messageHandler from "./messageHandler.js"
 
-let passives, weapons, buffs;
-
-export const init = (weaponData,passiveData,buffData) => [weapons,passives,buffs] = [weaponData,passiveData,buffData]
-
 export class Buff{
     constructor({
         parent,
-        slug, 
+        staticData, 
         statOverride = []}
     ){
-        Object.assign(
-            this, 
-            buffs.find(buff => buff.slug == slug)
-        );
+        Object.assign(this, staticData);
         this.parent = parent;
         this.image = make("img",{
             src:"/media/owo_images/battleEmojis/" + this.slug + ".png" ,
@@ -26,7 +19,7 @@ export class Buff{
 
         this.stats = this.statConfig.map((statConfig,i) => ({
             noWearConfig: statConfig, 
-            noWear: statOverride[i] ?? 100
+            noWear: statOverride[i]
         }));
 
         this.parent.buffs.push(this);
