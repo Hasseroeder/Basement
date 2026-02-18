@@ -35,8 +35,13 @@ export function appendPassiveNode(passive) {
     });
     boundWeapon.updateQualities();
 
+    const title = make("strong",{
+        innerHTML: " "+passive.name+" - "
+    })
+
     wrapper.append(
         passive.image, 
+        title,
         messageHandler.generateDescription(passive)
     );
     pList.appendChild(wrapper);

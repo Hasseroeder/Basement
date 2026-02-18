@@ -50,7 +50,7 @@ export function appendBuffNode(buff) {
     });
 
     const title = make("strong",{
-        innerHTML: "&nbsp;"+buff.name+"&nbsp;"
+        innerHTML: " "+buff.name+" - "
     })
 
     wrapper.append(
