@@ -1,4 +1,5 @@
 import * as messageHandler from "./messageHandler.js"
+import * as buffHandler from "./buffHandler.js";
 import { getRarity } from './util.js';
 import { make } from "../util/injectionUtil.js"
 
@@ -13,11 +14,12 @@ export function init(weaponData,passiveData,buffData){
     buffs = buffData;
     const pGrid = document.querySelector('.passiveGrid');
     pGrid.append(...passives.map(
-        (passive)=>make("img",{
+        passive=>make("img",{
             className:'passiveGridImage',
             src: `media/owo_images/battleEmojis/f_${passive.slug}.png`,
             alt: passive.slug,
             title: passive.slug,
+            draggable: false,
             onmousedown: () => new Passive({slug: passive.slug})
         })
     ));
@@ -26,14 +28,9 @@ export function init(weaponData,passiveData,buffData){
 export function appendPassiveNode(passive) {
     const wrapper = make("div",{className:"passive-item"});
 
-    passive.image = make("img",{
-        ariaLabel: passive.slug,
-        alt:":"+passive.slug+":",
-        draggable:false,
-        className:"discord-embed-emote weapon-desc-image passive-emote",
-        onclick: () => {passive.remove(); wrapper.remove();},
-    });
-    boundWeapon.updateQualities();
+    passive.image.onclick = () => {passive.remove(); wrapper.remove();}
+
+    passive.parent.updateQualities();
 
     const title = make("strong",{
         innerHTML: " "+passive.name+" - "
@@ -42,7 +39,8 @@ export function appendPassiveNode(passive) {
     wrapper.append(
         passive.image, 
         title,
-        messageHandler.generateDescription(passive)
+        messageHandler.generateDescription(passive),
+        passive.bList
     );
     pList.appendChild(wrapper);
 }
@@ -50,28 +48,45 @@ export function appendPassiveNode(passive) {
 export class Passive {
     constructor({
         slug, 
-        statOverride = []}
-    ){
+        statOverride
+    }){
         Object.assign(
             this, 
             passives.find(passive => passive.slug == slug)
         );
-        this.boundWeapon = boundWeapon;
+        this.parent = boundWeapon;
         this.slug = slug;
+        this.image = make("img",{
+            ariaLabel: this.slug,
+            alt:":"+this.slug+":",
+            draggable:false,
+            className:"discord-embed-emote weapon-desc-image passive-emote",
+        });
+
+        this.bList = make("div",{className:"buffContainer"});
+
+        if (!statOverride) 
+            statOverride = {
+                base: this.statConfig.map(_=>100),
+                buff: this.buffSlugs.map(slug=>
+                    buffs.find(buff => buff.slug == slug).statConfig.map(_=>100)
+                )
+            }
 
         this.stats = this.statConfig.map((statConfig,i) => ({
             noWearConfig: statConfig, 
-            noWear: statOverride[i] ?? 100
+            noWear: statOverride.base[i]
         }));
 
         const buffGenParams = this.buffSlugs.map((slug,i) => ({
+            parent: this,
             slug,
             statOverride: statOverride.buff[i]
         }));
         this.buffs = [];
         buffGenParams.forEach(params => new buffHandler.Buff(params));
-
-        boundWeapon.passives.push(this);
+        
+        this.parent.passives.push(this);
         appendPassiveNode(this);
     }
 
@@ -96,13 +111,13 @@ export class Passive {
     }
 
     get wear(){
-        return this.boundWeapon.wear;
+        return this.parent.wear;
     }
     get wearName(){
-        return this.boundWeapon.wearName;
+        return this.parent.wearName;
     }
     get wearBonus(){
-        return this.boundWeapon.wearBonus;
+        return this.parent.wearBonus;
     }
 
     updateImage(){
@@ -116,9 +131,9 @@ export class Passive {
     }
 
     remove() {
-        this.boundWeapon.passives =
-            this.boundWeapon.passives.filter(p => p !== this);
+        this.parent.passives =
+            this.parent.passives.filter(p => p !== this);
 
-        this.boundWeapon.updateQualities();
+        this.parent.updateQualities();
     }
 }

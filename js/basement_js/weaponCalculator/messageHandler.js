@@ -125,7 +125,7 @@ class WeaponStat {
 
     _buildDOM() {
         const makeUnitLabel = config => config.unit
-            ? make("span",{ className:"smol-right-margin", textContent:config.unit })
+            ? make("span",{ className:"smol-right-margin prevent-select", textContent:config.unit })
             :"";
 
         this.wrapper      = make("div",{className:"outerInputWrapperFromCalculator"});

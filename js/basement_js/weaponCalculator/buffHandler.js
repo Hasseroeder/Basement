@@ -1,62 +1,60 @@
 import { make } from "../util/injectionUtil.js"
 import * as messageHandler from "./messageHandler.js"
 
-const bList  = document.querySelector(".buffContainer");
-let passives, weapons, buffs, boundWeapon;
+let passives, weapons, buffs;
 
 export const init = (weaponData,passiveData,buffData) => [weapons,passives,buffs] = [weaponData,passiveData,buffData]
-export const bindWeapon = weapon => boundWeapon = weapon;
 
 export class Buff{
     constructor({
+        parent,
         slug, 
         statOverride = []}
     ){
         Object.assign(
             this, 
             buffs.find(buff => buff.slug == slug)
-        ); // I probably don't need all these params...
-        this.boundWeapon = boundWeapon;
+        );
+        this.parent = parent;
+        this.image = make("img",{
+            src:"/media/owo_images/battleEmojis/" + this.slug + ".png" ,
+            ariaLabel: this.slug,
+            alt:":"+this.slug+":",
+            draggable:false,
+            className:"discord-embed-emote weapon-desc-image",
+        });
 
         this.stats = this.statConfig.map((statConfig,i) => ({
             noWearConfig: statConfig, 
             noWear: statOverride[i] ?? 100
         }));
 
-        boundWeapon.buffs.push(this);
+        this.parent.buffs.push(this);
         appendBuffNode(this);
     }
 
     get wear(){
-        return this.boundWeapon.wear;
+        return this.parent.wear;
     }
     get wearName(){
-        return this.boundWeapon.wearName;
+        return this.parent.wearName;
     }
     get wearBonus(){
-        return this.boundWeapon.wearBonus;
+        return this.parent.wearBonus;
     }
 }
 
 export function appendBuffNode(buff) {
     const wrapper = make("div",{className:"buff-item"});
 
-    const image = make("img",{
-        src:"/media/owo_images/battleEmojis/" + buff.slug + ".png" ,
-        ariaLabel: buff.slug,
-        alt:":"+buff.slug+":",
-        draggable:false,
-        className:"discord-embed-emote weapon-desc-image",
-    });
-
     const title = make("strong",{
         innerHTML: " "+buff.name+" - "
     })
 
     wrapper.append(
-        image, 
+        buff.image, 
         title,
-        messageHandler.generateDescription(buff)
+        messageHandler.generateDescription(buff),
     );
-    bList.appendChild(wrapper);
+    buff.parent.bList.appendChild(wrapper);
 }

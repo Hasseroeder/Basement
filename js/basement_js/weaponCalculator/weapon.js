@@ -53,18 +53,19 @@ export class Weapon{
                 noWear: statOverride.wpStat
             }
 
+        this.bList = document.getElementById("buffContainer");
         this.image = document.getElementById("weaponImage");
         this._wear; 
 
         passiveHandler.bindWeapon(this);
         messageHandler.bindWeapon(this);
         blueprinter.bindWeapon(this);
-        buffHandler.bindWeapon(this);
 
         this.passives = [];
         this.buffs = [];
         passiveGenParams.forEach(params=> new passiveHandler.Passive(params));
         const buffGenParams = this.buffSlugs.map((slug,i) => ({
+            parent: this,
             slug,
             statOverride: statOverride.buff[i]
         }));

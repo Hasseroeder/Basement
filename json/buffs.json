@@ -189,7 +189,13 @@
         "slug": "stoneskin",
         "maxStack": 5,
         "defensive": false,
-        "statConfig":[]
+        "statConfig":[{
+            "min":3,
+            "max":8,
+            "emoji":[],
+            "unit":"%",
+            "digits":5
+        }]
     },
     {
         "name": "Spellskin",
@@ -197,7 +203,13 @@
         "slug": "spellskin",
         "maxStack": 5,
         "defensive": false,
-        "statConfig":[]
+        "statConfig":[{
+            "min":3,
+            "max":8,
+            "emoji":[],
+            "unit":"%",
+            "digits":5
+        }]
     },
     {
         "name": "Pest",
