@@ -179,9 +179,10 @@ class WeaponStat {
         pct = Number(pct);
         const noWearPct = pct - this.wearBonus;
         const rawValue  = percentToValue(pct, this.noWearConfig);
-        
-        this.numberInput.value  = rawValue;
-        this.slider.value       = rawValue;
+        const floatfixValue = Number(rawValue.toFixed(10));
+
+        this.numberInput.value  = floatfixValue;
+        this.slider.value       = floatfixValue;
 
         // percentToValue() 100% -> Sword 55% STR
         // valueToPercent() Sword 55% STR -> 100%

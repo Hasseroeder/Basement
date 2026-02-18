@@ -390,5 +390,75 @@
         ],
         "buffSlugs":[],
         "description":" **Knowledge** - This passive does not do anything in battle. However, it will give this animal [stat] extra xp after each battle."
+    },
+    {
+        "name": "Giant Slayer",
+        "aliases":["gslay","slayer","slay","giant","gslayer"],
+        "description": "Deal [stat] more damage to bosses.",
+        "slug": "gslay",
+        "statConfig":[
+            {
+                "min":10,
+                "max":25,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4
+            }
+        ],
+        "buffSlugs": []
+    },
+    {
+        "name": "Adaptation",
+        "aliases":["adapt"],
+        "description": "Gains resistance against the last damage type received. Physical hits grant :stoneskin:**Stoneskin**, while Magical hits grant :spellskin:**Spellskin**.",
+        "slug": "adapt",
+        "statConfig":[],
+        "buffSlugs": [
+            "stoneskin",
+            "spellskin"
+        ]
+    },
+    {
+        "name": "Resonance",
+        "aliases":["res", "reso"],
+        "description": "For every buff you have, deal [stat] more damage. For every debuff you have, take [stat] less damage.",
+        "slug": "resonance",
+        "statConfig":[
+            {
+                "min":2,
+                "max":8,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4.5
+            },
+            {
+                "min":4,
+                "max":10,
+                "type":"",
+                "emoji":"",
+                "unit":"%",
+                "digits":4.5
+            }
+        ],
+        "buffSlugs": []
+    },
+    {
+        "name": "Living Hive",
+        "aliases":["swarm", "hive", "lhive"],
+        "description": "When dealing damage, spend [stat] :WP:WP to apply :pest:**Pest** to the target.",
+        "slug": "swarm",
+        "statConfig":[
+            {
+                "min":8,
+                "max":2,
+                "type":"",
+                "emoji":"",
+                "unit":"",
+                "digits":4
+            }
+        ],
+        "buffSlugs": ["pest"]
     }
 ]
