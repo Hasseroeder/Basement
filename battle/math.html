@@ -66,7 +66,7 @@
 
         <p>In our example, the damage will go through <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png"> and 1 stack of <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_resonance.png">.</p>
         <p>
-          <code class="discord-code"> AfterNegModifiers = AfterPosModifiers + (AfterPosModifiers * Modifier) <br></code>
+          <code class="discord-code"> AfterNegModifiers = AfterPosModifiers - (AfterPosModifiers * Modifier) <br></code>
           <code class="discord-code"> AfterNegModifiers = 1500 - (1500 * 0.5) - (1500 * 0.1) <br></code>
           <code class="discord-code"> AfterNegModifiers = 600 </code><br><br>
           Note that you can add as many <code class="discord-code"> (BaseDamage * Modifier) </code> terms as you need, subtracting them all from the Base Damage.
