@@ -6,7 +6,7 @@ const injectors = [
   	{
 		selector: "#navbar",
 		load: async () => {
-			const res = await fetch("./donatorPages/navBar.html"); 
+			const res = await fetch("/donatorPages/navBar.html"); 
 			const html = await res.text();
 			const fragment = document.createRange().createContextualFragment(html);
 
