@@ -14,7 +14,7 @@
       <div class="container">
         <h1 style="margin-bottom:-0.6rem;">Damage Calculation</h1>
         <p>
-          After a pet uses a weapon, it goes through three main steps to calculate the total damage: caluclating the base damage, adding random variance, and going through various modifiers. All three of these steps are done for every Attack, Heal, or Replenish, but for simplicity they will only be refered to as Attacks or Damage in this section.
+          After a pet uses a weapon, it goes through three main steps to calculate the total damage: calculating the base damage, adding random variance, and going through various modifiers. All three of these steps are done for every Attack, Heal, or Replenish, but for simplicity they will only be referred to as Attacks or Damage in this section.
         </p>
 
         <p>Each step will be followed by the example math for a level 50 <img class="battles-page-emotes" src="/media/owo_images/pets/eagle.gif"> Eagle holding a <img class="battles-page-emotes" src="/media/owo_images/tiers/fabled.png"> <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_bow.png"></p>
@@ -31,7 +31,7 @@
 
         <h3 style="margin-bottom:-0.6rem;">Random Bonus</h3>
         <p>After base damage is calculated, a random ±50 damage is added. OwO will pick a random number from -50 to +50 and add it, then it will round to the nearest whole number.</p>
-        <p>For simplicity, we will be assuming that OwO Picked the random number 0, so 1200 is still our total damage to this point.</p>
+        <p>For simplicity, we will be assuming that OwO picked the random number 0, so 1200 is still our total damage to this point.</p>
 
         <h3 style="margin-bottom:-0.6rem;">Modifiers</h3>
         <p style="margin-bottom:-0.6rem; font-size:0.7rem;">
@@ -86,7 +86,7 @@
 
         <h4 style="margin-bottom:-0.6rem;">Redirect Modifier</h4>
         <p>
-          Finally comes the most compilcated step, Redirect Modifiers. There are only three Redirect Modifiers, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_sg.png"> Safeguard, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/tether.png"> Tether, and <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/leech.png"> Leech, and they are added unlike any other step previously. They are based on the damage from the last step, but if there are more than one, they are <b>instead</b> based on the damage from the previous Redirect Modifier.
+          Finally comes the most complicated step, Redirect Modifiers. There are only three Redirect Modifiers, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_sg.png"> Safeguard, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/tether.png"> Tether, and <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/leech.png"> Leech, and they are added unlike any other step previously. They are based on the damage from the last step, but if there is more than one, they are <b>instead</b> based on the damage from the previous Redirect Modifier.
         </p>
 
         <p>In our example, the damage will go through <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_sg.png"> and <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/tether.png">.</p>
