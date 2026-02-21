@@ -11,10 +11,10 @@ const injectors = [
 			const fragment = document.createRange().createContextualFragment(html);
 
 			await Promise.all([
-				loadJson("../json/weapons.json").then(items =>
+				loadJson("/json/weapons.json").then(items =>
 					gridInjector({container: fragment.querySelector('#menuWeaponContainer'),baseLink:"/weapon.html",items})
 				),
-				loadJson("../json/passives.json").then(items =>
+				loadJson("/json/passives.json").then(items =>
 					gridInjector({container: fragment.querySelector("#menuPassiveContainer"),baseLink:"/passive.html",items})
 				)
 			]);

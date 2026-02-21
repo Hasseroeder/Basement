@@ -16,7 +16,7 @@ export function gridInjector({
 		item=>makeGridItem(
 			onItemClick,
 			baseLink  + "#" + item.slug,
-			`media/owo_images/battleEmojis/f_${item.slug}.png`,
+			`/media/owo_images/battleEmojis/f_${item.slug}.png`,
 			item.name + (item.id ? "<br>"+item.id : "")
 		)
 	));
