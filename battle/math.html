@@ -61,15 +61,15 @@
 
         <h4 style="margin-bottom:-0.6rem;">Negative Modifiers</h4>
         <p>
-          Negative Modifiers include <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png">, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/defup.png">, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/mort.png">, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_adapt.png">, and <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_resonance.png">. Each of their buffs is based on the total of the previous step, after all positive modifiers.
+          Negative Modifiers include <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png">, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/defup.png">, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/mort.png">, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_adapt.png">, and <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_resonance.png">. These are stacked multiplicatively , with passives always going before buffs, multiplying on top of the previous step (Positive Modifiers).
         </p>
 
         <p>In our example, the damage will go through <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png"> and 1 stack of <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_resonance.png">.</p>
         <p>
-          <code class="discord-code"> AfterNegModifiers = AfterPosModifiers - (AfterPosModifiers * Modifier) <br></code>
-          <code class="discord-code"> AfterNegModifiers = 1500 - (1500 * 0.5) - (1500 * 0.1) <br></code>
-          <code class="discord-code"> AfterNegModifiers = 600 </code><br><br>
-          Note that you can add as many <code class="discord-code"> (BaseDamage * Modifier) </code> terms as you need, subtracting them all from the Base Damage.
+          <code class="discord-code"> AfterNegModifiers = AfterPosModifiers * (1 - Modifier) <br></code>
+          <code class="discord-code"> AfterNegModifiers = 1500 * (1 - 0.5) * (1 - 0.1) <br></code>
+          <code class="discord-code"> AfterNegModifiers = 675 </code><br><br>
+          Note that you can add as many <code class="discord-code"> (1 - Modifier) </code> terms as you need, <b>multiplying</b> them with your current result.
         </p>
 
         <h4 style="margin-bottom:-0.6rem;">Resistance</h4>
@@ -80,20 +80,20 @@
         <p>In our example, the damage will go through 60% <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/PR.png"> PR.</p>
         <p>
           <code class="discord-code"> AfterRes = AfterNegModifiers * (1 - Resistance) <br></code>
-          <code class="discord-code"> AfterRes = 600 * (1 - 0.6) <br></code>
-          <code class="discord-code"> AfterRes = 240 </code><br><br>
+          <code class="discord-code"> AfterRes = 675 * (1 - 0.6) <br></code>
+          <code class="discord-code"> AfterRes = 270 </code><br><br>
         </p>
 
         <h4 style="margin-bottom:-0.6rem;">Redirect Modifier</h4>
         <p>
-          Finally comes the most complicated step, Redirect Modifiers. There are only three Redirect Modifiers, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_sg.png"> Safeguard, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/tether.png"> Tether, and <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/leech.png"> Leech, and they are added unlike any other step previously. They are based on the damage from the last step, but if there is more than one, they are <b>instead</b> based on the damage from the previous Redirect Modifier.
+          Finally comes Redirect Modifiers, which send the damage intercepted to something else. There are only three Redirect Modifiers, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_sg.png"> Safeguard, <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/tether.png"> Tether, and <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/leech.png"> Leech. These are stacked multiplicatively , with passives always going before buffs, multiplying on top of the previous step (PR/MR).
         </p>
 
         <p>In our example, the damage will go through <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_sg.png"> and <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/tether.png">.</p>
         <p>
           <code class="discord-code"> FinalDamage = AfterRes * (1 - Modifier) <br></code>
-          <code class="discord-code"> FinalDamage = 240 * (1 - 0.4) * (1 - 0.4)<br></code>
-          <code class="discord-code"> FinalDamage = 86.4 </code><br><br>
+          <code class="discord-code"> FinalDamage = 270 * (1 - 0.4) * (1 - 0.4)<br></code>
+          <code class="discord-code"> FinalDamage = 97.2 </code><br><br>
 
           Note that you can add as many <code class="discord-code"> (1 - Modifier) </code> terms as you need, <b>multiplying</b> them with your current result.
         </p>
