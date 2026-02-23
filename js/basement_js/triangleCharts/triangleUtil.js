@@ -283,7 +283,7 @@ export async function initializeTriangle(){
     ctxWrapper.style="width: 600px; height:480px; margin-bottom:10px;";
     ctx.width=480;
     ctx.height=600;
-    petButton.style="position: absolute; width: 4rem; transform: translate(-275%,175%);";
+    petButton.style="position: absolute; width: 4.5rem; height: 3rem; transform: translate(-275%,175%);";
     petButton.textContent="Pets";
     ctxWrapper.append(ctx);
     container.append(ctxWrapper,petButton);
@@ -335,11 +335,11 @@ export async function initializeTriangle(){
         anns.filter(ann => ann.group === group)
             .forEach(ann => ann.display = override ?? !ann.display)
 
-    petButton.addEventListener('click', function() {
+    petButton.onclick = () => {
         ds.hidden = !ds.hidden;
         toggleAnns("polygonLabels");
         myChart.update();    
-    });
+    };
 
     toggleAnns("polygonLabels",false);
     myChart.update();   
