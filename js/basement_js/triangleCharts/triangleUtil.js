@@ -3,13 +3,7 @@ const imageCache = new Map(); // -> Promise<Image>
 const polygonPlugin = {
     id: 'polygonPlugin',
 
-    afterInit: (chart) => {
-        chart.polygons = { hidden: false };
-    },
-
-    beforeDraw: (chart) => {
-        if (chart.polygons && chart.polygons.hidden) return;
-
+    beforeDraw: chart => {
         const ctx = chart.ctx;
         ctx.save();
         const { polygons = [], colors = [] } = chart.options.plugins.polygonPlugin;
@@ -30,7 +24,7 @@ const polygonPlugin = {
         ctx.restore();
     },
 
-    beforeDestroy: (chart) => {
+    beforeDestroy: chart => {
         if (chart.polygons) delete chart.polygons;
     }
 };
@@ -285,17 +279,14 @@ export async function initializeTriangle(){
     const ctx = document.createElement("canvas");
     const ctxWrapper = document.createElement("div");
     const petButton = document.createElement("button");
-    const areaButton = document.createElement("button");
 
     ctxWrapper.style="width: 600px; height:480px; margin-bottom:10px;";
-    ctx.width=480*2;    // 2 is a dumb constant, because it probably looks bad on good monitors
-    ctx.height=600*2;
+    ctx.width=480;
+    ctx.height=600;
     petButton.style="position: absolute; width: 4rem; transform: translate(-275%,175%);";
     petButton.textContent="Pets";
-    areaButton.style="position: absolute; width: 4rem; transform: translate(-275%,300%);";
-    areaButton.textContent="Area";
     ctxWrapper.append(ctx);
-    container.append(ctxWrapper,petButton,areaButton);
+    container.append(ctxWrapper,petButton);
 
     const myChart = new Chart(ctx, {
         type: 'scatter',
@@ -338,23 +329,18 @@ export async function initializeTriangle(){
         },
     });
 
-    function checkLabelVisibility(group,chart){
-        const anns = chart.options.plugins.annotation.annotations;
-        Object.values(anns).forEach(ann => {
-            if (ann.group === group) ann.display = ds.hidden && !chart.polygons.hidden;
-        });
-        chart.update();
-    }
-
+    const anns = Object.values(myChart.options.plugins.annotation.annotations);
     const ds = myChart.data.datasets[0];
+    const toggleAnns = (group,override) => 
+        anns.filter(ann => ann.group === group)
+            .forEach(ann => ann.display = override ?? !ann.display)
+
     petButton.addEventListener('click', function() {
         ds.hidden = !ds.hidden;
-        checkLabelVisibility("polygonLabels",myChart);
+        toggleAnns("polygonLabels");
+        myChart.update();    
     });
 
-    areaButton.addEventListener('click', function() {
-        myChart.polygons.hidden = !myChart.polygons.hidden;
-        checkLabelVisibility("polygonLabels",myChart);
-    });
-    checkLabelVisibility("polygonLabels",myChart);
+    toggleAnns("polygonLabels",false);
+    myChart.update();   
 }
