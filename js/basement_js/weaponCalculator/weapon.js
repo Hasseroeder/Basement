@@ -13,6 +13,7 @@ export class Weapon{
         wear,
         statOverride,
         passiveGenParams,
+        wpbData
     }){
         this.owner = owner;
         this.weaponID = weaponID;
@@ -38,7 +39,7 @@ export class Weapon{
         passiveGenParams.forEach(params=> new passiveHandler.Passive(params));
         const buffGenParams = this.buffSlugs.map((slug,i) => ({
             parent: this,
-            staticData: buffs.find(buff => buff.slug === slug),
+            staticData: wpbData.buffs.find(buff => buff.slug === slug),
             statOverride: statOverride.buff[i]
         }));
         buffGenParams.forEach(params => new buffHandler.Buff(params));
@@ -72,6 +73,7 @@ export class Weapon{
             wear,
             statOverride,
             passiveGenParams,
+            wpbData
         });
     }
 
