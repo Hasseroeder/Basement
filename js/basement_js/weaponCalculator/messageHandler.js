@@ -13,9 +13,6 @@ const el = {
 	description:	    document.getElementById("description")
 }
 
-let boundWeapon;
-export const bindWeapon = weapon => boundWeapon = weapon;
-
 function generateDescription(weaponOrPassive) {
     const TOKEN_SPECS = [
         { name: "STAT",     pattern:"\\[stat\\]"},
@@ -66,10 +63,10 @@ function generateDescription(weaponOrPassive) {
     }
 }
 
-function generateWPInput(){
-    const stat = boundWeapon.wpStat;
+function generateWPInput(weapon){
+    const stat = weapon.wpStat;
     return stat
-        ? (stat.IO = new WeaponStat(stat, boundWeapon), stat.IO.wrapper)
+        ? (stat.IO = new WeaponStat(stat, weapon), stat.IO.wrapper)
         : `\u00A0${0}\u00A0`;
 }
 
@@ -192,7 +189,7 @@ class WeaponStat {
         this.stat.noWear        = noWearPct;
         this.stat.withWear      = pct;
 
-        boundWeapon.updateQualities();
+        this.parent.updateQualities();
     }
 
     updateWear() {
@@ -210,23 +207,23 @@ class WeaponStat {
     }
 }
 
-function displayInfo(){
-    el.weaponHeader.textContent= boundWeapon.owner.name+"'s " +boundWeapon.wearName +boundWeapon.typeName;
-    el.weaponName.textContent= boundWeapon.typeName;
-    el.ownerID.textContent= boundWeapon.owner.id;
-    el.weaponID.textContent= boundWeapon.weaponID;
-    const wsValue = boundWeapon.shardValue;
+function displayInfo(weapon){
+    el.weaponHeader.textContent= weapon.owner.name+"'s " +weapon.wearName +weapon.typeName;
+    el.weaponName.textContent= weapon.typeName;
+    el.ownerID.textContent= weapon.owner.id;
+    el.weaponID.textContent= weapon.weaponID;
+    const wsValue = weapon.shardValue;
     const shardString = wsValue
         ? wsValue + " selling / " + wsValue * 2.5 + " buying"
         : "UNSELLABLE"
     el.shardValue.textContent= shardString;
-    el.weaponQualityImage.src= getTierEmojiPath(boundWeapon.tier);
-    el.weaponQualitySpan.textContent= boundWeapon.qualityWear.toFixed(1)+"%"
+    el.weaponQualityImage.src= getTierEmojiPath(weapon.tier);
+    el.weaponQualitySpan.textContent= weapon.qualityWear.toFixed(1)+"%"
 }
 
-function generateStatInputs(){
-	el.wpCost.append(generateWPInput());
-	el.description.append(generateDescription(boundWeapon));
+function generateStatInputs(weapon){
+	el.wpCost.append(generateWPInput(weapon));
+	el.description.append(generateDescription(weapon));
 }
 
 function createRangedInput(type, {min, max, step, digits}, extraStyles={}) {

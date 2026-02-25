@@ -5,7 +5,7 @@ export class Buff{
     constructor({
         parent,
         staticData, 
-        statOverride = []}
+        statOverride}
     ){
         Object.assign(this, staticData);
         this.parent = parent;
@@ -34,6 +34,9 @@ export class Buff{
     }
     get wearBonus(){
         return this.parent.wearBonus;
+    }
+    updateQualities(){
+        this.parent.updateQualities();
     }
 }
 

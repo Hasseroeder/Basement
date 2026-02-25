@@ -3,12 +3,6 @@ import { valueToPercent } from "./util.js";
 const initWeaponSlug = "sword";	// start with sword if nothing is given
 const fabledPercent = 100;      // default to this quality if can't read stats
 
-var weapons, passives, buffs;
-export const init = (weaponData,passiveData,buffData) => [weapons,passives,buffs] = [weaponData,passiveData,buffData]
-
-let boundWeapon;
-export const bindWeapon = weapon => boundWeapon = weapon;
-
 function splitHypenSpaces(string){
     const normalized = string
         .replace(/-+/g, '-')     // "---" → "-"
@@ -48,7 +42,7 @@ function isCorrectStatAmount(str, statsNeeded) {
 const isOnlyNumbers =
     str => /^[\d.,\s-]+$/.test(str);
 
-function getStats(wear, {item,statToken}){
+function getStats(wear, {item,statToken},{buffs}){
     const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ',';
 
     const itemStatics = item;
@@ -120,14 +114,16 @@ function getMatches(arrayToSearch, query) {
     );
 }
 
-export function toWeapon(inputHash){
+export function toWeapon(inputHash,wpbData){
+    const {weapons,passives,buffs} = wpbData;
     const tokens         = splitHypenSpaces(inputHash);
     const weaponMatch    = getMatches(weapons, tokens)[0] ?? { slug:initWeaponSlug, statToken:"" };
     const wear           = ["decent","fine","pristine"].includes(tokens[0]) ? tokens[0] : "worn";
-    const statOverride   = getStats(wear, weaponMatch);
+    const statOverride   = getStats(wear, weaponMatch, wpbData);
     const passiveGenParams = getMatches(passives, tokens).map(passiveMatch => ({
         staticData: passiveMatch.item,
-        statOverride: getStats(wear, passiveMatch)
+        statOverride: getStats(wear, passiveMatch, wpbData),
+        wpbData
     }));  
         
     return {
@@ -138,22 +134,22 @@ export function toWeapon(inputHash){
     };
 }
 
-export function toString(){
+export function toString(weapon){
     const formatStats = stats => {
         const isFabled = stats.every(({ noWear }) => noWear === 100)
         return isFabled ? "" : stats.map(({ noWear }) => noWear).join(",")
     }
     
-    const wearString = boundWeapon.wear !== "worn" ? boundWeapon.wear : "";
-    const statstring = formatStats(boundWeapon.selfStats);  
+    const wearString = weapon.wear !== "worn" ? weapon.wear : "";
+    const statstring = formatStats(weapon.selfStats);  
 
-    const passiveParts = boundWeapon.passives.length === 0
+    const passiveParts = weapon.passives.length === 0
         ? ["none"]
-        : boundWeapon.passives.flatMap(
+        : weapon.passives.flatMap(
             passive => [ passive.slug, formatStats(passive.allStats) ]
         );
     
-    return [wearString, boundWeapon.slug, statstring, ...passiveParts]
+    return [wearString, weapon.slug, statstring, ...passiveParts]
         .filter(Boolean)
         .join("-");  
 }

@@ -6,13 +6,23 @@ import * as messageHandler from "./messageHandler.js";
 import { getRarity, wpEmojiPath } from './util.js';
 import { debounce } from "../util/inputUtil.js";
 
-const [weapons, passives, buffs] = await Promise.all([
-    loadJson("../json/weapons.json"),
-    loadJson("../json/passives.json"),
-    loadJson("../json/buffs.json")
-]);
+async function loadAll(obj) { 
+    const entries = Object.entries(obj);
+    const results = await Promise.all(
+        entries.map(([_, p]) => p)
+    ); 
+    return Object.fromEntries( 
+        entries.map(([key], i) => [key, results[i]]) 
+    ); 
+}
 
-[...weapons,...passives,...buffs].forEach(StatHaver=>{
+const wpbData = await loadAll({ 
+    weapons: loadJson("../json/weapons.json"), 
+    passives: loadJson("../json/passives.json"), 
+    buffs: loadJson("../json/buffs.json") 
+});
+
+[...wpbData.weapons,...wpbData.passives,...wpbData.buffs].forEach(StatHaver=>{
     [ ...StatHaver.statConfig , StatHaver.wpStatConfig ]
     .filter(Boolean)
     .forEach(stat=>{
@@ -21,12 +31,7 @@ const [weapons, passives, buffs] = await Promise.all([
     })
 })
 
-passiveHandler.init(passives, buffs);
-blueprinter.init(weapons, passives, buffs);
-
-const updateHash = debounce(()=>
-    history.replaceState(null,'','#'+blueprinter.toString())
-);
+passiveHandler.init(wpbData);
 
 export class Weapon{
     constructor({
@@ -36,7 +41,7 @@ export class Weapon{
         wear,              // "worn"
         statOverride,      // { buff: [], base: [ 55 ], wpStat: 55 }
         passiveGenParams   // []
-    }={}){
+    }){
         this.owner = owner;
         this.weaponID = weaponID;
         this.slug = slug;
@@ -56,8 +61,6 @@ export class Weapon{
         this._wear; 
 
         passiveHandler.bindWeapon(this);
-        messageHandler.bindWeapon(this);
-        blueprinter.bindWeapon(this);
 
         this.passives = [];
         this.buffs = [];
@@ -69,7 +72,7 @@ export class Weapon{
         }));
         buffGenParams.forEach(params => new buffHandler.Buff(params));
 
-        messageHandler.generateStatInputs();
+        messageHandler.generateStatInputs(this);
         this.wear = wear;
     }
 
@@ -83,10 +86,14 @@ export class Weapon{
     }
 
     static fromHash(){
-        const {slug, wear, statOverride, passiveGenParams } = blueprinter.toWeapon(location.hash.slice(1));
+        const {slug, wear, statOverride, passiveGenParams } = 
+            blueprinter.toWeapon(
+                location.hash.slice(1),
+                wpbData
+            );
         return new Weapon({
-            owner: {id:"@hsse",name:"Heather"},  // TODO: figure out what kind of user's I want to feature?
-            weaponID:"664DFC",                  // TODO: and IDs?
+            owner: {id:"@hsse",name:"Heather"},
+            weaponID:"664DFC",                  // TODO: get rid of these stupid defaults
             slug,
             wear,
             statOverride,
@@ -94,12 +101,20 @@ export class Weapon{
         });
     }
 
-    static bigArray = weapons;
+    static wpbData = wpbData;
+
+    get isEmpowered(){
+        return this.passives.length > this.staticData.normalPassiveAmount;
+    }
+
+    get hasWear(){
+        return this.wearBonus!=0;
+    }
 
     get prefix() {
-        if (this.passives.length > this.staticData.normalPassiveAmount)
+        if (this.isEmpowered)
             return "b"
-        else if (this.wear != "worn")
+        else if (this.hasWear)
             return "p"
         else 
             return ""
@@ -148,7 +163,7 @@ export class Weapon{
     }
 
     get staticData(){
-        return this.constructor.bigArray.find(
+        return this.constructor.wpbData.weapons.find(
             weaponStatics => weaponStatics.slug === this.slug
         )
     }
@@ -187,9 +202,13 @@ export class Weapon{
     }
 
     render(){
-        messageHandler.displayInfo();
-        updateHash(this);
+        messageHandler.displayInfo(this);
+        this.updateHash();
     }
+
+    updateHash = debounce(()=>
+        history.replaceState(null,'','#'+blueprinter.toString(this))
+    );
 
     updateImage(){ this.image.src = wpEmojiPath(this) }
 
