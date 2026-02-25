@@ -1,4 +1,3 @@
-import { loadJson } from '../util/jsonUtil.js';
 import * as blueprinter from './blueprintParser.js';
 import * as passiveHandler from './passiveHandler.js';
 import * as buffHandler from "./buffHandler.js";
@@ -6,41 +5,14 @@ import * as messageHandler from "./messageHandler.js";
 import { getRarity, wpEmojiPath } from './util.js';
 import { debounce } from "../util/inputUtil.js";
 
-async function loadAll(obj) { 
-    const entries = Object.entries(obj);
-    const results = await Promise.all(
-        entries.map(([_, p]) => p)
-    ); 
-    return Object.fromEntries( 
-        entries.map(([key], i) => [key, results[i]]) 
-    ); 
-}
-
-const wpbData = await loadAll({ 
-    weapons: loadJson("../json/weapons.json"), 
-    passives: loadJson("../json/passives.json"), 
-    buffs: loadJson("../json/buffs.json") 
-});
-
-[...wpbData.weapons,...wpbData.passives,...wpbData.buffs].forEach(StatHaver=>{
-    [ ...StatHaver.statConfig , StatHaver.wpStatConfig ]
-    .filter(Boolean)
-    .forEach(stat=>{
-        stat.range = stat.max - stat.min;
-        stat.step = stat.range/100;
-    })
-})
-
-passiveHandler.init(wpbData);
-
 export class Weapon{
     constructor({
-        owner,             // {id:"hsse",name:"Heather"}
-        weaponID,          // "664DFC"
-        slug,              // 1
-        wear,              // "worn"
-        statOverride,      // { buff: [], base: [ 55 ], wpStat: 55 }
-        passiveGenParams   // []
+        owner,
+        weaponID,
+        slug,
+        wear,
+        statOverride,
+        passiveGenParams,
     }){
         this.owner = owner;
         this.weaponID = weaponID;
@@ -60,10 +32,9 @@ export class Weapon{
         this.image = document.getElementById("weaponImage");
         this._wear; 
 
-        passiveHandler.bindWeapon(this);
-
         this.passives = [];
         this.buffs = [];
+        passiveGenParams.forEach(params=> params.parent=this)
         passiveGenParams.forEach(params=> new passiveHandler.Passive(params));
         const buffGenParams = this.buffSlugs.map((slug,i) => ({
             parent: this,
@@ -85,23 +56,24 @@ export class Weapon{
         // note: rune needs special stats
     }
 
-    static fromHash(){
+    static fromHash(wpbData){
         const {slug, wear, statOverride, passiveGenParams } = 
             blueprinter.toWeapon(
                 location.hash.slice(1),
                 wpbData
             );
+            
+        Weapon.wpbData = wpbData;
+
         return new Weapon({
             owner: {id:"@hsse",name:"Heather"},
             weaponID:"664DFC",                  // TODO: get rid of these stupid defaults
             slug,
             wear,
             statOverride,
-            passiveGenParams
+            passiveGenParams,
         });
     }
-
-    static wpbData = wpbData;
 
     get isEmpowered(){
         return this.passives.length > this.staticData.normalPassiveAmount;

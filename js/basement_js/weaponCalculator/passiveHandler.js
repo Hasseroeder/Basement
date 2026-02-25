@@ -4,30 +4,11 @@ import { getRarity, wpEmojiPath } from './util.js';
 import { make } from "../util/injectionUtil.js"
 
 const pList = document.querySelector(".passiveContainer");
-let boundWeapon;
-
-export const bindWeapon = weapon => boundWeapon = weapon;
-
-export function init(wpbData){
-    const pGrid = document.querySelector('.passiveGrid');
-    pGrid.append(...wpbData.passives.map(
-        passive=>make("img",{
-            className:'passiveGridImage',
-            src: `media/owo_images/battleEmojis/f_${passive.slug}.png`,
-            alt: passive.slug,
-            title: passive.slug,
-            draggable: false,
-            onmousedown: () => new Passive({staticData: passive, wpbData})
-        })
-    ));
-}
 
 export function appendPassiveNode(passive) {
     const wrapper = make("div",{className:"passive-item"});
-
     passive.image.onclick = () => {passive.remove(); wrapper.remove();}
-
-    passive.parent.updateQualities();
+    passive.updateQualities();
 
     const title = make("strong",{
         innerHTML: " "+passive.name+" - "
@@ -46,11 +27,12 @@ export class Passive {
     constructor({
         staticData,
         statOverride,
-        wpbData
+        wpbData,
+        parent
     }){
         const { buffs } = wpbData;
         Object.assign(this, staticData);
-        this.parent = boundWeapon;
+        this.parent = parent;
         this.image = make("img",{
             ariaLabel: this.slug,
             alt:":"+this.slug+":",

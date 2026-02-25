@@ -8,3 +8,13 @@ export async function loadJson(path) {
     }
     return jsonData;
 } 
+
+export async function loadAll(obj) { 
+    const entries = Object.entries(obj);
+    const results = await Promise.all(
+        entries.map(([_, p]) => p)
+    ); 
+    return Object.fromEntries( 
+        entries.map(([key], i) => [key, results[i]]) 
+    ); 
+}
