@@ -5,7 +5,35 @@ import * as messageHandler from "./messageHandler.js";
 import { getRarity, wpEmojiPath } from './util.js';
 import { debounce } from "../util/inputUtil.js";
 
-export class Weapon{
+export class WeaponFactory{
+    static fromRandom(id,settings={
+        doPassives: true,
+        defaultQuality: NaN,
+        defaultWear:"worn"
+    }){
+        // will need to generate random weapon stats and passives and such
+        // note: rune needs special stats
+    }
+
+    static fromHash(){
+        const {slug, wear, statOverride, passiveGenParams } = 
+            blueprinter.toWeapon(
+                location.hash.slice(1),
+                WeaponFactory.wpbData
+            );
+            
+        return new Weapon({
+            owner: {id:"@hsse",name:"Heather"},
+            weaponID:"664DFC",                  // TODO: get rid of these stupid defaults
+            slug,
+            wear,
+            statOverride,
+            passiveGenParams,
+        });
+    }
+}
+
+class Weapon{
     constructor({
         owner,
         weaponID,
@@ -13,7 +41,6 @@ export class Weapon{
         wear,
         statOverride,
         passiveGenParams,
-        wpbData
     }){
         this.owner = owner;
         this.weaponID = weaponID;
@@ -39,42 +66,13 @@ export class Weapon{
         passiveGenParams.forEach(params=> new passiveHandler.Passive(params));
         const buffGenParams = this.buffSlugs.map((slug,i) => ({
             parent: this,
-            staticData: wpbData.buffs.find(buff => buff.slug === slug),
+            staticData: WeaponFactory.wpbData.buffs.find(buff => buff.slug === slug),
             statOverride: statOverride.buff[i]
         }));
         buffGenParams.forEach(params => new buffHandler.Buff(params));
 
         messageHandler.generateStatInputs(this);
         this.wear = wear;
-    }
-
-    static fromRandom(id,settings={
-        doPassives: true,
-        defaultQuality: NaN,
-        defaultWear:"worn"
-    }){
-        // will need to generate random weapon stats and passives and such
-        // note: rune needs special stats
-    }
-
-    static fromHash(wpbData){
-        const {slug, wear, statOverride, passiveGenParams } = 
-            blueprinter.toWeapon(
-                location.hash.slice(1),
-                wpbData
-            );
-            
-        Weapon.wpbData = wpbData;
-
-        return new Weapon({
-            owner: {id:"@hsse",name:"Heather"},
-            weaponID:"664DFC",                  // TODO: get rid of these stupid defaults
-            slug,
-            wear,
-            statOverride,
-            passiveGenParams,
-            wpbData
-        });
     }
 
     get isEmpowered(){
@@ -137,7 +135,7 @@ export class Weapon{
     }
 
     get staticData(){
-        return this.constructor.wpbData.weapons.find(
+        return WeaponFactory.wpbData.weapons.find(
             weaponStatics => weaponStatics.slug === this.slug
         )
     }

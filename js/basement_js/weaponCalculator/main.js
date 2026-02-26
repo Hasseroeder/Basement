@@ -1,7 +1,7 @@
 import { customSelect } from '../util/customSelect.js';
 import { loadJson, loadAll } from '../util/jsonUtil.js';
 import { gridInjector, make } from '../util/injectionUtil.js';
-import { Weapon } from './weapon.js';
+import { WeaponFactory } from './weapon.js';
 import * as passviveHandler from "./passiveHandler.js";
 
 /*
@@ -30,7 +30,8 @@ const wpbData = await loadAll({
     })
 })
 
-const currentWeapon= Weapon.fromHash(wpbData);
+WeaponFactory.wpbData = wpbData;
+const currentWeapon= WeaponFactory.fromHash();
 
 const pGrid = document.querySelector('.passiveGrid');
 pGrid.append(...wpbData.passives.map(
