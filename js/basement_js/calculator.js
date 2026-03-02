@@ -336,16 +336,13 @@ function throttle(fn, delay) {
 const fetchNeonThrottled = throttle(loadJson, 500);
 
 function fetchNeonWithCache(query) {
-    if (neonCache.has(query)) return neonCache.get(query);
+    if (neonCache.has(query)) return Promise.resolve(neonCache.get(query));
 
-    const p = fetchNeonThrottled(neonURL + query)
+    return fetchNeonThrottled(neonURL + query)
         .then(data => {
-            neonCache.set(query, Promise.resolve(data));
+            neonCache.set(query, data);
             return data;
-        });
-
-    neonCache.set(query, p);
-    return p;
+    });
 }
 
 function fetchNeonWithRace(query) {
