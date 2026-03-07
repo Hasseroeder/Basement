@@ -190,9 +190,7 @@ function onInputNoDebounce(textInput,suggestions){
 
 async function fetchAndRenderSuggestions(query, textInput,suggestions){
     suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
-    if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet?.[0])){
-        return suggestions.style.display = 'none';
-    }
+    if (!suggestedPets.length) return suggestions.style.display = 'none';
     renderSuggestions(query,textInput,suggestions);
 }
 
