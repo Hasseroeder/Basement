@@ -337,26 +337,25 @@ const fetchNeonThrottled = throttle(loadJson, 500);
 
 function fetchNeonWithCache(query) {
     if (neonCache.has(query)) return Promise.resolve(neonCache.get(query));
-
-    return fetchNeonThrottled(neonURL + query)
-        .then(data => {
-            neonCache.set(query, data);
-            return data;
-    });
+    return fetchNeonThrottled(neonURL + query);
 }
 
 function fetchNeonWithRace(query) {
+    console.log(neonCache);
+    
     query = query.toLowerCase();
     currentQuery = query;
 
     return fetchNeonWithCache(query).then(data => {
         if (query === currentQuery) {
+            neonCache.set(query, data);
             return data;
-        }else{
+        } else {
             return Promise.reject(new Error("Outdated query"));
         }
     });
 }
+
 
 function updateInternalStats(){
     const base =[500,500,100,100,25,25]
