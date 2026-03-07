@@ -15,7 +15,6 @@ const inputs = Array.from(document.querySelectorAll(".myInputs"));
 const outputs = Array.from(document.querySelectorAll(".myOutputs"));
 
 const neonCache = new Map();
-let currentQuery = '';
 
 //for Mode: matching pets
 let showPets = true;
@@ -299,87 +298,13 @@ function highlight(suggestions) {
     });
 }
 
-/*function throttle(fn, delay) {
-    let last = 0,
-    timer = null,
-    pending = null;
-
-    return function throttled(...args) {
-        const now       = Date.now();
-        const remaining = delay - (now - last);
-
-        if (remaining <= 0) {
-            clearTimeout(timer);
-            timer  = null;
-            last   = now;
-            return Promise.resolve(fn.apply(this, args));
-        }
-
-        if (pending) {
-            return pending;
-        }
-
-        pending = new Promise(resolve => {
-            timer = setTimeout(() => {
-                last    = Date.now();
-                timer   = null;
-                const result = fn.apply(this, args);
-                resolve(result);
-                pending = null;
-            }, remaining);
-        });
-
-        return pending;
-    };
-}*/
-
-//const fetchNeonThrottled = throttle(loadJson, 500);
-
-/*function fetchNeonWithCache(query) {
-    if (neonCache.has(query)) return Promise.resolve(neonCache.get(query));
-    return fetchNeonThrottled(neonURL + query);
-}*/
-
-/*function fetchNeonWithRace(query) {
-    query = query.toLowerCase();
-    currentQuery = query;
-
-    return fetchNeonWithCache(query).then(data => {
-        if (query === currentQuery) {
-            neonCache.set(query, data);
-            return data;
-        } else {
-            return Promise.reject(new Error("Outdated query"));
-        }
-    });
-}*/
-
-function createSingleCaller(fetchFn) {
-    let activeToken = 0;
-
-    return function singleCaller(query) {
-        const token = ++activeToken;
-
-        return fetchFn(query).then(data => {
-            if (token !== activeToken) {
-                // A newer call has been made → reject immediately
-                throw new Error("Cancelled due to newer request");
-            }
-            return data;
-        });
-    };
-}
-
 function createCachedSingleCaller(fetchFn) {
-    const cache = new Map();
     let activeToken = 0;
 
     return function cachedCaller(query) {
         query = query.toLowerCase();
 
-        if (cache.has(query)) {
-            return Promise.resolve(cache.get(query));
-        }
+        if (neonCache.has(query)) return Promise.resolve(neonCache.get(query));
 
         const token = ++activeToken;
 
@@ -388,7 +313,7 @@ function createCachedSingleCaller(fetchFn) {
                 throw new Error("Cancelled due to newer request");
             }
 
-            cache.set(query, data);
+            neonCache.set(query, data);
             return data;
         });
     };
@@ -396,8 +321,6 @@ function createCachedSingleCaller(fetchFn) {
 
 const fetchNeon = q => loadJson(neonURL + q);
 const fetchNeonSingle = createCachedSingleCaller(fetchNeon);
-
-
 
 function updateInternalStats(){
     const base =[500,500,100,100,25,25]
