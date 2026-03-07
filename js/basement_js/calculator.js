@@ -190,7 +190,7 @@ function onInputNoDebounce(textInput,suggestions){
 }
 
 async function fetchAndRenderSuggestions(query, textInput,suggestions){
-    suggestedPets = await fetchNeonWithRace("n="+encodeURIComponent(query));
+    suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
     if (!suggestedPets.length || (suggestedPets[0][0] == chosenPet?.[0])){
         return suggestions.style.display = 'none';
     }
@@ -281,7 +281,7 @@ function onKeyDown(e,textInput,suggestions) {
 
 async function applyItem(textInput,suggestions) {
     if (suggestedPets.length==0){
-        const tempArray = await fetchNeonWithRace("n="+encodeURIComponent(textInput.value.trim()));
+        const tempArray = await fetchNeonSingle("n="+encodeURIComponent(textInput.value.trim()));
         tempArray.forEach((_,i)=>{
             suggestedPets.push(tempArray[i]);
         })
@@ -299,7 +299,7 @@ function highlight(suggestions) {
     });
 }
 
-function throttle(fn, delay) {
+/*function throttle(fn, delay) {
     let last = 0,
     timer = null,
     pending = null;
@@ -331,18 +331,16 @@ function throttle(fn, delay) {
 
         return pending;
     };
-}
+}*/
 
-const fetchNeonThrottled = throttle(loadJson, 500);
+//const fetchNeonThrottled = throttle(loadJson, 500);
 
-function fetchNeonWithCache(query) {
+/*function fetchNeonWithCache(query) {
     if (neonCache.has(query)) return Promise.resolve(neonCache.get(query));
     return fetchNeonThrottled(neonURL + query);
-}
+}*/
 
-function fetchNeonWithRace(query) {
-    console.log(neonCache);
-    
+/*function fetchNeonWithRace(query) {
     query = query.toLowerCase();
     currentQuery = query;
 
@@ -354,7 +352,51 @@ function fetchNeonWithRace(query) {
             return Promise.reject(new Error("Outdated query"));
         }
     });
+}*/
+
+function createSingleCaller(fetchFn) {
+    let activeToken = 0;
+
+    return function singleCaller(query) {
+        const token = ++activeToken;
+
+        return fetchFn(query).then(data => {
+            if (token !== activeToken) {
+                // A newer call has been made → reject immediately
+                throw new Error("Cancelled due to newer request");
+            }
+            return data;
+        });
+    };
 }
+
+function createCachedSingleCaller(fetchFn) {
+    const cache = new Map();
+    let activeToken = 0;
+
+    return function cachedCaller(query) {
+        query = query.toLowerCase();
+
+        if (cache.has(query)) {
+            return Promise.resolve(cache.get(query));
+        }
+
+        const token = ++activeToken;
+
+        return fetchFn(query).then(data => {
+            if (token !== activeToken) {
+                throw new Error("Cancelled due to newer request");
+            }
+
+            cache.set(query, data);
+            return data;
+        });
+    };
+}
+
+const fetchNeon = q => loadJson(neonURL + q);
+const fetchNeonSingle = createCachedSingleCaller(fetchNeon);
+
 
 
 function updateInternalStats(){
@@ -438,7 +480,7 @@ async function updatePetArray(){
     const statOrder = [0, 2, 4, 1, 3, 5];
     const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
 
-    const tempArray = await fetchNeonWithRace(query);
+    const tempArray = await fetchNeonSingle(query);
     console.log(tempArray);
     petArray = tempArray;
     
