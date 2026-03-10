@@ -21,7 +21,7 @@ let showPets = true;
 let page = 0;
 let columns=[];
 
-let petArray = [/*[NAME,ANIMATED,EMOJI,ALIAS,TYPE],*/];
+let petArray;
 
 //for Mode: searching pets
 let suggestedPets  = [];    
@@ -91,13 +91,13 @@ function sortPetArray(){
         "common","uncommon","rare","epic","mythical","legendary","gem","bot","distorted","fabled","hidden","special","patreon","cpatreon"
     ];
     petArray.sort((petA, petB) => {
-        const tierPriorityA = tiers.indexOf(petA[4]);
-        const tierPriorityB = tiers.indexOf(petB[4]);
+        const tierPriorityA = tiers.indexOf(petA.tier);
+        const tierPriorityB = tiers.indexOf(petB.tier);
 
         if (tierPriorityA !== tierPriorityB) 
             return tierPriorityA - tierPriorityB;
         else
-            return petA[0].localeCompare(petB[0]);
+            return petA.name.localeCompare(petB.name);
     });
     outputPetContainer();
 }
@@ -117,9 +117,9 @@ function outputPetContainerMATCHING(){
     page=0;
     let headersCreated = 0;
     petArray.forEach((_,i)=>{
-        if (!petArray[i-1] || petArray[i][4]!=petArray[i-1][4]){
+        if (i===0 || petArray[i].tier!=petArray[i-1].tier){
             headersCreated++;
-            columns.at(-1).append(createHeader(petArray[i]));
+            columns.at(-1).append(createHeader(petArray[i].tier));
         }
         if ((i+headersCreated) % 20 == 0){
             columns.push(createColumn());
@@ -164,7 +164,7 @@ function outputPetContainerSEARCH(){
     textInput.addEventListener('blur', () =>    suggestionWrapper.style.display = 'none');
 
     petContainer.append(textInput,suggestionWrapper);
-    if (chosenPet && chosenPet[0]) outputSmallPetContainer(chosenPet);
+    if (chosenPet && chosenPet.name) outputSmallPetContainer(chosenPet);
     textInput.focus();
 }
 
@@ -201,13 +201,13 @@ function renderSuggestions(query,suggestions) {
     selectedIndex = -1;
 
     suggestedPets.forEach((pet, i) => {
-        const aliases = pet[3]
+        const aliases = pet.aliases
             .filter(a => a.includes(query));
 
         suggestions.appendChild(
             make("div",{
                 className: 'suggestion',
-                textContent: pet[0],
+                textContent: pet.name,
                 onmousedown:(e)=> {
                     e.preventDefault();
                     selectedIndex=i;
@@ -232,12 +232,12 @@ function outputSmallPetContainer(pet){
             style:{width:"3rem"}
         }), 
         make("div",{
-            innerHTML:pet[0],
+            innerHTML:pet.name,
             className:"discord-code-lite",
             style: "width: max-content; text-align:unset; font-weight:bold;"
         }), 
-        pet[3] && pet[3][0] && make("div",{
-            innerHTML:"Aliases: " + pet[3].join(", "),
+        pet.aliases && pet.aliases[0] && make("div",{
+            innerHTML:"Aliases: " + pet.aliases.join(", "),
             className:"discord-code-lite",
             style: "display: inline; text-align:unset; font-size:0.75rem"
         })
@@ -286,7 +286,7 @@ async function applyItem(query,suggestions) {
     suggestedPets=[];
     suggestions.style.display = 'none'
 
-    if (!chosenPet || !chosenPet[0]) return;
+    if (!chosenPet || !chosenPet.name) return;
     petToStats(chosenPet)
     outputSmallPetContainer(chosenPet);
 }
@@ -393,7 +393,7 @@ function updateStats(){
 function petToStats(pet){
     const order =[0, 3, 1, 4, 2, 5];
     inputs.forEach((input,i) => {
-            input.value=pet[5][order[i]];
+        input.value=pet.stats[order[i]];
     });
     updateStats();
 }
@@ -403,8 +403,14 @@ async function updatePetArray(){
     const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
 
     const tempArray = await fetchNeonSingle(query);
-    console.log(tempArray);
-    petArray = tempArray;
+    petArray = tempArray.map(rawPet => ({
+        name: rawPet[0],
+        animated: rawPet[1],
+        emoji: rawPet[2],
+        aliases: rawPet[3],
+        tier: rawPet[4],
+        stats: rawPet[5]
+    }));
     
     sortPetArray();
 }
@@ -424,12 +430,12 @@ function displayPet(pet){
             className:"one-rem"
         }),
         make("code",{
-            textContent:pet[0],
+            textContent:pet.name,
             className:"discord-code",
             style:"font-size: 0.7rem; line-height:unset;"
         }),
         make("span",{
-            innerHTML: pet[3].length? pet[3].join(', '): 'no Alias',
+            innerHTML: pet.aliases.length? pet.aliases.join(', '): 'no Alias',
             className:"pet-tooltip-text"
         })
     ];
@@ -444,40 +450,40 @@ function displayPet(pet){
     ])
 }
 
-function createHeader(pet){
-    const tierTexts= {
-        "common":   " -----—— Common ——------ ",
-        "uncommon": " -----—— Uncommon —----- ",
-        "rare":     " -----—— Rare ———------- ",
-        "epic":     " -----—— Epic ———------- ",
-        "mythical": " -----—— Mythic ——------ ",
-        "legendary":" -----—— Legendary —---- ",
-        "gem":      " -----—— Gem ———-------- ",
-        "bot":      " -----—— Bot ———-------- ",
-        "distorted":" -----—— Distorted —---- ",
-        "fabled":   " -----—— Fabled ——------ ",
-        "hidden":   " -----—— Hidden ——------ ",
-        "special":  " -----—— Special ——----- ",
-        "patreon":  " -----—— Patreon ——----- ",
-        "cpatreon": " -----—— Custom ——------ "
-    };
+function createHeader(tier){
+    const tierText= {
+        common:   " -----—— Common ——------ ",
+        uncommon: " -----—— Uncommon —----- ",
+        rare:     " -----—— Rare ———------- ",
+        epic:     " -----—— Epic ———------- ",
+        mythical: " -----—— Mythic ——------ ",
+        legendary:" -----—— Legendary —---- ",
+        gem:      " -----—— Gem ———-------- ",
+        bot:      " -----—— Bot ———-------- ",
+        distorted:" -----—— Distorted —---- ",
+        fabled:   " -----—— Fabled ——------ ",
+        hidden:   " -----—— Hidden ——------ ",
+        special:  " -----—— Special ——----- ",
+        patreon:  " -----—— Patreon ——----- ",
+        cpatreon: " -----—— Custom ——------ "
+    }[tier];
 
     return make("div",
         {style:{width:"10.8rem"}},
-        [make("div",{ textContent: tierTexts[pet[4]], className:"pet-type-header"})]
+        [make("div",{ textContent: tierText, className:"pet-type-header"})]
     )
 }
 
 function getPetImage(pet, wantAnimated){
-    if( wantAnimated && pet[1] == 1){ 
+    if( wantAnimated && pet.animated == 1){ 
         // in search, where we display gifs (eg lizard)
-        return `https://cdn.discordapp.com/emojis/${pet[2]}.gif?size=96`;
-    }else if (["common","uncommon","rare","epic","mythic","hidden"].includes(pet[4])){
+        return `https://cdn.discordapp.com/emojis/${pet.emoji}.gif?size=96`;
+    }else if (["common","uncommon","rare","epic","mythic","hidden"].includes(pet.tier)){
         // snail, crocodile, ...
-        return `../media/owo_images/pets/${pet[0]}.png`;
+        return `../media/owo_images/pets/${pet.name}.png`;
     }else {
         // everything else displayed as pngs
-        return `https://cdn.discordapp.com/emojis/${pet[2]}.png?size=96`;
+        return `https://cdn.discordapp.com/emojis/${pet.emoji}.png?size=96`;
     }
 }
 
