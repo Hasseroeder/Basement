@@ -278,10 +278,7 @@ function onKeyDown(e,textInput,suggestions) {
 
 async function applyItem(query,suggestions) {
     if (suggestedPets.length==0){
-        const tempArray = await fetchNeonSingle("n="+encodeURIComponent(query));
-        tempArray.forEach((_,i)=>{
-            suggestedPets.push(tempArray[i]);
-        })
+        suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
     }
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
     if (!chosenPet || !chosenPet[0]) return;
