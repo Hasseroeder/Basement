@@ -161,7 +161,7 @@ function outputPetContainerSEARCH(){
     textInput.addEventListener('input', () =>   onInput(textInput,suggestionWrapper));
     textInput.addEventListener('focus', () =>   onInputNoDebounce(textInput,suggestionWrapper));
     textInput.addEventListener('keydown', e =>  onKeyDown(e,textInput,suggestionWrapper));
-    //textInput.addEventListener('blur', () =>    suggestions.style.display = 'none');
+    textInput.addEventListener('blur', () =>    suggestions.style.display = 'none');
 
     petContainer.append(textInput,suggestionWrapper);
     if (chosenPet && chosenPet[0]) outputSmallPetContainer(chosenPet);
