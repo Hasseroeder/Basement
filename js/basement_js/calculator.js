@@ -249,8 +249,6 @@ function outputSmallPetContainer(pet){
             id: "petOutput"
         },children)
     );
-
-    suggestedPets=[];
 }
 
 function onKeyDown(e,textInput,suggestions) {
@@ -283,10 +281,14 @@ async function applyItem(query,suggestions) {
         suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
     }
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
+    
+    clearTimeout(debounceTimer);
+    suggestedPets=[];
+    suggestions.style.display = 'none'
+
     if (!chosenPet || !chosenPet[0]) return;
     petToStats(chosenPet)
     outputSmallPetContainer(chosenPet);
-    suggestions.style.display = 'none'
 }
 
 function highlight(suggestions) {
