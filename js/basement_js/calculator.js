@@ -249,6 +249,8 @@ function outputSmallPetContainer(pet){
             id: "petOutput"
         },children)
     );
+
+    suggestedPets=[];
 }
 
 function onKeyDown(e,textInput,suggestions) {
