@@ -163,6 +163,8 @@ function outputPetContainerSEARCH(){
     textInput.addEventListener('keydown', e =>  onKeyDown(e,textInput,suggestionWrapper));
     textInput.addEventListener('blur', () =>    suggestions.style.display = 'none');
 
+    console.log(suggestions);
+
     petContainer.append(textInput,suggestionWrapper);
     if (chosenPet && chosenPet[0]) outputSmallPetContainer(chosenPet);
     textInput.focus();
