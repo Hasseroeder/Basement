@@ -124,7 +124,7 @@ export function getY(topStat,rightStat){
 }
 
 export async function getLinesAndLabels({bigLabels,areaLabels,statAllocation}={}){
-    const rightRotation = 57.2957795;
+    const rightRotation = 60;
     
     const annotations = [
         {
