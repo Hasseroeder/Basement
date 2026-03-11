@@ -163,7 +163,7 @@ function outputPetContainerSEARCH(){
     });
 
     textInput.addEventListener('input', () =>   onInput(textInput,suggestionWrapper));
-    textInput.addEventListener('focus', () =>   onInputNoDebounce(textInput,suggestionWrapper));
+    textInput.addEventListener('focus', () =>   onInput(textInput,suggestionWrapper));
     textInput.addEventListener('keydown', e =>  onKeyDown(e,textInput,suggestionWrapper));
     textInput.addEventListener('blur', () =>    suggestionWrapper.style.display = 'none');
 
@@ -173,29 +173,25 @@ function outputPetContainerSEARCH(){
 }
 
 const displayColumns = () =>
-  petContainer.firstChild.replaceChildren(...columns.slice(page * 2, page * 2 + 2));
+    petContainer.firstChild.replaceChildren(...columns.slice(page * 2, page * 2 + 2));
 
 function onInput(textInput,suggestions) {
     const q = textInput.value.trim();
     clearTimeout(debounceTimer);
     
     if (!q || q.length<=2){
-        suggestions.style.display = 'none';
-    }else {
-        debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,suggestions), 200);
+        suggestedPets=[];
+        return suggestions.style.display = 'none'
     }
-}
-
-function onInputNoDebounce(textInput,suggestions){
-    const q = textInput.value.trim();
-    if (!q || q.length<=2) return suggestions.style.display = 'none';
-    fetchAndRenderSuggestions(q,suggestions);
+    debounceTimer = setTimeout(()=>fetchAndRenderSuggestions(q,suggestions), 200);
 }
 
 async function fetchAndRenderSuggestions(query,suggestions){
     suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
 
-    if (!suggestedPets.length) return suggestions.style.display = 'none';
+    if (!suggestedPets.length) {
+        return suggestions.style.display = 'none';
+    }
     renderSuggestions(query,suggestions);
 }
 
@@ -274,21 +270,17 @@ function onKeyDown(e,textInput,suggestions) {
     else if (e.key === 'Escape') {
         e.target.blur();
     }
-    else if (e.key === ' ') {
-        e.preventDefault();
-        onInputNoDebounce(textInput, suggestions);
-    }
 }
 
 async function applyItem(query,suggestions) {
+    clearTimeout(debounceTimer);
     if (suggestedPets.length==0){
         suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
     }
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
     
-    clearTimeout(debounceTimer);
     suggestedPets=[];
-    suggestions.style.display = 'none'
+    suggestions.style.display = 'none';
 
     if (!chosenPet || !chosenPet.name) return;
     petToStats(chosenPet)
