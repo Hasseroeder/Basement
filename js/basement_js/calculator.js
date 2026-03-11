@@ -189,8 +189,7 @@ function onInputNoDebounce(textInput,suggestions){
 }
 
 async function fetchAndRenderSuggestions(query,suggestions){
-    const tempArray = await fetchNeonSingle("n="+encodeURIComponent(query));
-    suggestedPets = mapRawPetArray(tempArray);
+    suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
 
     if (!suggestedPets.length) return suggestions.style.display = 'none';
     renderSuggestions(query,suggestions);
@@ -279,8 +278,7 @@ function onKeyDown(e,textInput,suggestions) {
 
 async function applyItem(query,suggestions) {
     if (suggestedPets.length==0){
-        const tempArray = await fetchNeonSingle("n="+encodeURIComponent(query));
-        suggestedPets = mapRawPetArray(tempArray);
+        suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
     }
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
     
@@ -313,6 +311,15 @@ function createCachedSingleCaller(fetchFn) {
             if (token !== activeToken) {
                 throw new Error("Cancelled due to newer request");
             }
+
+            data = data.map(rawPet=>({
+                name: rawPet[0],
+                animated: rawPet[1],
+                emoji: rawPet[2],
+                aliases: rawPet[3],
+                tier: rawPet[4],
+                stats: rawPet[5]
+            }))
 
             neonCache.set(query, data);
             return data;
@@ -404,20 +411,9 @@ async function updatePetArray(){
     const statOrder = [0, 2, 4, 1, 3, 5];
     const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
 
-    const tempArray = await fetchNeonSingle(query);
-    petArray = mapRawPetArray(tempArray);
+    petArray = await fetchNeonSingle(query);
     sortPetArray();
 }
-
-const mapRawPetArray = rawArray =>
-    rawArray.map(rawPet=>({
-        name: rawPet[0],
-        animated: rawPet[1],
-        emoji: rawPet[2],
-        aliases: rawPet[3],
-        tier: rawPet[4],
-        stats: rawPet[5]
-    }))
 
 function setLevelTo(value){
     value           = Math.max(1,value);
