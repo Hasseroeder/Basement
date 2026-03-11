@@ -234,8 +234,6 @@ async function createLabelImage(item,statIDs) {
     canvas.style.height = `${cssHeight}px`;
 
     ctx.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
 
     ctx.fillStyle = 'lightgray';
     ctx.textBaseline = 'middle';
@@ -281,8 +279,6 @@ export async function initializeTriangle(){
     const petButton = document.createElement("button");
 
     ctxWrapper.style="width: 600px; height:480px; margin-bottom:10px;";
-    ctx.width=480;
-    ctx.height=600;
     petButton.style="position: absolute; width: 4.5rem; height: 3rem; transform: translate(-275%,175%);";
     petButton.textContent="Pets";
     ctxWrapper.append(ctx);
