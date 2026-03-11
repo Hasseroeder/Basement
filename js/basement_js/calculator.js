@@ -86,11 +86,11 @@ const imgTypeSuffix =[
     "rune"
 ]  
 
-function sortPetArray(){
+function sortArray(array){
     const tiers = [
         "common","uncommon","rare","epic","mythical","legendary","gem","bot","distorted","fabled","hidden","special","patreon","cpatreon"
     ];
-    petArray.sort((petA, petB) => {
+    array.sort((petA, petB) => {
         const tierPriorityA = tiers.indexOf(petA.tier);
         const tierPriorityB = tiers.indexOf(petB.tier);
 
@@ -99,7 +99,7 @@ function sortPetArray(){
         else
             return petA.name.localeCompare(petB.name);
     });
-    outputPetContainer();
+    return array;
 }
 
 function outputPetContainer(){
@@ -321,6 +321,8 @@ function createCachedSingleCaller(fetchFn) {
                 stats: rawPet[5]
             }))
 
+            data = sortArray(data);
+
             neonCache.set(query, data);
             return data;
         });
@@ -412,7 +414,7 @@ async function updatePetArray(){
     const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
 
     petArray = await fetchNeonSingle(query);
-    sortPetArray();
+    outputPetContainer();
 }
 
 function setLevelTo(value){
