@@ -100,23 +100,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         options: {
             layout: {padding: {left:60,right:60,top:48,bottom:48}},
             plugins: {
-                cursorLine: true, 
-                tooltip: {mode: 'nearest',enabled: false,animation: false,},
+                tooltip: {mode: 'nearest',enabled: false,animation: false},
                 legend: {display: false},
                 annotation: {clip: false, annotations: {...lines}}
             },
             scales: {
                 x: {
-                    display: false, type: 'linear',
-                    title: {display: false},
+                    display: false,
                     min: 0, max: 100,
-                    grid: {drawOnChartArea: false}
                 },
                 y: {
-                    display: false, type: 'linear',
-                    title: {display: false},
+                    display: false,
                     min: 0, max: 100,
-                    grid: {drawOnChartArea: false}
                 }
             }
         },
