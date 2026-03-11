@@ -311,7 +311,6 @@ input, textarea, code, [contenteditable] {
 .suggestions {
   border: 1px solid #191919;
   background: #191919;
-  width: max-content;
   border-radius: 0.2rem;
   margin-top: 0.2rem;
   display:none;
@@ -320,8 +319,6 @@ input, textarea, code, [contenteditable] {
 .suggestion {
   padding: 0.3rem;
   cursor: var(--cur-pointer);
-
-  width: 15rem;
   display: flex;
   gap: 0.35rem;
   align-items: baseline;
@@ -366,7 +363,7 @@ input, textarea, code, [contenteditable] {
 .petButtonFromCalculator {
   margin: 1rem 1rem 0.3rem 0.3rem; 
   font-size: 0.75rem;
-  width:11.3rem;
+  width:auto;
   border-radius: 0.2rem; 
   border-color: #909090;
 }

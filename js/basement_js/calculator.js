@@ -200,9 +200,7 @@ function renderSuggestions(query,suggestions) {
                 onmousedown: async e => {
                     e.preventDefault();
                     clearTimeout(debounceTimer);
-                    if (suggestedPets.length===0){
-                        suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(textInput.value.trim()));
-                    }
+                    suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(textInput.value.trim()));
                     applyItem(i);
                     suggestions.style.display = 'none';
                 }
@@ -259,9 +257,7 @@ async function onKeyDown(e,textInput,suggestions) {
     else if (e.key === 'Enter') {
         e.preventDefault();
         clearTimeout(debounceTimer);
-        if (suggestedPets.length===0){
-            suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(textInput.value.trim()));
-        }
+        suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(textInput.value.trim()));
         applyItem(selectedIndex);
         suggestions.style.display = 'none';
     }
