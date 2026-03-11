@@ -73,18 +73,9 @@ let effects = [
     // {"id":"1", "type":2, "quality":60}
 ]
 
-const effectMin = [0.05, 0.05, 0.15, 0.10, 0.05, 0.15, 0.05 ]
-const effectMax = [0.20, 0.20, 0.35, 0.30, 0.20, 0.35, 0.15 ]
-
-const imgTypeSuffix =[
-    "hp",
-    "str",
-    "pr",
-    "wp",
-    "mag",
-    "mr",
-    "rune"
-]  
+const effectMin =  [ 0.05, 0.05,  0.15, 0.10, 0.05,  0.15, 0.05 ]
+const effectMax =  [ 0.20, 0.20,  0.35, 0.30, 0.20,  0.35, 0.15 ]
+const boostSuffix =[ "hp", "str", "pr", "wp", "mag", "mr", "rune" ]
 
 function sortArray(array){
     const tiers = [
@@ -158,9 +149,7 @@ function outputPetContainerSEARCH(){
         placeholder:"type pet here..."
     });
 
-    const suggestionWrapper = make("div",{
-        className:"suggestions", id: "suggestions"
-    });
+    const suggestionWrapper = make("div",{className:"suggestions"});
 
     textInput.addEventListener('input', () =>   onInput(textInput,suggestionWrapper));
     textInput.addEventListener('focus', () =>   onInput(textInput,suggestionWrapper));
@@ -531,7 +520,7 @@ function addEffect(type){
         effect.quality=+value;
         inputs.forEach(i=>i.value=+value);
         imagechildren[0].src=`../media/owo_images/battleEmojis/${getImageForEffect(effect)}.png`;
-        imagechildren[1].textContent=updateBoostDisplay(effect);
+        imagechildren[1].textContent=boostToString(effect);
         updateInternalStats();
     }
 
@@ -560,19 +549,15 @@ function addEffect(type){
     updateValue(100);
 }
 
-function updateBoostDisplay( effect){
-    return "+"
-            +parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1))
-            +"%"
-    ;
-}
+const boostToString = effect =>
+    "+"
+    +parseFloat((100*getBoost(effect.type, effect.quality)).toFixed(1))
+    +"%";
 
-function getImageForEffect(effect){
-    return getPrefix(effect.quality) + imgTypeSuffix[effect.type];
-}
+const getImageForEffect = effect => prefix(effect.quality) + boostSuffix[effect.type];
 
-function getPrefix(quality) {
-    const thresholds = [
+const prefix = quality =>
+    [
         [-Infinity, "c_"],
         [20, "u_"],
         [40, "r_"],
@@ -580,9 +565,7 @@ function getPrefix(quality) {
         [80, "m_"],
         [94, "l_"],
         [99, "f_"]
-    ];
-    return thresholds.findLast(([t]) => t <= quality)[1];
-}
+    ].findLast(([t]) => t <= quality)[1];
 
 document.addEventListener("DOMContentLoaded", () => {
     doTimestamps();
