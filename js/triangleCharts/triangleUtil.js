@@ -278,7 +278,9 @@ export async function initializeTriangle(){
     const ctxWrapper = document.createElement("div");
     const petButton = document.createElement("button");
 
-    ctxWrapper.style="width: 600px; height:480px; margin-bottom:10px;";
+    ctxWrapper.style="width: 495px; height:480px; margin-bottom:10px;";
+    // I chose these values super carefully to get an approximately equilateral triangle. 
+    // It's off by less than a percent, but I's also hardcoded and super annoying
     petButton.style="position: absolute; width: 4.5rem; height: 3rem; transform: translate(-275%,175%);";
     petButton.textContent="Pets";
     ctxWrapper.append(ctx);
@@ -298,7 +300,7 @@ export async function initializeTriangle(){
         options: {
             animation: false,
             maintainAspectRatio: false,
-            layout: {padding: {left: 60, right: 60, top: 48, bottom: 48}},
+            layout: {padding: {top: 10, bottom: 48}},
             plugins: {
                 tooltip: {
                     mode: 'nearest', enabled: false, animation: false, 
