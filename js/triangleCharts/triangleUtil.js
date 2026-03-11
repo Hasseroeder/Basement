@@ -290,8 +290,7 @@ export async function initializeTriangle(){
 
     const myChart = new Chart(ctx, {
         type: 'scatter',
-        plugins: 
-            [polygonPlugin],
+        plugins: [polygonPlugin],
         data: {
             datasets: [{
                 label: 'Pet Stats',
@@ -301,6 +300,7 @@ export async function initializeTriangle(){
             }]
         },
         options: {
+            animation: false,
             maintainAspectRatio: false,
             layout: {padding: {left: 60, right: 60, top: 48, bottom: 48}},
             plugins: {
@@ -314,16 +314,12 @@ export async function initializeTriangle(){
             },
             scales: {
                 x: {
-                    display: false, type: 'linear', position: 'bottom',
+                    display: false,
                     min: 0, max: 100,
-                    title: {display: false},
-                    grid: {drawOnChartArea: false}
                 },
                 y: {
-                    display: false, type: 'linear',
+                    display: false,
                     min: 0, max: 100,
-                    title: {display: false},
-                    grid: {drawOnChartArea: false}
                 }
             }
         },
