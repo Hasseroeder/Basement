@@ -1310,5 +1310,5 @@ a:hover {
 .pet-calc-column{
   display: flex;
   width:12rem;
-  flex-direction: "column";
+  flex-direction: column;
 }

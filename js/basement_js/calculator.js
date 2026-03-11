@@ -208,10 +208,14 @@ function renderSuggestions(query,suggestions) {
             make("div",{
                 className: 'suggestion',
                 textContent: pet.name,
-                onmousedown:(e)=> {
+                onmousedown: async e => {
                     e.preventDefault();
-                    selectedIndex=i;
-                    applyItem(query,suggestions);
+                    clearTimeout(debounceTimer);
+                    if (suggestedPets.length===0){
+                        suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(textInput.value.trim()));
+                    }
+                    applyItem(i);
+                    suggestions.style.display = 'none';
                 }
             },[
                 make("div",{
@@ -251,7 +255,7 @@ function outputSmallPetContainer(pet){
     );
 }
 
-function onKeyDown(e,textInput,suggestions) {
+async function onKeyDown(e,textInput,suggestions) {
     const max = suggestedPets.length - 1;
     if (e.key === 'ArrowDown') {
         e.preventDefault();
@@ -265,33 +269,31 @@ function onKeyDown(e,textInput,suggestions) {
     }
     else if (e.key === 'Enter') {
         e.preventDefault();
-        applyItem(textInput.value.trim(),suggestions);
+        clearTimeout(debounceTimer);
+        if (suggestedPets.length===0){
+            suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(textInput.value.trim()));
+        }
+        applyItem(selectedIndex);
+        suggestions.style.display = 'none';
     }
     else if (e.key === 'Escape') {
         e.target.blur();
     }
 }
 
-async function applyItem(query,suggestions) {
-    clearTimeout(debounceTimer);
-    if (suggestedPets.length==0){
-        suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
-    }
-    chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
-    
+async function applyItem(i) {
+    chosenPet = suggestedPets[i] ?? suggestedPets[0];
     suggestedPets=[];
-    suggestions.style.display = 'none';
 
     if (!chosenPet || !chosenPet.name) return;
     petToStats(chosenPet)
     outputSmallPetContainer(chosenPet);
 }
 
-function highlight(suggestions) {
+const highlight = suggestions =>
     Array.from(suggestions.children).forEach((div, i) => {
         div.classList.toggle('active', i === selectedIndex);
     });
-}
 
 function createCachedSingleCaller(fetchFn) {
     let activeToken = 0;
