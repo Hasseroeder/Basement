@@ -314,6 +314,7 @@ input, textarea, code, [contenteditable] {
   border-radius: 0.2rem;
   margin-top: 0.2rem;
   display:none;
+  width: 11.8rem;
 }
 
 .suggestion {
@@ -363,7 +364,7 @@ input, textarea, code, [contenteditable] {
 .petButtonFromCalculator {
   margin: 1rem 1rem 0.3rem 0.3rem; 
   font-size: 0.75rem;
-  width:auto;
+  width:11.3rem;
   border-radius: 0.2rem; 
   border-color: #909090;
 }
