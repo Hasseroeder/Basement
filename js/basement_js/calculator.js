@@ -113,7 +113,9 @@ function outputPetContainer(){
 }
 
 function outputPetContainerMATCHING(){
-    columns=[createColumn()];
+    columns=[
+        make("div",{className:"pet-calc-column"})
+    ];
     page=0;
     let headersCreated = 0;
     petArray.forEach((_,i)=>{
@@ -122,7 +124,9 @@ function outputPetContainerMATCHING(){
             columns.at(-1).append(createHeader(petArray[i].tier));
         }
         if ((i+headersCreated) % 20 == 0){
-            columns.push(createColumn());
+            columns.push(
+                make("div",{className:"pet-calc-column"})
+            );
         }
         columns.at(-1).append(displayPet(petArray[i]));
     });
@@ -411,7 +415,7 @@ function petToStats(pet){
 
 async function updatePetArray(){
     const statOrder = [0, 2, 4, 1, 3, 5];
-    const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
+    const query= "s=" + statOrder.map(i => stats[i]).join('.');
 
     petArray = await fetchNeonSingle(query);
     outputPetContainer();
@@ -478,25 +482,12 @@ function createHeader(tier){
 
 function getPetImage(pet, wantAnimated){
     if( wantAnimated && pet.animated == 1){ 
-        // in search, where we display gifs (eg lizard)
         return `https://cdn.discordapp.com/emojis/${pet.emoji}.gif?size=96`;
     }else if (["common","uncommon","rare","epic","mythic","hidden"].includes(pet.tier)){
-        // snail, crocodile, ...
         return `../media/owo_images/pets/${pet.name}.png`;
     }else {
-        // everything else displayed as pngs
         return `https://cdn.discordapp.com/emojis/${pet.emoji}.png?size=96`;
     }
-}
-
-function createColumn(){
-    return make("div",{
-        style:{
-            display: "flex",
-            width:"12rem",
-            flexDirection: "column"
-        }
-    });
 }
 
 function addAddEffects(){

@@ -1306,3 +1306,9 @@ a:hover {
   width: 100%;   
   display: block;
 }
+
+.pet-calc-column{
+  display: flex;
+  width:12rem;
+  flex-direction: "column";
+}
