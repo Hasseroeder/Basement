@@ -189,11 +189,12 @@ function onInputNoDebounce(textInput,suggestions){
 }
 
 async function fetchAndRenderSuggestions(query,suggestions){
-    suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
+    const tempArray = await fetchNeonSingle("n="+encodeURIComponent(query));
+    suggestedPets = mapRawPetArray(tempArray);
+
     if (!suggestedPets.length) return suggestions.style.display = 'none';
     renderSuggestions(query,suggestions);
 }
-
 
 function renderSuggestions(query,suggestions) {
     suggestions.innerHTML = '';
@@ -278,7 +279,8 @@ function onKeyDown(e,textInput,suggestions) {
 
 async function applyItem(query,suggestions) {
     if (suggestedPets.length==0){
-        suggestedPets = await fetchNeonSingle("n="+encodeURIComponent(query));
+        const tempArray = await fetchNeonSingle("n="+encodeURIComponent(query));
+        suggestedPets = mapRawPetArray(tempArray);
     }
     chosenPet = suggestedPets[selectedIndex]? suggestedPets[selectedIndex]: suggestedPets[0];
     
@@ -403,17 +405,19 @@ async function updatePetArray(){
     const query=`s=${statOrder.map(i => stats[i]).join('.')}`;
 
     const tempArray = await fetchNeonSingle(query);
-    petArray = tempArray.map(rawPet => ({
+    petArray = mapRawPetArray(tempArray);
+    sortPetArray();
+}
+
+const mapRawPetArray = rawArray =>
+    rawArray.map(rawPet=>({
         name: rawPet[0],
         animated: rawPet[1],
         emoji: rawPet[2],
         aliases: rawPet[3],
         tier: rawPet[4],
         stats: rawPet[5]
-    }));
-    
-    sortPetArray();
-}
+    }))
 
 function setLevelTo(value){
     value           = Math.max(1,value);
