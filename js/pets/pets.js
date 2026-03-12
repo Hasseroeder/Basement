@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         {created: false, name: "triangle0", init: initializeTriangle, data: triangleData[0]}, 
         {created: false, name: "triangle1", init: initializeTriangle, data: triangleData[1]}
     ];
-    const pathName="../donatorPages/pets/";
+    const pathName="/donatorPages/pets/";
 
     extraHtml.forEach(html => createInjectAble(html,pathName));
 });
