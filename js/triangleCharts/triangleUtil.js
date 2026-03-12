@@ -278,7 +278,6 @@ export async function initializeTriangle(){
     const ctxWrapper = document.createElement("div");
     const petButton = document.createElement("button");
 
-    const equilateralNumber = Math.sqrt(3)/2;
     const constantPadding = 10; // this is unavoidable due to chart.js annoyingness
     const additionalPadding ={
         top: 0,
@@ -286,16 +285,12 @@ export async function initializeTriangle(){
         bottom: 50,
         left: 0
     };
-    const outerWidth = 480;
-    const innerWidth = outerWidth - additionalPadding.left - additionalPadding.right - constantPadding*2;
+    const outerWidth   = 480;
+    const innerWidth   = outerWidth - additionalPadding.left - additionalPadding.right - constantPadding*2;
     const innerHeight  = innerWidth * (Math.sqrt(3)/2);
     const outerHeight  = innerHeight  + additionalPadding.top + additionalPadding.bottom + constantPadding*2;
 
-    console.log("innerHeight:" + innerHeight);
-    console.log("innerWidth: " + innerWidth);
-
     ctxWrapper.style=`width: ${outerWidth}px; height:${outerHeight}px; margin-bottom:10px;`;
-    //ctxWrapper.style=`width: 495px; height:480px; margin-bottom:10px;`;
 
     petButton.style="position: absolute; width: 4.5rem; height: 3rem; transform: translate(-275%,175%);";
     petButton.textContent="Pets";
