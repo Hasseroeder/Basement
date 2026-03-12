@@ -278,9 +278,18 @@ export async function initializeTriangle(){
     const ctxWrapper = document.createElement("div");
     const petButton = document.createElement("button");
 
-    ctxWrapper.style="width: 495px; height:480px; margin-bottom:10px;";
-    // I chose these values super carefully to get an approximately equilateral triangle. 
-    // It's off by less than a percent, but I's also hardcoded and super annoying
+    const equilateralNumber = Math.sqrt(3)/2;
+    const constantPadding = 10; // this is unavoidable due to chart.js annoyingness
+    const additionalPadding ={
+        bottom: 48
+    };
+    const height = 480;
+
+    const neededWidth = (height-paddingTop-paddingBottom)*equilateralNumber;
+
+    //ctxWrapper.style=`width: ${neededWidth}px; height:${height}px; margin-bottom:10px;`;
+    ctxWrapper.style=`width: 495px; height:480px; margin-bottom:10px;`;
+
     petButton.style="position: absolute; width: 4.5rem; height: 3rem; transform: translate(-275%,175%);";
     petButton.textContent="Pets";
     ctxWrapper.append(ctx);
@@ -300,7 +309,7 @@ export async function initializeTriangle(){
         options: {
             animation: false,
             maintainAspectRatio: false,
-            layout: {padding: {top: 10, bottom: 48}},
+            layout: {padding:additionalPadding},
             plugins: {
                 tooltip: {
                     mode: 'nearest', enabled: false, animation: false, 
