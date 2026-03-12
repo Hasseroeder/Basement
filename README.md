@@ -54,13 +54,22 @@ Following other attempts to write guides, this one also won't be able to be kept
       <td><a href="https://github.com/Hasseroeder">Hasseroeder</a></td>
     </tr>
     <tr style="line-height:1.1rem; height:1.2rem;">
-      <td>Coop</td>
+      <td>April</td>
       <td>
           <div style="font-size: 0.75rem;">
             <code>@coopw</code>
           </div>
         </td>
       <td><a href="https://github.com/coopw1">coopw1</a></td>
+    </tr>
+    <tr style="line-height:1.1rem; height:1.2rem;">
+      <td>Smeagol</td>
+      <td>
+          <div style="font-size: 0.75rem;">
+            <code>@iamsmeagol</code>
+          </div>
+        </td>
+      <td><a href="https://github.com/IamSmeagol">IamSmeagol</a></td>
     </tr>
   </table>
 </div>
