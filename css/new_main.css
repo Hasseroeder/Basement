@@ -1206,7 +1206,11 @@ a:hover {
   text-align: start;
   border-right:none;
   border-left:none;
-  padding: 0.5rem 0.8rem;
+  padding: 0 0.8rem;
+}
+
+.introduction-table tr {
+  height:2.2rem;
 }
 
 .introduction-table{
@@ -1309,4 +1313,23 @@ a:hover {
   display: flex;
   width:12rem;
   flex-direction: column;
+}
+
+.introduction-discord-tag{
+  z-index:2; 
+  position:relative
+}
+
+.introduction-platform-logo{
+  z-index: 1;
+  width: 5rem;
+  position: absolute;
+  left: 48%;
+  top: 30%;
+}
+
+.introduction-subheading{
+  margin: 0.2rem 0.4rem; 
+  font-size: 0.7rem; 
+  color:#888;
 }
