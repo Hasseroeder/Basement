@@ -1339,7 +1339,7 @@ a:hover {
   display: inline-block;
   transform: rotate(-90deg);
   transition: 0.1s ease;
-  line-height: 1;
+  line-height: 1.65;
   font-size: 1rem;
 }
 
