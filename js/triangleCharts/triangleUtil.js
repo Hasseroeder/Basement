@@ -63,11 +63,11 @@ const externalTooltipHandler = (context) => {
 
     const renderPoint = ({ raw: { label, attributes } }) => {
         const cells = attributes.map(
-        (value, i) =>
-            `<div style="display:flex;gap:0.2rem;width:2.5rem">
-            <img src="${statImages[i]}" style="width:1rem;height:1rem;margin-top:0.05rem" />
-            ${value}
-            </div>`
+            (value, i) =>
+                `<div style="display:flex;gap:0.2rem;width:2.5rem">
+                <img src="${statImages[i]}" style="width:1rem;height:1rem;margin-top:0.05rem" />
+                ${value}
+                </div>`
         );
 
         return `
@@ -96,51 +96,10 @@ export function getY(topStat,rightStat){
     return topStat;
 }
 
-export async function getLinesAndLabels({bigLabels,areaLabels,statAllocation}={}){
+export async function getLinesAndLabels({bigLabels,statAllocation}={}){
     const rightRotation = 60;
     
-    const annotations = [
-        {
-            linePts: p => ([[p,0],[p,100-p]]),
-            labelPos: p => ([[p,-3], 0])
-        },
-        {
-            linePts: p => ([[100-p,p],[0,p]]),
-            labelPos: p => ([[103-p,p],-rightRotation])
-        },
-        {
-            linePts: p => ([[0,p],[p,0]]),
-            labelPos: p => ([[-3,103-p], rightRotation ])
-        }
-    ];
-
-    const lines  = {};
     const labels = {};
-
-    annotations.forEach(({ linePts, labelPos },i) => {
-        for (let percent = 0; percent <= 100; percent += 10) {
-            const Title = i +"_" +percent;
-            const [start, end] = linePts(percent);
-            lines[Title] = {
-                type: 'line',
-                xMin: getX(...start), yMin: getY(...start),
-                xMax: getX(...end), yMax: getY(...end),
-                borderWidth: 0.5,
-                color: 'lightgray',
-                drawTime:'beforeDraw'
-            };
-            if (percent == 0) {continue;} // we skip drawing labels saying zero
-            const [xy, rotation] = labelPos(percent);
-            labels[`${Title}Label`] = {
-                type: 'label',
-                xValue: getX(...xy),
-                yValue: getY(...xy),
-                content: `${percent}`,
-                color: 'lightgray',
-                rotation
-            };
-        }
-    });
 
     const positions = [[55,-10],[55,55],[-10,55]];
     (bigLabels || []).forEach(async (bigLabel,i) => {        
@@ -158,9 +117,7 @@ export async function getLinesAndLabels({bigLabels,areaLabels,statAllocation}={}
         };
     });
 
-    Object.assign(labels, getPolygonLabels(areaLabels));
-
-    return {lines,labels};
+    return {labels};
 }
 
 function scaleToFit(naturalW, naturalH,  maxH) {
@@ -223,26 +180,6 @@ async function createLabelImage(item,statIDs) {
     return canvas.toDataURL('image/png');
 }
 
-function getPolygonLabels({labels, colors} = {}){
-    const labelObject = {};
-    (labels || []).forEach(({text, coor, rotation = 0},i) =>{
-        labelObject[text+"label"]={
-            type:"label",
-            content:text,
-            xValue: getX(...coor),
-            yValue: getY(...coor),
-            color: colors[i],
-            font: {
-                size: 16,
-                weight:"bold"
-            },
-            rotation,
-            group: "polygonLabels"
-        };
-    });
-    return labelObject;
-}
-
 export async function initializeTriangle(){
     const container = this.cachedDiv.querySelector("#chartContainer");
     const {chartData, ann, pets} = this.data;
@@ -273,7 +210,9 @@ export async function initializeTriangle(){
     const myChart = new Chart(ctx, {
         type: 'scatter',
         plugins: [
-            PluginManager.polygonPlugin
+            PluginManager.polygonPluginFactory(chartData.polygonData),
+            PluginManager.polygonLabelPluginFactory(chartData.areaLabels),
+            PluginManager.triangleBasePluginFactory()
         ],
         data: {
             datasets: [{
@@ -294,17 +233,10 @@ export async function initializeTriangle(){
                 },
                 legend: {display: false},
                 annotation: {clip: false, annotations: {...ann.lines,...ann.labels}},
-                polygonPlugin: chartData.polygonData
             },
             scales: {
-                x: {
-                    display: false,
-                    min: 0, max: 100,
-                },
-                y: {
-                    display: false,
-                    min: 0, max: 100,
-                }
+                x: { display: false, min: 0, max: 100},
+                y: { display: false, min: 0, max: 100}
             }
         },
     });
