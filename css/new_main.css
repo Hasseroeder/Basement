@@ -1335,7 +1335,6 @@ a:hover {
 }
 
 .injectable-button{
-  overflow: visible;
   padding:0;
   border:none;
   border-radius: 0;
@@ -1351,7 +1350,7 @@ a:hover {
   background-size: cover;
 }
 
-.injectable-button.inverted::before{
+.injectable-button.opened::before{
   transform: rotate(90deg);
 }
 
