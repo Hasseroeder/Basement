@@ -38,7 +38,7 @@ const makeGridItem = (onClick, link, path, text) =>
 export async function createInjectAble(html,pathName){
     const response = await fetch(pathName+html.name+".html");
     const htmlContent = await response.text();
-    html.cachedDiv = document.createElement('div');
+    html.cachedDiv = make('div',{className:"injectable-box"});
     html.cachedDiv.innerHTML = htmlContent;
 
     const container = document.getElementById(`${html.name}Container`);

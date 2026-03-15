@@ -1354,3 +1354,9 @@ a:hover {
 .injectable-button.inverted::before{
   transform: rotate(90deg);
 }
+
+.injectable-box{
+  background-color:#333;
+  padding:20px 20px 10px 20px;
+  margin: 0 10px 10px 10px;
+}
