@@ -1341,10 +1341,8 @@ a:hover {
   transition: 0.1s ease;
   line-height: 1.65;
   font-size: 1rem;
-  translate: 0.5px 0;
 }
 
 .injectable-button.inverted::before{
   transform: rotate(0);
-  translate: 0 1px;
 }
