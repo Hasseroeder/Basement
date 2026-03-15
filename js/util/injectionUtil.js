@@ -42,10 +42,14 @@ export async function createInjectAble(html,pathName){
     html.cachedDiv.innerHTML = htmlContent;
 
     const container = document.getElementById(`${html.name}Container`);
-    container.querySelector('button').addEventListener("click", () => {
+
+	const button = container.querySelector('button');
+
+    button.addEventListener("click", () => {
         html.created ? container.lastElementChild.remove() 
                         : container.appendChild(html.cachedDiv);
         html.created = !html.created;
+		button.classList.toggle("inverted");
     });
 
     html.init?.();

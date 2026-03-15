@@ -1333,3 +1333,16 @@ a:hover {
   font-size: 0.7rem; 
   color:#888;
 }
+
+.injectable-button::before{
+  content:"⮟";
+  display: inline-block;
+  transform: rotate(-90deg);
+  transition: 0.1s ease;
+  line-height: 1;
+  font-size: 1rem;
+}
+
+.injectable-button.inverted::before{
+  transform: rotate(0);
+}
