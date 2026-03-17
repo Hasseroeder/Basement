@@ -1,6 +1,5 @@
 import * as PluginManager from "./trianglePlugins.js";
-
-const imageCache = new Map(); // -> Promise<Image>
+import { make } from "../util/injectionUtil.js";
 
 const statImages= [
     "./media/owo_images/battleEmojis/HP.png",
@@ -38,28 +37,25 @@ function getPosition(
     rightAttr,
     leftAttr
 ){
-    let sum = [...topAttr,...rightAttr,...leftAttr].reduce((acc, num) => acc + num, 0);
-
-    let right= 100*(rightAttr.reduce((acc, num) => acc + num, 0))/sum;
-    let top=   100*(topAttr.reduce((acc, num) => acc + num, 0))/sum;
+    const sum   = [...topAttr,...rightAttr,...leftAttr].reduce((acc, num) => acc + num, 0);
+    const right = 100*(rightAttr.reduce((acc, num) => acc + num, 0))/sum;
+    const top   = 100*(topAttr.reduce((acc, num) => acc + num, 0))/sum;
 
     return [top, right];
 }
 
-const externalTooltipHandler = (context) => {
+const externalTooltipHandler = context => {
     const { chart, tooltip } = context;
     let tooltipEl = document.getElementById('chartjs-tooltip');
     if (!tooltipEl) {
-        tooltipEl = document.createElement('div');
-        tooltipEl.id = 'chartjs-tooltip';
-        tooltipEl.className= 'triangle-tooltip';
+        tooltipEl = make('div',{
+            id: 'chartjs-tooltip',
+            className: 'triangle-tooltip'
+        });
         document.body.appendChild(tooltipEl);
     }
 
-    if (tooltip.opacity === 0) {
-        tooltipEl.style.opacity = 0;
-        return;
-    }
+    tooltipEl.style.opacity = tooltip.opacity;
 
     const renderPoint = ({ raw: { label, attributes } }) => {
         const cells = attributes.map(
@@ -81,9 +77,6 @@ const externalTooltipHandler = (context) => {
 
     const { left, top } = chart.canvas.getBoundingClientRect();
     tooltipEl.style.cssText += `
-        z-index: 2;
-        opacity:1;
-        position:absolute;
         left:${left + window.pageXOffset + tooltip.caretX + 5}px; 
         top:${top + window.pageYOffset + tooltip.caretY + 5}px;
     `;  // hardcoded offset is stupid, I know.
@@ -96,33 +89,79 @@ export function getY(topStat,rightStat){
     return topStat;
 }
 
-export async function getLinesAndLabels({bigLabels,statAllocation}={}){
-    const rightRotation = 60;
-    
-    const labels = {};
+const imageCache = new Map(); // -> Promise<Image>
 
-    const positions = [[55,-10],[55,55],[-10,55]];
-    (bigLabels || []).forEach(async (bigLabel,i) => {        
-        const src = await createLabelImage(bigLabel,statAllocation[i]);
-        const image = await loadImage(src);
-        const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 20);
+async function createLabelImage(elements) {
+    const font = '20px system-ui, Arial, sans-serif';
+    const defaultImageSize = 24;
 
-        labels["BigLabel_"+i] = {
-            type: 'label',
-            content: image,
-            width,
-            height,
-            rotation: [-rightRotation, rightRotation,0][i],
-            xValue: getX(...positions[i]), yValue: getY(...positions[i])
-        };
-    });
+    // --- First pass: measure everything ---
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.font = font;
+    ctx.textBaseline = 'middle';
 
-    return {labels};
-}
+    const measured = [];
+    let totalWidth = 0;
+    let maxHeight = 0;
 
-function scaleToFit(naturalW, naturalH,  maxH) {
-    const ratio = Math.min(maxH / naturalH, 1);
-    return { width: Math.round(naturalW * ratio), height: Math.round(naturalH * ratio) };
+    for (const el of elements) {
+        if (el.type === "text") {
+            const metrics = ctx.measureText(el.content);
+            const w = Math.ceil(metrics.width);
+            const h = Math.ceil(
+                (metrics.actualBoundingBoxAscent || 0) +
+                (metrics.actualBoundingBoxDescent || 0) ||
+                parseInt(font, 10)
+            );
+            measured.push({ type: "text", content: el.content, width: w, height: h });
+            totalWidth += w;
+            maxHeight = Math.max(maxHeight, h);
+
+        } else if (el.type === "image") {
+            const img = await loadImage(el.source);
+            const w = defaultImageSize;
+            const h = defaultImageSize;
+            measured.push({ type: "image", img, width: w, height: h });
+            totalWidth += w;
+            maxHeight = Math.max(maxHeight, h);
+
+        } else if (el.type === "gap") {
+            measured.push({ type: "gap", width: el.px, height: 0 });
+            totalWidth += el.px;
+        }
+    }
+
+    // --- Prepare canvas ---
+    canvas.width = totalWidth;
+    canvas.height = maxHeight;
+    canvas.style.width = `${totalWidth}px`;
+    canvas.style.height = `${maxHeight}px`;
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.font = font;
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'lightgray';
+
+    // --- Second pass: draw everything ---
+    let x = 0;
+    const centerY = maxHeight / 2;
+
+    for (const el of measured) {
+        if (el.type === "text") {
+            ctx.fillText(el.content, x, centerY);
+            x += el.width;
+
+        } else if (el.type === "image") {
+            ctx.drawImage(el.img, x, 0, el.width, el.height);
+            x += el.width;
+
+        } else if (el.type === "gap") {
+            x += el.width;
+        }
+    }
+
+    return loadImage(canvas.toDataURL("image/png"));
 }
 
 function loadImage(src) {
@@ -137,56 +176,33 @@ function loadImage(src) {
     return p;
 }
 
-async function createLabelImage(item,statIDs) {
-    const font = '20px system-ui, Arial, sans-serif';
-    const imageSize = 24;
+export async function getLabels(scaleTitles){    
+    const labels = {};
 
-    const imageSources = statIDs.map(i=>statImages[i]);
-    const imgs = await Promise.all(imageSources.map(loadImage));
+    (scaleTitles || []).forEach(async (scaleTitle,i) => {        
+        const image = await createLabelImage(scaleTitle.elements);
+        const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 20);
 
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+        labels["ScaleTitle_"+i] = {
+            type: 'label',
+            content: image,
+            width,
+            height,
+            rotation: scaleTitle.rotation || 0,
+            xValue: getX(...scaleTitle.coor), yValue: getY(...scaleTitle.coor)
+        };
+    });
+    return labels;
+}
 
-    ctx.font = font;
-    const metrics = ctx.measureText(item.text);
-    const textWidth = Math.ceil(metrics.width);
-    const textHeight = Math.ceil(
-        (metrics.actualBoundingBoxAscent || 0) + (metrics.actualBoundingBoxDescent || 0) || parseInt(font, 10)
-    );
-
-    const scaleFactor = 5;
-    const cssWidth = textWidth + imgs.length * imageSize;
-    const cssHeight = Math.max(textHeight, imageSize);      
-
-    canvas.width = Math.ceil(cssWidth * scaleFactor);
-    canvas.height = Math.ceil(cssHeight * scaleFactor);
-    canvas.style.width = `${cssWidth}px`;
-    canvas.style.height = `${cssHeight}px`;
-
-    ctx.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
-
-    ctx.fillStyle = 'lightgray';
-    ctx.textBaseline = 'middle';
-    ctx.font = '20px system-ui, Arial, sans-serif';
-    const textY = cssHeight / 2;
-    ctx.fillText(item.text, 0, textY);
-
-    let x = textWidth;
-    for (const img of imgs) {
-        ctx.drawImage(img, x, 0, imageSize, imageSize);
-        x += imageSize;
-    }
-
-    return canvas.toDataURL('image/png');
+function scaleToFit(naturalW, naturalH,  maxH) {
+    const ratio = Math.min(maxH / naturalH, 1);
+    return { width: Math.round(naturalW * ratio), height: Math.round(naturalH * ratio) };
 }
 
 export async function initializeTriangle(){
     const container = this.cachedDiv.querySelector("#chartContainer");
-    const {chartData, ann, pets} = this.data;
-
-    const ctx = document.createElement("canvas");
-    const ctxWrapper = document.createElement("div");
-    const petButton = document.createElement("button");
+    const {chartData, pets} = this.data;
 
     const constantPadding = 10; // this is unavoidable due to chart.js annoyingness
     const additionalPadding ={
@@ -198,30 +214,43 @@ export async function initializeTriangle(){
     const outerWidth   = 480;
     const innerWidth   = outerWidth - additionalPadding.left - additionalPadding.right - constantPadding*2;
     const innerHeight  = innerWidth * (Math.sqrt(3)/2);
-    const outerHeight  = innerHeight  + additionalPadding.top + additionalPadding.bottom + constantPadding*2;
+    const outerHeight  = innerHeight + additionalPadding.top + additionalPadding.bottom + constantPadding*2;
 
-    ctxWrapper.style=`width: ${outerWidth}px; height:${outerHeight}px; margin-bottom:10px;`;
+    const ctx = make("canvas");
+    const ctxWrapper = make("div",{
+        style:`width: ${outerWidth}px; height:${outerHeight}px; margin-bottom:10px;`
+    },[
+        ctx
+    ]);
 
-    petButton.style="position: absolute; width: 4.5rem; height: 3rem; transform: translate(-275%,175%);";
-    petButton.textContent="Pets";
-    ctxWrapper.append(ctx);
+    const petButton = make("button",{
+        className:"triangle-pet-button",
+        textContent:"Pets",
+        onclick: () => {
+            dataset.hidden = !dataset.hidden;
+            polygonLabelPlugin.toggle();
+            myChart.update();    
+        }
+    });
+
     container.append(ctxWrapper,petButton);
+
+    const polygonPlugin = PluginManager.polygonPluginFactory(chartData.polygonData);
+    const polygonLabelPlugin = PluginManager.polygonLabelPluginFactory(chartData.areaLabels);
+    const baseTrianglePlugin = PluginManager.triangleBasePluginFactory();
+
+    const dataset = {
+        data: dataPoints(pets, ...chartData.statAllocation),
+        pointStyle: ctx => ctx.raw.imageEl,
+        radius: 10, hoverRadius: 15, hidden: false, clip:false
+    }
+
+    const labels = await getLabels(chartData.scaleTitles);
 
     const myChart = new Chart(ctx, {
         type: 'scatter',
-        plugins: [
-            PluginManager.polygonPluginFactory(chartData.polygonData),
-            PluginManager.polygonLabelPluginFactory(chartData.areaLabels),
-            PluginManager.triangleBasePluginFactory()
-        ],
-        data: {
-            datasets: [{
-                label: 'Pet Stats',
-                data: dataPoints(pets, ...chartData.statAllocation),
-                pointStyle: ctx => ctx.raw.imageEl,
-                radius: 10, hoverRadius: 15, hidden: false, clip:false
-            }]
-        },
+        plugins: [ polygonPlugin, polygonLabelPlugin, baseTrianglePlugin],
+        data: {datasets: [dataset]},
         options: {
             animation: false,
             maintainAspectRatio: false,
@@ -232,7 +261,10 @@ export async function initializeTriangle(){
                     external: externalTooltipHandler  
                 },
                 legend: {display: false},
-                annotation: {clip: false, annotations: {...ann.lines,...ann.labels}},
+                annotation: {
+                    clip: false, 
+                    annotations: labels
+                },
             },
             scales: {
                 x: { display: false, min: 0, max: 100},
@@ -240,19 +272,4 @@ export async function initializeTriangle(){
             }
         },
     });
-
-    const anns = Object.values(myChart.options.plugins.annotation.annotations);
-    const ds = myChart.data.datasets[0];
-    const toggleAnns = (group,override) => 
-        anns.filter(ann => ann.group === group)
-            .forEach(ann => ann.display = override ?? !ann.display)
-
-    petButton.onclick = () => {
-        ds.hidden = !ds.hidden;
-        toggleAnns("polygonLabels");
-        myChart.update();    
-    };
-
-    toggleAnns("polygonLabels",false);
-    myChart.update();   
 }

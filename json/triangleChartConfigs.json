@@ -1,12 +1,13 @@
 [
     {
         "areaLabels" :{
+            "groupName":"polygonLabels",
             "labels" : [
-                {"text": "Gem", "coor": [70,25], "rotation": 57.2957795},
-                {"text": "Gemlike", "coor": [60,25], "rotation": 57.2957795},
-                {"text": "Attacker", "coor": [72.5,7], "rotation": -57.2957795},
-                {"text": "Hybrid", "coor": [35.5,7], "rotation": -57.2957795},
-                {"text": "Pure", "coor": [7.5,7], "rotation": -57.2957795},
+                {"text": "Gem", "coor": [70,25], "rotation": 60},
+                {"text": "Gemlike", "coor": [60,25], "rotation": 60},
+                {"text": "Attacker", "coor": [72.5,7], "rotation": -60},
+                {"text": "Hybrid", "coor": [35.5,7], "rotation": -60},
+                {"text": "Pure", "coor": [7.5,7], "rotation": -60},
                 {"text": "WP Tank", "coor": [7.5,32.5]},
                 {"text": "WP Hybrid", "coor": [23,25.6]},
                 {"text": "Supporter", "coor": [47.5,32.5]},
@@ -44,16 +45,41 @@
                 "rgba(160, 160, 160, 0.25)"
             ]
         },
-        "bigLabels" : [
-            {"text": "% of stats in Power"},
-            {"text": "% of stats in WP"},
-            {"text": "% of stats in Tanking"}
+        "scaleTitles" : [
+            {
+                "elements": [
+                    { "type": "text", "content": "% of stats in Power" },
+                    { "type": "gap", "px": 3 },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/STR.png" },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/MAG.png" }
+                ], 
+                "coor":[55,-10], 
+                "rotation": -60},
+            {
+                "elements": [
+                    { "type": "text", "content": "% of stats in WP" },
+                    { "type": "gap", "px": 3 },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" }
+                ], 
+                "coor":[55,55], 
+                "rotation": 60},
+            {
+                "elements": [
+                    { "type": "text", "content": "% of stats in Tanking" },
+                    { "type": "gap", "px": 3 },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
+                ], 
+                "coor":[-10,55]
+            }
         ],
         "statAllocation": [[1,4],[3],[0,2,5]],
         "jsonPath": "../json/pets.json"
     },
     {
         "areaLabels" :{
+            "groupName":"polygonLabels",
             "labels" : [
                 {"text":"shielded","coor":[55,20]},
                 {"text":"non-shielded","coor":[30,32.5]}
@@ -73,10 +99,32 @@
                 "rgba(133, 106, 207, 0.25)"
             ]
         },
-        "bigLabels" : [
-            {"text": "% of stats in Healing"},
-            {"text": "% of stats in Sustain"},
-            {"text": "% of stats in Health"}  
+        "scaleTitles" : [
+            {   
+                "elements": [
+                    { "type": "text", "content": "% of stats in Healing" },
+                    { "type": "gap", "px": 3 },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" }
+                ], 
+                "coor":[55,-10], 
+                "rotation": -60},
+            {
+                "elements": [
+                    { "type": "text", "content": "% of stats in Sustain" },
+                    { "type": "gap", "px": 3 },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
+                ], 
+                "coor":[55,55], 
+                "rotation": 60},
+            {
+                "elements": [
+                    { "type": "text", "content": "% of stats in Health" },
+                    { "type": "gap", "px": 3 },
+                    { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" }
+                ],
+                "coor":[-10,55]
+            }  
         ],
         "statAllocation": [[2],[3,5],[0]],
         "jsonPath": "../json/cruneHolders.json"

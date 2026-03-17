@@ -27,10 +27,19 @@ export const polygonPluginFactory = polygonData =>({
 
 export const polygonLabelPluginFactory = labelData => ({
     id: 'polygonLabelPlugin',
+    
+    toggle(override) {
+        const {groupName} = labelData;
+        const anns = Object.values(this.chart.options.plugins.annotation.annotations);
+        anns.filter(ann => ann.group === groupName)
+            .forEach(ann => ann.display = override ?? !ann.display)
+        this.chart.update();    
+    },
 
-    beforeInit: chart => {
+    beforeInit(chart) {
+        this.chart = chart;
         const anns = chart.options.plugins.annotation.annotations;
-        const {labels, colors} = labelData;
+        const {labels, colors, groupName} = labelData;
 
         (labels || []).forEach(({text, coor, rotation = 0},i) =>{
             anns[text+"label"]={
@@ -39,15 +48,13 @@ export const polygonLabelPluginFactory = labelData => ({
                 xValue: getX(...coor),
                 yValue: getY(...coor),
                 color: colors[i],
-                font: {
-                    size: 16,
-                    weight:"bold"
-                },
+                font: { size: 16, weight:"bold"},
                 rotation,
-                group: "polygonLabels"
+                group: groupName,
+                display: false
             };
         });
-    }
+    },
 })
 
 export const triangleBasePluginFactory = ({lines= true, labels = true} = {}) =>({
@@ -85,7 +92,7 @@ export const triangleBasePluginFactory = ({lines= true, labels = true} = {}) =>(
                         drawTime:'beforeDraw'
                     };
                 }
-                if (percent == 0) {continue;} // we skip drawing labels saying zero
+                if (percent == 0) continue; // we skip drawing labels saying zero
                 if (labels){
                     const [xy, rotation] = labelPos(percent);
                     anns[`${Title}Label`] = {
