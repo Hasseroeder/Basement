@@ -1,8 +1,4 @@
-const rightRotation = 60;
-
 export const polygonPluginFactory = polygonData =>({
-    id: 'polygonPlugin',
-
     beforeDraw: chart => {
         const ctx = chart.ctx;
         ctx.save();
@@ -25,9 +21,7 @@ export const polygonPluginFactory = polygonData =>({
     }
 })
 
-export const polygonLabelPluginFactory = labelData => ({
-    id: 'polygonLabelPlugin',
-    
+export const polygonLabelPluginFactory = labelData => ({    
     toggle(override) {
         const {groupName} = labelData;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
@@ -58,11 +52,9 @@ export const polygonLabelPluginFactory = labelData => ({
 })
 
 export const triangleBasePluginFactory = ({lines= true, labels = true} = {}) =>({
-    id: 'triangleBasePlugin',
-
     beforeInit: chart => {
         const anns = chart.options.plugins.annotation.annotations;
-
+        const rightRotation = 60;
         const scales = [
             {
                 linePts: p => ([[p,0],[p,100-p]]),
