@@ -1369,3 +1369,16 @@ a:hover {
   height: 3rem; 
   transform: translate(-275%,175%);
 }
+
+.triangle-help-label{
+  pointer-events: none; 
+  position: absolute;
+}
+
+.triangle-help-label.right{
+  transform: rotate(-60deg);
+}
+
+.triangle-help-label.bottom{
+  transform: rotate(60deg);
+}

@@ -1,24 +1,33 @@
 import { getX, getY } from "./triangleUtil.js";
 import * as pluginHandler from "./trianglePlugins.js"
-
-const ctx = document.getElementById('myChart');
-
-const HealLabel = document.getElementById('healLabel');
-const SustainLabel = document.getElementById('sustainLabel');
-const HealthLabel = document.getElementById('healthLabel');
+import { make } from "../util/injectionUtil.js";
 
 const cursorLinePlugin = {
+    enabled: true,
+
+    toggle(override) {
+        this.enabled = override || !this.enabled;
+    },
+
     afterEvent: (chart, args) => {
         const event = args.event;
         chart._cursorPosition = { x: event.x, y: event.y };
     },
 
-    afterDraw: (chart) => {
+    beforeInit(chart) {
+        const container = chart.canvas.parentNode;
+
+        this.healLabel = make('div',{className: 'triangle-help-label'});
+        this.sustainLabel = make('div',{className: 'triangle-help-label right'});
+        this.healthLabel = make('div',{className: 'triangle-help-label bottom'});
+
+        container.append(this.healLabel, this.sustainLabel, this.healthLabel);
+    },
+
+    afterDraw(chart) {
         const ctx = chart.ctx;
         
-        if (!chart._cursorPosition) {
-            return;
-        }
+        if (!chart._cursorPosition || this.enabled === false) return;
 
         const {x,y} = chart.scales;
 
@@ -55,26 +64,32 @@ const cursorLinePlugin = {
             ctx.stroke();
             ctx.restore();
 
-            HealLabel.innerHTML = `${Heal.toFixed(0)}%`;
-            HealLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(Heal,0)) - 37 + 'px';
-            HealLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(Heal,0)) - 10+  'px';
-            HealLabel.style.visibility = "visible";
+            this.healLabel.innerHTML = `${Heal.toFixed(0)}%`;
+            this.healLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(Heal,0)) - 37 + 'px';
+            this.healLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(Heal,0)) - 10+  'px';
+            this.healLabel.style.visibility = "visible";
 
-            SustainLabel.innerHTML = `${Sustain.toFixed(0)}%`;
-            SustainLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(100-Sustain,Sustain)) -5 + 'px';
-            SustainLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(100-Sustain,Sustain)) - 30+ 'px';
-            SustainLabel.style.visibility = "visible";
+            this.sustainLabel.innerHTML = `${Sustain.toFixed(0)}%`;
+            this.sustainLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(100-Sustain,Sustain)) -5 + 'px';
+            this.sustainLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(100-Sustain,Sustain)) - 30+ 'px';
+            this.sustainLabel.style.visibility = "visible";
 
-            HealthLabel.innerHTML = `${Health.toFixed(0)}%`;
-            HealthLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(0,100-Health)) + 'px';
-            HealthLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(0,100-Health)) + 10+ 'px';
-            HealthLabel.style.visibility = "visible";
+            this.healthLabel.innerHTML = `${Health.toFixed(0)}%`;
+            this.healthLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(0,100-Health)) + 'px';
+            this.healthLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(0,100-Health)) + 10+ 'px';
+            this.healthLabel.style.visibility = "visible";
         }
         else{
-            HealLabel.style.visibility = "hidden";
-            SustainLabel.style.visibility = "hidden";
-            HealthLabel.style.visibility = "hidden";
+            this.healLabel.style.visibility = "hidden";
+            this.sustainLabel.style.visibility = "hidden";
+            this.healthLabel.style.visibility = "hidden";
         }
+    },
+
+    beforeDestroy(){
+        this.healLabel.remove();
+        this.sustainLabel.remove();
+        this.healthLabel.remove();
     }
 };
 
@@ -94,6 +109,8 @@ function reverseXY(x,y){
 }
 
 document.addEventListener("DOMContentLoaded", async function () {    
+    const ctx = document.getElementById('myChart');
+
     const myChart = new Chart(ctx, {
         type: 'scatter',
         plugins: [cursorLinePlugin, pluginHandler.triangleBasePluginFactory()],
