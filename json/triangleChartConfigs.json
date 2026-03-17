@@ -3,50 +3,54 @@
         "areaLabels" :{
             "groupName":"polygonLabels",
             "labels" : [
-                {"text": "Gem", "coor": [70,25], "rotation": 60},
-                {"text": "Gemlike", "coor": [60,25], "rotation": 60},
-                {"text": "Attacker", "coor": [72.5,7], "rotation": -60},
-                {"text": "Hybrid", "coor": [35.5,7], "rotation": -60},
-                {"text": "Pure", "coor": [7.5,7], "rotation": -60},
-                {"text": "WP Tank", "coor": [7.5,32.5]},
-                {"text": "WP Hybrid", "coor": [23,25.6]},
-                {"text": "Supporter", "coor": [47.5,32.5]},
-                {"text": "Useless", "coor": [15,67.5]}
-            ],"colors" : [
-                "rgb(65, 172, 39)",
-                "rgb(99, 192, 187)",
-                "rgb(210, 210, 210)",
-                "rgb(218, 147, 214)",
-                "rgb(210, 210, 210)",
-                "rgb(99, 192, 187)",
-                "rgb(76, 148, 255)",
-                "rgb(160, 160, 160)",
-                "rgb(160, 160, 160)"
+                {"content": "Gem",       "coor": [70,25],  "rotation": 60, "color":"rgb(65, 172, 39)"},
+                {"content": "Gemlike",   "coor": [60,25],  "rotation": 60, "color":"rgb(99, 192, 187)"},
+                {"content": "Attacker",  "coor": [72.5,7], "rotation":-60, "color":"rgb(210, 210, 210)"},
+                {"content": "Hybrid",    "coor": [35.5,7], "rotation":-60, "color":"rgb(218, 147, 214)"},
+                {"content": "Pure",      "coor": [7.5,7],  "rotation":-60, "color":"rgb(210, 210, 210)"},
+                {"content": "WP Tank",   "coor": [7.5,32.5],               "color":"rgb(99, 192, 187)"},
+                {"content": "WP Hybrid", "coor": [23,25.6],                "color":"rgb(76, 148, 255)"},
+                {"content": "Supporter", "coor": [47.5,32.5],              "color":"rgb(160, 160, 160)"},
+                {"content": "Useless",   "coor": [15,67.5],                "color":"rgb(160, 160, 160)"}
             ]
         },
-        "polygonData":{
-            "polygons" : [
-                [[100,0],[50,50],[40,50],[90,0]],
-                [[90,0],[40,50],[30,50],[80,0]],
-                [[100,0],[85,15],[55,15],[55,0]],
-                [[55,0],[55,15],[15,15],[15,0]],
-                [[15,0],[15,15],[0,15],[0,0]],
-                [[15,15],[15,50],[0,50],[0,15]],
-                [[15,15],[45,15],[15,45]],
-                [[45,15],[85,15],[50,50],[15,50],[15,45]]
-            ],"colors" : [
-                "rgba(65, 172, 39, 0.25)",
-                "rgba(99, 192, 187, 0.25)",
-                "rgba(210, 210, 210, 0.25)",
-                "rgba(218, 147, 214, 0.25)",
-                "rgba(210, 210, 210, 0.25)",
-                "rgba(99, 192, 187, 0.25)",
-                "rgba(76, 148, 255, 0.25)",
-                "rgba(160, 160, 160, 0.25)"
-            ]
-        },
+        "polygonData":[
+            {
+                "coors":[[100,0],[50,50],[40,50],[90,0]],
+                "color":"rgba(65, 172, 39, 0.25)"
+            },
+            {
+                "coors":[[90,0],[40,50],[30,50],[80,0]],
+                "color":"rgba(99, 192, 187, 0.25)"
+            },
+            {
+                "coors":[[100,0],[85,15],[55,15],[55,0]],
+                "color":"rgba(210, 210, 210, 0.25)"
+            },
+            {
+                "coors":[[55,0],[55,15],[15,15],[15,0]],
+                "color":"rgba(218, 147, 214, 0.25)"
+            },
+            {
+                "coors":[[15,0],[15,15],[0,15],[0,0]],
+                "color":"rgba(210, 210, 210, 0.25)"
+            },
+            {
+                "coors":[[15,15],[15,50],[0,50],[0,15]],
+                "color":"rgba(99, 192, 187, 0.25)"
+            },
+            {
+                "coors":[[15,15],[45,15],[15,45]],
+                "color":"rgba(76, 148, 255, 0.25)"
+            },
+            {
+                "coors":[[45,15],[85,15],[50,50],[15,50],[15,45]],
+                "color":"rgba(160, 160, 160, 0.25)"
+            }
+        ],
         "scaleTitles" : [
             {
+                "id":"leftScaleTitle",
                 "elements": [
                     { "type": "text", "content": "% of stats in Power" },
                     { "type": "gap", "px": 3 },
@@ -56,6 +60,7 @@
                 "coor":[55,-10], 
                 "rotation": -60},
             {
+                "id":"rightScaleTitle",
                 "elements": [
                     { "type": "text", "content": "% of stats in WP" },
                     { "type": "gap", "px": 3 },
@@ -64,6 +69,7 @@
                 "coor":[55,55], 
                 "rotation": 60},
             {
+                "id":"bottomScaleTitle",
                 "elements": [
                     { "type": "text", "content": "% of stats in Tanking" },
                     { "type": "gap", "px": 3 },
@@ -81,26 +87,23 @@
         "areaLabels" :{
             "groupName":"polygonLabels",
             "labels" : [
-                {"text":"shielded","coor":[55,20]},
-                {"text":"non-shielded","coor":[30,32.5]}
-            ],
-            "colors" : [
-                "rgb(40, 119, 194)",
-                "rgb(133, 106, 207)"
+                {"content":"shielded",    "coor":[55,20],   "color":"rgb(40, 119, 194)"},
+                {"content":"non-shielded","coor":[30,32.5], "color":"rgb(133, 106, 207)"}
             ]
         },
-        "polygonData":{
-            "polygons" : [
-                [[70,10],[70,15],[45,40],[45,20],[55,10]],
-                [[45,40],[40,45],[15,45],[15,25],[20,20],[45,20]]
-            ],
-            "colors" : [
-                "rgba(40, 119, 194, 0.25)",
-                "rgba(133, 106, 207, 0.25)"
-            ]
-        },
+        "polygonData":[
+            {
+                "coors":[[70,10],[70,15],[45,40],[45,20],[55,10]],
+                "color":"rgba(40, 119, 194, 0.25)"
+            },
+            {
+                "coors":[[45,40],[40,45],[15,45],[15,25],[20,20],[45,20]],
+                "color":"rgba(133, 106, 207, 0.25)"
+            }
+        ],
         "scaleTitles" : [
             {   
+                "id":"leftScaleTitle",
                 "elements": [
                     { "type": "text", "content": "% of stats in Healing" },
                     { "type": "gap", "px": 3 },
@@ -109,6 +112,7 @@
                 "coor":[55,-10], 
                 "rotation": -60},
             {
+                "id":"rightScaleTitle",
                 "elements": [
                     { "type": "text", "content": "% of stats in Sustain" },
                     { "type": "gap", "px": 3 },
@@ -118,6 +122,7 @@
                 "coor":[55,55], 
                 "rotation": 60},
             {
+                "id":"bottomScaleTitle",
                 "elements": [
                     { "type": "text", "content": "% of stats in Health" },
                     { "type": "gap", "px": 3 },

@@ -89,117 +89,6 @@ export function getY(topStat,rightStat){
     return topStat;
 }
 
-const imageCache = new Map(); // -> Promise<Image>
-
-async function createLabelImage(elements) {
-    const font = '20px system-ui, Arial, sans-serif';
-    const defaultImageSize = 24;
-
-    // --- First pass: measure everything ---
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    ctx.font = font;
-    ctx.textBaseline = 'middle';
-
-    const measured = [];
-    let totalWidth = 0;
-    let maxHeight = 0;
-
-    for (const el of elements) {
-        if (el.type === "text") {
-            const metrics = ctx.measureText(el.content);
-            const w = Math.ceil(metrics.width);
-            const h = Math.ceil(
-                (metrics.actualBoundingBoxAscent || 0) +
-                (metrics.actualBoundingBoxDescent || 0) ||
-                parseInt(font, 10)
-            );
-            measured.push({ type: "text", content: el.content, width: w, height: h });
-            totalWidth += w;
-            maxHeight = Math.max(maxHeight, h);
-
-        } else if (el.type === "image") {
-            const img = await loadImage(el.source);
-            const w = defaultImageSize;
-            const h = defaultImageSize;
-            measured.push({ type: "image", img, width: w, height: h });
-            totalWidth += w;
-            maxHeight = Math.max(maxHeight, h);
-
-        } else if (el.type === "gap") {
-            measured.push({ type: "gap", width: el.px, height: 0 });
-            totalWidth += el.px;
-        }
-    }
-
-    // --- Prepare canvas ---
-    canvas.width = totalWidth;
-    canvas.height = maxHeight;
-    canvas.style.width = `${totalWidth}px`;
-    canvas.style.height = `${maxHeight}px`;
-
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.font = font;
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = 'lightgray';
-
-    // --- Second pass: draw everything ---
-    let x = 0;
-    const centerY = maxHeight / 2;
-
-    for (const el of measured) {
-        if (el.type === "text") {
-            ctx.fillText(el.content, x, centerY);
-            x += el.width;
-
-        } else if (el.type === "image") {
-            ctx.drawImage(el.img, x, 0, el.width, el.height);
-            x += el.width;
-
-        } else if (el.type === "gap") {
-            x += el.width;
-        }
-    }
-
-    return loadImage(canvas.toDataURL("image/png"));
-}
-
-function loadImage(src) {
-    if (imageCache.has(src)) return imageCache.get(src);
-    const p = new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error('Image failed to load: ' + src));
-        img.src = src;
-    });
-    imageCache.set(src, p);
-    return p;
-}
-
-export async function getLabels(scaleTitles){    
-    const labels = {};
-
-    (scaleTitles || []).forEach(async (scaleTitle,i) => {        
-        const image = await createLabelImage(scaleTitle.elements);
-        const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 20);
-
-        labels["ScaleTitle_"+i] = {
-            type: 'label',
-            content: image,
-            width,
-            height,
-            rotation: scaleTitle.rotation || 0,
-            xValue: getX(...scaleTitle.coor), yValue: getY(...scaleTitle.coor)
-        };
-    });
-    return labels;
-}
-
-function scaleToFit(naturalW, naturalH,  maxH) {
-    const ratio = Math.min(maxH / naturalH, 1);
-    return { width: Math.round(naturalW * ratio), height: Math.round(naturalH * ratio) };
-}
-
 export async function initializeTriangle(){
     const container = this.cachedDiv.querySelector("#chartContainer");
     const {chartData, pets} = this.data;
@@ -238,6 +127,7 @@ export async function initializeTriangle(){
     const polygonPlugin = PluginManager.polygonPluginFactory(chartData.polygonData);
     const polygonLabelPlugin = PluginManager.polygonLabelPluginFactory(chartData.areaLabels);
     const baseTrianglePlugin = PluginManager.triangleBasePluginFactory();
+    const labelPlugin = PluginManager.labelPluginFactory(chartData.scaleTitles)    
 
     const dataset = {
         data: dataPoints(pets, ...chartData.statAllocation),
@@ -245,11 +135,9 @@ export async function initializeTriangle(){
         radius: 10, hoverRadius: 15, hidden: false, clip:false
     }
 
-    const labels = await getLabels(chartData.scaleTitles);
-
     const myChart = new Chart(ctx, {
         type: 'scatter',
-        plugins: [ polygonPlugin, polygonLabelPlugin, baseTrianglePlugin],
+        plugins: [ polygonPlugin, polygonLabelPlugin, baseTrianglePlugin, labelPlugin],
         data: {datasets: [dataset]},
         options: {
             animation: false,
@@ -261,10 +149,7 @@ export async function initializeTriangle(){
                     external: externalTooltipHandler  
                 },
                 legend: {display: false},
-                annotation: {
-                    clip: false, 
-                    annotations: labels
-                },
+                annotation: {clip: false},
             },
             scales: {
                 x: { display: false, min: 0, max: 100},
