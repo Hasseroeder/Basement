@@ -7,10 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: [pluginHandler.cursorLinePluginFactory(), pluginHandler.triangleBasePluginFactory()],
         options: {
             layout: {padding: {left:60,right:60,top:48,bottom:48}},
-            plugins: {legend: {display: false},annotation: {clip: false}},
+            plugins: {
+                tooltip: {mode: 'nearest',enabled: false,animation: false},
+                legend: {display: false},
+                annotation: {clip: false}
+            },
             scales: {
                 x: { display: false, min: 0, max: 100 },
-                y: { display: false, min: 0, max: 100,}
+                y: { display: false, min: 0, max: 100 }
             }
         },
     });
