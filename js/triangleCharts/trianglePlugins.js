@@ -251,7 +251,7 @@ export const cursorLinePluginFactory = ({enabled=true}={})=>({
     afterDraw(chart) {
         const ctx = chart.ctx;
         
-        if (!chart._cursorPosition || this.enabled === false) return;
+        if (!chart._cursorPosition || !this.enabled) return;
 
         const {x,y} = chart.scales;
 
