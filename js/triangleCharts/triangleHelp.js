@@ -1,4 +1,5 @@
 import { getX, getY } from "./triangleUtil.js";
+import * as pluginHandler from "./trianglePlugins.js"
 
 const ctx = document.getElementById('myChart');
 
@@ -7,16 +8,9 @@ const SustainLabel = document.getElementById('sustainLabel');
 const HealthLabel = document.getElementById('healthLabel');
 
 const cursorLinePlugin = {
-    id: 'cursorLinePlugin',
-
     afterEvent: (chart, args) => {
         const event = args.event;
-        if (event.type === 'mousemove') {
-            chart._cursorPosition = {
-                x: event.x,
-                y: event.y
-            };
-        }
+        chart._cursorPosition = { x: event.x, y: event.y };
     },
 
     afterDraw: (chart) => {
@@ -64,14 +58,22 @@ const cursorLinePlugin = {
             HealLabel.innerHTML = `${Heal.toFixed(0)}%`;
             HealLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(Heal,0)) - 37 + 'px';
             HealLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(Heal,0)) - 10+  'px';
+            HealLabel.style.visibility = "visible";
 
             SustainLabel.innerHTML = `${Sustain.toFixed(0)}%`;
             SustainLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(100-Sustain,Sustain)) -5 + 'px';
             SustainLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(100-Sustain,Sustain)) - 30+ 'px';
+            SustainLabel.style.visibility = "visible";
 
             HealthLabel.innerHTML = `${Health.toFixed(0)}%`;
             HealthLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(0,100-Health)) + 'px';
             HealthLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(0,100-Health)) + 10+ 'px';
+            HealthLabel.style.visibility = "visible";
+        }
+        else{
+            HealLabel.style.visibility = "hidden";
+            SustainLabel.style.visibility = "hidden";
+            HealthLabel.style.visibility = "hidden";
         }
     }
 };
@@ -94,23 +96,17 @@ function reverseXY(x,y){
 document.addEventListener("DOMContentLoaded", async function () {    
     const myChart = new Chart(ctx, {
         type: 'scatter',
-        plugins: [cursorLinePlugin],
+        plugins: [cursorLinePlugin, pluginHandler.triangleBasePluginFactory()],
         options: {
             layout: {padding: {left:60,right:60,top:48,bottom:48}},
             plugins: {
                 tooltip: {mode: 'nearest',enabled: false,animation: false},
                 legend: {display: false},
-                annotation: {clip: false, annotations: {...lines}}
+                annotation: {clip: false}
             },
             scales: {
-                x: {
-                    display: false,
-                    min: 0, max: 100,
-                },
-                y: {
-                    display: false,
-                    min: 0, max: 100,
-                }
+                x: { display: false, min: 0, max: 100 },
+                y: { display: false, min: 0, max: 100,}
             }
         },
     });
