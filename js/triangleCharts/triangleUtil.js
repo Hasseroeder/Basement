@@ -1,30 +1,21 @@
 import * as PluginManager from "./triangleFactories.js";
 import { make } from "../util/injectionUtil.js";
 
-const statImages= [
-    "./media/owo_images/battleEmojis/HP.png",
-    "./media/owo_images/battleEmojis/STR.png",
-    "./media/owo_images/battleEmojis/PR.png",
-    "./media/owo_images/battleEmojis/WP.png",
-    "./media/owo_images/battleEmojis/MAG.png",
-    "./media/owo_images/battleEmojis/MR.png",
-]; 
-
-const dataPoints = (pets,top,right,left) => pets.map(pet => {
+const dataPoints = data => data.array.map(pet => {
     const imgEl = new Image();
     imgEl.src = pet.image;
-    imgEl.height=22;
-    imgEl.width=22;
+    imgEl.height=data.imageSize.height;
+    imgEl.width=data.imageSize.width;
     return {
         x: getX(...getPosition(
-            top.map(i => pet.attributes[i]),
-            right.map(i => pet.attributes[i]),
-            left.map(i => pet.attributes[i])
+            data.attributeGroups.left.map(i => pet.attributes[i]),
+            data.attributeGroups.right.map(i => pet.attributes[i]),
+            data.attributeGroups.bottom.map(i => pet.attributes[i])
         )),
         y: getY(...getPosition(
-            top.map(i => pet.attributes[i]),
-            right.map(i => pet.attributes[i]),
-            left.map(i => pet.attributes[i])
+            data.attributeGroups.left.map(i => pet.attributes[i]),
+            data.attributeGroups.right.map(i => pet.attributes[i]),
+            data.attributeGroups.bottom.map(i => pet.attributes[i])
         )),
         label: pet.name,
         imageEl: imgEl,
@@ -57,6 +48,15 @@ const externalTooltipHandler = context => {
 
     tooltipEl.style.opacity = tooltip.opacity;
     if (tooltip.opacity===0) return; 
+
+    const statImages= [
+        "./media/owo_images/battleEmojis/HP.png",
+        "./media/owo_images/battleEmojis/STR.png",
+        "./media/owo_images/battleEmojis/PR.png",
+        "./media/owo_images/battleEmojis/WP.png",
+        "./media/owo_images/battleEmojis/MAG.png",
+        "./media/owo_images/battleEmojis/MR.png",
+    ]; 
 
     const renderPoint = ({ raw: { label, attributes } }) => {
         const cells = attributes.map(
@@ -92,15 +92,10 @@ export function getY(topStat,rightStat){
 
 export async function initializeTriangle(){
     const container = this.cachedDiv.querySelector("#chartContainer");
-    const {chartData, pets} = this.data;
+    const {data, baseConfig, pluginConfigs} = this.data;
 
     const constantPadding = 10; // this is unavoidable due to chart.js annoyingness
-    const additionalPadding ={
-        top: 0,
-        right: 0,
-        bottom: 50,
-        left: 0
-    };
+    const additionalPadding =baseConfig.additionalPadding;
     const outerWidth   = 480;
     const innerWidth   = outerWidth - additionalPadding.left - additionalPadding.right - constantPadding*2;
     const innerHeight  = innerWidth * (Math.sqrt(3)/2);
@@ -116,30 +111,39 @@ export async function initializeTriangle(){
     const petButton = make("button",{
         className:"triangle-pet-button",
         textContent:"Pets",
-        onclick: () => {
+        /*onclick: () => {
             dataset.hidden = !dataset.hidden;
             polygonLabelPlugin.toggle();
             myChart.update();    
-        }
+        }*/
     });
 
     container.append(ctxWrapper,petButton);
 
-    const polygonPlugin = PluginManager.polygonPluginFactory(chartData.polygonData);
-    const polygonLabelPlugin = PluginManager.polygonLabelPluginFactory(chartData.areaLabels);
-    const baseTrianglePlugin = PluginManager.triangleBasePluginFactory();
-    const labelPlugin = PluginManager.labelPluginFactory(chartData.scaleTitles)    
-    const helperPlugin = PluginManager.cursorLinePluginFactory();
+    const pluginArray = pluginConfigs.map(pluginConfig => {
+        switch (pluginConfig.pluginName){
+            case "polygon":
+                return PluginManager.polygonPluginFactory(pluginConfig)
+            case "simpleLabel":
+                return PluginManager.simpleLabelPluginFactory(pluginConfig)
+            case "advancedLabel":
+                return PluginManager.advancedLabelPluginFactory(pluginConfig)
+            case "triangleBase": 
+                return PluginManager.triangleBasePluginFactory(pluginConfig)
+            case "cursorLine":
+                return PluginManager.cursorLinePluginFactory(pluginConfig)
+        }
+    })
 
     const dataset = {
-        data: dataPoints(pets, ...chartData.statAllocation),
+        data: dataPoints(data),
         pointStyle: ctx => ctx.raw.imageEl,
         radius: 10, hoverRadius: 15, hidden: false, clip:false
     }
 
     const myChart = new Chart(ctx, {
         type: 'scatter',
-        plugins: [ polygonPlugin, polygonLabelPlugin, baseTrianglePlugin, labelPlugin, helperPlugin],
+        plugins: pluginArray,
         data: {datasets: [dataset]},
         options: {
             animation: false,

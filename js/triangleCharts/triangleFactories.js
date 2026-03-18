@@ -5,12 +5,16 @@ import { make } from "../util/injectionUtil.js";
 // Plugin for the basic polygons
 //
 //
-export const polygonPluginFactory = polygonData =>({
+export const polygonPluginFactory = pluginConfig =>({
+    id: pluginConfig.pluginName,
+
     beforeDraw: chart => {
         const ctx = chart.ctx;
         ctx.save();
 
-        polygonData.forEach(polygon => {
+        const polygons = pluginConfig.data
+
+        polygons.forEach(polygon => {
             ctx.fillStyle = polygon.color;
             ctx.beginPath();
 
@@ -32,10 +36,13 @@ export const polygonPluginFactory = polygonData =>({
 // Plugin for the basic colored labels
 //
 //
-export const polygonLabelPluginFactory = labelData => ({    
+export const simpleLabelPluginFactory = pluginConfig => ({ 
+    id: pluginConfig.pluginName,
+    
     toggle(override) {
+        const groupName = pluginConfig.data.groupName;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
-        anns.filter(ann => ann.group === labelData.groupName)
+        anns.filter(ann => ann.group === groupName)
             .forEach(ann => ann.display = override ?? !ann.display)
         this.chart.update();    
     },
@@ -43,7 +50,7 @@ export const polygonLabelPluginFactory = labelData => ({
     beforeInit(chart) {
         this.chart = chart;
         const anns = chart.options.plugins.annotation.annotations;
-        const {labels, groupName} = labelData;
+        const {labels, groupName} = pluginConfig.data;
 
         labels.forEach(label =>{
             anns[label.content+"label"]={
@@ -66,8 +73,13 @@ export const polygonLabelPluginFactory = labelData => ({
 // Plugin for the basic lines and labels in any ternary chart
 //
 //
-export const triangleBasePluginFactory = ({lines= true, labels = true} = {}) =>({
+export const triangleBasePluginFactory = pluginConfig =>({
+    id: pluginConfig.pluginName,
+    
     beforeInit: chart => {
+        const lines = pluginConfig.lines ?? true;
+        const labels = pluginConfig.labels ?? true;
+
         const anns = chart.options.plugins.annotation.annotations;
         const rightRotation = 60;
         const scales = [
@@ -220,12 +232,15 @@ function scaleToFit(naturalW, naturalH,  maxH) {
     return { width: Math.round(naturalW * ratio), height: Math.round(naturalH * ratio) };
 }
 
-export const labelPluginFactory = labelData => ({
+export const advancedLabelPluginFactory = pluginConfig => ({
+    id: pluginConfig.pluginName,
+
     beforeInit(chart) {
         this.chart = chart;
         const anns = chart.options.plugins.annotation.annotations;
+        const labels = pluginConfig.data;
         
-        labelData.forEach( async ({id, elements, coor, rotation = 0}) =>{
+        labels.forEach( async ({id, elements, coor, rotation = 0}) =>{
             const image = await createLabelImage(elements);
             const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 20);
 
@@ -247,8 +262,9 @@ export const labelPluginFactory = labelData => ({
 // Plugin for helping lines toward the Cursor
 //
 //
-export const cursorLinePluginFactory = ({enabled=true}={})=>({
-    enabled: enabled,
+export const cursorLinePluginFactory = pluginConfig => ({
+    id: pluginConfig.pluginName,
+    enabled: pluginConfig.enabled,
 
     toggle(override) {
         this.enabled = override ?? !this.enabled;
