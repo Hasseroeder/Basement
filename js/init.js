@@ -74,6 +74,7 @@ const injectors = [
 ];
 
 function initInjectors() {
+	console.log("we're running the injectors!");
   	injectors.forEach(({ selector, load }) => {
 		const el = document.querySelector(selector);
 		if (!el) return;

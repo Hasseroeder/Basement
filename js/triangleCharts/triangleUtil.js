@@ -128,6 +128,7 @@ export async function initializeTriangle(){
     const polygonLabelPlugin = PluginManager.polygonLabelPluginFactory(chartData.areaLabels);
     const baseTrianglePlugin = PluginManager.triangleBasePluginFactory();
     const labelPlugin = PluginManager.labelPluginFactory(chartData.scaleTitles)    
+    const helperPlugin = PluginManager.cursorLinePluginFactory();
 
     const dataset = {
         data: dataPoints(pets, ...chartData.statAllocation),
@@ -137,7 +138,7 @@ export async function initializeTriangle(){
 
     const myChart = new Chart(ctx, {
         type: 'scatter',
-        plugins: [ polygonPlugin, polygonLabelPlugin, baseTrianglePlugin, labelPlugin],
+        plugins: [ polygonPlugin, polygonLabelPlugin, baseTrianglePlugin, labelPlugin, helperPlugin],
         data: {datasets: [dataset]},
         options: {
             animation: false,
@@ -146,7 +147,7 @@ export async function initializeTriangle(){
             plugins: {
                 tooltip: {
                     mode: 'nearest', enabled: false, animation: false, 
-                    external: externalTooltipHandler  
+                    //external: externalTooltipHandler  
                 },
                 legend: {display: false},
                 annotation: {clip: false},

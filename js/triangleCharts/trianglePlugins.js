@@ -9,7 +9,7 @@ export const polygonPluginFactory = polygonData =>({
             ctx.fillStyle = polygon.color;
             ctx.beginPath();
 
-            polygon.coors.forEach((pt, i) => {
+            polygon.coorArray.forEach((pt, i) => {
                 const x = chart.scales.x.getPixelForValue(getX(...pt));
                 const y = chart.scales.y.getPixelForValue(getY(...pt));
                 i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
@@ -24,9 +24,8 @@ export const polygonPluginFactory = polygonData =>({
 
 export const polygonLabelPluginFactory = labelData => ({    
     toggle(override) {
-        const {groupName} = labelData;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
-        anns.filter(ann => ann.group === groupName)
+        anns.filter(ann => ann.group === labelData.groupName)
             .forEach(ann => ann.display = override ?? !ann.display)
         this.chart.update();    
     },
@@ -228,7 +227,7 @@ export const cursorLinePluginFactory = ({enabled=true}={})=>({
     enabled: enabled,
 
     toggle(override) {
-        this.enabled = override || !this.enabled;
+        this.enabled = override ?? !this.enabled;
     },
 
     afterEvent: (chart, args) => {
