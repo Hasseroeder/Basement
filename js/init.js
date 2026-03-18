@@ -74,7 +74,6 @@ const injectors = [
 ];
 
 function initInjectors() {
-	console.log("we're running the injectors!");
   	injectors.forEach(({ selector, load }) => {
 		const el = document.querySelector(selector);
 		if (!el) return;
@@ -82,7 +81,11 @@ function initInjectors() {
   	});
 }
 
-window.addEventListener("DOMContentLoaded", initInjectors);
+if (document.readyState === "loading") {
+  	window.addEventListener("DOMContentLoaded", initInjectors);
+} else {
+  	initInjectors();
+}
 
 function randomElements(n,inputArray){
 	const clone = [...inputArray]
