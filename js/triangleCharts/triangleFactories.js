@@ -494,20 +494,16 @@ export async function initializeTriangle(){
 
     container.append(ctxWrapper,petButton);
 
-    const pluginArray = pluginConfigs.map(pluginConfig => {
-        switch (pluginConfig.pluginName){
-            case "polygon":
-                return polygonPluginFactory(pluginConfig)
-            case "simpleLabel":
-                return simpleLabelPluginFactory(pluginConfig)
-            case "advancedLabel":
-                return advancedLabelPluginFactory(pluginConfig)
-            case "triangleBase": 
-                return triangleBasePluginFactory(pluginConfig)
-            case "cursorLine":
-                return cursorLinePluginFactory(pluginConfig)
-        }
-    })
+    const pluginNameMap = {
+        polygon: polygonPluginFactory,
+        simpleLabel: simpleLabelPluginFactory,
+        advancedLabel: advancedLabelPluginFactory,
+        triangleBase: triangleBasePluginFactory,
+        cursorLine: cursorLinePluginFactory
+    }
+    const pluginArray = pluginConfigs.map(
+        pluginConfig => pluginNameMap[pluginConfig.pluginName](pluginConfig) 
+    )
 
     const dataset = {
         data: dataPoints(data),
