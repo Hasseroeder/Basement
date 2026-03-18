@@ -236,17 +236,18 @@ function toggleCell(i, boolOverride) {
     drawData();
 }
 
-const   patreonCheckWrapper = document.getElementById("patreonCheck");
-        patreonCheckWrapper.onmousedown = e => {
-            e.preventDefault();
-            patreonCheck.checked = !patreonCheck.checked;
-            patreon=patreonCheck.checked; 
-            saveDebounced();
-            drawData();
-            renderPatreon();
-        }
-const   patreonCheck = patreonCheckWrapper.querySelector("input");
-        patreonCheck.onclick= e => e.preventDefault();
+const patreonCheckWrapper = document.getElementById("patreonCheck");
+patreonCheckWrapper.onmousedown = e => {
+    e.preventDefault();
+    patreonCheck.checked = !patreonCheck.checked;
+    patreon=patreonCheck.checked; 
+    saveDebounced();
+    drawData();
+    renderPatreon();
+}
+
+const patreonCheck = patreonCheckWrapper.querySelector("input");
+patreonCheck.onclick= e => e.preventDefault();
 
 function modifyValueDirect(trait, value) {
     const {input,btnM,btnP} = trait;
