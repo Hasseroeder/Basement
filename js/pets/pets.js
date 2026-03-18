@@ -1,4 +1,4 @@
-import { initializeTriangle } from "../triangleCharts/triangleUtil.js"
+import { initializeTriangle } from "../triangleCharts/triangleFactories.js"
 import { loadJson } from "../util/jsonUtil.js";
 import { createInjectAble } from "../util/injectionUtil.js";
 
