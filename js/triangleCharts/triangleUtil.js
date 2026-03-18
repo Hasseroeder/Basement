@@ -56,6 +56,7 @@ const externalTooltipHandler = context => {
     }
 
     tooltipEl.style.opacity = tooltip.opacity;
+    if (tooltip.opacity===0) return; 
 
     const renderPoint = ({ raw: { label, attributes } }) => {
         const cells = attributes.map(
@@ -147,7 +148,7 @@ export async function initializeTriangle(){
             plugins: {
                 tooltip: {
                     mode: 'nearest', enabled: false, animation: false, 
-                    //external: externalTooltipHandler  
+                    external: externalTooltipHandler  
                 },
                 legend: {display: false},
                 annotation: {clip: false},

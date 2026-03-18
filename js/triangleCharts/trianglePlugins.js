@@ -1,5 +1,10 @@
 import { make } from "../util/injectionUtil.js";
 
+// --------------------------------------------------------------------------------------
+//
+// Plugin for the basic polygons
+//
+//
 export const polygonPluginFactory = polygonData =>({
     beforeDraw: chart => {
         const ctx = chart.ctx;
@@ -22,6 +27,11 @@ export const polygonPluginFactory = polygonData =>({
     }
 })
 
+// --------------------------------------------------------------------------------------
+//
+// Plugin for the basic colored labels
+//
+//
 export const polygonLabelPluginFactory = labelData => ({    
     toggle(override) {
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
@@ -51,6 +61,11 @@ export const polygonLabelPluginFactory = labelData => ({
     },
 })
 
+// --------------------------------------------------------------------------------------
+//
+// Plugin for the basic lines and labels in any ternary chart
+//
+//
 export const triangleBasePluginFactory = ({lines= true, labels = true} = {}) =>({
     beforeInit: chart => {
         const anns = chart.options.plugins.annotation.annotations;
@@ -108,7 +123,11 @@ export function getY(topStat,rightStat){
     return topStat;
 }
 
-
+// --------------------------------------------------------------------------------------
+//
+// Plugin for Annotations generated with a canvas, which allows images inline with text
+//
+//
 const imageCache = new Map(); // -> Promise<Image>
 
 async function createLabelImage(elements) {
@@ -223,6 +242,11 @@ export const labelPluginFactory = labelData => ({
     }
 })
 
+// --------------------------------------------------------------------------------------
+//
+// Plugin for helping lines toward the Cursor
+//
+//
 export const cursorLinePluginFactory = ({enabled=true}={})=>({
     enabled: enabled,
 
