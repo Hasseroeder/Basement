@@ -487,6 +487,8 @@ export async function initializeTriangle(){
                 // need some way of toggling the visibility of specific plugins, datasets and tooltips easily 
                 // this should all be easily configurable 
                 // different viewing modes should have different things visible each 
+                //
+                // this DOM element creation should also not be part of triangleFactories.js
         }*/
     });
 
