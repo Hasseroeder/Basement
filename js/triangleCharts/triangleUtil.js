@@ -1,4 +1,4 @@
-import * as PluginManager from "./trianglePlugins.js";
+import * as PluginManager from "./triangleFactories.js";
 import { make } from "../util/injectionUtil.js";
 
 const statImages= [

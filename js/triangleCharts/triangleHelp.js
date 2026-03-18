@@ -1,4 +1,4 @@
-import * as pluginHandler from "./trianglePlugins.js"
+import * as pluginHandler from "./triangleFactories.js"
 
 document.addEventListener("DOMContentLoaded", () => {    
     const ctx = document.getElementById('myChart');
