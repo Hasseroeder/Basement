@@ -1363,11 +1363,18 @@ a:hover {
   margin: 0 10px 10px 10px;
 }
 
-.triangle-pet-button {
+.triangle-button-wrapper{
+  display:flex;
+  flex-direction: column;
+  gap:1rem;
   position: absolute; 
-  width: 4.5rem; 
-  height: 3rem; 
-  transform: translate(-275%,175%);
+  width: 4.5rem;
+  height: 9rem;
+  transform: translate(-275%,2rem);
+}
+
+.triangle-button-wrapper > button {
+  width:100%;
 }
 
 .triangle-help-label{

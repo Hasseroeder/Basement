@@ -5,10 +5,20 @@ import { make } from "../util/injectionUtil.js";
 // Plugin for the basic polygons
 //
 //
-export const polygonPluginFactory = pluginConfig =>({
+const polygonPluginFactory = pluginConfig =>({
     id: pluginConfig.pluginName,
+    visibleIn: pluginConfig.visibleIn,
+    currentMode: undefined, 
 
-    beforeDraw: chart => {
+    shouldShow(){
+        return ( this.visibleIn === undefined
+              || this.visibleIn.includes(this.currentMode)
+        )
+    },
+
+    beforeDraw(chart){
+        if (!this.shouldShow()) return; 
+
         const ctx = chart.ctx;
         ctx.save();
 
@@ -36,15 +46,22 @@ export const polygonPluginFactory = pluginConfig =>({
 // Plugin for the basic colored labels
 //
 //
-export const simpleLabelPluginFactory = pluginConfig => ({ 
+const simpleLabelPluginFactory = pluginConfig => ({ 
     id: pluginConfig.pluginName,
-    
-    toggle(override) {
+    visibleIn: pluginConfig.visibleIn,
+    currentMode: undefined, 
+
+    shouldShow(){
+        return ( this.visibleIn === undefined
+              || this.visibleIn.includes(this.currentMode)
+        )
+    },
+
+    beforeDraw(){
         const groupName = pluginConfig.data.groupName;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
-            .forEach(ann => ann.display = override ?? !ann.display)
-        this.chart.update();    
+            .forEach(ann => ann.display = this.shouldShow())
     },
 
     beforeInit(chart) {
@@ -61,8 +78,7 @@ export const simpleLabelPluginFactory = pluginConfig => ({
                 color: label.color,
                 font: { size: 16, weight:"bold"},
                 rotation: label.rotation || 0,
-                group: groupName,
-                display: false
+                group: groupName
             };
         });
     },
@@ -73,9 +89,21 @@ export const simpleLabelPluginFactory = pluginConfig => ({
 // Plugin for the basic lines and labels in any ternary chart
 //
 //
-export const triangleBasePluginFactory = pluginConfig =>({
+const triangleBasePluginFactory = pluginConfig =>({
     id: pluginConfig.pluginName,
-    
+    visibleIn: pluginConfig.visibleIn,
+    currentMode: undefined, 
+
+    shouldShow(){
+        return ( this.visibleIn === undefined
+              || this.visibleIn.includes(this.currentMode)
+        )
+    },
+
+    beforeDraw(){
+        // I'm pretty sure this is always gonna be visible, so I won't add anything for now
+    },
+
     beforeInit: chart => {
         const lines = pluginConfig.lines ?? true;
         const labels = pluginConfig.labels ?? true;
@@ -128,10 +156,10 @@ export const triangleBasePluginFactory = pluginConfig =>({
     }
 })
 
-export function getX(topStat, rightStat){
+function getX(topStat, rightStat){
     return rightStat + 0.5 * topStat;
 }
-export function getY(topStat,rightStat){
+function getY(topStat,rightStat){
     return topStat;
 }
 
@@ -232,13 +260,28 @@ function scaleToFit(naturalW, naturalH,  maxH) {
     return { width: Math.round(naturalW * ratio), height: Math.round(naturalH * ratio) };
 }
 
-export const advancedLabelPluginFactory = pluginConfig => ({
+const advancedLabelPluginFactory = pluginConfig => ({
     id: pluginConfig.pluginName,
+    visibleIn: pluginConfig.visibleIn,
+    currentMode: undefined, 
+
+    shouldShow(){
+        return ( this.visibleIn === undefined
+              || this.visibleIn.includes(this.currentMode)
+        )
+    },
+
+    beforeDraw(){
+        const groupName = pluginConfig.data.groupName;
+        const anns = Object.values(this.chart.options.plugins.annotation.annotations);
+        anns.filter(ann => ann.group === groupName)
+            .forEach(ann => ann.display = this.shouldShow())
+    },
 
     beforeInit(chart) {
         this.chart = chart;
         const anns = chart.options.plugins.annotation.annotations;
-        const labels = pluginConfig.data;
+        const {labels, groupName} = pluginConfig.data;
         
         labels.forEach( async ({id, elements, coor, rotation = 0}) =>{
             const image = await createLabelImage(elements);
@@ -251,7 +294,8 @@ export const advancedLabelPluginFactory = pluginConfig => ({
                 height,
                 xValue: getX(...coor),
                 yValue: getY(...coor),
-                rotation
+                rotation,
+                group: groupName
             };
         });
     }
@@ -262,12 +306,15 @@ export const advancedLabelPluginFactory = pluginConfig => ({
 // Plugin for helping lines toward the Cursor
 //
 //
-export const cursorLinePluginFactory = pluginConfig => ({
+const cursorLinePluginFactory = pluginConfig => ({
     id: pluginConfig.pluginName,
-    enabled: pluginConfig.enabled,
+    visibleIn: pluginConfig.visibleIn,
+    currentMode: undefined, 
 
-    toggle(override) {
-        this.enabled = override ?? !this.enabled;
+    shouldShow(){
+        return ( this.visibleIn === undefined
+              || this.visibleIn.includes(this.currentMode)
+        )
     },
 
     afterEvent: (chart, args) => {
@@ -290,7 +337,7 @@ export const cursorLinePluginFactory = pluginConfig => ({
     afterDraw(chart) {
         const ctx = chart.ctx;
         
-        if (!chart._cursorPosition || !this.enabled) return;
+        if (!chart._cursorPosition || !this.shouldShow()) return;
 
         const {x,y} = chart.scales;
 
@@ -476,24 +523,6 @@ export async function initializeTriangle(){
         ctx
     ]);
 
-    const petButton = make("button",{
-        className:"triangle-pet-button",
-        textContent:"Pets",
-        /*onclick: () => {
-            dataset.hidden = !dataset.hidden;
-            polygonLabelPlugin.toggle();
-            myChart.update();  
-            
-                // need some way of toggling the visibility of specific plugins, datasets and tooltips easily 
-                // this should all be easily configurable 
-                // different viewing modes should have different things visible each 
-                //
-                // this DOM element creation should also not be part of triangleFactories.js
-        }*/
-    });
-
-    container.append(ctxWrapper,petButton);
-
     const pluginNameMap = {
         polygon: polygonPluginFactory,
         simpleLabel: simpleLabelPluginFactory,
@@ -505,11 +534,36 @@ export async function initializeTriangle(){
         pluginConfig => pluginNameMap[pluginConfig.pluginName](pluginConfig) 
     )
 
+    pluginArray.forEach(plugin => plugin.currentMode = "pet");
+
     const dataset = {
         data: dataPoints(data),
         pointStyle: ctx => ctx.raw.imageEl,
         radius: 10, hoverRadius: 15, hidden: false, clip:false
     }
+
+    const buttonWrapper = make("div",{className: "triangle-button-wrapper"})
+    const buttons = [
+        // this DOM element creation should not be part of triangleFactories.js
+        make("button",{
+            textContent:"Pets",
+            onclick: () => {
+                dataset.hidden = false;
+                pluginArray.forEach(plugin => plugin.currentMode = "pet");
+                myChart.update();  
+            }
+        }),
+        make("button",{
+            textContent:"Labels",
+            onclick: () => {
+                dataset.hidden = true;
+                pluginArray.forEach(plugin => plugin.currentMode = "label");
+                myChart.update();  
+            }
+        })
+    ];
+    buttonWrapper.append(...buttons);
+    container.append(ctxWrapper,buttonWrapper);
 
     const myChart = new Chart(ctx, {
         type: 'scatter',
