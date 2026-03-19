@@ -550,7 +550,8 @@ export async function initializeTriangle(){
             onclick: () => {
                 dataset.hidden = false;
                 pluginArray.forEach(plugin => plugin.currentMode = "pet");
-                myChart.update();  
+                myChart.update();
+                myChart.update(); // I have no idea why I need to do this twice
             }
         }),
         make("button",{
@@ -558,7 +559,8 @@ export async function initializeTriangle(){
             onclick: () => {
                 dataset.hidden = true;
                 pluginArray.forEach(plugin => plugin.currentMode = "label");
-                myChart.update();  
+                myChart.update();
+                myChart.update(); // I have no idea why I need to do this twice
             }
         })
     ];
