@@ -57,7 +57,7 @@ const simpleLabelPluginFactory = pluginConfig => ({
         )
     },
 
-    beforeDraw(){
+    beforeUpdate(){
         const groupName = pluginConfig.data.groupName;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
@@ -271,7 +271,7 @@ const advancedLabelPluginFactory = pluginConfig => ({
         )
     },
 
-    beforeDraw(){
+    beforeUpdate(){
         const groupName = pluginConfig.data.groupName;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
@@ -550,7 +550,6 @@ export async function initializeTriangle(){
             onclick: () => {
                 dataset.hidden = false;
                 pluginArray.forEach(plugin => plugin.currentMode = "pet");
-                myChart.update();
                 myChart.update(); // I have no idea why I need to do this twice
             }
         }),
@@ -559,7 +558,6 @@ export async function initializeTriangle(){
             onclick: () => {
                 dataset.hidden = true;
                 pluginArray.forEach(plugin => plugin.currentMode = "label");
-                myChart.update();
                 myChart.update(); // I have no idea why I need to do this twice
             }
         })

@@ -130,6 +130,9 @@
                 "pluginName":"triangleBase"
             },{
                 "pluginName":"simpleLabel",
+                "visibleIn":[
+                    "label"
+                ],
                 "data" :{
                     "groupName":"polygonLabels",
                     "labels" : [
