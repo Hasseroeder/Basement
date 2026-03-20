@@ -4,11 +4,15 @@ import { createInjectAble } from "../util/injectionUtil.js";
 
 window.addEventListener('DOMContentLoaded', async () => {
     const triangleConfigs = await loadJson("../json/triangleChartConfigs.json");
-    triangleConfigs.forEach(async config => {
-        await config.dataSetsConfig.forEach(async dataSetConfig => {
-            dataSetConfig.array = await loadJson(dataSetConfig.dataSource)
-        }) // TODO: parallelize this
-    })
+    await Promise.all(
+        triangleConfigs.map(config =>
+                Promise.all(
+                    config.dataSetsConfig.map(async dataSetConfig => {
+                        dataSetConfig.array = await loadJson(dataSetConfig.dataSource)
+                    })
+                )
+            )
+        )
 
     const extraHtml = [
         {created: false, name: "resChart", init: initializeResChart},

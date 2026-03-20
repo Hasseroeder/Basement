@@ -330,15 +330,17 @@ const cursorLinePluginFactory = pluginConfig => ({
         this.healthLabel = make('div',{className: 'triangle-help-label bottom'});
 
         container.append(this.healLabel, this.sustainLabel, this.healthLabel);
+        const plugin = this;
 
-        container.addEventListener('mousemove', () => chart.update());
+        container.addEventListener('mousemove', function() {
+            if(plugin.shouldShow()) chart.update()
+        });
     },
 
-    afterDraw(chart) {
-        const ctx = chart.ctx;
-        
+    afterDraw(chart) {        
         if (!chart._cursorPosition || !this.shouldShow()) return;
 
+        const ctx = chart.ctx;
         const {x,y} = chart.scales;
 
         const canvasRect = chart.canvas.getBoundingClientRect();
@@ -440,17 +442,15 @@ const dataPoints = data => data.array.map(pet => {
     imgEl.src = pet.image;
     imgEl.height=data.imageSize.height;
     imgEl.width=data.imageSize.width;
+    const [top, right] = getPosition(
+        data.attributeGroups.left.map(i => pet.attributes[i]),
+        data.attributeGroups.right.map(i => pet.attributes[i]),
+        data.attributeGroups.bottom.map(i => pet.attributes[i])
+    )
+
     return {
-        x: getX(...getPosition(
-            data.attributeGroups.left.map(i => pet.attributes[i]),
-            data.attributeGroups.right.map(i => pet.attributes[i]),
-            data.attributeGroups.bottom.map(i => pet.attributes[i])
-        )),
-        y: getY(...getPosition(
-            data.attributeGroups.left.map(i => pet.attributes[i]),
-            data.attributeGroups.right.map(i => pet.attributes[i]),
-            data.attributeGroups.bottom.map(i => pet.attributes[i])
-        )),
+        x: getX(top, right),
+        y: getY(top, right),
         label: pet.name,
         imageEl: imgEl,
         attributes: pet.attributes,
@@ -461,48 +461,59 @@ const externalTooltipHandler = context => {
     const { chart, tooltip } = context;
     let tooltipEl = document.getElementById('chartjs-tooltip');
     if (!tooltipEl) {
-        tooltipEl = make('div',{
+        const statImageSources = [
+            "./media/owo_images/battleEmojis/HP.png",
+            "./media/owo_images/battleEmojis/STR.png",
+            "./media/owo_images/battleEmojis/PR.png",
+            "./media/owo_images/battleEmojis/WP.png",
+            "./media/owo_images/battleEmojis/MAG.png",
+            "./media/owo_images/battleEmojis/MR.png",
+        ];
+        tooltipEl = make('div', {
             id: 'chartjs-tooltip',
             className: 'triangle-tooltip'
         });
-        document.body.appendChild(tooltipEl);
+
+        const rows = [ make('div'), make('div'), make('div') ];
+        tooltipEl.append(...rows);
+
+        const statTexts = [];
+        const statCells = [];
+
+        statImageSources.forEach(src => {
+            const text = document.createTextNode('');
+            const img = make('img', { src });
+            const cell = make('div', {}, [img, text]);
+            statTexts.push(text);
+            statCells.push(cell);
+        });
+
+        statCells.slice(0, 3).forEach(cell => rows[1].append(cell));
+        statCells.slice(3).forEach(cell => rows[2].append(cell));
+
+        // Save references
+        tooltipEl._nodes = {
+            labelRow: rows[0],
+            statTexts
+        };
+
+        document.body.append(tooltipEl);
     }
 
     tooltipEl.style.opacity = tooltip.opacity;
     if (tooltip.opacity===0) return; 
+    
+    const { label, attributes } = tooltip.dataPoints[0].raw;
 
-    const statImages= [
-        "./media/owo_images/battleEmojis/HP.png",
-        "./media/owo_images/battleEmojis/STR.png",
-        "./media/owo_images/battleEmojis/PR.png",
-        "./media/owo_images/battleEmojis/WP.png",
-        "./media/owo_images/battleEmojis/MAG.png",
-        "./media/owo_images/battleEmojis/MR.png",
-    ]; 
-
-    const renderPoint = ({ raw: { label, attributes } }) => {
-        const cells = attributes.map(
-            (value, i) =>
-                `<div style="display:flex;gap:0.2rem;width:2.5rem">
-                <img src="${statImages[i]}" style="width:1rem;height:1rem;margin-top:0.05rem" />
-                ${value}
-                </div>`
-        );
-
-        return `
-        <div style="margin-bottom:0.1rem">${label}</div>
-        <div style="display:flex">${cells.slice(0, 3).join('')}</div>
-        <div style="display:flex">${cells.slice(3).join('')}</div>
-        `;
-    };
-
-    tooltipEl.innerHTML = `<div>${tooltip.dataPoints.map(renderPoint).join('')}</div>`;
+    tooltipEl._nodes.labelRow.textContent = label;
+    tooltipEl._nodes.statTexts.forEach((text, i) => {
+        text.textContent = ' ' + attributes[i];
+    });
 
     const { left, top } = chart.canvas.getBoundingClientRect();
-    tooltipEl.style.cssText += `
-        left:${left + window.pageXOffset + tooltip.caretX + 5}px; 
-        top:${top + window.pageYOffset + tooltip.caretY + 5}px;
-    `;  // hardcoded offset is stupid, I know.
+    tooltipEl.style.left = `${left + window.pageXOffset + tooltip.caretX + 5}px`;
+    tooltipEl.style.top = `${top + window.pageYOffset + tooltip.caretY + 5}px`;
+    // hardcoded offset is stupid, I know.
 };
 
 export async function initializeTriangle(){

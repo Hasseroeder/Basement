@@ -1106,6 +1106,27 @@ a:hover {
   z-index: 2;
   opacity:1;
   position:absolute;
+  display:flex;
+  flex-direction: column;
+}
+
+.triangle-tooltip > div:first-child {
+  margin-bottom:0.2rem;
+}
+
+.triangle-tooltip > div {
+  display:flex;
+}
+
+.triangle-tooltip > div > div {
+  display:flex;
+  gap:0.2rem;
+  width:2.5rem
+}
+
+.triangle-tooltip img {
+  width:1rem;
+  height:1rem;
 }
 
 .discord-text-emote{
