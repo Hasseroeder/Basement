@@ -507,7 +507,7 @@ const externalTooltipHandler = context => {
 
 export async function initializeTriangle(){
     const container = this.cachedDiv.querySelector("#chartContainer");
-    const {data, baseConfig, pluginConfigs} = this.data;
+    const {dataSetsConfig, baseConfig, modes, pluginConfigs} = this.data;
 
     const constantPadding = 10; // this is unavoidable due to chart.js annoyingness
     const additionalPadding =baseConfig.additionalPadding;
@@ -517,11 +517,10 @@ export async function initializeTriangle(){
     const outerHeight  = innerHeight + additionalPadding.top + additionalPadding.bottom + constantPadding*2;
 
     const ctx = make("canvas");
-    const ctxWrapper = make("div",{
-        style:`width: ${outerWidth}px; height:${outerHeight}px; margin-bottom:10px;`
-    },[
-        ctx
-    ]);
+    container.append(make("div",
+        {style:`width: ${outerWidth}px; height:${outerHeight}px;`},
+        [ctx]
+    ))
 
     const pluginNameMap = {
         polygon: polygonPluginFactory,
@@ -534,41 +533,45 @@ export async function initializeTriangle(){
         pluginConfig => pluginNameMap[pluginConfig.pluginName](pluginConfig) 
     )
 
-    pluginArray.forEach(plugin => plugin.currentMode = "pet");
-
-    const dataset = {
-        data: dataPoints(data),
+    const datasets = dataSetsConfig.map(dataSetConfig=>({
+        data: dataPoints(dataSetConfig),
         pointStyle: ctx => ctx.raw.imageEl,
-        radius: 10, hoverRadius: 15, hidden: false, clip:false
-    }
+        radius: dataSetConfig.radius, 
+        hoverRadius: dataSetConfig.hoverRadius, 
+        hidden: false, 
+        clip:false,
+        shouldHideInMode(mode){
+            return ( dataSetConfig.visibleIn 
+                && !dataSetConfig.visibleIn.includes(mode)
+            )
+        }
+    }));
 
-    const buttonWrapper = make("div",{className: "triangle-button-wrapper"})
-    const buttons = [
-        // this DOM element creation should not be part of triangleFactories.js
-        make("button",{
-            textContent:"Pets",
-            onclick: () => {
-                dataset.hidden = false;
-                pluginArray.forEach(plugin => plugin.currentMode = "pet");
-                myChart.update(); // I have no idea why I need to do this twice
-            }
-        }),
-        make("button",{
-            textContent:"Labels",
-            onclick: () => {
-                dataset.hidden = true;
-                pluginArray.forEach(plugin => plugin.currentMode = "label");
-                myChart.update(); // I have no idea why I need to do this twice
-            }
-        })
-    ];
-    buttonWrapper.append(...buttons);
-    container.append(ctxWrapper,buttonWrapper);
+    if (modes && modes.length > 0){
+        pluginArray.forEach(plugin => plugin.currentMode = modes[0].slug);
+
+        const buttonWrapper = make("div",{className: "triangle-button-wrapper"})
+        modes.forEach(mode =>
+            buttonWrapper.append(
+                make("button",{
+                    textContent:mode.prettyName,
+                    onclick() {
+                        datasets.forEach(dataset =>{
+                            dataset.hidden = dataset.shouldHideInMode(mode.slug);
+                        })
+                        pluginArray.forEach(plugin => plugin.currentMode = mode.slug);
+                        myChart.update();
+                    }
+                })
+            )
+        )
+        container.append(buttonWrapper);
+    }
 
     const myChart = new Chart(ctx, {
         type: 'scatter',
         plugins: pluginArray,
-        data: {datasets: [dataset]},
+        data: {datasets: datasets},
         options: {
             animation: false,
             maintainAspectRatio: false,

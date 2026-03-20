@@ -4,23 +4,29 @@
         "baseConfig":{
             "additionalPadding":{ "top": 0, "right": 0, "bottom": 50, "left": 0 }
         },
-        "data": {
+        "dataSetsConfig": [{
             "dataSource": "../json/pets.json",
             "attributeGroups": {
                 "left": [1, 4],
                 "right": [3],
                 "bottom": [0, 2, 5]
             },
-            "imageSize":{"height":22, "width":22}
-        },
+            "imageSize":{"height":22, "width":22},
+            "hoverRadius": 15,
+            "radius": 15,
+            "visibleIn":["pet"]
+        }],
+        "modes":[
+            { "prettyName":"Pets", "slug":"pet" },
+            { "prettyName":"Labels", "slug":"label" },
+            { "prettyName":"Help", "slug":"help" }
+        ],
         "pluginConfigs":[
             {
                 "pluginName":"triangleBase"
             },{
                 "pluginName":"simpleLabel",
-                "visibleIn":[
-                    "label"
-                ],
+                "visibleIn":["label"],
                 "data":{
                     "groupName":"polygonLabels",
                     "labels" : [
@@ -73,6 +79,7 @@
                 ]
             },{
                 "pluginName":"advancedLabel",
+                "visibleIn":["pet","label"],
                 "data":{
                     "groupName":"scaleTitles",
                     "labels":[
@@ -108,6 +115,10 @@
                         }
                     ]
                 }
+            },
+            {
+                "pluginName":"cursorLine",
+                "visibleIn":["help"]
             }
         ]
     },
@@ -116,23 +127,29 @@
         "baseConfig":{
             "additionalPadding":{ "top": 0, "right": 0, "bottom": 50, "left": 0 }
         },
-        "data":{
+        "dataSetsConfig": [{
             "dataSource":"../json/cruneHolders.json",
             "attributeGroups":{
                 "left": [2],
                 "right":[3,5],
                 "bottom":[0]
             },
-            "imageSize":{"height":22, "width":22}
-        },
+            "imageSize":{"height":22, "width":22},
+            "hoverRadius": 15,
+            "radius": 15,
+            "visibleIn":["pet"]
+        }],
+        "modes":[
+            { "prettyName":"Pets", "slug":"pet" },
+            { "prettyName":"Labels", "slug":"label" },
+            { "prettyName":"Help", "slug":"help" }
+        ],
         "pluginConfigs":[
             {
                 "pluginName":"triangleBase"
             },{
                 "pluginName":"simpleLabel",
-                "visibleIn":[
-                    "label"
-                ],
+                "visibleIn":["label"],
                 "data" :{
                     "groupName":"polygonLabels",
                     "labels" : [
@@ -154,6 +171,7 @@
                 ]
             },{
                 "pluginName":"advancedLabel",
+                "visibleIn":["pet","label"],
                 "data":{
                     "groupName":"scaleTitles",
                     "labels":[
@@ -187,6 +205,10 @@
                         }  
                     ]
                 }
+            },
+            {
+                "pluginName":"cursorLine",
+                "visibleIn":["help"]
             }
         ]
     }
