@@ -325,11 +325,11 @@ const cursorLinePluginFactory = pluginConfig => ({
     beforeInit(chart) {
         const container = chart.canvas.parentNode;
 
-        this.healLabel = make('div',{className: 'triangle-help-label'});
-        this.sustainLabel = make('div',{className: 'triangle-help-label right'});
-        this.healthLabel = make('div',{className: 'triangle-help-label bottom'});
+        this.leftLabel = make('div',{className: 'triangle-help-label'});
+        this.rightLabel = make('div',{className: 'triangle-help-label right'});
+        this.bottomLabel = make('div',{className: 'triangle-help-label bottom'});
 
-        container.append(this.healLabel, this.sustainLabel, this.healthLabel);
+        container.append(this.leftLabel, this.rightLabel, this.bottomLabel);
         const plugin = this;
 
         container.addEventListener('mousemove', function() {
@@ -348,53 +348,53 @@ const cursorLinePluginFactory = pluginConfig => ({
         const dataX = x.getValueForPixel(chart._cursorPosition.x);
         const dataY = y.getValueForPixel(chart._cursorPosition.y);
 
-        const { Heal, Sustain, Health } = reverseXY(dataX, dataY);
+        const { left, right, bottom } = reverseXY(dataX, dataY);
 
-        const SustainX = getPixelForX(x, getX(100-Sustain,Sustain));
-        const SustainY = getPixelForY(y, getY(100-Sustain,Sustain));
-        const HealX = getPixelForX(x, getX(Heal,0));
-        const HealY = getPixelForY(y, getY(Heal,0));
-        const HealthX = getPixelForX(x, getX(0,100-Health));
-        const HealthY = getPixelForY(y, getY(0,100-Health));
+        const rightX = getPixelForX(x, getX(100-right,right));
+        const rightY = getPixelForY(y, getY(100-right,right));
+        const leftX = getPixelForX(x, getX(left,0));
+        const leftY = getPixelForY(y, getY(left,0));
+        const bottomX = getPixelForX(x, getX(0,100-bottom));
+        const bottomY = getPixelForY(y, getY(0,100-bottom));
 
         if (
-            Heal >= 0 &&
-            Sustain >= 0 &&
-            Health >= 0
+            left >= 0 &&
+            right >= 0 &&
+            bottom >= 0
         ){
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
-            ctx.lineTo(SustainX,SustainY);
+            ctx.lineTo(rightX,rightY);
             ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
-            ctx.lineTo(HealX,HealY);
+            ctx.lineTo(leftX,leftY);
             ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
-            ctx.lineTo(HealthX,HealthY);
+            ctx.lineTo(bottomX,bottomY);
             ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
             ctx.lineWidth = 2;
             ctx.strokeStyle = 'gray';
             ctx.stroke();
             ctx.restore();
 
-            this.healLabel.innerHTML = `${Heal.toFixed(0)}%`;
-            this.healLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(Heal,0)) - 37 + 'px';
-            this.healLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(Heal,0)) - 10+  'px';
-            this.healLabel.style.visibility = "visible";
+            this.leftLabel.innerHTML = `${left.toFixed(0)}%`;
+            this.leftLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(left,0)) - 37 + 'px';
+            this.leftLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(left,0)) - 10+  'px';
+            this.leftLabel.style.visibility = "visible";
 
-            this.sustainLabel.innerHTML = `${Sustain.toFixed(0)}%`;
-            this.sustainLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(100-Sustain,Sustain)) -5 + 'px';
-            this.sustainLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(100-Sustain,Sustain)) - 30+ 'px';
-            this.sustainLabel.style.visibility = "visible";
+            this.rightLabel.innerHTML = `${right.toFixed(0)}%`;
+            this.rightLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(100-right,right)) -5 + 'px';
+            this.rightLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(100-right,right)) - 30+ 'px';
+            this.rightLabel.style.visibility = "visible";
 
-            this.healthLabel.innerHTML = `${Health.toFixed(0)}%`;
-            this.healthLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(0,100-Health)) + 'px';
-            this.healthLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(0,100-Health)) + 10+ 'px';
-            this.healthLabel.style.visibility = "visible";
+            this.bottomLabel.innerHTML = `${bottom.toFixed(0)}%`;
+            this.bottomLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(0,100-bottom)) + 'px';
+            this.bottomLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(0,100-bottom)) + 10+ 'px';
+            this.bottomLabel.style.visibility = "visible";
         }
         else{
-            this.healLabel.style.visibility = "hidden";
-            this.sustainLabel.style.visibility = "hidden";
-            this.healthLabel.style.visibility = "hidden";
+            this.leftLabel.style.visibility = "hidden";
+            this.rightLabel.style.visibility = "hidden";
+            this.bottomLabel.style.visibility = "hidden";
         }
     },
 
@@ -414,10 +414,10 @@ function getPixelForX(scale,data){
 }
 
 function reverseXY(x,y){
-    let Heal= y;
-    let Sustain= x -0.5 * Heal;
-    let Health=100-Heal-Sustain;
-    return {Heal, Sustain, Health};
+    let left= y;
+    let right= x -0.5 * left;
+    let bottom=100-left-right;
+    return {left, right, bottom};
 }
 
 // --------------------------------------------------------------------------------------
@@ -502,7 +502,7 @@ const externalTooltipHandler = context => {
 
     tooltipEl.style.opacity = tooltip.opacity;
     if (tooltip.opacity===0) return; 
-    
+
     const { label, attributes } = tooltip.dataPoints[0].raw;
 
     tooltipEl._nodes.labelRow.textContent = label;
