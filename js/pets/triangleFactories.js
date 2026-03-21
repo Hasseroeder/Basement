@@ -484,9 +484,9 @@ const cursorLinePluginFactory = pluginConfig => ({
     },
 
     beforeDestroy(){
-        this.healLabel.remove();
-        this.sustainLabel.remove();
-        this.healthLabel.remove();
+        this.leftLabel.remove();
+        this.rightLabel.remove();
+        this.bottomLabel.remove();
     }
 });
 
