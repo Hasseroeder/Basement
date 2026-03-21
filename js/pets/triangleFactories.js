@@ -86,10 +86,10 @@ const simpleLabelPluginFactory = pluginConfig => ({
 
 // --------------------------------------------------------------------------------------
 //
-// Plugin for the basic lines and labels in any ternary chart
+// Plugin for basic ticks in any ternary chart
 //
 //
-const triangleBasePluginFactory = pluginConfig =>({
+const triangleTickPluginFactory = pluginConfig =>({
     id: pluginConfig.pluginName,
     visibleIn: pluginConfig.visibleIn,
     currentMode: undefined, 
@@ -100,57 +100,86 @@ const triangleBasePluginFactory = pluginConfig =>({
         )
     },
 
-    beforeDraw(){
-        // I'm pretty sure this is always gonna be visible, so I won't add anything for now
+    beforeUpdate(){
+        const groupName = pluginConfig.data.groupName;
+        const anns = Object.values(this.chart.options.plugins.annotation.annotations);
+        anns.filter(ann => ann.group === groupName)
+            .forEach(ann => ann.display = this.shouldShow())
     },
 
-    beforeInit: chart => {
-        const lines = pluginConfig.lines ?? true;
-        const labels = pluginConfig.labels ?? true;
-
+    beforeInit(chart){
+        this.chart = chart;
         const anns = chart.options.plugins.annotation.annotations;
         const rightRotation = 60;
-        const scales = [
-            {
-                linePts: p => ([[p,0],[p,100-p]]),
-                labelPos: p => ([[p,-3], 0])
-            },
-            {
-                linePts: p => ([[100-p,p],[0,p]]),
-                labelPos: p => ([[103-p,p],-rightRotation])
-            },
-            {
-                linePts: p => ([[0,p],[p,0]]),
-                labelPos: p => ([[-3,103-p], rightRotation ])
-            }
+        const posFns = [
+            p => ({coor: [p,-3], rotation: 0}),
+            p => ({coor: [103-p,p],rotation: -rightRotation }),
+            p => ({coor: [-3,103-p],rotation: rightRotation })
         ];
 
-        scales.forEach(({ linePts, labelPos },i) => {
+        posFns.forEach((posFn,i) => {
+            for (let percent = 10; percent <= 100; percent += 10) {
+                const Title = i+"_tick_" +percent;
+                const {coor, rotation} = posFn(percent);
+                anns[`${Title}Label`] = {
+                    type: 'label',
+                    xValue: getX(...coor),
+                    yValue: getY(...coor),
+                    content: percent,
+                    color: 'lightgray',
+                    rotation,
+                    group: pluginConfig.data.groupName
+                };
+            }
+        });
+    }
+})
+
+// --------------------------------------------------------------------------------------
+//
+// Plugin for basic lines in any ternary chart
+//
+//
+const triangleLinePluginFactory = pluginConfig =>({
+    id: pluginConfig.pluginName,
+    visibleIn: pluginConfig.visibleIn,
+    currentMode: undefined, 
+
+    shouldShow(){
+        return ( this.visibleIn === undefined
+              || this.visibleIn.includes(this.currentMode)
+        )
+    },
+
+    beforeUpdate(){
+        const groupName = pluginConfig.data.groupName;
+        const anns = Object.values(this.chart.options.plugins.annotation.annotations);
+        anns.filter(ann => ann.group === groupName)
+            .forEach(ann => ann.display = this.shouldShow())
+    },
+
+    beforeInit(chart){
+        this.chart = chart;
+        const anns = chart.options.plugins.annotation.annotations;
+        const posFns = [
+            p => ({start:[p,0],end:[p,100-p]}),
+            p => ({start:[100-p,p],end:[0,p]}),
+            p => ({start:[0,p],end:[p,0]}),
+        ];
+
+        posFns.forEach((posFn,i) => {
             for (let percent = 0; percent <= 100; percent += 10) {
-                const Title = i +"_" +percent;
-                if (lines){
-                    const [start, end] = linePts(percent);
-                    anns[Title] = {
-                        type: 'line',
-                        xMin: getX(...start), yMin: getY(...start),
-                        xMax: getX(...end), yMax: getY(...end),
-                        borderWidth: 0.5,
-                        color: 'lightgray',
-                        drawTime:'beforeDraw'
-                    };
-                }
-                if (percent == 0) continue; // we skip drawing labels saying zero
-                if (labels){
-                    const [xy, rotation] = labelPos(percent);
-                    anns[`${Title}Label`] = {
-                        type: 'label',
-                        xValue: getX(...xy),
-                        yValue: getY(...xy),
-                        content: `${percent}`,
-                        color: 'lightgray',
-                        rotation
-                    };
-                }
+                const Title = i+"_label_" +percent;
+                const {start, end} = posFn(percent);
+                anns[Title] = {
+                    type: 'line',
+                    xMin: getX(...start), yMin: getY(...start),
+                    xMax: getX(...end), yMax: getY(...end),
+                    borderWidth: 0.5,
+                    color: 'lightgray',
+                    drawTime:'beforeDraw',
+                    group: pluginConfig.data.groupName
+                };
             }
         });
     }
@@ -170,19 +199,22 @@ function getY(topStat,rightStat){
 //
 const imageCache = new Map(); // -> Promise<Image>
 
-async function createLabelImage(elements) {
+async function createLabelImage({elements, arrow}) {
+    // I'm aware this is super specific and can never be reused
+    // I'm aware that I wanted to make this reusable originally
+    // I don't care at this point anymore
     const font = '20px system-ui, Arial, sans-serif';
     const defaultImageSize = 24;
 
-    // --- First pass: measure everything ---
+    // --- First pass: measure elements ---
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     ctx.font = font;
     ctx.textBaseline = 'middle';
 
     const measured = [];
-    let totalWidth = 0;
-    let maxHeight = 0;
+    let contentWidth = 0;
+    let contentHeight = 0;
 
     for (const el of elements) {
         if (el.type === "text") {
@@ -194,45 +226,69 @@ async function createLabelImage(elements) {
                 parseInt(font, 10)
             );
             measured.push({ type: "text", content: el.content, width: w, height: h });
-            totalWidth += w;
-            maxHeight = Math.max(maxHeight, h);
+            contentWidth += w;
+            contentHeight = Math.max(contentHeight, h);
 
         } else if (el.type === "image") {
             const img = await loadImage(el.source);
             const w = defaultImageSize;
             const h = defaultImageSize;
             measured.push({ type: "image", img, width: w, height: h });
-            totalWidth += w;
-            maxHeight = Math.max(maxHeight, h);
+            contentWidth += w;
+            contentHeight = Math.max(contentHeight, h);
 
         } else if (el.type === "gap") {
             measured.push({ type: "gap", width: el.px, height: 0 });
-            totalWidth += el.px;
+            contentWidth += el.px;
         }
     }
 
-    // --- Prepare canvas ---
-    canvas.width = totalWidth;
-    canvas.height = maxHeight;
-    canvas.style.width = `${totalWidth}px`;
-    canvas.style.height = `${maxHeight}px`;
+    const arrowLength = arrow?.length ?? contentWidth;
+    const arrowWidth = arrow?.width ?? 1.25;
+    const arrowGap = arrow?.gap ?? 0;
+    const arrowHead = arrow?.headSize ?? 10;
+    const arrowDirection = arrow?.direction ?? "ltr";
 
+    const finalWidth = Math.max(contentWidth, arrowLength);
+
+    // Height = content + gap + arrow head height
+    const adjArrowGap = Math.max(
+        0,
+        Math.abs(arrowGap) + (arrowHead/2) -(contentHeight/2)
+    );
+
+    const finalHeight = contentHeight + adjArrowGap ;
+
+    // --- Prepare canvas ---
+    canvas.width = finalWidth;
+    canvas.height = finalHeight;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.font = font;
     ctx.textBaseline = 'middle';
     ctx.fillStyle = 'lightgray';
+    ctx.strokeStyle = 'lightgray';
 
-    // --- Second pass: draw everything ---
-    let x = 0;
-    const centerY = maxHeight / 2;
+    // --- Second pass: draw content ---
+    let x = (finalWidth - contentWidth) / 2;
+
+    const textCenterY = Math.max(
+        -arrowGap + (arrowHead/2),
+        contentHeight/2
+    )
 
     for (const el of measured) {
         if (el.type === "text") {
-            ctx.fillText(el.content, x, centerY);
+            ctx.fillText(el.content, x, textCenterY);
             x += el.width;
 
         } else if (el.type === "image") {
-            ctx.drawImage(el.img, x, 0, el.width, el.height);
+            ctx.drawImage(
+                el.img, 
+                x, 
+                textCenterY - contentHeight/2,
+                el.width, 
+                el.height
+            );
             x += el.width;
 
         } else if (el.type === "gap") {
@@ -240,8 +296,37 @@ async function createLabelImage(elements) {
         }
     }
 
+    // --- Draw arrow ---
+    const arrowY = textCenterY + arrowGap;
+    const arrowStartX = (finalWidth - arrowLength) / 2;
+    const arrowEndX = arrowStartX + arrowLength;
+
+    ctx.lineWidth = arrowWidth;
+
+    // Line
+    ctx.beginPath();
+    ctx.moveTo(arrowStartX, arrowY);
+    ctx.lineTo(arrowEndX, arrowY);
+    ctx.stroke();
+    ctx.fill();
+
+    // Arrow head
+    ctx.beginPath();
+    if (arrowDirection === "ltr"){
+        ctx.moveTo(arrowEndX, arrowY);
+        ctx.lineTo(arrowEndX - arrowHead, arrowY - arrowHead / 2);
+        ctx.lineTo(arrowEndX - arrowHead, arrowY + arrowHead / 2);
+    }else if (arrowDirection === "rtl"){
+        ctx.moveTo(arrowStartX, arrowY);
+        ctx.lineTo(arrowStartX + arrowHead, arrowY - arrowHead / 2);
+        ctx.lineTo(arrowStartX + arrowHead, arrowY + arrowHead / 2);
+    }
+    ctx.closePath();
+    ctx.fill();
+
     return loadImage(canvas.toDataURL("image/png"));
 }
+
 
 function loadImage(src) {
     if (imageCache.has(src)) return imageCache.get(src);
@@ -283,9 +368,9 @@ const advancedLabelPluginFactory = pluginConfig => ({
         const anns = chart.options.plugins.annotation.annotations;
         const {labels, groupName} = pluginConfig.data;
         
-        labels.forEach( async ({id, elements, coor, rotation = 0}) =>{
-            const image = await createLabelImage(elements);
-            const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 20);
+        labels.forEach( async ({id, imageConfig, coor, rotation = 0}) =>{
+            const image = await createLabelImage(imageConfig);
+            const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 27.5);
 
             anns[id]={
                 type:"label",
@@ -377,17 +462,17 @@ const cursorLinePluginFactory = pluginConfig => ({
             ctx.restore();
 
             this.leftLabel.innerHTML = `${left.toFixed(0)}%`;
-            this.leftLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(left,0)) - 37 + 'px';
-            this.leftLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(left,0)) - 10+  'px';
+            this.leftLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(left,0)) - 33 + 'px';
+            this.leftLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(left,0)) - 7+  'px';
             this.leftLabel.style.visibility = "visible";
 
             this.rightLabel.innerHTML = `${right.toFixed(0)}%`;
-            this.rightLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(100-right,right)) -5 + 'px';
-            this.rightLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(100-right,right)) - 30+ 'px';
+            this.rightLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(100-right,right)) -4 + 'px';
+            this.rightLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(100-right,right)) - 27+ 'px';
             this.rightLabel.style.visibility = "visible";
 
             this.bottomLabel.innerHTML = `${bottom.toFixed(0)}%`;
-            this.bottomLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(0,100-bottom)) + 'px';
+            this.bottomLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(0,100-bottom)) -1 +'px';
             this.bottomLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(0,100-bottom)) + 10+ 'px';
             this.bottomLabel.style.visibility = "visible";
         }
@@ -537,7 +622,8 @@ export async function initializeTriangle(){
         polygon: polygonPluginFactory,
         simpleLabel: simpleLabelPluginFactory,
         advancedLabel: advancedLabelPluginFactory,
-        triangleBase: triangleBasePluginFactory,
+        ticks: triangleTickPluginFactory,
+        line:triangleLinePluginFactory,
         cursorLine: cursorLinePluginFactory
     }
     const pluginArray = pluginConfigs.map(

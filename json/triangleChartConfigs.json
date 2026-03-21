@@ -2,7 +2,7 @@
     {
         "injectableName": "petRoles-ternaryChart",
         "baseConfig":{
-            "additionalPadding":{ "top": 0, "right": 0, "bottom": 50, "left": 0 }
+            "additionalPadding":{ "top": 0, "right": 0, "bottom": 60, "left": 0 }
         },
         "dataSetsConfig": [{
             "dataSource": "../json/pets.json",
@@ -23,7 +23,12 @@
         ],
         "pluginConfigs":[
             {
-                "pluginName":"triangleBase"
+                "pluginName":"line",
+                "data":{"groupName":"gridlines"}
+            },{
+                "pluginName":"ticks",
+                "data":{"groupName":"major ticks"},
+                "visibleIn":["label","pet"]
             },{
                 "pluginName":"simpleLabel",
                 "visibleIn":["label"],
@@ -79,39 +84,59 @@
                 ]
             },{
                 "pluginName":"advancedLabel",
-                "visibleIn":["pet","label"],
                 "data":{
                     "groupName":"scaleTitles",
                     "labels":[
                         {
                             "id":"leftScaleTitle",
-                            "elements": [
-                                { "type": "text", "content": "% of stats in Power" },
-                                { "type": "gap", "px": 3 },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/STR.png" },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/MAG.png" }
-                            ], 
-                            "coor":[55,-10], 
+                            "imageConfig":{
+                                "elements": [
+                                    { "type": "text", "content": "% of stats in Power" },
+                                    { "type": "gap", "px": 3 },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/STR.png" },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/MAG.png" }
+                                ],
+                                "arrow":{
+                                    "length":350,
+                                    "gap":20,
+                                    "direction":"ltr"
+                                }
+                            },
+                            "coor":[56,-12], 
                             "rotation": -60
                         },{
                             "id":"rightScaleTitle",
-                            "elements": [
-                                { "type": "text", "content": "% of stats in WP" },
-                                { "type": "gap", "px": 3 },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" }
-                            ], 
-                            "coor":[55,55], 
+                            "imageConfig":{
+                                "elements": [
+                                    { "type": "text", "content": "% of stats in WP" },
+                                    { "type": "gap", "px": 3 },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" }
+                                ],
+                                "arrow":{
+                                    "length":350,
+                                    "gap":20,
+                                    "direction":"ltr"
+                                }
+                            },
+                            "coor":[56,56], 
                             "rotation": 60},
                         {
                             "id":"bottomScaleTitle",
-                            "elements": [
-                                { "type": "text", "content": "% of stats in Tanking" },
-                                { "type": "gap", "px": 3 },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
-                            ], 
-                            "coor":[-10,55]
+                            "imageConfig":{
+                                "elements": [
+                                    { "type": "text", "content": "% of stats in Tanking" },
+                                    { "type": "gap", "px": 3 },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
+                                ],
+                                "arrow":{
+                                    "length":350,
+                                    "gap":-20,
+                                    "direction":"rtl"
+                                }
+                            },
+                            "coor":[-12,56]
                         }
                     ]
                 }
@@ -125,7 +150,7 @@
     {
         "injectableName": "crune-ternaryChart",
         "baseConfig":{
-            "additionalPadding":{ "top": 0, "right": 0, "bottom": 50, "left": 0 }
+            "additionalPadding":{ "top": 0, "right": 0, "bottom": 60, "left": 0 }
         },
         "dataSetsConfig": [{
             "dataSource":"../json/cruneHolders.json",
@@ -146,7 +171,12 @@
         ],
         "pluginConfigs":[
             {
-                "pluginName":"triangleBase"
+                "pluginName":"line",
+                "data":{"groupName":"gridlines"}
+            },{
+                "pluginName":"ticks",
+                "data":{"groupName":"major ticks"},
+                "visibleIn":["label","pet"]
             },{
                 "pluginName":"simpleLabel",
                 "visibleIn":["label"],
@@ -171,37 +201,57 @@
                 ]
             },{
                 "pluginName":"advancedLabel",
-                "visibleIn":["pet","label"],
                 "data":{
                     "groupName":"scaleTitles",
                     "labels":[
                         {   
                             "id":"leftScaleTitle",
-                            "elements": [
-                                { "type": "text", "content": "% of stats in Healing" },
-                                { "type": "gap", "px": 3 },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" }
-                            ], 
-                            "coor":[55,-10], 
+                            "imageConfig":{
+                                "elements": [
+                                    { "type": "text", "content": "% of stats in Healing" },
+                                    { "type": "gap", "px": 3 },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" }
+                                ], 
+                                "arrow":{
+                                    "length":350,
+                                    "gap":20,
+                                    "direction":"ltr"
+                                }
+                            },
+                            "coor":[56,-12], 
                             "rotation": -60
                         },{
                             "id":"rightScaleTitle",
-                            "elements": [
-                                { "type": "text", "content": "% of stats in Sustain" },
-                                { "type": "gap", "px": 3 },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
-                            ], 
-                            "coor":[55,55], 
+                            "imageConfig":{
+                                "elements": [
+                                    { "type": "text", "content": "% of stats in Sustain" },
+                                    { "type": "gap", "px": 3 },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
+                                ], 
+                                "arrow":{
+                                    "length":350,
+                                    "gap":20,
+                                    "direction":"ltr"
+                                }
+                            },
+                            "coor":[56,56], 
                             "rotation": 60
                         },{
                             "id":"bottomScaleTitle",
-                            "elements": [
-                                { "type": "text", "content": "% of stats in Health" },
-                                { "type": "gap", "px": 3 },
-                                { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" }
-                            ],
-                            "coor":[-10,55]
+                            "imageConfig":{
+                                "elements": [
+                                    { "type": "text", "content": "% of stats in Health" },
+                                    { "type": "gap", "px": 3 },
+                                    { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" }
+                                ],
+                                "arrow":{
+                                    "length":350,
+                                    "gap":-20,
+                                    "direction":"rtl"
+                                }
+                            },
+                            "coor":[-12,56]
                         }  
                     ]
                 }

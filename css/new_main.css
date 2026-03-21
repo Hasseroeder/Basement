@@ -1401,6 +1401,7 @@ a:hover {
 .triangle-help-label{
   pointer-events: none; 
   position: absolute;
+  font-size: 0.8rem;
 }
 
 .triangle-help-label.right{
