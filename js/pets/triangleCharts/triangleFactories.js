@@ -4,29 +4,29 @@ import { getX, getY } from "./triangleUtils.js";
 
 const dataPoints = data => data.array.map(pet => {
     function getPosition(
-        topAttr,
+        leftAttr,
         rightAttr,
-        leftAttr
+        bottomAttr
     ){
-        const sum   = [...topAttr,...rightAttr,...leftAttr].reduce((acc, num) => acc + num, 0);
+        const sum   = [...leftAttr,...rightAttr,...bottomAttr].reduce((acc, num) => acc + num, 0);
         const right = 100*(rightAttr.reduce((acc, num) => acc + num, 0))/sum;
-        const top   = 100*(topAttr.reduce((acc, num) => acc + num, 0))/sum;
-        return [top, right];
+        const left   = 100*(leftAttr.reduce((acc, num) => acc + num, 0))/sum;
+        return [left, right];
     }
     
     const imgEl = new Image();
     imgEl.src = pet.image;
     imgEl.height=data.imageSize.height;
     imgEl.width=data.imageSize.width;
-    const [top, right] = getPosition(
+    const [left, right] = getPosition(
         data.attributeGroups.left.map(i => pet.attributes[i]),
         data.attributeGroups.right.map(i => pet.attributes[i]),
         data.attributeGroups.bottom.map(i => pet.attributes[i])
     )
 
     return {
-        x: getX(top, right),
-        y: getY(top, right),
+        x: getX(left, right),
+        y: getY(left, right),
         label: pet.name,
         imageEl: imgEl,
         attributes: pet.attributes,
