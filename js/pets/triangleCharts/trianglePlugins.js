@@ -423,32 +423,17 @@ export const cursorLinePluginFactory = pluginConfig => ({
     afterDraw(chart) {             
         if (!chart._cursorPosition || !this.shouldShow()) return;
 
-        const plugin = this;
-        const ctx = chart.ctx;
-        const {x,y} = chart.scales;
-
-        const canvasRect = chart.canvas.getBoundingClientRect();
-
-        const squareDataX = x.getValueForPixel(chart._cursorPosition.x);
-        const squareDataY = y.getValueForPixel(chart._cursorPosition.y);
+        const squareDataX = chart.scales.x.getValueForPixel(chart._cursorPosition.x);
+        const squareDataY = chart.scales.y.getValueForPixel(chart._cursorPosition.y);
 
         const left = squareDataY;
         const right = squareDataX - 0.5 * left;
         const data = { left, right, bottom: 100-left-right}
 
         const edgePoints = {
-            right: {
-                x:  getPixelForX(x, getX(100-data.right,data.right)),
-                y:  getPixelForY(y, getY(100-data.right,data.right))
-            },
-            left: {
-                x:  getPixelForX(x, getX(data.left,0)),
-                y:  getPixelForY(y, getY(data.left,0))
-            }, 
-            bottom:{
-                x:  getPixelForX(x, getX(0,data.left+data.right)),
-                y:  getPixelForY(y, getY(0,data.left+data.right))
-            }
+            right: getPixel(chart.scales,[100-data.right,data.right]),
+            left: getPixel(chart.scales,[data.left,0]), 
+            bottom: getPixel(chart.scales,[0,data.left+data.right])
         }
 
         if (
@@ -457,6 +442,7 @@ export const cursorLinePluginFactory = pluginConfig => ({
             data.bottom >= 0
         ){
             const cursorPos = [chart._cursorPosition.x, chart._cursorPosition.y]
+            const ctx = chart.ctx;
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(...cursorPos);
@@ -470,9 +456,11 @@ export const cursorLinePluginFactory = pluginConfig => ({
             ctx.stroke();
             ctx.restore();
 
+            const canvasRect = chart.canvas.getBoundingClientRect();
             const constX = canvasRect.left + window.pageXOffset;
             const constY = canvasRect.top + window.pageYOffset;
 
+            const plugin = this;
             ["left","right","bottom"].forEach(name=>{
                 plugin[name].text.textContent = data[name].toFixed(0)+"%"
                 plugin[name].container.style.left = constX + edgePoints[name].x+ 'px';
@@ -494,10 +482,11 @@ export const cursorLinePluginFactory = pluginConfig => ({
     }
 });
 
-function getPixelForY(scale, data){
-    return scale.bottom - (data - scale.min) * (scale.height / (scale.max - scale.min));
-}
-
-function getPixelForX(scale,data){
-    return scale.left + (data - scale.min) * (scale.width / (scale.max - scale.min));
+function getPixel(scales, data){
+    const x = getX(...data);
+    const y = getY(...data);
+    return {
+        x:scales.x.left   + (x - scales.x.min) * (scales.x.width  / (scales.x.max - scales.x.min)),
+        y:scales.y.bottom - (y - scales.y.min) * (scales.y.height / (scales.y.max - scales.y.min))
+    }
 }

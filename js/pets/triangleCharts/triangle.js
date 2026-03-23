@@ -110,12 +110,13 @@ export async function initializeTriangle(){
     ))
 
     const pluginNameMap = {
-        polygon:        PluginHelper.polygonPluginFactory,
-        simpleLabel:    PluginHelper.simpleLabelPluginFactory,
-        advancedLabel:  PluginHelper.advancedLabelPluginFactory,
-        ticks:          PluginHelper.triangleTickPluginFactory,
-        line:           PluginHelper.triangleLinePluginFactory,
-        cursorLine:     PluginHelper.cursorLinePluginFactory
+        polygon:                PluginHelper.polygonPluginFactory,
+        simpleLabel:            PluginHelper.simpleLabelPluginFactory,
+        advancedLabel:          PluginHelper.advancedLabelPluginFactory,
+        ticks:                  PluginHelper.triangleTickPluginFactory,
+        line:                   PluginHelper.triangleLinePluginFactory,
+        cursorLine:             PluginHelper.cursorLinePluginFactory,
+        cursorLine_with_ticks:  PluginHelper.cursorLine_with_ticksPluginFactory
     }
     const pluginArray = pluginConfigs.map(
         pluginConfig => pluginNameMap[pluginConfig.pluginName](pluginConfig) 
