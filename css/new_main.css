@@ -1402,12 +1402,23 @@ a:hover {
   pointer-events: none; 
   position: absolute;
   font-size: 0.8rem;
+  width: 0.5px;
+  height: 0.5px;
 }
 
-.triangle-help-label.right{
-  transform: rotate(-60deg);
+.triangle-help-label.left > div {
+  transform: translate(0, -0.5rem);
+  direction:rtl;
 }
 
-.triangle-help-label.bottom{
-  transform: rotate(60deg);
+.triangle-help-label.right > div {
+  transform: translate(0, -0.5rem) rotate(-60deg);
+}
+
+.triangle-help-label.bottom > div {
+  transform: translate(0, -0.5rem) rotate(60deg);
+}
+
+.triangle-help-label span {
+  padding: 0 0.5rem;
 }

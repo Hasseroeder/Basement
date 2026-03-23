@@ -402,84 +402,95 @@ export const cursorLinePluginFactory = pluginConfig => ({
 
     beforeInit(chart) {
         const container = chart.canvas.parentNode;
-
-        this.leftLabel = make('div',{className: 'triangle-help-label'});
-        this.rightLabel = make('div',{className: 'triangle-help-label right'});
-        this.bottomLabel = make('div',{className: 'triangle-help-label bottom'});
-
-        container.append(this.leftLabel, this.rightLabel, this.bottomLabel);
         const plugin = this;
+
+        ["left","right","bottom"].forEach(name=>{
+            plugin[name]={
+                container: make('div',{className: `triangle-help-label ${name}`}),
+                text: make("span")
+            }
+            plugin[name].container.append(
+                make("div",{},[plugin[name].text])
+            )
+            container.append(plugin[name].container);
+        })
 
         container.addEventListener('mousemove', function() {
             if(plugin.shouldShow()) chart.update()
         });
     },
 
-    afterDraw(chart) {        
+    afterDraw(chart) {             
         if (!chart._cursorPosition || !this.shouldShow()) return;
 
+        const plugin = this;
         const ctx = chart.ctx;
         const {x,y} = chart.scales;
 
         const canvasRect = chart.canvas.getBoundingClientRect();
 
-        const dataX = x.getValueForPixel(chart._cursorPosition.x);
-        const dataY = y.getValueForPixel(chart._cursorPosition.y);
+        const squareDataX = x.getValueForPixel(chart._cursorPosition.x);
+        const squareDataY = y.getValueForPixel(chart._cursorPosition.y);
 
-        const { left, right, bottom } = reverseXY(dataX, dataY);
+        const left = squareDataY;
+        const right = squareDataX - 0.5 * left;
+        const data = { left, right, bottom: 100-left-right}
 
-        const rightX = getPixelForX(x, getX(100-right,right));
-        const rightY = getPixelForY(y, getY(100-right,right));
-        const leftX = getPixelForX(x, getX(left,0));
-        const leftY = getPixelForY(y, getY(left,0));
-        const bottomX = getPixelForX(x, getX(0,100-bottom));
-        const bottomY = getPixelForY(y, getY(0,100-bottom));
+        const edgePoints = {
+            right: {
+                x:  getPixelForX(x, getX(100-data.right,data.right)),
+                y:  getPixelForY(y, getY(100-data.right,data.right))
+            },
+            left: {
+                x:  getPixelForX(x, getX(data.left,0)),
+                y:  getPixelForY(y, getY(data.left,0))
+            }, 
+            bottom:{
+                x:  getPixelForX(x, getX(0,data.left+data.right)),
+                y:  getPixelForY(y, getY(0,data.left+data.right))
+            }
+        }
 
         if (
-            left >= 0 &&
-            right >= 0 &&
-            bottom >= 0
+            data.left >= 0 &&
+            data.right >= 0 &&
+            data.bottom >= 0
         ){
+            const cursorPos = [chart._cursorPosition.x, chart._cursorPosition.y]
             ctx.save();
             ctx.beginPath();
-            ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
-            ctx.lineTo(rightX,rightY);
-            ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
-            ctx.lineTo(leftX,leftY);
-            ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
-            ctx.lineTo(bottomX,bottomY);
-            ctx.moveTo(chart._cursorPosition.x, chart._cursorPosition.y);
+            ctx.moveTo(...cursorPos);
+            ctx.lineTo(edgePoints.right.x,edgePoints.right.y);
+            ctx.moveTo(...cursorPos);
+            ctx.lineTo(edgePoints.left.x,edgePoints.left.y);
+            ctx.moveTo(...cursorPos);
+            ctx.lineTo(edgePoints.bottom.x,edgePoints.bottom.y);
             ctx.lineWidth = 2;
             ctx.strokeStyle = 'gray';
             ctx.stroke();
             ctx.restore();
 
-            this.leftLabel.innerHTML = `${left.toFixed(0)}%`;
-            this.leftLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(left,0)) - 33 + 'px';
-            this.leftLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(left,0)) - 7+  'px';
-            this.leftLabel.style.visibility = "visible";
+            const constX = canvasRect.left + window.pageXOffset;
+            const constY = canvasRect.top + window.pageYOffset;
 
-            this.rightLabel.innerHTML = `${right.toFixed(0)}%`;
-            this.rightLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(100-right,right)) -4 + 'px';
-            this.rightLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(100-right,right)) - 27+ 'px';
-            this.rightLabel.style.visibility = "visible";
-
-            this.bottomLabel.innerHTML = `${bottom.toFixed(0)}%`;
-            this.bottomLabel.style.left = canvasRect.left + window.pageXOffset + getPixelForX(x, getX(0,100-bottom)) -1 +'px';
-            this.bottomLabel.style.top = canvasRect.top + window.pageYOffset + getPixelForY(y, getY(0,100-bottom)) + 10+ 'px';
-            this.bottomLabel.style.visibility = "visible";
+            ["left","right","bottom"].forEach(name=>{
+                plugin[name].text.textContent = data[name].toFixed(0)+"%"
+                plugin[name].container.style.left = constX + edgePoints[name].x+ 'px';
+                plugin[name].container.style.top = constY + edgePoints[name].y+ 'px';
+                plugin[name].container.style.visibility = "visible";
+            });
         }
         else{
-            this.leftLabel.style.visibility = "hidden";
-            this.rightLabel.style.visibility = "hidden";
-            this.bottomLabel.style.visibility = "hidden";
+            this.left.container.style.visibility = "hidden";
+            this.right.container.style.visibility = "hidden";
+            this.bottom.container.style.visibility = "hidden";
         }
     },
 
     beforeDestroy(){
-        this.leftLabel.remove();
-        this.rightLabel.remove();
-        this.bottomLabel.remove();
+        this.left.container.remove();
+        this.right.container.remove();
+        this.bottom.container.remove();
     }
 });
 
@@ -489,11 +500,4 @@ function getPixelForY(scale, data){
 
 function getPixelForX(scale,data){
     return scale.left + (data - scale.min) * (scale.width / (scale.max - scale.min));
-}
-
-function reverseXY(x,y){
-    let left= y;
-    let right= x -0.5 * left;
-    let bottom=100-left-right;
-    return {left, right, bottom};
 }
