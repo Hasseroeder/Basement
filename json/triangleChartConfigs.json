@@ -140,8 +140,7 @@
                         }
                     ]
                 }
-            },
-            {
+            },{
                 "pluginName":"cursorLine",
                 "visibleIn":["help"]
             }

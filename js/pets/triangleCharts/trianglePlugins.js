@@ -404,15 +404,15 @@ export const cursorLinePluginFactory = pluginConfig => ({
         const container = chart.canvas.parentNode;
         const plugin = this;
 
-        ["left","right","bottom"].forEach(name=>{
-            plugin[name]={
-                container: make('div',{className: `triangle-help-label ${name}`}),
+        ["left","right","bottom"].forEach(cardinal=>{
+            plugin[cardinal]={
+                container: make('div',{className: `triangle-help-label ${cardinal}`}),
                 text: make("span")
             }
-            plugin[name].container.append(
-                make("div",{},[plugin[name].text])
+            plugin[cardinal].container.append(
+                make("div",{},[plugin[cardinal].text])
             )
-            container.append(plugin[name].container);
+            container.append(plugin[cardinal].container);
         })
 
         container.addEventListener('mousemove', function() {
@@ -461,11 +461,11 @@ export const cursorLinePluginFactory = pluginConfig => ({
             const constY = canvasRect.top + window.pageYOffset;
 
             const plugin = this;
-            ["left","right","bottom"].forEach(name=>{
-                plugin[name].text.textContent = data[name].toFixed(0)+"%"
-                plugin[name].container.style.left = constX + edgePoints[name].x+ 'px';
-                plugin[name].container.style.top = constY + edgePoints[name].y+ 'px';
-                plugin[name].container.style.visibility = "visible";
+            ["left","right","bottom"].forEach(cardinal=>{
+                plugin[cardinal].text.textContent = data[cardinal].toFixed(0)+"%"
+                plugin[cardinal].container.style.left = constX + edgePoints[cardinal].x+ 'px';
+                plugin[cardinal].container.style.top = constY + edgePoints[cardinal].y+ 'px';
+                plugin[cardinal].container.style.visibility = "visible";
             });
         }
         else{
@@ -490,3 +490,169 @@ function getPixel(scales, data){
         y:scales.y.bottom - (y - scales.y.min) * (scales.y.height / (scales.y.max - scales.y.min))
     }
 }
+
+
+// --------------------------------------------------------------------------------------
+//
+// Plugin for helping lines toward the Cursor WITH automatically hiding ticks
+// Warning: This Plugin is not optimized at all and is honestly just a shoddy combination of the other two plugins
+// 
+//
+export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
+    id: pluginConfig.pluginName,
+    visibleIn: pluginConfig.visibleIn,
+    currentMode: undefined, 
+
+    shouldShow(){
+        return ( this.visibleIn === undefined
+              || this.visibleIn.includes(this.currentMode)
+        )
+    },
+
+    afterEvent: (chart, args) => {
+        const event = args.event;
+        chart._cursorPosition = { x: event.x, y: event.y };
+    },
+
+    beforeInit(chart) {
+        const container = chart.canvas.parentNode;
+        const plugin = this;
+
+        ["left","right","bottom"].forEach(cardinal=>{
+            plugin[cardinal]={
+                container: make('div',{className: `triangle-help-label ${cardinal}`}),
+                text: make("span")
+            }
+            plugin[cardinal].container.append(
+                make("div",{},[plugin[cardinal].text])
+            )
+            container.append(plugin[cardinal].container);
+        })
+
+        container.addEventListener('mousemove', function() {
+            if(plugin.shouldShow()) chart.update()
+        });
+    },
+
+    afterRender(chart){
+        if (this._initialized) return; 
+
+        const canvasRect = chart.canvas.getBoundingClientRect();
+        const constX = canvasRect.left + window.pageXOffset;
+        const constY = canvasRect.top + window.pageYOffset;
+        
+        const container = chart.canvas.parentNode;
+        const plugin = this;
+
+        ["left","right","bottom"].forEach(cardinal=>{
+            plugin[cardinal].ticks=
+                [10,20,30,40,50,60,70,80,90,100].map(percent=>{
+                    const coor = 
+                          cardinal === "left"   ? getPixel(chart.scales,[percent,0])
+                        : cardinal === "right"  ? getPixel(chart.scales,[100-percent,percent])
+                        : cardinal === "bottom" ? getPixel(chart.scales,[0,100-percent])
+                        : "error";
+
+                    const tickContainer = make('div',{className: `triangle-help-label animated ${cardinal}`});
+                    const tickText = make("span",{textContent:percent});
+                    tickContainer.append(make("div",{},[tickText]))
+                    container.append(tickContainer);
+
+                    tickContainer.style.left = constX + coor.x+ 'px';
+                    tickContainer.style.top = constY + coor.y+ 'px';
+
+                    return {container: tickContainer, text: tickText, percent}; 
+                })
+        });
+
+        this._initialized = true;
+    },
+
+    
+    afterDraw(chart) {             
+        if (!chart._cursorPosition || !this.shouldShow()) return;
+
+        const squareDataX = chart.scales.x.getValueForPixel(chart._cursorPosition.x);
+        const squareDataY = chart.scales.y.getValueForPixel(chart._cursorPosition.y);
+        const plugin = this;
+
+        const left = squareDataY;
+        const right = squareDataX - 0.5 * left;
+        const data = { left, right, bottom: 100-left-right}
+
+        const edgePoints = {
+            right: getPixel(chart.scales,[100-data.right,data.right]),
+            left: getPixel(chart.scales,[data.left,0]), 
+            bottom: getPixel(chart.scales,[0,data.left+data.right])
+        }
+
+        if (
+            data.left >= 0 &&
+            data.right >= 0 &&
+            data.bottom >= 0
+        ){
+            const cursorPos = [chart._cursorPosition.x, chart._cursorPosition.y]
+            const ctx = chart.ctx;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(...cursorPos);
+            ctx.lineTo(edgePoints.right.x,edgePoints.right.y);
+            ctx.moveTo(...cursorPos);
+            ctx.lineTo(edgePoints.left.x,edgePoints.left.y);
+            ctx.moveTo(...cursorPos);
+            ctx.lineTo(edgePoints.bottom.x,edgePoints.bottom.y);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'gray';
+            ctx.stroke();
+            ctx.restore();
+
+            const canvasRect = chart.canvas.getBoundingClientRect();
+            const constX = canvasRect.left + window.pageXOffset;
+            const constY = canvasRect.top + window.pageYOffset;
+
+            ["left","right","bottom"].forEach(cardinal=>{
+                plugin[cardinal].text.textContent = data[cardinal].toFixed(0)+"%"
+                plugin[cardinal].container.style.left = constX + edgePoints[cardinal].x+ 'px';
+                plugin[cardinal].container.style.top = constY + edgePoints[cardinal].y+ 'px';
+                plugin[cardinal].container.style.visibility = "visible";
+
+                function isWithin(toTest,target, radius){
+                    const min = target-radius;
+                    const max = target+radius;
+                    if (toTest >= min && toTest <=max)
+                        return 0;
+                    else 
+                        return 1;
+                }
+
+                plugin[cardinal].ticks.forEach(tick => {
+                    const coor = 
+                          cardinal === "left"   ? getPixel(chart.scales,[tick.percent,0])
+                        : cardinal === "right"  ? getPixel(chart.scales,[100-tick.percent,tick.percent])
+                        : cardinal === "bottom" ? getPixel(chart.scales,[0,100-tick.percent])
+                        : "error";
+
+                    tick.container.style.left = constX + coor.x+ 'px';
+                    tick.container.style.top = constY + coor.y+ 'px';
+
+
+                    tick.container.style.opacity = isWithin(tick.percent, data[cardinal],5);
+                });
+            });
+        }
+        else{
+            ["left","right","bottom"].forEach(cardinal=>{
+                plugin[cardinal].container.style.visibility = "hidden";
+                plugin[cardinal].ticks.forEach(tick => tick.container.style.opacity = 1);
+            });
+        }
+    },
+
+    beforeDestroy(){
+        const plugin = this;
+        ["left","right","bottom"].forEach(cardinal =>{
+            plugin[cardinal].ticks.forEach(tick => tick.container.remove());
+            plugin[cardinal].container.remove();
+        })
+    }
+});
