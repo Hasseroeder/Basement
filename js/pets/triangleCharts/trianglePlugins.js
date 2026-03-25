@@ -1,5 +1,8 @@
 import { make } from "/js/util/injectionUtil.js";
 import { getX, getY } from "./triangleUtils.js";
+
+const cardinals = ["left","right","bottom"]
+
 // --------------------------------------------------------------------------------------
 //
 // Plugin for the basic polygons
@@ -404,7 +407,7 @@ export const cursorLinePluginFactory = pluginConfig => ({
         const container = chart.canvas.parentNode;
         const plugin = this;
 
-        ["left","right","bottom"].forEach(cardinal=>{
+        cardinals.forEach(cardinal=>{
             plugin[cardinal]={
                 container: make('div',{className: `triangle-help-label ${cardinal}`}),
                 text: make("span")
@@ -420,7 +423,11 @@ export const cursorLinePluginFactory = pluginConfig => ({
         });
     },
 
-    afterDraw(chart) {             
+    afterDraw(chart) {          
+        this.left.container.style.visibility = "hidden";
+        this.right.container.style.visibility = "hidden";
+        this.bottom.container.style.visibility = "hidden";
+        
         if (!chart._cursorPosition || !this.shouldShow()) return;
 
         const squareDataX = chart.scales.x.getValueForPixel(chart._cursorPosition.x);
@@ -430,49 +437,8 @@ export const cursorLinePluginFactory = pluginConfig => ({
         const right = squareDataX - 0.5 * left;
         const data = { left, right, bottom: 100-left-right}
 
-        const edgePoints = {
-            right: getPixel(chart.scales,[100-data.right,data.right]),
-            left: getPixel(chart.scales,[data.left,0]), 
-            bottom: getPixel(chart.scales,[0,data.left+data.right])
-        }
-
-        if (
-            data.left >= 0 &&
-            data.right >= 0 &&
-            data.bottom >= 0
-        ){
-            const cursorPos = [chart._cursorPosition.x, chart._cursorPosition.y]
-            const ctx = chart.ctx;
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(...cursorPos);
-            ctx.lineTo(edgePoints.right.x,edgePoints.right.y);
-            ctx.moveTo(...cursorPos);
-            ctx.lineTo(edgePoints.left.x,edgePoints.left.y);
-            ctx.moveTo(...cursorPos);
-            ctx.lineTo(edgePoints.bottom.x,edgePoints.bottom.y);
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = 'gray';
-            ctx.stroke();
-            ctx.restore();
-
-            const canvasRect = chart.canvas.getBoundingClientRect();
-            const constX = canvasRect.left + window.pageXOffset;
-            const constY = canvasRect.top + window.pageYOffset;
-
-            const plugin = this;
-            ["left","right","bottom"].forEach(cardinal=>{
-                plugin[cardinal].text.textContent = data[cardinal].toFixed(0)+"%"
-                plugin[cardinal].container.style.left = constX + edgePoints[cardinal].x+ 'px';
-                plugin[cardinal].container.style.top = constY + edgePoints[cardinal].y+ 'px';
-                plugin[cardinal].container.style.visibility = "visible";
-            });
-        }
-        else{
-            this.left.container.style.visibility = "hidden";
-            this.right.container.style.visibility = "hidden";
-            this.bottom.container.style.visibility = "hidden";
-        }
+        if ( data.left >= 0 && data.right >= 0 && data.bottom >= 0 ) 
+            drawTrident(chart, this)
     },
 
     beforeDestroy(){
@@ -518,7 +484,7 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
         const container = chart.canvas.parentNode;
         const plugin = this;
 
-        ["left","right","bottom"].forEach(cardinal=>{
+        cardinals.forEach(cardinal=>{
             plugin[cardinal]={
                 container: make('div',{className: `triangle-help-label ${cardinal}`}),
                 text: make("span")
@@ -529,130 +495,152 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
             container.append(plugin[cardinal].container);
         })
 
-        container.addEventListener('mousemove', function() {
-            if(plugin.shouldShow()) chart.update()
-        });
+        const smartUpdate = () => { if(plugin.shouldShow()) chart.update() };
+
+        container.addEventListener('mousemove', smartUpdate);
+        window.addEventListener("resize",smartUpdate);
     },
 
-    afterRender(chart){
-        if (this._initialized) return; 
-
+    afterDraw(chart) {      
+        const plugin = this;
         const canvasRect = chart.canvas.getBoundingClientRect();
         const constX = canvasRect.left + window.pageXOffset;
         const constY = canvasRect.top + window.pageYOffset;
-        
-        const container = chart.canvas.parentNode;
-        const plugin = this;
 
-        ["left","right","bottom"].forEach(cardinal=>{
-            plugin[cardinal].ticks=
-                [10,20,30,40,50,60,70,80,90,100].map(percent=>{
-                    const coor = 
-                          cardinal === "left"   ? getPixel(chart.scales,[percent,0])
-                        : cardinal === "right"  ? getPixel(chart.scales,[100-percent,percent])
-                        : cardinal === "bottom" ? getPixel(chart.scales,[0,100-percent])
-                        : "error";
+        if (!this._initialized) initializeTickDOM(chart, this);
 
-                    const tickContainer = make('div',{className: `triangle-help-label animated ${cardinal}`});
-                    const tickText = make("span",{textContent:percent});
-                    tickContainer.append(make("div",{},[tickText]))
-                    container.append(tickContainer);
-
-                    tickContainer.style.left = constX + coor.x+ 'px';
-                    tickContainer.style.top = constY + coor.y+ 'px';
-
-                    return {container: tickContainer, text: tickText, percent}; 
-                })
+        cardinals.forEach(cardinal =>{
+            plugin[cardinal].ticks.forEach(tick => {
+                const coor = 
+                    cardinal === "left"   ? getPixel(chart.scales,[tick.percent,0])
+                    : cardinal === "right"  ? getPixel(chart.scales,[100-tick.percent,tick.percent])
+                    : cardinal === "bottom" ? getPixel(chart.scales,[0,100-tick.percent])
+                    : "error";
+                tick.container.style.left = constX + coor.x+ 'px';
+                tick.container.style.top = constY + coor.y+ 'px';
+            });
+            plugin[cardinal].container.style.visibility = "hidden";
         });
 
-        this._initialized = true;
-    },
-
-    
-    afterDraw(chart) {             
         if (!chart._cursorPosition || !this.shouldShow()) return;
 
         const squareDataX = chart.scales.x.getValueForPixel(chart._cursorPosition.x);
         const squareDataY = chart.scales.y.getValueForPixel(chart._cursorPosition.y);
-        const plugin = this;
 
         const left = squareDataY;
         const right = squareDataX - 0.5 * left;
         const data = { left, right, bottom: 100-left-right}
-
-        const edgePoints = {
-            right: getPixel(chart.scales,[100-data.right,data.right]),
-            left: getPixel(chart.scales,[data.left,0]), 
-            bottom: getPixel(chart.scales,[0,data.left+data.right])
-        }
 
         if (
             data.left >= 0 &&
             data.right >= 0 &&
             data.bottom >= 0
         ){
-            const cursorPos = [chart._cursorPosition.x, chart._cursorPosition.y]
-            const ctx = chart.ctx;
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(...cursorPos);
-            ctx.lineTo(edgePoints.right.x,edgePoints.right.y);
-            ctx.moveTo(...cursorPos);
-            ctx.lineTo(edgePoints.left.x,edgePoints.left.y);
-            ctx.moveTo(...cursorPos);
-            ctx.lineTo(edgePoints.bottom.x,edgePoints.bottom.y);
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = 'gray';
-            ctx.stroke();
-            ctx.restore();
-
-            const canvasRect = chart.canvas.getBoundingClientRect();
-            const constX = canvasRect.left + window.pageXOffset;
-            const constY = canvasRect.top + window.pageYOffset;
-
-            ["left","right","bottom"].forEach(cardinal=>{
-                plugin[cardinal].text.textContent = data[cardinal].toFixed(0)+"%"
-                plugin[cardinal].container.style.left = constX + edgePoints[cardinal].x+ 'px';
-                plugin[cardinal].container.style.top = constY + edgePoints[cardinal].y+ 'px';
-                plugin[cardinal].container.style.visibility = "visible";
-
+            drawTrident(chart,this);
+            cardinals.forEach(cardinal =>{
                 function isWithin(toTest,target, radius){
                     const min = target-radius;
                     const max = target+radius;
-                    if (toTest >= min && toTest <=max)
-                        return 0;
-                    else 
-                        return 1;
+                    return toTest >= min && toTest <=max
+                        ? 0
+                        : 1;
                 }
-
-                plugin[cardinal].ticks.forEach(tick => {
-                    const coor = 
-                          cardinal === "left"   ? getPixel(chart.scales,[tick.percent,0])
-                        : cardinal === "right"  ? getPixel(chart.scales,[100-tick.percent,tick.percent])
-                        : cardinal === "bottom" ? getPixel(chart.scales,[0,100-tick.percent])
-                        : "error";
-
-                    tick.container.style.left = constX + coor.x+ 'px';
-                    tick.container.style.top = constY + coor.y+ 'px';
-
-
-                    tick.container.style.opacity = isWithin(tick.percent, data[cardinal],5);
-                });
-            });
-        }
-        else{
-            ["left","right","bottom"].forEach(cardinal=>{
-                plugin[cardinal].container.style.visibility = "hidden";
-                plugin[cardinal].ticks.forEach(tick => tick.container.style.opacity = 1);
-            });
+                plugin[cardinal].ticks.forEach(tick => 
+                    tick.container.style.opacity = isWithin(tick.percent, data[cardinal],5)
+                );
+            })
+        }else{
+            cardinals.forEach(cardinal =>{
+                plugin[cardinal].ticks.forEach(tick => 
+                    tick.container.style.opacity = 1
+                );
+            })
         }
     },
 
     beforeDestroy(){
         const plugin = this;
-        ["left","right","bottom"].forEach(cardinal =>{
+        cardinals.forEach(cardinal =>{
             plugin[cardinal].ticks.forEach(tick => tick.container.remove());
             plugin[cardinal].container.remove();
         })
     }
 });
+
+function drawTrident(chart, plugin, opts = {}){
+    const line = {
+        width: 2,
+        color: "gray",
+        ...(opts.line || {})
+    };
+
+    const squareDataX = chart.scales.x.getValueForPixel(chart._cursorPosition.x);
+    const squareDataY = chart.scales.y.getValueForPixel(chart._cursorPosition.y);
+
+    const canvasRect = chart.canvas.getBoundingClientRect();
+    const constX = canvasRect.left + window.pageXOffset;
+    const constY = canvasRect.top + window.pageYOffset;
+
+    const left = squareDataY;
+    const right = squareDataX - 0.5 * left;
+    const data = { left, right, bottom: 100-left-right}
+
+    const edgePoints = {
+        right: getPixel(chart.scales,[100-data.right,data.right]),
+        left: getPixel(chart.scales,[data.left,0]), 
+        bottom: getPixel(chart.scales,[0,data.left+data.right])
+    }
+
+    const cursorPos = [chart._cursorPosition.x, chart._cursorPosition.y]
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(...cursorPos);
+    ctx.lineTo(edgePoints.right.x,edgePoints.right.y);
+    ctx.moveTo(...cursorPos);
+    ctx.lineTo(edgePoints.left.x,edgePoints.left.y);
+    ctx.moveTo(...cursorPos);
+    ctx.lineTo(edgePoints.bottom.x,edgePoints.bottom.y);
+    ctx.lineWidth = line.width;
+    ctx.strokeStyle = line.color;
+    ctx.stroke();
+    ctx.restore();
+
+    cardinals.forEach(cardinal=>{
+        plugin[cardinal].text.textContent = data[cardinal].toFixed(0)+"%"
+        plugin[cardinal].container.style.left = constX + edgePoints[cardinal].x+ 'px';
+        plugin[cardinal].container.style.top = constY + edgePoints[cardinal].y+ 'px';
+        plugin[cardinal].container.style.visibility = "visible";
+    });
+}
+
+function initializeTickDOM(chart, plugin){
+    const canvasRect = chart.canvas.getBoundingClientRect();
+    const constX = canvasRect.left + window.pageXOffset;
+    const constY = canvasRect.top + window.pageYOffset;
+    
+    const container = chart.canvas.parentNode;
+
+    cardinals.forEach(cardinal=>{
+        plugin[cardinal].ticks=
+            [10,20,30,40,50,60,70,80,90,100].map(percent=>{
+                const coor = 
+                        cardinal === "left"   ? getPixel(chart.scales,[percent,0])
+                    : cardinal === "right"  ? getPixel(chart.scales,[100-percent,percent])
+                    : cardinal === "bottom" ? getPixel(chart.scales,[0,100-percent])
+                    : "error";
+
+                const tickContainer = make('div',{className: `triangle-help-label animated ${cardinal}`});
+                const tickText = make("span",{textContent:percent});
+                tickContainer.append(make("div",{},[tickText]))
+                container.append(tickContainer);
+
+                tickContainer.style.left = constX + coor.x+ 'px';
+                tickContainer.style.top = constY + coor.y+ 'px';
+
+                return {container: tickContainer, text: tickText, percent}; 
+            })
+    });
+
+    plugin._initialized = true;
+}
