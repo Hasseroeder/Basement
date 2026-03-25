@@ -407,16 +407,7 @@ export const cursorLinePluginFactory = pluginConfig => ({
         const container = chart.canvas.parentNode;
         const plugin = this;
 
-        cardinals.forEach(cardinal=>{
-            plugin[cardinal]={
-                container: make('div',{className: `triangle-help-label ${cardinal}`}),
-                text: make("span")
-            }
-            plugin[cardinal].container.append(
-                make("div",{},[plugin[cardinal].text])
-            )
-            container.append(plugin[cardinal].container);
-        })
+        initializeLabelDOM(chart,this);
 
         container.addEventListener('mousemove', function() {
             if(plugin.shouldShow()) chart.update()
@@ -484,16 +475,7 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
         const container = chart.canvas.parentNode;
         const plugin = this;
 
-        cardinals.forEach(cardinal=>{
-            plugin[cardinal]={
-                container: make('div',{className: `triangle-help-label ${cardinal}`}),
-                text: make("span")
-            }
-            plugin[cardinal].container.append(
-                make("div",{},[plugin[cardinal].text])
-            )
-            container.append(plugin[cardinal].container);
-        })
+        initializeLabelDOM(chart,this);
 
         const smartUpdate = () => { if(plugin.shouldShow()) chart.update() };
 
@@ -647,3 +629,24 @@ function initializeTickDOM(chart, plugin){
 
     plugin._initialized = true;
 }
+
+function initializeLabelDOM(chart,plugin){
+    const container = chart.canvas.parentNode;
+    
+    cardinals.forEach(cardinal=>{
+        plugin[cardinal]={
+            container: make('div',{className: `triangle-help-label ${cardinal}`}),
+            text: make("span")
+        }
+        plugin[cardinal].container.append(
+            make("div",{},[plugin[cardinal].text])
+        )
+        container.append(plugin[cardinal].container);
+    })
+}
+
+export const lineOnClickPluginFactory = pluginConfig => ({
+    id: pluginConfig.pluginName,
+    visibleIn: pluginConfig.visibleIn,
+    currentMode: undefined
+})
