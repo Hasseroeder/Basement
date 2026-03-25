@@ -573,9 +573,13 @@ function drawTrident(chart, plugin, opts = {}){
         color: "gray",
         ...(opts.line || {})
     };
+    const coor = opts.coor ?? [
+        chart._cursorPosition.x,
+        chart._cursorPosition.y
+    ]
 
-    const squareDataX = chart.scales.x.getValueForPixel(chart._cursorPosition.x);
-    const squareDataY = chart.scales.y.getValueForPixel(chart._cursorPosition.y);
+    const squareDataX = chart.scales.x.getValueForPixel(coor[0]);
+    const squareDataY = chart.scales.y.getValueForPixel(coor[1]);
 
     const canvasRect = chart.canvas.getBoundingClientRect();
     const constX = canvasRect.left + window.pageXOffset;
@@ -591,15 +595,14 @@ function drawTrident(chart, plugin, opts = {}){
         bottom: getPixel(chart.scales,[0,data.left+data.right])
     }
 
-    const cursorPos = [chart._cursorPosition.x, chart._cursorPosition.y]
     const ctx = chart.ctx;
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(...cursorPos);
+    ctx.moveTo(...coor);
     ctx.lineTo(edgePoints.right.x,edgePoints.right.y);
-    ctx.moveTo(...cursorPos);
+    ctx.moveTo(...coor);
     ctx.lineTo(edgePoints.left.x,edgePoints.left.y);
-    ctx.moveTo(...cursorPos);
+    ctx.moveTo(...coor);
     ctx.lineTo(edgePoints.bottom.x,edgePoints.bottom.y);
     ctx.lineWidth = line.width;
     ctx.strokeStyle = line.color;
