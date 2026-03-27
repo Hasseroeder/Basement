@@ -142,8 +142,7 @@
                 }
             },
             {
-                "pluginName":"cursorLine",
-                "visibleIn":["help"]
+                "pluginName":"lineOnClick"
             }
         ]
     },

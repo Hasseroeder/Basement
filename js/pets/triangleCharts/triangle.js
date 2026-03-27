@@ -116,7 +116,8 @@ export async function initializeTriangle(){
         ticks:                  PluginHelper.triangleTickPluginFactory,
         line:                   PluginHelper.triangleLinePluginFactory,
         cursorLine:             PluginHelper.cursorLinePluginFactory,
-        cursorLine_with_ticks:  PluginHelper.cursorLine_with_ticksPluginFactory
+        cursorLine_with_ticks:  PluginHelper.cursorLine_with_ticksPluginFactory,
+        lineOnClick:            PluginHelper.lineOnClickPluginFactory
     }
     const pluginArray = pluginConfigs.map(
         pluginConfig => pluginNameMap[pluginConfig.pluginName](pluginConfig) 

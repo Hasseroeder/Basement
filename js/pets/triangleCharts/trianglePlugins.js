@@ -1,5 +1,6 @@
 import { make } from "/js/util/injectionUtil.js";
 import { getX, getY } from "./triangleUtils.js";
+import { roundToDecimals } from "../../util/inputUtil.js";
 
 const cardinals = ["left","right","bottom"]
 
@@ -122,9 +123,8 @@ export const triangleTickPluginFactory = pluginConfig =>({
 
         posFns.forEach((posFn,i) => {
             for (let percent = 10; percent <= 100; percent += 10) {
-                const Title = i+"_tick_" +percent;
                 const {coor, rotation} = posFn(percent);
-                anns[`${Title}Label`] = {
+                anns[cardinals[i]+"_tick_" +percent] = {
                     type: 'label',
                     xValue: getX(...coor),
                     yValue: getY(...coor),
@@ -172,9 +172,8 @@ export const triangleLinePluginFactory = pluginConfig =>({
 
         posFns.forEach((posFn,i) => {
             for (let percent = 0; percent <= 100; percent += 10) {
-                const Title = i+"_label_" +percent;
                 const {start, end} = posFn(percent);
-                anns[Title] = {
+                anns[cardinals[i]+"_line_" +percent] = {
                     type: 'line',
                     xMin: getX(...start), yMin: getY(...start),
                     xMax: getX(...end), yMax: getY(...end),
@@ -592,7 +591,9 @@ function drawTrident(chart, plugin, opts = {}){
     ctx.restore();
 
     cardinals.forEach(cardinal=>{
-        plugin[cardinal].text.textContent = data[cardinal].toFixed(0)+"%"
+        const thisData = data[cardinal];
+
+        plugin[cardinal].text.textContent = thisData.toFixed(0)+"%"
         plugin[cardinal].container.style.left = constX + edgePoints[cardinal].x+ 'px';
         plugin[cardinal].container.style.top = constY + edgePoints[cardinal].y+ 'px';
         plugin[cardinal].container.style.visibility = "visible";
@@ -648,5 +649,45 @@ function initializeLabelDOM(chart,plugin){
 export const lineOnClickPluginFactory = pluginConfig => ({
     id: pluginConfig.pluginName,
     visibleIn: pluginConfig.visibleIn,
-    currentMode: undefined
+    currentMode: undefined,
+    selectedPoint: undefined,
+
+    shouldShow(){
+        return ( this.visibleIn === undefined
+              || this.visibleIn.includes(this.currentMode)
+        )
+    },
+
+    afterInit(chart){
+        initializeLabelDOM(chart,this)
+    },
+
+    afterEvent(chart, args){
+        if (!this.shouldShow()) return;
+        if (args.event.type !== "click") return;
+
+        const [element] = chart.getElementsAtEventForMode(
+            args.event,
+            "nearest",
+            { intersect: true },
+            false
+        );
+
+        this.selectedPoint = element
+            ? [ element.element.x, element.element.y ]
+            : undefined;
+
+        args.changed = true;
+    },
+
+    beforeDraw(chart, args){
+        if (!this.shouldShow() || !this.selectedPoint) return;
+        drawTrident(
+            chart,
+            this,
+            {
+                coor: this.selectedPoint
+            }
+        );
+    }
 })
