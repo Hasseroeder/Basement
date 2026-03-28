@@ -420,15 +420,11 @@ export const cursorLinePluginFactory = pluginConfig => ({
         
         if (!chart._cursorPosition || !this.shouldShow()) return;
 
-        const squareDataX = chart.scales.x.getValueForPixel(chart._cursorPosition.x);
-        const squareDataY = chart.scales.y.getValueForPixel(chart._cursorPosition.y);
-
-        const left = squareDataY;
-        const right = squareDataX - 0.5 * left;
-        const data = { left, right, bottom: 100-left-right}
+        const DOMCoors = [chart._cursorPosition.x,chart._cursorPosition.y]
+        const data = SquareToTriangleCoor(DOMToSquareCoor(chart,DOMCoors));
 
         if ( data.left >= 0 && data.right >= 0 && data.bottom >= 0 ) 
-            drawTrident(chart, this)
+            drawTrident(chart, this);
     },
 
     beforeDestroy(){
@@ -451,7 +447,6 @@ function getPixel(scales, data){
 // --------------------------------------------------------------------------------------
 //
 // Plugin for helping lines toward the Cursor WITH automatically hiding ticks
-// Warning: This Plugin is not optimized at all and is honestly just a shoddy combination of the other two plugins
 // 
 //
 export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
@@ -484,9 +479,7 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
 
     afterDraw(chart) {      
         const plugin = this;
-        const canvasRect = chart.canvas.getBoundingClientRect();
-        const constX = canvasRect.left + window.pageXOffset;
-        const constY = canvasRect.top + window.pageYOffset;
+        const canvasLocation = getCanvasLocation(chart);
 
         if (!this._initialized) initializeTickDOM(chart, this);
 
@@ -497,20 +490,16 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
                     : cardinal === "right"  ? getPixel(chart.scales,[100-tick.percent,tick.percent])
                     : cardinal === "bottom" ? getPixel(chart.scales,[0,100-tick.percent])
                     : "error";
-                tick.container.style.left = constX + coor.x+ 'px';
-                tick.container.style.top = constY + coor.y+ 'px';
+                tick.container.style.left = canvasLocation.x + coor.x+ 'px';
+                tick.container.style.top = canvasLocation.y + coor.y+ 'px';
             });
             plugin[cardinal].container.style.visibility = "hidden";
         });
 
         if (!chart._cursorPosition || !this.shouldShow()) return;
 
-        const squareDataX = chart.scales.x.getValueForPixel(chart._cursorPosition.x);
-        const squareDataY = chart.scales.y.getValueForPixel(chart._cursorPosition.y);
-
-        const left = squareDataY;
-        const right = squareDataX - 0.5 * left;
-        const data = { left, right, bottom: 100-left-right}
+        const DOMCoors = [chart._cursorPosition.x,chart._cursorPosition.y]
+        const data = SquareToTriangleCoor(DOMToSquareCoor(chart,DOMCoors));
 
         if (
             data.left >= 0 &&
@@ -559,16 +548,8 @@ function drawTrident(chart, plugin, opts = {}){
         chart._cursorPosition.y
     ]
 
-    const squareDataX = chart.scales.x.getValueForPixel(coor[0]);
-    const squareDataY = chart.scales.y.getValueForPixel(coor[1]);
-
-    const canvasRect = chart.canvas.getBoundingClientRect();
-    const constX = canvasRect.left + window.pageXOffset;
-    const constY = canvasRect.top + window.pageYOffset;
-
-    const left = squareDataY;
-    const right = squareDataX - 0.5 * left;
-    const data = { left, right, bottom: 100-left-right}
+    const canvasLocation = getCanvasLocation(chart);
+    const data = SquareToTriangleCoor(DOMToSquareCoor(chart,coor));
 
     const edgePoints = {
         right: getPixel(chart.scales,[100-data.right,data.right]),
@@ -594,17 +575,20 @@ function drawTrident(chart, plugin, opts = {}){
         const thisData = data[cardinal];
 
         plugin[cardinal].text.textContent = thisData.toFixed(0)+"%"
-        plugin[cardinal].container.style.left = constX + edgePoints[cardinal].x+ 'px';
-        plugin[cardinal].container.style.top = constY + edgePoints[cardinal].y+ 'px';
+        plugin[cardinal].container.style.left = canvasLocation.x + edgePoints[cardinal].x+ 'px';
+        plugin[cardinal].container.style.top = canvasLocation.y + edgePoints[cardinal].y+ 'px';
         plugin[cardinal].container.style.visibility = "visible";
     });
 }
 
+function clearTrident(chart,plugin){
+    cardinals.forEach(cardinal=>{
+        plugin[cardinal].container.style.visibility = "hidden";
+    });
+}
+
 function initializeTickDOM(chart, plugin){
-    const canvasRect = chart.canvas.getBoundingClientRect();
-    const constX = canvasRect.left + window.pageXOffset;
-    const constY = canvasRect.top + window.pageYOffset;
-    
+    const canvasLocation = getCanvasLocation(chart);
     const container = chart.canvas.parentNode;
 
     cardinals.forEach(cardinal=>{
@@ -621,8 +605,8 @@ function initializeTickDOM(chart, plugin){
                 tickContainer.append(make("div",{},[tickText]))
                 container.append(tickContainer);
 
-                tickContainer.style.left = constX + coor.x+ 'px';
-                tickContainer.style.top = constY + coor.y+ 'px';
+                tickContainer.style.left = canvasLocation.x + coor.x+ 'px';
+                tickContainer.style.top = canvasLocation.y + coor.y+ 'px';
 
                 return {container: tickContainer, text: tickText, percent}; 
             })
@@ -646,6 +630,11 @@ function initializeLabelDOM(chart,plugin){
     })
 }
 
+// --------------------------------------------------------------------------------------
+//
+// Plugin for helping lines toward the Cursor whenever the user clicks on an item
+// 
+//
 export const lineOnClickPluginFactory = pluginConfig => ({
     id: pluginConfig.pluginName,
     visibleIn: pluginConfig.visibleIn,
@@ -677,17 +666,49 @@ export const lineOnClickPluginFactory = pluginConfig => ({
             ? [ element.element.x, element.element.y ]
             : undefined;
 
-        args.changed = true;
+        chart.update();
     },
 
-    beforeDraw(chart, args){
-        if (!this.shouldShow() || !this.selectedPoint) return;
-        drawTrident(
-            chart,
-            this,
-            {
-                coor: this.selectedPoint
+    beforeUpdate(chart){
+        const anns = chart.options.plugins.annotation?.annotations;
+        const data = this.selectedPoint
+            ? SquareToTriangleCoor(DOMToSquareCoor(chart,this.selectedPoint))
+            : {left: Infinity, right: Infinity, bottom: Infinity}
+
+        cardinals.forEach(cardinal =>{
+            const thisRoundedData = roundToDecimals(data[cardinal],-1);
+            for (let percent = 10; percent <= 100; percent += 10) {
+                const ann = anns[cardinal+"_tick_" +percent];
+                if (!ann) continue;
+                ann.display = thisRoundedData != ann.content;
             }
-        );
+        });
+    },
+
+    beforeDraw(chart){
+        if (!this.shouldShow()) return;
+        if (!this.selectedPoint) return clearTrident(chart, this);
+        drawTrident(chart,this, { coor: this.selectedPoint });
     }
 })
+
+function DOMToSquareCoor(chart,coor){
+    return [
+        chart.scales.x.getValueForPixel(coor[0]),
+        chart.scales.y.getValueForPixel(coor[1])
+    ]
+}
+
+function SquareToTriangleCoor(coor){
+    const left = coor[1];
+    const right = coor[0] - 0.5 * left;
+    return { left, right, bottom: 100-left-right}
+}
+
+function getCanvasLocation(chart){
+    const canvasRect = chart.canvas.getBoundingClientRect();
+    return{
+        x: canvasRect.left + window.pageXOffset,
+        y: canvasRect.top + window.pageYOffset
+    }
+}

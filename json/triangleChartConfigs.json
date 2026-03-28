@@ -18,8 +18,7 @@
         }],
         "modes":[
             { "prettyName":"Pets", "slug":"pet" },
-            { "prettyName":"Labels", "slug":"label" },
-            { "prettyName":"Help", "slug":"help" }
+            { "prettyName":"Labels", "slug":"label" }
         ],
         "pluginConfigs":[
             {
