@@ -2,7 +2,7 @@
     {
         "injectableName": "petRoles-ternaryChart",
         "baseConfig":{
-            "additionalPadding":{ "top": 0, "right": 0, "bottom": 60, "left": 0 }
+            "additionalPadding":{ "top": 0, "right": 0, "bottom": 65, "left": 0 }
         },
         "dataSetsConfig": [{
             "dataSource": "../json/pets.json",
@@ -148,7 +148,7 @@
     {
         "injectableName": "crune-ternaryChart",
         "baseConfig":{
-            "additionalPadding":{ "top": 0, "right": 0, "bottom": 60, "left": 0 }
+            "additionalPadding":{ "top": 0, "right": 0, "bottom": 65, "left": 0 }
         },
         "dataSetsConfig": [{
             "dataSource":"../json/cruneHolders.json",
