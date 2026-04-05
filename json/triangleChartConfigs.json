@@ -233,13 +233,6 @@
         "moduleConfigs":[
             {
                 "id":"default",
-                "dataSetConfigs": [{
-                    "dataSource":"../json/cruneHolders.json",
-                    "attributeGroups":{ "left": [2], "right":[3,5], "bottom":[0] },
-                    "imageSize":{"height":22, "width":22},
-                    "hoverRadius": 15,
-                    "radius": 15
-                }],
                 "pluginConfigs":[
                     {
                         "factory":"triangleLinePluginFactory",
@@ -315,6 +308,15 @@
                         }
                     }
                 ]
+            },{
+                "id":"pets",
+                "dataSetConfigs": [{
+                    "dataSource":"../json/cruneHolders.json",
+                    "attributeGroups":{ "left": [2], "right":[3,5], "bottom":[0] },
+                    "imageSize":{"height":22, "width":22},
+                    "hoverRadius": 15,
+                    "radius": 15
+                }]
             },{
                 "id":"labels",
                 "pluginConfigs":[
