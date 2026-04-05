@@ -1,254 +1,341 @@
 [
     {
-        "injectableName": "petRoles-ternaryChart",
         "baseConfig":{
             "additionalPadding":{ "top": 0, "right": 0, "bottom": 65, "left": 0 }
         },
-        "dataSetsConfig": [{
-            "dataSource": "../json/pets.json",
-            "attributeGroups": { "left": [1, 4], "right": [3], "bottom": [0, 2, 5] },
-            "imageSize":{"height":22, "width":22},
-            "hoverRadius": 15,
-            "radius": 15,
-            "visibleIn":["pet"]
-        }],
-        "modes":[
-            { "prettyName":"Pets", "slug":"pet" },
-            { "prettyName":"Labels", "slug":"label" }
-        ],
-        "pluginConfigs":[
+        "buttonConfigs":[
             {
-                "pluginName":"line",
-                "data":{"groupName":"gridlines"}
-            },{
-                "pluginName":"ticks",
-                "data":{"groupName":"major ticks"},
-                "visibleIn":["label","pet"]
-            },{
-                "pluginName":"simpleLabel",
-                "visibleIn":["label"],
-                "data":{
-                    "groupName":"polygonLabels",
-                    "labels" : [
-                        {"content": "Gem",       "coor": [70,25],  "rotation": 60, "color":"rgb(65, 172, 39)"},
-                        {"content": "Gemlike",   "coor": [60,25],  "rotation": 60, "color":"rgb(99, 192, 187)"},
-                        {"content": "Attacker",  "coor": [72.5,7], "rotation":-60, "color":"rgb(210, 210, 210)"},
-                        {"content": "Hybrid",    "coor": [35.5,7], "rotation":-60, "color":"rgb(218, 147, 214)"},
-                        {"content": "Pure",      "coor": [7.5,7],  "rotation":-60, "color":"rgb(210, 210, 210)"},
-                        {"content": "WP Tank",   "coor": [7.5,32.5],               "color":"rgb(99, 192, 187)"},
-                        {"content": "WP Hybrid", "coor": [23,25.6],                "color":"rgb(76, 148, 255)"},
-                        {"content": "Supporter", "coor": [47.5,32.5],              "color":"rgb(160, 160, 160)"},
-                        {"content": "Useless",   "coor": [15,67.5],                "color":"rgb(160, 160, 160)"}
-                    ]
+                "type":"cycle",
+                "cycle":[
+                    {
+                        "prettyName":"Enable Labels",
+                        "turnOn":["labels"],
+                        "turnOff":["pets"]
+                    },{
+                        "prettyName":"Enable Pets",
+                        "turnOn":["pets"],
+                        "turnOff":["labels"]
+                    }
+                ],
+                "image":{
+                    "src":"/media/misc_images/label.png"
                 }
             },{
-                "pluginName":"polygon",
-                "data":[
+                "type":"cycle",
+                "cycle":[
                     {
-                        "coorArray":[[100,0],[50,50],[40,50],[90,0]],
-                        "color":"rgba(65, 172, 39, 0.25)"
-                    },
+                        "prettyName":"Enable Help",
+                        "turnOn":["help"]
+                    },{
+                        "prettyName":"Disable Help",
+                        "turnOff":["help"]
+                    }
+                ],
+                "image":{
+                    "src":"/media/misc_images/help.png"
+                }
+            },{
+                "image":{
+                    "src":"/media/misc_images/wikipedia-logo.png"
+                },
+                "prettyName":"Ternary Charts",
+                "type":"link",
+                "href":"https://en.wikipedia.org/wiki/SV-98#/media/File:SV-98_Engineering_technologies_-_2010.jpg"
+            }
+        ],
+        "moduleConfigs":[
+            {
+                "id":"default",
+                "pluginConfigs":[
                     {
-                        "coorArray":[[90,0],[40,50],[30,50],[80,0]],
-                        "color":"rgba(99, 192, 187, 0.25)"
-                    },
-                    {
-                        "coorArray":[[100,0],[85,15],[55,15],[55,0]],
-                        "color":"rgba(210, 210, 210, 0.25)"
-                    },
-                    {
-                        "coorArray":[[55,0],[55,15],[15,15],[15,0]],
-                        "color":"rgba(218, 147, 214, 0.25)"
-                    },
-                    {
-                        "coorArray":[[15,0],[15,15],[0,15],[0,0]],
-                        "color":"rgba(210, 210, 210, 0.25)"
-                    },
-                    {
-                        "coorArray":[[15,15],[15,50],[0,50],[0,15]],
-                        "color":"rgba(99, 192, 187, 0.25)"
-                    },
-                    {
-                        "coorArray":[[15,15],[45,15],[15,45]],
-                        "color":"rgba(76, 148, 255, 0.25)"
-                    },
-                    {
-                        "coorArray":[[45,15],[85,15],[50,50],[15,50],[15,45]],
-                        "color":"rgba(160, 160, 160, 0.25)"
+                        "factory":"triangleLinePluginFactory",
+                        "data":{"groupName":"gridlines"}
+                    },{
+                        "factory":"polygonPluginFactory",
+                        "data":[
+                            {
+                                "coorArray":[[100,0],[50,50],[40,50],[90,0]],
+                                "color":"rgba(65, 172, 39, 0.25)"
+                            },
+                            {
+                                "coorArray":[[90,0],[40,50],[30,50],[80,0]],
+                                "color":"rgba(99, 192, 187, 0.25)"
+                            },
+                            {
+                                "coorArray":[[100,0],[85,15],[55,15],[55,0]],
+                                "color":"rgba(210, 210, 210, 0.25)"
+                            },
+                            {
+                                "coorArray":[[55,0],[55,15],[15,15],[15,0]],
+                                "color":"rgba(218, 147, 214, 0.25)"
+                            },
+                            {
+                                "coorArray":[[15,0],[15,15],[0,15],[0,0]],
+                                "color":"rgba(210, 210, 210, 0.25)"
+                            },
+                            {
+                                "coorArray":[[15,15],[15,50],[0,50],[0,15]],
+                                "color":"rgba(99, 192, 187, 0.25)"
+                            },
+                            {
+                                "coorArray":[[15,15],[45,15],[15,45]],
+                                "color":"rgba(76, 148, 255, 0.25)"
+                            },
+                            {
+                                "coorArray":[[45,15],[85,15],[50,50],[15,50],[15,45]],
+                                "color":"rgba(160, 160, 160, 0.25)"
+                            }
+                        ]
+                    },{
+                        "factory":"advancedLabelPluginFactory",
+                        "data":{
+                            "groupName":"scaleTitles",
+                            "labels":[
+                                {
+                                    "id":"leftScaleTitle",
+                                    "imageConfig":{
+                                        "elements": [
+                                            { "type": "text", "content": "% of stats in Power" },
+                                            { "type": "gap", "px": 3 },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/STR.png" },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/MAG.png" }
+                                        ],
+                                        "arrow":{
+                                            "length":350,
+                                            "gap":20,
+                                            "direction":"ltr"
+                                        }
+                                    },
+                                    "coor":[56,-12], 
+                                    "rotation": -60
+                                },{
+                                    "id":"rightScaleTitle",
+                                    "imageConfig":{
+                                        "elements": [
+                                            { "type": "text", "content": "% of stats in WP" },
+                                            { "type": "gap", "px": 3 },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" }
+                                        ],
+                                        "arrow":{
+                                            "length":350,
+                                            "gap":20,
+                                            "direction":"ltr"
+                                        }
+                                    },
+                                    "coor":[56,56], 
+                                    "rotation": 60},
+                                {
+                                    "id":"bottomScaleTitle",
+                                    "imageConfig":{
+                                        "elements": [
+                                            { "type": "text", "content": "% of stats in Tanking" },
+                                            { "type": "gap", "px": 3 },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
+                                        ],
+                                        "arrow":{
+                                            "length":350,
+                                            "gap":-20,
+                                            "direction":"rtl"
+                                        }
+                                    },
+                                    "coor":[-12,56]
+                                }
+                            ]
+                        }
                     }
                 ]
             },{
-                "pluginName":"advancedLabel",
-                "data":{
-                    "groupName":"scaleTitles",
-                    "labels":[
-                        {
-                            "id":"leftScaleTitle",
-                            "imageConfig":{
-                                "elements": [
-                                    { "type": "text", "content": "% of stats in Power" },
-                                    { "type": "gap", "px": 3 },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/STR.png" },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/MAG.png" }
-                                ],
-                                "arrow":{
-                                    "length":350,
-                                    "gap":20,
-                                    "direction":"ltr"
-                                }
-                            },
-                            "coor":[56,-12], 
-                            "rotation": -60
-                        },{
-                            "id":"rightScaleTitle",
-                            "imageConfig":{
-                                "elements": [
-                                    { "type": "text", "content": "% of stats in WP" },
-                                    { "type": "gap", "px": 3 },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" }
-                                ],
-                                "arrow":{
-                                    "length":350,
-                                    "gap":20,
-                                    "direction":"ltr"
-                                }
-                            },
-                            "coor":[56,56], 
-                            "rotation": 60},
-                        {
-                            "id":"bottomScaleTitle",
-                            "imageConfig":{
-                                "elements": [
-                                    { "type": "text", "content": "% of stats in Tanking" },
-                                    { "type": "gap", "px": 3 },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
-                                ],
-                                "arrow":{
-                                    "length":350,
-                                    "gap":-20,
-                                    "direction":"rtl"
-                                }
-                            },
-                            "coor":[-12,56]
+                "id":"pets",
+                "dataSetConfigs": [{
+                    "dataSource": "../json/pets.json",
+                    "attributeGroups": { "left": [1, 4], "right": [3], "bottom": [0, 2, 5] },
+                    "imageSize":{"height":22, "width":22},
+                    "hoverRadius": 15,
+                    "radius": 15
+                }]
+            },{
+                "id":"labels",
+                "pluginConfigs":[
+                    {
+                        "factory":"simpleLabelPluginFactory",
+                        "data":{
+                            "groupName":"polygonLabels",
+                            "labels" : [
+                                {"content": "Gem",       "coor": [70,25],  "rotation": 60, "color":"rgb(65, 172, 39)"},
+                                {"content": "Gemlike",   "coor": [60,25],  "rotation": 60, "color":"rgb(99, 192, 187)"},
+                                {"content": "Attacker",  "coor": [72.5,7], "rotation":-60, "color":"rgb(210, 210, 210)"},
+                                {"content": "Hybrid",    "coor": [35.5,7], "rotation":-60, "color":"rgb(218, 147, 214)"},
+                                {"content": "Pure",      "coor": [7.5,7],  "rotation":-60, "color":"rgb(210, 210, 210)"},
+                                {"content": "WP Tank",   "coor": [7.5,32.5],               "color":"rgb(99, 192, 187)"},
+                                {"content": "WP Hybrid", "coor": [23,25.6],                "color":"rgb(76, 148, 255)"},
+                                {"content": "Supporter", "coor": [47.5,32.5],              "color":"rgb(160, 160, 160)"},
+                                {"content": "Useless",   "coor": [15,67.5],                "color":"rgb(160, 160, 160)"}
+                            ]
                         }
-                    ]
-                }
-            },
-            {
-                "pluginName":"lineOnClick"
+                    }
+                ]
+            },{
+                "id":"help",
+                "pluginConfigs":[
+                    {
+                        "factory":"cursorLine_with_ticksPluginFactory"
+                    }
+                ]   
             }
         ]
     },
     {
-        "injectableName": "crune-ternaryChart",
         "baseConfig":{
             "additionalPadding":{ "top": 0, "right": 0, "bottom": 65, "left": 0 }
         },
-        "dataSetsConfig": [{
-            "dataSource":"../json/cruneHolders.json",
-            "attributeGroups":{ "left": [2], "right":[3,5], "bottom":[0] },
-            "imageSize":{"height":22, "width":22},
-            "hoverRadius": 15,
-            "radius": 15,
-            "visibleIn":["pet"]
-        }],
-        "modes":[
-            { "prettyName":"Pets", "slug":"pet" },
-            { "prettyName":"Labels", "slug":"label" },
-            { "prettyName":"Help", "slug":"help" }
-        ],
-        "pluginConfigs":[
+        "buttonConfigs":[
             {
-                "pluginName":"line",
-                "data":{"groupName":"gridlines"}
-            },{
-                "pluginName":"ticks",
-                "data":{"groupName":"major ticks"},
-                "visibleIn":["label","pet"]
-            },{
-                "pluginName":"simpleLabel",
-                "visibleIn":["label"],
-                "data" :{
-                    "groupName":"polygonLabels",
-                    "labels" : [
-                        {"content":"shielded",    "coor":[55,20],   "color":"rgb(40, 119, 194)"},
-                        {"content":"non-shielded","coor":[30,32.5], "color":"rgb(133, 106, 207)"}
-                    ]
+                "type":"cycle",
+                "cycle":[
+                    {
+                        "prettyName":"Enable Labels",
+                        "turnOn":["labels"],
+                        "turnOff":["pets"]
+                    },{
+                        "prettyName":"Enable Pets",
+                        "turnOn":["pets"],
+                        "turnOff":["labels"]
+                    }
+                ],
+                "image":{
+                    "src":"/media/misc_images/label.png"
                 }
             },{
-                "pluginName":"polygon",
-                "data":[
+                "type":"cycle",
+                "cycle":[
                     {
-                        "coorArray":[[70,10],[70,15],[45,40],[45,20],[55,10]],
-                        "color":"rgba(40, 119, 194, 0.25)"
+                        "prettyName":"Enable Help",
+                        "turnOn":["help"]
+                    },{
+                        "prettyName":"Disable Help",
+                        "turnOff":["help"]
+                    }
+                ],
+                "image":{
+                    "src":"/media/misc_images/help.png"
+                }
+            },{
+                "image":{
+                    "src":"/media/misc_images/wikipedia-logo.png"
+                },
+                "prettyName":"Ternary Charts",
+                "type":"link",
+                "href":"https://en.wikipedia.org/wiki/SV-98#/media/File:SV-98_Engineering_technologies_-_2010.jpg"
+            }
+        ],
+        "moduleConfigs":[
+            {
+                "id":"default",
+                "dataSetConfigs": [{
+                    "dataSource":"../json/cruneHolders.json",
+                    "attributeGroups":{ "left": [2], "right":[3,5], "bottom":[0] },
+                    "imageSize":{"height":22, "width":22},
+                    "hoverRadius": 15,
+                    "radius": 15
+                }],
+                "pluginConfigs":[
+                    {
+                        "factory":"triangleLinePluginFactory",
+                        "data":{"groupName":"gridlines"}
                     },
                     {
-                        "coorArray":[[45,40],[40,45],[15,45],[15,25],[20,20],[45,20]],
-                        "color":"rgba(133, 106, 207, 0.25)"
+                        "factory":"polygonPluginFactory",
+                        "data":[
+                            {
+                                "coorArray":[[70,10],[70,15],[45,40],[45,20],[55,10]],
+                                "color":"rgba(40, 119, 194, 0.25)"
+                            },
+                            {
+                                "coorArray":[[45,40],[40,45],[15,45],[15,25],[20,20],[45,20]],
+                                "color":"rgba(133, 106, 207, 0.25)"
+                            }
+                        ]
+                    },{
+                        "factory":"advancedLabelPluginFactory",
+                        "data":{
+                            "groupName":"scaleTitles",
+                            "labels":[
+                                {   
+                                    "id":"leftScaleTitle",
+                                    "imageConfig":{
+                                        "elements": [
+                                            { "type": "text", "content": "% of stats in Healing" },
+                                            { "type": "gap", "px": 3 },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" }
+                                        ], 
+                                        "arrow":{
+                                            "length":350,
+                                            "gap":20,
+                                            "direction":"ltr"
+                                        }
+                                    },
+                                    "coor":[56,-12], 
+                                    "rotation": -60
+                                },{
+                                    "id":"rightScaleTitle",
+                                    "imageConfig":{
+                                        "elements": [
+                                            { "type": "text", "content": "% of stats in Sustain" },
+                                            { "type": "gap", "px": 3 },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
+                                        ], 
+                                        "arrow":{
+                                            "length":350,
+                                            "gap":20,
+                                            "direction":"ltr"
+                                        }
+                                    },
+                                    "coor":[56,56], 
+                                    "rotation": 60
+                                },{
+                                    "id":"bottomScaleTitle",
+                                    "imageConfig":{
+                                        "elements": [
+                                            { "type": "text", "content": "% of stats in Health" },
+                                            { "type": "gap", "px": 3 },
+                                            { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" }
+                                        ],
+                                        "arrow":{
+                                            "length":350,
+                                            "gap":-20,
+                                            "direction":"rtl"
+                                        }
+                                    },
+                                    "coor":[-12,56]
+                                }  
+                            ]
+                        }
                     }
                 ]
             },{
-                "pluginName":"advancedLabel",
-                "data":{
-                    "groupName":"scaleTitles",
-                    "labels":[
-                        {   
-                            "id":"leftScaleTitle",
-                            "imageConfig":{
-                                "elements": [
-                                    { "type": "text", "content": "% of stats in Healing" },
-                                    { "type": "gap", "px": 3 },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/PR.png" }
-                                ], 
-                                "arrow":{
-                                    "length":350,
-                                    "gap":20,
-                                    "direction":"ltr"
-                                }
-                            },
-                            "coor":[56,-12], 
-                            "rotation": -60
-                        },{
-                            "id":"rightScaleTitle",
-                            "imageConfig":{
-                                "elements": [
-                                    { "type": "text", "content": "% of stats in Sustain" },
-                                    { "type": "gap", "px": 3 },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/WP.png" },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/MR.png" }
-                                ], 
-                                "arrow":{
-                                    "length":350,
-                                    "gap":20,
-                                    "direction":"ltr"
-                                }
-                            },
-                            "coor":[56,56], 
-                            "rotation": 60
-                        },{
-                            "id":"bottomScaleTitle",
-                            "imageConfig":{
-                                "elements": [
-                                    { "type": "text", "content": "% of stats in Health" },
-                                    { "type": "gap", "px": 3 },
-                                    { "type": "image", "source": "./media/owo_images/battleEmojis/HP.png" }
-                                ],
-                                "arrow":{
-                                    "length":350,
-                                    "gap":-20,
-                                    "direction":"rtl"
-                                }
-                            },
-                            "coor":[-12,56]
-                        }  
-                    ]
-                }
-            },
-            {
-                "pluginName":"cursorLine",
-                "visibleIn":["help"]
+                "id":"labels",
+                "pluginConfigs":[
+                    {
+                        "factory":"simpleLabelPluginFactory",
+                        "data" :{
+                            "groupName":"polygonLabels",
+                            "labels" : [
+                                {"content":"shielded",    "coor":[55,20],   "color":"rgb(40, 119, 194)"},
+                                {"content":"non-shielded","coor":[30,32.5], "color":"rgb(133, 106, 207)"}
+                            ]
+                        }
+                    }
+                ]
+            },{
+                "id":"help",
+                "pluginConfigs":[
+                    {
+                        "factory":"cursorLine_with_ticksPluginFactory"
+                    }
+                ]
             }
         ]
     }

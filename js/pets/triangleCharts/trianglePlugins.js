@@ -10,18 +10,10 @@ const cardinals = ["left","right","bottom"]
 //
 //
 export const polygonPluginFactory = pluginConfig =>({
-    id: pluginConfig.pluginName,
-    visibleIn: pluginConfig.visibleIn,
-    currentMode: undefined, 
-
-    shouldShow(){
-        return ( this.visibleIn === undefined
-              || this.visibleIn.includes(this.currentMode)
-        )
-    },
+    hidden:false,
 
     beforeDraw(chart){
-        if (!this.shouldShow()) return; 
+        if (this.hidden) return; 
 
         const ctx = chart.ctx;
         ctx.save();
@@ -51,21 +43,13 @@ export const polygonPluginFactory = pluginConfig =>({
 //
 //
 export const simpleLabelPluginFactory = pluginConfig => ({ 
-    id: pluginConfig.pluginName,
-    visibleIn: pluginConfig.visibleIn,
-    currentMode: undefined, 
-
-    shouldShow(){
-        return ( this.visibleIn === undefined
-              || this.visibleIn.includes(this.currentMode)
-        )
-    },
+    hidden: false,
 
     beforeUpdate(){
         const groupName = pluginConfig.data.groupName;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
-            .forEach(ann => ann.display = this.shouldShow())
+            .forEach(ann => ann.display = !this.hidden)
     },
 
     beforeInit(chart) {
@@ -94,21 +78,13 @@ export const simpleLabelPluginFactory = pluginConfig => ({
 //
 //
 export const triangleTickPluginFactory = pluginConfig =>({
-    id: pluginConfig.pluginName,
-    visibleIn: pluginConfig.visibleIn,
-    currentMode: undefined, 
-
-    shouldShow(){
-        return ( this.visibleIn === undefined
-              || this.visibleIn.includes(this.currentMode)
-        )
-    },
+    hidden: false,
 
     beforeUpdate(){
         const groupName = pluginConfig.data.groupName;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
-            .forEach(ann => ann.display = this.shouldShow())
+            .forEach(ann => ann.display = !this.hidden)
     },
 
     beforeInit(chart){
@@ -144,21 +120,13 @@ export const triangleTickPluginFactory = pluginConfig =>({
 //
 //
 export const triangleLinePluginFactory = pluginConfig =>({
-    id: pluginConfig.pluginName,
-    visibleIn: pluginConfig.visibleIn,
-    currentMode: undefined, 
-
-    shouldShow(){
-        return ( this.visibleIn === undefined
-              || this.visibleIn.includes(this.currentMode)
-        )
-    },
+    hidden: false,
 
     beforeUpdate(){
         const groupName = pluginConfig.data.groupName;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
-            .forEach(ann => ann.display = this.shouldShow())
+            .forEach(ann => ann.display = !this.hidden)
     },
 
     beforeInit(chart){
@@ -341,21 +309,13 @@ function scaleToFit(naturalW, naturalH,  maxH) {
 }
 
 export const advancedLabelPluginFactory = pluginConfig => ({
-    id: pluginConfig.pluginName,
-    visibleIn: pluginConfig.visibleIn,
-    currentMode: undefined, 
-
-    shouldShow(){
-        return ( this.visibleIn === undefined
-              || this.visibleIn.includes(this.currentMode)
-        )
-    },
+    hidden: false,
 
     beforeUpdate(){
         const groupName = pluginConfig.data.groupName;
         const anns = Object.values(this.chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
-            .forEach(ann => ann.display = this.shouldShow())
+            .forEach(ann => ann.display = !this.hidden)
     },
 
     beforeInit(chart) {
@@ -387,15 +347,7 @@ export const advancedLabelPluginFactory = pluginConfig => ({
 //
 //
 export const cursorLinePluginFactory = pluginConfig => ({
-    id: pluginConfig.pluginName,
-    visibleIn: pluginConfig.visibleIn,
-    currentMode: undefined, 
-
-    shouldShow(){
-        return ( this.visibleIn === undefined
-              || this.visibleIn.includes(this.currentMode)
-        )
-    },
+    hidden: false,
 
     afterEvent: (chart, args) => {
         const event = args.event;
@@ -409,7 +361,7 @@ export const cursorLinePluginFactory = pluginConfig => ({
         initializeLabelDOM(chart,this);
 
         container.addEventListener('mousemove', function() {
-            if(plugin.shouldShow()) chart.update()
+            if(!plugin.hidden) chart.update()
         });
     },
 
@@ -418,7 +370,7 @@ export const cursorLinePluginFactory = pluginConfig => ({
         this.right.container.style.visibility = "hidden";
         this.bottom.container.style.visibility = "hidden";
         
-        if (!chart._cursorPosition || !this.shouldShow()) return;
+        if (!chart._cursorPosition || this.hidden) return;
 
         const DOMCoors = [chart._cursorPosition.x,chart._cursorPosition.y]
         const data = SquareToTriangleCoor(DOMToSquareCoor(chart,DOMCoors));
@@ -450,15 +402,7 @@ function getPixel(scales, data){
 // 
 //
 export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
-    id: pluginConfig.pluginName,
-    visibleIn: pluginConfig.visibleIn,
-    currentMode: undefined, 
-
-    shouldShow(){
-        return ( this.visibleIn === undefined
-              || this.visibleIn.includes(this.currentMode)
-        )
-    },
+    hidden: false,
 
     afterEvent: (chart, args) => {
         const event = args.event;
@@ -471,13 +415,13 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
 
         initializeLabelDOM(chart,this);
 
-        const smartUpdate = () => { if(plugin.shouldShow()) chart.update() };
+        const smartUpdate = () => { if(!plugin.hidden) chart.update() };
 
         container.addEventListener('mousemove', smartUpdate);
         window.addEventListener("resize",smartUpdate);
     },
 
-    afterDraw(chart) {      
+    beforeDraw(chart) {
         const plugin = this;
         const canvasLocation = getCanvasLocation(chart);
 
@@ -496,7 +440,7 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
             plugin[cardinal].container.style.visibility = "hidden";
         });
 
-        if (!chart._cursorPosition || !this.shouldShow()) return;
+        if (!chart._cursorPosition || this.hidden) return;
 
         const DOMCoors = [chart._cursorPosition.x,chart._cursorPosition.y]
         const data = SquareToTriangleCoor(DOMToSquareCoor(chart,DOMCoors));
@@ -636,23 +580,15 @@ function initializeLabelDOM(chart,plugin){
 // 
 //
 export const lineOnClickPluginFactory = pluginConfig => ({
-    id: pluginConfig.pluginName,
-    visibleIn: pluginConfig.visibleIn,
-    currentMode: undefined,
     selectedPoint: undefined,
-
-    shouldShow(){
-        return ( this.visibleIn === undefined
-              || this.visibleIn.includes(this.currentMode)
-        )
-    },
+    hidden: false,
 
     afterInit(chart){
         initializeLabelDOM(chart,this)
     },
 
     afterEvent(chart, args){
-        if (!this.shouldShow()) return;
+        if (this.hidden) return;
         if (args.event.type !== "click") return;
 
         const [element] = chart.getElementsAtEventForMode(
@@ -686,7 +622,7 @@ export const lineOnClickPluginFactory = pluginConfig => ({
     },
 
     beforeDraw(chart){
-        if (!this.shouldShow()) return;
+        if (this.hidden) return;
         if (!this.selectedPoint) return clearTrident(chart, this);
         drawTrident(chart,this, { coor: this.selectedPoint });
     }

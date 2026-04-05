@@ -1388,15 +1388,33 @@ a:hover {
   display:flex;
   flex-direction: column;
   gap:1rem;
-  position: absolute; 
-  width: 4.5rem;
-  height: 9rem;
-  transform: translate(-275%,2rem);
+  margin: 2rem -4rem 0 0;
 }
 
-.triangle-button-wrapper > button {
+.triangle-button-wrapper button {
   width:100%;
+  display:flex;
+  gap: 0.3rem;
+  align-items: center;
 }
+
+.triangle-button-wrapper button, a {
+  z-index: 3;
+}
+
+.triangle-button-wrapper button > img {
+  height:90%
+}
+
+.triangle-button-wrapper a button {
+  color: #6d97c0; 
+  text-decoration: underline;
+}
+
+.triangle-button-wrapper a:hover button{
+  color: #90d7ee; 
+}
+
 
 .triangle-help-label{
   pointer-events: none; 

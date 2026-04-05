@@ -1,37 +1,5 @@
-import * as PluginHelper from "./trianglePlugins.js"
 import { make } from "../../util/injectionUtil.js";
-import { getX, getY } from "./triangleUtils.js";
-
-const dataPoints = data => data.array.map(pet => {
-    function getPosition(
-        leftAttr,
-        rightAttr,
-        bottomAttr
-    ){
-        const sum   = [...leftAttr,...rightAttr,...bottomAttr].reduce((acc, num) => acc + num, 0);
-        const right = 100*(rightAttr.reduce((acc, num) => acc + num, 0))/sum;
-        const left   = 100*(leftAttr.reduce((acc, num) => acc + num, 0))/sum;
-        return [left, right];
-    }
-    
-    const imgEl = new Image();
-    imgEl.src = pet.image;
-    imgEl.height=data.imageSize.height;
-    imgEl.width=data.imageSize.width;
-    const [left, right] = getPosition(
-        data.attributeGroups.left.map(i => pet.attributes[i]),
-        data.attributeGroups.right.map(i => pet.attributes[i]),
-        data.attributeGroups.bottom.map(i => pet.attributes[i])
-    )
-
-    return {
-        x: getX(left, right),
-        y: getY(left, right),
-        label: pet.name,
-        imageEl: imgEl,
-        attributes: pet.attributes,
-    };
-});
+import { Module } from "./module.js";
 
 const externalTooltipHandler = context => {
     const { chart, tooltip } = context;
@@ -94,7 +62,7 @@ const externalTooltipHandler = context => {
 
 export async function initializeTriangle(){
     const container = this.cachedDiv.querySelector("#chartContainer");
-    const {dataSetsConfig, baseConfig, modes, pluginConfigs} = this.data;
+    const {moduleConfigs, baseConfig, buttonConfigs} = this.data;
 
     const constantPadding = 10; // this is unavoidable due to chart.js annoyingness
     const additionalPadding =baseConfig.additionalPadding;
@@ -104,63 +72,61 @@ export async function initializeTriangle(){
     const outerHeight  = innerHeight + additionalPadding.top + additionalPadding.bottom + constantPadding*2;
 
     const ctx = make("canvas");
+    const modules = moduleConfigs.map(moduleConfig => new Module(moduleConfig));
+
+    const datasets = modules.map(module=>module.dataSets).flat();
+    const plugins = modules.map(module=>module.plugins).flat();
+
+    const initFns = [];
+
+    if (buttonConfigs && buttonConfigs.length > 0){
+        const buttonWrapper = make("div",{className: "triangle-button-wrapper"})
+        buttonConfigs.forEach(buttonConfig=>{
+            const button = make("button");
+            const children = [];
+            if (buttonConfig.image)
+                children.push(make("img",buttonConfig.image));
+            const textEl = make("div");
+            children.push(textEl);
+            if (buttonConfig.prettyName)
+                textEl.textContent = buttonConfig.prettyName;
+
+            if (buttonConfig.type==="cycle"){
+                buttonWrapper.append(button);    
+                function executeCycle(thisCycle){
+                    const {turnOn, turnOff} = thisCycle;
+                    modules.forEach(module => {
+                        if ((turnOn ?? []).includes(module.id)) module.hidden = false;
+                        if ((turnOff ?? []).includes(module.id)) module.hidden = true;
+                    });
+                    myChart.update();
+                }
+                const cycle = buttonConfig.cycle;
+                var idx = cycle.length-1;
+                button.onclick = () => {
+                    executeCycle(cycle[idx])
+                    idx = (idx + 1) % cycle.length;
+                    textEl.textContent = cycle[idx].prettyName;
+                }
+                initFns.push(()=>button.click()); // very inelegant
+            }else if (buttonConfig.type==="link"){
+                buttonWrapper.append(
+                    make("a",{href:buttonConfig.href, target:"_blank"},[button])
+                );
+            }
+            button.append(...children);
+        })
+        container.append(buttonWrapper);
+    }
+
     container.append(make("div",
         {style:`width: ${outerWidth}px; height:${outerHeight}px;`},
         [ctx]
     ))
-
-    const pluginNameMap = {
-        polygon:                PluginHelper.polygonPluginFactory,
-        simpleLabel:            PluginHelper.simpleLabelPluginFactory,
-        advancedLabel:          PluginHelper.advancedLabelPluginFactory,
-        ticks:                  PluginHelper.triangleTickPluginFactory,
-        line:                   PluginHelper.triangleLinePluginFactory,
-        cursorLine:             PluginHelper.cursorLinePluginFactory,
-        cursorLine_with_ticks:  PluginHelper.cursorLine_with_ticksPluginFactory,
-        lineOnClick:            PluginHelper.lineOnClickPluginFactory
-    }
-    const pluginArray = pluginConfigs.map(
-        pluginConfig => pluginNameMap[pluginConfig.pluginName](pluginConfig) 
-    )
-
-    const datasets = dataSetsConfig.map(dataSetConfig=>({
-        data: dataPoints(dataSetConfig),
-        pointStyle: ctx => ctx.raw.imageEl,
-        radius: dataSetConfig.radius, 
-        hoverRadius: dataSetConfig.hoverRadius, 
-        hidden: false, 
-        clip:false,
-        shouldHideInMode(mode){
-            return ( dataSetConfig.visibleIn 
-                && !dataSetConfig.visibleIn.includes(mode)
-            )
-        }
-    }));
-
-    if (modes && modes.length > 0){
-        pluginArray.forEach(plugin => plugin.currentMode = modes[0].slug);
-
-        const buttonWrapper = make("div",{className: "triangle-button-wrapper"})
-        modes.forEach(mode =>
-            buttonWrapper.append(
-                make("button",{
-                    textContent:mode.prettyName,
-                    onclick() {
-                        datasets.forEach(dataset =>{
-                            dataset.hidden = dataset.shouldHideInMode(mode.slug);
-                        })
-                        pluginArray.forEach(plugin => plugin.currentMode = mode.slug);
-                        myChart.update();
-                    }
-                })
-            )
-        )
-        container.append(buttonWrapper);
-    }
-
+    
     const myChart = new Chart(ctx, {
         type: 'scatter',
-        plugins: pluginArray,
+        plugins: plugins,
         data: {datasets: datasets},
         options: {
             animation: false,
@@ -180,4 +146,5 @@ export async function initializeTriangle(){
             }
         },
     });
+    initFns.forEach(fn=>fn());
 }
