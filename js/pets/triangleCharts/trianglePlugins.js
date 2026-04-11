@@ -286,11 +286,6 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
     },
 
     beforeDestroy(chart){
-        const plugin = this;
-        cardinals.forEach(cardinal =>{
-            plugin[cardinal].ticks.forEach(tick => tick.container.remove());
-            plugin[cardinal].container.remove();
-        })
         chart.canvas.parentNode.removeEventListener('mousemove', this._updateOnVisible);
     }
 });
@@ -410,9 +405,5 @@ export const tooltipPluginFactory = pluginConfig => ({
         };
 
         chart.options.plugins.tooltip.external = externalTooltipHandler;
-    },
-
-    beforeDestroy(){
-        this.tooltipEl?.remove();
     }
 })
