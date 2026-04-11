@@ -1,5 +1,5 @@
 import { initGlobal } from "./globalExp.js";
-import { make, createInjectAble } from "../util/injectionUtil.js";
+import { createInjectAble } from "/js/util/injectionUtil.js";
 
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', init);
@@ -12,7 +12,7 @@ function doMathJax(){
 }
 
 async function init(){
-    const pathName="../donatorPages/exp/";
+    const pathName="/donatorPages/exp/";
     const extraHtml = [
         {created: false, name: "knowledge"},
         {created: false, name: "global", init:initGlobal},

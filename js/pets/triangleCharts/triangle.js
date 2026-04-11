@@ -1,4 +1,4 @@
-import { make } from "../../util/injectionUtil.js";
+import { make } from "/js/util/injectionUtil.js";
 import { Module } from "./module.js";
 
 export async function initializeTriangle(){

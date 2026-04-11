@@ -1,4 +1,4 @@
-import { make } from "../util/injectionUtil.js";
+import { make } from "/js/util/injectionUtil.js";
 
 const multiTable = new Array(100).fill(1); 
 for (let i = 0; i < 100; i += 5) multiTable[i] = 3; 
@@ -36,7 +36,7 @@ function cachedBonusXp(streak){
 	return result;
 }
 
-await fetch('../csv/bonusXP.csv')
+await fetch('/csv/bonusXP.csv')
 	.then(r => r.text())
 	.then(txt => txt.split(/\r?\n/).forEach(line => {
 		const [key, val] = line.split(',');

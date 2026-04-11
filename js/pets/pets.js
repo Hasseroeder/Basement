@@ -1,9 +1,9 @@
 import { initializeTriangle } from "./triangleCharts/triangle.js"
-import { loadJson } from "../util/jsonUtil.js";
-import { createInjectAble } from "../util/injectionUtil.js";
+import { loadJson } from "/js/util/jsonUtil.js";
+import { createInjectAble } from "/js/util/injectionUtil.js";
 
 window.addEventListener('DOMContentLoaded', async () => {
-    const triangleConfigs = await loadJson("../json/triangleChartConfigs.json");
+    const triangleConfigs = await loadJson("/json/triangleChartConfigs.json");
     const dataSetConfigs = [];
 
     for (const config of triangleConfigs) {

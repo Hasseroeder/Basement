@@ -1,6 +1,6 @@
-import { make } from "../../util/injectionUtil.js";
+import { make } from "/js/util/injectionUtil.js";
 import { cardinals, clearTrident, drawTrident, getCanvasLocation, SquareToTriangleCoor, DOMToSquareCoor, initializeTickDOM, initializeLabelDOM, createLabelImage, getPixel, buildTriangleDataset, getX, getY } from "./triangleUtils.js";
-import { roundToDecimals } from "../../util/inputUtil.js";
+import { roundToDecimals } from "/js/util/inputUtil.js";
 
 // --------------------------------------------------------------------------------------
 //
