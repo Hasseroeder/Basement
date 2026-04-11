@@ -1,65 +1,6 @@
 import { make } from "../../util/injectionUtil.js";
 import { Module } from "./module.js";
 
-const externalTooltipHandler = context => {
-    const { chart, tooltip } = context;
-    let tooltipEl = document.getElementById('chartjs-tooltip');
-    if (!tooltipEl) {
-        const statImageSources = [
-            "./media/owo_images/battleEmojis/HP.png",
-            "./media/owo_images/battleEmojis/STR.png",
-            "./media/owo_images/battleEmojis/PR.png",
-            "./media/owo_images/battleEmojis/WP.png",
-            "./media/owo_images/battleEmojis/MAG.png",
-            "./media/owo_images/battleEmojis/MR.png",
-        ];
-        tooltipEl = make('div', {
-            id: 'chartjs-tooltip',
-            className: 'triangle-tooltip'
-        });
-
-        const rows = [ make('div'), make('div'), make('div') ];
-        tooltipEl.append(...rows);
-
-        const statTexts = [];
-        const statCells = [];
-
-        statImageSources.forEach(src => {
-            const text = document.createTextNode('');
-            const img = make('img', { src });
-            const cell = make('div', {}, [img, text]);
-            statTexts.push(text);
-            statCells.push(cell);
-        });
-
-        statCells.slice(0, 3).forEach(cell => rows[1].append(cell));
-        statCells.slice(3).forEach(cell => rows[2].append(cell));
-
-        // Save references
-        tooltipEl._nodes = {
-            labelRow: rows[0],
-            statTexts
-        };
-
-        document.body.append(tooltipEl);
-    }
-
-    tooltipEl.style.opacity = tooltip.opacity;
-    if (tooltip.opacity===0) return; 
-
-    const { label, attributes } = tooltip.dataPoints[0].raw;
-
-    tooltipEl._nodes.labelRow.textContent = label;
-    tooltipEl._nodes.statTexts.forEach((text, i) => {
-        text.textContent = ' ' + attributes[i];
-    });
-
-    const { left, top } = chart.canvas.getBoundingClientRect();
-    tooltipEl.style.left = `${left + window.pageXOffset + tooltip.caretX + 5}px`;
-    tooltipEl.style.top = `${top + window.pageYOffset + tooltip.caretY + 5}px`;
-    // hardcoded offset is stupid, I know.
-};
-
 export async function initializeTriangle(){
     const container = this.cachedDiv.querySelector("#chartContainer");
     const {moduleConfigs, baseConfig, buttonConfigs} = this.data;
@@ -128,10 +69,7 @@ export async function initializeTriangle(){
             maintainAspectRatio: false,
             layout: {padding:additionalPadding},
             plugins: {
-                tooltip: {
-                    mode: 'nearest', enabled: false, animation: false, 
-                    external: externalTooltipHandler  
-                },
+                tooltip: { mode: 'nearest', enabled: false, animation: false },
                 legend: {display: false},
                 annotation: {clip: false},
             },

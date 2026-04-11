@@ -48,6 +48,9 @@
                 "id":"default",
                 "pluginConfigs":[
                     {
+                        "factory":"tooltipPluginFactory"
+                    },
+                    {
                         "factory":"triangleLinePluginFactory",
                         "data":{"groupName":"gridlines"}
                     },{
@@ -239,6 +242,9 @@
             {
                 "id":"default",
                 "pluginConfigs":[
+                    {
+                        "factory":"tooltipPluginFactory"
+                    },
                     {
                         "factory":"triangleLinePluginFactory",
                         "data":{"groupName":"gridlines"}

@@ -4,17 +4,21 @@ import { createInjectAble } from "../util/injectionUtil.js";
 
 window.addEventListener('DOMContentLoaded', async () => {
     const triangleConfigs = await loadJson("../json/triangleChartConfigs.json");
+    const dataSetConfigs = [];
+
+    for (const config of triangleConfigs) {
+        for (const moduleConfig of (config.moduleConfigs ?? [])) {
+            for (const pluginConfig of (moduleConfig.pluginConfigs ?? [])) {
+                for (const ds of (pluginConfig.data?.dataSetConfigs ?? [])) {
+                    dataSetConfigs.push(ds);
+                }
+            }
+        }
+    }
+
     await Promise.all(
-        triangleConfigs.flatMap(config =>
-            (config.moduleConfigs ?? []).flatMap(moduleConfig => 
-                (moduleConfig.pluginConfigs ?? []).flatMap(pluginConfig => 
-                    (pluginConfig.data?.dataSetConfigs ?? []).map(async dataSetConfig => {
-                        dataSetConfig.array = await loadJson(dataSetConfig.dataSource)
-                    })
-                )
-            )
-        )
-    )
+        dataSetConfigs.map(async ds => ds.array = await loadJson(ds.dataSource))
+    );
 
     const extraHtml = [
         {created: false, name: "resChart", init: initializeResChart},

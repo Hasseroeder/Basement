@@ -1,3 +1,4 @@
+import { make } from "../../util/injectionUtil.js";
 import { cardinals, clearTrident, drawTrident, getCanvasLocation, SquareToTriangleCoor, DOMToSquareCoor, initializeTickDOM, initializeLabelDOM, createLabelImage, getPixel, buildTriangleDataset, getX, getY } from "./triangleUtils.js";
 import { roundToDecimals } from "../../util/inputUtil.js";
 
@@ -210,10 +211,6 @@ export const advancedLabelPluginFactory = pluginConfig => ({
     }
 })
 
-const updateOnVisible = (chart,plugin) => function (){
-    !plugin.hidden && chart.update()
-}
-
 // --------------------------------------------------------------------------------------
 //
 // Plugin for helping lines toward the Cursor WITH automatically hiding ticks
@@ -230,8 +227,11 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
     beforeInit(chart) {
         initializeLabelDOM(chart,this);
 
-        chart.canvas.parentNode.addEventListener('mousemove', updateOnVisible(chart,this));
-        window.addEventListener("resize",updateOnVisible(chart,this));
+        this._updateOnVisible = function (){
+            !this.hidden && chart.update()
+        }
+        chart.canvas.parentNode.addEventListener('mousemove', this._updateOnVisible);
+        window.addEventListener("resize",this._updateOnVisible);
     },
 
     beforeDraw(chart) {
@@ -287,14 +287,14 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
         }
     },
 
-    beforeDestroy(){
+    beforeDestroy(chart){
         const plugin = this;
         cardinals.forEach(cardinal =>{
             plugin[cardinal].ticks.forEach(tick => tick.container.remove());
             plugin[cardinal].container.remove();
         })
-        chart.canvas.parentNode.removeEventListener('mousemove', updateOnVisible(chart,this));
-        window.removeEventListener("resize",updateOnVisible(chart,this));
+        chart.canvas.parentNode.removeEventListener('mousemove', this._updateOnVisible);
+        window.removeEventListener("resize",this._updateOnVisible);
     }
 });
 
@@ -349,5 +349,65 @@ export const lineOnClickPluginFactory = pluginConfig => ({
         if (this.hidden) return;
         if (!this.selectedPoint) return clearTrident(chart, this);
         drawTrident(chart,this, { coor: this.selectedPoint });
+    }
+})
+
+export const tooltipPluginFactory = pluginConfig => ({
+    beforeInit(chart){
+        const plugin = this;
+        const externalTooltipHandler = context => {
+            const { chart, tooltip } = context;
+            if (!plugin.tooltipEl) {
+                const statImageSources = [
+                    "./media/owo_images/battleEmojis/HP.png",
+                    "./media/owo_images/battleEmojis/STR.png",
+                    "./media/owo_images/battleEmojis/PR.png",
+                    "./media/owo_images/battleEmojis/WP.png",
+                    "./media/owo_images/battleEmojis/MAG.png",
+                    "./media/owo_images/battleEmojis/MR.png",
+                ];
+                plugin.tooltipEl = make('div', { className: 'triangle-tooltip' });
+        
+                plugin.rows = [ make('div'), make('div'), make('div') ];
+                plugin.tooltipEl.append(...plugin.rows);
+                plugin.statTexts = [];
+
+                const statCells = [];
+        
+                statImageSources.forEach(src => {
+                    const text = document.createTextNode('');
+                    const img = make('img', { src });
+                    const cell = make('div', {}, [img, text]);
+                    plugin.statTexts.push(text);
+                    statCells.push(cell);
+                });
+        
+                statCells.slice(0, 3).forEach(cell => plugin.rows[1].append(cell));
+                statCells.slice(3).forEach(cell => plugin.rows[2].append(cell));
+        
+                document.body.append(plugin.tooltipEl);
+            }
+        
+            plugin.tooltipEl.style.opacity = tooltip.opacity;
+            if (tooltip.opacity === 0 || tooltip.dataPoints.length === 0) return; 
+        
+            const { label, attributes } = tooltip.dataPoints[0].raw;
+        
+            plugin.rows[0].textContent = label;
+            plugin.statTexts.forEach((text, i) => 
+                text.textContent = ' ' + attributes[i]
+            );
+        
+            const { left, top } = chart.canvas.getBoundingClientRect();
+            plugin.tooltipEl.style.left = `${left + window.pageXOffset + tooltip.caretX + 5}px`;
+            plugin.tooltipEl.style.top = `${top + window.pageYOffset + tooltip.caretY + 5}px`;
+            // hardcoded offset is stupid
+        };
+
+        chart.options.plugins.tooltip.external = externalTooltipHandler;
+    },
+
+    beforeDestroy(){
+        this.tooltipEl.remove();
     }
 })
