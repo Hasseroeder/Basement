@@ -1,4 +1,4 @@
-import { make } from "../util/injectionUtil.js"
+import { make } from "/js/util/injectionUtil.js"
 import * as messageHandler from "./messageHandler.js"
 
 export class Buff{

@@ -1,4 +1,4 @@
-import { make } from "../util/injectionUtil.js"
+import { make } from "/js/util/injectionUtil.js"
 
 function getRarity(quality) {
 	const tiers = [
@@ -27,8 +27,8 @@ const valueToPercent =
 
 
 function getStatImage(inputString,className) {
-    const gifUrl = `../media/owo_images/battleEmojis/${inputString}.gif`;
-    const pngUrl = `../media/owo_images/battleEmojis/${inputString}.png`;
+    const gifUrl = `/media/owo_images/battleEmojis/${inputString}.gif`;
+    const pngUrl = `/media/owo_images/battleEmojis/${inputString}.png`;
     const imageClasses =  'discord-embed-emote ' + className??""
 
     const image = make("img",{
@@ -66,13 +66,13 @@ function getTierEmoji(tier){
 
 function getTierEmojiPath(stringOrQuality){
     const paths = {
-        common: 	"../media/owo_images/tiers/common.png",
-        uncommon:   "../media/owo_images/tiers/uncommon.png",
-        rare:   	"../media/owo_images/tiers/rare.png",
-        epic:     	"../media/owo_images/tiers/epic.png",
-        mythic:  	"../media/owo_images/tiers/mythic.png",
-        legendary:	"../media/owo_images/tiers/legendary.gif",
-        fabled: 	"../media/owo_images/tiers/fabled.gif"
+        common: 	"/media/owo_images/tiers/common.png",
+        uncommon:   "/media/owo_images/tiers/uncommon.png",
+        rare:   	"/media/owo_images/tiers/rare.png",
+        epic:     	"/media/owo_images/tiers/epic.png",
+        mythic:  	"/media/owo_images/tiers/mythic.png",
+        legendary:	"/media/owo_images/tiers/legendary.gif",
+        fabled: 	"/media/owo_images/tiers/fabled.gif"
     };
     if (stringOrQuality === undefined){
         return paths["fabled"];

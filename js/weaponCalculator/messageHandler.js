@@ -1,5 +1,5 @@
 import { valueToPercent, percentToValue,getStatImage,getTierEmoji, getTierEmojiPath } from './util.js'
-import { make } from "../util/injectionUtil.js"
+import { make } from "/js/util/injectionUtil.js"
 
 const el = {
 	weaponHeader:	    document.getElementById("weaponHeader"), 

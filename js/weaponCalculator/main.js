@@ -1,6 +1,6 @@
-import { customSelect } from '../util/customSelect.js';
-import { loadJson, loadAll } from '../util/jsonUtil.js';
-import { gridInjector, make } from '../util/injectionUtil.js';
+import { customSelect } from '/js/util/customSelect.js';
+import { loadJson, loadAll } from '/js/util/jsonUtil.js';
+import { gridInjector, make } from '/js/util/injectionUtil.js';
 import { WeaponFactory } from './weapon.js';
 import * as passviveHandler from "./passiveHandler.js";
 
@@ -16,9 +16,9 @@ gridInjector({
 */
 
 const wpbData = await loadAll({ 
-    weapons: loadJson("../json/weapons.json"), 
-    passives: loadJson("../json/passives.json"), 
-    buffs: loadJson("../json/buffs.json") 
+    weapons: loadJson("/json/weapons.json"), 
+    passives: loadJson("/json/passives.json"), 
+    buffs: loadJson("/json/buffs.json") 
 });
 
 [...wpbData.weapons,...wpbData.passives,...wpbData.buffs].forEach(StatHaver=>{

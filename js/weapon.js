@@ -19,9 +19,9 @@ const buttons ={
 }
 
 const [weapons, passives, buffs] = await Promise.all([
-    loadJson("../json/weapons.json"),
-    loadJson("../json/passives.json"),
-    loadJson("../json/buffs.json")
+    loadJson("/json/weapons.json"),
+    loadJson("/json/passives.json"),
+    loadJson("/json/buffs.json")
 ]);
 
 var currentWeaponID = fromWeaponString(location.hash.slice(1));

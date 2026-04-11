@@ -19,7 +19,7 @@ class Trait{
     constructor (opts){
         Object.assign(this, opts);
         this.header = make("span");
-        this.emoji = make("img",{src:`../media/owo_images/huntbot/${this.name.toLowerCase()}.png`, style:{height:"1rem"}});
+        this.emoji = make("img",{src:`/media/owo_images/huntbot/${this.name.toLowerCase()}.png`, style:{height:"1rem"}});
 
         const wrappers = [
             make("div",{className:"header-wrapper"},[this.emoji,this.header]),
@@ -56,7 +56,7 @@ class Trait{
         ];
         const _numberWrapper = make("div",{className:"numberWrapper"},[this._span, this.input]);
 
-        const _ttKids = [make("img",{className:"upgrade-image",src:"../media/owo_images/essence.gif"}),make("div")]
+        const _ttKids = [make("img",{className:"upgrade-image",src:"/media/owo_images/essence.gif"}),make("div")]
         const _tt = make("span",{className:"tooltip-text"},_ttKids);
         const text = make("div");
         const _btnP = make("button",{onclick: ()=>modifyValueAndCookie(this,true), className:"tooltip"},[text,_tt]);

@@ -463,7 +463,7 @@ function getPetImage(pet, wantAnimated){
     if( wantAnimated && pet.animated == 1){ 
         return `https://cdn.discordapp.com/emojis/${pet.emoji}.gif?size=96`;
     }else if (["common","uncommon","rare","epic","mythic","hidden"].includes(pet.tier)){
-        return `../media/owo_images/pets/${pet.name}.png`;
+        return `/media/owo_images/pets/${pet.name}.png`;
     }else {
         return `https://cdn.discordapp.com/emojis/${pet.emoji}.png?size=96`;
     }
@@ -484,7 +484,7 @@ function addAddEffects(){
         [
             ...effectIcons.map((name, i) =>
                 make("img", {
-                    src: "../media/owo_images/battleEmojis/" + name,
+                    src: "/media/owo_images/battleEmojis/" + name,
                     style: { height: i == 6 ? "1.4rem" : "1.5rem" },
                     onclick: () => addEffect(i)
                 })
@@ -515,7 +515,7 @@ function addEffect(type){
     function updateValue(value){
         effect.quality=+value;
         inputs.forEach(i=>i.value=+value);
-        imagechildren[0].src=`../media/owo_images/battleEmojis/${getImageForEffect(effect)}.png`;
+        imagechildren[0].src=`/media/owo_images/battleEmojis/${getImageForEffect(effect)}.png`;
         imagechildren[1].textContent=boostToString(effect);
         updateInternalStats();
     }

@@ -40,7 +40,7 @@ const injectors = [
 			);
 			const createBlinkie = blinkie => 
 				make("a",{target:"_blank", href: blinkie.href, onclick: blinkie.fn },[
-					make("img",{className:"blinkie", src:"../media/blinkies/" + blinkie.file})
+					make("img",{className:"blinkie", src:"/media/blinkies/" + blinkie.file})
 				]);
 
 			return make("footer",{className:"blinkie-footer"},blinkies.map(createBlinkie));
@@ -52,8 +52,8 @@ const injectors = [
 			const container = make("div",{className:"construction-container"});
 
 			const [json,html] = await Promise.all([
-				fetch("../media/construction/construction-list.json").then(r => r.json()),
-				fetch("../donatorPages/underConstruction.html").then(r => r.text())
+				fetch("/media/construction/construction-list.json").then(r => r.json()),
+				fetch("/donatorPages/underConstruction.html").then(r => r.text())
 			])
 
 			const giflist = json.filter(f => f.endsWith(".gif"));
@@ -61,7 +61,7 @@ const injectors = [
 
 			container.append(
 				make("img", {
-					src: `../media/construction/${giflist[idx]}`,
+					src: `/media/construction/${giflist[idx]}`,
 					alt: "Under construction...",
 					className: "construction-image"
 				}),
