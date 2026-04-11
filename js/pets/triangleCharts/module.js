@@ -21,15 +21,15 @@ export class Module {
             imgEl.src = pet.image;
             imgEl.height=data.imageSize.height;
             imgEl.width=data.imageSize.width;
-            const [left, right] = getPosition(
+            const coor = getPosition(
                 data.attributeGroups.left.map(i => pet.attributes[i]),
                 data.attributeGroups.right.map(i => pet.attributes[i]),
                 data.attributeGroups.bottom.map(i => pet.attributes[i])
             )
         
             return {
-                x: getX(left, right),
-                y: getY(left, right),
+                x: getX(coor),
+                y: getY(coor),
                 label: pet.name,
                 imageEl: imgEl,
                 attributes: pet.attributes,

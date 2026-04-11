@@ -24,9 +24,9 @@ export const polygonPluginFactory = pluginConfig =>({
             ctx.fillStyle = polygon.color;
             ctx.beginPath();
 
-            polygon.coorArray.forEach((pt, i) => {
-                const x = chart.scales.x.getPixelForValue(getX(...pt));
-                const y = chart.scales.y.getPixelForValue(getY(...pt));
+            polygon.coorArray.forEach((coor, i) => {
+                const x = chart.scales.x.getPixelForValue(getX(coor));
+                const y = chart.scales.y.getPixelForValue(getY(coor));
                 i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
             });
 
@@ -60,8 +60,8 @@ export const simpleLabelPluginFactory = pluginConfig => ({
             anns[label.content+"label"]={
                 type:"label",
                 content: label.content,
-                xValue: getX(...label.coor),
-                yValue: getY(...label.coor),
+                xValue: getX(label.coor),
+                yValue: getY(label.coor),
                 color: label.color,
                 font: { size: 16, weight:"bold"},
                 rotation: label.rotation || 0,
@@ -101,8 +101,8 @@ export const triangleTickPluginFactory = pluginConfig =>({
                 const {coor, rotation} = posFn(percent);
                 anns[cardinals[i]+"_tick_" +percent] = {
                     type: 'label',
-                    xValue: getX(...coor),
-                    yValue: getY(...coor),
+                    xValue: getX(coor),
+                    yValue: getY(coor),
                     content: percent,
                     color: 'lightgray',
                     rotation,
@@ -141,8 +141,8 @@ export const triangleLinePluginFactory = pluginConfig =>({
                 const {start, end} = posFn(percent);
                 anns[cardinals[i]+"_line_" +percent] = {
                     type: 'line',
-                    xMin: getX(...start), yMin: getY(...start),
-                    xMax: getX(...end), yMax: getY(...end),
+                    xMin: getX(start), yMin: getY(start),
+                    xMax: getX(end), yMax: getY(end),
                     borderWidth: 0.5,
                     color: 'lightgray',
                     drawTime:'beforeDraw',
@@ -327,8 +327,8 @@ export const advancedLabelPluginFactory = pluginConfig => ({
                 content: image,
                 width,
                 height,
-                xValue: getX(...coor),
-                yValue: getY(...coor),
+                xValue: getX(coor),
+                yValue: getY(coor),
                 rotation,
                 group: groupName
             };
@@ -384,9 +384,9 @@ export const cursorLinePluginFactory = pluginConfig => ({
     }
 });
 
-function getPixel(scales, data){
-    const x = getX(...data);
-    const y = getY(...data);
+function getPixel(scales, coor){
+    const x = getX(coor);
+    const y = getY(coor);
     return {
         x:scales.x.left   + (x - scales.x.min) * (scales.x.width  / (scales.x.max - scales.x.min)),
         y:scales.y.bottom - (y - scales.y.min) * (scales.y.height / (scales.y.max - scales.y.min))

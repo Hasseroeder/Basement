@@ -1,6 +1,8 @@
-export function getX(topStat, rightStat){
+export function getX(coor){
+    const [topStat, rightStat] = coor;
     return rightStat + 0.5 * topStat;
 }
-export function getY(topStat,rightStat){
+export function getY(coor){
+    const [topStat, rightStat] = coor;
     return topStat;
 }
