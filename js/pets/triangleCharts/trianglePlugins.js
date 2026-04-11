@@ -382,7 +382,7 @@ export const tooltipPluginFactory = pluginConfig => ({
                 statCells.slice(0, 3).forEach(cell => plugin.rows[1].append(cell));
                 statCells.slice(3).forEach(cell => plugin.rows[2].append(cell));
         
-                document.body.append(plugin.tooltipEl);
+                chart.canvas.parentNode.append(plugin.tooltipEl);
             }
         
             plugin.tooltipEl.style.opacity = tooltip.opacity;
@@ -395,9 +395,8 @@ export const tooltipPluginFactory = pluginConfig => ({
                 text.textContent = ' ' + attributes[i]
             );
         
-            const { left, top } = chart.canvas.getBoundingClientRect();
-            plugin.tooltipEl.style.left = `${left + window.pageXOffset + tooltip.caretX + 5}px`;
-            plugin.tooltipEl.style.top = `${top + window.pageYOffset + tooltip.caretY + 5}px`;
+            plugin.tooltipEl.style.left = tooltip.caretX + 5 + "px";
+            plugin.tooltipEl.style.top = tooltip.caretY + 5 + "px";
             // hardcoded offset is stupid
         };
 
