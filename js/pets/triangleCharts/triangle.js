@@ -57,7 +57,7 @@ export async function initializeTriangle(){
     }
 
     container.append(make("div",
-        {style:`width: ${outerWidth}px; height:${outerHeight}px;`},
+        {style:`width: ${outerWidth}px; height:${outerHeight}px; position: relative;`},
         [ctx]
     ))
     

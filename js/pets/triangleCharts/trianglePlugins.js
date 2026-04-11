@@ -1,5 +1,5 @@
 import { make } from "/js/util/injectionUtil.js";
-import { cardinals, clearTrident, drawTrident, getCanvasLocation, SquareToTriangleCoor, DOMToSquareCoor, initializeTickDOM, initializeLabelDOM, createLabelImage, getPixel, buildTriangleDataset, getX, getY } from "./triangleUtils.js";
+import { cardinals, clearTrident, drawTrident, SquareToTriangleCoor, DOMToSquareCoor, initializeTickDOM, initializeLabelDOM, createLabelImage, getPixel, buildTriangleDataset, getX, getY } from "./triangleUtils.js";
 import { roundToDecimals } from "/js/util/inputUtil.js";
 
 // --------------------------------------------------------------------------------------
@@ -231,12 +231,10 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
             !this.hidden && chart.update()
         }
         chart.canvas.parentNode.addEventListener('mousemove', this._updateOnVisible);
-        window.addEventListener("resize",this._updateOnVisible);
     },
 
     beforeDraw(chart) {
         const plugin = this;
-        const canvasLocation = getCanvasLocation(chart);
         !plugin._initialized && initializeTickDOM(chart, plugin);
 
         cardinals.forEach(cardinal =>{
@@ -249,8 +247,8 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
                 else if (cardinal === "bottom")
                     coor = getPixel(chart.scales,[0,100-tick.percent])
 
-                tick.container.style.left = canvasLocation.x + coor.x+ 'px';
-                tick.container.style.top = canvasLocation.y + coor.y+ 'px';
+                tick.container.style.left = coor.x + 'px';
+                tick.container.style.top = coor.y + 'px';
             });
             plugin[cardinal].container.style.visibility = "hidden";
         });
@@ -294,7 +292,6 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
             plugin[cardinal].container.remove();
         })
         chart.canvas.parentNode.removeEventListener('mousemove', this._updateOnVisible);
-        window.removeEventListener("resize",this._updateOnVisible);
     }
 });
 

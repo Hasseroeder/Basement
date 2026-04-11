@@ -217,7 +217,6 @@ export function initializeLabelDOM(chart,plugin){
 }
 
 export function initializeTickDOM(chart, plugin){
-    const canvasLocation = getCanvasLocation(chart);
     const container = chart.canvas.parentNode;
 
     cardinals.forEach(cardinal=>{
@@ -236,8 +235,8 @@ export function initializeTickDOM(chart, plugin){
                 tickContainer.append(make("div",{},[tickText]))
                 container.append(tickContainer);
 
-                tickContainer.style.left = canvasLocation.x + coor.x+ 'px';
-                tickContainer.style.top = canvasLocation.y + coor.y+ 'px';
+                tickContainer.style.left = coor.x+ 'px';
+                tickContainer.style.top = coor.y+ 'px';
 
                 return {container: tickContainer, text: tickText, percent}; 
             })
@@ -259,14 +258,6 @@ export function SquareToTriangleCoor(coor){
     return { left, right, bottom: 100-left-right}
 }
 
-export function getCanvasLocation(chart){
-    const canvasRect = chart.canvas.getBoundingClientRect();
-    return{
-        x: canvasRect.left + window.pageXOffset,
-        y: canvasRect.top + window.pageYOffset
-    }
-}
-
 export function drawTrident(chart, plugin, opts = {}){
     const line = {
         width: 2,
@@ -278,7 +269,6 @@ export function drawTrident(chart, plugin, opts = {}){
         chart._cursorPosition.y
     ]
 
-    const canvasLocation = getCanvasLocation(chart);
     const data = SquareToTriangleCoor(DOMToSquareCoor(chart,coor));
 
     const edgePoints = {
@@ -305,8 +295,8 @@ export function drawTrident(chart, plugin, opts = {}){
         const thisData = data[cardinal];
 
         plugin[cardinal].text.textContent = thisData.toFixed(0)+"%"
-        plugin[cardinal].container.style.left = canvasLocation.x + edgePoints[cardinal].x+ 'px';
-        plugin[cardinal].container.style.top = canvasLocation.y + edgePoints[cardinal].y+ 'px';
+        plugin[cardinal].container.style.left = edgePoints[cardinal].x+ 'px';
+        plugin[cardinal].container.style.top = edgePoints[cardinal].y+ 'px';
         plugin[cardinal].container.style.visibility = "visible";
     });
 }
