@@ -45,15 +45,14 @@ export const polygonPluginFactory = pluginConfig =>({
 export const simpleLabelPluginFactory = pluginConfig => ({ 
     hidden: false,
 
-    beforeUpdate(){
+    beforeUpdate(chart){
         const groupName = pluginConfig.data.groupName;
-        const anns = Object.values(this.chart.options.plugins.annotation.annotations);
+        const anns = Object.values(chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
             .forEach(ann => ann.display = !this.hidden)
     },
 
     beforeInit(chart) {
-        this.chart = chart;
         const anns = chart.options.plugins.annotation.annotations;
         const {labels, groupName} = pluginConfig.data;
 
@@ -122,15 +121,14 @@ export const triangleTickPluginFactory = pluginConfig =>({
 export const triangleLinePluginFactory = pluginConfig =>({
     hidden: false,
 
-    beforeUpdate(){
+    beforeUpdate(chart){
         const groupName = pluginConfig.data.groupName;
-        const anns = Object.values(this.chart.options.plugins.annotation.annotations);
+        const anns = Object.values(chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
             .forEach(ann => ann.display = !this.hidden)
     },
 
     beforeInit(chart){
-        this.chart = chart;
         const anns = chart.options.plugins.annotation.annotations;
         const posFns = [
             p => ({start:[p,0],end:[p,100-p]}),
@@ -164,8 +162,6 @@ const imageCache = new Map(); // -> Promise<Image>
 
 async function createLabelImage({elements, arrow}) {
     // I'm aware this is super specific and can never be reused
-    // I'm aware that I wanted to make this reusable originally
-    // I don't care at this point anymore
     const font = '20px system-ui, Arial, sans-serif';
     const defaultImageSize = 24;
 
@@ -311,15 +307,14 @@ function scaleToFit(naturalW, naturalH,  maxH) {
 export const advancedLabelPluginFactory = pluginConfig => ({
     hidden: false,
 
-    beforeUpdate(){
+    beforeUpdate(chart){
         const groupName = pluginConfig.data.groupName;
-        const anns = Object.values(this.chart.options.plugins.annotation.annotations);
+        const anns = Object.values(chart.options.plugins.annotation.annotations);
         anns.filter(ann => ann.group === groupName)
             .forEach(ann => ann.display = !this.hidden)
     },
 
     beforeInit(chart) {
-        this.chart = chart;
         const anns = chart.options.plugins.annotation.annotations;
         const {labels, groupName} = pluginConfig.data;
         
@@ -346,6 +341,11 @@ export const advancedLabelPluginFactory = pluginConfig => ({
 // Plugin for helping lines toward the Cursor
 //
 //
+
+const updateOnVisible = (chart,plugin) => function (){
+    !plugin.hidden && chart.update()
+}
+
 export const cursorLinePluginFactory = pluginConfig => ({
     hidden: false,
 
@@ -357,12 +357,8 @@ export const cursorLinePluginFactory = pluginConfig => ({
     beforeInit(chart) {
         const container = chart.canvas.parentNode;
         const plugin = this;
-
-        initializeLabelDOM(chart,this);
-
-        container.addEventListener('mousemove', function() {
-            if(!plugin.hidden) chart.update()
-        });
+        initializeLabelDOM(chart,plugin);
+        container.addEventListener('mousemove', updateOnVisible(chart,plugin));
     },
 
     afterDraw(chart) {          
@@ -379,10 +375,12 @@ export const cursorLinePluginFactory = pluginConfig => ({
             drawTrident(chart, this);
     },
 
-    beforeDestroy(){
-        this.left.container.remove();
-        this.right.container.remove();
-        this.bottom.container.remove();
+    beforeDestroy(chart){
+        const plugin = this;
+        plugin.left.container.remove();
+        plugin.right.container.remove();
+        plugin.bottom.container.remove();
+        container.removeEventListener('mousemove', updateOnVisible(chart,plugin));
     }
 });
 
@@ -424,8 +422,7 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
     beforeDraw(chart) {
         const plugin = this;
         const canvasLocation = getCanvasLocation(chart);
-
-        if (!this._initialized) initializeTickDOM(chart, this);
+        !plugin._initialized && initializeTickDOM(chart, plugin);
 
         cardinals.forEach(cardinal =>{
             plugin[cardinal].ticks.forEach(tick => {
@@ -440,7 +437,7 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
             plugin[cardinal].container.style.visibility = "hidden";
         });
 
-        if (!chart._cursorPosition || this.hidden) return;
+        if (!chart._cursorPosition || plugin.hidden) return;
 
         const DOMCoors = [chart._cursorPosition.x,chart._cursorPosition.y]
         const data = SquareToTriangleCoor(DOMToSquareCoor(chart,DOMCoors));
@@ -450,7 +447,7 @@ export const cursorLine_with_ticksPluginFactory = pluginConfig => ({
             data.right >= 0 &&
             data.bottom >= 0
         ){
-            drawTrident(chart,this);
+            drawTrident(chart,plugin);
             cardinals.forEach(cardinal =>{
                 function isWithin(toTest,target, radius){
                     const min = target-radius;
