@@ -349,6 +349,15 @@ export const lineOnClickPluginFactory = pluginConfig => ({
     }
 })
 
+// --------------------------------------------------------------------------------------
+//
+// Plugin for pretty tooltip that looks like this:
+//  _______________________
+// / Hedgebot              \
+// | :hp: 7 :str: 0 :pr: 6 |
+// | :wp: 2 :mag: 0 :mr: 6 |
+// \_______________________/
+//
 export const tooltipPluginFactory = pluginConfig => ({
     beforeInit(chart){
         const plugin = this;
