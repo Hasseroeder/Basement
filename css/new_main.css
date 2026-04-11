@@ -646,9 +646,14 @@ a:hover {
   visibility: visible;
 }
 
-.weaponImageGridWrapper a:hover, button:hover{
-    background-color: #555555;
-    color: lightgray;
+.weaponImageGridWrapper a:hover{
+  background-color: #555555;
+  color: lightgray;
+}
+
+button:hover {
+  background-color: #555555;
+  color: lightgray;
 }
 
 .extra-padding::before {
@@ -1395,7 +1400,7 @@ a:hover {
   align-items: center;
 }
 
-.triangle-button-wrapper button, a {
+.triangle-button-wrapper button, .triangle-button-wrapper a {
   z-index: 3;
 }
 
