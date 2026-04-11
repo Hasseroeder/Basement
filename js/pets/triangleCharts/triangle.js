@@ -93,20 +93,17 @@ export async function initializeTriangle(){
 
             if (buttonConfig.type==="cycle"){
                 buttonWrapper.append(button);    
-                function executeCycle(thisCycle){
-                    const {turnOn, turnOff} = thisCycle;
+                const cycle = buttonConfig.cycle;
+                var idx = cycle.length-1;
+                button.onclick = () => {
+                    const {turnOn, turnOff} = cycle[idx];
                     modules.forEach(module => {
                         if ((turnOn ?? []).includes(module.id)) module.hidden = false;
                         if ((turnOff ?? []).includes(module.id)) module.hidden = true;
                     });
-                    myChart.update();
-                }
-                const cycle = buttonConfig.cycle;
-                var idx = cycle.length-1;
-                button.onclick = () => {
-                    executeCycle(cycle[idx])
+                    textEl.textContent = cycle[idx].nameTo;
                     idx = (idx + 1) % cycle.length;
-                    textEl.textContent = cycle[idx].prettyName;
+                    myChart.update();
                 }
                 initFns.push(()=>button.click()); // very inelegant
             }else if (buttonConfig.type==="link"){

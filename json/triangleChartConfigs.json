@@ -8,11 +8,11 @@
                 "type":"cycle",
                 "cycle":[
                     {
-                        "prettyName":"Enable Labels",
+                        "nameTo":"Enable Pets",
                         "turnOn":["labels"],
                         "turnOff":["pets"]
                     },{
-                        "prettyName":"Enable Pets",
+                        "nameTo":"Enable Labels",
                         "turnOn":["pets"],
                         "turnOff":["labels"]
                     }
@@ -24,10 +24,10 @@
                 "type":"cycle",
                 "cycle":[
                     {
-                        "prettyName":"Enable Help",
+                        "nameTo":"Disable Help",
                         "turnOn":["help"]
                     },{
-                        "prettyName":"Disable Help",
+                        "nameTo":"Enable Help",
                         "turnOff":["help"]
                     }
                 ],
@@ -195,11 +195,11 @@
                 "type":"cycle",
                 "cycle":[
                     {
-                        "prettyName":"Enable Labels",
+                        "nameTo":"Enable Pets",
                         "turnOn":["labels"],
                         "turnOff":["pets"]
                     },{
-                        "prettyName":"Enable Pets",
+                        "nameTo":"Enable Labels",
                         "turnOn":["pets"],
                         "turnOff":["labels"]
                     }
@@ -211,10 +211,10 @@
                 "type":"cycle",
                 "cycle":[
                     {
-                        "prettyName":"Enable Help",
+                        "nameTo":"Disable Help",
                         "turnOn":["help"]
                     },{
-                        "prettyName":"Disable Help",
+                        "nameTo":"Enable Help",
                         "turnOff":["help"]
                     }
                 ],
