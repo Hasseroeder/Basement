@@ -408,6 +408,6 @@ export const tooltipPluginFactory = pluginConfig => ({
     },
 
     beforeDestroy(){
-        this.tooltipEl.remove();
+        this.tooltipEl?.remove();
     }
 })

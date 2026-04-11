@@ -18,22 +18,22 @@
 }
 
 body.tbh {
-  --cur-auto: url('../media/tbhCursors/tbh-normal.cur'), auto;
-  --cur-default: url('../media/tbhCursors/tbh-normal.cur'), default;
-  --cur-pointer: url('../media/tbhCursors/tbh-link.cur'), pointer;
-  --cur-text: url('../media/tbhCursors/tbh-text.cur'), text;
-  --cur-vertical-text: url('../media/tbhCursors/tbh-text.cur'), vertical-text;
-  --cur-crosshair: url('../media/tbhCursors/tbh-crosshair.cur'), crosshair;
-  --cur-move: url('../media/tbhCursors/tbh-move.cur'), move;
-  --cur-grab: url('../media/tbhCursors/tbh-crosshair.cur'), grab;
-  --cur-grabbing: url('../media/tbhCursors/tbh-crosshair.cur'), grabbing;
-  --cur-not-allowed: url('../media/tbhCursors/tbh-no.ani'), not-allowed;
-  --cur-wait: url('../media/tbhCursors/tbh-working.ani'), wait;
-  --cur-progress: url('../media/tbhCursors/tbh-busy.ani'), progress;
-  --cur-resize-ew: url('../media/tbhCursors/tbh-horizontal.cur'), ew-resize;
-  --cur-resize-ns: url('../media/tbhCursors/tbh-vertical.cur'), ns-resize;
-  --cur-resize-nesw: url('../media/tbhCursors/tbh-nesw.cur'), nesw-resize;
-  --cur-resize-nwse: url('../media/tbhCursors/tbh-nwse.cur'), nwse-resize;
+  --cur-auto: url('/media/tbhCursors/tbh-normal.cur'), auto;
+  --cur-default: url('/media/tbhCursors/tbh-normal.cur'), default;
+  --cur-pointer: url('/media/tbhCursors/tbh-link.cur'), pointer;
+  --cur-text: url('/media/tbhCursors/tbh-text.cur'), text;
+  --cur-vertical-text: url('/media/tbhCursors/tbh-text.cur'), vertical-text;
+  --cur-crosshair: url('/media/tbhCursors/tbh-crosshair.cur'), crosshair;
+  --cur-move: url('/media/tbhCursors/tbh-move.cur'), move;
+  --cur-grab: url('/media/tbhCursors/tbh-crosshair.cur'), grab;
+  --cur-grabbing: url('/media/tbhCursors/tbh-crosshair.cur'), grabbing;
+  --cur-not-allowed: url('/media/tbhCursors/tbh-no.ani'), not-allowed;
+  --cur-wait: url('/media/tbhCursors/tbh-working.ani'), wait;
+  --cur-progress: url('/media/tbhCursors/tbh-busy.ani'), progress;
+  --cur-resize-ew: url('/media/tbhCursors/tbh-horizontal.cur'), ew-resize;
+  --cur-resize-ns: url('/media/tbhCursors/tbh-vertical.cur'), ns-resize;
+  --cur-resize-nesw: url('/media/tbhCursors/tbh-nesw.cur'), nesw-resize;
+  --cur-resize-nwse: url('/media/tbhCursors/tbh-nwse.cur'), nwse-resize;
 }
 
 * {
@@ -962,7 +962,7 @@ a:hover {
 .weaponSlider::-moz-range-thumb {
   width: 1.5rem !important;
   height: 1.5rem !important;
-  background: url('../media/misc_images/colon_three.png') no-repeat center center !important;
+  background: url('/media/misc_images/colon_three.png') no-repeat center center !important;
   background-size: contain !important;
   border: none !important;
 }
@@ -970,7 +970,7 @@ a:hover {
 .weaponSlider::-webkit-slider-thumb {
   width: 1.5rem !important;
   height: 1.5rem !important;
-  background: url('../media/misc_images/colon_three.png') no-repeat center center !important;
+  background: url('/media/misc_images/colon_three.png') no-repeat center center !important;
   background-size: contain !important;
   border: none !important;
   margin-top: -0.55rem;
