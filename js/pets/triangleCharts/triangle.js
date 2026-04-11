@@ -74,7 +74,6 @@ export async function initializeTriangle(){
     const ctx = make("canvas");
     const modules = moduleConfigs.map(moduleConfig => new Module(moduleConfig));
 
-    const datasets = modules.map(module=>module.dataSets).flat();
     const plugins = modules.map(module=>module.plugins).flat();
 
     const initFns = [];
@@ -124,7 +123,6 @@ export async function initializeTriangle(){
     const myChart = new Chart(ctx, {
         type: 'scatter',
         plugins: plugins,
-        data: {datasets: datasets},
         options: {
             animation: false,
             maintainAspectRatio: false,

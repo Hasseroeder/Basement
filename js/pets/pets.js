@@ -7,9 +7,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     await Promise.all(
         triangleConfigs.flatMap(config =>
             (config.moduleConfigs ?? []).flatMap(moduleConfig => 
-                (moduleConfig.dataSetConfigs ?? []).map(async dataSetConfig => {
-                    dataSetConfig.array = await loadJson(dataSetConfig.dataSource)
-                })
+                (moduleConfig.pluginConfigs ?? []).flatMap(pluginConfig => 
+                    (pluginConfig.data?.dataSetConfigs ?? []).map(async dataSetConfig => {
+                        dataSetConfig.array = await loadJson(dataSetConfig.dataSource)
+                    })
+                )
             )
         )
     )

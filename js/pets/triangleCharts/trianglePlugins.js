@@ -1,8 +1,32 @@
 import { make } from "/js/util/injectionUtil.js";
-import { getX, getY } from "./triangleUtils.js";
+import { buildTriangleDataset, getX, getY } from "./triangleUtils.js";
 import { roundToDecimals } from "../../util/inputUtil.js";
 
 const cardinals = ["left","right","bottom"]
+
+// --------------------------------------------------------------------------------------
+//
+// Plugin wrapper around one or more dataset configs.
+// Keeps module init surface as "plugins only" while still producing datasets.
+//
+//
+export const dataSetPluginFactory = pluginConfig => ({
+    skipRegistration: true,
+    dataSets: (pluginConfig.data?.dataSetConfigs ?? []).map(buildTriangleDataset),
+
+    beforeInit(chart){
+        chart.data.datasets = this.dataSets;
+    },
+
+    set hidden(value){
+        this._hidden = value;
+        (this.dataSets ?? []).forEach(dataSet => dataSet.hidden = value);
+    },
+
+    get hidden(){
+        return this._hidden ?? false;
+    }
+});
 
 // --------------------------------------------------------------------------------------
 //
@@ -535,11 +559,13 @@ function initializeTickDOM(chart, plugin){
     cardinals.forEach(cardinal=>{
         plugin[cardinal].ticks=
             [10,20,30,40,50,60,70,80,90,100].map(percent=>{
-                const coor = 
-                        cardinal === "left"   ? getPixel(chart.scales,[percent,0])
-                    : cardinal === "right"  ? getPixel(chart.scales,[100-percent,percent])
-                    : cardinal === "bottom" ? getPixel(chart.scales,[0,100-percent])
-                    : "error";
+                var coor;
+                if (cardinal === "left") 
+                    coor = getPixel(chart.scales,[percent,0])
+                else if (cardinal === "right") 
+                    coor = getPixel(chart.scales,[100-percent,percent])
+                else if (cardinal === "bottom")
+                    coor = getPixel(chart.scales,[0,100-percent])
 
                 const tickContainer = make('div',{className: `triangle-help-label animated ${cardinal}`});
                 const tickText = make("span",{textContent:percent});
