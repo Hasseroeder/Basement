@@ -8,7 +8,7 @@ export function gridInjector({
 		gridClasses=[]							// custom classes grid
     }){
 	
-	container.className="toolbarSubMenu navbar-grid";
+	container.className="toolbarSubMenu grid";
 	container.style.gridTemplateColumns=columns;
 	container.style.transform=transform;
 	container.classList.add(...gridClasses);
