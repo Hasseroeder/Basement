@@ -12,7 +12,7 @@ export const dataSetPluginFactory = pluginConfig => ({
     dataSets: (pluginConfig.data?.dataSetConfigs ?? []).map(buildTriangleDataset),
 
     beforeInit(chart){
-        chart.data.datasets = this.dataSets;
+        chart.data.datasets.push(...this.dataSets);
     },
 
     set hidden(value){
