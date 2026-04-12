@@ -1,23 +1,23 @@
-import { initGlobal } from "./globalExp.js";
-import { createInjectAble } from "/js/util/injectionUtil.js";
+import { initGlobal } from './globalExp.js'
+import { createInjectAble } from '/js/util/injectionUtil.js'
 
 if (document.readyState === 'loading') {
-	document.addEventListener('DOMContentLoaded', init);
+	document.addEventListener('DOMContentLoaded', init)
 } else {
-	init();
+	init()
 }
 
-function doMathJax(){
-    window.MathJax.typesetPromise([this.cachedDiv]);
+function doMathJax() {
+	window.MathJax.typesetPromise([this.cachedDiv])
 }
 
-async function init(){
-    const pathName="/donatorPages/exp/";
-    const extraHtml = [
-        {created: false, name: "knowledge"},
-        {created: false, name: "global", init:initGlobal},
-        {created: false, name: "streakWorth", init:doMathJax}
-    ];
+async function init() {
+	const pathName = '/donatorPages/exp/'
+	const extraHtml = [
+		{ created: false, name: 'knowledge' },
+		{ created: false, name: 'global', init: initGlobal },
+		{ created: false, name: 'streakWorth', init: doMathJax },
+	]
 
-    extraHtml.forEach(html => createInjectAble(html,pathName));
+	extraHtml.forEach((html) => createInjectAble(html, pathName))
 }

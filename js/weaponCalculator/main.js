@@ -1,8 +1,8 @@
-import { customSelect } from '/js/util/customSelect.js';
-import { loadJson, loadAll } from '/js/util/jsonUtil.js';
-import { gridInjector, make } from '/js/util/injectionUtil.js';
-import { WeaponFactory } from './weapon.js';
-import * as passviveHandler from "./passiveHandler.js";
+import { customSelect } from '/js/util/customSelect.js'
+import { loadJson, loadAll } from '/js/util/jsonUtil.js'
+import { gridInjector, make } from '/js/util/injectionUtil.js'
+import { WeaponFactory } from './weapon.js'
+import * as passviveHandler from './passiveHandler.js'
 
 /*
 gridInjector({
@@ -15,45 +15,45 @@ gridInjector({
 });
 */
 
-const wpbData = await loadAll({ 
-    weapons: loadJson("/json/weapons.json"), 
-    passives: loadJson("/json/passives.json"), 
-    buffs: loadJson("/json/buffs.json") 
-});
-
-[...wpbData.weapons,...wpbData.passives,...wpbData.buffs].forEach(StatHaver=>{
-    [ ...StatHaver.statConfig , StatHaver.wpStatConfig ]
-    .filter(Boolean)
-    .forEach(stat=>{
-        stat.range = stat.max - stat.min;
-        stat.step = stat.range/100;
-    })
+const wpbData = await loadAll({
+	weapons: loadJson('/json/weapons.json'),
+	passives: loadJson('/json/passives.json'),
+	buffs: loadJson('/json/buffs.json'),
 })
 
-WeaponFactory.wpbData = wpbData;
-const currentWeapon= WeaponFactory.fromHash();
-
-const pGrid = document.querySelector('.passiveGrid');
-pGrid.append(...wpbData.passives.map(
-	passive=>make("img",{
-		className:'passiveGridImage',
-		src: `media/owo_images/battleEmojis/f_${passive.slug}.png`,
-		alt: passive.slug,
-		title: passive.slug,
-		draggable: false,
-		onmousedown: () => new passviveHandler.Passive({
-			staticData: passive, 
-			wpbData, 
-			parent:currentWeapon
-		})
+;[...wpbData.weapons, ...wpbData.passives, ...wpbData.buffs].forEach((StatHaver) => {
+	;[...StatHaver.statConfig, StatHaver.wpStatConfig].filter(Boolean).forEach((stat) => {
+		stat.range = stat.max - stat.min
+		stat.step = stat.range / 100
 	})
-));
+})
 
-const wearSelect = new customSelect(
-	currentWeapon.wear,
-	document.getElementById('wearSelect'),
-	["WORN","DECENT","FINE","PRISTINE"]
-);
-wearSelect.addEventListener('change', e => 
-	currentWeapon.wear = e.detail.value
-);
+WeaponFactory.wpbData = wpbData
+const currentWeapon = WeaponFactory.fromHash()
+
+const pGrid = document.querySelector('.passiveGrid')
+pGrid.append(
+	...wpbData.passives.map((passive) =>
+		make('img', {
+			className: 'passiveGridImage',
+			src: `media/owo_images/battleEmojis/f_${passive.slug}.png`,
+			alt: passive.slug,
+			title: passive.slug,
+			draggable: false,
+			onmousedown: () =>
+				new passviveHandler.Passive({
+					staticData: passive,
+					wpbData,
+					parent: currentWeapon,
+				}),
+		})
+	)
+)
+
+const wearSelect = new customSelect(currentWeapon.wear, document.getElementById('wearSelect'), [
+	'WORN',
+	'DECENT',
+	'FINE',
+	'PRISTINE',
+])
+wearSelect.addEventListener('change', (e) => (currentWeapon.wear = e.detail.value))

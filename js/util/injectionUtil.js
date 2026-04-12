@@ -1,88 +1,91 @@
 export function gridInjector({
-        container,								// container
-        items,									// array of items
-		baseLink,								// baseLink
-		onItemClick,							// event listener
-		columns = "repeat(3, 3.5rem)",			// custom styles grid
-		transform="translate(-2.8rem,1.5%)",	// custom styles grid
-		gridClasses=[]							// custom classes grid
-    }){
-	
-	container.className="toolbarSubMenu grid";
-	container.style.gridTemplateColumns=columns;
-	container.style.transform=transform;
-	container.classList.add(...gridClasses);
-	container.append(...items.map(
-		item=>makeGridItem(
-			onItemClick,
-			baseLink  + "#" + item.slug,
-			`/media/owo_images/battleEmojis/f_${item.slug}.png`,
-			item.name + (item.id ? "<br>"+item.id : "")
+	container, // container
+	items, // array of items
+	baseLink, // baseLink
+	onItemClick, // event listener
+	columns = 'repeat(3, 3.5rem)', // custom styles grid
+	transform = 'translate(-2.8rem,1.5%)', // custom styles grid
+	gridClasses = [], // custom classes grid
+}) {
+	container.className = 'toolbarSubMenu grid'
+	container.style.gridTemplateColumns = columns
+	container.style.transform = transform
+	container.classList.add(...gridClasses)
+	container.append(
+		...items.map((item) =>
+			makeGridItem(
+				onItemClick,
+				baseLink + '#' + item.slug,
+				`/media/owo_images/battleEmojis/f_${item.slug}.png`,
+				item.name + (item.id ? '<br>' + item.id : '')
+			)
 		)
-	));
+	)
 }
 
 const makeGridItem = (onClick, link, path, text) =>
 	make(
-		onClick?"button":"a",
+		onClick ? 'button' : 'a',
 		{
 			href: link,
-			className: "tooltip unset-me",
-			onClick
-		},[
-			make("img",{src:path,	   style:{width:"2.5rem"}}),
-			make("div",{innerHTML:text,className:"navBar-tooltip-text"})
+			className: 'tooltip unset-me',
+			onClick,
+		},
+		[
+			make('img', { src: path, style: { width: '2.5rem' } }),
+			make('div', { innerHTML: text, className: 'navBar-tooltip-text' }),
 		]
 	)
 
-export async function createInjectAble(html,pathName){
-    const response = await fetch(pathName+html.name+".html");
-    const htmlContent = await response.text();
-    html.cachedDiv = make('div',{className:"injectable-box"});
-    html.cachedDiv.innerHTML = htmlContent;
+export async function createInjectAble(html, pathName) {
+	const response = await fetch(pathName + html.name + '.html')
+	const htmlContent = await response.text()
+	html.cachedDiv = make('div', { className: 'injectable-box' })
+	html.cachedDiv.innerHTML = htmlContent
 
-    const container = document.getElementById(`${html.name}Container`);
+	const container = document.getElementById(`${html.name}Container`)
 
-	const button = container.querySelector('button');
+	const button = container.querySelector('button')
 
-    button.addEventListener("click", () => {
-        html.created ? container.lastElementChild.remove() 
-                        : container.appendChild(html.cachedDiv);
-        html.created = !html.created;
-		button.classList.toggle("opened");
-    });
+	button.addEventListener('click', () => {
+		html.created ? container.lastElementChild.remove() : container.appendChild(html.cachedDiv)
+		html.created = !html.created
+		button.classList.toggle('opened')
+	})
 
-    html.init?.();
+	html.init?.()
 
-    if (location.hash === "#"+html.name) {
-        container.appendChild(html.cachedDiv);
-        html.created= true;
-        container.scrollIntoView({ behavior: "smooth", block: "start"});
-    }
+	if (location.hash === '#' + html.name) {
+		container.appendChild(html.cachedDiv)
+		html.created = true
+		container.scrollIntoView({ behavior: 'smooth', block: 'start' })
+	}
 }
 
 export const make = (tag, props = {}, children) => {
-    const el = document.createElement(tag);
-    if (props.style && typeof props.style == "object") {
-        Object.assign(el.style, props.style);
-        delete props.style;
-    }
-    if (props.dataset && typeof props.dataset === "object") {
-        Object.assign(el.dataset, props.dataset);
-        delete props.dataset;
-    }
+	const el = document.createElement(tag)
+	if (props.style && typeof props.style == 'object') {
+		Object.assign(el.style, props.style)
+		delete props.style
+	}
+	if (props.dataset && typeof props.dataset === 'object') {
+		Object.assign(el.dataset, props.dataset)
+		delete props.dataset
+	}
 
 	for (const [key, value] of Object.entries(props)) {
-		if (value === undefined) continue;
-		el[key] = value;
+		if (value === undefined) continue
+		el[key] = value
 	}
-	
-    if (children){
-        el.append(...children);
-    }
-    return el;
-};
 
-export function doTimestamps(){
-	document.querySelectorAll('.discord-timestamp').forEach(el=>el.textContent=new Date().toTimeString().slice(0,5));
+	if (children) {
+		el.append(...children)
+	}
+	return el
+}
+
+export function doTimestamps() {
+	document
+		.querySelectorAll('.discord-timestamp')
+		.forEach((el) => (el.textContent = new Date().toTimeString().slice(0, 5)))
 }

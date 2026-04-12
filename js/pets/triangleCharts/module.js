@@ -1,16 +1,16 @@
-import * as PluginHelper from "./trianglePlugins.js"
+import * as PluginHelper from './trianglePlugins.js'
 
 export class Module {
-    constructor(opts){
-        const {pluginConfigs,id} = opts;
+	constructor(opts) {
+		const { pluginConfigs, id } = opts
 
-        this.id = id;
-        this.plugins = (pluginConfigs ?? []).map(
-            pluginConfig => PluginHelper[pluginConfig.factory](pluginConfig) 
-        )
-    }
+		this.id = id
+		this.plugins = (pluginConfigs ?? []).map((pluginConfig) =>
+			PluginHelper[pluginConfig.factory](pluginConfig)
+		)
+	}
 
-    set hidden(bool){
-        this.plugins.forEach(plugin=>plugin.hidden = bool);
-    }
+	set hidden(bool) {
+		this.plugins.forEach((plugin) => (plugin.hidden = bool))
+	}
 }

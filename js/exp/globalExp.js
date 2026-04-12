@@ -1,170 +1,187 @@
-import { make } from "/js/util/injectionUtil.js";
+import { make } from '/js/util/injectionUtil.js'
 
-const multiTable = new Array(100).fill(1); 
-for (let i = 0; i < 100; i += 5) multiTable[i] = 3; 
-for (let i = 0; i < 100; i += 10) multiTable[i] = 5; 
-for (let i = 0; i < 100; i += 50) multiTable[i] = 10; 
-multiTable[0] = 25; 
+const multiTable = new Array(100).fill(1)
+for (let i = 0; i < 100; i += 5) multiTable[i] = 3
+for (let i = 0; i < 100; i += 10) multiTable[i] = 5
+for (let i = 0; i < 100; i += 50) multiTable[i] = 10
+multiTable[0] = 25
 
-function bonusXp(n){
+function bonusXp(n) {
 	// for 10*n, since we're going in steps of 10
-	const dynamic = 10 * Math.sqrt(10*n)
-	const bonus = multiTable[n % 100]*(dynamic+500);
-	return Math.min(100000, Math.round(bonus));
+	const dynamic = 10 * Math.sqrt(10 * n)
+	const bonus = multiTable[n % 100] * (dynamic + 500)
+	return Math.min(100000, Math.round(bonus))
 }
 
-function calcBonusXp(streak){
-	const winChance = streak / (streak + 1);
-	const accuracyFactor = 1; // this is basically a config constant, 
-							  // make it higher if you want more accuracy,
-							  // or lower if you want faster execution
+function calcBonusXp(streak) {
+	const winChance = streak / (streak + 1)
+	const accuracyFactor = 1 // this is basically a config constant,
+	// make it higher if you want more accuracy,
+	// or lower if you want faster execution
 
-	let sum = 0;
-	for (let n=1; n<=streak*accuracyFactor; n++) {
-		sum += winChance**(10*n) 
-			* bonusXp(n);
+	let sum = 0
+	for (let n = 1; n <= streak * accuracyFactor; n++) {
+		sum += winChance ** (10 * n) * bonusXp(n)
 	}
-	return sum;
+	return sum
 }
 
-const _xpCache = new Map();
-function cachedBonusXp(streak){
-	const key = String(streak);
-	if (_xpCache.has(key)) return _xpCache.get(key);
-	const result = calcBonusXp(streak);
-	_xpCache.set(key, result);
-	return result;
+const _xpCache = new Map()
+function cachedBonusXp(streak) {
+	const key = String(streak)
+	if (_xpCache.has(key)) return _xpCache.get(key)
+	const result = calcBonusXp(streak)
+	_xpCache.set(key, result)
+	return result
 }
 
 await fetch('/csv/bonusXP.csv')
-	.then(r => r.text())
-	.then(txt => txt.split(/\r?\n/).forEach(line => {
-		const [key, val] = line.split(',');
-		_xpCache.set(key, +val);
-	}));
+	.then((r) => r.text())
+	.then((txt) =>
+		txt.split(/\r?\n/).forEach((line) => {
+			const [key, val] = line.split(',')
+			_xpCache.set(key, +val)
+		})
+	)
 
 function battleExp(s, t) {
-	[s,t]=[Number(s),Number(t)];
-	const tieChance = 0.01*t;             // converting from percent to decimal
-	const lossPart  = 50;                 // adding 50xp because each streak will have a loss, giving 50
-	const winPart   = 200 * s;            // average amount of wins in the streak, giving 200
-	const bonusPart = cachedBonusXp(s);
-	const sum = lossPart + winPart + bonusPart;
+	;[s, t] = [Number(s), Number(t)]
+	const tieChance = 0.01 * t // converting from percent to decimal
+	const lossPart = 50 // adding 50xp because each streak will have a loss, giving 50
+	const winPart = 200 * s // average amount of wins in the streak, giving 200
+	const bonusPart = cachedBonusXp(s)
+	const sum = lossPart + winPart + bonusPart
 
-	const battleExp = 
-		sum
-		*(1-tieChance)
-		/(s+1) 
-		+ t;
-	return battleExp;
+	const battleExp = (sum * (1 - tieChance)) / (s + 1) + t
+	return battleExp
 }
 
-function attachBattleCalculator(){
-	const output = () => outputField.textContent= 
-		battleExp(streak.value,tierate.value).toFixed(2); 
+function attachBattleCalculator() {
+	const output = () =>
+		(outputField.textContent = battleExp(streak.value, tierate.value).toFixed(2))
 
-	const streak = make('input',{ 
-		className:'global-inputs no-arrows', 
-		type: 'number', min: 0, max: 1e6, step: 1, value: 1, lang: 'en',
-		oninput:output
-	});
-	const tierate = make('input',{ 
-		className:'global-inputs no-arrows', 
-		type: 'number', min: 0,	max: 100, step: 0.01, value: 0,	lang: 'en',
-		oninput:output
-	});
-	const outputField = make('div');
+	const streak = make('input', {
+		className: 'global-inputs no-arrows',
+		type: 'number',
+		min: 0,
+		max: 1e6,
+		step: 1,
+		value: 1,
+		lang: 'en',
+		oninput: output,
+	})
+	const tierate = make('input', {
+		className: 'global-inputs no-arrows',
+		type: 'number',
+		min: 0,
+		max: 100,
+		step: 0.01,
+		value: 0,
+		lang: 'en',
+		oninput: output,
+	})
+	const outputField = make('div')
 
 	this.container.append(
-		make('div', {className: 'global-column align-child-text-right'},[streak, tierate, outputField]), 
-		make('div',  {className: 'global-column' },[
-			make('div', {textContent:"streak"}), 
-			make('div', {textContent:"% tierate"}), 
-			make('div', {textContent:"exp/battle"})
+		make('div', { className: 'global-column align-child-text-right' }, [
+			streak,
+			tierate,
+			outputField,
+		]),
+		make('div', { className: 'global-column' }, [
+			make('div', { textContent: 'streak' }),
+			make('div', { textContent: '% tierate' }),
+			make('div', { textContent: 'exp/battle' }),
 		])
-	);
+	)
 
-	output();
+	output()
 }
 
-function attachExpChart(){
-	const ctx = make("canvas");
-	const slider = make("input",{
-		className:"global-tierate-slider", type:"range", min:"0", max:"100", step:"1", value:"0"
-	});
+function attachExpChart() {
+	const ctx = make('canvas')
+	const slider = make('input', {
+		className: 'global-tierate-slider',
+		type: 'range',
+		min: '0',
+		max: '100',
+		step: '1',
+		value: '0',
+	})
 
-	const percentText = make("div",{innerHTML:"0%"});
-	const tierateText = make("div",{innerHTML:"tierate"});
-	const textWrapper = make("div",{style:"height: 4.4rem"},[percentText,tierateText]);
+	const percentText = make('div', { innerHTML: '0%' })
+	const tierateText = make('div', { innerHTML: 'tierate' })
+	const textWrapper = make('div', { style: 'height: 4.4rem' }, [percentText, tierateText])
 
 	this.container.append(
-		make("div",{className:"global-chart-wrapper"},[ctx]),
-		make("div",{className:"global-slider-wrapper"},[slider,textWrapper])
-	);
+		make('div', { className: 'global-chart-wrapper' }, [ctx]),
+		make('div', { className: 'global-slider-wrapper' }, [slider, textWrapper])
+	)
 
-	let currentTierate = 0;
+	let currentTierate = 0
 
 	const points = Array.from({ length: 101 }, (_, i) =>
-		[..._xpCache.keys()].map(k => ({
+		[..._xpCache.keys()].map((k) => ({
 			x: k,
-			y: battleExp(k, i).toFixed(1)
+			y: battleExp(k, i).toFixed(1),
 		}))
-	);
+	)
 
 	const streakExpChart = new Chart(ctx, {
-		type: "line",
+		type: 'line',
 		data: {
-			datasets: [{
-				label: "Exp/Battle",
-				data: points[currentTierate],
-				borderColor: "rgba(154, 213, 213, 1)",
-			}]
+			datasets: [
+				{
+					label: 'Exp/Battle',
+					data: points[currentTierate],
+					borderColor: 'rgba(154, 213, 213, 1)',
+				},
+			],
 		},
 		options: {
 			animation: false,
-			plugins:{
+			plugins: {
 				legend: { display: false },
 				tooltip: {
 					mode: 'index',
 					intersect: false,
-					displayColors:false,
-					callbacks: { title: tooltipData => "Streak: "+ tooltipData[0].label}
-				}
+					displayColors: false,
+					callbacks: { title: (tooltipData) => 'Streak: ' + tooltipData[0].label },
+				},
 			},
 			hover: { mode: 'index', intersect: false },
 			scales: {
-				y: { 
-					min:0, 
-					max:1400, 
-					title: { display: true, text: 'Exp/Battle', font: {size: 13} },
-					grid: {color:'#333'},
+				y: {
+					min: 0,
+					max: 1400,
+					title: { display: true, text: 'Exp/Battle', font: { size: 13 } },
+					grid: { color: '#333' },
 				},
-				x:{
-					title: { display:true, text: 'average Streak', font: {size: 13} },
-					type: "logarithmic",
-					grid: {color:'#333'},
+				x: {
+					title: { display: true, text: 'average Streak', font: { size: 13 } },
+					type: 'logarithmic',
+					grid: { color: '#333' },
 					ticks: {
-						font: {size: 10}, 
-						minRotation: 90, 
-						maxRotation: 90, 
-						callback: t => t
-					}
-				}
-			}
-    	}
-	});
+						font: { size: 10 },
+						minRotation: 90,
+						maxRotation: 90,
+						callback: (t) => t,
+					},
+				},
+			},
+		},
+	})
 
-	slider.addEventListener("input", ()=>{
-		currentTierate=+slider.value;
-		percentText.innerHTML=slider.value+"%";
-		streakExpChart.data.datasets[0].data= points[currentTierate];
-		streakExpChart.update("none");
-	});
+	slider.addEventListener('input', () => {
+		currentTierate = +slider.value
+		percentText.innerHTML = slider.value + '%'
+		streakExpChart.data.datasets[0].data = points[currentTierate]
+		streakExpChart.update('none')
+	})
 }
 
-function attachLatex(){
-	const rawLatex = String.raw
-	`$$
+function attachLatex() {
+	const rawLatex = String.raw`$$
 	\displaylines{  
 		\mathrm{Multi}(n) =
 		\begin{cases}
@@ -198,39 +215,39 @@ function attachLatex(){
 			{s+1}
 			+100t
 		}
-	$$`;
-	this.container.textContent=rawLatex;
-	window.MathJax.typesetPromise([this.container]);
+	$$`
+	this.container.textContent = rawLatex
+	window.MathJax.typesetPromise([this.container])
 }
 
-export function initGlobal(){
-	const { cachedDiv } = this;
-	window.MathJax.typesetPromise([cachedDiv]);
-	const wrapper = cachedDiv.querySelector("#tabContainer");
-	const buttonWrapper = make("div", { style: "display:flex;" });
-  	const contentWrapper = make("div");
-	wrapper.append(buttonWrapper,contentWrapper);
+export function initGlobal() {
+	const { cachedDiv } = this
+	window.MathJax.typesetPromise([cachedDiv])
+	const wrapper = cachedDiv.querySelector('#tabContainer')
+	const buttonWrapper = make('div', { style: 'display:flex;' })
+	const contentWrapper = make('div')
+	wrapper.append(buttonWrapper, contentWrapper)
 
 	const tabs = [
-		{name:"Function", 	init:attachLatex 			/*, button, container */},
-		{name:"Calculator", init:attachBattleCalculator /*, button, container */},
-		{name:"Graph", 		init:attachExpChart 		/*, button, container */}
+		{ name: 'Function', init: attachLatex /*, button, container */ },
+		{ name: 'Calculator', init: attachBattleCalculator /*, button, container */ },
+		{ name: 'Graph', init: attachExpChart /*, button, container */ },
 	]
 
-	tabs.forEach(t =>{
-		t.container = make("div", { className: "global-content-container" });
-    	t.button =    make("button", { 
-			className: "tab-button", 
+	tabs.forEach((t) => {
+		t.container = make('div', { className: 'global-content-container' })
+		t.button = make('button', {
+			className: 'tab-button',
 			textContent: t.name,
-			onclick: e =>{
-				tabs.forEach(tab => tab.button.classList.remove("tab-button-active"))
-				e.target.classList.add("tab-button-active");
-				contentWrapper.replaceChildren(t.container);
-			}
-		});
-		buttonWrapper.append(t.button);
-		t.init();
-	});
+			onclick: (e) => {
+				tabs.forEach((tab) => tab.button.classList.remove('tab-button-active'))
+				e.target.classList.add('tab-button-active')
+				contentWrapper.replaceChildren(t.container)
+			},
+		})
+		buttonWrapper.append(t.button)
+		t.init()
+	})
 
-	tabs[0].button.click();
+	tabs[0].button.click()
 }
