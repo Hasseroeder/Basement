@@ -1,146 +1,159 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Calculator</title>
-    <link rel="icon" type="image/png" href="media/misc_images/may.png">
-    <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all">
-  
-    	<meta property="og:title" content="Pet Calculator">
-			<meta property="og:description" content="A calculator OwO Bot's pet stats">
-			<meta property="og:type" content="website">
-			<meta property="og:image" content="https://owo.bwep.net/media/misc_images/may.png">
-			<meta property="og:url" content="https://owo.bwep.net/calculator">
-    
-  </head>
-  <body>
-    <div class="center-pillar">
-      <div id="navbar" class="navbar"></div>
-      <div class="container">
-        <div>
-          <div class="discord-message-outer">
-            <div class="discord-message-header">
-              <img src="media/owo_images/avatars/owo_avatar.png" class="discord-avatar">
-              <p class="discord-name">OwO</p><span class="discord-bot-tag">✓APP</span><span class="discord-timestamp">15:35</span>
-            </div>
-            <div class="discord-embed-outer" style="gap: 1rem;display:flex;">
-              <div class="discord-embed-middle">
-                <div class="discord-embed-inner">
-                  <span class="discord-embed-header">
-                    <div class="discord-text-bolder">
-                      <img src="media/owo_images/huntbot/robot.png" class="discord-embed-emote"> Pet Calculator
-                    </div>
-                  </span>
-                  
-                  <div style="display: grid;
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Calculator</title>
+  <link rel="icon" type="image/png" href="media/misc_images/may.png">
+  <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all">
+
+  <meta property="og:title" content="Pet Calculator">
+  <meta property="og:description" content="A calculator OwO Bot's pet stats">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://owo.bwep.net/media/misc_images/may.png">
+  <meta property="og:url" content="https://owo.bwep.net/calculator">
+
+</head>
+
+<body>
+  <div class="center-pillar">
+    <div id="navbar" class="navbar"></div>
+    <div class="container">
+      <div>
+        <div class="discord-message-outer">
+          <div class="discord-message-header">
+            <img src="media/owo_images/avatars/owo_avatar.png" class="discord-avatar">
+            <p class="discord-name">OwO</p><span class="discord-bot-tag">✓APP</span><span
+              class="discord-timestamp">15:35</span>
+          </div>
+          <div class="discord-embed-outer" style="gap: 1rem;display:flex;">
+            <div class="discord-embed-middle">
+              <div class="discord-embed-inner">
+                <span class="discord-embed-header">
+                  <div class="discord-text-bolder">
+                    <img src="media/owo_images/huntbot/robot.png" class="discord-embed-emote"> Pet Calculator
+                  </div>
+                </span>
+
+                <div style="display: grid;
                               grid-template-columns: 8rem 8rem;
                               grid-template-rows: 3rem 1.55rem 1.55rem 1.55rem 0.5rem;
                               justify-items: start;
                               align-items: center;
                   ">
-                    <div style="
+                  <div style="
                     grid-row: 1 / 2;
                     grid-column: span 2;
                     display:flex; align-items: center;">
-                      <div id="levelWrapper" class="grayOnHover darkGrayBackground" style="display:flex;align-items: center; border-radius: 3px; padding:0.1rem 0.1rem 0.1rem 0.4rem; font-family: monospace; margin-right: 0.2rem;">
-                        Lvl.&nbsp;
-                        <input  class="no-arrows levelInputFromCalculator" 
-                                type="number" id="inputLvl" min="1" value="20"
-                                tabindex="1">
-                      </div>
-                      <input id="sliderLvl" type="range" min="1" max="100" value="20">
+                    <div id="levelWrapper" class="grayOnHover darkGrayBackground"
+                      style="display:flex;align-items: center; border-radius: 3px; padding:0.1rem 0.1rem 0.1rem 0.4rem; font-family: monospace; margin-right: 0.2rem;">
+                      Lvl.&nbsp;
+                      <input class="no-arrows levelInputFromCalculator" type="number" id="inputLvl" min="1" value="20"
+                        tabindex="1">
                     </div>
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/HP.png" class="discord-embed-emote">
-                      <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0" max="99" value="15" tabindex="2"><code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code> 
-                    </div>  
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/WP.png" class="discord-embed-emote">
-                      <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0" max="99" value="1" tabindex="5"><code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code> 
-                    </div>
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/STR.png" class="discord-embed-emote">
-                      <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0" max="99" value="1" tabindex="3"><code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code> 
-                    </div>
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/MAG.png" class="discord-embed-emote">
-                      <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0" max="99" value="1" tabindex="6"><code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code>
-                    </div>
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/PR.png" class="discord-embed-emote">
-                      <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0" max="99" value="1" tabindex="4"><code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    %</code> 
-                    </div>
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/MR.png" class="discord-embed-emote">
-                      <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0" max="99" value="1" tabindex="7"><code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    %</code>
-                    </div>
-                    <div>
-                      <span 
-                        id="statSpan"
-                        style="
+                    <input id="sliderLvl" type="range" min="1" max="100" value="20">
+                  </div>
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/HP.png" class="discord-embed-emote">
+                    <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0"
+                      max="99" value="15" tabindex="2"><code class="arrowBefore outputFromCalculator myOutputs"
+                      style="width:3rem">    -</code>
+                  </div>
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/WP.png" class="discord-embed-emote">
+                    <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0"
+                      max="99" value="1" tabindex="5"><code class="arrowBefore outputFromCalculator myOutputs"
+                      style="width:3rem">    -</code>
+                  </div>
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/STR.png" class="discord-embed-emote">
+                    <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0"
+                      max="99" value="1" tabindex="3"><code class="arrowBefore outputFromCalculator myOutputs"
+                      style="width:3rem">    -</code>
+                  </div>
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/MAG.png" class="discord-embed-emote">
+                    <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0"
+                      max="99" value="1" tabindex="6"><code class="arrowBefore outputFromCalculator myOutputs"
+                      style="width:3rem">    -</code>
+                  </div>
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/PR.png" class="discord-embed-emote">
+                    <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0"
+                      max="99" value="1" tabindex="4"><code class="arrowBefore outputFromCalculator myOutputs"
+                      style="width:3rem">    %</code>
+                  </div>
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/MR.png" class="discord-embed-emote">
+                    <input required class="discord-code-lite no-arrows grayOnHover myInputs" type="number" min="0"
+                      max="99" value="1" tabindex="7"><code class="arrowBefore outputFromCalculator myOutputs"
+                      style="width:3rem">    %</code>
+                  </div>
+                  <div>
+                    <span id="statSpan" style="
                         grid-column: span 2;
-                        color:#aaa; font-size:10px"> 20 stats </span>                  
-                    </div>
+                        color:#aaa; font-size:10px"> 20 stats </span>
                   </div>
                 </div>
               </div>
-              <div style="max-width: unset;  align-self: auto;" class="discord-embed-middle">
-                <div class="discord-embed-inner" id="effectContainer" style="display:unset">
-                </div>
-              </div>
-            </div>  
-          </div>
-          <div class="discord-message-outer">
-            <div class="discord-message-header">
-              <img src="media/owo_images/avatars/neonutil.png" class="discord-avatar">
-              <p class="discord-name">NeonUtil</p><span class="discord-bot-tag">✓APP</span><span class="discord-timestamp">15:35</span>
             </div>
-            <div class="discord-embed-outer">
-              <div style="max-width: unset;" class="discord-embed-middle">
-                <div class="discord-embed-inner">
-        
-                  <div style="display: grid;
+            <div style="max-width: unset;  align-self: auto;" class="discord-embed-middle">
+              <div class="discord-embed-inner" id="effectContainer" style="display:unset">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="discord-message-outer">
+          <div class="discord-message-header">
+            <img src="media/owo_images/avatars/neonutil.png" class="discord-avatar">
+            <p class="discord-name">NeonUtil</p><span class="discord-bot-tag">✓APP</span><span
+              class="discord-timestamp">15:35</span>
+          </div>
+          <div class="discord-embed-outer">
+            <div style="max-width: unset;" class="discord-embed-middle">
+              <div class="discord-embed-inner">
+
+                <div style="display: grid;
                               grid-template-columns: 8rem 8rem;
                               grid-template-rows: 1.55rem 1.55rem;
                               justify-items: start;
                               align-items: center;">
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/prHP.png" class="discord-embed-emote">
-                      <code class="outputFromCalculator">eHP</code> 
-                      <code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code> 
-                    </div>
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/mrHP.png" class="discord-embed-emote">
-                      <code class="outputFromCalculator">eHP</code> 
-                      <code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code>   
-                    </div>
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/iPR.png" class="discord-embed-emote">
-                      <code class="outputFromCalculator">iPR</code> 
-                      <code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code> 
-                    </div>
-                    <div style="display:flex; align-items: center; gap:0.2rem">
-                      <img src="media/owo_images/battleEmojis/iMR.png" class="discord-embed-emote">
-                      <code class="outputFromCalculator">iMR</code> 
-                      <code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">   -</code>  
-                    </div>
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/prHP.png" class="discord-embed-emote">
+                    <code class="outputFromCalculator">eHP</code>
+                    <code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code>
                   </div>
-                  <button id="petButton" 
-                          tabindex="8"
-                          class="petButtonFromCalculator">
-                    Mode: Matching Pets
-                  </button>
-                  <div id="petContainer">
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/mrHP.png" class="discord-embed-emote">
+                    <code class="outputFromCalculator">eHP</code>
+                    <code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code>
+                  </div>
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/iPR.png" class="discord-embed-emote">
+                    <code class="outputFromCalculator">iPR</code>
+                    <code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">    -</code>
+                  </div>
+                  <div style="display:flex; align-items: center; gap:0.2rem">
+                    <img src="media/owo_images/battleEmojis/iMR.png" class="discord-embed-emote">
+                    <code class="outputFromCalculator">iMR</code>
+                    <code class="arrowBefore outputFromCalculator myOutputs" style="width:3rem">   -</code>
                   </div>
                 </div>
+                <button id="petButton" tabindex="8" class="petButtonFromCalculator">
+                  Mode: Matching Pets
+                </button>
+                <div id="petContainer">
+                </div>
               </div>
-            </div>  
+            </div>
           </div>
-        </div>  
+        </div>
       </div>
     </div>
-    <script type="module" src="/js/init.js"></script>
-    <script type="module" src="/js/calculator.js"></script>
-  </body>
+  </div>
+  <script type="module" src="/js/init.js"></script>
+  <script type="module" src="/js/calculator.js"></script>
+</body>
+
 </html>
