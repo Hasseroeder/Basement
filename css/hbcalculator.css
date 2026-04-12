@@ -1,196 +1,199 @@
-.gridContainer{
-    display:grid;
-    grid-template-rows: 7rem 7rem;
-    grid-template-columns: repeat(3, 12rem);
-    font-size: 0.8rem;
+.gridContainer {
+	display: grid;
+	grid-template-rows: 7rem 7rem;
+	grid-template-columns: repeat(3, 12rem);
+	font-size: 0.8rem;
 }
 
-.intro{
-    padding:0.3rem;
-    display:flex;
-    align-items: center;
-    font-size: 0.8rem;
-}  
-.intro:hover{
-    background-color: #373737;
-    color: lightgray;
-}  
-
-.trait-box{
-    padding: 0.3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+.intro {
+	padding: 0.3rem;
+	display: flex;
+	align-items: center;
+	font-size: 0.8rem;
 }
-.trait-box:hover{
-    background-color: #373737;
-    color: lightgray;
+.intro:hover {
+	background-color: #373737;
+	color: lightgray;
 }
 
-.discord-code{
-    white-space: pre-wrap;
-    font-size:0.7rem;
-    background-color:#202020;
+.trait-box {
+	padding: 0.3rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+.trait-box:hover {
+	background-color: #373737;
+	color: lightgray;
 }
 
-.discord-embed-middle{
-    max-width: fit-content;
+.discord-code {
+	white-space: pre-wrap;
+	font-size: 0.7rem;
+	background-color: #202020;
+}
+
+.discord-embed-middle {
+	max-width: fit-content;
 }
 
 .gray-hover:hover {
-    background-color: #555555;
+	background-color: #555555;
 }
 .gray-hover {
-    background-color: #202020;
+	background-color: #202020;
 }
 
 #table-1 td {
-    height:2.2rem;
-    border:none;
-    font-size:0.8rem;
+	height: 2.2rem;
+	border: none;
+	font-size: 0.8rem;
 }
 
-.table-2{
-    font-size: 0.8rem;
-}  
-.table-2:hover{
-    background-color: #373737;
-    color: lightgray;
-    outline:0.3rem solid #373737;
+.table-2 {
+	font-size: 0.8rem;
+}
+.table-2:hover {
+	background-color: #373737;
+	color: lightgray;
+	outline: 0.3rem solid #373737;
 }
 
-.table-2 td, .table-2 th {
-    padding:0.1rem;
-    width:6rem;
+.table-2 td,
+.table-2 th {
+	padding: 0.1rem;
+	width: 6rem;
 }
 
 .table-1 {
-    table-layout: fixed;
+	table-layout: fixed;
 }
 
-input[type="checkbox"] {
-    width: 1rem; 
-    height: 1rem; 
-    appearance: none; 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border: 2px solid lightgray; 
-    border-radius: 0; 
+input[type='checkbox'] {
+	width: 1rem;
+	height: 1rem;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border: 2px solid lightgray;
+	border-radius: 0;
 
-    /*cursor: pointer;*/
-    position: relative; 
+	/*cursor: pointer;*/
+	position: relative;
 }
 
-.calculatorLevel{
-    padding: 0 0 0 0.6rem;
-    display: flex;
-    height: 1.45rem;
-    align-items: center;
-    font-family: monospace;
+.calculatorLevel {
+	padding: 0 0 0 0.6rem;
+	display: flex;
+	height: 1.45rem;
+	align-items: center;
+	font-family: monospace;
 }
 
-.number-input{
-    width: 2.3rem;
-    color: lightgray;
-    text-align: center;
-    background-color: unset;
-    border: none;
-    font-family: monospace;
+.number-input {
+	width: 2.3rem;
+	color: lightgray;
+	text-align: center;
+	background-color: unset;
+	border: none;
+	font-family: monospace;
 }
 
 .numberWrapper {
-    background-color: #202020;
-    display:flex;
-    padding: 0;
-    border-radius: 0.2rem;
+	background-color: #202020;
+	display: flex;
+	padding: 0;
+	border-radius: 0.2rem;
 }
 
 .numberWrapper:hover {
-    background-color: #555555;
+	background-color: #555555;
 }
 
-input[type="checkbox"]:checked::before {
-    content: "✔"; 
-    font-size: 0.8rem;
-    color: lightgray;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+input[type='checkbox']:checked::before {
+	content: '✔';
+	font-size: 0.8rem;
+	color: lightgray;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 button {
-    height:1.45rem;
-    width: 2.5rem;
-    border: none;
-    font-size:0.55rem;
-    margin:0;
-    background-color: #202020;
+	height: 1.45rem;
+	width: 2.5rem;
+	border: none;
+	font-size: 0.55rem;
+	margin: 0;
+	background-color: #202020;
 }
 
 button:hover {
-    background-color: #555555;
+	background-color: #555555;
 }
 
 li {
-    font-size:0.75rem;
+	font-size: 0.75rem;
 }
 
 ul {
-    padding-left: 1.4rem;
-    margin-bottom:0;
+	padding-left: 1.4rem;
+	margin-bottom: 0;
 }
 
-.upgrade-image{
-    width: 0.6rem; 
-    height: 0.6rem;
+.upgrade-image {
+	width: 0.6rem;
+	height: 0.6rem;
 }
 
-.hb-input-wrapper{
-    display:flex; 
-    align-items:center; 
-    gap: 0.15rem;   
+.hb-input-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 0.15rem;
 }
 
 .hb-input-wrapper > * {
-    max-height: unset;
+	max-height: unset;
 }
 
-.patreon-graying{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(30,30,30,0.8);
-    top: 0%; 
-    left: 0%; 
+.patreon-graying {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(30, 30, 30, 0.8);
+	top: 0%;
+	left: 0%;
 }
 
-.table-1-img{
-    height:1rem;
-    width:1rem; 
+.table-1-img {
+	height: 1rem;
+	width: 1rem;
 }
 
-.cell-text{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.2rem;
+.cell-text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.2rem;
 }
 
-.table-2{
-    margin:0.3rem;
+.table-2 {
+	margin: 0.3rem;
 }
 
 .header-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    padding-left: 0.35rem;
+	display: flex;
+	align-items: center;
+	gap: 0.2rem;
+	padding-left: 0.35rem;
 }
 
 h4 {
-    margin: 0.15rem;
+	margin: 0.15rem;
 }
 
-[hidden] { display: none !important; }
-    /* this should be important by default imo */
+[hidden] {
+	display: none !important;
+}
+/* this should be important by default imo */
