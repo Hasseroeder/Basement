@@ -7,8 +7,7 @@ This guide will try to give an explanation of the battle system in the game, and
 
 Following other attempts to write guides, this one also won't be able to be kept up to date completely and will always be work-in-progress. Also please understand that this guide is painted by our bias significantly. While we try to be objective, some of the topics in this game are inherently subjective. To this end, we also accept all feedback or extra info you'd like added to the site!
 
- 
-    -/=--                                --=\-    
+    -/=--                                --=\-
            ,-.       _,---._ __  / \
           /  )    ./´       `./ /   \
          (  (   ,'            `/    /|
@@ -19,11 +18,11 @@ Following other attempts to write guides, this one also won't be able to be kept
            |  ,-.    ,-'         |  /
            |  | (   |        hjw | /
            )  |  \  `.___________|/
-           '--'   `--'  
+           '--'   `--'
     -\=--                                --=/-
- 
 
 ## Basement
+
 <div style="display:flex; gap:1.5rem; margin-top:-0.4rem;">
   <table>
     <tr style="line-height:1.1rem">
@@ -36,7 +35,6 @@ Following other attempts to write guides, this one also won't be able to be kept
       <td><a href="https://discord.gg/wA82GZ2rnR">Support Server</a></td>
     </tr>
   </table>
-
 
   <table style="height:3.3rem;">
     <tr style="line-height:1.1rem;">
@@ -75,6 +73,7 @@ Following other attempts to write guides, this one also won't be able to be kept
 </div>
 
 ## Friends & Useful Stuff
+
 <div style="display:flex; gap: 2.5rem; margin-top:-0.7rem;">
   <div>
     <h4 style="margin: 0.2rem 0.4rem; font-size: 0.7rem; color:#888;">#Relevant Bots</h4>
@@ -113,7 +112,12 @@ Following other attempts to write guides, this one also won't be able to be kept
 </div>
 
 ## Technical
+
 We try to use vanilla JavaScript to keep the entry barrier as low as possible. You don't need any NPM or Node to help with this project, and you could probably even develop in notepad. We do have some dependencies, but we pull those with CDN script tags, so that's easy peasy.
+
 - Chart.js v4.5.0
 - chartjs-plugin-annotation v3.1.0
 - MathJax v3
+
+To keep formatting consistent across contributors, we use: `.editorconfig`, `.prettierrc`, `.prettierignore`.  
+These files work in most modern editors and will automatically apply the project’s style when you work on it.
