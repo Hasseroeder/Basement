@@ -28,7 +28,7 @@
 }
 
 .discord-code {
-	white-space: pre-wrap;
+	/*white-space: pre-wrap;*/
 	font-size: 0.7rem;
 	background-color: #202020;
 }
