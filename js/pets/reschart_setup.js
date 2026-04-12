@@ -10,12 +10,12 @@ const colorPalette = [
     "rgb(147, 196, 125)", // spider
     "rgb(255, 217, 102)", // deer
     "rgb(111, 168, 220)", // gorilla
-    "rgb(175, 85, 82)", // parrot
+    "rgb(175, 85, 82)",   // parrot
     "rgb(149, 149, 149)", // giraffbot
     "rgb(139, 122, 190)", // koala
-	"rgb(80, 80, 80)",    // hedgebot
+	"rgb(149, 149, 149)", // hedgebot
     "rgb(234, 153, 153)", // 3m_specialpanda
-    "rgb(168, 112, 29)", // 2025dec_polar
+    "rgb(219, 219, 219)", // 2025dec_polar
     "rgb(150, 220, 220)", // 2026march_miku
 ];
 
