@@ -1529,8 +1529,8 @@ table.discord-code-styling td {
 	font-family: monospace;
 }
 
-table.discord-code-styling.this-to-that td:last-child,
-table.discord-code-styling.this-to-that td:first-child {
+table.discord-code-styling td:last-child,
+table.discord-code-styling td:first-child {
 	padding: 0.1em 0.7rem;
 	background: #191919;
 }
@@ -1543,4 +1543,16 @@ table.this-to-that td:last-child {
 }
 table.this-to-that td:nth-child(2)::after {
 	content: '⇀';
+}
+table.this-to-that.with-equals td:nth-child(2)::after {
+	content: '=';
+}
+
+.discord-code-background {
+	border-radius: 3px;
+	background-color: #191919;
+}
+
+table.align-child-text-left td {
+	text-align: left;
 }

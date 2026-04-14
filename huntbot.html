@@ -31,26 +31,35 @@
             becomes more useful, it becomes increasingly expensive to upgrade. <br />
             These are the relevant formulas for upgrading to level x from the previous level:<br />
           </p>
-          <ul style="list-style-type: none">
-            <li>
-              <pre class="discord-code"> Efficiency = floor(10x^1.748) where x ≤ 215; </pre>
-            </li>
-            <li>
-              <pre class="discord-code"> Gain       = floor(10x^1.800) where x ≤ 200; </pre>
-            </li>
-            <li>
-              <pre class="discord-code"> Duration   = floor(10x^1.700) where x ≤ 235; </pre>
-            </li>
-            <li>
-              <pre class="discord-code"> Exp        = floor(10x^1.800) where x ≤ 200; </pre>
-            </li>
-            <li>
-              <pre class="discord-code"> Cost       = floor(1000x^3.4) where x ≤   5; </pre>
-            </li>
-            <li>
-              <pre class="discord-code"> Radar      = floor(50x^2.500) where x ≤ 999; </pre>
-            </li>
-          </ul>
+          <table
+            class="bare discord-code-background discord-code-styling align-child-text-left"
+            style="margin-left: 2rem"
+          >
+            <tr>
+              <td>Efficiency(x)</td>
+              <td>= floor(10x^1.748) for x ≤ 215</td>
+            </tr>
+            <tr>
+              <td>Gain(x)</td>
+              <td>= floor(10x^1.800) for x ≤ 200</td>
+            </tr>
+            <tr>
+              <td>Duration(x)</td>
+              <td>= floor(10x^1.700) for x ≤ 235</td>
+            </tr>
+            <tr>
+              <td>Exp(x)</td>
+              <td>= floor(10x^1.800) for x ≤ 200</td>
+            </tr>
+            <tr>
+              <td>Cost(x)</td>
+              <td>= floor(1000x^3.4) for x ≤ 5</td>
+            </tr>
+            <tr>
+              <td>Radar(x)</td>
+              <td>= floor(50x^2.500) for x ≤ 999</td>
+            </tr>
+          </table>
         </section>
         <section class="readable-text">
           <h2>
