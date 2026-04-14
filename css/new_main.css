@@ -1494,3 +1494,53 @@ button:hover {
 .readable-text .discord-code {
 	padding: 0.1em 0.2em;
 }
+
+.subscript::before {
+	content: '-# ';
+	font-size: 0.75rem;
+	font-style: italic;
+}
+
+.subscript {
+	font-size: 0.75rem;
+	font-style: italic;
+	margin: 0.2rem;
+}
+
+table.bare {
+	border: none;
+}
+table.bare tr {
+	border: none;
+}
+table.bare td {
+	border: none;
+}
+
+table.discord-code-styling {
+	margin: 0.3rem;
+}
+
+table.discord-code-styling td {
+	padding: 0.1em 0.3rem;
+	border-radius: 3px;
+	font-size: 0.85rem;
+	line-height: 1.125rem;
+	font-family: monospace;
+}
+
+table.discord-code-styling.this-to-that td:last-child,
+table.discord-code-styling.this-to-that td:first-child {
+	padding: 0.1em 0.7rem;
+	background: #191919;
+}
+
+table.this-to-that td:first-child {
+	text-align: right;
+}
+table.this-to-that td:last-child {
+	text-align: left;
+}
+table.this-to-that td:nth-child(2)::after {
+	content: '⇀';
+}
