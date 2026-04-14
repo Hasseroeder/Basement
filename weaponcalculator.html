@@ -1,93 +1,112 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weapon Calculator</title>
+    <link rel="icon" type="image/png" href="media/misc_images/may.png" />
+    <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/temporary.css" rel="stylesheet" type="text/css" media="all" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weapon Calculator</title>
-  <link rel="icon" type="image/png" href="media/misc_images/may.png">
-  <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all">
+    <meta property="og:title" content="Weapon Calculator" />
+    <meta property="og:description" content="A calculator for OwO Bot's weapons" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://owo.bwep.net/media/misc_images/may.png" />
+    <meta property="og:url" content="https://owo.bwep.net/weaponcalculator" />
+  </head>
 
-  <meta property="og:title" content="Weapon Calculator">
-  <meta property="og:description" content="A calculator for OwO Bot's weapons">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://owo.bwep.net/media/misc_images/may.png">
-  <meta property="og:url" content="https://owo.bwep.net/weaponcalculator">
+  <body>
+    <div class="center-pillar">
+      <div id="navbar"></div>
 
-</head>
-
-<body>
-  <div class="center-pillar">
-    <div id="navbar"></div>
-
-    <div class="container">
-      <div>
-        <div class="discord-message-outer">
-          <div class="discord-message-header">
-            <img src="media/owo_images/avatars/owo_avatar.png" alt="User avatar" class="discord-avatar">
-            <p class="discord-name">OwO</p><span class="discord-bot-tag">✓APP</span><span
-              class="discord-timestamp">15:35</span>
-          </div>
-          <div class="discord-embed-outer">
-            <div class="discord-embed-middle" style="width: 520px;">
-              <div class="discord-embed-inner" style="width: 100%;">
-                <span class="discord-embed-header">
-                  <div id="weaponHeader" class="discord-text-bolder"></div>
-                </span>
-                <div class="lineFromWeaponCalculator" style="margin-top: 0.5rem;">
-                  <strong>Name:&nbsp;</strong>
-                  <div id="weaponName"></div>
-                </div>
-                <div class="lineFromWeaponCalculator">
-                  <strong>Owner:&nbsp;</strong>
-                  <div id="ownerID"></div>
-                </div>
-                <div class="lineFromWeaponCalculator">
-                  <strong>ID:&nbsp;</strong>
-                  <code id="weaponID" class="discord-code weapon-id"></code>
-                </div>
-                <div class="lineFromWeaponCalculator">
-                  <strong>Shard Value:&nbsp;</strong>
-                  <div id="shardValue"></div>
-                </div>
-                <div class="lineFromWeaponCalculator">
-                  <strong>Quality:&nbsp;</strong>
-                  <img id="weaponQualityImage" class="discord-embed-emote">
-                  <span id="weaponQualitySpan"></span>
-                </div>
-                <div class="lineFromWeaponCalculator">
-                  <strong>Wear:&nbsp;</strong>
-                  <div id="wearSelect"></div>
-                </div>
-                <div class="lineFromWeaponCalculator">
-                  <div style="display: flex; align-items: center;">
-                    <strong>WP Cost:&nbsp;</strong>
-                    <div id="WP-Cost"></div>
-                    <img alt=":WP:" aria-label="WP" title=":WP:" class="discord-embed-emote"
-                      src="/media/owo_images/battleEmojis/WP.png">
+      <div class="container">
+        <div>
+          <div class="discord-message-outer">
+            <div class="discord-message-header">
+              <img
+                src="media/owo_images/avatars/owo_avatar.png"
+                alt="User avatar"
+                class="discord-avatar"
+              />
+              <p class="discord-name">OwO</p>
+              <span class="discord-bot-tag">✓APP</span><span class="discord-timestamp">15:35</span>
+            </div>
+            <div class="discord-embed-outer">
+              <div class="discord-embed-middle" style="width: 520px">
+                <div class="discord-embed-inner" style="width: 100%">
+                  <span class="discord-embed-header">
+                    <div id="weaponHeader" class="discord-text-bolder"></div>
+                  </span>
+                  <div class="lineFromWeaponCalculator" style="margin-top: 0.5rem">
+                    <strong>Name:&nbsp;</strong>
+                    <div id="weaponName"></div>
                   </div>
-
-                </div>
-                <div class="lineFromWeaponCalculator header">Description:</div>
-                <div id="description" class="lineFromWeaponCalculator description"></div>
-                <div id="buffContainer" class="buffContainer"></div>
-                <div class="passiveContainer"></div>
-                <div class="add-passive-wrapper prevent-select">
-                  <div class="text original">+ add passive</div>
-                  <div class="text replacement">
-                    <div class="passiveGrid"></div>
+                  <div class="lineFromWeaponCalculator">
+                    <strong>Owner:&nbsp;</strong>
+                    <div id="ownerID"></div>
+                  </div>
+                  <div class="lineFromWeaponCalculator">
+                    <strong>ID:&nbsp;</strong>
+                    <code id="weaponID" class="discord-code weapon-id"></code>
+                  </div>
+                  <div class="lineFromWeaponCalculator">
+                    <strong>Shard Value:&nbsp;</strong>
+                    <div id="shardValue"></div>
+                  </div>
+                  <div class="lineFromWeaponCalculator">
+                    <strong>Quality:&nbsp;</strong>
+                    <img id="weaponQualityImage" class="discord-embed-emote" />
+                    <span id="weaponQualitySpan"></span>
+                  </div>
+                  <div class="lineFromWeaponCalculator">
+                    <strong>Wear:&nbsp;</strong>
+                    <div id="wearSelect"></div>
+                  </div>
+                  <div class="lineFromWeaponCalculator">
+                    <div style="display: flex; align-items: center">
+                      <strong>WP Cost:&nbsp;</strong>
+                      <div id="WP-Cost"></div>
+                      <img
+                        alt=":WP:"
+                        aria-label="WP"
+                        title=":WP:"
+                        class="discord-embed-emote"
+                        src="/media/owo_images/battleEmojis/WP.png"
+                      />
+                    </div>
+                  </div>
+                  <div class="lineFromWeaponCalculator header">Description:</div>
+                  <div id="description" class="lineFromWeaponCalculator description"></div>
+                  <div id="buffContainer" class="buffContainer"></div>
+                  <div class="passiveContainer"></div>
+                  <div class="add-passive-wrapper prevent-select">
+                    <div class="text original">+ add passive</div>
+                    <div class="text replacement">
+                      <div class="passiveGrid"></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="discord-embed-inner" style="display:flex; flex-direction: column; padding-left: 0;">
-                <div class="weaponImageGridWrapper">
-                  <img id="weaponImage" aria-label="sword" alt=":sword:" style="border-radius: 0.2rem;"
-                    draggable="false" class="discord-pet-display">
-                  <div id="weaponImageGrid"></div>
-                </div>
-                <div class="add-passive-wrapper star-wrapper prevent-select"
-                  style="margin-top: auto; display:flex; justify-content: center;">
-                  <img src="/media/owo_images/star.png" style="width:1.3rem; height: 1.3rem">
+                <div
+                  class="discord-embed-inner"
+                  style="display: flex; flex-direction: column; padding-left: 0"
+                >
+                  <div class="weaponImageGridWrapper">
+                    <img
+                      id="weaponImage"
+                      aria-label="sword"
+                      alt=":sword:"
+                      style="border-radius: 0.2rem"
+                      draggable="false"
+                      class="discord-pet-display"
+                    />
+                    <div id="weaponImageGrid"></div>
+                  </div>
+                  <div
+                    class="add-passive-wrapper star-wrapper prevent-select"
+                    style="margin-top: auto; display: flex; justify-content: center"
+                  >
+                    <img src="/media/owo_images/star.png" style="width: 1.3rem; height: 1.3rem" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -95,9 +114,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <script type="module" src="/js/init.js"></script>
-  <script type="module" src="/js/weaponCalculator/main.js"></script>
-</body>
-
+    <script type="module" src="/js/init.js"></script>
+    <script type="module" src="/js/weaponCalculator/main.js"></script>
+  </body>
 </html>

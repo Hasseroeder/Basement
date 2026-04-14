@@ -11,6 +11,7 @@
 	background: #191919;
 	font-size: 0.85rem;
 	line-height: 1.125rem;
+	display: inline;
 }
 
 .discord-embed-text {

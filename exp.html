@@ -1,141 +1,213 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Exp</title>
+    <link rel="icon" type="image/png" href="media/misc_images/may.png" />
+    <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/temporary.css" rel="stylesheet" type="text/css" media="all" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pet Exp</title>
-  <link rel="icon" type="image/png" href="media/misc_images/may.png">
-  <link href="css/new_main.css" rel="stylesheet" type="text/css" media="all">
+    <meta property="og:title" content="Pet Exp" />
+    <meta property="og:description" content="A guide for OwO Bot's Pet Exp mechanics" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://owo.bwep.net/media/misc_images/may.png" />
+    <meta property="og:url" content="https://owo.bwep.net/exp" />
+  </head>
 
-  <meta property="og:title" content="Pet Exp">
-  <meta property="og:description" content="A guide for OwO Bot's Pet Exp mechanics">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://owo.bwep.net/media/misc_images/may.png">
-  <meta property="og:url" content="https://owo.bwep.net/exp">
-</head>
+  <body>
+    <div class="center-pillar">
+      <div id="navbar"></div>
+      <div class="container">
+        <h1>Pet Exp</h1>
+        <p>
+          Pet experience is gained by a couple of methods, including battling, hunting, and also
+          just by doing absolutely nothing. <br />
+          I won't be talking about Profile exp here, since I honestly just find that boring as
+          fuck.<br /><br />
 
-<body>
-  <div class="center-pillar">
-    <div id="navbar"></div>
-    <div class="container">
-      <h1> Pet Exp</h1>
-      <p> Pet experience is gained by a couple of methods, including battling, hunting, and also just by doing
-        absolutely nothing. <br>
-        I won't be talking about Profile exp here, since I honestly just find that boring as fuck.<br><br>
+          You'll have 2 or 3 teams in your <code class="discord-code">owotm</code>, which we call
+          "Primary", "Secondary", and "Tertiary", the last of which is exclusive to uncommon and
+          above Patreons. Your Primary team is the selected one, and the others are to the right of
+          this, cycling back to the start after the third slot. Generally speaking, your Primary
+          gains full exp, Secondary gains half exp and
+          <img src="media/owo_images/tiers/patreon.gif" class="discord-text-emote" /> Tertiary gains
+          no exp.<br /><br />
 
-        You'll have 2 or 3 teams in your <code class="discord-code">owotm</code>, which we call "Primary", "Secondary",
-        and "Tertiary", the last of which is exclusive to uncommon and above Patreons.
-        Your Primary team is the selected one, and the others are to the right of this, cycling back to the start after
-        the third slot.
-        Generally speaking, your Primary gains full exp, Secondary gains half exp and <img
-          src="media/owo_images/tiers/patreon.gif" class="discord-text-emote"> Tertiary gains no exp.<br><br>
+          But exp doesn't stack if you have Pets on both your Primary & Secondary, so it generally
+          doesn't make much sense to share pets between these teams. Stacking Pets or even entire
+          Teams in the Tertiary team is quite common though, as there's no reason not to, and you're
+          getting extra Blitz performance for free.<br /><br />
 
-        But exp doesn't stack if you have Pets on both your Primary & Secondary, so it generally doesn't make much sense
-        to share pets between these teams.
-        Stacking Pets or even entire Teams in the Tertiary team is quite common though, as there's no reason not to, and
-        you're getting extra Blitz performance for free.<br><br>
+          The basic exp needed per level up is: <code class="discord-code">1000 + level^4</code>
+        </p>
+        <h2 style="margin-top: 2rem">
+          Battle Exp
+          <img
+            src="media/owo_images/huntbot/experience.png"
+            style="width: 1.7rem"
+            class="discord-text-emote"
+          />
+        </h2>
+        <p>
+          Your main team gains 200/100/50 Exp on a Win/Tie/Loss. <br />
+          <span style="margin-bottom: 0.7rem; display: inline-block"
+            >And your secondary team passively gains 100/50/25 Exp for the same.</span
+          ><br />
 
-        The basic exp needed per level up is: <code class="discord-code">1000 + level^4</code>
-      </p>
-      <h2 style="margin-top:2rem;">
-        Battle Exp <img src="media/owo_images/huntbot/experience.png" style="width:1.7rem;" class="discord-text-emote">
-      </h2>
-      <p>
-        Your main team gains 200/100/50 Exp on a Win/Tie/Loss. <br>
-        <span style="margin-bottom:0.7rem; display: inline-block;">And your secondary team passively gains 100/50/25 Exp
-          for the same.</span><br>
+          This also happens when others encounter you in random battles, and not just when you grind
+          <code class="discord-code">owob</code> yourself. Your streaks are unaffected by these
+          battles though, and due to how rarely you're encountered by random people, the amount of
+          gained exp is miniscule compared to grinding
+          <code class="discord-code">owob</code> yourself. We typically call this "Blitz" exp,
+          because it's more noticeable when your blitz team kills some high level player and you
+          gain a bunch of Bonus exp.<br />
+          <br />
+        </p>
+        <h3 style="margin-bottom: -0.7rem">Bonus Exp is gained in two ways:</h3>
 
-        This also happens when others encounter you in random battles, and not just when you grind <code
-          class="discord-code">owob</code> yourself. Your streaks are unaffected by these battles though, and due to how
-        rarely you're encountered by random people, the amount of gained exp is miniscule compared to grinding <code
-          class="discord-code">owob</code> yourself. We typically call this "Blitz" exp, because it's more noticeable
-        when your blitz team kills some high level player and you gain a bunch of Bonus exp.<br> <br>
-      </p>
-      <h3 style="margin-bottom:-0.7rem;">Bonus Exp is gained in two ways:</h3>
-
-      <ol>
-        <li style="line-height:1.2rem; margin-bottom: 1rem;">By battling teams that have a higher average level than
-          yours. <br>
-          Which is very useful for new players, but quickly becomes a rarity once you've got a leveled team yourself.
-          <br>
-          <span style="line-height:1.5rem;"> You gain this much: <code
-              class="discord-code"> 600(avgEnemyLevel-avgAllyLevel) </code> </span>
-        </li>
-        <li>
-          By reaching certain streak milestones, which is where the real gains lie. <img
-            src="media/misc_images/stonks.png" style="width:1.5rem;" class="discord-text-emote"><br>
-          Multiples of 10, 50, 100, 500 and 1000 give Bonus Exp:
-          <ul style="list-style: none; padding: 0.5rem 1rem 0.5rem 1rem;">
-            <li><code class="discord-code">   10 </code> - <code class="discord-code"> 10√x + 500 </code></li>
-            <li><code class="discord-code">   50 </code> - <code class="discord-code"> 30√x + 1500 </code></li>
-            <li><code class="discord-code">  100 </code> - <code class="discord-code"> 50√x + 2500 </code></li>
-            <li><code class="discord-code">  500 </code> - <code class="discord-code"> 100√x + 5000 </code></li>
-            <li><code class="discord-code"> 1000 </code> - <code class="discord-code"> 250√x + 12500 </code></li>
-            <li><span style="font-size:0.7rem;">The max is capped at 100k in these.</span></li>
-          </ul>
-        </li>
-      </ol>
-      <div class="container" id="streakWorthContainer">
-        <div class="toolbar">
-          <button class="injectable-button" id="streakWorthButton"></button>
-          <div style="font-size:1rem"> Streak Worth </div>
+        <ol>
+          <li style="line-height: 1.2rem; margin-bottom: 1rem">
+            By battling teams that have a higher average level than yours. <br />
+            Which is very useful for new players, but quickly becomes a rarity once you've got a
+            leveled team yourself.
+            <br />
+            <span style="line-height: 1.5rem">
+              You gain this much:
+              <code class="discord-code"> 600(avgEnemyLevel-avgAllyLevel) </code>
+            </span>
+          </li>
+          <li>
+            By reaching certain streak milestones, which is where the real gains lie.
+            <img
+              src="media/misc_images/stonks.png"
+              style="width: 1.5rem"
+              class="discord-text-emote"
+            /><br />
+            Multiples of 10, 50, 100, 500 and 1000 give Bonus Exp:
+            <ul style="list-style: none; padding: 0.5rem 1rem 0.5rem 1rem">
+              <li>
+                <pre class="new-discord-code">   10 </pre>
+                -
+                <pre class="new-discord-code"> 10√x + 500 </pre>
+              </li>
+              <li>
+                <pre class="new-discord-code">   50 </pre>
+                -
+                <pre class="new-discord-code"> 30√x + 1500 </pre>
+              </li>
+              <li>
+                <pre class="new-discord-code">  100 </pre>
+                -
+                <pre class="new-discord-code"> 50√x + 2500 </pre>
+              </li>
+              <li>
+                <pre class="new-discord-code">  500 </pre>
+                -
+                <pre class="new-discord-code"> 100√x + 5000 </pre>
+              </li>
+              <li>
+                <pre class="new-discord-code"> 1000 </pre>
+                -
+                <pre class="new-discord-code"> 250√x + 12500 </pre>
+              </li>
+              <li><span style="font-size: 0.7rem">The max is capped at 100k in these.</span></li>
+            </ul>
+          </li>
+        </ol>
+        <div class="container" id="streakWorthContainer">
+          <div class="toolbar">
+            <button class="injectable-button" id="streakWorthButton"></button>
+            <div style="font-size: 1rem">Streak Worth</div>
+          </div>
         </div>
-      </div>
-      <div class="container" id="globalContainer">
-        <div class="toolbar">
-          <button class="injectable-button" id="globalButton"></button>
-          <div style="font-size:1rem"> NeonUtil Global </div>
+        <div class="container" id="globalContainer">
+          <div class="toolbar">
+            <button class="injectable-button" id="globalButton"></button>
+            <div style="font-size: 1rem">NeonUtil Global</div>
+          </div>
         </div>
-      </div>
 
-      <h3 style="margin-bottom:-0.7rem;margin-top:2rem;">Exp Multiplier</h3>
-      <p>
-        Pets on your <strong>primary</strong> team sometimes gain a multiplier on their battle Exp. This happens when
-        said pet is on a team with another pet of higher level— OwO then gives the lower leveled pet a multiplier for it
-        to "catch up". You could also imagine it as your more experienced pet "training" the other. <br>
-        The multiplier is equal to: <code class="discord-code"> (2 + .1 * levelDifference) </code>
-      </p>
-      <div class="container" id="knowledgeContainer">
-        <div class="toolbar">
-          <button class="injectable-button" id="knowledgeButton"></button>
-          <div style="font-size:1rem"> Knowledge <img src="media/owo_images/battleEmojis/f_kno.png"
-              class="discord-text-emote"> </div>
+        <h3 style="margin-bottom: -0.7rem; margin-top: 2rem">Exp Multiplier</h3>
+        <p>
+          Pets on your <strong>primary</strong> team sometimes gain a multiplier on their battle
+          Exp. This happens when said pet is on a team with another pet of higher level— OwO then
+          gives the lower leveled pet a multiplier for it to "catch up". You could also imagine it
+          as your more experienced pet "training" the other. <br />
+          The multiplier is equal to: <code class="discord-code"> (2 + .1 * levelDifference) </code>
+        </p>
+        <div class="container" id="knowledgeContainer">
+          <div class="toolbar">
+            <button class="injectable-button" id="knowledgeButton"></button>
+            <div style="font-size: 1rem">
+              Knowledge
+              <img src="media/owo_images/battleEmojis/f_kno.png" class="discord-text-emote" />
+            </div>
+          </div>
         </div>
+
+        <h2 style="margin-top: 2rem; margin-bottom: 0.5rem">
+          Hunt Exp
+          <img
+            src="media/owo_images/gems/gem1c1.png"
+            style="width: 1.7rem"
+            class="discord-text-emote"
+          />
+          <img
+            src="media/owo_images/gems/gem1c2.png"
+            style="width: 1.7rem"
+            class="discord-text-emote"
+          />
+          <img
+            src="media/owo_images/gems/gem1c3.png"
+            style="width: 1.7rem"
+            class="discord-text-emote"
+          />
+        </h2>
+        <p style="margin-top: 0">
+          Here's the amount of Exp you get per hunt, depending on Gem Tier and Patreon status, but
+          assuming there's no event, nor distorted:
+        </p>
+        <div
+          style="
+            background-color: #303030;
+            color: lightgray;
+            padding-top: 20px;
+            margin: 10px 10px 10px;
+            justify-content: center;
+            display: flex;
+          "
+        >
+          <canvas
+            id="myChart"
+            style="max-width: 70%; max-height: 300px; margin-bottom: 10px; margin-right: 4rem"
+          ></canvas>
+        </div>
+
+        <h2 style="margin-top: 2rem; margin-bottom: 0.5rem">
+          Huntbot Exp
+          <img
+            src="media/owo_images/huntbot/robot.png"
+            alt=":robot:"
+            title=":robot:"
+            style="width: 1.7rem"
+            class="discord-text-emote"
+          />
+        </h2>
+        <p>
+          This ends up being the biggest contribution to leveling pets for the more inactive
+          players.<br />
+          At a maximum level of 200, the ⚔️ Exp trait provides 7000 Exp per hour. ( 168k /day )<br /><br />
+
+          Personally, for my team and situation, that's as much Exp as ~300 owoh & owob would give.
+          So that's quite a big amount for most people.
+        </p>
       </div>
-
-      <h2 style="margin-top:2rem;margin-bottom:0.5rem;">
-        Hunt Exp
-        <img src="media/owo_images/gems/gem1c1.png" style="width:1.7rem;" class="discord-text-emote">
-        <img src="media/owo_images/gems/gem1c2.png" style="width:1.7rem;" class="discord-text-emote">
-        <img src="media/owo_images/gems/gem1c3.png" style="width:1.7rem;" class="discord-text-emote">
-      </h2>
-      <p style="margin-top:0"> Here's the amount of Exp you get per hunt, depending on Gem Tier and Patreon status, but
-        assuming there's no event, nor distorted: </p>
-      <div
-        style="background-color:#303030;color:lightgray;padding-top:20px;margin: 10px 10px 10px;justify-content: center; display:flex">
-        <canvas id="myChart" style="max-width:70%;max-height:300px;margin-bottom:10px; margin-right:4rem;"></canvas>
-      </div>
-
-      <h2 style="margin-top:2rem;margin-bottom:0.5rem;">
-        Huntbot Exp
-        <img src="media/owo_images/huntbot/robot.png" alt=":robot:" title=":robot:" style="width:1.7rem;"
-          class="discord-text-emote">
-      </h2>
-      <p>
-        This ends up being the biggest contribution to leveling pets for the more inactive players.<br>
-        At a maximum level of 200, the ⚔️ Exp trait provides 7000 Exp per hour. ( 168k /day )<br><br>
-
-        Personally, for my team and situation, that's as much Exp as ~300 owoh & owob would give. So that's quite a big
-        amount for most people.
-      </p>
     </div>
-  </div>
-  <script async type="module" src="/js/init.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
-  <script async type="module" src="/js/exp/exp.js"></script>
-  <script async type="module" src="/js/exp/gemchart_setup.js"></script>
-</body>
-
+    <script async type="module" src="/js/init.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+    <script async type="module" src="/js/exp/exp.js"></script>
+    <script async type="module" src="/js/exp/gemchart_setup.js"></script>
+  </body>
 </html>
