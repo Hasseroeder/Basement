@@ -109,7 +109,6 @@ function createWikipediaTable(weapon) {
 	const table = make('div', { className: 'wikipedia-table' })
 	const rankHeader = make('div')
 	table.append(rankHeader)
-
 	;['common.png', 'fabled.gif'].forEach((rank) =>
 		rankHeader.append(
 			make('div', { className: 'wikipedia-stat-header' }, [
