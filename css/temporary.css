@@ -1,0 +1,16 @@
+.new-discord-code {
+	padding: 0.2em;
+	margin: -0.2em 0px;
+	border-radius: 3px;
+	background: #191919;
+	font-size: 0.85rem;
+	line-height: 1.125rem;
+}
+
+.discord-embed-text {
+	white-space: unset;
+}
+
+.discord-message {
+	white-space: unset;
+}
