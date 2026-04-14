@@ -119,5 +119,5 @@ We try to use vanilla JavaScript to keep the entry barrier as low as possible. Y
 - chartjs-plugin-annotation v3.1.0
 - MathJax v3
 
-To keep formatting consistent across contributors, we use: `.editorconfig`, `.prettierrc`, `.prettierignore`.  
+To keep formatting consistent across contributors, we use: `.editorconfig`, `.prettierrc`.  
 These files work in most modern editors and will automatically apply the project’s style when you work on it.
