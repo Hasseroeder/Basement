@@ -1518,7 +1518,7 @@ table.bare td {
 }
 
 table.discord-code-styling {
-	margin: 0.3rem;
+	margin: 0.2rem;
 }
 
 table.discord-code-styling td {
@@ -1529,9 +1529,8 @@ table.discord-code-styling td {
 	font-family: monospace;
 }
 
-table.discord-code-styling td:last-child,
-table.discord-code-styling td:first-child {
-	padding: 0.1em 0.7rem;
+table.discord-code-styling.this-to-that td:last-child,
+table.discord-code-styling.this-to-that td:first-child {
 	background: #191919;
 }
 
