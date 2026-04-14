@@ -5,24 +5,20 @@
 	font-size: 0.8rem;
 }
 
-.intro {
-	padding: 0.3rem;
-	display: flex;
-	align-items: center;
-	font-size: 0.8rem;
-}
-.intro:hover {
-	background-color: #373737;
-	color: lightgray;
-}
-
-.trait-box {
+.box {
 	padding: 0.3rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.25rem;
 }
-.trait-box:hover {
+
+.box.intro {
+	align-items: center;
+	font-size: 0.8rem;
+	flex-direction: unset;
+}
+
+.box:hover {
 	background-color: #373737;
 	color: lightgray;
 }
@@ -44,29 +40,26 @@
 	background-color: #202020;
 }
 
-#table-1 td {
+.table-1 td {
 	height: 2.2rem;
 	border: none;
 	font-size: 0.8rem;
 }
 
+.table-1 {
+	table-layout: fixed;
+}
+
 .table-2 {
 	font-size: 0.8rem;
-}
-.table-2:hover {
-	background-color: #373737;
-	color: lightgray;
-	outline: 0.3rem solid #373737;
+	border: none;
 }
 
 .table-2 td,
 .table-2 th {
 	padding: 0.1rem;
 	width: 6rem;
-}
-
-.table-1 {
-	table-layout: fixed;
+	border: none;
 }
 
 input[type='checkbox'] {
@@ -129,6 +122,10 @@ button {
 	background-color: #202020;
 }
 
+button.bigger {
+	height: 1.8rem;
+}
+
 button:hover {
 	background-color: #555555;
 }
@@ -176,10 +173,6 @@ ul {
 	justify-content: center;
 	align-items: center;
 	gap: 0.2rem;
-}
-
-.table-2 {
-	margin: 0.3rem;
 }
 
 .header-wrapper {

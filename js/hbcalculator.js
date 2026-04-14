@@ -29,7 +29,7 @@ class Trait {
 			make('div', { style: { display: 'flex', alignItems: 'center' } }),
 			make('ul'),
 		]
-		gridContainer.append(make('div', { className: 'trait-box' }, wrappers))
+		gridContainer.append(make('div', { className: 'box' }, wrappers))
 
 		if (this.upgradeWorth) {
 			const cells = [...Array(4)].map(() => make('td'))

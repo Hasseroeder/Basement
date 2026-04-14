@@ -1552,3 +1552,14 @@ table.this-to-that td:nth-child(2)::after {
 table.align-child-text-left td {
 	text-align: left;
 }
+
+.center-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.gapped-box {
+	display: flex;
+	gap: 0.25rem;
+}
