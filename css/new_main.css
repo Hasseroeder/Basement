@@ -1486,3 +1486,11 @@ button:hover {
 	transition: 0.1s ease;
 	font-size: 0.7rem;
 }
+
+.readable-text {
+	line-height: 1.25rem;
+}
+
+.readable-text .discord-code {
+	padding: 0.1em 0.2em;
+}

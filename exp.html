@@ -19,7 +19,7 @@
       <div id="navbar"></div>
       <div class="container">
         <h1>Pet Exp</h1>
-        <p>
+        <p class="readable-text">
           Pet experience is gained by a couple of methods, including battling, hunting, and also
           just by doing absolutely nothing. <br />
           I won't be talking about Profile exp here, since I honestly just find that boring as
@@ -48,7 +48,7 @@
             class="discord-text-emote"
           />
         </h2>
-        <p>
+        <p class="readable-text">
           Your main team gains 200/100/50 Exp on a Win/Tie/Loss. <br />
           <span style="margin-bottom: 0.7rem; display: inline-block"
             >And your secondary team passively gains 100/50/25 Exp for the same.</span
@@ -65,7 +65,7 @@
         </p>
         <h3 style="margin-bottom: -0.7rem">Bonus Exp is gained in two ways:</h3>
 
-        <ol>
+        <ol class="readable-text">
           <li style="line-height: 1.2rem; margin-bottom: 1rem">
             By battling teams that have a higher average level than yours. <br />
             Which is very useful for new players, but quickly becomes a rarity once you've got a
@@ -73,7 +73,7 @@
             <br />
             <span style="line-height: 1.5rem">
               You gain this much:
-              <pre class="discord-code"> 600(avgEnemyLevel-avgAllyLevel) </pre>
+              <code class="discord-code">&nbsp;600(avgEnemyLevel-avgAllyLevel)&nbsp;</code>
             </span>
           </li>
           <li>
@@ -114,13 +114,13 @@
             </ul>
           </li>
         </ol>
-        <div class="container" id="streakWorthContainer">
+        <div class="container readable-text" id="streakWorthContainer">
           <div class="toolbar">
             <button class="injectable-button" id="streakWorthButton"></button>
             <div style="font-size: 1rem">Streak Worth</div>
           </div>
         </div>
-        <div class="container" id="globalContainer">
+        <div class="container readable-text" id="globalContainer">
           <div class="toolbar">
             <button class="injectable-button" id="globalButton"></button>
             <div style="font-size: 1rem">NeonUtil Global</div>
@@ -128,14 +128,14 @@
         </div>
 
         <h3 style="margin-bottom: -0.7rem; margin-top: 2rem">Exp Multiplier</h3>
-        <p>
+        <p class="readable-text">
           Pets on your <strong>primary</strong> team sometimes gain a multiplier on their battle
           Exp. This happens when said pet is on a team with another pet of higher level— OwO then
           gives the lower leveled pet a multiplier for it to "catch up". You could also imagine it
           as your more experienced pet "training" the other. <br />
           The multiplier is equal to: <code class="discord-code"> (2 + .1 * levelDifference) </code>
         </p>
-        <div class="container" id="knowledgeContainer">
+        <div class="container readable-text" id="knowledgeContainer">
           <div class="toolbar">
             <button class="injectable-button" id="knowledgeButton"></button>
             <div style="font-size: 1rem">
