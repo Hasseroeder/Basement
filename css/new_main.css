@@ -1544,9 +1544,6 @@ table.this-to-that td:last-child {
 table.this-to-that td:nth-child(2)::after {
 	content: '⇀';
 }
-table.this-to-that.with-equals td:nth-child(2)::after {
-	content: '=';
-}
 
 .discord-code-background {
 	border-radius: 3px;
