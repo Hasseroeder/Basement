@@ -229,7 +229,6 @@ code,
 
 .discord-name {
 	display: inline;
-	margin: 0px 0.25rem 0px 0px;
 	font-weight: 500;
 	color: #eee;
 	line-height: 1.375rem;
@@ -296,8 +295,6 @@ code,
 	font-size: 0.875rem;
 	color: rgb(225, 225, 225);
 	line-height: 1.125rem;
-	white-space: pre-line;
-	overflow-wrap: break-word;
 }
 .discord-text-bolder {
 	font-size: 1rem;
@@ -310,9 +307,7 @@ code,
 }
 
 .discord-message {
-	white-space: pre-wrap;
-	overflow-wrap: break-word;
-	line-height: 1.375;
+	line-height: 1.375rem;
 }
 
 .grayOnHover {

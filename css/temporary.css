@@ -13,15 +13,3 @@
 	line-height: 1.125rem;
 	display: inline;
 }
-
-.discord-embed-text {
-	white-space: unset;
-}
-
-.discord-message {
-	white-space: unset;
-}
-
-.discord-name {
-	margin: unset;
-}
