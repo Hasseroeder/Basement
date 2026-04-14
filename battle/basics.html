@@ -1,116 +1,166 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="icon" type="image/png" href="/media/misc_images/may.png">
+    <link rel="icon" type="image/png" href="/media/misc_images/may.png" />
     <title>Battles</title>
-    <link href="/css/new_main.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/new_main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/temporary.css" rel="stylesheet" type="text/css" media="all" />
   </head>
   <body>
     <div class="center-pillar">
       <div id="navbar"></div>
       <div class="container">
-
-        <p style="margin-top:2rem;">
-          <span style="line-height: 1.5rem;">Quick preamble;</span><br>
-          To learn the most about battles, always turn on battle logs! (<code class="discord-code"> owo battlesetting logs=link </code>). <br>
-          I've learned 50% of what I know today, just from logs. <br>
-          Other sources of learning include Helper bots, as some of them also have logs and can help you simulate & understand matchups better.<br>
-          Otherwise, just talking with experienced players is a great recource, as the community is super helpful and always happy to explain mechanics. <br>
+        <p style="margin-top: 2rem">
+          <span style="line-height: 1.5rem">Quick preamble;</span><br />
+          To learn the most about battles, always turn on battle logs! (<code
+            class="new-discord-code"
+          >
+            owo battlesetting logs=link </code
+          >). <br />
+          I've learned 50% of what I know today, just from logs. <br />
+          Other sources of learning include Helper bots, as some of them also have logs and can help
+          you simulate & understand matchups better.<br />
+          Otherwise, just talking with experienced players is a great recource, as the community is
+          super helpful and always happy to explain mechanics. <br />
         </p>
 
-        <h3 style="margin-bottom:-0.6rem;">OwO Battles</h3>
+        <h3 style="margin-bottom: -0.6rem">OwO Battles</h3>
         <p>
-          There are 2 types of battles: friendly battles <code class="discord-code"> owob @user </code> and random battles <code class="discord-code"> owob </code>. <br>
-          When doing a friendly battle, the challenger will always go second, in random battles, however, they will always go first. 
+          There are 2 types of battles: friendly battles
+          <code class="discord-code"> owob @user </code> and random battles
+          <code class="discord-code"> owob </code>. <br />
+          When doing a friendly battle, the challenger will always go second, in random battles,
+          however, they will always go first.
         </p>
         <p>
-          The way that owo does random-battle matchmaking is by generating a random ID and checking what team correlates to that ID. Which means that you mostly battle old and inactive teams, not the actively played ones. <br>
-          When a user gets their team deleted, that ID is no longer available and gets rounded up when checked. This is super rare, but when it happens, another team would be twice as common to encounter in battles.
+          The way that owo does random-battle matchmaking is by generating a random ID and checking
+          what team correlates to that ID. Which means that you mostly battle old and inactive
+          teams, not the actively played ones. <br />
+          When a user gets their team deleted, that ID is no longer available and gets rounded up
+          when checked. This is super rare, but when it happens, another team would be twice as
+          common to encounter in battles.
         </p>
 
-        <h1 style="margin-bottom:-0.6rem;">the Battle System</h1>
+        <h1 style="margin-bottom: -0.6rem">the Battle System</h1>
 
         <p>
-          Each battle is split into 24 turns. And each turn is split into a pre-phase, a main-phase and an end-phase.
+          Each battle is split into 24 turns. And each turn is split into a pre-phase, a main-phase
+          and an end-phase.
         </p>
-        <h4 style="margin-bottom:-0.6rem;">Pre-Phase</h4>
-        <p style="margin-bottom:-0.6rem;">
-          Firstly <i>canAttack</i> gets checked, which will determine whether your pets will be able to act this turn. <br>
-          This returns false for dead pets and for pets with the <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/freeze.png"> freeze debuff applied. <br>
-          <i>canAttack</i> getting determined this early in the turn, means that even if your pet is un-frozen or revived later in the turn, it still won't be able to act.
-        </p>
-        <p>
-          Then, during the pre-phase only, pets holding a 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_shield.png">Shield or 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_banner.png">Banner might act.<br>
-          If a pet is holding a 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_shield.png">Shield but has no active 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png">Taunt Buff, then the pet will use its shield, casting said buff.<br>
-          For 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_banner.png">Banner the logic is slightly different, it will cast if it has no AttackUp Buff or if the AttackUp it has, were to expire after this turn. <br>
-        </p>
-        <h4 style="margin-bottom:-0.6rem;">Main-Phase</h4>
-        <p style="margin-bottom:-0.6rem;"> 
-          This is where the real magic happens! Damage is dealt, health is healed, and more!<img class="battles-page-emotes" src="/media/misc_images/woah.png">
+        <h4 style="margin-bottom: -0.6rem">Pre-Phase</h4>
+        <p style="margin-bottom: -0.6rem">
+          Firstly <i>canAttack</i> gets checked, which will determine whether your pets will be able
+          to act this turn. <br />
+          This returns false for dead pets and for pets with the
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/freeze.png" /> freeze
+          debuff applied. <br />
+          <i>canAttack</i> getting determined this early in the turn, means that even if your pet is
+          un-frozen or revived later in the turn, it still won't be able to act.
         </p>
         <p>
-          During the main phase, all pets act in alternating turns: First your pet in position 1, then the enemy pet in position 1, then your pet in position 2, etc. - if a pet is dead or its <i>canAttack</i> is false, its turn is skipped, but the order will stay the same, i.e., two pets of one team might act after one another.<br>
-          Position is incredibly important because of this ordering. 
+          Then, during the pre-phase only, pets holding a
+          <img
+            class="battles-page-emotes"
+            src="/media/owo_images/battleEmojis/f_shield.png"
+          />Shield or
+          <img
+            class="battles-page-emotes"
+            src="/media/owo_images/battleEmojis/f_banner.png"
+          />Banner might act.<br />
+          If a pet is holding a
+          <img
+            class="battles-page-emotes"
+            src="/media/owo_images/battleEmojis/f_shield.png"
+          />Shield but has no active
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png" />Taunt
+          Buff, then the pet will use its shield, casting said buff.<br />
+          For
+          <img
+            class="battles-page-emotes"
+            src="/media/owo_images/battleEmojis/f_banner.png"
+          />Banner the logic is slightly different, it will cast if it has no AttackUp Buff or if
+          the AttackUp it has, were to expire after this turn. <br />
+        </p>
+        <h4 style="margin-bottom: -0.6rem">Main-Phase</h4>
+        <p style="margin-bottom: -0.6rem">
+          This is where the real magic happens! Damage is dealt, health is healed, and more!<img
+            class="battles-page-emotes"
+            src="/media/misc_images/woah.png"
+          />
+        </p>
+        <p>
+          During the main phase, all pets act in alternating turns: First your pet in position 1,
+          then the enemy pet in position 1, then your pet in position 2, etc. - if a pet is dead or
+          its <i>canAttack</i> is false, its turn is skipped, but the order will stay the same,
+          i.e., two pets of one team might act after one another.<br />
+          Position is incredibly important because of this ordering.
         </p>
 
-        <h4 style="margin-bottom:-0.85rem;">End-Phase</h4>
-        <p style="margin-bottom:-0.6rem; font-size:0.7rem;">
+        <h4 style="margin-bottom: -0.85rem">End-Phase</h4>
+        <p style="margin-bottom: -0.6rem; font-size: 0.7rem">
           <i>For the purposes of this, Buffs and Debuffs are both considered Buffs.</i>
         </p>
-        <p style="margin-bottom:0.4rem;">  
-          During the end phase, post-turn buffs will trigger: 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/poison.png"> Poison, 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/flame.png"> Flame, 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/celeb.png"> Celebration.<br>
+        <p style="margin-bottom: 0.4rem">
+          During the end phase, post-turn buffs will trigger:
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/poison.png" />
+          Poison,
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/flame.png" /> Flame,
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/celeb.png" />
+          Celebration.<br />
         </p>
         <ul>
           <li>
-            Their effects are executed in reverse order of reception, which also reduces their duration by 1.
+            Their effects are executed in reverse order of reception, which also reduces their
+            duration by 1.
           </li>
           <li>
-            But as these don't proc on dead pets, their duration is never reduced on them. ⇒ Dead pets keep these buffs indefinitely.
+            But as these don't proc on dead pets, their duration is never reduced on them. ⇒ Dead
+            pets keep these buffs indefinitely.
           </li>
         </ul>
-        <p style="margin-bottom:-0.6rem;">
-          the other Buffs also lose duration: 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/mort.png">
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/leech.png">
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/stinky.png">
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png">
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/attup++.png">
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/defup.png">
-          (but 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/freeze.png">
-          duration is reduced elsewhere) <br>
-          Buffs also have a "just created" tag on creation, this tag is removed now.
-          Only now, after all buffs went through their thing, a "clean up" is performed, and any that are at 0 duration (ie. marked for removal) are removed.
-          
+        <p style="margin-bottom: -0.6rem">
+          the other Buffs also lose duration:
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/mort.png" />
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/leech.png" />
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/stinky.png" />
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png" />
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/attup++.png" />
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/defup.png" />
+          (but
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/freeze.png" />
+          duration is reduced elsewhere) <br />
+          Buffs also have a "just created" tag on creation, this tag is removed now. Only now, after
+          all buffs went through their thing, a "clean up" is performed, and any that are at 0
+          duration (ie. marked for removal) are removed.
         </p>
-        <p>  
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_hgen.png">Hgen and 
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_wgen.png">Wgen 
-          afterwards also trigger, and heal/replenish their pets. <br>
-          I.e. when a <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/mort.png"> Mortality Debuff ends in, say, turn 10, then Hgen will work again at full power in that turn.
+        <p>
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_hgen.png" />Hgen
+          and
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_wgen.png" />Wgen
+          afterwards also trigger, and heal/replenish their pets. <br />
+          I.e. when a
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/mort.png" />
+          Mortality Debuff ends in, say, turn 10, then Hgen will work again at full power in that
+          turn.
         </p>
 
-        <h1 style="margin-bottom:-0.6rem;">Notes on reading logs</h1>
-        <p style="margin-bottom:-0.6rem;">
+        <h1 style="margin-bottom: -0.6rem">Notes on reading logs</h1>
+        <p style="margin-bottom: -0.6rem">
           Only after the Turn has ended, does the Battle Snapshot you see in the Logs get made.
         </p>
-        <p >
-          Example:
-          You'd think my Tank didn't have <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png"> this turn, but that's incorrect.<br>
-          It had <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png"> throughout the whole turn, but only after the turn has ended, does OwO show the Battle Snapshot.
+        <p>
+          Example: You'd think my Tank didn't have
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png" /> this
+          turn, but that's incorrect.<br />
+          It had
+          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png" />
+          throughout the whole turn, but only after the turn has ended, does OwO show the Battle
+          Snapshot.
         </p>
-      
+
         <div id="construction"></div>
       </div>
     </div>
