@@ -1,5 +1,5 @@
 export function signedNumberFixedString(input, fixed) {
-	if (input == undefined || input == NaN) return NaN
+	if (input == undefined || Number.isNaN(input)) return NaN
 	const formatted = Math.abs(input.toFixed(fixed))
 	const sign = input < 0 ? '-' : '+'
 	return sign + formatted

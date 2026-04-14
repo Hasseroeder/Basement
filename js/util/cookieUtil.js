@@ -1,6 +1,6 @@
 function setCookie(name, value, daysToLive) {
 	const date = new Date()
-	date.setDate(date.getDate() + daysToLive * 24 * 60 * 60 * 1000)
+	date.setDate(date.getDate() + daysToLive)
 
 	let expires = 'expires=' + date.toUTCString()
 	document.cookie = `${name}=${value}; ${expires};`
