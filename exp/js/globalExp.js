@@ -35,7 +35,7 @@ function cachedBonusXp(streak) {
 	return result
 }
 
-await fetch('/csv/bonusXP.csv')
+await fetch('/exp/csv/bonusXP.csv')
 	.then((r) => r.text())
 	.then((txt) =>
 		txt.split(/\r?\n/).forEach((line) => {

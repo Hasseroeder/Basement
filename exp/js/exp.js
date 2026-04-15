@@ -12,7 +12,7 @@ function doMathJax() {
 }
 
 async function init() {
-	const pathName = '/donatorPages/exp/'
+	const pathName = '/exp/donatorPages/'
 	const extraHtml = [
 		{ created: false, name: 'knowledge' },
 		{ created: false, name: 'global', init: initGlobal },
