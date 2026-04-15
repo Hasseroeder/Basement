@@ -266,25 +266,22 @@ function getWorth() {
 const cellWrappers = Array.from(document.querySelectorAll('.pseudo-table > div'))
 
 const cells = cellWrappers.map((wrapper) => {
-	const dynamicPart = wrapper.querySelector('.dynamic')
+	const img = make('img', { className: 'smol' })
+	const text = make('div')
 	const cell = {
-		wrapper,
-		text: dynamicPart.querySelector('div'),
-		img: dynamicPart.querySelector('img'),
 		isSac: undefined,
 		toggle(override) {
 			this.isSac = override ?? !this.isSac
-			this.text.innerHTML = this.isSac ? 'Sac' : 'Sell'
-			this.img.src = this.isSac
-				? 'media/owo_images/essence.gif'
-				: 'media/owo_images/cowoncy.png'
+			text.innerHTML = this.isSac ? 'Sac' : 'Sell'
+			img.src = this.isSac ? 'media/owo_images/essence.gif' : 'media/owo_images/cowoncy.png'
 			drawData()
 		},
 	}
-	cell.wrapper.querySelectorAll('img').forEach((img) => (img.draggable = false))
-	cell.wrapper.addEventListener('mousedown', () => cell.toggle())
-	cell.wrapper.addEventListener('mouseenter', (e) => {
-		if (e.relatedTarget && cell.wrapper.contains(e.relatedTarget)) return
+	wrapper.append(make('div', { className: 'dynamic' }, [text, img]))
+	wrapper.querySelectorAll('img').forEach((img) => (img.draggable = false))
+	wrapper.addEventListener('mousedown', () => cell.toggle())
+	wrapper.addEventListener('mouseenter', (e) => {
+		if (e.relatedTarget && wrapper.contains(e.relatedTarget)) return
 		if (isDragging) cell.toggle()
 	})
 	return cell
