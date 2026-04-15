@@ -1,5 +1,5 @@
-import { loadJson } from './util/jsonUtil.js'
-import { make, doTimestamps } from './util/injectionUtil.js'
+import { loadJson } from '/js/util/jsonUtil.js'
+import { make, doTimestamps } from '/js/util/injectionUtil.js'
 
 const petContainer = document.getElementById('petContainer')
 const effectContainer = document.getElementById('effectContainer')

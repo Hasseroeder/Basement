@@ -48,7 +48,7 @@ const htmlLegendPlugin = {
 			}
 
 			const img = document.createElement('img')
-			img.src = `media/owo_images/resistance_chart/image_${colorPalette.length - idx - 1}.gif`
+			img.src = `/media/owo_images/resistance_chart/image_${colorPalette.length - idx - 1}.gif`
 			img.alt = ds.label
 			img.className = 'res-image'
 

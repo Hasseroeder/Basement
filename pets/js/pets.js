@@ -1,9 +1,9 @@
-import { initializeTriangle } from './triangleCharts/triangle.js'
+import { initializeTriangle } from '/js/triangleCharts/triangle.js'
 import { loadJson } from '/js/util/jsonUtil.js'
 import { createInjectAble } from '/js/util/injectionUtil.js'
 
 window.addEventListener('DOMContentLoaded', async () => {
-	const triangleConfigs = await loadJson('/json/triangleChartConfigs.json')
+	const triangleConfigs = await loadJson('/pets/triangleChartConfigs.json')
 	const dataSetConfigs = []
 
 	for (const config of triangleConfigs) {
@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 		{ created: false, name: 'triangle0', init: initializeTriangle, data: triangleConfigs[0] },
 		{ created: false, name: 'triangle1', init: initializeTriangle, data: triangleConfigs[1] },
 	]
-	const pathName = '/donatorPages/pets/'
+	const pathName = '/pets/donatorPages/'
 
 	extraHtml.forEach((html) => createInjectAble(html, pathName))
 })
