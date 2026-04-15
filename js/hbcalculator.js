@@ -7,8 +7,13 @@ let traitcounter = 1
 let patreon = false
 let isDragging = false
 
-const table2El = document.getElementById('table2')
-table2El.innerHTML = '<tr><th></th><th>Cost</th><th>Essence</th><th>ROI</th></tr>'
+const tableEl = make('table')
+{
+	//table init
+	const cells = ['', 'Cost', 'Essence', 'ROI'].map((textContent) => make('td', { textContent }))
+	tableEl.append(make('tr', {}, cells))
+	document.querySelector('.table-box').append(tableEl)
+}
 
 const gridContainer = document.querySelector('.gridContainer')
 
@@ -34,19 +39,19 @@ class Trait {
 		if (this.upgradeWorth) {
 			const cells = [...Array(4)].map(() => make('td'))
 			const row = make('tr', {}, cells)
+			cells[0].textContent = this.name
 			this.table = {
 				row,
 				update: () => {
 					row.style.textDecoration = this.level === this.max ? 'line-through' : 'none'
 					row.style.fontWeight = 'normal'
-					cells[0].textContent = this.name
-					cells[1].textContent = this.cost
+					cells[1].textContent = this.cost.toLocaleString()
 					cells[2].textContent =
 						signedNumberFixedString(this.upgradeWorth(), 1) + ` ess/day`
 					cells[3].textContent = (this.ROI * 100).toFixed(1) + '%/day'
 				},
 			}
-			table2El.append(row)
+			tableEl.append(row)
 		}
 
 		;[this._span, this.input] = [
@@ -176,8 +181,8 @@ const Radar = new Trait({
 	valueParams: { mult: 0.04 },
 	upgradeWorth: () => {
 		return (
-			(isSac[8] ? 0.00000004 * petWorth[8][1] * dailyPets() : 0) -
-			(isSac[0] ? 0.00000004 * dailyPets() : 0)
+			(cells[8].isSac ? 0.00000004 * petWorth[8][1] * dailyPets() : 0) -
+			(cells[8].isSac ? 0.00000004 * dailyPets() : 0)
 		)
 	},
 	outputs: [
@@ -251,39 +256,45 @@ function getWorth() {
 	let sacWorth = 0
 	let sellWorth = 0
 
-	isSac.forEach((is, i) => {
-		if (is) sacWorth += rates[i] * petWorth[i][1]
+	cells.forEach((cell, i) => {
+		if (cell.isSac) sacWorth += rates[i] * petWorth[i][1]
 		else sellWorth += rates[i] * petWorth[i][0]
 	})
 
 	return [sacWorth, sellWorth]
 }
+const cellWrappers = Array.from(document.querySelectorAll('.pseudo-table > div'))
 
-const cells = Array.from(document.querySelectorAll('#table-1 td'))
-const isSac = new Array(cells.length).fill(undefined)
-const toggleAllCells = (boolean) => cells.forEach((_, i) => toggleCell(i, boolean))
+const cells = cellWrappers.map((wrapper) => {
+	const dynamicPart = wrapper.querySelector('.dynamic')
+	const cell = {
+		wrapper,
+		text: dynamicPart.querySelector('div'),
+		img: dynamicPart.querySelector('img'),
+		isSac: undefined,
+		toggle(override) {
+			this.isSac = override ?? !this.isSac
+			this.text.innerHTML = this.isSac ? 'Sac' : 'Sell'
+			this.img.src = this.isSac
+				? 'media/owo_images/essence.gif'
+				: 'media/owo_images/cowoncy.png'
+			drawData()
+		},
+	}
+	cell.wrapper.querySelectorAll('img').forEach((img) => (img.draggable = false))
+	cell.wrapper.addEventListener('mousedown', () => cell.toggle())
+	cell.wrapper.addEventListener('mouseenter', (e) => {
+		if (e.relatedTarget && cell.wrapper.contains(e.relatedTarget)) return
+		if (isDragging) cell.toggle()
+	})
+	return cell
+})
+
+const toggleAllCells = (boolean) => cells.forEach((cell) => cell.toggle(boolean))
 
 document.addEventListener('mouseup', () => (isDragging = false))
 document.addEventListener('mousedown', () => (isDragging = true))
-document.addEventListener('paste', (event) => extractLevels(event.clipboardData.getData('text')))
-
-cells.forEach((cell, index) => {
-	cell.addEventListener('mousedown', () => toggleCell(index))
-
-	cell.addEventListener('mouseenter', (event) => {
-		if (event.relatedTarget && cell.contains(event.relatedTarget)) return
-		if (isDragging) toggleCell(index)
-	})
-})
-
-function toggleCell(i, boolOverride) {
-	isSac[i] = boolOverride ?? !isSac[i]
-	cells[i].querySelector('.table-1-text').innerHTML = isSac[i] ? 'Sac' : 'Sell'
-	cells[i].querySelector('.table-1-img').src = isSac[i]
-		? 'media/owo_images/essence.gif'
-		: 'media/owo_images/cowoncy.png'
-	drawData()
-}
+document.addEventListener('paste', (e) => extractLevels(e.clipboardData.getData('text')))
 
 const patreonCheckWrapper = document.getElementById('patreonCheck')
 patreonCheckWrapper.onmousedown = (e) => {
