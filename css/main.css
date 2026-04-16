@@ -1389,9 +1389,7 @@ button:hover {
 	top: 30%;
 }
 
-.introduction-subheading {
-	margin: 0.2rem 0.4rem;
-	font-size: 0.7rem;
+.grayed-text {
 	color: #888;
 }
 
@@ -1497,13 +1495,11 @@ button:hover {
 
 .subscript::before {
 	content: '-# ';
-	font-size: 0.75rem;
-	font-style: italic;
+	font-size: 0.7rem;
 }
 
 .subscript {
-	font-size: 0.75rem;
-	font-style: italic;
+	font-size: 0.7rem;
 	margin: 0.2rem;
 }
 
