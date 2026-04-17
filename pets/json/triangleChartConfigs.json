@@ -224,7 +224,7 @@
 						"data": {
 							"dataSetConfigs": [
 								{
-									"dataSource": "/json/pets.json",
+									"dataSource": "/pets/json/pets.json",
 									"attributeGroups": {
 										"left": [1, 4],
 										"right": [3],
@@ -478,7 +478,7 @@
 						"data": {
 							"dataSetConfigs": [
 								{
-									"dataSource": "/json/cruneHolders.json",
+									"dataSource": "/pets//json/cruneHolders.json",
 									"attributeGroups": {
 										"left": [2],
 										"right": [3, 5],

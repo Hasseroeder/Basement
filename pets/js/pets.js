@@ -3,7 +3,7 @@ import { loadJson } from '/js/util/jsonUtil.js'
 import { createInjectAble } from '/js/util/injectionUtil.js'
 
 window.addEventListener('DOMContentLoaded', async () => {
-	const triangleConfigs = await loadJson('/pets/triangleChartConfigs.json')
+	const triangleConfigs = await loadJson('/pets/json/triangleChartConfigs.json')
 	const dataSetConfigs = []
 
 	for (const config of triangleConfigs) {
