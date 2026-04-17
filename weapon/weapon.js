@@ -1,5 +1,5 @@
-import { loadJson } from './util/jsonUtil.js'
-import { make } from './util/injectionUtil.js'
+import { loadJson } from '/js/util/jsonUtil.js'
+import { make } from '/js/util/injectionUtil.js'
 
 const weaponDisplay = {
 	image: document.getElementById('weaponImage'),
@@ -52,7 +52,7 @@ function updateWeaponDisplay() {
 
 	weaponDisplay.text.textContent =
 		(weapon.id ?? '???') + ' - ' + (weapon.aliases[0] ?? weapon.name)
-	weaponDisplay.image.src = `media/owo_images/battleEmojis/${weapon.slug}.png`
+	weaponDisplay.image.src = `/media/owo_images/battleEmojis/${weapon.slug}.png`
 
 	fetch(`donatorPages/weapons/${weapon.slug}.html`).then(async (r) => {
 		weaponContainer.innerHTML = await r.text()
@@ -75,7 +75,7 @@ function createWikipediaContainer(weapon) {
 		className: 'wikipedia-calc-link',
 		innerHTML:
 			weapon.objectType == 'weapon'
-				? `<a href="/weaponcalculator.html#${weapon.slug}">Calculator</a>`
+				? `<a href="/weapon/calculator/#${weapon.slug}">Calculator</a>`
 				: '',
 	})
 
@@ -86,7 +86,7 @@ function createWikipediaContainer(weapon) {
 		]),
 		make('img', {
 			className: 'wikipedia-image',
-			src: `media/owo_images/battleEmojis/${weapon.slug}.png`,
+			src: `/media/owo_images/battleEmojis/${weapon.slug}.png`,
 		}),
 		make('div', { className: 'wikipedia-stars' }, weapon.wikiStars.map(makeStarDisplay)),
 		make('div', { className: 'wikipedia-id' }, [
@@ -112,7 +112,7 @@ function createWikipediaTable(weapon) {
 	;['common.png', 'fabled.gif'].forEach((rank) =>
 		rankHeader.append(
 			make('div', { className: 'wikipedia-stat-header' }, [
-				make('img', { src: 'media/owo_images/tiers/' + rank }),
+				make('img', { src: '/media/owo_images/tiers/' + rank }),
 				rank == 'common.png' ? '0%' : '100%',
 			])
 		)
@@ -120,7 +120,7 @@ function createWikipediaTable(weapon) {
 
 	const makeImg = (emoji) =>
 		make('img', {
-			src: 'media/owo_images/battleEmojis/' + emoji,
+			src: '/media/owo_images/battleEmojis/' + emoji,
 			title: emoji,
 		})
 

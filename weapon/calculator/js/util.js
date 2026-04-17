@@ -76,7 +76,7 @@ function getTierEmojiPath(stringOrQuality) {
 }
 
 const wpEmojiPath = (wp) =>
-	'media/owo_images/battleEmojis/' + wp.prefix + wp.tier.at(0) + '_' + wp.slug + '.png'
+	'/media/owo_images/battleEmojis/' + wp.prefix + wp.tier.at(0) + '_' + wp.slug + '.png'
 
 export {
 	wpEmojiPath,

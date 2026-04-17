@@ -36,7 +36,7 @@ pGrid.append(
 	...wpbData.passives.map((passive) =>
 		make('img', {
 			className: 'passiveGridImage',
-			src: `media/owo_images/battleEmojis/f_${passive.slug}.png`,
+			src: `/media/owo_images/battleEmojis/f_${passive.slug}.png`,
 			alt: passive.slug,
 			title: passive.slug,
 			draggable: false,
