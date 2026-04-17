@@ -1,7 +1,5 @@
 import { make } from '/js/util/injectionUtil.js'
 
-console.log('hello world!')
-
 const wpp = (tier, patreon) => {
 	const rest = [
 		{ rate: 0.3, value: 10 }, //uncommon
