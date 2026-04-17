@@ -16,9 +16,9 @@ gridInjector({
 */
 
 const wpbData = await loadAll({
-	weapons: loadJson('/json/weapons.json'),
-	passives: loadJson('/json/passives.json'),
-	buffs: loadJson('/json/buffs.json'),
+	weapons: loadJson('/weapon/json/weapons.json'),
+	passives: loadJson('/weapon/json/passives.json'),
+	buffs: loadJson('/weapon/json/buffs.json'),
 })
 
 ;[...wpbData.weapons, ...wpbData.passives, ...wpbData.buffs].forEach((StatHaver) => {
