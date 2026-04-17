@@ -14,14 +14,14 @@ const injectors = [
 				loadJson('/json/weapons.json').then((items) =>
 					gridInjector({
 						container: fragment.querySelector('#menuWeaponContainer'),
-						baseLink: '/weapon/',
+						baseLink: '/weapon',
 						items,
 					})
 				) /*,
 				loadJson('/json/passives.json').then((items) =>
 					gridInjector({
 						container: fragment.querySelector('#menuPassiveContainer'),
-						baseLink: '/passive/',
+						baseLink: '/passive',
 						items,
 					})
 				),*/,
