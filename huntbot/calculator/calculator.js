@@ -1,7 +1,7 @@
-import * as cookie from './util/cookieUtil.js'
-import { signedNumberFixedString } from './util/stringUtil.js'
-import { make, doTimestamps } from './util/injectionUtil.js'
-import { debounce, roundToDecimals } from './util/inputUtil.js'
+import * as cookie from '/js/util/cookieUtil.js'
+import { signedNumberFixedString } from '/js/util/stringUtil.js'
+import { make, doTimestamps } from '/js/util/injectionUtil.js'
+import { debounce, roundToDecimals } from '/js/util/inputUtil.js'
 
 let traitcounter = 1
 let patreon = false
@@ -273,7 +273,7 @@ const cells = cellWrappers.map((wrapper) => {
 		toggle(override) {
 			this.isSac = override ?? !this.isSac
 			text.innerHTML = this.isSac ? 'Sac' : 'Sell'
-			img.src = this.isSac ? 'media/owo_images/essence.gif' : 'media/owo_images/cowoncy.png'
+			img.src = this.isSac ? '/media/owo_images/essence.gif' : '/media/owo_images/cowoncy.png'
 			drawData()
 		},
 	}
