@@ -54,7 +54,7 @@ function updateWeaponDisplay() {
 		(weapon.id ?? '???') + ' - ' + (weapon.aliases[0] ?? weapon.name)
 	weaponDisplay.image.src = `/media/owo_images/battleEmojis/${weapon.slug}.png`
 
-	fetch(`donatorPages/weapons/${weapon.slug}.html`).then(async (r) => {
+	fetch(`/weapon/donatorPages/${weapon.slug}.html`).then(async (r) => {
 		weaponContainer.innerHTML = await r.text()
 		createWikipediaContainer(weapon)
 	})
