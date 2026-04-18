@@ -49,46 +49,46 @@ class Trait {
 			tableEl.append(row)
 		}
 
-		;[this._span, this.input] = [
-			make('div', {
-				textContent: 'Lvl',
-				className: 'calculatorLevel',
-			}),
-			make('input', {
-				type: 'number',
-				min: 0,
-				max: this.max,
-				tabIndex: traitcounter++,
-				className: 'number-input no-arrows',
-				onchange: () => modifyValueAndCookie(this),
-			}),
-		]
-		const _numberWrapper = make(
+		const lvlSpan = make('div', {
+			textContent: 'Lvl',
+			className: 'calculatorLevel',
+		})
+		this.input = make('input', {
+			type: 'number',
+			min: 0,
+			max: this.max,
+			tabIndex: traitcounter++,
+			className: 'number-input no-arrows',
+			onchange: () => modifyValueAndCookie(this),
+		})
+
+		const numberWrapper = make(
 			'div',
 			{ className: 'numberWrapper  rounded gray-hover', onclick: () => this.input.focus() },
-			[this._span, this.input]
+			[lvlSpan, this.input]
 		)
 
-		const _ttKids = [
-			make('img', { className: 'upgrade-image', src: '/media/owo_images/essence.gif' }),
-			make('div'),
-		]
-		const _tt = make('span', { className: 'tooltip-text' }, _ttKids)
+		const ttImg = make('img', {
+			className: 'upgrade-image',
+			src: '/media/owo_images/essence.gif',
+		})
+		const ttText = make('div')
+		const ttEl = make('span', { className: 'tooltip-text' }, [ttImg, ttText])
 		const text = make('div')
-		const _btnP = make(
+		const btnP = make(
 			'button',
 			{
 				className: 'gray-hover tooltip',
 				onclick: () => modifyValueAndCookie(this, true),
 			},
-			[text, _tt]
+			[text, ttEl]
 		)
-		const _btnM = make('button', {
+		const btnM = make('button', {
 			className: 'gray-hover',
 			onclick: () => modifyValueAndCookie(this, false),
 		})
-		this.btnM = _btnM
-		this.btnP = { text, ttText: _ttKids[1], ttEl: _tt }
+		this.btnM = btnM
+		this.btnP = { text, ttText, ttEl }
 
 		const inputWrapper = make(
 			'div',
@@ -99,7 +99,7 @@ class Trait {
 					modifyValueAndCookie(this, e.deltaY < 0)
 				},
 			},
-			[_btnM, _numberWrapper, _btnP]
+			[btnM, numberWrapper, btnP]
 		)
 
 		const outputWrapper = make('ul')
