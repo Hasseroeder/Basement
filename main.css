@@ -186,8 +186,11 @@ code,
 	background: #191919;
 	font-size: 0.85rem;
 	line-height: 1.125rem;
-
 	display: inline;
+}
+
+.discord-code.light {
+	background-color: #202020;
 }
 
 .discord-code-lite {
@@ -1558,4 +1561,20 @@ table.align-child-text-left td {
 .gapped-box {
 	display: flex;
 	gap: 0.25rem;
+}
+
+.gapped-box.column {
+	flex-direction: column;
+}
+
+.gapped-box.bigger {
+	gap: 0.75rem;
+}
+
+.gapped-box.biggest {
+	gap: 2rem;
+}
+
+.flexing-children > * {
+	flex: 1;
 }

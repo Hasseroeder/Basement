@@ -2,7 +2,6 @@
 	display: grid;
 	grid-template-rows: 7rem 7rem;
 	grid-template-columns: repeat(3, 12rem);
-	font-size: 0.8rem;
 }
 
 .box {
@@ -10,6 +9,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.25rem;
+	font-size: 0.8rem;
 }
 
 .box.intro {
@@ -24,9 +24,7 @@
 }
 
 .discord-code {
-	white-space: pre-wrap;
 	font-size: 0.7rem;
-	background-color: #202020;
 }
 
 .discord-embed-middle {
@@ -40,7 +38,7 @@
 	background-color: #202020;
 }
 
-.pseudo-table > div {
+.pseudo-table > .pseudo-cell {
 	border: none;
 	font-size: 0.8rem;
 	display: flex;
@@ -55,18 +53,18 @@
 	width: 1rem;
 }
 
-.pseudo-table .dynamic {
+.pseudo-cell .dynamic {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 0.2rem;
 }
 
-.pseudo-table > div:first-child {
+.pseudo-table > .pseudo-cell:first-child {
 	border-radius: 0.5rem 0 0 0.5rem;
 	padding-left: 0.1rem;
 }
-.pseudo-table > div:last-child {
+.pseudo-table > .pseudo-cell:last-child {
 	border-radius: 0 0.5rem 0.5rem 0;
 	padding-right: 0.1rem;
 }
@@ -78,8 +76,11 @@
 	grid-template-columns: 1.05fr repeat(9, 1fr) 1.05fr;
 }
 
+.pseudo-cell > img {
+	width: 1.5rem;
+}
+
 .table-box table {
-	font-size: 0.8rem;
 	border: none;
 }
 
@@ -97,16 +98,12 @@ input[type='checkbox'] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	border: 2px solid lightgray;
-	border-radius: 0;
-
-	/*cursor: pointer;*/
 	position: relative;
 }
 
 .calculatorLevel {
-	padding: 0 0 0 0.6rem;
+	padding-left: 0.6rem;
 	display: flex;
-	height: 1.45rem;
 	align-items: center;
 	font-family: monospace;
 }
@@ -124,7 +121,6 @@ input[type='checkbox'] {
 	background-color: #202020;
 	display: flex;
 	padding: 0;
-	border-radius: 0.2rem;
 }
 
 .numberWrapper:hover {
@@ -133,7 +129,6 @@ input[type='checkbox'] {
 
 input[type='checkbox']:checked::before {
 	content: '✔';
-	font-size: 0.8rem;
 	color: lightgray;
 	position: absolute;
 	left: 50%;
@@ -150,21 +145,13 @@ button {
 	background-color: #202020;
 }
 
+label.bigger,
 button.bigger {
-	height: 1.8rem;
-}
-
-button:hover {
-	background-color: #555555;
-}
-
-li {
-	font-size: 0.75rem;
+	/*height: 1.8rem;*/
 }
 
 ul {
 	padding-left: 1.4rem;
-	margin-bottom: 0;
 }
 
 .upgrade-image {
@@ -204,4 +191,11 @@ h4 {
 
 [hidden] {
 	display: none !important;
+}
+
+.rounded,
+label,
+button {
+	border-radius: 0.3rem;
+	height: 1.7rem;
 }

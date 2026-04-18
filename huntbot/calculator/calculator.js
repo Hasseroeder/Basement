@@ -69,7 +69,10 @@ class Trait {
 				onchange: () => modifyValueAndCookie(this),
 			}),
 		]
-		const _numberWrapper = make('div', { className: 'numberWrapper' }, [this._span, this.input])
+		const _numberWrapper = make('div', { className: 'numberWrapper rounded' }, [
+			this._span,
+			this.input,
+		])
 
 		const _ttKids = [
 			make('img', { className: 'upgrade-image', src: '/media/owo_images/essence.gif' }),
@@ -365,6 +368,7 @@ function importFromCookie() {
 	stringToLevel(levelsData ?? '0,0,0,0,0,0')
 
 	patreon = cookie.getCookie('Patreon') === 'true'
+	patreonCheck.checked = patreon
 	renderPatreon()
 }
 
