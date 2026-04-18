@@ -29,12 +29,7 @@ class Trait {
 			style: { height: '1rem' },
 		})
 
-		const wrappers = [
-			make('div', { className: 'header-wrapper' }, [this.emoji, this.header]),
-			make('div', { style: { display: 'flex', alignItems: 'center' } }),
-			make('ul'),
-		]
-		gridContainer.append(make('div', { className: 'box' }, wrappers))
+		const header = make('div', { className: 'header-wrapper' }, [this.emoji, this.header])
 
 		if (this.upgradeWorth) {
 			const cells = [...Array(4)].map(() => make('td'))
@@ -58,7 +53,6 @@ class Trait {
 			make('div', {
 				textContent: 'Lvl',
 				className: 'calculatorLevel',
-				onclick: () => this.input.focus(),
 			}),
 			make('input', {
 				type: 'number',
@@ -69,7 +63,7 @@ class Trait {
 				onchange: () => modifyValueAndCookie(this),
 			}),
 		]
-		const _numberWrapper = make('div', { className: 'numberWrapper rounded' }, [
+		const _numberWrapper = make('div', { className: 'numberWrapper  rounded gray-hover' }, [
 			this._span,
 			this.input,
 		])
@@ -89,25 +83,28 @@ class Trait {
 		this.btnM = _btnM
 		this.btnP = { text, ttText: _ttKids[1], ttEl: _tt }
 
-		wrappers[1].append(
-			make(
-				'div',
-				{
-					className: 'hb-input-wrapper',
-					onwheel: (e) => {
-						e.preventDefault()
-						modifyValueAndCookie(this, e.deltaY < 0)
-					},
+		const inputWrapper = make(
+			'div',
+			{
+				className: 'hb-input-wrapper',
+				onwheel: (e) => {
+					e.preventDefault()
+					modifyValueAndCookie(this, e.deltaY < 0)
 				},
-				[_btnM, _numberWrapper, _btnP]
-			)
+				onclick: () => this.input.focus(),
+			},
+			[_btnM, _numberWrapper, _btnP]
 		)
 
+		const outputWrapper = make('ul')
 		this.outputs.forEach((output, i) => {
-			const el = document.createElement('li')
-			wrappers[2].append(el)
+			const el = make('li')
+			outputWrapper.append(el)
 			this.outputs[i] = () => (el.textContent = output())
 		})
+		gridContainer.append(
+			make('div', { className: 'box' }, [header, inputWrapper, outputWrapper])
+		)
 	}
 
 	get cost() {

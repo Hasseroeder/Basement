@@ -39,7 +39,6 @@
 }
 
 .pseudo-table > .pseudo-cell {
-	border: none;
 	font-size: 0.8rem;
 	display: flex;
 	flex-direction: column;
@@ -80,7 +79,9 @@
 	width: 1.5rem;
 }
 
-.table-box table {
+.table-box table,
+.table-box td,
+.table-box th {
 	border: none;
 }
 
@@ -88,7 +89,6 @@
 .table-box table th {
 	padding: 0.1rem;
 	width: 6rem;
-	border: none;
 }
 
 input[type='checkbox'] {
@@ -118,13 +118,7 @@ input[type='checkbox'] {
 }
 
 .numberWrapper {
-	background-color: #202020;
 	display: flex;
-	padding: 0;
-}
-
-.numberWrapper:hover {
-	background-color: #555555;
 }
 
 input[type='checkbox']:checked::before {
@@ -145,11 +139,6 @@ button {
 	background-color: #202020;
 }
 
-label.bigger,
-button.bigger {
-	/*height: 1.8rem;*/
-}
-
 ul {
 	padding-left: 1.4rem;
 }
@@ -163,10 +152,6 @@ ul {
 	display: flex;
 	align-items: center;
 	gap: 0.15rem;
-}
-
-.hb-input-wrapper > * {
-	max-height: unset;
 }
 
 .patreon-graying {
