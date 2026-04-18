@@ -131,12 +131,10 @@ input[type='checkbox']:checked::before {
 }
 
 button {
-	height: 1.45rem;
 	width: 2.5rem;
 	border: none;
 	font-size: 0.55rem;
 	margin: 0;
-	background-color: #202020;
 }
 
 ul {

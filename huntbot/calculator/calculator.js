@@ -76,10 +76,16 @@ class Trait {
 		const text = make('div')
 		const _btnP = make(
 			'button',
-			{ onclick: () => modifyValueAndCookie(this, true), className: 'tooltip' },
+			{
+				className: 'gray-hover tooltip',
+				onclick: () => modifyValueAndCookie(this, true),
+			},
 			[text, _tt]
 		)
-		const _btnM = make('button', { onclick: () => modifyValueAndCookie(this, false) })
+		const _btnM = make('button', {
+			className: 'gray-hover',
+			onclick: () => modifyValueAndCookie(this, false),
+		})
 		this.btnM = _btnM
 		this.btnP = { text, ttText: _ttKids[1], ttEl: _tt }
 
