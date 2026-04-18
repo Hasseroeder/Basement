@@ -92,7 +92,7 @@ class Trait {
 		const inputWrapper = make(
 			'div',
 			{
-				className: 'hb-input-wrapper',
+				className: 'gapped-box',
 				onwheel: (e) => {
 					e.preventDefault()
 					modifyValueAndCookie(this, e.deltaY < 0)

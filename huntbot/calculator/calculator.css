@@ -12,15 +12,14 @@
 	font-size: 0.8rem;
 }
 
+.box:hover {
+	background-color: #373737;
+}
+
 .box.intro {
 	align-items: center;
 	font-size: 0.8rem;
 	flex-direction: unset;
-}
-
-.box:hover {
-	background-color: #373737;
-	color: lightgray;
 }
 
 .discord-code {
@@ -28,7 +27,7 @@
 }
 
 .discord-embed-middle {
-	max-width: fit-content;
+	max-width: unset;
 }
 
 .gray-hover:hover {
@@ -52,7 +51,7 @@
 	width: 1rem;
 }
 
-.pseudo-cell .dynamic {
+.pseudo-cell > .dynamic {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -143,13 +142,6 @@ ul {
 
 .upgrade-image {
 	width: 0.6rem;
-	height: 0.6rem;
-}
-
-.hb-input-wrapper {
-	display: flex;
-	align-items: center;
-	gap: 0.15rem;
 }
 
 .patreon-graying {
