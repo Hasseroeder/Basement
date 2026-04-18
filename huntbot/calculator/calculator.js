@@ -59,7 +59,7 @@ class Trait {
 			max: this.max,
 			tabIndex: traitcounter++,
 			className: 'number-input no-arrows',
-			onchange: () => modifyValueAndCookie(this),
+			onchange: () => (this.level = this.input.value),
 		})
 
 		const numberWrapper = make(
@@ -79,13 +79,13 @@ class Trait {
 			'button',
 			{
 				className: 'gray-hover tooltip',
-				onclick: () => modifyValueAndCookie(this, true),
+				onclick: () => this.level++,
 			},
 			[text, ttEl]
 		)
 		const btnM = make('button', {
 			className: 'gray-hover',
-			onclick: () => modifyValueAndCookie(this, false),
+			onclick: () => this.level--,
 		})
 		this.btnM = btnM
 		this.btnP = { text, ttText, ttEl }
@@ -96,7 +96,8 @@ class Trait {
 				className: 'gapped-box',
 				onwheel: (e) => {
 					e.preventDefault()
-					modifyValueAndCookie(this, e.deltaY < 0)
+					if (e.deltaY < 0) this.level++
+					else this.level--
 				},
 			},
 			[btnM, numberWrapper, btnP]
@@ -111,6 +112,23 @@ class Trait {
 		gridContainer.append(
 			make('div', { className: 'box' }, [header, inputWrapper, outputWrapper])
 		)
+	}
+
+	set level(value) {
+		value = Number(value)
+		value = Math.min(this.input.max, Math.max(0, value))
+		this._level = value
+		//DOM updates
+		this.input.value = value
+		this.btnM.textContent = value == 0 ? 'MIN' : '<'
+		this.btnP.text.textContent = value == this.max ? 'MAX' : '>'
+		this.btnP.ttEl.hidden = value == this.max
+		this.btnP.ttText.textContent = this.cost
+		drawData()
+		saveDebounced()
+	}
+	get level() {
+		return this._level
 	}
 
 	get cost() {
@@ -300,30 +318,12 @@ document.addEventListener('mousedown', () => (isDragging = true))
 document.addEventListener('paste', (e) => extractLevels(e.clipboardData.getData('text')))
 
 const patreonCheckWrapper = document.getElementById('patreonCheck')
-patreonCheckWrapper.onmousedown = (e) => {
-	e.preventDefault()
-	patreonCheck.checked = !patreonCheck.checked
+const patreonCheck = patreonCheckWrapper.querySelector('input')
+patreonCheckWrapper.onclick = () => {
 	patreon = patreonCheck.checked
 	saveDebounced()
 	drawData()
 	renderPatreon()
-}
-
-const patreonCheck = patreonCheckWrapper.querySelector('input')
-patreonCheck.onclick = (e) => e.preventDefault()
-
-function modifyValueDirect(trait, value) {
-	const { input, btnM, btnP } = trait
-	value = Math.min(input.max, Math.max(0, +value))
-
-	input.value = value
-	trait.level = value
-
-	btnM.textContent = value == 0 ? 'MIN' : '<'
-	btnP.text.textContent = value == input.max ? 'MAX' : '>'
-	btnP.ttEl.hidden = value == input.max
-	btnP.ttText.textContent = trait.cost
-	drawData()
 }
 
 function drawData() {
@@ -350,21 +350,7 @@ function drawData() {
 }
 
 const extractLevels = (text) =>
-	[...text.matchAll(/\bLvl (\d+)\b/g)]
-		.slice(0, 6)
-		.forEach((m, i) => modifyValueAndCookie(traits[i], m[1]))
-
-function modifyValueAndCookie(trait, value) {
-	if (value === undefined)
-		value = +trait.input.value // if no value given, take from input
-	else if (typeof value === 'boolean')
-		value = +trait.input.value + (value ? +1 : -1) // if boolean, just assume you want to go up/down
-	else if (typeof value === 'string') {
-	} // modifyValueDirect() recognizes strings as numbers, no need to convert
-
-	modifyValueDirect(trait, value)
-	saveDebounced()
-}
+	[...text.matchAll(/\bLvl (\d+)\b/g)].slice(0, 6).forEach((m, i) => (traits[i].level = m[1]))
 
 function importFromCookie() {
 	const levelsData = cookie.getCookie('Levels')
@@ -376,9 +362,7 @@ function importFromCookie() {
 }
 
 const stringToLevel = (levelString) =>
-	levelString
-		.split(',')
-		.forEach((value, index) => modifyValueAndCookie(traits[index], value || 0))
+	levelString.split(',').forEach((value, i) => (traits[i].level = value || 0))
 
 importFromCookie()
 if (location.hash) stringToLevel(location.hash.slice(1))
