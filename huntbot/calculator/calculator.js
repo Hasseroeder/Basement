@@ -63,10 +63,11 @@ class Trait {
 				onchange: () => modifyValueAndCookie(this),
 			}),
 		]
-		const _numberWrapper = make('div', { className: 'numberWrapper  rounded gray-hover' }, [
-			this._span,
-			this.input,
-		])
+		const _numberWrapper = make(
+			'div',
+			{ className: 'numberWrapper  rounded gray-hover', onclick: () => this.input.focus() },
+			[this._span, this.input]
+		)
 
 		const _ttKids = [
 			make('img', { className: 'upgrade-image', src: '/media/owo_images/essence.gif' }),
@@ -97,7 +98,6 @@ class Trait {
 					e.preventDefault()
 					modifyValueAndCookie(this, e.deltaY < 0)
 				},
-				onclick: () => this.input.focus(),
 			},
 			[_btnM, _numberWrapper, _btnP]
 		)
