@@ -38,8 +38,12 @@ class Trait {
 			this.table = {
 				row,
 				update: () => {
-					row.style.textDecoration = this.level === this.max ? 'line-through' : 'none'
-					row.style.fontWeight = 'normal'
+					const ROIs = [Efficiency, Gain, Radar]
+						.filter((trait) => trait.level != trait.max)
+						.map((trait) => trait.ROI)
+
+					row.classList.toggle('maxxed', this.level === this.max)
+					row.classList.toggle('recommended', this.ROI === Math.max(...ROIs))
 					cells[1].textContent = this.cost.toLocaleString()
 					cells[2].textContent =
 						signedNumberFixedString(this.upgradeWorth(), 1) + ` ess/day`
@@ -332,8 +336,6 @@ function drawData() {
 		trait.outputs.forEach((fn) => fn())
 		trait.table?.update()
 	})
-	;[Efficiency, Gain, Radar].sort((a, b) => b.ROI - a.ROI)[0].table.row.style.fontWeight =
-		'bolder'
 
 	const worth = getWorth()
 	petWorthEls[0].textContent = worth[1].toFixed(1) + ' owo/pet'

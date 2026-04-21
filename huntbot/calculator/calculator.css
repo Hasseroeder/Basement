@@ -215,3 +215,48 @@ button {
 	display: flex;
 	align-items: center;
 }
+
+.maxxed {
+	text-decoration: line-through;
+}
+
+.recommended {
+	-webkit-animation: rainbow 5s infinite;
+	font-weight: bolder;
+}
+
+@-webkit-keyframes rainbow {
+	0% {
+		color: #ced1ff;
+	} /* orange */
+	10% {
+		color: #dfcaff;
+	} /* purple */
+	20% {
+		color: #f5bfff;
+	} /* red */
+	30% {
+		color: #ffc0e0;
+	} /* cadetblue */
+	40% {
+		color: #f5bfff;
+	} /* yellow */
+	50% {
+		color: #dfcaff;
+	} /* coral */
+	60% {
+		color: #ced1ff;
+	} /* green */
+	70% {
+		color: #b8d8ff;
+	} /* cyan */
+	80% {
+		color: #a4deff;
+	} /* deeppink */
+	90% {
+		color: #b8d8ff;
+	} /* dodgerblue */
+	100% {
+		color: #ced1ff;
+	} /* orange */
+}
