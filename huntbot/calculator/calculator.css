@@ -4,22 +4,17 @@
 	grid-template-columns: repeat(3, 12rem);
 }
 
-.box {
-	padding: 0.3rem;
+.gridContainer > div {
+	padding: 0.75rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.25rem;
-	font-size: 0.8rem;
 }
 
-.box:hover {
-	background-color: #373737;
-}
-
-.box.intro {
+.intro {
+	display: flex;
 	align-items: center;
-	font-size: 0.8rem;
-	flex-direction: unset;
+	padding: 0.5rem;
 }
 
 .discord-code {
@@ -28,6 +23,10 @@
 
 .discord-embed-middle {
 	max-width: unset;
+}
+
+.subtle-gray-hover:hover {
+	background-color: #373737;
 }
 
 .gray-hover:hover {
@@ -78,14 +77,25 @@
 	width: 1.5rem;
 }
 
-.table-box table,
-.table-box td,
-.table-box th {
-	border: none;
+table {
+	margin: 0.5rem;
 }
 
-.table-box table td,
-.table-box table th {
+table,
+td,
+th {
+	border: none;
+	width: 100%;
+}
+
+td,
+th {
+	padding: 0.1rem;
+	width: 6rem;
+}
+
+td:first-child,
+th:first-child {
 	padding: 0.1rem;
 	width: 6rem;
 }
@@ -160,8 +170,13 @@ ul {
 	padding-left: 0.35rem;
 }
 
+h3 {
+	font-size: 1rem;
+	margin: 0.4rem 0 0 0.5rem;
+}
+
 h4 {
-	margin: 0.3rem;
+	margin: 0.5rem;
 }
 
 [hidden] {
@@ -173,4 +188,30 @@ label,
 button {
 	border-radius: 0.3rem;
 	height: 1.7rem;
+}
+
+.discord-embed-middle {
+	font-size: 0.8rem;
+	margin-top: 0.125rem;
+}
+
+.based-discord-embed {
+	display: flex;
+	gap: 0.25rem;
+	font-size: 0.8rem;
+	margin-top: 0.125rem;
+	flex-direction: column;
+	background: #303030;
+	border-radius: 4px;
+	border-left: 4px solid #909090;
+	padding: 1rem;
+	width: 36rem;
+}
+
+.page-wrapper {
+	padding: 1.2rem;
+	gap: 1.2rem;
+	flex-direction: column;
+	display: flex;
+	align-items: center;
 }

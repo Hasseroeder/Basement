@@ -12,7 +12,7 @@ const tableEl = make('table')
 	//table init
 	const cells = ['', 'Cost', 'Essence', 'ROI'].map((textContent) => make('td', { textContent }))
 	tableEl.append(make('tr', {}, cells))
-	document.querySelector('.table-box').append(tableEl)
+	document.querySelector('#table-box').append(tableEl)
 }
 
 const gridContainer = document.querySelector('.gridContainer')
@@ -110,7 +110,7 @@ class Trait {
 			this.outputs[i] = () => (el.textContent = output())
 		})
 		gridContainer.append(
-			make('div', { className: 'box' }, [header, inputWrapper, outputWrapper])
+			make('div', { className: 'subtle-gray-hover' }, [header, inputWrapper, outputWrapper])
 		)
 	}
 

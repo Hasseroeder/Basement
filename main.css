@@ -1558,6 +1558,10 @@ table.align-child-text-left td {
 	align-items: center;
 }
 
+.center-box.column {
+	flex-direction: column;
+}
+
 .gapped-box {
 	display: flex;
 	gap: 0.25rem;
