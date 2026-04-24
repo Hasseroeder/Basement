@@ -36,13 +36,14 @@
 	background-color: #202020;
 }
 
-.pseudo-table > .pseudo-cell {
+.tier-table > .tier-cell {
 	font-size: 0.8rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 0.4rem;
 	padding: 0.5rem 0;
+	position: relative;
 }
 
 .smol {
@@ -50,30 +51,30 @@
 	width: 1rem;
 }
 
-.pseudo-cell > .dynamic {
+.tier-cell > .dynamic {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 0.2rem;
 }
 
-.pseudo-table > .pseudo-cell:first-child {
+.tier-cell:first-child {
 	border-radius: 0.5rem 0 0 0.5rem;
 	padding-left: 0.1rem;
 }
-.pseudo-table > .pseudo-cell:last-child {
+.tier-cell:last-child {
 	border-radius: 0 0.5rem 0.5rem 0;
 	padding-right: 0.1rem;
 }
 
-.pseudo-table {
+.tier-table {
 	display: grid;
 	user-select: none;
 	width: 100%;
 	grid-template-columns: 1.05fr repeat(9, 1fr) 1.05fr;
 }
 
-.pseudo-cell > img {
+.tier-cell > img {
 	width: 1.5rem;
 }
 

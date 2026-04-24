@@ -1,0 +1,226 @@
+[
+	{
+		"prettyName": "Common",
+		"slug": "common",
+		"huntbotAvailable": true,
+		"patreonNeeded": false,
+		"_rate": null,
+		"emoteSrc": "/media/owo_images/tiers/common.png",
+		"value": { "sell": 1, "sac": 1 },
+		"pets": [
+			{ "name": "bee", "stats": [1, 5, 2, 3, 3, 1], "caught": 0 },
+			{ "name": "bug", "stats": [3, 2, 2, 4, 2, 2], "caught": 0 },
+			{ "name": "snail", "stats": [8, 1, 2, 3, 5, 1], "caught": 0 },
+			{ "name": "beetle", "stats": [4, 2, 2, 3, 2, 2], "caught": 0 },
+			{ "name": "butterfly", "stats": [1, 1, 1, 5, 5, 2], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Uncommon",
+		"slug": "uncommon",
+		"huntbotAvailable": true,
+		"patreonNeeded": false,
+		"_rate": 0.3,
+		"emoteSrc": "/media/owo_images/tiers/uncommon.png",
+		"value": { "sell": 3, "sac": 5 },
+		"pets": [
+			{ "name": "chick", "stats": [3, 2, 3, 3, 3, 2], "caught": 0 },
+			{ "name": "mouse", "stats": [3, 3, 2, 3, 3, 2], "caught": 0 },
+			{ "name": "chicken", "stats": [3, 4, 3, 2, 2, 2], "caught": 0 },
+			{ "name": "rabbit", "stats": [3, 4, 2, 3, 2, 2], "caught": 0 },
+			{ "name": "chipmunk", "stats": [3, 5, 2, 3, 2, 1], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Rare",
+		"slug": "rare",
+		"huntbotAvailable": true,
+		"patreonNeeded": false,
+		"_rate": 0.1,
+		"emoteSrc": "/media/owo_images/tiers/rare.png",
+		"value": { "sell": 10, "sac": 20 },
+		"pets": [
+			{ "name": "sheep", "stats": [5, 2, 2, 3, 1, 4], "caught": 0 },
+			{ "name": "pig", "stats": [4, 2, 3, 2, 2, 4], "caught": 0 },
+			{ "name": "cow", "stats": [5, 4, 3, 1, 1, 3], "caught": 0 },
+			{ "name": "dog", "stats": [4, 6, 3, 1, 1, 2], "caught": 0 },
+			{ "name": "cat", "stats": [3, 1, 1, 6, 3, 3], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Epic",
+		"slug": "epic",
+		"huntbotAvailable": true,
+		"patreonNeeded": false,
+		"_rate": 0.01,
+		"emoteSrc": "/media/owo_images/tiers/epic.png",
+		"value": { "sell": 250, "sac": 250 },
+		"pets": [
+			{ "name": "crocodile", "stats": [3, 4, 4, 2, 1, 4], "caught": 0 },
+			{ "name": "tiger", "stats": [4, 6, 2, 1, 3, 2], "caught": 0 },
+			{ "name": "penguin", "stats": [2, 1, 2, 6, 5, 2], "caught": 0 },
+			{ "name": "elephant", "stats": [5, 5, 3, 1, 1, 3], "caught": 0 },
+			{ "name": "whale", "stats": [7, 1, 3, 1, 2, 4], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Mythic",
+		"slug": "mythic",
+		"huntbotAvailable": true,
+		"patreonNeeded": false,
+		"_rate": 0.001,
+		"emoteSrc": "/media/owo_images/tiers/mythic.png",
+		"value": { "sell": 5000, "sac": 3000 },
+		"pets": [
+			{ "name": "dragon", "stats": [4, 8, 1, 3, 1, 2], "caught": 0 },
+			{ "name": "unicorn", "stats": [2, 1, 2, 6, 6, 2], "caught": 0 },
+			{ "name": "snowman", "stats": [3, 2, 1, 8, 3, 2], "caught": 0 },
+			{ "name": "ghost", "stats": [2, 2, 8, 3, 3, 1], "caught": 0 },
+			{ "name": "dove", "stats": [4, 4, 4, 2, 1, 4], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Patreon",
+		"slug": "patreon",
+		"huntbotAvailable": true,
+		"patreonNeeded": true,
+		"_rate": 0.005,
+		"emoteSrc": "/media/owo_images/tiers/patreon.png",
+		"value": { "sell": 1000, "sac": 500 },
+		"pets": [
+			{ "name": "pbird", "stats": [1, 2, 2, 9, 3, 2], "caught": 0 },
+			{ "name": "pdolphin", "stats": [2, 1, 1, 4, 10, 1], "caught": 0 },
+			{ "name": "pogre", "stats": [6, 3, 2, 3, 3, 2], "caught": 0 },
+			{ "name": "pscorpion", "stats": [1, 11, 1, 3, 2, 1], "caught": 0 },
+			{ "name": "ptiger", "stats": [3, 4, 3, 3, 3, 3], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Custom Patreon",
+		"slug": "customPatreon",
+		"huntbotAvailable": true,
+		"patreonNeeded": true,
+		"_rate": 0.0001,
+		"emoteSrc": "/media/owo_images/tiers/patreon.gif",
+		"value": { "sell": 50000, "sac": 25000 },
+		"pets": [
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 },
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 },
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 },
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 },
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Legendary",
+		"slug": "legendary",
+		"huntbotAvailable": true,
+		"patreonNeeded": false,
+		"_rate": 0.0005,
+		"emoteSrc": "/media/owo_images/tiers/legendary.gif",
+		"value": { "sell": 15000, "sac": 10000 },
+		"pets": [
+			{ "name": "deer", "stats": [3, 1, 1, 3, 11, 1], "caught": 0 },
+			{ "name": "fox", "stats": [4, 9, 1, 3, 1, 2], "caught": 0 },
+			{ "name": "lion", "stats": [7, 7, 2, 1, 1, 2], "caught": 0 },
+			{ "name": "owl", "stats": [10, 1, 3, 1, 2, 3], "caught": 0 },
+			{ "name": "squid", "stats": [3, 1, 2, 6, 6, 2], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Gem",
+		"slug": "gem",
+		"huntbotAvailable": false,
+		"patreonNeeded": false,
+		"_rate": null,
+		"emoteSrc": "/media/owo_images/tiers/gem.gif",
+		"value": { "sell": 30000, "sac": 20000 },
+		"pets": [
+			{ "name": "camel", "stats": [1, 0, 0, 5, 14, 0], "caught": 0 },
+			{ "name": "fish", "stats": [0, 0, 0, 1, 19, 0], "caught": 0 },
+			{ "name": "panda", "stats": [1, 10, 0, 9, 0, 0], "caught": 0 },
+			{ "name": "shrimp", "stats": [0, 0, 0, 10, 10, 0], "caught": 0 },
+			{ "name": "spider", "stats": [0, 19, 0, 1, 0, 0], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Bot",
+		"slug": "bot",
+		"huntbotAvailable": true,
+		"patreonNeeded": false,
+		"_rate": null,
+		"emoteSrc": "/media/owo_images/tiers/bot.gif",
+		"value": { "sell": 50000, "sac": 10000 },
+		"pets": [
+			{ "name": "dinobot", "stats": [13, 0, 2, 4, 0, 2], "caught": 0 },
+			{ "name": "giraffbot", "stats": [12, 0, 4, 1, 0, 4], "caught": 0 },
+			{ "name": "hedgebot", "stats": [7, 0, 6, 2, 0, 6], "caught": 0 },
+			{ "name": "lobbot", "stats": [14, 0, 3, 1, 0, 3], "caught": 0 },
+			{ "name": "slothbot", "stats": [9, 0, 2, 8, 0, 2], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Distorted",
+		"slug": "distorted",
+		"huntbotAvailable": false,
+		"patreonNeeded": false,
+		"_rate": 0.0000025,
+		"emoteSrc": "/media/owo_images/tiers/distorted.gif",
+		"value": { "sell": 300000, "sac": 200000 },
+		"pets": [
+			{ "name": "glitchflamingo", "stats": [3, 9, 2, 4, 1, 2], "caught": 0 },
+			{ "name": "glitchotter", "stats": [2, 1, 2, 4, 10, 2], "caught": 0 },
+			{ "name": "glitchparrot", "stats": [8, 1, 3, 5, 1, 3], "caught": 0 },
+			{ "name": "glitchraccoon", "stats": [2, 6, 2, 3, 6, 2], "caught": 0 },
+			{ "name": "glitchzebra", "stats": [3, 1, 2, 8, 5, 2], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Fabled",
+		"slug": "fabled",
+		"huntbotAvailable": true,
+		"patreonNeeded": false,
+		"_rate": 0.00001,
+		"emoteSrc": "/media/owo_images/tiers/fabled.gif",
+		"value": { "sell": 250000, "sac": 100000 },
+		"pets": [
+			{ "name": "boar", "stats": [7, 5, 2, 4, 1, 2], "caught": 0 },
+			{ "name": "eagle", "stats": [2, 13, 2, 1, 1, 2], "caught": 0 },
+			{ "name": "frog", "stats": [3, 1, 1, 3, 10, 3], "caught": 0 },
+			{ "name": "gorilla", "stats": [8, 7, 2, 1, 1, 2], "caught": 0 },
+			{ "name": "wolf", "stats": [7, 3, 5, 1, 1, 4], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Special",
+		"slug": "special",
+		"huntbotAvailable": false,
+		"patreonNeeded": false,
+		"_rate": null,
+		"emoteSrc": "/media/owo_images/tiers/special.png",
+		"value": { "sell": 6000, "sac": 5000 },
+		"pets": [
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 },
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 },
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 },
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 },
+			{ "name": "bitter", "stats": [1, 15, 1, 1, 1, 1], "caught": 0 }
+		]
+	},
+	{
+		"prettyName": "Hidden",
+		"slug": "hidden",
+		"huntbotAvailable": true,
+		"patreonNeeded": false,
+		"_rate": 0.000001,
+		"emoteSrc": "/media/owo_images/tiers/hidden.gif",
+		"value": { "sell": 1000000, "sac": 500000 },
+		"pets": [
+			{ "name": "hkoala", "stats": [10, 1, 4, 1, 1, 5], "caught": 0 },
+			{ "name": "hlizard", "stats": [2, 1, 2, 2, 13, 2], "caught": 0 },
+			{ "name": "hmonkey", "stats": [3, 7, 2, 1, 7, 2], "caught": 0 },
+			{ "name": "hsnake", "stats": [2, 13, 3, 1, 1, 2], "caught": 0 },
+			{ "name": "hsquid", "stats": [3, 1, 2, 2, 11, 3], "caught": 0 }
+		]
+	}
+]

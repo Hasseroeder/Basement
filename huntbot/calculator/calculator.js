@@ -2,10 +2,63 @@ import * as cookie from '/js/util/cookieUtil.js'
 import { signedNumberFixedString } from '/js/util/stringUtil.js'
 import { make, doTimestamps } from '/js/util/injectionUtil.js'
 import { debounce, roundToDecimals } from '/js/util/inputUtil.js'
+import { loadJson } from '/js/util/jsonUtil.js'
 
 let traitcounter = 1
 let patreon = false
 let isDragging = false
+
+const zoo = (await loadJson('/huntbot/calculator/zoo.json')).filter((tier) => tier.huntbotAvailable)
+const tierTable = document.querySelector('.tier-table')
+
+zoo.forEach((tier) => {
+	Object.defineProperty(tier, 'rate', {
+		get() {
+			if (tier.patreonNeeded && !patreon) return 0
+			if (typeof tier._rate === 'number') return tier._rate
+
+			switch (tier.slug) {
+				case 'common': {
+					// common = 1 - sum(other active rates)
+					const sumOther = zoo
+						.filter((t) => t.slug !== 'common')
+						.reduce((acc, t) => acc + t.rate, 0)
+					return Math.max(0, 1 - sumOther)
+				}
+				case 'bot':
+					// scales with Radar.level
+					return 0.00000004 * Radar.level
+			}
+		},
+	})
+
+	const img = make('img', { className: 'smol', draggable: false })
+	const text = make('div')
+	tier.toggle = function (override) {
+		this.isSac = override ?? !this.isSac
+		text.innerHTML = this.isSac ? 'Sac' : 'Sell'
+		img.src = this.isSac ? '/media/owo_images/essence.gif' : '/media/owo_images/cowoncy.png'
+		drawData()
+	}
+
+	const wrapper = make(
+		'div',
+		{
+			className: 'tier-cell gray-hover',
+			onmousedown: () => tier.toggle(),
+			onmouseenter: (e) => {
+				if (e.relatedTarget && wrapper.contains(e.relatedTarget)) return
+				if (isDragging) tier.toggle()
+			},
+		},
+		[
+			make('img', { src: tier.emoteSrc, draggable: false }),
+			make('div', { className: 'dynamic' }, [text, img]),
+			tier.patreonNeeded ? make('div', { className: 'patreon-graying' }) : '',
+		]
+	)
+	tierTable.append(wrapper)
+})
 
 const tableEl = make('table')
 {
@@ -129,7 +182,7 @@ class Trait {
 		this.btnP.ttEl.hidden = value == this.max
 		this.btnP.ttText.textContent = this.cost
 		drawData()
-		saveDebounced()
+		save()
 	}
 	get level() {
 		return this._level
@@ -156,7 +209,7 @@ const Efficiency = new Trait({
 	max: 215,
 	costParams: { mult: 10, exponent: 1.748 },
 	valueParams: { base: 25 },
-	upgradeWorth: () => getWorth()[0] * 24,
+	upgradeWorth: () => petValue().sac * 24,
 	outputs: [() => dailyPets() + ' pets/day', () => hbPets() + ' pets/hb'],
 })
 const Duration = new Trait({
@@ -208,9 +261,11 @@ const Radar = new Trait({
 	costParams: { mult: 50, exponent: 2.5 },
 	valueParams: { mult: 0.04 },
 	upgradeWorth: () => {
+		const botTier = zoo.find((tier) => tier.slug == 'bot')
+		const commonTier = zoo.find((tier) => tier.slug == 'common')
 		return (
-			(cells[8].isSac ? 0.00000004 * petWorth[8][1] * dailyPets() : 0) -
-			(cells[8].isSac ? 0.00000004 * dailyPets() : 0)
+			(botTier.isSac ? 0.00000004 * botTier.value.sac * dailyPets() : 0) -
+			(commonTier.isSac ? 0.00000004 * commonTier.value.sac * dailyPets() : 0)
 		)
 	},
 	outputs: [
@@ -226,96 +281,35 @@ const Radar = new Trait({
 })
 const traits = [Efficiency, Duration, Cost, Gain, Experience, Radar]
 
-const graying = Array.from(document.querySelectorAll('.patreon-graying'))
-const renderPatreon = () => graying.forEach((el) => (el.hidden = patreon))
+const renderPatreon = () =>
+	Array.from(document.querySelectorAll('.patreon-graying')).forEach((el) => (el.hidden = patreon))
 
 doTimestamps()
 const toggleAllButtons = document.getElementById('sacToggles').querySelectorAll('button')
-toggleAllButtons[0].onclick = () => toggleAllCells(false)
-toggleAllButtons[1].onclick = () => toggleAllCells(true)
+toggleAllButtons[0].onclick = () => toggleAllTiers(false)
+toggleAllButtons[1].onclick = () => toggleAllTiers(true)
+const toggleAllTiers = (boolean) => zoo.forEach((tier) => tier.toggle(boolean))
 
-const saveDebounced = debounce(saveData)
-function saveData() {
+const save = debounce(function () {
 	const tempLevels = traits.map((t) => Number(t.level))
-
 	history.replaceState(null, '', '#' + tempLevels.join(','))
 	cookie.setCookie('Patreon', patreon.toString(), 30)
 	cookie.setCookie('Levels', tempLevels.join(','), 30)
-}
+})
 
 const hbWorthEls = Array.from(document.querySelectorAll('.hbworth'))
 const petWorthEls = Array.from(document.querySelectorAll('.petworth'))
 
-const petWorth = [
-	/*[sell,sac]*/
-	[1, 1], //c
-	[3, 5], //u
-	[10, 20], //r
-	[250, 250], //e
-	[5000, 3000], //m
-	[1000, 500], //p1
-	[50000, 25000], //p2
-	[15000, 10000], //l
-	[50000, 10000], //b
-	[250000, 100000], //f
-	[1000000, 500000], //h
-]
-
-function petRates() {
-	let petRates = [
-		0.3, //u
-		0.1, //r
-		0.01, //e
-		0.001, //m
-		patreon ? 0.005 : 0, //p1
-		patreon ? 0.0001 : 0, //p2
-		0.0005, //l
-		0.00000004 * Radar.level, //b
-		0.00001, //f
-		0.000001, //h
-	]
-	let cRate = petRates.reduce((acc, num) => acc - num, 1)
-
-	return [cRate, ...petRates]
-}
-
-function getWorth() {
-	const rates = petRates()
+function petValue() {
 	let sacWorth = 0
 	let sellWorth = 0
-
-	cells.forEach((cell, i) => {
-		if (cell.isSac) sacWorth += rates[i] * petWorth[i][1]
-		else sellWorth += rates[i] * petWorth[i][0]
+	zoo.forEach((tier) => {
+		if (tier.isSac) sacWorth += tier.rate * tier.value.sac
+		else sellWorth += tier.rate * tier.value.sell
 	})
 
-	return [sacWorth, sellWorth]
+	return { sac: sacWorth, sell: sellWorth }
 }
-const cellWrappers = Array.from(document.querySelectorAll('.pseudo-table > div'))
-
-const cells = cellWrappers.map((wrapper) => {
-	const img = make('img', { className: 'smol' })
-	const text = make('div')
-	const cell = {
-		isSac: undefined,
-		toggle(override) {
-			this.isSac = override ?? !this.isSac
-			text.innerHTML = this.isSac ? 'Sac' : 'Sell'
-			img.src = this.isSac ? '/media/owo_images/essence.gif' : '/media/owo_images/cowoncy.png'
-			drawData()
-		},
-	}
-	wrapper.append(make('div', { className: 'dynamic' }, [text, img]))
-	wrapper.querySelectorAll('img').forEach((img) => (img.draggable = false))
-	wrapper.addEventListener('mousedown', () => cell.toggle())
-	wrapper.addEventListener('mouseenter', (e) => {
-		if (e.relatedTarget && wrapper.contains(e.relatedTarget)) return
-		if (isDragging) cell.toggle()
-	})
-	return cell
-})
-
-const toggleAllCells = (boolean) => cells.forEach((cell) => cell.toggle(boolean))
 
 document.addEventListener('mouseup', () => (isDragging = false))
 document.addEventListener('mousedown', () => (isDragging = true))
@@ -325,7 +319,7 @@ const patreonCheckWrapper = document.getElementById('patreonCheck')
 const patreonCheck = patreonCheckWrapper.querySelector('input')
 patreonCheckWrapper.onclick = () => {
 	patreon = patreonCheck.checked
-	saveDebounced()
+	save()
 	drawData()
 	renderPatreon()
 }
@@ -337,16 +331,15 @@ function drawData() {
 		trait.table?.update()
 	})
 
-	const worth = getWorth()
-	petWorthEls[0].textContent = worth[1].toFixed(1) + ' owo/pet'
-	hbWorthEls[0].textContent = (worth[1] * hbPets()).toFixed(0) + ' owo/hb'
+	const { sac, sell } = petValue()
+	petWorthEls[0].textContent = sell.toFixed(1) + ' owo/pet'
+	hbWorthEls[0].textContent = (sell * hbPets()).toFixed(0) + ' owo/hb'
 
-	petWorthEls[1].textContent = 'Profit: ' + (worth[1] - Cost.value).toFixed(1) + ' owo/pet'
-	hbWorthEls[1].textContent =
-		'Profit: ' + ((worth[1] - Cost.value) * hbPets()).toFixed(0) + ' owo/hb'
+	petWorthEls[1].textContent = 'Profit: ' + (sell - Cost.value).toFixed(1) + ' owo/pet'
+	hbWorthEls[1].textContent = 'Profit: ' + ((sell - Cost.value) * hbPets()).toFixed(0) + ' owo/hb'
 
-	petWorthEls[2].textContent = worth[0].toFixed(1) + ' ess/pet'
-	hbWorthEls[2].textContent = (worth[0] * hbPets()).toFixed(0) + ' ess/hb'
+	petWorthEls[2].textContent = sac.toFixed(1) + ' ess/pet'
+	hbWorthEls[2].textContent = (sac * hbPets()).toFixed(0) + ' ess/hb'
 
 	patreonCheckWrapper.checked = patreon
 }
@@ -368,4 +361,23 @@ const stringToLevel = (levelString) =>
 
 importFromCookie()
 if (location.hash) stringToLevel(location.hash.slice(1))
-toggleAllCells(true)
+toggleAllTiers(true)
+
+/*function generateHuntbot() {
+	const pets = hbPets()
+	let acc = 0
+	const rateArray = petRates().map((n) => (acc += n))
+	const returnArray = petRates().map((_) => [0, 0, 0, 0, 0])
+
+	for (let i = 0; i < pets; i++) {
+		const r = Math.random()
+		const idx = rateArray.findIndex((rate) => r < rate)
+		const inneridx = Math.floor(Math.random() * 5)
+		returnArray[idx][inneridx]++
+	}
+	return returnArray
+}
+*/
+window.addEventListener('keydown', (e) => {
+	//if (e.key == 'g') console.log(generateHuntbot())
+})
