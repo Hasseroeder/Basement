@@ -4,11 +4,13 @@ import { make, doTimestamps } from '/js/util/injectionUtil.js'
 import { debounce, roundToDecimals } from '/js/util/inputUtil.js'
 import { loadJson } from '/js/util/jsonUtil.js'
 
-let traitcounter = 1
 let patreon = false
 let isDragging = false
 
-const zoo = (await loadJson('/huntbot/calculator/zoo.json')).filter((tier) => tier.huntbotAvailable)
+const JSON = await loadJson('/huntbot/calculator/zoo.json')
+const zoo = JSON.zoo.filter((tier) => tier.huntbotAvailable)
+const { petFolder, tierFolder } = JSON.config
+
 const tierTable = document.querySelector('.tier-table')
 
 zoo.forEach((tier) => {
@@ -52,7 +54,7 @@ zoo.forEach((tier) => {
 			},
 		},
 		[
-			make('img', { src: tier.emoteSrc, draggable: false }),
+			make('img', { src: tierFolder + tier.emoteSrc, draggable: false }),
 			make('div', { className: 'dynamic' }, [text, img]),
 			tier.patreonNeeded ? make('div', { className: 'patreon-graying' }) : '',
 		]
@@ -114,7 +116,6 @@ class Trait {
 			type: 'number',
 			min: 0,
 			max: this.max,
-			tabIndex: traitcounter++,
 			className: 'number-input no-arrows',
 			onchange: () => (this.level = this.input.value),
 		})
@@ -363,21 +364,29 @@ importFromCookie()
 if (location.hash) stringToLevel(location.hash.slice(1))
 toggleAllTiers(true)
 
-/*function generateHuntbot() {
+function generateHuntbot() {
 	const pets = hbPets()
 	let acc = 0
-	const rateArray = petRates().map((n) => (acc += n))
-	const returnArray = petRates().map((_) => [0, 0, 0, 0, 0])
+	const rateArray = zoo.map((tier) => (acc += tier.rate))
+	const zooCopy = JSON.parse(JSON.stringify(zoo))
 
 	for (let i = 0; i < pets; i++) {
 		const r = Math.random()
-		const idx = rateArray.findIndex((rate) => r < rate)
-		const inneridx = Math.floor(Math.random() * 5)
-		returnArray[idx][inneridx]++
+		const tierIdx = rateArray.findIndex((rate) => r < rate)
+		const tier = zooCopy[tierIdx]
+
+		const petIdx = Math.floor(Math.random() * tier.pets.length)
+		const pet = tier.pets[petIdx]
+
+		zooCopy[tierIdx].pets[petIdx].caught++
+		zoo[tierIdx].pets[petIdx].caught++
 	}
-	return returnArray
+	return zooCopy
 }
-*/
+
 window.addEventListener('keydown', (e) => {
-	//if (e.key == 'g') console.log(generateHuntbot())
+	if (e.key == 'g') {
+		generateHuntbot()
+		console.log(zoo)
+	}
 })

@@ -1,132 +1,132 @@
 [
 	{
-		"image": "/media/owo_images/pets/day.gif",
-		"name": "Day",
+		"image": "/media/owo_images/pets/2023val_day.gif",
+		"name": "2023val_day",
 		"attributes": [7, 1, 1, 9, 1, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/love.gif",
-		"name": "Love",
+		"image": "/media/owo_images/pets/2023val_love.gif",
+		"name": "2023val_love",
 		"attributes": [9, 1, 1, 7, 1, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/night.gif",
-		"name": "Night",
+		"image": "/media/owo_images/pets/2023val_night.gif",
+		"name": "2023val_night",
 		"attributes": [12, 1, 1, 5, 1, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/lovebunny.gif",
-		"name": "Lovebunny",
+		"image": "/media/owo_images/pets/2023val_lovebunny.gif",
+		"name": "2023val_lovebunny",
 		"attributes": [8, 1, 1, 8, 1, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/angelowo.gif",
-		"name": "Angelowo",
+		"image": "/media/owo_images/pets/2023val_AngelOwO.gif",
+		"name": "2023val_AngelOwO",
 		"attributes": [2, 1, 1, 7, 8, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/spider.gif",
-		"name": "Spider",
+		"image": "/media/owo_images/pets/gspider.gif",
+		"name": "gspider",
 		"attributes": [0, 19, 0, 1, 0, 0]
 	},
 	{
-		"image": "/media/owo_images/pets/camel.gif",
-		"name": "Camel",
+		"image": "/media/owo_images/pets/gcamel.gif",
+		"name": "gcamel",
 		"attributes": [1, 0, 0, 5, 14, 0]
 	},
 	{
-		"image": "/media/owo_images/pets/shrimp.gif",
-		"name": "Shrimp",
+		"image": "/media/owo_images/pets/gshrimp.gif",
+		"name": "gshrimp",
 		"attributes": [0, 0, 0, 10, 10, 0]
 	},
 	{
-		"image": "/media/owo_images/pets/panda.gif",
-		"name": "Panda",
+		"image": "/media/owo_images/pets/gpanda.gif",
+		"name": "gpanda",
 		"attributes": [1, 10, 0, 9, 0, 0]
 	},
 	{
-		"image": "/media/owo_images/pets/fox.gif",
-		"name": "Fox",
+		"image": "/media/owo_images/pets/gfox.gif",
+		"name": "fox",
 		"attributes": [4, 9, 1, 3, 1, 2]
 	},
 	{
 		"image": "/media/owo_images/pets/slothbot.gif",
-		"name": "Slothbot",
+		"name": "slothbot",
 		"attributes": [9, 0, 2, 8, 0, 2]
 	},
 	{
 		"image": "/media/owo_images/pets/lobbot.gif",
-		"name": "Lobbot",
+		"name": "lobbot",
 		"attributes": [14, 0, 3, 1, 0, 3]
 	},
 	{
 		"image": "/media/owo_images/pets/dinobot.gif",
-		"name": "Dinobot",
+		"name": "dinobot",
 		"attributes": [13, 0, 2, 4, 0, 2]
 	},
 	{
-		"image": "/media/owo_images/pets/may.gif",
-		"name": "May",
+		"image": "/media/owo_images/pets/2024may_flower.gif",
+		"name": "2024may_flower",
 		"attributes": [15, 1, 1, 1, 1, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/gorilla.gif",
-		"name": "Gorilla",
+		"image": "/media/owo_images/pets/dgorilla.gif",
+		"name": "dgorilla",
 		"attributes": [8, 7, 2, 1, 1, 2]
 	},
 	{
-		"image": "/media/owo_images/pets/spoopy.gif",
-		"name": "Spoopy",
+		"image": "/media/owo_images/pets/2021specialhalloween.gif",
+		"name": "2021specialhalloween",
 		"attributes": [9, 6, 2, 1, 1, 2]
 	},
 	{
-		"image": "/media/owo_images/pets/squid.gif",
-		"name": "Squid",
+		"image": "/media/owo_images/pets/gsquid.gif",
+		"name": "gsquid",
 		"attributes": [3, 1, 2, 6, 6, 2]
 	},
 	{
-		"image": "/media/owo_images/pets/deer.gif",
-		"name": "Deer",
+		"image": "/media/owo_images/pets/gdeer.gif",
+		"name": "gdeer",
 		"attributes": [3, 1, 1, 3, 11, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/lion.gif",
-		"name": "Lion",
+		"image": "/media/owo_images/pets/glion.gif",
+		"name": "glion",
 		"attributes": [7, 7, 2, 1, 1, 2]
 	},
 	{
-		"image": "/media/owo_images/pets/zebra.gif",
-		"name": "Zebra",
+		"image": "/media/owo_images/pets/glitchzebra.gif",
+		"name": "glitchzebra",
 		"attributes": [3, 1, 2, 8, 5, 2]
 	},
 	{
-		"image": "/media/owo_images/pets/eagle.gif",
-		"name": "Eagle",
+		"image": "/media/owo_images/pets/deagle.gif",
+		"name": "deagle",
 		"attributes": [2, 13, 2, 1, 1, 2]
 	},
 	{
 		"image": "/media/owo_images/pets/bitter.png",
-		"name": "Bitter",
+		"name": "bitter",
 		"attributes": [1, 15, 1, 1, 1, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/vampire.gif",
-		"name": "Vampire",
+		"image": "/media/owo_images/pets/2022hal_vampire.gif",
+		"name": "2022hal_vampire",
 		"attributes": [2, 1, 1, 1, 14, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/pastel.gif",
-		"name": "Pastel",
+		"image": "/media/owo_images/pets/2024june_pastel.gif",
+		"name": "2024june_pastel",
 		"attributes": [11, 3, 3, 1, 1, 1]
 	},
 	{
 		"image": "/media/owo_images/pets/snail.png",
-		"name": "Snail",
+		"name": "snail",
 		"attributes": [8, 1, 2, 3, 5, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/boar.gif",
-		"name": "Boar",
+		"image": "/media/owo_images/pets/dboar.gif",
+		"name": "dboar",
 		"attributes": [7, 5, 2, 4, 1, 2]
 	},
 	{
@@ -135,8 +135,8 @@
 		"attributes": [4, 1, 1, 4, 11, 1]
 	},
 	{
-		"image": "/media/owo_images/pets/candydeer.gif",
-		"name": "Candydeer",
+		"image": "/media/owo_images/pets/2024dec_christmasreindeer.gif",
+		"name": "2024dec_christmasreindeer",
 		"attributes": [7, 1, 1, 1, 9, 1]
 	}
 ]
