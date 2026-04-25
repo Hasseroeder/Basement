@@ -485,12 +485,34 @@ function createHeader(tier) {
 }
 
 function getPetImage(pet, wantAnimated) {
+	const nonLocalTiers = ['cpatreon', 'special']
+
+	const source = nonLocalTiers.includes(pet.tier)
+		? `https://cdn.discordapp.com/emojis/${pet.emoji}`
+		: `/media/owo_images/pets/${pet.name}.png`
+
+	if (nonLocalTiers.includes(pet.tier)) {
+		wantAnimated && pet.animated == 1
+	}
+
 	if (wantAnimated && pet.animated == 1) {
-		return `https://cdn.discordapp.com/emojis/${pet.emoji}.gif?size=96`
-	} else if (['common', 'uncommon', 'rare', 'epic', 'mythic', 'hidden'].includes(pet.tier)) {
+		return `https://cdn.discordapp.com/emojis/${pet.emoji}.gif`
+	} else if (
+		[
+			'common',
+			'uncommon',
+			'rare',
+			'epic',
+			'mythic',
+			'hidden',
+			'gem',
+			'distorted',
+			'fabled',
+		].includes(pet.tier)
+	) {
 		return `/media/owo_images/pets/${pet.name}.png`
 	} else {
-		return `https://cdn.discordapp.com/emojis/${pet.emoji}.png?size=96`
+		return `https://cdn.discordapp.com/emojis/${pet.emoji}.png`
 	}
 }
 
