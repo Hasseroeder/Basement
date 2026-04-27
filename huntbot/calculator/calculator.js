@@ -15,23 +15,24 @@ const archive = {
 	huntbot: JSON.parse(JSON.stringify(zoo)),
 	text: [],
 }
-// storing each new huntbot in a new index of this then
-
 archive.huntbot.forEach((tier) => tier.pets.forEach((pet) => (pet.caught = [])))
+// storing each new huntbot in a new index of this then
 let currentHbIdx = 0
 
-for (const _zoo of [zoo, archive.huntbot]) {
-	Object.defineProperty(_zoo, 'maxCaught', {
-		get() {
-			let maxCaught = 0
-			for (const { pets } of this) {
-				for (const { caught } of pets) {
-					if (caught > maxCaught) maxCaught = caught
-				}
-			}
-			return maxCaught
-		},
-	})
+zoo.getMaxCaught = function () {
+	let maxCaught = 0
+	for (const { pets } of this) {
+		for (const { caught } of pets) maxCaught = Math.max(caught, maxCaught)
+	}
+	return maxCaught
+}
+
+archive.huntbot.getMaxCaught = function (idx) {
+	let maxCaught = 0
+	for (const { pets } of this) {
+		for (const { caught } of pets) maxCaught = Math.max(caught[idx], maxCaught)
+	}
+	return maxCaught
 }
 
 const tierTable = document.querySelector('.tier-table')
@@ -439,32 +440,37 @@ function newHuntbot() {
 		`BEEP BOOP. I AM BACK WITH ${hbPets()} ANIMALS,`,
 		`${Gain.value * Duration.value} ESSENCE, AND ${Experience.value * Duration.value} EXPERIENCE`,
 	])
-	displayHuntbot(zoo)
+	displayZoo()
 	displayNthHuntbot(currentHbIdx)
 }
 
 function displayNthHuntbot(n) {
-	huntbotIdxEl.textContent = n + '/' + (archive.huntbot[0].pets[0].caught.length - 1)
+	huntbotIdxEl.textContent = n + 1 + '/' + archive.huntbot[0].pets[0].caught.length
 	currentHbLines[0].textContent = archive.text[n][0]
 	currentHbLines[1].textContent = archive.text[n][1]
-	displayHuntbot(archive.huntbot, n)
+
+	const digitsNeeded = String(archive.huntbot.getMaxCaught(n)).length
+	for (const tier of archive.huntbot) {
+		tier.row.el.style.display = 'none'
+		for (const pet of tier.pets) processPet(pet.caught[n], pet, digitsNeeded, tier)
+	}
 }
 
-function displayHuntbot(_zoo, caughtIdx) {
-	const digitsNeeded = String(_zoo.maxCaught).length
-	for (const tier of _zoo) {
+function displayZoo() {
+	const digitsNeeded = String(zoo.getMaxCaught()).length
+	for (const tier of zoo) {
 		tier.row.el.style.display = 'none'
-		for (const pet of tier.pets) {
-			const caughtInt = Array.isArray(pet.caught) ? pet.caught[caughtIdx] : pet.caught
+		for (const pet of tier.pets) processPet(pet.caught, pet, digitsNeeded, tier)
+	}
+}
 
-			if (caughtInt) {
-				pet.cell.textEl.textContent = numStringToSubscript(zeroPad(caughtInt, digitsNeeded))
-				pet.cell.wrapper.style.display = 'flex'
-				tier.row.el.style.display = 'flex'
-			} else {
-				pet.cell.wrapper.style.display = 'none'
-			}
-		}
+function processPet(caughtInt, pet, digitsNeeded, tier) {
+	if (caughtInt) {
+		pet.cell.textEl.textContent = numStringToSubscript(zeroPad(caughtInt, digitsNeeded))
+		pet.cell.wrapper.style.display = 'flex'
+		tier.row.el.style.display = 'flex'
+	} else {
+		pet.cell.wrapper.style.display = 'none'
 	}
 }
 
