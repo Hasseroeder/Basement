@@ -4,6 +4,16 @@ import { make, doTimestamps } from '/js/util/injectionUtil.js'
 import { debounce, roundToDecimals } from '/js/util/inputUtil.js'
 import { loadJson } from '/js/util/jsonUtil.js'
 
+const sellZooValue = document.querySelector('#cowoncyZooValue')
+const sacZooValue = document.querySelector('#essenceZooValue')
+const sellHbValue = document.querySelector('#cowoncyHbValue')
+const sacHbValue = document.querySelector('#essenceHbValue')
+const zpSpan = document.querySelector('#zpSpan')
+const [prevButton, nextButton] = Array.from(document.querySelectorAll('#simming-buttons button'))
+const huntbotIdxEl = document.querySelector('#huntbotIdx')
+const currentHbLines = Array.from(document.querySelectorAll('#huntbotLine'))
+const countContainer = document.querySelector(`#tierCountContainer`)
+
 let patreon = false
 let isDragging = false
 
@@ -35,12 +45,36 @@ zoo.getZP = function () {
 	return ZP
 }
 
+zoo.getValue = function () {
+	let sac = 0
+	let sell = 0
+	for (const tier of this) {
+		for (const pet of tier.pets) {
+			if (tier.isSac) sac += pet.caught * tier.value.sac
+			else sell += pet.caught * tier.value.sell
+		}
+	}
+	return { sac, sell }
+}
+
 archive.huntbot.getMaxCaught = function (idx) {
 	let maxCaught = 0
 	for (const { pets } of this) {
 		for (const { caught } of pets) maxCaught = Math.max(caught[idx], maxCaught)
 	}
 	return maxCaught
+}
+
+archive.huntbot.getValue = function (idx) {
+	let sac = 0
+	let sell = 0
+	for (const tier of this) {
+		for (const pet of tier.pets) {
+			if (tier.isSac) sac += pet.caught[idx] * tier.value.sac
+			else sell += pet.caught[idx] * tier.value.sell
+		}
+	}
+	return { sac, sell }
 }
 
 const tierTable = document.querySelector('.tier-table')
@@ -67,8 +101,10 @@ zoo.forEach((tier) => {
 
 	const img = make('img', { className: 'smol', draggable: false })
 	const text = make('div')
+	const siblingTier = archive.huntbot.find((archiveTier) => archiveTier.slug == tier.slug)
 	tier.toggle = function (override) {
 		this.isSac = override ?? !this.isSac
+		siblingTier.isSac = this.isSac
 		text.innerHTML = this.isSac ? 'Sac' : 'Sell'
 		img.src = this.isSac ? '/media/owo_images/essence.gif' : '/media/owo_images/cowoncy.png'
 		drawData()
@@ -357,6 +393,9 @@ patreonCheckWrapper.onclick = () => {
 }
 
 function drawData() {
+	displayZoo()
+	if (currentHbIdx >= 0) displayNthHuntbot(currentHbIdx)
+
 	traits.forEach((trait) => {
 		trait.header.textContent = trait.name + ' - ' + roundToDecimals(trait.value, 2) + trait.unit
 		trait.outputs.forEach((fn) => fn())
@@ -391,12 +430,7 @@ function importFromCookie() {
 const stringToLevel = (levelString) =>
 	levelString.split(',').forEach((value, i) => (traits[i].level = value || 0))
 
-importFromCookie()
-if (location.hash) stringToLevel(location.hash.slice(1))
-toggleAllTiers(true)
-
 initDom(zoo, document.getElementById('zooContainer'))
-const currentHbLines = Array.from(document.querySelectorAll('#huntbotLine'))
 initDom(archive.huntbot, document.getElementById('huntbotContainer'), ' | ')
 
 function initDom(zoo, container, separator) {
@@ -449,11 +483,14 @@ function newHuntbot() {
 		`${Gain.value * Duration.value} ESSENCE, AND ${Experience.value * Duration.value} EXPERIENCE`,
 	])
 	displayZoo()
-	zpSpan.textContent = zoo.getZP().toLocaleString()
 	displayNthHuntbot(currentHbIdx)
 }
 
 function displayNthHuntbot(n) {
+	const { sell, sac } = archive.huntbot.getValue(n)
+	sellHbValue.textContent = sell.toLocaleString()
+	sacHbValue.textContent = sac.toLocaleString()
+
 	huntbotIdxEl.textContent = n + 1 + '/' + archive.huntbot[0].pets[0].caught.length
 	currentHbLines[0].textContent = archive.text[n][0]
 	currentHbLines[1].textContent = archive.text[n][1]
@@ -465,9 +502,12 @@ function displayNthHuntbot(n) {
 	}
 }
 
-const countContainer = document.querySelector(`#tierCountContainer`)
-
 function displayZoo() {
+	zpSpan.textContent = zoo.getZP().toLocaleString()
+	const { sell, sac } = zoo.getValue()
+	sellZooValue.textContent = sell.toLocaleString()
+	sacZooValue.textContent = sac.toLocaleString()
+
 	const digitsNeeded = String(zoo.getMaxCaught()).length
 	const countContainerArray = []
 	for (const tier of zoo) {
@@ -491,9 +531,6 @@ function processPet(caughtInt, pet, digitsNeeded, tier) {
 	}
 }
 
-const zpSpan = document.querySelector('#zpSpan')
-const [prevButton, nextButton] = Array.from(document.querySelectorAll('#simming-buttons button'))
-const huntbotIdxEl = document.querySelector('#huntbotIdx')
 prevButton.onclick = () => {
 	if (currentHbIdx > 0) {
 		currentHbIdx--
@@ -508,3 +545,7 @@ nextButton.onclick = () => {
 		displayNthHuntbot(currentHbIdx)
 	}
 }
+
+importFromCookie()
+if (location.hash) stringToLevel(location.hash.slice(1))
+toggleAllTiers(true)

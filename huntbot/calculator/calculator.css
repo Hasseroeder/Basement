@@ -292,7 +292,7 @@ button {
 .simming-container {
 	display: flex;
 	font-family: sans;
-	min-height: 15rem;
+	min-height: 19rem;
 }
 
 .zoo-container .button-container {
@@ -307,4 +307,22 @@ button {
 
 .tier-count-container span {
 	display: none;
+}
+
+details {
+	border: 1px solid #909090;
+	border-radius: 3px;
+	margin: 0.4rem 1rem 0.4rem 0;
+}
+
+details > * {
+	padding: 0.5em;
+}
+
+details[open] summary {
+	border-bottom: 1px solid #909090;
+}
+
+details .discord-code {
+	padding: 0.1em 0.15rem;
 }
