@@ -17,7 +17,7 @@ const archive = {
 }
 archive.huntbot.forEach((tier) => tier.pets.forEach((pet) => (pet.caught = [])))
 // storing each new huntbot in a new index of this then
-let currentHbIdx = 0
+let currentHbIdx = -1
 
 zoo.getMaxCaught = function () {
 	let maxCaught = 0
@@ -483,7 +483,7 @@ prevButton.onclick = () => {
 	}
 }
 nextButton.onclick = () => {
-	if (archive.text.length === 0 || currentHbIdx === archive.text.length - 1) {
+	if (currentHbIdx === archive.text.length - 1) {
 		newHuntbot()
 	} else {
 		currentHbIdx++
