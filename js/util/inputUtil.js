@@ -39,3 +39,29 @@ export function debounce(fn, wait = 200, immediate = false) {
 		if (callNow) fn.apply(context, args)
 	}
 }
+
+export function makeRepeatingButton(el, action, delay = 400, interval = 50) {
+	let timeoutId = null
+	let intervalId = null
+
+	const start = () => {
+		action()
+
+		timeoutId = setTimeout(() => {
+			intervalId = setInterval(action, interval)
+		}, delay)
+	}
+
+	const stop = () => {
+		clearTimeout(timeoutId)
+		clearInterval(intervalId)
+		timeoutId = null
+		intervalId = null
+	}
+
+	el.addEventListener('mousedown', start)
+	el.addEventListener('mouseup', stop)
+	el.addEventListener('mouseleave', stop)
+	el.addEventListener('touchstart', start)
+	el.addEventListener('touchend', stop)
+}

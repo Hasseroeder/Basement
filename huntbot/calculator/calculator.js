@@ -1,7 +1,7 @@
 import * as cookie from '/js/util/cookieUtil.js'
 import { signedNumberFixedString, numStringToSubscript, zeroPad } from '/js/util/stringUtil.js'
 import { make, doTimestamps } from '/js/util/injectionUtil.js'
-import { debounce, roundToDecimals } from '/js/util/inputUtil.js'
+import { debounce, roundToDecimals, makeRepeatingButton } from '/js/util/inputUtil.js'
 import { loadJson } from '/js/util/jsonUtil.js'
 
 const sellZooValue = document.querySelector('#cowoncyZooValue')
@@ -531,20 +531,21 @@ function processPet(caughtInt, pet, digitsNeeded, tier) {
 	}
 }
 
-prevButton.onclick = () => {
+makeRepeatingButton(prevButton, () => {
 	if (currentHbIdx > 0) {
 		currentHbIdx--
 		displayNthHuntbot(currentHbIdx)
 	}
-}
-nextButton.onclick = () => {
+})
+
+makeRepeatingButton(nextButton, () => {
 	if (currentHbIdx === archive.text.length - 1) {
 		newHuntbot()
 	} else {
 		currentHbIdx++
 		displayNthHuntbot(currentHbIdx)
 	}
-}
+})
 
 importFromCookie()
 if (location.hash) stringToLevel(location.hash.slice(1))
