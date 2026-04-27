@@ -27,6 +27,14 @@ zoo.getMaxCaught = function () {
 	return maxCaught
 }
 
+zoo.getZP = function () {
+	let ZP = 0
+	for (const tier of this) {
+		for (const pet of tier.pets) ZP += pet.caught * tier.value.points
+	}
+	return ZP
+}
+
 archive.huntbot.getMaxCaught = function (idx) {
 	let maxCaught = 0
 	for (const { pets } of this) {
@@ -441,6 +449,7 @@ function newHuntbot() {
 		`${Gain.value * Duration.value} ESSENCE, AND ${Experience.value * Duration.value} EXPERIENCE`,
 	])
 	displayZoo()
+	zpSpan.textContent = zoo.getZP().toLocaleString()
 	displayNthHuntbot(currentHbIdx)
 }
 
@@ -456,11 +465,20 @@ function displayNthHuntbot(n) {
 	}
 }
 
+const countContainer = document.querySelector(`#tierCountContainer`)
+
 function displayZoo() {
 	const digitsNeeded = String(zoo.getMaxCaught()).length
+	const countContainerArray = []
 	for (const tier of zoo) {
-		for (const pet of tier.pets) processPet(pet.caught, pet, digitsNeeded, tier)
+		var tierPets = 0
+		for (const pet of tier.pets) {
+			processPet(pet.caught, pet, digitsNeeded, tier)
+			tierPets += pet.caught
+		}
+		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets}`)
 	}
+	countContainer.textContent = countContainerArray.reverse().join(', ')
 }
 
 function processPet(caughtInt, pet, digitsNeeded, tier) {
@@ -473,6 +491,7 @@ function processPet(caughtInt, pet, digitsNeeded, tier) {
 	}
 }
 
+const zpSpan = document.querySelector('#zpSpan')
 const [prevButton, nextButton] = Array.from(document.querySelectorAll('#simming-buttons button'))
 const huntbotIdxEl = document.querySelector('#huntbotIdx')
 prevButton.onclick = () => {

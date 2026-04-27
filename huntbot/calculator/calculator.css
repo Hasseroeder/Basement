@@ -299,3 +299,12 @@ button {
 	margin-top: auto;
 	padding-right: 1rem;
 }
+
+.tier-count-container,
+.zp-container {
+	font-size: 0.7rem;
+}
+
+.tier-count-container span {
+	display: none;
+}

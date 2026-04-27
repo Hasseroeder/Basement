@@ -11,6 +11,7 @@
 			"patreonNeeded": false,
 			"_rate": null,
 			"emoteSrc": "common.png",
+			"prefix": "C",
 			"value": { "sell": 1, "sac": 1, "points": 1, "exp": 1 },
 			"pets": [
 				{ "emoteSrc": "bee.png", "name": "bee", "stats": [1, 5, 2, 3, 3, 1], "caught": 0 },
@@ -42,6 +43,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.3,
 			"emoteSrc": "uncommon.png",
+			"prefix": "U",
 			"value": { "sell": 3, "sac": 5, "points": 5, "exp": 10 },
 			"pets": [
 				{
@@ -83,6 +85,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.1,
 			"emoteSrc": "rare.png",
+			"prefix": "R",
 			"value": { "sell": 10, "sac": 20, "points": 20, "exp": 20 },
 			"pets": [
 				{
@@ -104,6 +107,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.01,
 			"emoteSrc": "epic.png",
+			"prefix": "E",
 			"value": { "sell": 250, "sac": 250, "points": 250, "exp": 400 },
 			"pets": [
 				{
@@ -145,6 +149,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.001,
 			"emoteSrc": "mythic.png",
+			"prefix": "M",
 			"value": { "sell": 5000, "sac": 3000, "points": 3000, "exp": 1000 },
 			"pets": [
 				{
@@ -186,6 +191,7 @@
 			"patreonNeeded": true,
 			"_rate": 0.005,
 			"emoteSrc": "patreon.png",
+			"prefix": "P",
 			"value": { "sell": 1000, "sac": 500, "points": 500, "exp": 400 },
 			"pets": [
 				{
@@ -227,6 +233,7 @@
 			"patreonNeeded": true,
 			"_rate": 0.0001,
 			"emoteSrc": "patreon.gif",
+			"prefix": "CP",
 			"value": { "sell": 50000, "sac": 25000, "points": 25000, "exp": 2000 },
 			"pets": [
 				{
@@ -268,6 +275,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.0005,
 			"emoteSrc": "legendary.gif",
+			"prefix": "L",
 			"value": { "sell": 15000, "sac": 10000, "points": 10000, "exp": 2000 },
 			"pets": [
 				{
@@ -309,6 +317,7 @@
 			"patreonNeeded": false,
 			"_rate": null,
 			"emoteSrc": "gem.gif",
+			"prefix": "G",
 			"value": { "sell": 30000, "sac": 20000, "points": 20000, "exp": 5000 },
 			"pets": [
 				{
@@ -350,6 +359,7 @@
 			"patreonNeeded": false,
 			"_rate": null,
 			"emoteSrc": "bot.gif",
+			"prefix": "B",
 			"value": { "sell": 50000, "sac": 10000, "points": 30000 },
 			"pets": [
 				{
@@ -391,6 +401,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.0000025,
 			"emoteSrc": "distorted.gif",
+			"prefix": "D",
 			"value": { "sell": 300000, "sac": 200000, "points": 200000, "exp": 100000 },
 			"pets": [
 				{
@@ -432,6 +443,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.00001,
 			"emoteSrc": "fabled.gif",
+			"prefix": "F",
 			"value": { "sell": 250000, "sac": 100000, "points": 100000, "exp": 100000 },
 			"pets": [
 				{
@@ -473,6 +485,7 @@
 			"patreonNeeded": false,
 			"_rate": null,
 			"emoteSrc": "special.png",
+			"prefix": "S",
 			"value": { "sell": 6000, "sac": 5000, "points": 500, "exp": 250 },
 			"pets": [
 				{
@@ -514,6 +527,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.000001,
 			"emoteSrc": "hidden.gif",
+			"prefix": "H",
 			"value": { "sell": 1000000, "sac": 500000, "points": 500000, "exp": 300000 },
 			"pets": [
 				{
