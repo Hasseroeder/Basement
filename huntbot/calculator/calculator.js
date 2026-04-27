@@ -9,7 +9,9 @@ const sacZooValue = document.querySelector('#essenceZooValue')
 const sellHbValue = document.querySelector('#cowoncyHbValue')
 const sacHbValue = document.querySelector('#essenceHbValue')
 const zpSpan = document.querySelector('#zpSpan')
-const [prevButton, nextButton] = Array.from(document.querySelectorAll('#simming-buttons button'))
+const [firstButton, prevButton, nextButton, lastButton] = Array.from(
+	document.querySelectorAll('#simming-buttons button')
+)
 const huntbotIdxEl = document.querySelector('#huntbotIdx')
 const currentHbLines = Array.from(document.querySelectorAll('#huntbotLine'))
 const countContainer = document.querySelector(`#tierCountContainer`)
@@ -546,6 +548,16 @@ makeRepeatingButton(nextButton, () => {
 		displayNthHuntbot(currentHbIdx)
 	}
 })
+
+firstButton.onmousedown = () => {
+	currentHbIdx = 0
+	displayNthHuntbot(currentHbIdx)
+}
+
+lastButton.onmousedown = () => {
+	currentHbIdx = archive.text.length - 1
+	displayNthHuntbot(currentHbIdx)
+}
 
 importFromCookie()
 if (location.hash) stringToLevel(location.hash.slice(1))
