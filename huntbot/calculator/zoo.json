@@ -11,7 +11,7 @@
 			"patreonNeeded": false,
 			"_rate": null,
 			"emoteSrc": "common.png",
-			"value": { "sell": 1, "sac": 1 },
+			"value": { "sell": 1, "sac": 1, "points": 1, "exp": 1 },
 			"pets": [
 				{ "emoteSrc": "bee.png", "name": "bee", "stats": [1, 5, 2, 3, 3, 1], "caught": 0 },
 				{ "emoteSrc": "bug.png", "name": "bug", "stats": [3, 2, 2, 4, 2, 2], "caught": 0 },
@@ -42,7 +42,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.3,
 			"emoteSrc": "uncommon.png",
-			"value": { "sell": 3, "sac": 5 },
+			"value": { "sell": 3, "sac": 5, "points": 5, "exp": 10 },
 			"pets": [
 				{
 					"emoteSrc": "chick.png",
@@ -83,7 +83,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.1,
 			"emoteSrc": "rare.png",
-			"value": { "sell": 10, "sac": 20 },
+			"value": { "sell": 10, "sac": 20, "points": 20, "exp": 20 },
 			"pets": [
 				{
 					"emoteSrc": "sheep.png",
@@ -104,7 +104,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.01,
 			"emoteSrc": "epic.png",
-			"value": { "sell": 250, "sac": 250 },
+			"value": { "sell": 250, "sac": 250, "points": 250, "exp": 400 },
 			"pets": [
 				{
 					"emoteSrc": "crocodile.png",
@@ -145,7 +145,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.001,
 			"emoteSrc": "mythic.png",
-			"value": { "sell": 5000, "sac": 3000 },
+			"value": { "sell": 5000, "sac": 3000, "points": 3000, "exp": 1000 },
 			"pets": [
 				{
 					"emoteSrc": "dragon.png",
@@ -186,7 +186,7 @@
 			"patreonNeeded": true,
 			"_rate": 0.005,
 			"emoteSrc": "patreon.png",
-			"value": { "sell": 1000, "sac": 500 },
+			"value": { "sell": 1000, "sac": 500, "points": 500, "exp": 400 },
 			"pets": [
 				{
 					"emoteSrc": "pbird.png",
@@ -227,7 +227,7 @@
 			"patreonNeeded": true,
 			"_rate": 0.0001,
 			"emoteSrc": "patreon.gif",
-			"value": { "sell": 50000, "sac": 25000 },
+			"value": { "sell": 50000, "sac": 25000, "points": 25000, "exp": 2000 },
 			"pets": [
 				{
 					"emoteSrc": "bitter.png",
@@ -268,7 +268,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.0005,
 			"emoteSrc": "legendary.gif",
-			"value": { "sell": 15000, "sac": 10000 },
+			"value": { "sell": 15000, "sac": 10000, "points": 10000, "exp": 2000 },
 			"pets": [
 				{
 					"emoteSrc": "gdeer.gif",
@@ -309,7 +309,7 @@
 			"patreonNeeded": false,
 			"_rate": null,
 			"emoteSrc": "gem.gif",
-			"value": { "sell": 30000, "sac": 20000 },
+			"value": { "sell": 30000, "sac": 20000, "points": 20000, "exp": 5000 },
 			"pets": [
 				{
 					"emoteSrc": "gcamel.gif",
@@ -350,7 +350,7 @@
 			"patreonNeeded": false,
 			"_rate": null,
 			"emoteSrc": "bot.gif",
-			"value": { "sell": 50000, "sac": 10000 },
+			"value": { "sell": 50000, "sac": 10000, "points": 30000 },
 			"pets": [
 				{
 					"emoteSrc": "dinobot.gif",
@@ -391,7 +391,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.0000025,
 			"emoteSrc": "distorted.gif",
-			"value": { "sell": 300000, "sac": 200000 },
+			"value": { "sell": 300000, "sac": 200000, "points": 200000, "exp": 100000 },
 			"pets": [
 				{
 					"emoteSrc": "glitchflamingo.gif",
@@ -432,7 +432,7 @@
 			"patreonNeeded": false,
 			"_rate": 0.00001,
 			"emoteSrc": "fabled.gif",
-			"value": { "sell": 250000, "sac": 100000 },
+			"value": { "sell": 250000, "sac": 100000, "points": 100000, "exp": 100000 },
 			"pets": [
 				{
 					"emoteSrc": "dboar.gif",
@@ -473,7 +473,7 @@
 			"patreonNeeded": false,
 			"_rate": null,
 			"emoteSrc": "special.png",
-			"value": { "sell": 6000, "sac": 5000 },
+			"value": { "sell": 6000, "sac": 5000, "points": 500, "exp": 250 },
 			"pets": [
 				{
 					"emoteSrc": "bitter.png",
@@ -514,34 +514,34 @@
 			"patreonNeeded": false,
 			"_rate": 0.000001,
 			"emoteSrc": "hidden.gif",
-			"value": { "sell": 1000000, "sac": 500000 },
+			"value": { "sell": 1000000, "sac": 500000, "points": 500000, "exp": 300000 },
 			"pets": [
 				{
-					"emoteSrc": "hkoala.png",
+					"emoteSrc": "hkoala.gif",
 					"name": "hkoala",
 					"stats": [10, 1, 4, 1, 1, 5],
 					"caught": 0
 				},
 				{
-					"emoteSrc": "hlizard.png",
+					"emoteSrc": "hlizard.gif",
 					"name": "hlizard",
 					"stats": [2, 1, 2, 2, 13, 2],
 					"caught": 0
 				},
 				{
-					"emoteSrc": "hmonkey.png",
+					"emoteSrc": "hmonkey.gif",
 					"name": "hmonkey",
 					"stats": [3, 7, 2, 1, 7, 2],
 					"caught": 0
 				},
 				{
-					"emoteSrc": "hsnake.png",
+					"emoteSrc": "hsnake.gif",
 					"name": "hsnake",
 					"stats": [2, 13, 3, 1, 1, 2],
 					"caught": 0
 				},
 				{
-					"emoteSrc": "hsquid.png",
+					"emoteSrc": "hsquid.gif",
 					"name": "hsquid",
 					"stats": [3, 1, 2, 2, 11, 3],
 					"caught": 0

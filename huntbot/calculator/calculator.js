@@ -1,5 +1,5 @@
 import * as cookie from '/js/util/cookieUtil.js'
-import { signedNumberFixedString } from '/js/util/stringUtil.js'
+import { signedNumberFixedString, numStringToSubscript, zeroPad } from '/js/util/stringUtil.js'
 import { make, doTimestamps } from '/js/util/injectionUtil.js'
 import { debounce, roundToDecimals } from '/js/util/inputUtil.js'
 import { loadJson } from '/js/util/jsonUtil.js'
@@ -7,12 +7,34 @@ import { loadJson } from '/js/util/jsonUtil.js'
 let patreon = false
 let isDragging = false
 
-const JSON = await loadJson('/huntbot/calculator/zoo.json')
-const zoo = JSON.zoo.filter((tier) => tier.huntbotAvailable)
-const { petFolder, tierFolder } = JSON.config
+const DATA = await loadJson('/huntbot/calculator/zoo.json')
+const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
+const { petFolder, tierFolder } = DATA.config
+
+const archive = {
+	huntbot: JSON.parse(JSON.stringify(zoo)),
+	text: [],
+}
+// storing each new huntbot in a new index of this then
+
+archive.huntbot.forEach((tier) => tier.pets.forEach((pet) => (pet.caught = [])))
+let currentHbIdx = 0
+
+for (const _zoo of [zoo, archive.huntbot]) {
+	Object.defineProperty(_zoo, 'maxCaught', {
+		get() {
+			let maxCaught = 0
+			for (const { pets } of this) {
+				for (const { caught } of pets) {
+					if (caught > maxCaught) maxCaught = caught
+				}
+			}
+			return maxCaught
+		},
+	})
+}
 
 const tierTable = document.querySelector('.tier-table')
-
 zoo.forEach((tier) => {
 	Object.defineProperty(tier, 'rate', {
 		get() {
@@ -62,12 +84,12 @@ zoo.forEach((tier) => {
 	tierTable.append(wrapper)
 })
 
-const tableEl = make('table')
+const traitTable = make('table')
 {
 	//table init
 	const cells = ['', 'Cost', 'Essence', 'ROI'].map((textContent) => make('td', { textContent }))
-	tableEl.append(make('tr', {}, cells))
-	document.querySelector('#table-box').append(tableEl)
+	traitTable.append(make('tr', {}, cells))
+	document.querySelector('#table-box').append(traitTable)
 }
 
 const gridContainer = document.querySelector('.gridContainer')
@@ -105,7 +127,7 @@ class Trait {
 					cells[3].textContent = (this.ROI * 100).toFixed(1) + '%/day'
 				},
 			}
-			tableEl.append(row)
+			traitTable.append(row)
 		}
 
 		const lvlSpan = make('div', {
@@ -364,29 +386,97 @@ importFromCookie()
 if (location.hash) stringToLevel(location.hash.slice(1))
 toggleAllTiers(true)
 
-function generateHuntbot() {
-	const pets = hbPets()
-	let acc = 0
-	const rateArray = zoo.map((tier) => (acc += tier.rate))
-	const zooCopy = JSON.parse(JSON.stringify(zoo))
+initDom(zoo, document.getElementById('zooContainer'))
+const currentHbLines = Array.from(document.querySelectorAll('#huntbotLine'))
+initDom(archive.huntbot, document.getElementById('huntbotContainer'), ' | ')
 
-	for (let i = 0; i < pets; i++) {
-		const r = Math.random()
-		const tierIdx = rateArray.findIndex((rate) => r < rate)
-		const tier = zooCopy[tierIdx]
+function initDom(zoo, container, separator) {
+	for (const tier of zoo) {
+		tier.row = {
+			el: make('div', { className: 'zoo-row' }, [
+				make('img', { src: tierFolder + tier.emoteSrc }),
+			]),
+			initialized: false,
+		}
+		container.append(tier.row.el)
+		separator && tier.row.el.append(separator)
 
-		const petIdx = Math.floor(Math.random() * tier.pets.length)
-		const pet = tier.pets[petIdx]
-
-		zooCopy[tierIdx].pets[petIdx].caught++
-		zoo[tierIdx].pets[petIdx].caught++
+		for (const pet of tier.pets) {
+			const textEl = make('div')
+			pet.cell = {
+				wrapper: make('div', { className: 'pet-cell' }, [
+					make('img', { src: petFolder + pet.emoteSrc }),
+					textEl,
+				]),
+				textEl,
+				initialized: false,
+			}
+			tier.row.el.append(pet.cell.wrapper)
+		}
 	}
-	return zooCopy
 }
 
-window.addEventListener('keydown', (e) => {
-	if (e.key == 'g') {
-		generateHuntbot()
-		console.log(zoo)
+function newHuntbot() {
+	{
+		// RUN RNG
+		const pets = hbPets()
+		let acc = 0
+		const rateArray = zoo.map((tier) => (acc += tier.rate))
+		archive.huntbot.forEach((tier) => tier.pets.forEach((pet) => pet.caught.push(0)))
+		currentHbIdx = archive.huntbot[0].pets[0].caught.length - 1
+
+		for (let i = 0; i < pets; i++) {
+			const r = Math.random()
+			const tierIdx = rateArray.findIndex((rate) => r < rate)
+			const petIdx = Math.floor(Math.random() * zoo[tierIdx].pets.length)
+
+			archive.huntbot[tierIdx].pets[petIdx].caught[currentHbIdx]++
+			zoo[tierIdx].pets[petIdx].caught++
+		}
 	}
-})
+
+	archive.text.push([
+		`BEEP BOOP. I AM BACK WITH ${hbPets()} ANIMALS,`,
+		`${Gain.value * Duration.value} ESSENCE, AND ${Experience.value * Duration.value} EXPERIENCE`,
+	])
+	displayHuntbot(zoo)
+	displayNthHuntbot(currentHbIdx)
+}
+
+function displayNthHuntbot(n) {
+	huntbotIdxEl.textContent = n + '/' + (archive.huntbot[0].pets[0].caught.length - 1)
+	currentHbLines[0].textContent = archive.text[n][0]
+	currentHbLines[1].textContent = archive.text[n][1]
+	displayHuntbot(archive.huntbot, n)
+}
+
+function displayHuntbot(_zoo, caughtIdx) {
+	const digitsNeeded = String(_zoo.maxCaught).length
+	for (const tier of _zoo) {
+		tier.row.el.style.display = 'none'
+		for (const pet of tier.pets) {
+			const caughtInt = Array.isArray(pet.caught) ? pet.caught[caughtIdx] : pet.caught
+
+			if (caughtInt) {
+				pet.cell.textEl.textContent = numStringToSubscript(zeroPad(caughtInt, digitsNeeded))
+				pet.cell.wrapper.style.display = 'flex'
+				tier.row.el.style.display = 'flex'
+			} else {
+				pet.cell.wrapper.style.display = 'none'
+			}
+		}
+	}
+}
+
+const [prevButton, nextButton] = Array.from(document.querySelectorAll('#simming-buttons button'))
+const huntbotIdxEl = document.querySelector('#huntbotIdx')
+prevButton.onclick = () => {
+	if (currentHbIdx > 0) {
+		currentHbIdx--
+		displayNthHuntbot(currentHbIdx)
+	}
+}
+nextButton.onclick = () => {
+	console.log(archive)
+	newHuntbot()
+}
