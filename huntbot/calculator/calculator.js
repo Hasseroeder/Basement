@@ -477,6 +477,10 @@ prevButton.onclick = () => {
 	}
 }
 nextButton.onclick = () => {
-	console.log(archive)
-	newHuntbot()
+	if (archive.text.length === 0 || currentHbIdx === archive.text.length - 1) {
+		newHuntbot()
+	} else {
+		currentHbIdx++
+		displayNthHuntbot(currentHbIdx)
+	}
 }
