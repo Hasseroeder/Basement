@@ -459,7 +459,6 @@ function displayNthHuntbot(n) {
 function displayZoo() {
 	const digitsNeeded = String(zoo.getMaxCaught()).length
 	for (const tier of zoo) {
-		tier.row.el.style.display = 'none'
 		for (const pet of tier.pets) processPet(pet.caught, pet, digitsNeeded, tier)
 	}
 }
