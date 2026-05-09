@@ -148,11 +148,11 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/STR.png"
+												"source": "/media/owo_images/battleEmojis/STR.png"
 											},
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/MAG.png"
+												"source": "/media/owo_images/battleEmojis/MAG.png"
 											}
 										],
 										"arrow": {
@@ -172,7 +172,7 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/WP.png"
+												"source": "/media/owo_images/battleEmojis/WP.png"
 											}
 										],
 										"arrow": {
@@ -192,15 +192,15 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/HP.png"
+												"source": "/media/owo_images/battleEmojis/HP.png"
 											},
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/PR.png"
+												"source": "/media/owo_images/battleEmojis/PR.png"
 											},
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/MR.png"
+												"source": "/media/owo_images/battleEmojis/MR.png"
 											}
 										],
 										"arrow": {
@@ -410,7 +410,7 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/PR.png"
+												"source": "/media/owo_images/battleEmojis/PR.png"
 											}
 										],
 										"arrow": {
@@ -430,11 +430,11 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/WP.png"
+												"source": "/media/owo_images/battleEmojis/WP.png"
 											},
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/MR.png"
+												"source": "/media/owo_images/battleEmojis/MR.png"
 											}
 										],
 										"arrow": {
@@ -454,7 +454,7 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "./media/owo_images/battleEmojis/HP.png"
+												"source": "/media/owo_images/battleEmojis/HP.png"
 											}
 										],
 										"arrow": {
@@ -478,7 +478,7 @@
 						"data": {
 							"dataSetConfigs": [
 								{
-									"dataSource": "/pets//json/cruneHolders.json",
+									"dataSource": "/pets/json/cruneHolders.json",
 									"attributeGroups": {
 										"left": [2],
 										"right": [3, 5],
