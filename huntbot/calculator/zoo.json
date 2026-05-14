@@ -14,25 +14,44 @@
 			"prefix": "C",
 			"value": { "sell": 1, "sac": 1, "points": 1, "exp": 1 },
 			"pets": [
-				{ "emoteSrc": "bee.png", "name": "bee", "stats": [1, 5, 2, 3, 3, 1], "caught": 0 },
-				{ "emoteSrc": "bug.png", "name": "bug", "stats": [3, 2, 2, 4, 2, 2], "caught": 0 },
+				{ "emoteSrc": "bee.png", "name": "bee", "stats": [1, 5, 2, 3, 3, 1],
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
+				},
+				{ "emoteSrc": "bug.png", "name": "bug", "stats": [3, 2, 2, 4, 2, 2],
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
+				},
 				{
 					"emoteSrc": "snail.png",
 					"name": "snail",
 					"stats": [8, 1, 2, 3, 5, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "beetle.png",
 					"name": "beetle",
 					"stats": [4, 2, 2, 3, 2, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "butterfly.png",
 					"name": "butterfly",
 					"stats": [1, 1, 1, 5, 5, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -50,31 +69,46 @@
 					"emoteSrc": "chick.png",
 					"name": "chick",
 					"stats": [3, 2, 3, 3, 3, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "mouse.png",
 					"name": "mouse",
 					"stats": [3, 3, 2, 3, 3, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "chicken.png",
 					"name": "chicken",
 					"stats": [3, 4, 3, 2, 2, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "rabbit.png",
 					"name": "rabbit",
 					"stats": [3, 4, 2, 3, 2, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "chipmunk.png",
 					"name": "chipmunk",
 					"stats": [3, 5, 2, 3, 2, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -92,12 +126,35 @@
 					"emoteSrc": "sheep.png",
 					"name": "sheep",
 					"stats": [5, 2, 2, 3, 1, 4],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
-				{ "emoteSrc": "pig.png", "name": "pig", "stats": [4, 2, 3, 2, 2, 4], "caught": 0 },
-				{ "emoteSrc": "cow.png", "name": "cow", "stats": [5, 4, 3, 1, 1, 3], "caught": 0 },
-				{ "emoteSrc": "dog.png", "name": "dog", "stats": [4, 6, 3, 1, 1, 2], "caught": 0 },
-				{ "emoteSrc": "cat.png", "name": "cat", "stats": [3, 1, 1, 6, 3, 3], "caught": 0 }
+				{ "emoteSrc": "pig.png", "name": "pig", "stats": [4, 2, 3, 2, 2, 4],
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
+				},
+				{ "emoteSrc": "cow.png", "name": "cow", "stats": [5, 4, 3, 1, 1, 3],
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
+				},
+				{ "emoteSrc": "dog.png", "name": "dog", "stats": [4, 6, 3, 1, 1, 2],
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
+				},
+				{ "emoteSrc": "cat.png", "name": "cat", "stats": [3, 1, 1, 6, 3, 3],
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
+				}
 			]
 		},
 		{
@@ -114,31 +171,46 @@
 					"emoteSrc": "crocodile.png",
 					"name": "crocodile",
 					"stats": [3, 4, 4, 2, 1, 4],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "tiger.png",
 					"name": "tiger",
 					"stats": [4, 6, 2, 1, 3, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "penguin.png",
 					"name": "penguin",
 					"stats": [2, 1, 2, 6, 5, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "elephant.png",
 					"name": "elephant",
 					"stats": [5, 5, 3, 1, 1, 3],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "whale.png",
 					"name": "whale",
 					"stats": [7, 1, 3, 1, 2, 4],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -156,31 +228,46 @@
 					"emoteSrc": "dragon.png",
 					"name": "dragon",
 					"stats": [4, 8, 1, 3, 1, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "unicorn.png",
 					"name": "unicorn",
 					"stats": [2, 1, 2, 6, 6, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "snowman.png",
 					"name": "snowman",
 					"stats": [3, 2, 1, 8, 3, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "ghost.png",
 					"name": "ghost",
 					"stats": [2, 2, 8, 3, 3, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "dove.png",
 					"name": "dove",
 					"stats": [4, 4, 4, 2, 1, 4],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -198,31 +285,46 @@
 					"emoteSrc": "pbird.png",
 					"name": "pbird",
 					"stats": [1, 2, 2, 9, 3, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "pdolphin.png",
 					"name": "pdolphin",
 					"stats": [2, 1, 1, 4, 10, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "pogre.png",
 					"name": "pogre",
 					"stats": [6, 3, 2, 3, 3, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "pscorpion.png",
 					"name": "pscorpion",
 					"stats": [1, 11, 1, 3, 2, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "ptiger.png",
 					"name": "ptiger",
 					"stats": [3, 4, 3, 3, 3, 3],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -240,31 +342,46 @@
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -282,31 +399,46 @@
 					"emoteSrc": "gdeer.gif",
 					"name": "gdeer",
 					"stats": [3, 1, 1, 3, 11, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "gfox.gif",
 					"name": "gfox",
 					"stats": [4, 9, 1, 3, 1, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "glion.gif",
 					"name": "glion",
 					"stats": [7, 7, 2, 1, 1, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "gowl.gif",
 					"name": "gowl",
 					"stats": [10, 1, 3, 1, 2, 3],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "gsquid.gif",
 					"name": "gsquid",
 					"stats": [3, 1, 2, 6, 6, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -324,31 +456,46 @@
 					"emoteSrc": "gcamel.gif",
 					"name": "gcamel",
 					"stats": [1, 0, 0, 5, 14, 0],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "gfish.gif",
 					"name": "gfish",
 					"stats": [0, 0, 0, 1, 19, 0],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "gpanda.gif",
 					"name": "gpanda",
 					"stats": [1, 10, 0, 9, 0, 0],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "gshrimp.gif",
 					"name": "gshrimp",
 					"stats": [0, 0, 0, 10, 10, 0],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "gspider.gif",
 					"name": "gspider",
 					"stats": [0, 19, 0, 1, 0, 0],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -366,31 +513,46 @@
 					"emoteSrc": "dinobot.gif",
 					"name": "dinobot",
 					"stats": [13, 0, 2, 4, 0, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "giraffbot.gif",
 					"name": "giraffbot",
 					"stats": [12, 0, 4, 1, 0, 4],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "hedgebot.gif",
 					"name": "hedgebot",
 					"stats": [7, 0, 6, 2, 0, 6],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "lobbot.gif",
 					"name": "lobbot",
 					"stats": [14, 0, 3, 1, 0, 3],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "slothbot.gif",
 					"name": "slothbot",
 					"stats": [9, 0, 2, 8, 0, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -408,31 +570,46 @@
 					"emoteSrc": "glitchflamingo.gif",
 					"name": "glitchflamingo",
 					"stats": [3, 9, 2, 4, 1, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "glitchotter.gif",
 					"name": "glitchotter",
 					"stats": [2, 1, 2, 4, 10, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "glitchparrot.gif",
 					"name": "glitchparrot",
 					"stats": [8, 1, 3, 5, 1, 3],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "glitchraccoon.gif",
 					"name": "glitchraccoon",
 					"stats": [2, 6, 2, 3, 6, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "glitchzebra.gif",
 					"name": "glitchzebra",
 					"stats": [3, 1, 2, 8, 5, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -450,31 +627,46 @@
 					"emoteSrc": "dboar.gif",
 					"name": "dboar",
 					"stats": [7, 5, 2, 4, 1, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "deagle.gif",
 					"name": "deagle",
 					"stats": [2, 13, 2, 1, 1, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "dfrog.gif",
 					"name": "dfrog",
 					"stats": [3, 1, 1, 3, 10, 3],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "dgorilla.gif",
 					"name": "dgorilla",
 					"stats": [8, 7, 2, 1, 1, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "dwolf.gif",
 					"name": "dwolf",
 					"stats": [7, 3, 5, 1, 1, 4],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -492,31 +684,46 @@
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "bitter.png",
 					"name": "bitter",
 					"stats": [1, 15, 1, 1, 1, 1],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		},
@@ -534,31 +741,46 @@
 					"emoteSrc": "hkoala.gif",
 					"name": "hkoala",
 					"stats": [10, 1, 4, 1, 1, 5],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "hlizard.gif",
 					"name": "hlizard",
 					"stats": [2, 1, 2, 2, 13, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "hmonkey.gif",
 					"name": "hmonkey",
 					"stats": [3, 7, 2, 1, 7, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "hsnake.gif",
 					"name": "hsnake",
 					"stats": [2, 13, 3, 1, 1, 2],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				},
 				{
 					"emoteSrc": "hsquid.gif",
 					"name": "hsquid",
 					"stats": [3, 1, 2, 2, 11, 3],
-					"caught": 0
+					"caught": {
+						"zoo":0,
+						"huntbot":[]
+					}
 				}
 			]
 		}

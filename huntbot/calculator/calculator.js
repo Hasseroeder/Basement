@@ -34,7 +34,7 @@ let currentHbIdx = -1
 zoo.getMaxCaught = function () {
 	let maxCaught = 0
 	for (const { pets } of this) {
-		for (const { caught } of pets) maxCaught = Math.max(caught, maxCaught)
+		for (const { caught } of pets) maxCaught = Math.max(caught.zoo, maxCaught)
 	}
 	return maxCaught
 }
@@ -42,7 +42,7 @@ zoo.getMaxCaught = function () {
 zoo.getZP = function () {
 	let ZP = 0
 	for (const tier of this) {
-		for (const pet of tier.pets) ZP += pet.caught * tier.value.points
+		for (const pet of tier.pets) ZP += pet.caught.zoo * tier.value.points
 	}
 	return ZP
 }
@@ -52,8 +52,8 @@ zoo.getValue = function () {
 	let sell = 0
 	for (const tier of this) {
 		for (const pet of tier.pets) {
-			if (tier.isSac) sac += pet.caught * tier.value.sac
-			else sell += pet.caught * tier.value.sell
+			if (tier.isSac) sac += pet.caught.zoo * tier.value.sac
+			else sell += pet.caught.zoo * tier.value.sell
 		}
 	}
 	return { sac, sell }
@@ -476,7 +476,7 @@ function newHuntbot() {
 			const petIdx = Math.floor(Math.random() * zoo[tierIdx].pets.length)
 
 			archive.huntbot[tierIdx].pets[petIdx].caught[currentHbIdx]++
-			zoo[tierIdx].pets[petIdx].caught++
+			zoo[tierIdx].pets[petIdx].caught.zoo++
 		}
 	}
 
@@ -515,8 +515,8 @@ function displayZoo() {
 	for (const tier of zoo) {
 		var tierPets = 0
 		for (const pet of tier.pets) {
-			processPet(pet.caught, pet, digitsNeeded, tier)
-			tierPets += pet.caught
+			processPet(pet.caught.zoo, pet, digitsNeeded, tier)
+			tierPets += pet.caught.zoo
 		}
 		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets}`)
 	}
