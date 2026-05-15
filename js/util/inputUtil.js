@@ -28,7 +28,7 @@ export function toFixedDigits(value, digits) {
 	const neededDigitsAfterDot = digits - digitsBeforeDot
 	const boundRounding = Math.max(0, neededDigitsAfterDot)
 
-	return value.toFixed(boundRounding)
+	return roundToDecimals(value, boundRounding).toLocaleString()
 }
 
 export function debounce(fn, wait = 200, immediate = false) {
