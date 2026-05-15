@@ -527,7 +527,7 @@ function displayNthHuntbot(n) {
 			tier.expectedPetAmount.huntbot[n],
 			3
 		)
-		tier.luckEls.hb.actualLuck.textContent = tierPets
+		tier.luckEls.hb.actualLuck.textContent = tierPets.toLocaleString()
 	}
 }
 
@@ -546,7 +546,7 @@ function displayZoo() {
 			tierPets += pet.caught.zoo
 		}
 		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
-		tier.luckEls.zoo.actualLuck.textContent = tierPets
+		tier.luckEls.zoo.actualLuck.textContent = tierPets.toLocaleString()
 		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets}`)
 	}
 	countContainer.textContent = countContainerArray.reverse().join(', ')
