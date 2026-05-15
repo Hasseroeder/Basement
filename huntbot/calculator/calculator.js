@@ -39,8 +39,8 @@ zoo.getMaxCaught = function (n) {
 
 zoo.getZP = function (n) {
 	let ZP = 0
-	for (const { pets } of this) {
-		for (const { caught, value } of pets) {
+	for (const { pets, value } of this) {
+		for (const { caught } of pets) {
 			const caughtInt = typeof n == 'number' ? caught.huntbot[n] : caught.zoo
 			ZP += caughtInt * value.points
 		}
