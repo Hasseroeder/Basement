@@ -23,18 +23,16 @@ const DATA = await loadJson('/huntbot/calculator/zoo.json')
 const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
 const { petFolder, tierFolder } = DATA.config
 
-const archive = {
-	huntbot: JSON.parse(JSON.stringify(zoo)),
-	text: [],
-}
-archive.huntbot.forEach((tier) => tier.pets.forEach((pet) => (pet.caught = [])))
-// storing each new huntbot in a new index of this then
+const huntbotTexts = []
 let currentHbIdx = -1
 
-zoo.getMaxCaught = function () {
+zoo.getMaxCaught = function (n) {
 	let maxCaught = 0
 	for (const { pets } of this) {
-		for (const { caught } of pets) maxCaught = Math.max(caught.zoo, maxCaught)
+		for (const { caught } of pets) {
+			const caughtInt = typeof n == 'number' ? caught.huntbot[n] : caught.zoo
+			maxCaught = Math.max(caughtInt, maxCaught)
+		}
 	}
 	return maxCaught
 }
@@ -47,33 +45,14 @@ zoo.getZP = function () {
 	return ZP
 }
 
-zoo.getValue = function () {
+zoo.getValue = function (n) {
 	let sac = 0
 	let sell = 0
-	for (const tier of this) {
-		for (const pet of tier.pets) {
-			if (tier.isSac) sac += pet.caught.zoo * tier.value.sac
-			else sell += pet.caught.zoo * tier.value.sell
-		}
-	}
-	return { sac, sell }
-}
-
-archive.huntbot.getMaxCaught = function (idx) {
-	let maxCaught = 0
-	for (const { pets } of this) {
-		for (const { caught } of pets) maxCaught = Math.max(caught[idx], maxCaught)
-	}
-	return maxCaught
-}
-
-archive.huntbot.getValue = function (idx) {
-	let sac = 0
-	let sell = 0
-	for (const tier of this) {
-		for (const pet of tier.pets) {
-			if (tier.isSac) sac += pet.caught[idx] * tier.value.sac
-			else sell += pet.caught[idx] * tier.value.sell
+	for (const { pets, value, isSac } of this) {
+		for (const { caught } of pets) {
+			const caughtInt = typeof n == 'number' ? caught.huntbot[n] : caught.zoo
+			if (isSac) sac += caughtInt * value.sac
+			else sell += caughtInt * value.sell
 		}
 	}
 	return { sac, sell }
@@ -103,10 +82,8 @@ zoo.forEach((tier) => {
 
 	const img = make('img', { className: 'smol', draggable: false })
 	const text = make('div')
-	const siblingTier = archive.huntbot.find((archiveTier) => archiveTier.slug == tier.slug)
 	tier.toggle = function (override) {
 		this.isSac = override ?? !this.isSac
-		siblingTier.isSac = this.isSac
 		text.innerHTML = this.isSac ? 'Sac' : 'Sell'
 		img.src = this.isSac ? '/media/owo_images/essence.gif' : '/media/owo_images/cowoncy.png'
 		drawData()
@@ -432,31 +409,35 @@ function importFromCookie() {
 const stringToLevel = (levelString) =>
 	levelString.split(',').forEach((value, i) => (traits[i].level = value || 0))
 
-initDom(zoo, document.getElementById('zooContainer'))
-initDom(archive.huntbot, document.getElementById('huntbotContainer'), ' | ')
+initDom(zoo, document.getElementById('zooContainer'), document.getElementById('huntbotContainer'))
 
-function initDom(zoo, container, separator) {
+function initDom(zoo, zooContainer, hbContainer) {
 	for (const tier of zoo) {
-		tier.row = {
-			el: make('div', { className: 'zoo-row' }, [
+		const makeRow = () =>
+			make('div', { className: 'zoo-row' }, [
 				make('img', { src: tierFolder + tier.emoteSrc }),
-			]),
-			initialized: false,
-		}
-		container.append(tier.row.el)
-		separator && tier.row.el.append(separator)
+			])
+		tier.zooRow = makeRow()
+		tier.hbRow = makeRow()
+		tier.hbRow.append(' | ')
+		zooContainer.append(tier.zooRow)
+		hbContainer.append(tier.hbRow)
 
 		for (const pet of tier.pets) {
-			const textEl = make('div')
-			pet.cell = {
-				wrapper: make('div', { className: 'pet-cell' }, [
-					make('img', { src: petFolder + pet.emoteSrc }),
+			const makeCell = () => {
+				const textEl = make('div')
+				return {
+					wrapper: make('div', { className: 'pet-cell' }, [
+						make('img', { src: petFolder + pet.emoteSrc }),
+						textEl,
+					]),
 					textEl,
-				]),
-				textEl,
-				initialized: false,
+				}
 			}
-			tier.row.el.append(pet.cell.wrapper)
+			pet.zooCell = makeCell()
+			pet.hbCell = makeCell()
+			tier.zooRow.append(pet.zooCell.wrapper)
+			tier.hbRow.append(pet.hbCell.wrapper)
 		}
 	}
 }
@@ -467,40 +448,41 @@ function newHuntbot() {
 		const pets = hbPets()
 		let acc = 0
 		const rateArray = zoo.map((tier) => (acc += tier.rate))
-		archive.huntbot.forEach((tier) => tier.pets.forEach((pet) => pet.caught.push(0)))
-		currentHbIdx = archive.huntbot[0].pets[0].caught.length - 1
+		zoo.forEach((tier) => tier.pets.forEach((pet) => pet.caught.huntbot.push(0)))
 
 		for (let i = 0; i < pets; i++) {
 			const r = Math.random()
 			const tierIdx = rateArray.findIndex((rate) => r < rate)
 			const petIdx = Math.floor(Math.random() * zoo[tierIdx].pets.length)
 
-			archive.huntbot[tierIdx].pets[petIdx].caught[currentHbIdx]++
-			zoo[tierIdx].pets[petIdx].caught.zoo++
+			const caught = zoo[tierIdx].pets[petIdx].caught
+			caught.huntbot[caught.huntbot.length - 1]++
+			caught.zoo++
 		}
 	}
 
-	archive.text.push([
+	huntbotTexts.push([
 		`BEEP BOOP. I AM BACK WITH ${hbPets()} ANIMALS,`,
 		`${Gain.value * Duration.value} ESSENCE, AND ${Experience.value * Duration.value} EXPERIENCE`,
 	])
 	displayZoo()
-	displayNthHuntbot(currentHbIdx)
+	displayNthHuntbot(++currentHbIdx)
 }
 
 function displayNthHuntbot(n) {
-	const { sell, sac } = archive.huntbot.getValue(n)
+	const { sell, sac } = zoo.getValue(n)
 	sellHbValue.textContent = sell.toLocaleString()
 	sacHbValue.textContent = sac.toLocaleString()
 
-	huntbotIdxEl.textContent = n + 1 + '/' + archive.huntbot[0].pets[0].caught.length
-	currentHbLines[0].textContent = archive.text[n][0]
-	currentHbLines[1].textContent = archive.text[n][1]
+	huntbotIdxEl.textContent = n + 1 + '/' + huntbotTexts.length
+	currentHbLines[0].textContent = huntbotTexts[n][0]
+	currentHbLines[1].textContent = huntbotTexts[n][1]
 
-	const digitsNeeded = String(archive.huntbot.getMaxCaught(n)).length
-	for (const tier of archive.huntbot) {
-		tier.row.el.style.display = 'none'
-		for (const pet of tier.pets) processPet(pet.caught[n], pet, digitsNeeded, tier)
+	const digitsNeeded = String(zoo.getMaxCaught(n)).length
+	for (const tier of zoo) {
+		tier.hbRow.style.display = 'none'
+		for (const pet of tier.pets)
+			processPet(pet.caught.huntbot[n], digitsNeeded, pet.hbCell, tier.hbRow)
 	}
 }
 
@@ -515,7 +497,7 @@ function displayZoo() {
 	for (const tier of zoo) {
 		var tierPets = 0
 		for (const pet of tier.pets) {
-			processPet(pet.caught.zoo, pet, digitsNeeded, tier)
+			processPet(pet.caught.zoo, digitsNeeded, pet.zooCell, tier.zooRow)
 			tierPets += pet.caught.zoo
 		}
 		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets}`)
@@ -523,13 +505,13 @@ function displayZoo() {
 	countContainer.textContent = countContainerArray.reverse().join(', ')
 }
 
-function processPet(caughtInt, pet, digitsNeeded, tier) {
+function processPet(caughtInt, digitsNeeded, cell, row) {
 	if (caughtInt) {
-		pet.cell.textEl.textContent = numStringToSubscript(zeroPad(caughtInt, digitsNeeded))
-		pet.cell.wrapper.style.display = 'flex'
-		tier.row.el.style.display = 'flex'
+		cell.textEl.textContent = numStringToSubscript(zeroPad(caughtInt, digitsNeeded))
+		cell.wrapper.style.display = 'flex'
+		row.style.display = 'flex'
 	} else {
-		pet.cell.wrapper.style.display = 'none'
+		cell.wrapper.style.display = 'none'
 	}
 }
 
@@ -541,7 +523,7 @@ makeRepeatingButton(prevButton, () => {
 })
 
 makeRepeatingButton(nextButton, () => {
-	if (currentHbIdx === archive.text.length - 1) {
+	if (currentHbIdx === huntbotTexts.length - 1) {
 		newHuntbot()
 	} else {
 		currentHbIdx++
@@ -555,7 +537,7 @@ firstButton.onmousedown = () => {
 }
 
 lastButton.onmousedown = () => {
-	currentHbIdx = archive.text.length - 1
+	currentHbIdx = huntbotTexts.length - 1
 	displayNthHuntbot(currentHbIdx)
 }
 
