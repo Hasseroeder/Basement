@@ -296,13 +296,16 @@ button {
 }
 
 .zoo-container .button-container {
-	margin-top: auto;
-	padding-right: 1rem;
+	padding: 1rem 1rem 0 0;
 }
 
 .tier-count-container,
 .zp-container {
 	font-size: 0.7rem;
+}
+
+.value-wrapper {
+	margin-top: auto;
 }
 
 .tier-count-container span {
@@ -325,4 +328,39 @@ details[open] summary {
 
 details .discord-code {
 	padding: 0.1em 0.15rem;
+}
+
+details > summary,
+details > div {
+	/*display: grid;*/
+	/*grid-template-columns: 7.5% 35% auto;*/
+}
+
+.details-row {
+	display: flex;
+	align-items: center;
+}
+
+.details-row > * {
+	display: flex;
+	align-items: center;
+}
+
+.details-row > *:first-child {
+	width: 7.5%;
+}
+.details-row > *:nth-child(2) {
+	width: 35%;
+}
+
+summary {
+	list-style: none;
+}
+
+details > summary img {
+	transition: 0.1s ease;
+}
+
+details[open] > summary img {
+	transform: rotate(90deg);
 }

@@ -23,6 +23,14 @@ export function roundToDecimals(value, decimals) {
 	return Math.round(value * factor) / factor
 }
 
+export function toFixedDigits(value, digits) {
+	const digitsBeforeDot = String(value.toFixed(0)).length
+	const neededDigitsAfterDot = digits - digitsBeforeDot
+	const boundRounding = Math.max(0, neededDigitsAfterDot)
+
+	return value.toFixed(boundRounding)
+}
+
 export function debounce(fn, wait = 200, immediate = false) {
 	let timeoutId
 

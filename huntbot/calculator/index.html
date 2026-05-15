@@ -124,18 +124,37 @@
                   >
                 </div>
                 <div id="huntbotContainer" class="tier-container"></div>
+                <div class="value-wrapper">
+                  <details class="zp-container">
+                    <summary class="prevent-select">
+                      <div class="details-row">
+                        <div><img src="/media/misc_images/chevron.png" /></div>
+                        <div>Value</div>
+                      </div>
+                    </summary>
+                    <div>
+                      <div class="details-row">
+                        <div><img src="/media/owo_images/cowoncy.png" /></div>
+                        <div>Cowoncy:</div>
+                        <code id="cowoncyHbValue" class="discord-code light">0</code>
+                      </div>
+                      <div class="details-row">
+                        <div><img src="/media/owo_images/essence.gif" /></div>
+                        <div>Essence:</div>
+                        <code id="essenceHbValue" class="discord-code light">0</code>
+                      </div>
+                    </div>
+                  </details>
+                </div>
                 <details class="zp-container">
-                  <summary class="prevent-select">Value</summary>
-                  <div>
-                    <div style="display: flex; gap: 0.2rem">
-                      <img src="/media/owo_images/cowoncy.png" /> Cowoncy:
-                      <code id="cowoncyHbValue" class="discord-code light">0</code>
+                  <summary class="prevent-select">
+                    <div class="details-row">
+                      <div><img src="/media/misc_images/chevron.png" /></div>
+                      <div>Expected Pets</div>
+                      <div>Actual Pets</div>
                     </div>
-                    <div style="display: flex; gap: 0.2rem">
-                      <img src="/media/owo_images/essence.gif" /> Essence:
-                      <code id="essenceHbValue" class="discord-code light">0</code>
-                    </div>
-                  </div>
+                  </summary>
+                  <div id="hb-luck-container"></div>
                 </details>
                 <div class="gapped-box flexing-children button-container" id="simming-buttons">
                   <button class="gray-hover">first</button>
@@ -156,18 +175,35 @@
                 <div id="zooContainer" class="tier-container"></div>
                 <div class="zp-container">Zoo Points: <span id="zpSpan">0</span></div>
                 <div class="zp-container" id="tierCountContainer"></div>
+                <div class="value-wrapper">
+                  <details class="zp-container">
+                    <summary class="prevent-select">
+                      <div class="details-row">
+                        <div><img src="/media/misc_images/chevron.png" /></div>
+                        <div>Value</div>
+                      </div>
+                    </summary>
+                    <div>
+                      <div style="display: flex; gap: 0.2rem">
+                        <img src="/media/owo_images/cowoncy.png" /> Cowoncy:
+                        <code id="cowoncyZooValue" class="discord-code light">0</code>
+                      </div>
+                      <div style="display: flex; gap: 0.2rem">
+                        <img src="/media/owo_images/essence.gif" /> Essence:
+                        <code id="essenceZooValue" class="discord-code light">0</code>
+                      </div>
+                    </div>
+                  </details>
+                </div>
                 <details class="zp-container">
-                  <summary class="prevent-select">Value</summary>
-                  <div>
-                    <div style="display: flex; gap: 0.2rem">
-                      <img src="/media/owo_images/cowoncy.png" /> Cowoncy:
-                      <code id="cowoncyZooValue" class="discord-code light">0</code>
+                  <summary class="prevent-select">
+                    <div class="details-row">
+                      <div><img src="/media/misc_images/chevron.png" /></div>
+                      <div>Expected Pets</div>
+                      <div>Actual Pets</div>
                     </div>
-                    <div style="display: flex; gap: 0.2rem">
-                      <img src="/media/owo_images/essence.gif" /> Essence:
-                      <code id="essenceZooValue" class="discord-code light">0</code>
-                    </div>
-                  </div>
+                  </summary>
+                  <div id="zoo-luck-container"></div>
                 </details>
               </div>
             </div>

@@ -1,7 +1,12 @@
 import * as cookie from '/js/util/cookieUtil.js'
 import { signedNumberFixedString, numStringToSubscript, zeroPad } from '/js/util/stringUtil.js'
 import { make, doTimestamps } from '/js/util/injectionUtil.js'
-import { debounce, roundToDecimals, makeRepeatingButton } from '/js/util/inputUtil.js'
+import {
+	debounce,
+	roundToDecimals,
+	makeRepeatingButton,
+	toFixedDigits,
+} from '/js/util/inputUtil.js'
 import { loadJson } from '/js/util/jsonUtil.js'
 
 const sellZooValue = document.querySelector('#cowoncyZooValue')
@@ -14,7 +19,9 @@ const [firstButton, prevButton, nextButton, lastButton] = Array.from(
 )
 const huntbotIdxEl = document.querySelector('#huntbotIdx')
 const currentHbLines = Array.from(document.querySelectorAll('#huntbotLine'))
-const countContainer = document.querySelector(`#tierCountContainer`)
+const countContainer = document.querySelector('#tierCountContainer')
+const zooLuckContainer = document.querySelector('#zoo-luck-container')
+const hbLuckContainer = document.querySelector('#hb-luck-container')
 
 let patreon = false
 let isDragging = false
@@ -426,6 +433,27 @@ function initDom(zoo, zooContainer, hbContainer) {
 		zooContainer.append(tier.zooRow)
 		hbContainer.append(tier.hbRow)
 
+		const makeDetailsRow = ({ expectedLuck, actualLuck }) =>
+			make('div', { className: 'details-row' }, [
+				make('div', {}, [make('img', { src: tierFolder + tier.emoteSrc })]),
+				make('div', {}, [expectedLuck]),
+				make('div', {}, [actualLuck]),
+			])
+
+		tier.luckEls = {
+			zoo: {
+				expectedLuck: make('code', { className: 'discord-code light' }),
+				actualLuck: make('code', { className: 'discord-code light' }),
+			},
+			hb: {
+				expectedLuck: make('code', { className: 'discord-code light' }),
+				actualLuck: make('code', { className: 'discord-code light' }),
+			},
+		}
+
+		zooLuckContainer.append(makeDetailsRow(tier.luckEls.zoo))
+		hbLuckContainer.append(makeDetailsRow(tier.luckEls.hb))
+
 		for (const pet of tier.pets) {
 			const makeCell = () => {
 				const textEl = make('div')
@@ -451,7 +479,12 @@ function newHuntbot() {
 		const pets = hbPets()
 		let acc = 0
 		const rateArray = zoo.map((tier) => (acc += tier.rate))
-		zoo.forEach((tier) => tier.pets.forEach((pet) => pet.caught.huntbot.push(0)))
+		zoo.forEach((tier) => {
+			const expectedPetAmount = pets * tier.rate
+			tier.expectedPetAmount.huntbot.push(expectedPetAmount)
+			tier.expectedPetAmount.zoo += expectedPetAmount
+			tier.pets.forEach((pet) => pet.caught.huntbot.push(0))
+		})
 
 		for (let i = 0; i < pets; i++) {
 			const r = Math.random()
@@ -484,8 +517,17 @@ function displayNthHuntbot(n) {
 	const digitsNeeded = String(zoo.getMaxCaught(n)).length
 	for (const tier of zoo) {
 		tier.hbRow.style.display = 'none'
-		for (const pet of tier.pets)
+
+		var tierPets = 0
+		for (const pet of tier.pets) {
+			tierPets += pet.caught.huntbot[n]
 			processPet(pet.caught.huntbot[n], digitsNeeded, pet.hbCell, tier.hbRow)
+		}
+		tier.luckEls.hb.expectedLuck.textContent = toFixedDigits(
+			tier.expectedPetAmount.huntbot[n],
+			3
+		)
+		tier.luckEls.hb.actualLuck.textContent = tierPets
 	}
 }
 
@@ -503,6 +545,8 @@ function displayZoo() {
 			processPet(pet.caught.zoo, digitsNeeded, pet.zooCell, tier.zooRow)
 			tierPets += pet.caught.zoo
 		}
+		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
+		tier.luckEls.zoo.actualLuck.textContent = tierPets
 		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets}`)
 	}
 	countContainer.textContent = countContainerArray.reverse().join(', ')
