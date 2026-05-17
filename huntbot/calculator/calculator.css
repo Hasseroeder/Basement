@@ -287,6 +287,7 @@ button {
 
 .pet-cell {
 	display: none;
+	position: relative;
 }
 
 .simming-container {
@@ -370,4 +371,29 @@ details svg {
 
 details[open] > summary img {
 	transform: rotate(90deg);
+}
+
+.pet-cell .tooltip {
+	position: absolute;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.pet-cell:hover .tooltip {
+	visibility: visible;
+	background-color: #222;
+	padding: 0.2rem 0.35rem;
+	border-radius: 0.2rem;
+	z-index: 1;
+	top: 70%;
+	left: 70%;
+	font-family: monospace;
+}
+
+.pet-cell > img {
+	transition: 0.15s ease;
+}
+
+.pet-cell:hover > img {
+	transform: scale(1.6);
 }

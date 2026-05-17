@@ -480,6 +480,27 @@ function initDom(zoo, zooContainer, hbContainer) {
 		zooLuckContainer.append(makeDetailsRow(tier.luckEls.zoo))
 		hbLuckContainer.append(makeDetailsRow(tier.luckEls.hb))
 
+		const makeStat = (src, stat) =>
+			make('div', { className: 'gapped-box center-box' }, [
+				make('img', { src }),
+				make('div', { textContent: stat }),
+			])
+
+		const makeTooltip = ({ stats, name }) =>
+			make('div', { className: 'tooltip' }, [
+				make('div', { textContent: name }),
+				make('div', { className: 'gapped-box' }, [
+					makeStat('/media/owo_images/battleEmojis/HP.png', stats[0]),
+					makeStat('/media/owo_images/battleEmojis/STR.png', stats[1]),
+					makeStat('/media/owo_images/battleEmojis/PR.png', stats[2]),
+				]),
+				make('div', { className: 'gapped-box' }, [
+					makeStat('/media/owo_images/battleEmojis/WP.png', stats[3]),
+					makeStat('/media/owo_images/battleEmojis/MAG.png', stats[4]),
+					makeStat('/media/owo_images/battleEmojis/MR.png', stats[5]),
+				]),
+			])
+
 		for (const pet of tier.pets) {
 			const makeCell = () => {
 				const textEl = make('div')
@@ -487,6 +508,7 @@ function initDom(zoo, zooContainer, hbContainer) {
 					wrapper: make('div', { className: 'pet-cell' }, [
 						make('img', { src: petFolder + pet.emoteSrc }),
 						textEl,
+						makeTooltip(pet),
 					]),
 					textEl,
 				}
