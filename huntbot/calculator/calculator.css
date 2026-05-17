@@ -361,6 +361,13 @@ details > summary img {
 	transition: 0.1s ease;
 }
 
+details svg {
+	width: 0.5rem;
+	height: 0.5rem;
+	padding: 0.25rem;
+	transform: rotate(-90deg);
+}
+
 details[open] > summary img {
 	transform: rotate(90deg);
 }

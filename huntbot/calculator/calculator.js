@@ -433,21 +433,47 @@ function initDom(zoo, zooContainer, hbContainer) {
 		zooContainer.append(tier.zooRow)
 		hbContainer.append(tier.hbRow)
 
-		const makeDetailsRow = ({ expectedLuck, actualLuck }) =>
+		const makeDetailsRow = ({ expectedLuck, actualLuck, arrow }) =>
 			make('div', { className: 'details-row' }, [
 				make('div', {}, [make('img', { src: tierFolder + tier.emoteSrc })]),
 				make('div', {}, [expectedLuck]),
-				make('div', {}, [actualLuck]),
+				make('div', {}, [arrow, actualLuck]),
 			])
+		const SVG_NS = 'http://www.w3.org/2000/svg'
+		const makeArrow = () => {
+			const el = document.createElementNS(SVG_NS, 'svg')
+			el.setAttribute('viewBox', '0 0 16 16')
+			el.setAttribute('xmlns', SVG_NS)
+			const path = document.createElementNS(SVG_NS, 'path')
+			path.setAttribute('d', 'M10 8L14 8V10L8 16L2 10V8H6V0L10 4.76995e-08V8Z')
+			path.setAttribute('fill', '#ffdc51')
+			el.append(path)
+
+			el.update = (actual, expected) => {
+				if (actual > expected) {
+					el.style.transform = 'rotate(-180deg)'
+					path.setAttribute('fill', '#56caff')
+				} else if (actual < expected) {
+					el.style.transform = 'rotate(0deg)'
+					path.setAttribute('fill', '#ff5656')
+				} else {
+					el.style.transform = 'rotate(-90deg)'
+					path.setAttribute('fill', '#ffdc51')
+				}
+			}
+			return el
+		}
 
 		tier.luckEls = {
 			zoo: {
 				expectedLuck: make('code', { className: 'discord-code light' }),
 				actualLuck: make('code', { className: 'discord-code light' }),
+				arrow: makeArrow(),
 			},
 			hb: {
 				expectedLuck: make('code', { className: 'discord-code light' }),
 				actualLuck: make('code', { className: 'discord-code light' }),
+				arrow: makeArrow(),
 			},
 		}
 
@@ -528,6 +554,7 @@ function displayNthHuntbot(n) {
 			3
 		)
 		tier.luckEls.hb.actualLuck.textContent = tierPets.toLocaleString()
+		tier.luckEls.hb.arrow.update(tierPets, tier.expectedPetAmount.huntbot[n])
 	}
 }
 
@@ -547,6 +574,7 @@ function displayZoo() {
 		}
 		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
 		tier.luckEls.zoo.actualLuck.textContent = tierPets.toLocaleString()
+		tier.luckEls.zoo.arrow.update(tierPets, tier.expectedPetAmount.zoo)
 		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets}`)
 	}
 	countContainer.textContent = countContainerArray.reverse().join(', ')
