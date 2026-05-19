@@ -55,7 +55,7 @@ Following other attempts to write guides, this one also won't be able to be kept
       <td>April</td>
       <td>
           <div style="font-size: 0.75rem;">
-            <code>@coopw</code>
+            <code>@aprilflwrs</code>
           </div>
         </td>
       <td><a href="https://github.com/coopw1">coopw1</a></td>
