@@ -74,32 +74,29 @@ const effectMin = [0.05, 0.05, 0.15, 0.1, 0.05, 0.15, 0.05]
 const effectMax = [0.2, 0.2, 0.35, 0.3, 0.2, 0.35, 0.15]
 const boostSuffix = ['hp', 'str', 'pr', 'wp', 'mag', 'mr', 'rune']
 
-function sortArray(array) {
-	const tiers = [
-		'common',
-		'uncommon',
-		'rare',
-		'epic',
-		'mythical',
-		'legendary',
-		'gem',
-		'bot',
-		'distorted',
-		'fabled',
-		'hidden',
-		'special',
-		'patreon',
-		'cpatreon',
-	]
-	array.sort((petA, petB) => {
-		const tierPriorityA = tiers.indexOf(petA.tier)
-		const tierPriorityB = tiers.indexOf(petB.tier)
+const tiers = [
+	{ name: 'common', priority: 0, header: ' -----—— Common ——------ ' },
+	{ name: 'uncommon', priority: 1, header: ' -----—— Uncommon —----- ' },
+	{ name: 'rare', priority: 2, header: ' -----—— Rare ———------- ' },
+	{ name: 'epic', priority: 3, header: ' -----—— Epic ———------- ' },
+	{ name: 'mythical', priority: 4, header: ' -----—— Mythic ——------ ' },
+	{ name: 'legendary', priority: 5, header: ' -----—— Legendary —---- ' },
+	{ name: 'gem', priority: 5, header: ' -----—— Gem ———-------- ' },
+	{ name: 'bot', priority: 6, header: ' -----—— Bot ———-------- ' },
+	{ name: 'distorted', priority: 7, header: ' -----—— Distorted —---- ' },
+	{ name: 'fabled', priority: 8, header: ' -----—— Fabled ——------ ' },
+	{ name: 'hidden', priority: 9, header: ' -----—— Hidden ——------ ' },
+	{ name: 'special', priority: 10, header: ' -----—— Special ——----- ' },
+	{ name: 'patreon', priority: 11, header: ' -----—— Patreon ——----- ' },
+	{ name: 'cpatreon', priority: 12, header: ' -----—— Custom ——------ ' },
+]
 
-		if (tierPriorityA !== tierPriorityB) return tierPriorityA - tierPriorityB
+const sortPets = (array) =>
+	array.sort((petA, petB) => {
+		if (petA.tier.priority !== petB.tier.priority)
+			return petA.tier.priority - petB.tier.priority
 		else return petA.name.localeCompare(petB.name)
 	})
-	return array
-}
 
 function outputPetContainer() {
 	if (showPets) {
@@ -118,7 +115,7 @@ function outputPetContainerMATCHING() {
 	petArray.forEach((_, i) => {
 		if (i === 0 || petArray[i].tier != petArray[i - 1].tier) {
 			headersCreated++
-			columns.at(-1).append(createHeader(petArray[i].tier))
+			columns.at(-1).append(createHeader(petArray[i].tier.header))
 		}
 		if ((i + headersCreated) % 20 == 0) {
 			columns.push(make('div', { className: 'pet-calc-column' }))
@@ -179,20 +176,15 @@ const displayColumns = () =>
 function onInput(textInput, suggestions) {
 	const q = textInput.value.trim()
 
-	if (!q || q.length <= 2) {
+	/*if (!q || q.length <= 2) {
 		suggestedPets = []
 		return (suggestions.style.display = 'none')
-	}
-	fetchAndRenderSuggestions(q, suggestions)
-}
-
-async function fetchAndRenderSuggestions(query, suggestions) {
-	suggestedPets = searchPets(query)
-
+	}*/
+	suggestedPets = searchPets(q)
 	if (!suggestedPets.length) {
 		return (suggestions.style.display = 'none')
 	}
-	renderSuggestions(query, suggestions)
+	renderSuggestions(q, suggestions)
 }
 
 function renderSuggestions(query, suggestions) {
@@ -297,7 +289,7 @@ const highlight = (suggestions) =>
 
 const fetchNeon = async () => {
 	const response = await loadJson(neonURL)
-	const ranks = response.ranks
+	const tierNames = response.ranks
 	return response.data.map((rawPet) => ({
 		animated: rawPet[0],
 		name: rawPet[1],
@@ -305,13 +297,13 @@ const fetchNeon = async () => {
 		emoji: rawPet[2],
 		aliases: rawPet[3].map((alias) => alias.toLowerCase()),
 		stats: rawPet[4],
-		tier: ranks[rawPet[5]],
+		tier: tiers.find((tier) => tier.name == tierNames[rawPet[5]]),
 	}))
 }
 
 const searchPets = (query) => {
 	const normalizedQuery = query.trim().toLowerCase()
-	return sortArray(
+	return sortPets(
 		allPets.filter(
 			(pet) =>
 				pet.lowerName.includes(normalizedQuery) ||
@@ -401,7 +393,7 @@ async function updatePetArray() {
 	const filteredPets = allPets.filter((pet) =>
 		pet.stats.every((value, i) => value === searchedStats[i])
 	)
-	petArray = sortArray(filteredPets)
+	petArray = sortPets(filteredPets)
 	outputPetContainer()
 }
 
@@ -447,28 +439,10 @@ function displayPet(pet) {
 	)
 }
 
-function createHeader(tier) {
-	const tierText = {
-		common: ' -----—— Common ——------ ',
-		uncommon: ' -----—— Uncommon —----- ',
-		rare: ' -----—— Rare ———------- ',
-		epic: ' -----—— Epic ———------- ',
-		mythical: ' -----—— Mythic ——------ ',
-		legendary: ' -----—— Legendary —---- ',
-		gem: ' -----—— Gem ———-------- ',
-		bot: ' -----—— Bot ———-------- ',
-		distorted: ' -----—— Distorted —---- ',
-		fabled: ' -----—— Fabled ——------ ',
-		hidden: ' -----—— Hidden ——------ ',
-		special: ' -----—— Special ——----- ',
-		patreon: ' -----—— Patreon ——----- ',
-		cpatreon: ' -----—— Custom ——------ ',
-	}[tier]
-
-	return make('div', { style: { width: '10.8rem' } }, [
-		make('div', { textContent: tierText, className: 'pet-type-header' }),
+const createHeader = (string) =>
+	make('div', { style: { width: '10.8rem' } }, [
+		make('div', { textContent: string, className: 'pet-type-header' }),
 	])
-}
 
 function getPetImage(pet, wantAnimated) {
 	if (wantAnimated && pet.animated == 1) {
