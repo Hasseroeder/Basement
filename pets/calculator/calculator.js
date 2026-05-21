@@ -14,8 +14,6 @@ const sliderLvl = document.getElementById('sliderLvl')
 const inputs = Array.from(document.querySelectorAll('.myInputs'))
 const outputs = Array.from(document.querySelectorAll('.myOutputs'))
 
-const neonCache = new Map()
-
 //for Mode: matching pets
 let showPets = true
 let page = 0
@@ -27,9 +25,8 @@ let petArray
 let suggestedPets = []
 let chosenPet = []
 let selectedIndex = -1
-let debounceTimer
 
-const neonURL = 'https://neonutil.com/zoo-stats?'
+const neonURL = 'https://neonutil.com/api/animals'
 
 let level = 0
 
@@ -181,17 +178,16 @@ const displayColumns = () =>
 
 function onInput(textInput, suggestions) {
 	const q = textInput.value.trim()
-	clearTimeout(debounceTimer)
 
 	if (!q || q.length <= 2) {
 		suggestedPets = []
 		return (suggestions.style.display = 'none')
 	}
-	debounceTimer = setTimeout(() => fetchAndRenderSuggestions(q, suggestions), 200)
+	fetchAndRenderSuggestions(q, suggestions)
 }
 
 async function fetchAndRenderSuggestions(query, suggestions) {
-	suggestedPets = await fetchNeonSingle('n=' + encodeURIComponent(query))
+	suggestedPets = searchPets(query)
 
 	if (!suggestedPets.length) {
 		return (suggestions.style.display = 'none')
@@ -200,12 +196,13 @@ async function fetchAndRenderSuggestions(query, suggestions) {
 }
 
 function renderSuggestions(query, suggestions) {
+	const normalizedQuery = query.toLowerCase()
 	suggestions.innerHTML = ''
 	suggestions.style.display = 'block'
 	selectedIndex = -1
 
 	suggestedPets.forEach((pet, i) => {
-		const aliases = pet.aliases.filter((a) => a.includes(query))
+		const aliases = pet.aliases.filter((a) => a.includes(normalizedQuery))
 
 		suggestions.appendChild(
 			make(
@@ -213,12 +210,8 @@ function renderSuggestions(query, suggestions) {
 				{
 					className: 'suggestion',
 					textContent: pet.name,
-					onmousedown: async (e) => {
+					onmousedown: (e) => {
 						e.preventDefault()
-						clearTimeout(debounceTimer)
-						suggestedPets = await fetchNeonSingle(
-							'n=' + encodeURIComponent(textInput.value.trim())
-						)
 						applyItem(i)
 						suggestions.style.display = 'none'
 					},
@@ -280,8 +273,7 @@ async function onKeyDown(e, textInput, suggestions) {
 		highlight(suggestions)
 	} else if (e.key === 'Enter') {
 		e.preventDefault()
-		clearTimeout(debounceTimer)
-		suggestedPets = await fetchNeonSingle('n=' + encodeURIComponent(textInput.value.trim()))
+		suggestedPets = searchPets(textInput.value.trim())
 		applyItem(selectedIndex)
 		suggestions.style.display = 'none'
 	} else if (e.key === 'Escape') {
@@ -303,40 +295,30 @@ const highlight = (suggestions) =>
 		div.classList.toggle('active', i === selectedIndex)
 	})
 
-function createCachedSingleCaller(fetchFn) {
-	let activeToken = 0
-
-	return function cachedCaller(query) {
-		query = query.toLowerCase()
-
-		if (neonCache.has(query)) return Promise.resolve(neonCache.get(query))
-
-		const token = ++activeToken
-
-		return fetchFn(query).then((data) => {
-			if (token !== activeToken) {
-				throw new Error('Cancelled due to newer request')
-			}
-
-			data = data.map((rawPet) => ({
-				name: rawPet[0],
-				animated: rawPet[1],
-				emoji: rawPet[2],
-				aliases: rawPet[3],
-				tier: rawPet[4],
-				stats: rawPet[5],
-			}))
-
-			data = sortArray(data)
-
-			neonCache.set(query, data)
-			return data
-		})
-	}
+const fetchNeon = async () => {
+	const response = await loadJson(neonURL)
+	const ranks = response.ranks
+	return response.data.map((rawPet) => ({
+		animated: rawPet[0],
+		name: rawPet[1],
+		lowerName: rawPet[1].toLowerCase(),
+		emoji: rawPet[2],
+		aliases: rawPet[3].map((alias) => alias.toLowerCase()),
+		stats: rawPet[4],
+		tier: ranks[rawPet[5]],
+	}))
 }
 
-const fetchNeon = (q) => loadJson(neonURL + q)
-const fetchNeonSingle = createCachedSingleCaller(fetchNeon)
+const searchPets = (query) => {
+	const normalizedQuery = query.trim().toLowerCase()
+	return sortArray(
+		allPets.filter(
+			(pet) =>
+				pet.lowerName.includes(normalizedQuery) ||
+				pet.aliases.some((alias) => alias.includes(normalizedQuery))
+		)
+	)
+}
 
 function updateInternalStats() {
 	const base = [500, 500, 100, 100, 25, 25]
@@ -415,11 +397,15 @@ function petToStats(pet) {
 
 async function updatePetArray() {
 	const statOrder = [0, 2, 4, 1, 3, 5]
-	const query = 's=' + statOrder.map((i) => stats[i]).join('.')
-
-	petArray = await fetchNeonSingle(query)
+	const searchedStats = statOrder.map((i) => Number(stats[i]))
+	const filteredPets = allPets.filter((pet) =>
+		pet.stats.every((value, i) => value === searchedStats[i])
+	)
+	petArray = sortArray(filteredPets)
 	outputPetContainer()
 }
+
+let allPets = []
 
 function setLevelTo(value) {
 	value = Math.max(1, value)
@@ -591,7 +577,7 @@ const prefix = (quality) =>
 		[99, 'f_'],
 	].findLast(([t]) => t <= quality)[1]
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	doTimestamps()
 	inputs.forEach((input) => {
 		input.addEventListener('change', updateStats)
@@ -618,6 +604,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		updatePetArray()
 	})
 
+	allPets = await fetchNeon()
 	updateStats()
 	setLevelTo(0)
 	addAddEffects()
