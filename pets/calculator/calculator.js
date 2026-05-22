@@ -26,8 +26,6 @@ let suggestedPets = []
 let chosenPet = []
 let selectedIndex = -1
 
-const neonURL = 'https://neonutil.com/api/animals'
-
 let level = 0
 
 const stats = [
@@ -176,12 +174,8 @@ const displayColumns = () =>
 function onInput(textInput, suggestions) {
 	const q = textInput.value.trim()
 
-	/*if (!q || q.length <= 2) {
-		suggestedPets = []
-		return (suggestions.style.display = 'none')
-	}*/
 	suggestedPets = searchPets(q)
-	if (!suggestedPets.length) {
+	if (!suggestedPets.length || !q || q.length <= 2) {
 		return (suggestions.style.display = 'none')
 	}
 	renderSuggestions(q, suggestions)
@@ -288,7 +282,7 @@ const highlight = (suggestions) =>
 	})
 
 const fetchNeon = async () => {
-	const response = await loadJson(neonURL)
+	const response = await loadJson('https://neonutil.com/api/animals')
 	const tierNames = response.ranks
 	return response.data.map((rawPet) => ({
 		animated: rawPet[0],
@@ -447,7 +441,7 @@ const createHeader = (string) =>
 function getPetImage(pet, wantAnimated) {
 	if (wantAnimated && pet.animated == 1) {
 		return `https://cdn.discordapp.com/emojis/${pet.emoji}.gif?size=96`
-	} else if (['common', 'uncommon', 'rare', 'epic', 'mythic', 'hidden'].includes(pet.tier)) {
+	} else if (['common', 'uncommon', 'rare', 'epic', 'mythic', 'hidden'].includes(pet.tier.name)) {
 		return `/media/owo_images/pets/${pet.name}.png`
 	} else {
 		return `https://cdn.discordapp.com/emojis/${pet.emoji}.png?size=96`
