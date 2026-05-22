@@ -536,14 +536,14 @@ const getImageForEffect = (effect) => prefix(effect.quality) + boostSuffix[effec
 
 const prefix = (quality) =>
 	[
-		[-Infinity, 'c_'],
-		[20, 'u_'],
-		[40, 'r_'],
-		[60, 'e_'],
-		[80, 'm_'],
-		[94, 'l_'],
-		[99, 'f_'],
-	].findLast(([t]) => t <= quality)[1]
+		{ min: -Infinity, prefix: 'c_' },
+		{ min: 20, prefix: 'u_' },
+		{ min: 40, prefix: 'r_' },
+		{ min: 60, prefix: 'e_' },
+		{ min: 80, prefix: 'm_' },
+		{ min: 94, prefix: 'l_' },
+		{ min: 99, prefix: 'f_' },
+	].findLast(({ min }) => min < quality).prefix
 
 document.addEventListener('DOMContentLoaded', async () => {
 	doTimestamps()
