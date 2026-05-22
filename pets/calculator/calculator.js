@@ -258,10 +258,9 @@ async function onKeyDown(e, textInput, suggestions) {
 		selectedIndex = selectedIndex > 0 ? selectedIndex - 1 : max
 		highlight(suggestions)
 	} else if (e.key === 'Enter') {
-		//e.preventDefault()
 		applyItem(selectedIndex, suggestions)
 	} else if (e.key === 'Escape') {
-		//e.target.blur()
+		e.target.blur()
 	}
 }
 
