@@ -200,11 +200,7 @@ function renderSuggestions(query, suggestions) {
 				{
 					className: 'suggestion',
 					textContent: pet.name,
-					onmousedown: (e) => {
-						e.preventDefault()
-						applyItem(i)
-						suggestions.style.display = 'none'
-					},
+					onmousedown: (_) => applyItem(i, suggestions),
 				},
 				[
 					make('div', {
@@ -262,16 +258,15 @@ async function onKeyDown(e, textInput, suggestions) {
 		selectedIndex = selectedIndex > 0 ? selectedIndex - 1 : max
 		highlight(suggestions)
 	} else if (e.key === 'Enter') {
-		e.preventDefault()
-		//suggestedPets = searchPets(textInput.value.trim())
-		applyItem(selectedIndex)
-		suggestions.style.display = 'none'
+		//e.preventDefault()
+		applyItem(selectedIndex, suggestions)
 	} else if (e.key === 'Escape') {
-		e.target.blur()
+		//e.target.blur()
 	}
 }
 
-async function applyItem(i) {
+async function applyItem(i, suggestions) {
+	suggestions.style.display = 'none'
 	chosenPet = suggestedPets[i] ?? suggestedPets[0]
 	suggestedPets = []
 
