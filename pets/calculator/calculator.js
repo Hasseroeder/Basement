@@ -172,9 +172,13 @@ const displayColumns = () =>
 	petContainer.firstChild.replaceChildren(...columns.slice(page * 2, page * 2 + 2))
 
 function onInput(textInput, suggestions) {
-	const q = textInput.value.trim()
+	const q = textInput.value.trim().toLowerCase()
 
-	suggestedPets = searchPets(q)
+	suggestedPets = allPets.filter(
+		(pet) => pet.lowerName.includes(q) || pet.aliases.some((alias) => alias.includes(q))
+	)
+	suggestedPets = sortPets(suggestedPets)
+	suggestedPets = suggestedPets.slice(0, 5)
 	if (!suggestedPets.length || !q || q.length <= 2) {
 		return (suggestions.style.display = 'none')
 	}
@@ -259,7 +263,7 @@ async function onKeyDown(e, textInput, suggestions) {
 		highlight(suggestions)
 	} else if (e.key === 'Enter') {
 		e.preventDefault()
-		suggestedPets = searchPets(textInput.value.trim())
+		//suggestedPets = searchPets(textInput.value.trim())
 		applyItem(selectedIndex)
 		suggestions.style.display = 'none'
 	} else if (e.key === 'Escape') {
@@ -293,17 +297,6 @@ const fetchNeon = async () => {
 		stats: rawPet[4],
 		tier: tiers.find((tier) => tier.name == tierNames[rawPet[5]]),
 	}))
-}
-
-const searchPets = (query) => {
-	const normalizedQuery = query.trim().toLowerCase()
-	return sortPets(
-		allPets.filter(
-			(pet) =>
-				pet.lowerName.includes(normalizedQuery) ||
-				pet.aliases.some((alias) => alias.includes(normalizedQuery))
-		)
-	)
 }
 
 function updateInternalStats() {
