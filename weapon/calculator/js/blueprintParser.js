@@ -12,7 +12,7 @@ function splitHypenSpaces(string) {
 		.trim()
 
 	// split on hyphen or space
-	// but don’t split when it’s between two digits
+	// but don't split when it's between two digits
 	const parts = normalized.split(/(?<!\d)[ -]|[ -](?!\d)/)
 
 	// drop any empty tokens just in case
