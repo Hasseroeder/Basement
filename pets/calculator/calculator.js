@@ -397,7 +397,9 @@ const createHeader = (string) =>
 function getPetImage(pet, wantAnimated) {
 	if (wantAnimated && pet.animated == 1) {
 		return `https://cdn.discordapp.com/emojis/${pet.emoji}.gif?size=96`
-	} else if (['common', 'uncommon', 'rare', 'epic', 'mythic', 'hidden'].includes(pet.tier.name)) {
+	} else if (
+		['common', 'uncommon', 'rare', 'epic', 'mythical', 'hidden'].includes(pet.tier.name)
+	) {
 		return `/media/owo_images/pets/${pet.name}.png`
 	} else {
 		return `https://cdn.discordapp.com/emojis/${pet.emoji}.png?size=96`
