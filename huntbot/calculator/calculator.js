@@ -53,7 +53,7 @@ allPets.forEach((pet) => {
 		}
 	}
 })
-console.log(allPets)
+console.log(newZoo)
 /*
 	emoji: "418284974593277954"
 	name: "gowl"
