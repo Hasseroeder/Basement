@@ -36,7 +36,9 @@ newZoo.forEach((tier) => {
 })
 allPets.forEach((pet) => {
 	const tier = newZoo.find((tier) => tier.slug == pet.tier.name)
-	if (!tier) console.log('beep boop, found an issue')
+	if (!tier) {
+		console.log('beep boop, found an issue')
+	}
 })
 /*
 	emoji: "418284974593277954"
