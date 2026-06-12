@@ -52,7 +52,7 @@ console.log(newZoo)
 	tier: Object { name: "legendary", priority: 5, prettyName: "Legendary" }
 */
 
-const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
+const zoo = newZoo.filter((tier) => tier.huntbotAvailable)
 
 const huntbotTexts = []
 let currentHbIdx = -1
