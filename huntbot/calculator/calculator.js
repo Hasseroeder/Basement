@@ -9,8 +9,6 @@ import {
 } from '/js/util/inputUtil.js'
 import { loadJson, loadPets } from '/js/util/jsonUtil.js'
 
-console.log(await loadPets())
-
 const sellZooValue = document.querySelector('#cowoncyZooValue')
 const sacZooValue = document.querySelector('#essenceZooValue')
 const sellHbValue = document.querySelector('#cowoncyHbValue')
@@ -29,6 +27,24 @@ let patreon = false
 let isDragging = false
 
 const DATA = await loadJson('/huntbot/calculator/zoo.json')
+
+const newData = JSON.parse(JSON.stringify(DATA))
+const newZoo = newData.zoo
+const allPets = await loadPets()
+newZoo.forEach((tier) => {
+	tier.pets = []
+})
+allPets.forEach((pet) => {
+	const tier = newZoo.find((tier) => tier.slug == pet.tier.name)
+	if (!tier) console.log('beep boop, found an issue')
+})
+/*
+	emoji: "418284974593277954"
+	name: "gowl"
+	stats: Array(6) [ 10, 1, 3, … ]
+	tier: Object { name: "legendary", priority: 5, prettyName: "Legendary" }
+*/
+
 const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
 const { petFolder, tierFolder } = DATA.config
 
