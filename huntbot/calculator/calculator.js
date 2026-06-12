@@ -9,7 +9,7 @@ import {
 } from '/js/util/inputUtil.js'
 import { loadJson, loadPets } from '/js/util/jsonUtil.js'
 
-loadPets()
+console.log(await loadPets())
 
 const sellZooValue = document.querySelector('#cowoncyZooValue')
 const sacZooValue = document.querySelector('#essenceZooValue')
