@@ -42,6 +42,10 @@ allPets.forEach((pet) => {
 		: '/media/owo_images/pets/' + pet.name
 	const extension = pet.animated ? '.gif' : '.png'
 	pet.emoteSrc = fileName + extension
+	pet.caught = {
+		zoo: 0,
+		huntbot: [],
+	}
 	delete pet.emoji
 })
 console.log(newZoo)
