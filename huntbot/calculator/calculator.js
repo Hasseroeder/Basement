@@ -53,7 +53,6 @@ console.log(newZoo)
 */
 
 const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
-const { petFolder, tierFolder } = DATA.config
 
 const huntbotTexts = []
 let currentHbIdx = -1
@@ -135,7 +134,7 @@ zoo.forEach((tier) => {
 			},
 		},
 		[
-			make('img', { src: tierFolder + tier.emoteSrc, draggable: false }),
+			make('img', { src: tier.emoteSrc, draggable: false }),
 			make('div', { className: 'dynamic' }, [text, img]),
 			tier.patreonNeeded ? make('div', { className: 'patreon-graying' }) : '',
 		]
@@ -449,9 +448,7 @@ initDom(zoo, document.getElementById('zooContainer'), document.getElementById('h
 function initDom(zoo, zooContainer, hbContainer) {
 	for (const tier of zoo) {
 		const makeRow = () =>
-			make('div', { className: 'zoo-row' }, [
-				make('img', { src: tierFolder + tier.emoteSrc }),
-			])
+			make('div', { className: 'zoo-row' }, [make('img', { src: tier.emoteSrc })])
 		tier.zooRow = makeRow()
 		tier.hbRow = makeRow()
 		tier.hbRow.append(' | ')
@@ -460,7 +457,7 @@ function initDom(zoo, zooContainer, hbContainer) {
 
 		const makeDetailsRow = ({ expectedLuck, actualLuck, arrow }) =>
 			make('div', { className: 'details-row' }, [
-				make('div', {}, [make('img', { src: tierFolder + tier.emoteSrc })]),
+				make('div', {}, [make('img', { src: tier.emoteSrc })]),
 				make('div', {}, [expectedLuck]),
 				make('div', {}, [arrow, actualLuck]),
 			])
@@ -543,7 +540,7 @@ function initDom(zoo, zooContainer, hbContainer) {
 				const textEl = make('div')
 				return {
 					wrapper: make('div', { className: 'pet-cell' }, [
-						make('img', { src: petFolder + pet.emoteSrc }),
+						make('img', { src: pet.emoteSrc }),
 						textEl,
 						makeTooltip(pet),
 					]),

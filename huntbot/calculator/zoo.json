@@ -1,8 +1,4 @@
 {
-	"config": {
-		"petFolder": "/media/owo_images/pets/",
-		"tierFolder": "/media/owo_images/tiers/"
-	},
 	"zoo": [
 		{
 			"prettyName": "Common",
@@ -10,7 +6,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": false,
 			"_rate": null,
-			"emoteSrc": "common.png",
+			"emoteSrc": "/media/owo_images/tiers/common.png",
 			"prefix": "C",
 			"value": { "sell": 1, "sac": 1, "points": 1, "exp": 1 },
 			"expectedPetAmount": {
@@ -71,7 +67,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": false,
 			"_rate": 0.3,
-			"emoteSrc": "uncommon.png",
+			"emoteSrc": "/media/owo_images/tiers/uncommon.png",
 			"prefix": "U",
 			"value": { "sell": 3, "sac": 5, "points": 5, "exp": 10 },
 			"expectedPetAmount": {
@@ -132,7 +128,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": false,
 			"_rate": 0.1,
-			"emoteSrc": "rare.png",
+			"emoteSrc": "/media/owo_images/tiers/rare.png",
 			"prefix": "R",
 			"value": { "sell": 10, "sac": 20, "points": 20, "exp": 20 },
 			"expectedPetAmount": {
@@ -193,7 +189,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": false,
 			"_rate": 0.01,
-			"emoteSrc": "epic.png",
+			"emoteSrc": "/media/owo_images/tiers/epic.png",
 			"prefix": "E",
 			"value": { "sell": 250, "sac": 250, "points": 250, "exp": 400 },
 			"expectedPetAmount": {
@@ -254,7 +250,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": false,
 			"_rate": 0.001,
-			"emoteSrc": "mythic.png",
+			"emoteSrc": "/media/owo_images/tiers/mythic.png",
 			"prefix": "M",
 			"value": { "sell": 5000, "sac": 3000, "points": 3000, "exp": 1000 },
 			"expectedPetAmount": {
@@ -315,7 +311,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": true,
 			"_rate": 0.005,
-			"emoteSrc": "patreon.png",
+			"emoteSrc": "/media/owo_images/tiers/patreon.png",
 			"prefix": "P",
 			"value": { "sell": 1000, "sac": 500, "points": 500, "exp": 400 },
 			"expectedPetAmount": {
@@ -376,7 +372,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": true,
 			"_rate": 0.0001,
-			"emoteSrc": "patreon.gif",
+			"emoteSrc": "/media/owo_images/tiers/patreon.gif",
 			"prefix": "CP",
 			"value": { "sell": 50000, "sac": 25000, "points": 25000, "exp": 2000 },
 			"expectedPetAmount": {
@@ -617,7 +613,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": false,
 			"_rate": 0.0005,
-			"emoteSrc": "legendary.gif",
+			"emoteSrc": "/media/owo_images/tiers/legendary.gif",
 			"prefix": "L",
 			"value": { "sell": 15000, "sac": 10000, "points": 10000, "exp": 2000 },
 			"expectedPetAmount": {
@@ -678,7 +674,7 @@
 			"huntbotAvailable": false,
 			"patreonNeeded": false,
 			"_rate": null,
-			"emoteSrc": "gem.gif",
+			"emoteSrc": "/media/owo_images/tiers/gem.gif",
 			"prefix": "G",
 			"value": { "sell": 30000, "sac": 20000, "points": 20000, "exp": 5000 },
 			"expectedPetAmount": {
@@ -739,7 +735,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": false,
 			"_rate": null,
-			"emoteSrc": "bot.gif",
+			"emoteSrc": "/media/owo_images/tiers/bot.gif",
 			"prefix": "B",
 			"value": { "sell": 50000, "sac": 10000, "points": 30000 },
 			"expectedPetAmount": {
@@ -800,7 +796,7 @@
 			"huntbotAvailable": false,
 			"patreonNeeded": false,
 			"_rate": 0.0000025,
-			"emoteSrc": "distorted.gif",
+			"emoteSrc": "/media/owo_images/tiers/distorted.gif",
 			"prefix": "D",
 			"value": { "sell": 300000, "sac": 200000, "points": 200000, "exp": 100000 },
 			"expectedPetAmount": {
@@ -861,7 +857,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": false,
 			"_rate": 0.00001,
-			"emoteSrc": "fabled.gif",
+			"emoteSrc": "/media/owo_images/tiers/fabled.gif",
 			"prefix": "F",
 			"value": { "sell": 250000, "sac": 100000, "points": 100000, "exp": 100000 },
 			"expectedPetAmount": {
@@ -922,7 +918,7 @@
 			"huntbotAvailable": false,
 			"patreonNeeded": false,
 			"_rate": null,
-			"emoteSrc": "special.png",
+			"emoteSrc": "/media/owo_images/tiers/special.png",
 			"prefix": "S",
 			"value": { "sell": 6000, "sac": 5000, "points": 500, "exp": 250 },
 			"expectedPetAmount": {
@@ -983,7 +979,7 @@
 			"huntbotAvailable": true,
 			"patreonNeeded": false,
 			"_rate": 0.000001,
-			"emoteSrc": "hidden.gif",
+			"emoteSrc": "/media/owo_images/tiers/hidden.gif",
 			"prefix": "H",
 			"value": { "sell": 1000000, "sac": 500000, "points": 500000, "exp": 300000 },
 			"expectedPetAmount": {
