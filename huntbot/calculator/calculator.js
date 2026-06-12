@@ -37,21 +37,12 @@ newZoo.forEach((tier) => {
 allPets.forEach((pet) => {
 	const tier = newZoo.find((tier) => tier.slug == pet.tier.name)
 	tier.pets.push(pet)
-	if (['cpatreon', 'special'].includes(tier.slug)) {
-		pet.emoteSrc = 'https://cdn.discordapp.com/emojis/' + pet.emoji
-		if (pet.animated) {
-			pet.emoteSrc += '.gif?size=96'
-		} else {
-			pet.emoteSrc += '.png?size=96'
-		}
-	} else {
-		pet.emoteSrc = '/media/owo_images/pets/' + pet.name
-		if (pet.animated) {
-			pet.emoteSrc += '.gif'
-		} else {
-			pet.emoteSrc += '.png'
-		}
-	}
+	const fileName = ['cpatreon', 'special'].includes(tier.slug)
+		? 'https://cdn.discordapp.com/emojis/' + pet.emoji
+		: '/media/owo_images/pets/' + pet.name
+	const extension = pet.animated ? '.gif' : '.png'
+	pet.emoteSrc = fileName + extension
+	delete pet.emote
 })
 console.log(newZoo)
 /*
