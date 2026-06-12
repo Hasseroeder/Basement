@@ -42,7 +42,7 @@ allPets.forEach((pet) => {
 		: '/media/owo_images/pets/' + pet.name
 	const extension = pet.animated ? '.gif' : '.png'
 	pet.emoteSrc = fileName + extension
-	delete pet.emote
+	delete pet.emoji
 })
 console.log(newZoo)
 /*
