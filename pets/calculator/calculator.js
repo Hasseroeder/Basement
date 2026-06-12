@@ -96,7 +96,7 @@ function outputPetContainerMATCHING() {
 	petArray.forEach((_, i) => {
 		if (i === 0 || petArray[i].tier != petArray[i - 1].tier) {
 			headersCreated++
-			columns.at(-1).append(createHeader(petArray[i].tier.header))
+			columns.at(-1).append(createHeader(petArray[i].tier.prettyName))
 		}
 		if ((i + headersCreated) % 20 == 0) {
 			columns.push(make('div', { className: 'pet-calc-column' }))
