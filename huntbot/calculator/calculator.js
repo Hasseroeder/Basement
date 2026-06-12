@@ -7,7 +7,7 @@ import {
 	makeRepeatingButton,
 	toFixedDigits,
 } from '/js/util/inputUtil.js'
-import { loadJson } from '/js/util/jsonUtil.js'
+import { loadJson, loadPets } from '/js/util/jsonUtil.js'
 
 loadPets()
 
