@@ -38,6 +38,7 @@ allPets.forEach((pet) => {
 	const tier = newZoo.find((tier) => tier.slug == pet.tier.name)
 	if (!tier) {
 		console.log('beep boop, found an issue')
+		console.log(tier, pet)
 	}
 })
 /*
@@ -521,7 +522,6 @@ function initDom(zoo, zooContainer, hbContainer) {
 				]),
 			])
 
-		console.log(tier)
 		let zooCellWrapper, hbCellWrapper
 		if (tier.slug == 'cpatreon') {
 			const extraZooWrapper = make('div', { className: 'custom-patreon-grid' })
