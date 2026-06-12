@@ -9,6 +9,8 @@ import {
 } from '/js/util/inputUtil.js'
 import { loadJson } from '/js/util/jsonUtil.js'
 
+loadPets()
+
 const sellZooValue = document.querySelector('#cowoncyZooValue')
 const sacZooValue = document.querySelector('#essenceZooValue')
 const sellHbValue = document.querySelector('#cowoncyHbValue')
@@ -501,6 +503,19 @@ function initDom(zoo, zooContainer, hbContainer) {
 				]),
 			])
 
+		console.log(tier)
+		let zooCellWrapper, hbCellWrapper
+		if (tier.slug == 'customPatreon') {
+			const extraZooWrapper = make('div', { className: 'custom-patreon-grid' })
+			const extraHbWrapper = make('div', { className: 'custom-patreon-grid' })
+			tier.zooRow.append(extraZooWrapper)
+			tier.hbRow.append(extraHbWrapper)
+			zooCellWrapper = extraZooWrapper
+			hbCellWrapper = extraHbWrapper
+		} else {
+			zooCellWrapper = tier.zooRow
+			hbCellWrapper = tier.hbRow
+		}
 		for (const pet of tier.pets) {
 			const makeCell = () => {
 				const textEl = make('div')
@@ -515,8 +530,8 @@ function initDom(zoo, zooContainer, hbContainer) {
 			}
 			pet.zooCell = makeCell()
 			pet.hbCell = makeCell()
-			tier.zooRow.append(pet.zooCell.wrapper)
-			tier.hbRow.append(pet.hbCell.wrapper)
+			zooCellWrapper.append(pet.zooCell.wrapper)
+			hbCellWrapper.append(pet.hbCell.wrapper)
 		}
 	}
 }

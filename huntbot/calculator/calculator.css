@@ -396,4 +396,11 @@ details[open] > summary img {
 
 .pet-cell:hover > img {
 	transform: scale(1.6);
+	z-index: 1;
+}
+
+.custom-patreon-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 0.1rem 0.2rem;
 }

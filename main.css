@@ -377,13 +377,9 @@ code,
 }
 
 .pet-type-header {
-	white-space: preserve-spaces;
 	height: 1rem;
 	padding-top: 0.25rem;
 	font-size: 0.75rem;
-	align-content: center;
-	font-family: monospace;
-	text-align: center;
 }
 
 .petButtonFromCalculator {

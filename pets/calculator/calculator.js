@@ -1,4 +1,4 @@
-import { loadJson } from '/js/util/jsonUtil.js'
+import { loadJson, loadPets } from '/js/util/jsonUtil.js'
 import { make, doTimestamps } from '/js/util/injectionUtil.js'
 
 const petContainer = document.getElementById('petContainer')
@@ -71,23 +71,6 @@ let effects = [
 const effectMin = [0.05, 0.05, 0.15, 0.1, 0.05, 0.15, 0.05]
 const effectMax = [0.2, 0.2, 0.35, 0.3, 0.2, 0.35, 0.15]
 const boostSuffix = ['hp', 'str', 'pr', 'wp', 'mag', 'mr', 'rune']
-
-const tiers = [
-	{ name: 'common', priority: 0, header: ' -----—— Common ——------ ' },
-	{ name: 'uncommon', priority: 1, header: ' -----—— Uncommon —----- ' },
-	{ name: 'rare', priority: 2, header: ' -----—— Rare ———------- ' },
-	{ name: 'epic', priority: 3, header: ' -----—— Epic ———------- ' },
-	{ name: 'mythical', priority: 4, header: ' -----—— Mythic ——------ ' },
-	{ name: 'legendary', priority: 5, header: ' -----—— Legendary —---- ' },
-	{ name: 'gem', priority: 5, header: ' -----—— Gem ———-------- ' },
-	{ name: 'bot', priority: 6, header: ' -----—— Bot ———-------- ' },
-	{ name: 'distorted', priority: 7, header: ' -----—— Distorted —---- ' },
-	{ name: 'fabled', priority: 8, header: ' -----—— Fabled ——------ ' },
-	{ name: 'hidden', priority: 9, header: ' -----—— Hidden ——------ ' },
-	{ name: 'special', priority: 10, header: ' -----—— Special ——----- ' },
-	{ name: 'patreon', priority: 11, header: ' -----—— Patreon ——----- ' },
-	{ name: 'cpatreon', priority: 12, header: ' -----—— Custom ——------ ' },
-]
 
 const sortPets = (array) =>
 	array.sort((petA, petB) => {
@@ -278,20 +261,6 @@ const highlight = (suggestions) =>
 	Array.from(suggestions.children).forEach((div, i) => {
 		div.classList.toggle('active', i === selectedIndex)
 	})
-
-const fetchNeon = async () => {
-	const response = await loadJson('https://neonutil.com/api/animals')
-	const tierNames = response.ranks
-	return response.data.map((rawPet) => ({
-		animated: rawPet[0],
-		name: rawPet[1],
-		lowerName: rawPet[1].toLowerCase(),
-		emoji: rawPet[2],
-		aliases: rawPet[3].map((alias) => alias.toLowerCase()),
-		stats: rawPet[4],
-		tier: tiers.find((tier) => tier.name == tierNames[rawPet[5]]),
-	}))
-}
 
 function updateInternalStats() {
 	const base = [500, 500, 100, 100, 25, 25]
@@ -559,7 +528,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 		updatePetArray()
 	})
 
-	allPets = await fetchNeon()
+	allPets = await loadPets()
 	updateStats()
 	setLevelTo(0)
 	addAddEffects()
