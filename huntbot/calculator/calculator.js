@@ -523,7 +523,7 @@ function initDom(zoo, zooContainer, hbContainer) {
 
 		console.log(tier)
 		let zooCellWrapper, hbCellWrapper
-		if (tier.slug == 'customPatreon') {
+		if (tier.slug == 'cpatreon') {
 			const extraZooWrapper = make('div', { className: 'custom-patreon-grid' })
 			const extraHbWrapper = make('div', { className: 'custom-patreon-grid' })
 			tier.zooRow.append(extraZooWrapper)

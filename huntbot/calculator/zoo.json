@@ -372,7 +372,7 @@
 		},
 		{
 			"prettyName": "Custom Patreon",
-			"slug": "customPatreon",
+			"slug": "cpatreon",
 			"huntbotAvailable": true,
 			"patreonNeeded": true,
 			"_rate": 0.0001,

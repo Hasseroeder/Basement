@@ -30,7 +30,7 @@ export async function loadPets() {
 		{ name: 'hidden', priority: 9, prettyName: 'Hidden' },
 		{ name: 'special', priority: 10, prettyName: 'Special' },
 		{ name: 'patreon', priority: 11, prettyName: 'Patreon' },
-		{ name: 'customPatreon', priority: 12, prettyName: 'Custom' },
+		{ name: 'cpatreon', priority: 12, prettyName: 'Custom' },
 	]
 	const response = await loadJson('https://neonutil.com/api/animals')
 	const tierNames = response.ranks
