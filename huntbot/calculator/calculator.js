@@ -576,9 +576,11 @@ function newHuntbot() {
 		}
 	}
 
+	const essenceGain = (Gain.value * Duration.value).toFixed(0)
+	const expGain = (Experience.value * Duration.value).toFixed(0)
 	huntbotTexts.push([
 		`BEEP BOOP. I AM BACK WITH ${hbPets()} ANIMALS,`,
-		`${Gain.value * Duration.value} ESSENCE, AND ${Experience.value * Duration.value} EXPERIENCE`,
+		`${essenceGain} ESSENCE, AND ${expGain} EXPERIENCE`,
 	])
 	displayZoo()
 	displayNthHuntbot(++currentHbIdx)
