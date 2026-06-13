@@ -48,13 +48,6 @@ allPets.forEach((pet) => {
 	}
 	delete pet.emoji
 })
-console.log(newZoo)
-/*
-	emoji: "418284974593277954"
-	name: "gowl"
-	stats: Array(6) [ 10, 1, 3, … ]
-	tier: Object { name: "legendary", priority: 5, prettyName: "Legendary" }
-*/
 
 const zoo = newZoo.filter((tier) => tier.huntbotAvailable)
 
@@ -544,7 +537,7 @@ function initDom(zoo, zooContainer, hbContainer) {
 				const textEl = make('div')
 				return {
 					wrapper: make('div', { className: 'pet-cell' }, [
-						make('img', { src: pet.emoteSrc }),
+						make('img', { src: pet.emoteSrc, loading: 'lazy' }),
 						textEl,
 						makeTooltip(pet),
 					]),
