@@ -701,7 +701,7 @@ function displayNthHuntbotFull(n) {
 }
 
 const prev = () => {
-	if (currentHbIdx >= 0) return
+	if (currentHbIdx < 1) return
 	currentHbIdx--
 	displayNthHuntbotFull(currentHbIdx)
 }
