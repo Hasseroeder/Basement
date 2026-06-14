@@ -39,13 +39,13 @@ const hbLuckContainer = document.querySelector('#hb-luck-container')
 let patreon = false
 let isDragging = false
 
-const DATA = await loadJson('/huntbot/calculator/zoo.json')
+const localZoo = await loadJson('/huntbot/calculator/zoo.json')
 const pets = await loadPets()
 const petByName = new Map()
 for (const pet of pets) {
 	petByName.set(pet.name, pet)
 }
-const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
+const zoo = localZoo.filter((tier) => tier.huntbotAvailable)
 const cpatreonTier = zoo.find((tier) => tier.slug == 'cpatreon')
 pets.forEach((pet) => {
 	if (pet.tier.name !== 'cpatreon') return
