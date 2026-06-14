@@ -695,35 +695,29 @@ function processPet(caughtInt, digitsNeeded, cell, row) {
 	}
 }
 
-makeRepeatingButton(prevButton, () => {
-	if (currentHbIdx > 0) {
-		currentHbIdx--
-		displayNthHuntbot(currentHbIdx)
-		updateHbValue(currentHbIdx)
-	}
-})
-
-makeRepeatingButton(nextButton, () => {
-	if (currentHbIdx === huntbotTexts.length - 1) {
-		newHuntbot()
-	} else {
-		currentHbIdx++
-		displayNthHuntbot(currentHbIdx)
-		updateHbValue(currentHbIdx)
-	}
-})
-
-firstButton.onmousedown = () => {
-	currentHbIdx = 0
-	displayNthHuntbot(currentHbIdx)
-	updateHbValue(currentHbIdx)
+function displayNthHuntbotFull(n) {
+	displayNthHuntbot(n)
+	updateHbValue(n)
 }
 
-lastButton.onmousedown = () => {
-	currentHbIdx = huntbotTexts.length - 1
-	displayNthHuntbot(currentHbIdx)
-	updateHbValue(currentHbIdx)
+const prev = () => currentHbIdx > 0 && currentHbIdx-- && displayNthHuntbotFull(currentHbIdx)
+const next = () => {
+	if (currentHbIdx === huntbotTexts.length - 1) newHuntbot()
+	else currentHbIdx++ && displayNthHuntbotFull(currentHbIdx)
 }
+const first = () => (currentHbIdx = 0 && displayNthHuntbotFull(currentHbIdx))
+const last = () => (currentHbIdx = huntbotTexts.length - 1 && displayNthHuntbotFull(currentHbIdx))
+makeRepeatingButton(prevButton, prev)
+makeRepeatingButton(nextButton, next)
+firstButton.onmousedown = first
+lastButton.onmousedown = last
+
+document.addEventListener('keydown', (e) => {
+	if (e.key === 'p') prev()
+	else if (e.key === 'n') next()
+	else if (e.key === 'f') first()
+	else if (e.key === 'l') last()
+})
 
 importFromCookie()
 if (location.hash) stringToLevel(location.hash.slice(1))
