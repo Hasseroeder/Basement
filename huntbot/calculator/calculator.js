@@ -48,7 +48,7 @@ pets.forEach((pet) => {
 	delete pet.emoji
 })
 
-const zoo = zoo.filter((tier) => tier.huntbotAvailable)
+const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
 
 const huntbotTexts = []
 let currentHbIdx = -1
