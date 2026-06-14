@@ -747,6 +747,10 @@ const reset = () => {
 	countContainer.textContent = ''
 	currentHbLines[0].textContent = 'BEEP BOOP'
 	currentHbLines[1].textContent = 'BOOP BEEP BEEP'
+	sellZooValue.textContent = 0
+	sacZooValue.textContent = 0
+	sellHbValue.textContent = 0
+	sacHbValue.textContent = 0
 	zpSpan.textContent = 0
 	zoo.forEach((tier) => {
 		tier.luckEls.zoo.expectedLuck.textContent = ''
