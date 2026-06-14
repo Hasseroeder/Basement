@@ -60,11 +60,11 @@ pets.forEach((pet) => {
 		stats: pet.stats,
 		caught: {
 			zoo: 0,
-			huntbot: [],
+			hb: [],
 		},
 		displayed: {
 			//zoo: undefined,
-			//huntbot: undefined,
+			//hb: undefined,
 		},
 	})
 })
@@ -77,7 +77,7 @@ zoo.getMaxCaught = function (n) {
 	let maxCaught = 0
 	for (const { pets } of this) {
 		for (const { caught } of pets) {
-			const caughtInt = typeof n == 'number' ? caught.huntbot[n] : caught.zoo
+			const caughtInt = typeof n == 'number' ? caught.hb[n] : caught.zoo
 			maxCaught = Math.max(caughtInt, maxCaught)
 		}
 	}
@@ -88,7 +88,7 @@ zoo.getZP = function (n) {
 	let ZP = 0
 	for (const { pets, value } of this) {
 		for (const { caught } of pets) {
-			const caughtInt = typeof n == 'number' ? caught.huntbot[n] : caught.zoo
+			const caughtInt = typeof n == 'number' ? caught.hb[n] : caught.zoo
 			ZP += caughtInt * value.points
 		}
 	}
@@ -100,7 +100,7 @@ zoo.getValue = function (n) {
 	let sell = 0
 	for (const { pets, value, isSac } of this) {
 		for (const { caught } of pets) {
-			const caughtInt = typeof n == 'number' ? caught.huntbot[n] : caught.zoo
+			const caughtInt = typeof n == 'number' ? caught.hb[n] : caught.zoo
 			if (isSac) sac += caughtInt * value.sac
 			else sell += caughtInt * value.sell
 		}
@@ -610,9 +610,9 @@ function newHuntbot() {
 		const rateArray = zoo.map((tier) => (acc += tier.rate))
 		zoo.forEach((tier) => {
 			const expectedPetAmount = pets * tier.rate
-			tier.expectedPetAmount.huntbot.push(expectedPetAmount)
+			tier.expectedPetAmount.hb.push(expectedPetAmount)
 			tier.expectedPetAmount.zoo += expectedPetAmount
-			tier.pets.forEach((pet) => pet.caught.huntbot.push(0))
+			tier.pets.forEach((pet) => pet.caught.hb.push(0))
 		})
 
 		for (let i = 0; i < pets; i++) {
@@ -622,7 +622,7 @@ function newHuntbot() {
 
 			const pet = zoo[tierIdx].pets[petIdx]
 			const caught = pet.caught
-			caught.huntbot[caught.huntbot.length - 1]++
+			caught.hb[caught.hb.length - 1]++
 			caught.zoo++
 		}
 	}
@@ -648,19 +648,23 @@ function displayNthHuntbot(n) {
 	const digitsNeeded = String(zoo.getMaxCaught(n)).length
 	for (const tier of zoo) {
 		tier.hbRow.style.display = 'none'
-
 		var tierPets = 0
 		for (const pet of tier.pets) {
-			processPet(pet.caught.huntbot[n], digitsNeeded, pet.hbCell, tier.hbRow)
-			tierPets += pet.caught.huntbot[n]
-			pet.displayed.huntbot = pet.caught.huntbot[n]
+			const visible = pet.caught.hb[n] !== 0
+			if (visible && !tier.hbRowVisibility) {
+				tier.hbRow.style.display = 'flex'
+				tier.hbRowVisibility = true
+			}
+			const numberStr = visible
+				? numStringToSubscript(zeroPad(pet.caught.hb[n], digitsNeeded))
+				: undefined
+			if (pet.displayed.hb !== numberStr) processPet(numberStr, pet.hbCell)
+			tierPets += pet.caught.hb[n]
+			pet.displayed.hb = numberStr
 		}
-		tier.luckEls.hb.expectedLuck.textContent = toFixedDigits(
-			tier.expectedPetAmount.huntbot[n],
-			3
-		)
+		tier.luckEls.hb.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.hb[n], 3)
 		tier.luckEls.hb.actualLuck.textContent = tierPets.toLocaleString()
-		tier.luckEls.hb.arrow.update(tierPets, tier.expectedPetAmount.huntbot[n])
+		tier.luckEls.hb.arrow.update(tierPets, tier.expectedPetAmount.hb[n])
 	}
 }
 
@@ -671,10 +675,17 @@ function displayZoo() {
 	for (const tier of zoo) {
 		var tierPets = 0
 		for (const pet of tier.pets) {
-			if (pet.displayed.zoo !== pet.caught.zoo)
-				processPet(pet.caught.zoo, digitsNeeded, pet.zooCell, tier.zooRow)
+			const visible = pet.caught.zoo !== 0
+			if (visible && !tier.zooRowVisibility) {
+				tier.zooRow.style.display = 'flex'
+				tier.zooRowVisibility = true
+			}
+			const numberStr = visible
+				? numStringToSubscript(zeroPad(pet.caught.zoo, digitsNeeded))
+				: undefined
+			if (pet.displayed.zoo !== numberStr) processPet(numberStr, pet.zooCell)
 			tierPets += pet.caught.zoo
-			pet.displayed.zoo = pet.caught.zoo
+			pet.displayed.zoo = numberStr
 		}
 		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
 		tier.luckEls.zoo.actualLuck.textContent = tierPets.toLocaleString()
@@ -684,11 +695,10 @@ function displayZoo() {
 	countContainer.textContent = countContainerArray.reverse().join(', ')
 }
 
-function processPet(caughtInt, digitsNeeded, cell, row) {
-	if (caughtInt) {
-		cell.textEl.textContent = numStringToSubscript(zeroPad(caughtInt, digitsNeeded))
+function processPet(str, cell) {
+	if (str) {
+		cell.textEl.textContent = str
 		cell.wrapper.style.display = 'flex'
-		row.style.display = 'flex'
 	} else {
 		cell.wrapper.style.display = 'none'
 	}

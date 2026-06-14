@@ -11,7 +11,7 @@
 			"value": { "sell": 1, "sac": 1, "points": 1, "exp": 1 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -20,7 +20,7 @@
 					"stats": [1, 5, 2, 3, 3, 1],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -30,7 +30,7 @@
 					"stats": [3, 2, 2, 4, 2, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -40,7 +40,7 @@
 					"stats": [8, 1, 2, 3, 5, 1],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -50,7 +50,7 @@
 					"stats": [4, 2, 2, 3, 2, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -60,7 +60,7 @@
 					"stats": [1, 1, 1, 5, 5, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -77,7 +77,7 @@
 			"value": { "sell": 3, "sac": 5, "points": 5, "exp": 10 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -86,7 +86,7 @@
 					"stats": [3, 2, 3, 3, 3, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -96,7 +96,7 @@
 					"stats": [3, 3, 2, 3, 3, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -106,7 +106,7 @@
 					"stats": [3, 4, 3, 2, 2, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -116,7 +116,7 @@
 					"stats": [3, 4, 2, 3, 2, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -126,7 +126,7 @@
 					"stats": [3, 5, 2, 3, 2, 1],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -143,7 +143,7 @@
 			"value": { "sell": 10, "sac": 20, "points": 20, "exp": 20 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -152,7 +152,7 @@
 					"stats": [5, 2, 2, 3, 1, 4],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -162,7 +162,7 @@
 					"stats": [4, 2, 3, 2, 2, 4],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -172,7 +172,7 @@
 					"stats": [5, 4, 3, 1, 1, 3],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -182,7 +182,7 @@
 					"stats": [4, 6, 3, 1, 1, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -192,7 +192,7 @@
 					"stats": [3, 1, 1, 6, 3, 3],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -209,7 +209,7 @@
 			"value": { "sell": 250, "sac": 250, "points": 250, "exp": 400 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -218,7 +218,7 @@
 					"stats": [3, 4, 4, 2, 1, 4],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -228,7 +228,7 @@
 					"stats": [4, 6, 2, 1, 3, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -238,7 +238,7 @@
 					"stats": [2, 1, 2, 6, 5, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -248,7 +248,7 @@
 					"stats": [5, 5, 3, 1, 1, 3],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -258,7 +258,7 @@
 					"stats": [7, 1, 3, 1, 2, 4],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -275,7 +275,7 @@
 			"value": { "sell": 5000, "sac": 3000, "points": 3000, "exp": 1000 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -284,7 +284,7 @@
 					"stats": [4, 8, 1, 3, 1, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -294,7 +294,7 @@
 					"stats": [2, 1, 2, 6, 6, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -304,7 +304,7 @@
 					"stats": [3, 2, 1, 8, 3, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -314,7 +314,7 @@
 					"stats": [2, 2, 8, 3, 3, 1],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -324,7 +324,7 @@
 					"stats": [4, 4, 4, 2, 1, 4],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -341,7 +341,7 @@
 			"value": { "sell": 1000, "sac": 500, "points": 500, "exp": 400 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -350,7 +350,7 @@
 					"stats": [1, 2, 2, 9, 3, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -360,7 +360,7 @@
 					"stats": [2, 1, 1, 4, 10, 1],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -370,7 +370,7 @@
 					"stats": [6, 3, 2, 3, 3, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -380,7 +380,7 @@
 					"stats": [1, 11, 1, 3, 2, 1],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -390,7 +390,7 @@
 					"stats": [3, 4, 3, 3, 3, 3],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -407,7 +407,7 @@
 			"value": { "sell": 50000, "sac": 25000, "points": 25000, "exp": 2000 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": []
 		},
@@ -422,7 +422,7 @@
 			"value": { "sell": 15000, "sac": 10000, "points": 10000, "exp": 2000 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -431,7 +431,7 @@
 					"stats": [3, 1, 1, 3, 11, 1],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -441,7 +441,7 @@
 					"stats": [4, 9, 1, 3, 1, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -451,7 +451,7 @@
 					"stats": [7, 7, 2, 1, 1, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -461,7 +461,7 @@
 					"stats": [10, 1, 3, 1, 2, 3],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -471,7 +471,7 @@
 					"stats": [3, 1, 2, 6, 6, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -488,7 +488,7 @@
 			"value": { "sell": 30000, "sac": 20000, "points": 20000, "exp": 5000 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -497,7 +497,7 @@
 					"stats": [1, 0, 0, 5, 14, 0],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -507,7 +507,7 @@
 					"stats": [0, 0, 0, 1, 19, 0],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -517,7 +517,7 @@
 					"stats": [1, 10, 0, 9, 0, 0],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -527,7 +527,7 @@
 					"stats": [0, 0, 0, 10, 10, 0],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -537,7 +537,7 @@
 					"stats": [0, 19, 0, 1, 0, 0],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -554,7 +554,7 @@
 			"value": { "sell": 50000, "sac": 10000, "points": 30000 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -563,7 +563,7 @@
 					"stats": [13, 0, 2, 4, 0, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -573,7 +573,7 @@
 					"stats": [12, 0, 4, 1, 0, 4],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -583,7 +583,7 @@
 					"stats": [7, 0, 6, 2, 0, 6],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -593,7 +593,7 @@
 					"stats": [14, 0, 3, 1, 0, 3],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -603,7 +603,7 @@
 					"stats": [9, 0, 2, 8, 0, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -620,7 +620,7 @@
 			"value": { "sell": 300000, "sac": 200000, "points": 200000, "exp": 100000 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -629,7 +629,7 @@
 					"stats": [3, 9, 2, 4, 1, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -639,7 +639,7 @@
 					"stats": [2, 1, 2, 4, 10, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -649,7 +649,7 @@
 					"stats": [8, 1, 3, 5, 1, 3],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -659,7 +659,7 @@
 					"stats": [2, 6, 2, 3, 6, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -669,7 +669,7 @@
 					"stats": [3, 1, 2, 8, 5, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -686,7 +686,7 @@
 			"value": { "sell": 250000, "sac": 100000, "points": 100000, "exp": 100000 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -695,7 +695,7 @@
 					"stats": [7, 5, 2, 4, 1, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -705,7 +705,7 @@
 					"stats": [2, 13, 2, 1, 1, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -715,7 +715,7 @@
 					"stats": [3, 1, 1, 3, 10, 3],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -725,7 +725,7 @@
 					"stats": [8, 7, 2, 1, 1, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -735,7 +735,7 @@
 					"stats": [7, 3, 5, 1, 1, 4],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
@@ -752,7 +752,7 @@
 			"value": { "sell": 6000, "sac": 5000, "points": 500, "exp": 250 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": []
 		},
@@ -767,7 +767,7 @@
 			"value": { "sell": 1000000, "sac": 500000, "points": 500000, "exp": 300000 },
 			"expectedPetAmount": {
 				"zoo": 0,
-				"huntbot": []
+				"hb": []
 			},
 			"pets": [
 				{
@@ -776,7 +776,7 @@
 					"stats": [10, 1, 4, 1, 1, 5],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -786,7 +786,7 @@
 					"stats": [2, 1, 2, 2, 13, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -796,7 +796,7 @@
 					"stats": [3, 7, 2, 1, 7, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -806,7 +806,7 @@
 					"stats": [2, 13, 3, 1, 1, 2],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				},
@@ -816,7 +816,7 @@
 					"stats": [3, 1, 2, 2, 11, 3],
 					"caught": {
 						"zoo": 0,
-						"huntbot": []
+						"hb": []
 					},
 					"displayed": {}
 				}
