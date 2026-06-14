@@ -288,7 +288,6 @@ button {
 
 .pet-cell {
 	display: none;
-	position: relative;
 }
 
 .simming-container {
@@ -369,7 +368,7 @@ details[open] > summary img {
 }
 
 .pet-tooltip {
-	position: absolute;
+	position: fixed;
 	visibility: hidden;
 	pointer-events: none;
 	background-color: #222;
