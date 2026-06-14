@@ -107,6 +107,13 @@
             <span class="discord-bot-tag">✓APP</span><span class="discord-timestamp">15:35</span>
           </div>
           <div class="based-discord-embed">
+            <div class="gapped-box flexing-children button-container" id="simming-buttons">
+              <button class="gray-hover">first</button>
+              <button class="gray-hover">prev</button>
+              <button class="gray-hover">next</button>
+              <button class="gray-hover">last</button>
+            </div>
+            <div id="huntbotIdx">0/0</div>
             <div class="consistent-images simming-container">
               <div style="width: 55%" class="zoo-container">
                 <div style="display: flex">
@@ -124,28 +131,26 @@
                   >
                 </div>
                 <div id="huntbotContainer" class="tier-container"></div>
-                <div class="value-wrapper">
-                  <details class="zp-container">
-                    <summary class="prevent-select">
-                      <div class="details-row">
-                        <div><img src="/media/misc_images/chevron.png" /></div>
-                        <div>Value</div>
-                      </div>
-                    </summary>
-                    <div>
-                      <div class="details-row">
-                        <div><img src="/media/owo_images/cowoncy.png" /></div>
-                        <div>Cowoncy:</div>
-                        <code id="cowoncyHbValue" class="discord-code light">0</code>
-                      </div>
-                      <div class="details-row">
-                        <div><img src="/media/owo_images/essence.gif" /></div>
-                        <div>Essence:</div>
-                        <code id="essenceHbValue" class="discord-code light">0</code>
-                      </div>
+                <details class="zp-container">
+                  <summary class="prevent-select">
+                    <div class="details-row">
+                      <div><img src="/media/misc_images/chevron.png" /></div>
+                      <div>Value</div>
                     </div>
-                  </details>
-                </div>
+                  </summary>
+                  <div>
+                    <div class="details-row">
+                      <div><img src="/media/owo_images/cowoncy.png" /></div>
+                      <div>Cowoncy:</div>
+                      <code id="cowoncyHbValue" class="discord-code light">0</code>
+                    </div>
+                    <div class="details-row">
+                      <div><img src="/media/owo_images/essence.gif" /></div>
+                      <div>Essence:</div>
+                      <code id="essenceHbValue" class="discord-code light">0</code>
+                    </div>
+                  </div>
+                </details>
                 <details class="zp-container">
                   <summary class="prevent-select">
                     <div class="details-row">
@@ -156,47 +161,32 @@
                   </summary>
                   <div id="hb-luck-container"></div>
                 </details>
-                <div class="gapped-box flexing-children button-container" id="simming-buttons">
-                  <button class="gray-hover">first</button>
-                  <button class="gray-hover">prev</button>
-                  <button class="gray-hover">next</button>
-                  <button class="gray-hover">last</button>
-                </div>
-                <div
-                  class="grayed-text"
-                  style="font-family: monospace; margin-top: 0.2rem; font-size: 0.6rem"
-                  id="huntbotIdx"
-                >
-                  0/0
-                </div>
               </div>
               <div style="width: 45%" class="zoo-container">
                 <strong>🌿 🌱 🌳 your zoo! 🌳 🌿 🌱</strong>
                 <div id="zooContainer" class="tier-container"></div>
                 <div class="zp-container">Zoo Points: <span id="zpSpan">0</span></div>
                 <div class="zp-container" id="tierCountContainer"></div>
-                <div class="value-wrapper">
-                  <details class="zp-container">
-                    <summary class="prevent-select">
-                      <div class="details-row">
-                        <div><img src="/media/misc_images/chevron.png" /></div>
-                        <div>Value</div>
-                      </div>
-                    </summary>
-                    <div>
-                      <div class="details-row">
-                        <div><img src="/media/owo_images/cowoncy.png" /></div>
-                        <div>Cowoncy:</div>
-                        <code id="cowoncyZooValue" class="discord-code light">0</code>
-                      </div>
-                      <div class="details-row">
-                        <div><img src="/media/owo_images/essence.gif" /></div>
-                        <div>Essence:</div>
-                        <code id="essenceZooValue" class="discord-code light">0</code>
-                      </div>
+                <details class="zp-container">
+                  <summary class="prevent-select">
+                    <div class="details-row">
+                      <div><img src="/media/misc_images/chevron.png" /></div>
+                      <div>Value</div>
                     </div>
-                  </details>
-                </div>
+                  </summary>
+                  <div>
+                    <div class="details-row">
+                      <div><img src="/media/owo_images/cowoncy.png" /></div>
+                      <div>Cowoncy:</div>
+                      <code id="cowoncyZooValue" class="discord-code light">0</code>
+                    </div>
+                    <div class="details-row">
+                      <div><img src="/media/owo_images/essence.gif" /></div>
+                      <div>Essence:</div>
+                      <code id="essenceZooValue" class="discord-code light">0</code>
+                    </div>
+                  </div>
+                </details>
                 <details class="zp-container">
                   <summary class="prevent-select">
                     <div class="details-row">

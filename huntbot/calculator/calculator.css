@@ -305,10 +305,6 @@ button {
 	font-size: 0.7rem;
 }
 
-.value-wrapper {
-	margin-top: auto;
-}
-
 .tier-count-container span {
 	display: none;
 }
@@ -316,7 +312,11 @@ button {
 details {
 	border: 1px solid #909090;
 	border-radius: 3px;
-	margin: 0.4rem 1rem 0.4rem 0;
+	margin: auto 1rem 0.4rem 0;
+}
+
+details ~ details {
+	margin-top: 0.4rem;
 }
 
 details > * {
@@ -329,12 +329,6 @@ details[open] summary {
 
 details .discord-code {
 	padding: 0.1em 0.15rem;
-}
-
-details > summary,
-details > div {
-	/*display: grid;*/
-	/*grid-template-columns: 7.5% 35% auto;*/
 }
 
 .details-row {
@@ -403,4 +397,11 @@ details[open] > summary img {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 0.1rem 0.2rem;
+}
+
+#huntbotIdx {
+	font-family: monospace;
+	margin-bottom: 0.2rem;
+	font-size: 0.6rem;
+	color: #888;
 }
