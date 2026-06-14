@@ -27,15 +27,13 @@ let patreon = false
 let isDragging = false
 
 const DATA = await loadJson('/huntbot/calculator/zoo.json')
-
-const newData = JSON.parse(JSON.stringify(DATA))
-const newZoo = newData.zoo
-const allPets = await loadPets()
-newZoo.forEach((tier) => {
+const zoo = DATA.zoo
+const pets = await loadPets()
+zoo.forEach((tier) => {
 	tier.pets = []
 })
-allPets.forEach((pet) => {
-	const tier = newZoo.find((tier) => tier.slug == pet.tier.name)
+pets.forEach((pet) => {
+	const tier = zoo.find((tier) => tier.slug == pet.tier.name)
 	tier.pets.push(pet)
 	const fileName = ['cpatreon', 'special'].includes(tier.slug)
 		? 'https://cdn.discordapp.com/emojis/' + pet.emoji
@@ -51,7 +49,7 @@ allPets.forEach((pet) => {
 	delete pet.emoji
 })
 
-const zoo = newZoo.filter((tier) => tier.huntbotAvailable)
+const zoo = zoo.filter((tier) => tier.huntbotAvailable)
 
 const huntbotTexts = []
 let currentHbIdx = -1
