@@ -377,6 +377,34 @@ const save = debounce(function () {
 	cookie.setCookie('Levels', tempLevels.join(','), 30)
 })
 
+const tt = {
+	wrapper: make('div', {
+		className: 'tooltip',
+	}),
+	title: make('div'),
+	statCells: [
+		'/media/owo_images/battleEmojis/HP.png',
+		'/media/owo_images/battleEmojis/STR.png',
+		'/media/owo_images/battleEmojis/PR.png',
+		'/media/owo_images/battleEmojis/WP.png',
+		'/media/owo_images/battleEmojis/MAG.png',
+		'/media/owo_images/battleEmojis/MR.png',
+	].map((src) =>
+		make('div', { className: 'gapped-box center-box' }, [make('img', { src }), make('div')])
+	),
+	rows: [make('div', { className: 'gapped-box' }), make('div', { className: 'gapped-box' })],
+	update(pet) {
+		this.title.textContent = pet.name
+		pet.stats.forEach((value, i) => {
+			statCells[i].querySelector('dom').textContent = value
+		})
+	},
+}
+tt.rows[0].append(tt.statCells[0], tt.statCells[1], tt.statCells[2])
+tt.rows[1].append(tt.statCells[3], tt.statCells[4], tt.statCells[5])
+tt.append(tt.title, ...tt.rows)
+document.body.append(tt)
+
 const hbWorthEls = Array.from(document.querySelectorAll('.hbworth'))
 const petWorthEls = Array.from(document.querySelectorAll('.petworth'))
 
@@ -507,21 +535,6 @@ function initDom(zoo, zooContainer, hbContainer) {
 				make('div', { textContent: stat }),
 			])
 
-		const makeTooltip = ({ stats, name }) =>
-			make('div', { className: 'tooltip' }, [
-				make('div', { textContent: name }),
-				make('div', { className: 'gapped-box' }, [
-					makeStat('/media/owo_images/battleEmojis/HP.png', stats[0]),
-					makeStat('/media/owo_images/battleEmojis/STR.png', stats[1]),
-					makeStat('/media/owo_images/battleEmojis/PR.png', stats[2]),
-				]),
-				make('div', { className: 'gapped-box' }, [
-					makeStat('/media/owo_images/battleEmojis/WP.png', stats[3]),
-					makeStat('/media/owo_images/battleEmojis/MAG.png', stats[4]),
-					makeStat('/media/owo_images/battleEmojis/MR.png', stats[5]),
-				]),
-			])
-
 		let zooCellWrapper, hbCellWrapper
 		if (tier.slug == 'cpatreon') {
 			const extraZooWrapper = make('div', { className: 'custom-patreon-grid' })
@@ -537,12 +550,22 @@ function initDom(zoo, zooContainer, hbContainer) {
 		for (const pet of tier.pets) {
 			const makeCell = () => {
 				const textEl = make('div')
+				const wrapper = make('div', { className: 'pet-cell' }, [
+					make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
+					textEl,
+				])
+				wrapper.addEventListener('mouseenter', (e) => {
+					tt.update(pet)
+					tt.wrapper.hidden = false
+					tt.wrapper.style.left = `${e.pageX + 10}px`
+					tt.wrapper.style.top = `${e.pageY + 10}px`
+				})
+
+				wrapper.addEventListener('mouseleave', () => {
+					tt.wrapper.hidden = true
+				})
 				return {
-					wrapper: make('div', { className: 'pet-cell' }, [
-						make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
-						textEl,
-						makeTooltip(pet),
-					]),
+					wrapper,
 					textEl,
 				}
 			}

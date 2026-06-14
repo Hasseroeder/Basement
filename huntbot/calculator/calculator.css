@@ -372,16 +372,10 @@ details[open] > summary img {
 	position: absolute;
 	visibility: hidden;
 	pointer-events: none;
-}
-
-.pet-cell:hover .tooltip {
-	visibility: visible;
 	background-color: #222;
 	padding: 0.2rem 0.35rem;
 	border-radius: 0.2rem;
 	z-index: 1;
-	top: 70%;
-	left: 70%;
 	font-family: monospace;
 }
 
