@@ -687,7 +687,7 @@ function displayZoo() {
 		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
 		tier.luckEls.zoo.actualLuck.textContent = tierPets.toLocaleString()
 		tier.luckEls.zoo.arrow.update(tierPets, tier.expectedPetAmount.zoo)
-		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets.value}`)
+		if (tierPets.value) countContainerArray.push(`${tier.prefix}-${tierPets.value}`)
 	}
 	countContainer.textContent = countContainerArray.reverse().join(', ')
 }
