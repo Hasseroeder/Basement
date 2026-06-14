@@ -379,7 +379,7 @@ const save = debounce(function () {
 
 const tt = {
 	wrapper: make('div', {
-		className: 'pet-tooltip',
+		className: 'pet-tooltip consistent-images',
 	}),
 	title: make('div'),
 	statCells: [
@@ -556,13 +556,13 @@ function initDom(zoo, zooContainer, hbContainer) {
 				])
 				wrapper.addEventListener('mouseenter', (e) => {
 					tt.update(pet)
-					tt.wrapper.hidden = false
+					tt.wrapper.style.visibility = 'hidden'
 					tt.wrapper.style.left = `${e.pageX + 10}px`
 					tt.wrapper.style.top = `${e.pageY + 10}px`
 				})
 
 				wrapper.addEventListener('mouseleave', () => {
-					tt.wrapper.hidden = true
+					tt.wrapper.style.visibility = 'visible'
 				})
 				return {
 					wrapper,
