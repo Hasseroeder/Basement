@@ -272,13 +272,13 @@ button {
 
 .zoo-container .discord-code {
 	font-size: 0.6rem;
+	margin: 0;
+	padding: 0 0.2rem;
 }
 
 .tier-container {
 	display: flex;
 	flex-direction: column;
-	gap: 0.1rem;
-	margin: 0.2rem 0;
 }
 
 .consistent-images img {
