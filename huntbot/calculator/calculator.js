@@ -649,7 +649,7 @@ function displayNthHuntbot(n) {
 	for (const tier of zoo) {
 		tier.hbRow.style.display = 'none'
 		tier.hbRow._visibility = false
-		var tierPets = 0
+		var tierPets = { value: 0 }
 		for (const pet of tier.pets) {
 			processPet({
 				callOrigin: 'hb',
@@ -662,8 +662,8 @@ function displayNthHuntbot(n) {
 			})
 		}
 		tier.luckEls.hb.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.hb[n], 3)
-		tier.luckEls.hb.actualLuck.textContent = tierPets.toLocaleString()
-		tier.luckEls.hb.arrow.update(tierPets, tier.expectedPetAmount.hb[n])
+		tier.luckEls.hb.actualLuck.textContent = tierPets.value.toLocaleString()
+		tier.luckEls.hb.arrow.update(tierPets.value, tier.expectedPetAmount.hb[n])
 	}
 }
 
@@ -685,8 +685,8 @@ function displayZoo() {
 			})
 		}
 		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
-		tier.luckEls.zoo.actualLuck.textContent = tierPets.toLocaleString()
-		tier.luckEls.zoo.arrow.update(tierPets, tier.expectedPetAmount.zoo)
+		tier.luckEls.zoo.actualLuck.textContent = tierPets.value.toLocaleString()
+		tier.luckEls.zoo.arrow.update(tierPets.value, tier.expectedPetAmount.zoo)
 		if (tierPets.value) countContainerArray.push(`${tier.prefix}-${tierPets.value}`)
 	}
 	countContainer.textContent = countContainerArray.reverse().join(', ')
