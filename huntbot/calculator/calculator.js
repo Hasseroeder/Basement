@@ -731,10 +731,12 @@ const next = () => {
 	}
 }
 const first = () => {
+	if (!huntbotTexts.length) return
 	currentHbIdx = 0
 	displayNthHuntbotFull(currentHbIdx)
 }
 const last = () => {
+	if (!huntbotTexts.length) return
 	currentHbIdx = huntbotTexts.length - 1
 	displayNthHuntbotFull(currentHbIdx)
 }
