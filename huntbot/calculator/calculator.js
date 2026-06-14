@@ -27,13 +27,12 @@ let patreon = false
 let isDragging = false
 
 const DATA = await loadJson('/huntbot/calculator/zoo.json')
-const zoo = DATA.zoo
 const pets = await loadPets()
-zoo.forEach((tier) => {
+DATA.zoo.forEach((tier) => {
 	tier.pets = []
 })
 pets.forEach((pet) => {
-	const tier = zoo.find((tier) => tier.slug == pet.tier.name)
+	const tier = DATA.zoo.find((tier) => tier.slug == pet.tier.name)
 	tier.pets.push(pet)
 	const fileName = ['cpatreon', 'special'].includes(tier.slug)
 		? 'https://cdn.discordapp.com/emojis/' + pet.emoji
