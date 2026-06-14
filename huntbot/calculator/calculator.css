@@ -266,7 +266,6 @@ button {
 .zoo-container {
 	display: flex;
 	flex-direction: column;
-	padding-right: 1rem;
 	flex: 1;
 }
 
@@ -300,6 +299,7 @@ button {
 	display: flex;
 	font-family: sans;
 	min-height: 21rem;
+	gap: 1rem;
 }
 
 #simming-buttons button {
