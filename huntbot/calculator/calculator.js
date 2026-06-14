@@ -651,8 +651,7 @@ function displayNthHuntbot(n) {
 
 		var tierPets = 0
 		for (const pet of tier.pets) {
-			if (pet.displayed.huntbot !== pet.caught.huntbot[n])
-				processPet(pet.caught.huntbot[n], digitsNeeded, pet.hbCell, tier.hbRow)
+			processPet(pet.caught.huntbot[n], digitsNeeded, pet.hbCell, tier.hbRow)
 			tierPets += pet.caught.huntbot[n]
 			pet.displayed.huntbot = pet.caught.huntbot[n]
 		}
