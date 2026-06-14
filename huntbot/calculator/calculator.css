@@ -266,6 +266,7 @@ button {
 .zoo-container {
 	display: flex;
 	flex-direction: column;
+	flex: 1;
 }
 
 .tier-container {
@@ -315,9 +316,10 @@ button {
 }
 
 details {
-	border: 1px solid #909090;
 	border-radius: 3px;
 	margin: 0.4rem 1rem 0.4rem 0;
+	background-color: #202020;
+	font-family: monospace;
 }
 
 .value-wrapper {
@@ -329,11 +331,7 @@ details > * {
 }
 
 details[open] summary {
-	border-bottom: 1px solid #909090;
-}
-
-details .discord-code {
-	padding: 0.1em 0.15rem;
+	border-bottom: 1px solid #303030;
 }
 
 .details-row {
@@ -355,6 +353,7 @@ details .discord-code {
 
 summary {
 	list-style: none;
+	font-size: 0.6rem;
 }
 
 details > summary img {

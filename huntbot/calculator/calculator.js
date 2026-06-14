@@ -549,13 +549,13 @@ function initDom(zoo, zooContainer, hbContainer) {
 
 		tier.luckEls = {
 			zoo: {
-				expectedLuck: make('code', { className: 'discord-code light' }),
-				actualLuck: make('code', { className: 'discord-code light' }),
+				expectedLuck: make('code'),
+				actualLuck: make('code'),
 				arrow: makeArrow(),
 			},
 			hb: {
-				expectedLuck: make('code', { className: 'discord-code light' }),
-				actualLuck: make('code', { className: 'discord-code light' }),
+				expectedLuck: make('code'),
+				actualLuck: make('code'),
 				arrow: makeArrow(),
 			},
 		}
