@@ -651,17 +651,15 @@ function displayNthHuntbot(n) {
 		tier.hbRow._visibility = false
 		var tierPets = 0
 		for (const pet of tier.pets) {
-			const visible = pet.caught.hb[n] !== 0
-			if (visible && !tier.hbRow._visibility) {
-				tier.hbRow.style.display = 'flex'
-				tier.hbRow._visibility = true
-			}
-			const numberStr = visible
-				? numStringToSubscript(zeroPad(pet.caught.hb[n], digitsNeeded))
-				: undefined
-			if (pet.displayed.hb !== numberStr) processPet(numberStr, pet.hbCell)
-			tierPets += pet.caught.hb[n]
-			pet.displayed.hb = numberStr
+			processPet({
+				callOrigin: 'hb',
+				tierPets,
+				pet,
+				petCaught: pet.caught.hb[n],
+				digitsNeeded,
+				row: tier.hbRow,
+				cell: pet.hbCell,
+			})
 		}
 		tier.luckEls.hb.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.hb[n], 3)
 		tier.luckEls.hb.actualLuck.textContent = tierPets.toLocaleString()
@@ -676,17 +674,15 @@ function displayZoo() {
 	for (const tier of zoo) {
 		var tierPets = 0
 		for (const pet of tier.pets) {
-			const visible = pet.caught.zoo !== 0
-			if (visible && !tier.zooRow._visibility) {
-				tier.zooRow.style.display = 'flex'
-				tier.zooRow._visibility = true
-			}
-			const numberStr = visible
-				? numStringToSubscript(zeroPad(pet.caught.zoo, digitsNeeded))
-				: undefined
-			if (pet.displayed.zoo !== numberStr) processPet(numberStr, pet.zooCell)
-			tierPets += pet.caught.zoo
-			pet.displayed.zoo = numberStr
+			processPet({
+				callOrigin: 'zoo',
+				tierPets,
+				pet,
+				petCaught: pet.caught.zoo,
+				digitsNeeded,
+				row: tier.zooRow,
+				cell: pet.zooCell,
+			})
 		}
 		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
 		tier.luckEls.zoo.actualLuck.textContent = tierPets.toLocaleString()
@@ -696,12 +692,23 @@ function displayZoo() {
 	countContainer.textContent = countContainerArray.reverse().join(', ')
 }
 
-function processPet(str, cell) {
-	if (str) {
-		cell.textEl.textContent = str
-		cell.wrapper.style.display = 'flex'
-	} else {
-		cell.wrapper.style.display = 'none'
+function processPet({ callOrigin, tierPets, pet, petCaught, digitsNeeded, row, cell }) {
+	const visible = pet.caught.zoo !== 0
+	if (visible && !row._visibility) {
+		row.style.display = 'flex'
+		row._visibility = true
+	}
+	if (visible !== cell.wrapper._visibility) {
+		cell.wrapper.style.display = visible ? 'flex' : 'none'
+		cell.wrapper._visibility = visible
+	}
+	if (visible) {
+		const str = numStringToSubscript(zeroPad(petCaught, digitsNeeded))
+		if (pet.displayed[callOrigin] !== str) {
+			cell.textEl.textContent = str
+			pet.displayed[callOrigin] = str
+		}
+		tierPets += pet.caught[callOrigin]
 	}
 }
 
