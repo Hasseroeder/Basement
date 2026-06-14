@@ -539,7 +539,7 @@ function initDom(zoo, zooContainer, hbContainer) {
 				const textEl = make('div')
 				return {
 					wrapper: make('div', { className: 'pet-cell' }, [
-						make('img', { src: pet.emoteSrc, loading: 'lazy' }),
+						make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
 						textEl,
 						makeTooltip(pet),
 					]),
