@@ -672,7 +672,7 @@ function displayZoo() {
 	const digitsNeeded = String(zoo.getMaxCaught()).length
 	const countContainerArray = []
 	for (const tier of zoo) {
-		var tierPets = 0
+		var tierPets = { value: 0 }
 		for (const pet of tier.pets) {
 			processPet({
 				callOrigin: 'zoo',
@@ -687,7 +687,7 @@ function displayZoo() {
 		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
 		tier.luckEls.zoo.actualLuck.textContent = tierPets.toLocaleString()
 		tier.luckEls.zoo.arrow.update(tierPets, tier.expectedPetAmount.zoo)
-		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets}`)
+		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets.value}`)
 	}
 	countContainer.textContent = countContainerArray.reverse().join(', ')
 }
@@ -708,7 +708,7 @@ function processPet({ callOrigin, tierPets, pet, petCaught, digitsNeeded, row, c
 			cell.textEl.textContent = str
 			pet.displayed[callOrigin] = str
 		}
-		tierPets += pet.caught[callOrigin]
+		tierPets.value += pet.caught[callOrigin]
 	}
 }
 
