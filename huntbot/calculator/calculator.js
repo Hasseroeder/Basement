@@ -31,7 +31,7 @@ const pets = await loadPets()
 const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
 const cpatreonTier = zoo.find((tier) => tier.slug == 'cpatreon')
 pets.forEach((pet) => {
-	if (!pet.tier.name === 'cpatreon') return
+	if (pet.tier.name !== 'cpatreon') return
 	const fileName = 'https://cdn.discordapp.com/emojis/' + pet.emoji
 	const extension = pet.animated ? '.gif' : '.png'
 	// Maybe always choose png? Would help with performance.
