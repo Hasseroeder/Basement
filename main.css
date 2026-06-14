@@ -499,8 +499,8 @@ button {
 	color: lightgray;
 	border-color: lightgray;
 	height: 2rem;
+	min-height: 2rem;
 	max-height: min-content;
-	/**/
 	width: 2rem;
 	text-align: center;
 	text-decoration: none;
