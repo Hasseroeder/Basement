@@ -39,8 +39,8 @@ const hbLuckContainer = document.querySelector('#hb-luck-container')
 let patreon = false
 let isDragging = false
 
-const localZoo = await loadJson('/huntbot/calculator/zoo.json')
-const pets = await loadPets()
+const [localZoo, pets] = await Promise.all([loadJson('/huntbot/calculator/zoo.json'), loadPets()])
+
 const petByName = new Map()
 for (const pet of pets) {
 	petByName.set(pet.name, pet)
