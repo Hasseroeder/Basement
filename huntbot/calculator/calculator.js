@@ -28,27 +28,26 @@ let isDragging = false
 
 const DATA = await loadJson('/huntbot/calculator/zoo.json')
 const pets = await loadPets()
-DATA.zoo.forEach((tier) => {
-	tier.pets = []
-})
-pets.forEach((pet) => {
-	const tier = DATA.zoo.find((tier) => tier.slug == pet.tier.name)
-	tier.pets.push(pet)
-	const fileName = ['cpatreon', 'special'].includes(tier.slug)
-		? 'https://cdn.discordapp.com/emojis/' + pet.emoji
-		: '/media/owo_images/pets/' + pet.name
-	const extension = pet.animated ? '.gif' : '.png'
-	const size = ['cpatreon', 'special'].includes(tier.slug) ? '?size=32' : ''
-	// I would love not to do this, but it helps with performance.
-	pet.emoteSrc = fileName + extension + size
-	pet.caught = {
-		zoo: 0,
-		huntbot: [],
-	}
-	delete pet.emoji
-})
-
 const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
+const cpatreonTier = zoo.find((tier) => tier.slug == 'cpatreon')
+pets.forEach((pet) => {
+	if (!pet.tier.name === 'cpatreon') return
+	const fileName = 'https://cdn.discordapp.com/emojis/' + pet.emoji
+	const extension = pet.animated ? '.gif' : '.png'
+	// Maybe always choose png? Would help with performance.
+	const size = '?size=32'
+	// I would love not to do this, but it helps with performance.
+	cpatreonTier.pets.push({
+		emoteSrc: fileName + extension + size,
+		name: pet.name,
+		stats: pet.stats,
+		caught: {
+			zoo: 0,
+			huntbot: [],
+		},
+	})
+})
+cpatreonTier.sort((petA, petB) => petA.name.localeCompare(petB.name))
 
 const huntbotTexts = []
 let currentHbIdx = -1

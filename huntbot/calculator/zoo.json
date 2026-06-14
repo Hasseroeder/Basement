@@ -12,7 +12,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/bee.png",
+					"name": "bee",
+					"stats": [1, 5, 2, 3, 3, 1],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/bug.png",
+					"name": "bug",
+					"stats": [3, 2, 2, 4, 2, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/snail.png",
+					"name": "snail",
+					"stats": [8, 1, 2, 3, 5, 1],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/beetle.png",
+					"name": "beetle",
+					"stats": [4, 2, 2, 3, 2, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/butterfly.png",
+					"name": "butterfly",
+					"stats": [1, 1, 1, 5, 5, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Uncommon",
@@ -26,7 +73,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/chick.png",
+					"name": "chick",
+					"stats": [3, 2, 3, 3, 3, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/mouse.png",
+					"name": "mouse",
+					"stats": [3, 3, 2, 3, 3, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/chicken.png",
+					"name": "chicken",
+					"stats": [3, 4, 3, 2, 2, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/rabbit.png",
+					"name": "rabbit",
+					"stats": [3, 4, 2, 3, 2, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/chipmunk.png",
+					"name": "chipmunk",
+					"stats": [3, 5, 2, 3, 2, 1],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Rare",
@@ -40,7 +134,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/sheep.png",
+					"name": "sheep",
+					"stats": [5, 2, 2, 3, 1, 4],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/pig.png",
+					"name": "pig",
+					"stats": [4, 2, 3, 2, 2, 4],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/cow.png",
+					"name": "cow",
+					"stats": [5, 4, 3, 1, 1, 3],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/dog.png",
+					"name": "dog",
+					"stats": [4, 6, 3, 1, 1, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/cat.png",
+					"name": "cat",
+					"stats": [3, 1, 1, 6, 3, 3],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Epic",
@@ -54,7 +195,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/crocodile.png",
+					"name": "crocodile",
+					"stats": [3, 4, 4, 2, 1, 4],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/tiger.png",
+					"name": "tiger",
+					"stats": [4, 6, 2, 1, 3, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/penguin.png",
+					"name": "penguin",
+					"stats": [2, 1, 2, 6, 5, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/elephant.png",
+					"name": "elephant",
+					"stats": [5, 5, 3, 1, 1, 3],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/whale.png",
+					"name": "whale",
+					"stats": [7, 1, 3, 1, 2, 4],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Mythic",
@@ -68,7 +256,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/dragon.png",
+					"name": "dragon",
+					"stats": [4, 8, 1, 3, 1, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/unicorn.png",
+					"name": "unicorn",
+					"stats": [2, 1, 2, 6, 6, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/snowman.png",
+					"name": "snowman",
+					"stats": [3, 2, 1, 8, 3, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/ghost.png",
+					"name": "ghost",
+					"stats": [2, 2, 8, 3, 3, 1],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/dove.png",
+					"name": "dove",
+					"stats": [4, 4, 4, 2, 1, 4],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Patreon",
@@ -82,7 +317,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/pbird.png",
+					"name": "pbird",
+					"stats": [1, 2, 2, 9, 3, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/pdolphin.png",
+					"name": "pdolphin",
+					"stats": [2, 1, 1, 4, 10, 1],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/pogre.png",
+					"name": "pogre",
+					"stats": [6, 3, 2, 3, 3, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/pscorpion.png",
+					"name": "pscorpion",
+					"stats": [1, 11, 1, 3, 2, 1],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/ptiger.png",
+					"name": "ptiger",
+					"stats": [3, 4, 3, 3, 3, 3],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Custom Patreon",
@@ -96,7 +378,8 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": []
 		},
 		{
 			"prettyName": "Legendary",
@@ -110,7 +393,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/gdeer.gif",
+					"name": "gdeer",
+					"stats": [3, 1, 1, 3, 11, 1],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/gfox.gif",
+					"name": "gfox",
+					"stats": [4, 9, 1, 3, 1, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/glion.gif",
+					"name": "glion",
+					"stats": [7, 7, 2, 1, 1, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/gowl.gif",
+					"name": "gowl",
+					"stats": [10, 1, 3, 1, 2, 3],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/gsquid.gif",
+					"name": "gsquid",
+					"stats": [3, 1, 2, 6, 6, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Gem",
@@ -124,7 +454,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/gcamel.gif",
+					"name": "gcamel",
+					"stats": [1, 0, 0, 5, 14, 0],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/gfish.gif",
+					"name": "gfish",
+					"stats": [0, 0, 0, 1, 19, 0],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/gpanda.gif",
+					"name": "gpanda",
+					"stats": [1, 10, 0, 9, 0, 0],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/gshrimp.gif",
+					"name": "gshrimp",
+					"stats": [0, 0, 0, 10, 10, 0],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/gspider.gif",
+					"name": "gspider",
+					"stats": [0, 19, 0, 1, 0, 0],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Bot",
@@ -138,7 +515,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/dinobot.gif",
+					"name": "dinobot",
+					"stats": [13, 0, 2, 4, 0, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/giraffbot.gif",
+					"name": "giraffbot",
+					"stats": [12, 0, 4, 1, 0, 4],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/hedgebot.gif",
+					"name": "hedgebot",
+					"stats": [7, 0, 6, 2, 0, 6],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/lobbot.gif",
+					"name": "lobbot",
+					"stats": [14, 0, 3, 1, 0, 3],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/slothbot.gif",
+					"name": "slothbot",
+					"stats": [9, 0, 2, 8, 0, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Distorted",
@@ -152,7 +576,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/glitchflamingo.gif",
+					"name": "glitchflamingo",
+					"stats": [3, 9, 2, 4, 1, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/glitchotter.gif",
+					"name": "glitchotter",
+					"stats": [2, 1, 2, 4, 10, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/glitchparrot.gif",
+					"name": "glitchparrot",
+					"stats": [8, 1, 3, 5, 1, 3],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/glitchraccoon.gif",
+					"name": "glitchraccoon",
+					"stats": [2, 6, 2, 3, 6, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/glitchzebra.gif",
+					"name": "glitchzebra",
+					"stats": [3, 1, 2, 8, 5, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Fabled",
@@ -166,7 +637,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/dboar.gif",
+					"name": "dboar",
+					"stats": [7, 5, 2, 4, 1, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/deagle.gif",
+					"name": "deagle",
+					"stats": [2, 13, 2, 1, 1, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/dfrog.gif",
+					"name": "dfrog",
+					"stats": [3, 1, 1, 3, 10, 3],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/dgorilla.gif",
+					"name": "dgorilla",
+					"stats": [8, 7, 2, 1, 1, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/dwolf.gif",
+					"name": "dwolf",
+					"stats": [7, 3, 5, 1, 1, 4],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		},
 		{
 			"prettyName": "Special",
@@ -180,7 +698,8 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": []
 		},
 		{
 			"prettyName": "Hidden",
@@ -194,7 +713,54 @@
 			"expectedPetAmount": {
 				"zoo": 0,
 				"huntbot": []
-			}
+			},
+			"pets": [
+				{
+					"emoteSrc": "/media/owo_images/pets/hkoala.gif",
+					"name": "hkoala",
+					"stats": [10, 1, 4, 1, 1, 5],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/hlizard.gif",
+					"name": "hlizard",
+					"stats": [2, 1, 2, 2, 13, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/hmonkey.gif",
+					"name": "hmonkey",
+					"stats": [3, 7, 2, 1, 7, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/hsnake.gif",
+					"name": "hsnake",
+					"stats": [2, 13, 3, 1, 1, 2],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				},
+				{
+					"emoteSrc": "/media/owo_images/pets/hsquid.gif",
+					"name": "hsquid",
+					"stats": [3, 1, 2, 2, 11, 3],
+					"caught": {
+						"zoo": 0,
+						"huntbot": []
+					}
+				}
+			]
 		}
 	]
 }
