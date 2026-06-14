@@ -311,11 +311,11 @@ button {
 details {
 	border: 1px solid #909090;
 	border-radius: 3px;
-	margin: auto 1rem 0.4rem 0;
+	margin: 0.4rem 1rem 0.4rem 0;
 }
 
-details ~ details {
-	margin-top: 0.4rem;
+.value-wrapper {
+	margin-top: auto;
 }
 
 details > * {
