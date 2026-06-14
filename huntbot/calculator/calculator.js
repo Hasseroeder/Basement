@@ -396,7 +396,7 @@ const tt = {
 	update(pet) {
 		this.title.textContent = pet.name
 		pet.stats.forEach((value, i) => {
-			statCells[i].querySelector('dom').textContent = value
+			this.statCells[i].querySelector('div').textContent = value
 		})
 	},
 }
