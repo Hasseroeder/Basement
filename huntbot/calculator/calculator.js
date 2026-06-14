@@ -563,7 +563,7 @@ function initDom(zoo, zooContainer, hbContainer) {
 		for (const pet of tier.pets) {
 			const makeCell = () => {
 				const textEl = make('div')
-				const wrapper = make('div', { className: 'pet-cell', dataset: pet }, [
+				const wrapper = make('div', { className: 'pet-cell', dataset: { pet } }, [
 					make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
 					textEl,
 				])
