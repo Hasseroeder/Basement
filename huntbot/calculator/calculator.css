@@ -26,6 +26,9 @@
 	max-width: unset;
 }
 
+.subtle-gray-hover {
+	border-radius: 0.3rem;
+}
 .subtle-gray-hover:hover {
 	background-color: #373737;
 }
