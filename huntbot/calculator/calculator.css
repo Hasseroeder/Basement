@@ -296,6 +296,11 @@ button {
 	min-height: 21rem;
 }
 
+#simming-buttons button {
+	font-size: 0.7rem;
+	font-family: monospace;
+}
+
 .zoo-container .button-container {
 	padding: 1rem 1rem 0 0;
 }
