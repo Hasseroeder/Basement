@@ -62,6 +62,10 @@ pets.forEach((pet) => {
 			zoo: 0,
 			huntbot: [],
 		},
+		displayed: {
+			//zoo: undefined,
+			//huntbot: undefined,
+		},
 	})
 })
 cpatreonTier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
@@ -616,7 +620,8 @@ function newHuntbot() {
 			const tierIdx = rateArray.findIndex((rate) => r < rate)
 			const petIdx = Math.floor(Math.random() * zoo[tierIdx].pets.length)
 
-			const caught = zoo[tierIdx].pets[petIdx].caught
+			const pet = zoo[tierIdx].pets[petIdx]
+			const caught = pet.caught
 			caught.huntbot[caught.huntbot.length - 1]++
 			caught.zoo++
 		}
@@ -646,8 +651,10 @@ function displayNthHuntbot(n) {
 
 		var tierPets = 0
 		for (const pet of tier.pets) {
+			if (pet.displayed.huntbot !== pet.caught.huntbot[n])
+				processPet(pet.caught.huntbot[n], digitsNeeded, pet.hbCell, tier.hbRow)
 			tierPets += pet.caught.huntbot[n]
-			processPet(pet.caught.huntbot[n], digitsNeeded, pet.hbCell, tier.hbRow)
+			pet.displayed.huntbot = pet.caught.huntbot[n]
 		}
 		tier.luckEls.hb.expectedLuck.textContent = toFixedDigits(
 			tier.expectedPetAmount.huntbot[n],
@@ -665,8 +672,10 @@ function displayZoo() {
 	for (const tier of zoo) {
 		var tierPets = 0
 		for (const pet of tier.pets) {
-			processPet(pet.caught.zoo, digitsNeeded, pet.zooCell, tier.zooRow)
+			if (pet.displayed.zoo !== pet.caught.zoo)
+				processPet(pet.caught.zoo, digitsNeeded, pet.zooCell, tier.zooRow)
 			tierPets += pet.caught.zoo
+			pet.displayed.zoo = pet.caught.zoo
 		}
 		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
 		tier.luckEls.zoo.actualLuck.textContent = tierPets.toLocaleString()
