@@ -402,7 +402,7 @@ const tt = {
 }
 tt.rows[0].append(tt.statCells[0], tt.statCells[1], tt.statCells[2])
 tt.rows[1].append(tt.statCells[3], tt.statCells[4], tt.statCells[5])
-tt.append(tt.title, ...tt.rows)
+tt.wrapper.append(tt.title, ...tt.rows)
 document.body.append(tt)
 
 const hbWorthEls = Array.from(document.querySelectorAll('.hbworth'))
