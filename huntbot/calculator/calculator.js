@@ -20,7 +20,7 @@ function updateZooValue() {
 	sacZooValue.textContent = sac.toLocaleString()
 }
 function updateHbValue(n) {
-	if (n > 0) return
+	if (n < 0) return
 	const { sell, sac } = zoo.getValue(n)
 	sellHbValue.textContent = sell.toLocaleString()
 	sacHbValue.textContent = sac.toLocaleString()
@@ -743,6 +743,7 @@ const last = () => {
 const reset = () => {
 	currentHbIdx = -1
 	huntbotTexts.length = 0
+	huntbotIdxEl.textContent = '0/0'
 	countContainer.textContent = ''
 	currentHbLines[0].textContent = 'BEEP BOOP'
 	currentHbLines[1].textContent = 'BOOP BEEP BEEP'
