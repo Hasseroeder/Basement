@@ -270,6 +270,10 @@ button {
 	flex: 1;
 }
 
+.zoo-container .discord-code {
+	font-size: 0.6rem;
+}
+
 .tier-container {
 	display: flex;
 	flex-direction: column;
