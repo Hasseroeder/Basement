@@ -693,7 +693,7 @@ function displayZoo() {
 }
 
 function processPet({ callOrigin, tierPets, pet, petCaught, digitsNeeded, row, cell }) {
-	const visible = pet.caught.zoo !== 0
+	const visible = pet.caught[callOrigin] !== 0
 	if (visible && !row._visibility) {
 		row.style.display = 'flex'
 		row._visibility = true
