@@ -28,6 +28,10 @@ let isDragging = false
 
 const DATA = await loadJson('/huntbot/calculator/zoo.json')
 const pets = await loadPets()
+const petByName = new Map()
+for (const pet of pets) {
+	petByName.set(pet.name, pet)
+}
 const zoo = DATA.zoo.filter((tier) => tier.huntbotAvailable)
 const cpatreonTier = zoo.find((tier) => tier.slug == 'cpatreon')
 pets.forEach((pet) => {
@@ -405,8 +409,8 @@ document.addEventListener('pointerover', (e) => {
 	const petCell = e.target.closest('.pet-cell')
 	if (!petCell) return
 	const rect = petCell.getBoundingClientRect()
-	console.log(petCell.dataset)
-	tt.update(JSON.parse(petCell.dataset.pet))
+	const pet = petByName.get(petCell.dataset.name)
+	tt.update(pet)
 	tt.wrapper.style.visibility = 'visible'
 	tt.wrapper.style.left = `${rect.right - 3}px`
 	tt.wrapper.style.top = `${rect.bottom - 3}px`
@@ -566,7 +570,7 @@ function initDom(zoo, zooContainer, hbContainer) {
 				const textEl = make('div')
 				const wrapper = make(
 					'div',
-					{ className: 'pet-cell', dataset: { pet: JSON.stringify(pet) } },
+					{ className: 'pet-cell', dataset: { name: pet.name } },
 					[make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }), textEl]
 				)
 				return {
