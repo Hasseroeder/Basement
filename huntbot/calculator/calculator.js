@@ -556,14 +556,15 @@ function initDom(zoo, zooContainer, hbContainer) {
 				])
 				wrapper.addEventListener('mouseenter', (e) => {
 					tt.update(pet)
-					tt.wrapper.style.visibility = 'hidden'
+					tt.wrapper.style.visibility = 'visible'
 					tt.wrapper.style.left = `${e.pageX + 10}px`
 					tt.wrapper.style.top = `${e.pageY + 10}px`
 				})
 
-				wrapper.addEventListener('mouseleave', () => {
-					tt.wrapper.style.visibility = 'visible'
-				})
+				wrapper.addEventListener(
+					'mouseleave',
+					() => (tt.wrapper.style.visibility = 'hidden')
+				)
 				return {
 					wrapper,
 					textEl,
