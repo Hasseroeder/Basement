@@ -406,7 +406,7 @@ document.addEventListener('pointerover', (e) => {
 	if (!petCell) return
 	const rect = petCell.getBoundingClientRect()
 	console.log(petCell.dataset)
-	tt.update(petCell.dataset.pet)
+	tt.update(JSON.parse(petCell.dataset))
 	tt.wrapper.style.visibility = 'visible'
 	tt.wrapper.style.left = `${rect.right - 3}px`
 	tt.wrapper.style.top = `${rect.bottom - 3}px`
@@ -564,10 +564,11 @@ function initDom(zoo, zooContainer, hbContainer) {
 		for (const pet of tier.pets) {
 			const makeCell = () => {
 				const textEl = make('div')
-				const wrapper = make('div', { className: 'pet-cell', dataset: { pet } }, [
-					make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
-					textEl,
-				])
+				const wrapper = make(
+					'div',
+					{ className: 'pet-cell', dataset: JSON.stringify(pet) },
+					[make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }), textEl]
+				)
 				return {
 					wrapper,
 					textEl,
