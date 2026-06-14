@@ -554,11 +554,13 @@ function initDom(zoo, zooContainer, hbContainer) {
 					make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
 					textEl,
 				])
-				wrapper.addEventListener('mouseenter', (e) => {
+				wrapper.addEventListener('mouseenter', () => {
+					const rect = wrapper.getBoundingClientRect()
+
 					tt.update(pet)
 					tt.wrapper.style.visibility = 'visible'
-					tt.wrapper.style.left = `${e.pageX + 10}px`
-					tt.wrapper.style.top = `${e.pageY + 10}px`
+					tt.wrapper.style.left = `${rect.right + 10}px`
+					tt.wrapper.style.top = `${rect.bottom + 10}px`
 				})
 
 				wrapper.addEventListener(
