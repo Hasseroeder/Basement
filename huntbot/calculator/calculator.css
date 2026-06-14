@@ -266,6 +266,7 @@ button {
 .zoo-container {
 	display: flex;
 	flex-direction: column;
+	padding-right: 1rem;
 	flex: 1;
 }
 
@@ -317,7 +318,7 @@ button {
 
 details {
 	border-radius: 3px;
-	margin: 0.4rem 1rem 0.4rem 0;
+	margin: 0.4rem 0;
 	background-color: #202020;
 	font-family: monospace;
 }
