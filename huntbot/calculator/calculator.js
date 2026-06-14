@@ -41,7 +41,9 @@ allPets.forEach((pet) => {
 		? 'https://cdn.discordapp.com/emojis/' + pet.emoji
 		: '/media/owo_images/pets/' + pet.name
 	const extension = pet.animated ? '.gif' : '.png'
-	pet.emoteSrc = fileName + extension
+	const size = ['cpatreon', 'special'].includes(tier.slug) ? '?size=32' : '0'
+	// I would love not to do this, but it helps with performance.
+	pet.emoteSrc = fileName + extension + size
 	pet.caught = {
 		zoo: 0,
 		huntbot: [],
