@@ -708,7 +708,7 @@ function processPet({ callOrigin, tierPets, pet, petCaught, digitsNeeded, row, c
 			cell.textEl.textContent = str
 			pet.displayed[callOrigin] = str
 		}
-		tierPets.value += pet.caught[callOrigin]
+		tierPets.value += petCaught
 	}
 }
 
@@ -741,10 +741,17 @@ const last = () => {
 const reset = () => {
 	currentHbIdx = -1
 	huntbotTexts.length = 0
+	countContainer.textContent = ''
+	currentHbLines[0].textContent = 'BEEP BOOP'
+	currentHbLines[1].textContent = 'BOOP BEEP BEEP'
+	zpSpan.textContent = 0
 	zoo.forEach((tier) => {
-		tier.luckEls.zoo.expectedLuck.textContent = 0
-		tier.luckEls.zoo.actualLuck.textContent = 0
+		tier.luckEls.zoo.expectedLuck.textContent = ''
+		tier.luckEls.zoo.actualLuck.textContent = ''
 		tier.luckEls.zoo.arrow.update(0, 0)
+		tier.luckEls.hb.expectedLuck.textContent = ''
+		tier.luckEls.hb.actualLuck.textContent = ''
+		tier.luckEls.hb.arrow.update(0, 0)
 		tier.hbRow.style.display = 'none'
 		tier.hbRow._visibility = false
 		tier.zooRow.style.display = 'none'
