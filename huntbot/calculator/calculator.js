@@ -559,8 +559,8 @@ function initDom(zoo, zooContainer, hbContainer) {
 
 					tt.update(pet)
 					tt.wrapper.style.visibility = 'visible'
-					tt.wrapper.style.left = `${rect.right}px`
-					tt.wrapper.style.top = `${rect.bottom}px`
+					tt.wrapper.style.left = `${rect.right - 3}px`
+					tt.wrapper.style.top = `${rect.bottom - 3}px`
 				})
 
 				wrapper.addEventListener(
