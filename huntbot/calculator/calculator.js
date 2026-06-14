@@ -13,6 +13,19 @@ const sellZooValue = document.querySelector('#cowoncyZooValue')
 const sacZooValue = document.querySelector('#essenceZooValue')
 const sellHbValue = document.querySelector('#cowoncyHbValue')
 const sacHbValue = document.querySelector('#essenceHbValue')
+
+function updateZooValue() {
+	const { sell, sac } = zoo.getValue()
+	sellZooValue.textContent = sell.toLocaleString()
+	sacZooValue.textContent = sac.toLocaleString()
+}
+function updateHbValue(n) {
+	if (n > 0) return
+	const { sell, sac } = zoo.getValue(n)
+	sellHbValue.textContent = sell.toLocaleString()
+	sacHbValue.textContent = sac.toLocaleString()
+}
+
 const zpSpan = document.querySelector('#zpSpan')
 const [firstButton, prevButton, nextButton, lastButton] = Array.from(
 	document.querySelectorAll('#simming-buttons button')
@@ -120,6 +133,8 @@ zoo.forEach((tier) => {
 		text.innerHTML = this.isSac ? 'Sac' : 'Sell'
 		img.src = this.isSac ? '/media/owo_images/essence.gif' : '/media/owo_images/cowoncy.png'
 		drawData()
+		updateZooValue()
+		updateHbValue(currentHbIdx)
 	}
 
 	const wrapper = make(
@@ -451,9 +466,6 @@ patreonCheckWrapper.onclick = () => {
 }
 
 function drawData() {
-	displayZoo()
-	if (currentHbIdx >= 0) displayNthHuntbot(currentHbIdx)
-
 	traits.forEach((trait) => {
 		trait.header.textContent = trait.name + ' - ' + roundToDecimals(trait.value, 2) + trait.unit
 		trait.outputs.forEach((fn) => fn())
@@ -617,14 +629,13 @@ function newHuntbot() {
 		`${essenceGain} ESSENCE, AND ${expGain} EXPERIENCE`,
 	])
 	displayZoo()
-	displayNthHuntbot(++currentHbIdx)
+	updateZooValue()
+	currentHbIdx++
+	displayNthHuntbot(currentHbIdx)
+	updateHbValue(currentHbIdx)
 }
 
 function displayNthHuntbot(n) {
-	const { sell, sac } = zoo.getValue(n)
-	sellHbValue.textContent = sell.toLocaleString()
-	sacHbValue.textContent = sac.toLocaleString()
-
 	huntbotIdxEl.textContent = n + 1 + '/' + huntbotTexts.length
 	currentHbLines[0].textContent = huntbotTexts[n][0]
 	currentHbLines[1].textContent = huntbotTexts[n][1]
@@ -649,10 +660,6 @@ function displayNthHuntbot(n) {
 
 function displayZoo() {
 	zpSpan.textContent = zoo.getZP().toLocaleString()
-	const { sell, sac } = zoo.getValue()
-	sellZooValue.textContent = sell.toLocaleString()
-	sacZooValue.textContent = sac.toLocaleString()
-
 	const digitsNeeded = String(zoo.getMaxCaught()).length
 	const countContainerArray = []
 	for (const tier of zoo) {
@@ -683,6 +690,7 @@ makeRepeatingButton(prevButton, () => {
 	if (currentHbIdx > 0) {
 		currentHbIdx--
 		displayNthHuntbot(currentHbIdx)
+		updateHbValue(currentHbIdx)
 	}
 })
 
@@ -692,17 +700,20 @@ makeRepeatingButton(nextButton, () => {
 	} else {
 		currentHbIdx++
 		displayNthHuntbot(currentHbIdx)
+		updateHbValue(currentHbIdx)
 	}
 })
 
 firstButton.onmousedown = () => {
 	currentHbIdx = 0
 	displayNthHuntbot(currentHbIdx)
+	updateHbValue(currentHbIdx)
 }
 
 lastButton.onmousedown = () => {
 	currentHbIdx = huntbotTexts.length - 1
 	displayNthHuntbot(currentHbIdx)
+	updateHbValue(currentHbIdx)
 }
 
 importFromCookie()
