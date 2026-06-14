@@ -47,7 +47,7 @@ pets.forEach((pet) => {
 		},
 	})
 })
-cpatreonTier.sort((petA, petB) => petA.name.localeCompare(petB.name))
+cpatreonTier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
 
 const huntbotTexts = []
 let currentHbIdx = -1
