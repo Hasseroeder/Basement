@@ -648,12 +648,13 @@ function displayNthHuntbot(n) {
 	const digitsNeeded = String(zoo.getMaxCaught(n)).length
 	for (const tier of zoo) {
 		tier.hbRow.style.display = 'none'
+		tier.hbRow._visibility = false
 		var tierPets = 0
 		for (const pet of tier.pets) {
 			const visible = pet.caught.hb[n] !== 0
-			if (visible && !tier.hbRowVisibility) {
+			if (visible && !tier.hbRow._visibility) {
 				tier.hbRow.style.display = 'flex'
-				tier.hbRowVisibility = true
+				tier.hbRow._visibility = true
 			}
 			const numberStr = visible
 				? numStringToSubscript(zeroPad(pet.caught.hb[n], digitsNeeded))
@@ -676,9 +677,9 @@ function displayZoo() {
 		var tierPets = 0
 		for (const pet of tier.pets) {
 			const visible = pet.caught.zoo !== 0
-			if (visible && !tier.zooRowVisibility) {
+			if (visible && !tier.zooRow._visibility) {
 				tier.zooRow.style.display = 'flex'
-				tier.zooRowVisibility = true
+				tier.zooRow._visibility = true
 			}
 			const numberStr = visible
 				? numStringToSubscript(zeroPad(pet.caught.zoo, digitsNeeded))
