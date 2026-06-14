@@ -700,13 +700,27 @@ function displayNthHuntbotFull(n) {
 	updateHbValue(n)
 }
 
-const prev = () => currentHbIdx > 0 && currentHbIdx-- && displayNthHuntbotFull(currentHbIdx)
-const next = () => {
-	if (currentHbIdx === huntbotTexts.length - 1) newHuntbot()
-	else currentHbIdx++ && displayNthHuntbotFull(currentHbIdx)
+const prev = () => {
+	if (currentHbIdx >= 0) return
+	currentHbIdx--
+	displayNthHuntbotFull(currentHbIdx)
 }
-const first = () => (currentHbIdx = 0 && displayNthHuntbotFull(currentHbIdx))
-const last = () => (currentHbIdx = huntbotTexts.length - 1 && displayNthHuntbotFull(currentHbIdx))
+const next = () => {
+	if (currentHbIdx === huntbotTexts.length - 1) {
+		newHuntbot()
+	} else {
+		currentHbIdx++
+		displayNthHuntbotFull(currentHbIdx)
+	}
+}
+const first = () => {
+	currentHbIdx = 0
+	displayNthHuntbotFull(currentHbIdx)
+}
+const last = () => {
+	currentHbIdx = huntbotTexts.length - 1
+	displayNthHuntbotFull(currentHbIdx)
+}
 makeRepeatingButton(prevButton, prev)
 makeRepeatingButton(nextButton, next)
 firstButton.onmousedown = first
