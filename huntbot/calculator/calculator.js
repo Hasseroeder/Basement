@@ -177,6 +177,8 @@ class Trait {
 	constructor(opts) {
 		Object.assign(this, opts)
 		this.header = make('span')
+		if (opts.title) this.header.title = opts.title
+
 		this.emoji = make('img', {
 			src: `/media/owo_images/huntbot/${this.name.toLowerCase()}.png`,
 			style: { height: '1rem' },
@@ -356,6 +358,7 @@ const Experience = new Trait({
 const Radar = new Trait({
 	name: 'Radar',
 	unit: 'ppm',
+	title: 'pets per million',
 	max: 999,
 	costParams: { mult: 50, exponent: 2.5 },
 	valueParams: { mult: 0.04 },
