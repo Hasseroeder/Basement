@@ -27,7 +27,7 @@ function updateHbValue(n) {
 }
 
 const zpSpan = document.querySelector('#zpSpan')
-const [firstButton, prevButton, nextButton, lastButton] = Array.from(
+const [firstButton, prevButton, nextButton, lastButton, resetButton] = Array.from(
 	document.querySelectorAll('#simming-buttons button')
 )
 const huntbotIdxEl = document.querySelector('#huntbotIdx')
@@ -738,16 +738,51 @@ const last = () => {
 	currentHbIdx = huntbotTexts.length - 1
 	displayNthHuntbotFull(currentHbIdx)
 }
+const reset = () => {
+	currentHbIdx = -1
+	huntbotTexts.length = 0
+	zoo.forEach((tier) => {
+		tier.luckEls.zoo.expectedLuck.textContent = 0
+		tier.luckEls.zoo.actualLuck.textContent = 0
+		tier.luckEls.zoo.arrow.update(0, 0)
+		tier.hbRow.style.display = 'none'
+		tier.hbRow._visibility = false
+		tier.zooRow.style.display = 'none'
+		tier.zooRow._visibility = false
+		tier.expectedPetAmount = {
+			zoo: 0,
+			hb: [],
+		}
+		tier.pets.forEach((pet) => {
+			pet.zooCell.wrapper.style.display = 'none'
+			pet.zooCell.wrapper._visibility = false
+			pet.zooCell.textEl.textContent = ''
+			pet.hbCell.wrapper.style.display = 'none'
+			pet.hbCell.wrapper._visibility = false
+			pet.hbCell.textEl.textContent = ''
+			pet.caught = {
+				zoo: 0,
+				hb: [],
+			}
+			pet.displayed = {
+				//zoo: undefined,
+				//hb: undefined,
+			}
+		})
+	})
+}
 makeRepeatingButton(prevButton, prev)
 makeRepeatingButton(nextButton, next)
 firstButton.onmousedown = first
 lastButton.onmousedown = last
+resetButton.onmousedown = reset
 
 document.addEventListener('keydown', (e) => {
 	if (e.key === 'p') prev()
 	else if (e.key === 'n') next()
 	else if (e.key === 'f') first()
 	else if (e.key === 'l') last()
+	else if (e.key === 'r') reset()
 })
 
 importFromCookie()
