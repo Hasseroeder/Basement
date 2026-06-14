@@ -368,7 +368,7 @@ details[open] > summary img {
 	transform: rotate(90deg);
 }
 
-.pet-cell .tooltip {
+.pet-tooltip {
 	position: absolute;
 	visibility: hidden;
 	pointer-events: none;

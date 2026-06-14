@@ -379,7 +379,7 @@ const save = debounce(function () {
 
 const tt = {
 	wrapper: make('div', {
-		className: 'tooltip',
+		className: 'pet-tooltip',
 	}),
 	title: make('div'),
 	statCells: [
