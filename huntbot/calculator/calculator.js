@@ -401,6 +401,23 @@ tt.rows[1].append(tt.statCells[3], tt.statCells[4], tt.statCells[5])
 tt.wrapper.append(tt.title, ...tt.rows)
 document.body.append(tt.wrapper)
 
+document.addEventListener('pointerover', (e) => {
+	const petCell = e.target.closest('.pet-cell')
+	if (!petCell) return
+	const rect = petCell.getBoundingClientRect()
+	tt.update(petCell.dataset.pet)
+	tt.wrapper.style.visibility = 'visible'
+	tt.wrapper.style.left = `${rect.right - 3}px`
+	tt.wrapper.style.top = `${rect.bottom - 3}px`
+})
+
+document.addEventListener('pointerout', (e) => {
+	const petCell = e.target.closest('.pet-cell')
+	if (!petCell) return
+	if (petCell.contains(e.relatedTarget)) return
+	tt.wrapper.style.visibility = 'hidden'
+})
+
 const hbWorthEls = Array.from(document.querySelectorAll('.hbworth'))
 const petWorthEls = Array.from(document.querySelectorAll('.petworth'))
 
@@ -546,23 +563,10 @@ function initDom(zoo, zooContainer, hbContainer) {
 		for (const pet of tier.pets) {
 			const makeCell = () => {
 				const textEl = make('div')
-				const wrapper = make('div', { className: 'pet-cell' }, [
+				const wrapper = make('div', { className: 'pet-cell', dataset: pet }, [
 					make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
 					textEl,
 				])
-				wrapper.addEventListener('mouseenter', () => {
-					const rect = wrapper.getBoundingClientRect()
-
-					tt.update(pet)
-					tt.wrapper.style.visibility = 'visible'
-					tt.wrapper.style.left = `${rect.right - 3}px`
-					tt.wrapper.style.top = `${rect.bottom - 3}px`
-				})
-
-				wrapper.addEventListener(
-					'mouseleave',
-					() => (tt.wrapper.style.visibility = 'hidden')
-				)
 				return {
 					wrapper,
 					textEl,
