@@ -405,6 +405,7 @@ document.addEventListener('pointerover', (e) => {
 	const petCell = e.target.closest('.pet-cell')
 	if (!petCell) return
 	const rect = petCell.getBoundingClientRect()
+	console.log(petCell.dataset)
 	tt.update(petCell.dataset.pet)
 	tt.wrapper.style.visibility = 'visible'
 	tt.wrapper.style.left = `${rect.right - 3}px`
