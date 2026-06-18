@@ -369,13 +369,13 @@ function displayPet(pet) {
 		}),
 		make('span', {
 			innerHTML: pet.aliases.length ? pet.aliases.join(', ') : 'no Alias',
-			className: 'pet-tooltip-text',
+			className: 'tooltip-text',
 		}),
 	]
 
 	return make(
 		'div',
-		{ className: 'pet-row tooltip', style: 'display:flex; align-items:center; gap:0.1rem;' },
+		{ className: 'pet-row', style: 'display:flex; align-items:center; gap:0.1rem;' },
 		children
 	)
 }
