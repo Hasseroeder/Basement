@@ -157,12 +157,11 @@ code,
 }
 
 .art-display {
-	font-family: monospace;
 	background-color: #333;
-	margin-top: 2.5rem;
-	margin-bottom: 2.5rem;
-	width: fit-content;
-	height: fit-content;
+	margin: 1rem 0;
+	padding: 0.5rem;
+	width: max-content;
+	height: max-content;
 }
 
 .flexContainer {
@@ -191,20 +190,6 @@ code,
 
 .discord-code.light {
 	background-color: #202020;
-}
-
-.discord-code-lite {
-	border: none;
-	width: 1.5rem;
-	background-color: #191919;
-	color: rgb(225, 225, 225);
-	font-size: 0.85rem;
-	border-radius: 3px;
-	font-family: monospace;
-	padding: 0.2em;
-	text-align: end;
-	display: block;
-	background-color: #050505;
 }
 
 .discord-message-outer {

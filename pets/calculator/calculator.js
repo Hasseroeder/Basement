@@ -133,7 +133,7 @@ function outputPetContainerSEARCH() {
 	const textInput = make('input', {
 		id: 'textInput',
 		tabIndex: '9',
-		className: 'discord-code-lite',
+		className: 'discord-code',
 		style: 'width:11.6rem; text-align:unset;',
 		autocomplete: 'off',
 		placeholder: 'type pet here...',
@@ -206,14 +206,14 @@ function outputSmallPetContainer(pet) {
 		}),
 		make('div', {
 			innerHTML: pet.name,
-			className: 'discord-code-lite',
+			className: 'discord-code',
 			style: 'width: max-content; text-align:unset; font-weight:bold;',
 		}),
 		pet.aliases &&
 			pet.aliases[0] &&
 			make('div', {
 				innerHTML: 'Aliases: ' + pet.aliases.join(', '),
-				className: 'discord-code-lite',
+				className: 'discord-code',
 				style: 'display: inline; text-align:unset; font-size:0.75rem',
 			}),
 	].filter(Boolean)
