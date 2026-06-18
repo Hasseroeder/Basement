@@ -4,7 +4,7 @@ import { make, doTimestamps } from '/js/util/injectionUtil.js'
 const petContainer = document.getElementById('petContainer')
 const effectContainer = document.getElementById('effectContainer')
 
-const petButton = document.getElementById('petButton')
+const petButton = document.querySelector('.pet-button')
 const statSpan = document.getElementById('statSpan')
 
 const inputLvl = document.getElementById('inputLvl')
