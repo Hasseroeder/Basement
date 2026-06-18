@@ -18,3 +18,17 @@
 	width: 1rem;
 	height: 1rem;
 }
+
+.tooltip .pet-tooltip-text {
+	z-index: 100;
+	width: max-content;
+	padding: 0.1rem;
+	pointer-events: none;
+	border: 2.5px solid rgb(25, 25, 25);
+	font-size: 0.7rem;
+	border-radius: 0.2rem;
+	visibility: hidden;
+	background-color: #333;
+	position: absolute;
+	right: -0.7rem;
+}

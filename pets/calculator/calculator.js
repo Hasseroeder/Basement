@@ -375,16 +375,8 @@ function displayPet(pet) {
 
 	return make(
 		'div',
-		{
-			style: 'display:flex; align-items:center; height:1.25rem;',
-		},
-		[
-			make(
-				'div',
-				{ className: 'tooltip', style: 'display:flex; align-items:center; gap:0.1rem;' },
-				children
-			),
-		]
+		{ className: 'tooltip', style: 'display:flex; align-items:center; gap:0.1rem;' },
+		children
 	)
 }
 
