@@ -380,8 +380,7 @@ function displayPet(pet) {
 	)
 }
 
-const createHeader = (string) =>
-	make('div', {}, [make('div', { textContent: string, className: 'pet-row' })])
+const createHeader = (string) => make('div', { textContent: string, className: 'pet-row' })
 
 function getPetImage(pet, wantAnimated) {
 	if (wantAnimated && pet.animated == 1) {
