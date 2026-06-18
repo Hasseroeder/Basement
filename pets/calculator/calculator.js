@@ -374,7 +374,7 @@ function displayPet(pet) {
 	]
 
 	return make('div', { className: 'pet-row' }, [
-		make('div', { class: 'tooltip-parent' }, children),
+		make('div', { className: 'tooltip-parent' }, children),
 	])
 }
 
