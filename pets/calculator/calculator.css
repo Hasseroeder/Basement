@@ -1,13 +1,20 @@
 .discord-code {
 	border: none;
 	width: 1.5rem;
-	/*background-color: #191919;*/
 	color: rgb(225, 225, 225);
-	/*font-size: 0.85rem;*/
-	/*border-radius: 3px;*/
 	font-family: monospace;
-	/*padding: 0.2em;*/
 	text-align: end;
-	/*display: block;*/
 	background-color: #050505;
+}
+
+.pet-name {
+	font-size: 0.7rem;
+	line-height: unset;
+	width: unset;
+	background-color: #191919;
+}
+
+.one-rem {
+	width: 1rem;
+	height: 1rem;
 }

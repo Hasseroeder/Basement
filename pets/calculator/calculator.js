@@ -365,8 +365,7 @@ function displayPet(pet) {
 		}),
 		make('code', {
 			textContent: pet.name,
-			className: 'discord-code',
-			style: 'font-size: 0.7rem; line-height:unset;',
+			className: 'discord-code pet-name',
 		}),
 		make('span', {
 			innerHTML: pet.aliases.length ? pet.aliases.join(', ') : 'no Alias',
@@ -390,9 +389,7 @@ function displayPet(pet) {
 }
 
 const createHeader = (string) =>
-	make('div', { style: { width: '10.8rem' } }, [
-		make('div', { textContent: string, className: 'pet-type-header' }),
-	])
+	make('div', {}, [make('div', { textContent: string, className: 'pet-type-header' })])
 
 function getPetImage(pet, wantAnimated) {
 	if (wantAnimated && pet.animated == 1) {
