@@ -32,3 +32,10 @@
 	position: absolute;
 	right: -0.7rem;
 }
+
+.pet-row {
+	display: flex;
+	align-items: center;
+	gap: 0.1rem;
+	font-size: 0.75rem;
+}

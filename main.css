@@ -361,12 +361,6 @@ code,
 	padding: 0.35rem;
 }
 
-.pet-type-header {
-	height: 1rem;
-	padding-top: 0.25rem;
-	font-size: 0.75rem;
-}
-
 .petButtonFromCalculator {
 	margin: 1rem 1rem 0.3rem 0.3rem;
 	font-size: 0.75rem;

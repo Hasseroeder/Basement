@@ -375,13 +375,13 @@ function displayPet(pet) {
 
 	return make(
 		'div',
-		{ className: 'tooltip', style: 'display:flex; align-items:center; gap:0.1rem;' },
+		{ className: 'pet-row tooltip', style: 'display:flex; align-items:center; gap:0.1rem;' },
 		children
 	)
 }
 
 const createHeader = (string) =>
-	make('div', {}, [make('div', { textContent: string, className: 'pet-type-header' })])
+	make('div', {}, [make('div', { textContent: string, className: 'pet-row' })])
 
 function getPetImage(pet, wantAnimated) {
 	if (wantAnimated && pet.animated == 1) {
