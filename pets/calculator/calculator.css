@@ -26,11 +26,15 @@
 .pet-row {
 	display: flex;
 	align-items: center;
-	gap: 0.1rem;
 	font-size: 0.75rem;
+	height: 1.25rem;
 }
 .tooltip-parent {
 	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 0.1rem;
+	width: min-content;
 }
 .tooltip-parent .tooltip {
 	z-index: 100;
@@ -43,5 +47,5 @@
 	visibility: hidden;
 	background-color: #333;
 	position: absolute;
-	right: -0.7rem;
+	left: calc(100% + 0.1rem);
 }
