@@ -373,7 +373,9 @@ function displayPet(pet) {
 		}),
 	]
 
-	return make('div', { className: 'pet-row' }, children)
+	return make('div', { className: 'pet-row' }, [
+		make('div', { class: 'tooltip-parent' }, children),
+	])
 }
 
 const createHeader = (string) => make('div', { textContent: string, className: 'pet-row' })

@@ -19,7 +19,20 @@
 	height: 1rem;
 }
 
-.pet-row .tooltip {
+.pet-row:hover .tooltip {
+	visibility: visible;
+}
+
+.pet-row {
+	display: flex;
+	align-items: center;
+	gap: 0.1rem;
+	font-size: 0.75rem;
+}
+.tooltip-parent {
+	position: relative;
+}
+.tooltip-parent .tooltip {
 	z-index: 100;
 	width: max-content;
 	padding: 0.1rem;
@@ -31,14 +44,4 @@
 	background-color: #333;
 	position: absolute;
 	right: -0.7rem;
-}
-.pet-row:hover .tooltip {
-	visibility: visible;
-}
-
-.pet-row {
-	display: flex;
-	align-items: center;
-	gap: 0.1rem;
-	font-size: 0.75rem;
 }
