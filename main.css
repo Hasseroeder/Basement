@@ -1294,11 +1294,6 @@ button:hover {
 	font-weight: bold;
 }
 
-.one-rem {
-	width: 1rem;
-	height: 1rem;
-}
-
 .passive-wrapper-pet-calc {
 	display: flex;
 	background-color: #303030;
