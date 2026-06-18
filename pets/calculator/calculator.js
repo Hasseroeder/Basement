@@ -8,7 +8,7 @@ const petButton = document.getElementById('petButton')
 const statSpan = document.getElementById('statSpan')
 
 const inputLvl = document.getElementById('inputLvl')
-const levelWrapper = document.getElementById('levelWrapper')
+const levelWrapper = document.querySelector('.level-wrapper')
 const sliderLvl = document.getElementById('sliderLvl')
 
 const inputs = Array.from(document.querySelectorAll('.myInputs'))

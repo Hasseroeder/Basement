@@ -382,17 +382,6 @@ code,
 	align-items: center;
 }
 
-.levelInputFromCalculator {
-	font-family: monospace;
-	font-size: 0.9rem;
-	width: 1.7rem;
-	height: 1rem;
-	text-align: start;
-	border: none;
-	background-color: transparent;
-	color: rgb(225, 225, 225);
-}
-
 .passiveWrapperFromCalculator {
 	border-top: 2px solid #909090;
 	border-left: 2px solid #909090;

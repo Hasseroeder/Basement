@@ -49,3 +49,23 @@
 	position: absolute;
 	left: calc(100% + 0.1rem);
 }
+
+.level-wrapper {
+	display: flex;
+	align-items: center;
+	border-radius: 3px;
+	padding: 0.1rem 0.1rem 0.1rem 0.4rem;
+	font-family: monospace;
+	margin-right: 0.2rem;
+}
+
+.input-lvl {
+	font-family: monospace;
+	font-size: 0.9rem;
+	width: 1.7rem;
+	height: 1rem;
+	text-align: start;
+	border: none;
+	background-color: transparent;
+	color: rgb(225, 225, 225);
+}
