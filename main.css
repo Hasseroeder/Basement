@@ -394,21 +394,6 @@ code,
 	visibility: visible;
 }
 
-.outputFromCalculator {
-	border: none;
-	width: 1.5rem;
-	background-color: transparent;
-	color: rgb(225, 225, 225);
-	font-size: 0.85rem;
-	border-radius: 3px;
-	font-family: monospace;
-	padding: 0.2em;
-	text-align: end;
-	display: block;
-	position: relative;
-	background-color: #191919;
-}
-
 .arrowBefore::before {
 	content: '→';
 	position: absolute;
