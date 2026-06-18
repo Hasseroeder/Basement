@@ -7,7 +7,7 @@ const effectContainer = document.getElementById('effectContainer')
 const petButton = document.querySelector('.pet-button')
 const statSpan = document.getElementById('statSpan')
 
-const inputLvl = document.getElementById('inputLvl')
+const inputLvl = document.querySelector('.input-lvl')
 const levelWrapper = document.querySelector('.level-wrapper')
 const sliderLvl = document.getElementById('sliderLvl')
 
