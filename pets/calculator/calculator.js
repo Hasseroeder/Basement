@@ -110,13 +110,13 @@ function outputPetContainerMATCHING() {
 			make('button', {
 				textContent: '<',
 				tabIndex: '9',
-				className: 'petButtonFromCalculator',
+				className: 'pet-button',
 				onclick: () => swapPages(page - 1),
 			}),
 			make('button', {
 				textContent: '>',
 				tabIndex: '10',
-				className: 'petButtonFromCalculator',
+				className: 'pet-button',
 				onclick: () => swapPages(page + 1),
 			}),
 		])
