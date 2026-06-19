@@ -76,7 +76,7 @@
 }
 
 .pet-button {
-	margin: 1rem 1rem 1rem 0rem;
+	margin: 1rem 0;
 	font-size: 0.75rem;
 	border-radius: 10rem;
 	border-color: #909090;
