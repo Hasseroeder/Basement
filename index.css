@@ -1,9 +1,9 @@
-.introduction-discord-tag {
+.on-top {
 	z-index: 2;
 	position: relative;
 }
 
-.introduction-platform-logo {
+.platform-logo {
 	z-index: 1;
 	width: 5rem;
 	position: absolute;
@@ -11,7 +11,7 @@
 	top: 30%;
 }
 
-.introduction-table td {
+table td {
 	line-height: 1rem;
 	text-align: start;
 	border-right: none;
@@ -19,24 +19,42 @@
 	padding: 0 0.8rem;
 }
 
-.introduction-table tr {
+table tr {
 	height: 2.2rem;
 }
 
-.introduction-table {
+table {
 	border-right: none;
 	border-left: none;
+	width: 100%;
 }
 
-.introduction-section {
+section {
 	display: flex;
 	gap: 3rem;
 	align-items: center;
 }
 
-.introduction-section-wrapper {
+section > div:last-child {
+	flex: 1;
+}
+
+.section-wrapper {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
 	padding: 1rem 1rem 0.5rem 0;
+}
+
+h3 {
+	margin: 0;
+}
+
+.table-wrapper {
+	display: flex;
+	gap: 2.5rem;
+}
+
+.table-wrapper > div:last-child {
+	flex: 1;
 }
