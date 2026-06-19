@@ -111,7 +111,6 @@
 	border-bottom: 2px solid #606060;
 	border-radius: 0.75rem;
 	margin-top: 0.5rem;
-	margin-right: 1rem;
 	padding: 0.75rem;
 	display: flex;
 	flex-direction: column;
@@ -134,7 +133,6 @@
 	background: #191919;
 	border-radius: 0.2rem;
 	margin-top: 0.2rem;
-	margin-right: 1rem;
 	display: none;
 }
 
@@ -162,7 +160,7 @@
 
 .column {
 	display: flex;
-	width: 12rem;
+	flex: 1;
 	flex-direction: column;
 }
 
@@ -265,7 +263,6 @@ input[type='range']::-moz-range-thumb {
 .search-bar {
 	flex: 1;
 	text-align: unset;
-	margin-right: 1rem;
 	width: unset;
 }
 
@@ -276,10 +273,11 @@ input[type='range']::-moz-range-thumb {
 
 .nav-button-wrapper {
 	display: flex;
+	gap: 1rem;
 }
 
 .nav-button-wrapper > button {
-	margin: 1rem 1rem 1rem 0rem;
+	margin: 1rem 0;
 	border-radius: 10rem;
 	border-color: #909090;
 	flex: 1;
