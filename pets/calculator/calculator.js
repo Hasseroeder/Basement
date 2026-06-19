@@ -90,7 +90,7 @@ function outputPetContainer() {
 }
 
 function outputPetContainerMATCHING() {
-	columns = [make('div', { className: 'pet-calc-column' })]
+	columns = [make('div', { className: 'column' })]
 	page = 0
 	let headersCreated = 0
 	petArray.forEach((_, i) => {
@@ -99,7 +99,7 @@ function outputPetContainerMATCHING() {
 			columns.at(-1).append(createHeader(petArray[i].tier.prettyName))
 		}
 		if ((i + headersCreated) % 20 == 0) {
-			columns.push(make('div', { className: 'pet-calc-column' }))
+			columns.push(make('div', { className: 'column' }))
 		}
 		columns.at(-1).append(displayPet(petArray[i]))
 	})
@@ -402,8 +402,8 @@ function addAddEffects() {
 		'f_mr.png',
 		'f_rune.png',
 	]
-	const text = make('div', { className: 'add-effect-pet-calc', textContent: 'add effect' })
-	const imgContainer = make('div', { className: 'passive-wrapper-pet-calc' }, [
+	const text = make('div', { className: 'add-effect', textContent: 'add effect' })
+	const imgContainer = make('div', { className: 'passive-wrapper' }, [
 		...effectIcons.map((name, i) =>
 			make('img', {
 				src: '/media/owo_images/battleEmojis/' + name,
@@ -454,13 +454,13 @@ function addEffect(type) {
 		},
 	})
 
-	const numberWrapper = make('div', { className: 'grayOnHover number-wrapper-pet-calculator' }, [
+	const numberWrapper = make('div', { className: 'grayOnHover number-wrapper' }, [
 		inputs[0],
 		make('div', { textContent: '%', className: 'percent-span' }),
 	])
 
 	const wrapper = make('div', { className: 'passive-wrapper' }, [
-		make('div', { className: 'pimage-wrapper-pet-calc' }, imagechildren),
+		make('div', { className: 'passive-image-wrapper' }, imagechildren),
 		make('div', { className: 'listening-wrapper', onclick: () => inputs[0].focus() }, [
 			numberWrapper,
 		]),

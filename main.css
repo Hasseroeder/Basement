@@ -755,13 +755,6 @@ button:hover {
 	margin-top: -0.55rem;
 }
 
-.number-wrapper-pet-calculator {
-	display: flex;
-	border-radius: 3px;
-	background-color: #050505;
-	height: max-content;
-}
-
 .percent-span {
 	width: 0.6rem;
 	font-size: 0.85rem;
@@ -1020,24 +1013,6 @@ button:hover {
 	font-weight: bold;
 }
 
-.passive-wrapper-pet-calc {
-	display: flex;
-	background-color: #303030;
-	justify-content: center;
-	align-items: center;
-	visibility: hidden;
-	width: 100%;
-	z-index: 10;
-}
-
-.pimage-wrapper-pet-calc {
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	margin-top: 0.15rem;
-	min-width: 28px;
-}
-
 .prevent-select {
 	-webkit-user-select: none;
 	-ms-user-select: none;
@@ -1065,12 +1040,6 @@ button:hover {
 .blinkie {
 	width: 100%;
 	display: block;
-}
-
-.pet-calc-column {
-	display: flex;
-	width: 12rem;
-	flex-direction: column;
 }
 
 .grayed-text {

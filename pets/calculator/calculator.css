@@ -167,10 +167,41 @@
 	border-bottom: 1px dashed #666;
 }
 
-.add-effect-pet-calc {
+.add-effect {
 	position: absolute;
 	width: inherit;
 	font-family: monospace;
 	font-size: 0.8rem;
 	text-align: center;
+}
+
+.column {
+	display: flex;
+	width: 12rem;
+	flex-direction: column;
+}
+
+.passive-wrapper {
+	display: flex;
+	background-color: #303030;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+	width: 100%;
+	z-index: 10;
+}
+
+.passive-image-wrapper {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	margin-top: 0.15rem;
+	min-width: 28px;
+}
+
+.number-wrapper {
+	display: flex;
+	border-radius: 3px;
+	background-color: #050505;
+	height: max-content;
 }
