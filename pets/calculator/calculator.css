@@ -181,16 +181,16 @@
 	flex-direction: column;
 }
 
-.add-passive-wrapper:hover .text.original {
+.passive-wrapper:hover .text.original {
 	transform: translate(-50%, -150%);
 	opacity: 0;
 }
-.add-passive-wrapper:hover .text.replacement {
+.passive-wrapper:hover .text.replacement {
 	transform: translate(-50%, -50%);
 	opacity: 1;
 }
 
-.add-passive-wrapper {
+.passive-wrapper {
 	background: #393939;
 	padding: 1rem;
 	border: 1px solid #444;
