@@ -288,5 +288,5 @@ input[type='range']::-moz-range-thumb {
 	padding: 0.5rem 1rem 1rem 0.75rem;
 	display: flex;
 	flex-direction: column;
-	max-width: 38rem;
+	width: 38rem;
 }

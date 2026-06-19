@@ -18,6 +18,7 @@ const outputs = Array.from(document.querySelectorAll('.myOutputs'))
 let showPets = true
 let page = 0
 let columns = []
+const maxDisplayColumns = 3
 
 let petArray
 
@@ -121,7 +122,7 @@ function outputPetContainerMATCHING() {
 	)
 
 	function swapPages(newPage) {
-		page = Math.min(Math.max(newPage, 0), columns.length / 2 - 1)
+		page = Math.min(Math.max(newPage, 0), Math.ceil(columns.length / maxDisplayColumns) - 1)
 		displayColumns()
 	}
 	displayColumns()
@@ -149,7 +150,9 @@ function outputPetContainerSEARCH() {
 }
 
 const displayColumns = () =>
-	petContainer.firstChild.replaceChildren(...columns.slice(page * 2, page * 2 + 2))
+	petContainer.firstChild.replaceChildren(
+		...columns.slice(page * maxDisplayColumns, page * maxDisplayColumns + maxDisplayColumns)
+	)
 
 function onInput(textInput, suggestions) {
 	const q = textInput.value.trim().toLowerCase()
