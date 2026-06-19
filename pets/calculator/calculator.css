@@ -133,7 +133,6 @@
 	border-radius: 0.2rem;
 	margin-top: 0.2rem;
 	display: none;
-	width: 11.8rem;
 }
 
 .suggestion {
@@ -261,7 +260,13 @@ input[type='range']::-moz-range-thumb {
 }
 
 .search-bar {
-	width: 11.6rem;
+	flex: 1;
 	text-align: unset;
 	margin-top: 0.5rem;
+	width: unset;
+}
+
+#petContainer {
+	display: flex;
+	flex-direction: column;
 }
