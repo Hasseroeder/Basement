@@ -174,7 +174,7 @@
 }
 
 .passive-wrapper:hover .original {
-	transform: translateY(150%);
+	transform: translateY(-150%);
 	opacity: 0;
 }
 .passive-wrapper:hover .replacement {
@@ -215,8 +215,10 @@
 	font-family: monospace;
 	font-size: 0.8rem;
 	text-align: center;
+	transition: 0.1s ease;
 }
 .replacement {
 	transform: translateY(150%);
 	opacity: 0;
+	transition: 0.1s ease;
 }
