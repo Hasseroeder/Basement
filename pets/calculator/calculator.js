@@ -403,7 +403,7 @@ function addAddEffects() {
 		'f_rune.png',
 	]
 	const text = make('div', { className: 'add-effect', textContent: 'add effect' })
-	const imgContainer = make('div', { className: 'passive-wrapper' }, [
+	const imgContainer = make('div', { className: 'passive-emoji-wrapper' }, [
 		...effectIcons.map((name, i) =>
 			make('img', {
 				src: '/media/owo_images/battleEmojis/' + name,
