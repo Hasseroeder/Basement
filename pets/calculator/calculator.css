@@ -124,7 +124,7 @@
 
 .pet-output-wrapper .alias {
 	font-size: 0.75rem;
-	width: min-content;
+	width: unset;
 	text-align: start;
 }
 
