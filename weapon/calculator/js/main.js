@@ -30,11 +30,10 @@ const wpbData = await loadAll({
 WeaponFactory.wpbData = wpbData
 const currentWeapon = WeaponFactory.fromHash()
 
-const pGrid = document.querySelector('.passiveGrid')
+const pGrid = document.querySelector('.passive-grid')
 pGrid.append(
 	...wpbData.passives.map((passive) =>
 		make('img', {
-			className: 'passiveGridImage',
 			src: `/media/owo_images/battleEmojis/f_${passive.slug}.png`,
 			alt: passive.slug,
 			title: passive.slug,

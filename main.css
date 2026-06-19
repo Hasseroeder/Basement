@@ -434,52 +434,9 @@ a:hover {
 	text-align: left;
 }
 
-.cool-border {
-	border-left: 0.125rem solid #d3d3d3;
-	border-right: 0.125rem solid #8d8d8d;
-	border-top: 0.125rem solid #d3d3d3;
-	border-bottom: 0.125rem solid #8d8d8d;
-}
-
 .tooltip:hover * {
 	visibility: visible;
 	opacity: 1;
-}
-
-.tooltip-lite {
-	position: relative;
-}
-
-.tooltip-lite-child {
-	z-index: 7;
-	position: absolute;
-	width: 12.5rem;
-	top: 1.15rem;
-	background-color: #555;
-	transform: translateX(-50%);
-	left: 50%;
-	height: 1.9rem;
-	padding: 0 0.3rem;
-	border-radius: 0.2rem;
-	display: flex;
-	align-items: center;
-}
-
-.tooltip-lite:hover *,
-.tooltip-lite-child:hover {
-	visibility: visible;
-	opacity: 1;
-}
-
-.buffContainer {
-	font-size: 0.8rem;
-}
-
-.passiveGrid {
-	display: grid;
-	grid-template-rows: repeat(2, 1.4rem);
-	grid-auto-flow: column;
-	grid-auto-columns: 1.4rem;
 }
 
 button:hover {
@@ -556,15 +513,6 @@ button:hover {
 
 .options:focus {
 	outline: none;
-}
-
-.passiveGridImage {
-	width: 100%;
-}
-
-.passive-item .passive-emote:hover {
-	background-color: #666;
-	cursor: var(--cur-pointer);
 }
 
 .grid {
