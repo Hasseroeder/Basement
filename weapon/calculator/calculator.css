@@ -263,3 +263,69 @@
 	background-color: #555555;
 	color: lightgray;
 }
+
+/*styles for the custom select element start here. I might end up moving to a normal select sometime though?*/
+.custom-select {
+	position: relative;
+	width: 5.2rem;
+	font-family: monospace;
+	font-size: 0.85rem;
+	white-space: unset;
+}
+
+.selected {
+	width: 100%;
+	text-align: left;
+	padding: 0.1rem 0.2rem;
+	border: none;
+	border-radius: 0.2rem;
+	background: #191919;
+	color: lightgray;
+	cursor: var(--cur-pointer);
+	font-family: monospace;
+	height: unset;
+}
+
+.selected:focus {
+	outline: 1px solid lightskyblue;
+	outline-offset: 0px;
+}
+
+.options {
+	position: absolute;
+	left: 0;
+	right: 0;
+	border-radius: 2px;
+	padding: 0 0;
+	background: #191919;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+	max-height: 220px;
+	overflow: auto;
+	display: none;
+	z-index: 1000;
+}
+
+.custom-select.open .options {
+	display: block;
+}
+
+.option {
+	padding: 0.2rem 0.2rem;
+	line-height: 1.2;
+	cursor: var(--cur-pointer);
+}
+
+.option:hover,
+.option.highlighted {
+	background: #454545;
+}
+
+.option[aria-selected='true']::after {
+	content: '✓';
+	float: right;
+	color: lightgray;
+}
+
+.options:focus {
+	outline: none;
+}
