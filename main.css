@@ -394,15 +394,6 @@ code,
 	visibility: visible;
 }
 
-.arrowBefore::before {
-	content: '→';
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	color: rgb(225, 225, 225);
-	left: 0rem;
-}
-
 .no-arrows {
 	-moz-appearance: textfield;
 	appearance: textfield;
