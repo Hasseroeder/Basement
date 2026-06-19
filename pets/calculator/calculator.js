@@ -133,8 +133,7 @@ function outputPetContainerSEARCH() {
 	const textInput = make('input', {
 		id: 'textInput',
 		tabIndex: '9',
-		className: 'discord-code',
-		style: 'width:11.6rem; text-align:unset;',
+		className: 'discord-code search-bar',
 		autocomplete: 'off',
 		placeholder: 'type pet here...',
 	})

@@ -248,3 +248,9 @@ input[type='range']::-moz-range-thumb {
 	text-align: center;
 	line-height: 1.4rem;
 }
+
+.search-bar {
+	width: 11.6rem;
+	text-align: unset;
+	margin-top: 0.5rem;
+}
