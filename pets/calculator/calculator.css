@@ -206,7 +206,7 @@
 }
 
 .number-wrapper,
-.passive-wrapper > input,
+input[type='range'],
 .fake-button {
 	height: 1.5rem;
 	min-height: 1.5rem;
@@ -219,12 +219,15 @@
 }
 
 .number-wrapper:hover,
-.passive-wrapper > input:hover,
 .fake-button:hover {
 	background-color: #555555;
 }
 
-.passive-wrapper input[type='range']::-moz-range-thumb {
+input[type='range']:hover {
+	background-color: #555555;
+}
+
+input[type='range']::-moz-range-thumb {
 	width: 1.5rem;
 	height: 1.5rem;
 	background: #333;
