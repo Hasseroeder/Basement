@@ -465,7 +465,7 @@ function addEffect(type) {
 			numberWrapper,
 		]),
 		inputs[1],
-		button,
+		make('div', { className: 'button-wrapper' }, [button]),
 	])
 	effectContainer.insertBefore(wrapper, effectContainer.lastChild)
 	updateValue(100)
