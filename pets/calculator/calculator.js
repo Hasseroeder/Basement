@@ -106,17 +106,15 @@ function outputPetContainerMATCHING() {
 
 	petContainer.append(
 		make('div', { style: { display: 'flex' } }),
-		make('div', { style: { display: 'flex' } }, [
+		make('div', { className: 'nav-button-wrapper' }, [
 			make('button', {
 				textContent: '<',
 				tabIndex: '9',
-				className: 'pet-button',
 				onclick: () => swapPages(page - 1),
 			}),
 			make('button', {
 				textContent: '>',
 				tabIndex: '10',
-				className: 'pet-button',
 				onclick: () => swapPages(page + 1),
 			}),
 		])

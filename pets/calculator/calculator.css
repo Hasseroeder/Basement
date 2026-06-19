@@ -270,3 +270,14 @@ input[type='range']::-moz-range-thumb {
 	display: flex;
 	flex-direction: column;
 }
+
+.nav-button-wrapper {
+	display: flex;
+}
+
+.nav-button-wrapper > button {
+	margin: 1rem 1rem 1rem 0rem;
+	border-radius: 10rem;
+	border-color: #909090;
+	flex: 1;
+}
