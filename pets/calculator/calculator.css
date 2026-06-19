@@ -167,14 +167,6 @@
 	border-bottom: 1px dashed #666;
 }
 
-.add-effect {
-	position: absolute;
-	width: inherit;
-	font-family: monospace;
-	font-size: 0.8rem;
-	text-align: center;
-}
-
 .column {
 	display: flex;
 	width: 12rem;
@@ -217,9 +209,14 @@
 	height: max-content;
 }
 
-.text.original {
+.original {
+	position: absolute;
+	width: inherit;
+	font-family: monospace;
+	font-size: 0.8rem;
+	text-align: center;
 }
-.text.replacement {
+.replacement {
 	transform: translate(-50%, 100%);
 	opacity: 0;
 }
