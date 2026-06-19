@@ -510,7 +510,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	petButton.addEventListener('click', function () {
 		showPets = !showPets
-		petButton.textContent = showPets ? 'Mode: Matching Pets' : 'Mode: Search Pets'
+		petButton.textContent = showPets ? 'Mode: Matching Pets' : 'Mode:   Search Pets'
 		updatePetArray()
 	})
 
