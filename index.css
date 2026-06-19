@@ -1,0 +1,12 @@
+.introduction-discord-tag {
+	z-index: 2;
+	position: relative;
+}
+
+.introduction-platform-logo {
+	z-index: 1;
+	width: 5rem;
+	position: absolute;
+	left: 48%;
+	top: 30%;
+}
