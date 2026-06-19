@@ -105,7 +105,7 @@
 	border-bottom: 2px solid #606060;
 
 	border-radius: 0.2rem;
-	width: 15rem;
+	width: 17rem;
 	margin-top: 0.5rem;
 	padding: 0.35rem;
 	display: flex !important;
@@ -224,8 +224,25 @@
 	min-height: 1.5rem;
 	margin: 0;
 	padding: 0;
-	border-radius: 0.75rem;
+	border-radius: 10rem;
 	background: #333;
-	border: 0.15rem outset lightgray;
+	border: 2px outset #909090;
 	max-height: 1.5rem;
+}
+
+.passive-wrapper input[type='range']::-moz-range-thumb {
+	width: 1.5rem;
+	height: 1.5rem;
+	background: #333;
+	border-radius: 10rem;
+	outline: 2px outset #909090;
+	outline-offset: -0.7px;
+	border: none;
+}
+
+.fake-button {
+	width: 1.5rem;
+	min-width: 1.5rem;
+	text-align: center;
+	line-height: 1.4rem;
 }
