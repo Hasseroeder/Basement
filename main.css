@@ -726,44 +726,6 @@ button:hover {
 	margin-top: -0.55rem;
 }
 
-.percent-span {
-	width: 0.6rem;
-	font-size: 0.85rem;
-	font-family: monospace;
-	padding: 0.2em;
-}
-
-.passive-number-input {
-	margin: 0 0 0 0.1rem;
-	border: none;
-	color: rgb(225, 225, 225);
-	font-size: 0.85rem;
-	font-family: monospace;
-	background: transparent;
-	text-align: end;
-}
-
-.listening-wrapper {
-	height: 3rem;
-	display: flex;
-	align-items: center;
-}
-
-.star-wrapper:hover {
-	background-color: #404040;
-}
-
-.text {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	transition:
-		transform 0.3s ease,
-		opacity 0.4s ease;
-	white-space: nowrap;
-}
-
 .passiveGridImage {
 	width: 100%;
 }
@@ -786,125 +748,18 @@ button:hover {
 	display: flex;
 }
 
-.resTextContainer {
-	margin: 0;
-	padding: 0;
-}
-
-.res-image {
-	width: 20px;
-	margin: 0 0.2rem 0 0.125rem;
-}
-
-.res-li {
-	align-items: center;
-	cursor: var(--cur-pointer);
-	display: flex;
-	margin-bottom: 10px;
-	height: 20px;
-}
-
-.res-li-container {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.triangle-tooltip {
-	background: #222222;
-	color: white;
-	border-radius: 3px;
-	padding: 8px;
-	transition: all 0.1s ease;
-	pointer-events: none;
-	z-index: 2;
-	opacity: 1;
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-}
-
-.triangle-tooltip > div:first-child {
-	margin-bottom: 0.2rem;
-}
-
-.triangle-tooltip > div {
-	display: flex;
-}
-
-.triangle-tooltip > div > div {
-	display: flex;
-	gap: 0.2rem;
-	width: 2.5rem;
-}
-
-.triangle-tooltip img {
-	width: 1rem;
-	height: 1rem;
-}
-
 .discord-text-emote {
 	width: 18px;
 	vertical-align: text-bottom;
-}
-
-.global-inputs {
-	width: 4rem;
-	background-color: #191919;
-	border: none;
-	border-radius: 2px;
-	color: lightgray;
-	font-family: monospace;
-}
-
-.global-column {
-	width: max-content;
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	font-family: monospace;
 }
 
 .align-child-text-right * {
 	text-align: end;
 }
 
-.global-column * {
-	height: 1rem;
-	padding: 0.1rem 0.2rem;
-}
-
 .battles-page-emotes {
 	width: 1.05rem;
 	vertical-align: text-bottom;
-}
-
-.tab-button {
-	flex: auto;
-	margin: 0;
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-	border-color: #666;
-}
-.tab-button:hover {
-	background-color: #262626;
-}
-
-.tab-button-active {
-	background-color: #222;
-	border-bottom: unset;
-}
-.tab-button-active:hover {
-	background-color: #222;
-}
-
-.global-content-container {
-	display: flex;
-	background-color: #222;
-	justify-content: center;
-	padding: 1rem;
-	border: 2px outset #666;
-	border-top: unset;
 }
 
 .italic {

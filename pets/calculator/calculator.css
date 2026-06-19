@@ -308,3 +308,19 @@ input[type='range'] {
 	flex-direction: column;
 	width: 38rem;
 }
+
+.listening-wrapper {
+	height: 3rem;
+	display: flex;
+	align-items: center;
+}
+
+.passive-number-input {
+	margin: 0 0 0 0.1rem;
+	border: none;
+	color: rgb(225, 225, 225);
+	font-size: 0.85rem;
+	font-family: monospace;
+	background: transparent;
+	text-align: end;
+}

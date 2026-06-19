@@ -60,3 +60,18 @@ input[type='range'] {
 .smol-right-margin {
 	margin-right: 0.2rem;
 }
+
+.star-wrapper:hover {
+	background-color: #404040;
+}
+
+.text {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	transition:
+		transform 0.3s ease,
+		opacity 0.4s ease;
+	white-space: nowrap;
+}

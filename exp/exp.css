@@ -60,3 +60,53 @@ table.this-to-that td:nth-child(2)::after {
 	aspect-ratio: auto 600 / 300;
 	width: 100%;
 }
+
+.tab-button {
+	flex: auto;
+	margin: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-color: #666;
+}
+.tab-button:hover {
+	background-color: #262626;
+}
+
+.tab-button-active {
+	background-color: #222;
+	border-bottom: unset;
+}
+.tab-button-active:hover {
+	background-color: #222;
+}
+
+.global-content-container {
+	display: flex;
+	background-color: #222;
+	justify-content: center;
+	padding: 1rem;
+	border: 2px outset #666;
+	border-top: unset;
+}
+
+.global-column * {
+	height: 1rem;
+	padding: 0.1rem 0.2rem;
+}
+
+.global-column {
+	width: max-content;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	font-family: monospace;
+}
+
+.global-inputs {
+	width: 4rem;
+	background-color: #191919;
+	border: none;
+	border-radius: 2px;
+	color: lightgray;
+	font-family: monospace;
+}
