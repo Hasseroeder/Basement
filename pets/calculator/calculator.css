@@ -262,6 +262,11 @@ input[type='range'] {
 	appearance: none;
 }
 
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+}
+
 .fake-button {
 	width: 1.5rem;
 	min-width: 1.5rem;
