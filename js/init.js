@@ -17,14 +17,7 @@ const injectors = [
 						baseLink: '/weapon',
 						items,
 					})
-				) /*,
-				loadJson('/weapon/json/passives.json').then((items) =>
-					gridInjector({
-						container: fragment.querySelector('#menuPassiveContainer'),
-						baseLink: '/passive',
-						items,
-					})
-				),*/,
+				),
 			])
 
 			return fragment

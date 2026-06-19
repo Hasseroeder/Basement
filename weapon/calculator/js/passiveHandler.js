@@ -3,7 +3,7 @@ import * as buffHandler from './buffHandler.js'
 import { getRarity, wpEmojiPath } from './util.js'
 import { make } from '/js/util/injectionUtil.js'
 
-const pList = document.querySelector('.passiveContainer')
+const pList = document.querySelector('.passive-container')
 
 export function appendPassiveNode(passive) {
 	const wrapper = make('div', { className: 'passive-item' })
