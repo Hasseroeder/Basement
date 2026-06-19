@@ -166,3 +166,11 @@
 .suggestions > .suggestion:not(:last-child) {
 	border-bottom: 1px dashed #666;
 }
+
+.add-effect-pet-calc {
+	position: absolute;
+	width: inherit;
+	font-family: monospace;
+	font-size: 0.8rem;
+	text-align: center;
+}
