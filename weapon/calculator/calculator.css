@@ -250,7 +250,7 @@
 	grid-auto-columns: 1.4rem;
 }
 
-.passive-grid image {
+.passive-grid img {
 	width: 100%;
 }
 
@@ -283,7 +283,8 @@
 	color: lightgray;
 	cursor: var(--cur-pointer);
 	font-family: monospace;
-	height: unset;
+	height: 1.3rem;
+	min-height: 1.3rem;
 }
 
 .selected:focus {
