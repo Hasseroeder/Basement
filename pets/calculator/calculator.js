@@ -444,8 +444,8 @@ function addEffect(type) {
 		updateInternalStats()
 	}
 
-	const button = make('button', {
-		className: 'passive-remove-btn',
+	const button = make('div', {
+		className: 'fake-button',
 		textContent: 'X',
 		onclick: () => {
 			effects = effects.filter((e) => e !== effect)
@@ -465,7 +465,7 @@ function addEffect(type) {
 			numberWrapper,
 		]),
 		inputs[1],
-		make('div', { className: 'button-wrapper' }, [button]),
+		button,
 	])
 	effectContainer.insertBefore(wrapper, effectContainer.lastChild)
 	updateValue(100)

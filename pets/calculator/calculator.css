@@ -114,10 +114,6 @@
 	position: relative;
 }
 
-.passive-wrapper:hover * {
-	visibility: visible;
-}
-
 .pet-output-wrapper {
 	border-top: 2px solid #909090;
 	border-left: 2px solid #909090;
@@ -216,6 +212,9 @@
 	transform: translateY(150%);
 	opacity: 0;
 	transition: 0.1s ease;
+	width: inherit;
+	display: flex;
+	justify-content: center;
 }
 
 .passive-wrapper .number-wrapper,
