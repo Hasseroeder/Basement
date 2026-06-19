@@ -109,11 +109,22 @@
 	border-left: 2px solid #909090;
 	border-right: 2px solid #606060;
 	border-bottom: 2px solid #606060;
-
-	border-radius: 0.2rem;
-	width: 11rem;
+	border-radius: 0.75rem;
 	margin-top: 0.5rem;
-	padding: 0.35rem;
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.pet-output-wrapper .name {
+	font-weight: bold;
+	width: max-content;
+}
+
+.pet-output-wrapper .alias {
+	font-size: 0.75rem;
+	width: max-content;
 }
 
 .suggestions {

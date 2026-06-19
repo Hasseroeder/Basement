@@ -205,15 +205,13 @@ function outputSmallPetContainer(pet) {
 		}),
 		make('div', {
 			innerHTML: pet.name,
-			className: 'discord-code',
-			style: 'width: max-content; text-align:unset; font-weight:bold;',
+			className: 'discord-code name',
 		}),
 		pet.aliases &&
 			pet.aliases[0] &&
 			make('div', {
 				innerHTML: 'Aliases: ' + pet.aliases.join(', '),
-				className: 'discord-code',
-				style: 'display: inline; text-align:unset; font-size:0.75rem',
+				className: 'discord-code alias',
 			}),
 	].filter(Boolean)
 
