@@ -181,11 +181,11 @@
 	flex-direction: column;
 }
 
-.passive-wrapper:hover .text.original {
+.passive-wrapper:hover .original {
 	transform: translate(-50%, -150%);
 	opacity: 0;
 }
-.passive-wrapper:hover .text.replacement {
+.passive-wrapper:hover .replacement {
 	transform: translate(-50%, -50%);
 	opacity: 1;
 }

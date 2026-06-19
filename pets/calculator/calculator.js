@@ -402,8 +402,8 @@ function addAddEffects() {
 		'f_mr.png',
 		'f_rune.png',
 	]
-	const text = make('div', { className: 'add-effect', textContent: 'add effect' })
-	const imgContainer = make('div', { className: 'passive-emoji-wrapper' }, [
+	const text = make('div', { className: 'original', textContent: 'add effect' })
+	const imgContainer = make('div', { className: 'replacement passive-emoji-wrapper' }, [
 		...effectIcons.map((name, i) =>
 			make('img', {
 				src: '/media/owo_images/battleEmojis/' + name,
