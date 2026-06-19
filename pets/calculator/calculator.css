@@ -257,6 +257,11 @@ input[type='range']::-moz-range-thumb {
 	border: none;
 }
 
+input[type='range'] {
+	-webkit-appearance: none;
+	appearance: none;
+}
+
 .fake-button {
 	width: 1.5rem;
 	min-width: 1.5rem;
