@@ -10,7 +10,6 @@ gridInjector({
 	items: [weapons],
 	columns: `repeat(4, 3.5rem)`,
 	transform: `translate(6.5rem, -6rem)`,
-	gridClasses: ["extra-padding"],
 	onItemClick: () => console.log("add something here!")
 });
 */

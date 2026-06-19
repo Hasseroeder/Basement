@@ -504,15 +504,6 @@ button:hover {
 	color: lightgray;
 }
 
-.extra-padding::before {
-	content: '';
-	position: absolute;
-	top: -8px;
-	bottom: -8px;
-	left: -28px;
-	right: -8px;
-}
-
 .hidden {
 	visibility: hidden;
 }
