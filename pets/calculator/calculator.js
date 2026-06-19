@@ -206,13 +206,13 @@ function outputSmallPetContainer(pet) {
 		}),
 		make('div', {
 			innerHTML: pet.name,
-			className: 'discord-code name',
+			className: 'discord-code light name',
 		}),
 		pet.aliases &&
 			pet.aliases[0] &&
 			make('div', {
 				innerHTML: 'Aliases: ' + pet.aliases.join(', '),
-				className: 'discord-code alias',
+				className: 'discord-code light alias',
 			}),
 	].filter(Boolean)
 
