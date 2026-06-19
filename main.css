@@ -699,33 +699,6 @@ button:hover {
 	outline-offset: 0px;
 }
 
-.weaponSlider::-webkit-slider-runnable-track {
-	height: 6px;
-	background: #ccc;
-}
-
-.weaponSlider::-moz-range-track {
-	height: 6px;
-	background: #ccc;
-}
-
-.weaponSlider::-moz-range-thumb {
-	width: 1.5rem !important;
-	height: 1.5rem !important;
-	background: url('/media/misc_images/colon_three.png') no-repeat center center !important;
-	background-size: contain !important;
-	border: none !important;
-}
-
-.weaponSlider::-webkit-slider-thumb {
-	width: 1.5rem !important;
-	height: 1.5rem !important;
-	background: url('/media/misc_images/colon_three.png') no-repeat center center !important;
-	background-size: contain !important;
-	border: none !important;
-	margin-top: -0.55rem;
-}
-
 .passiveGridImage {
 	width: 100%;
 }
