@@ -244,6 +244,18 @@ input[type='range']:hover {
 	background-color: #555555;
 }
 
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: #333;
+	border-radius: 10rem;
+	outline: 2px outset #909090;
+	outline-offset: -0.7px;
+	border: none;
+}
+
 input[type='range']::-moz-range-thumb {
 	width: 1.5rem;
 	height: 1.5rem;
