@@ -187,7 +187,7 @@ function renderSuggestions(query, suggestions) {
 				},
 				[
 					make('div', {
-						className: 'suggestionAlias',
+						className: 'alias',
 						innerHTML: aliases.join(', '),
 					}),
 				]
@@ -413,9 +413,7 @@ function addAddEffects() {
 		),
 	])
 
-	effectContainer.append(
-		make('div', { className: 'passiveWrapperFromCalculator' }, [text, imgContainer])
-	)
+	effectContainer.append(make('div', { className: 'passive-wrapper' }, [text, imgContainer]))
 }
 
 function addEffect(type) {
@@ -447,7 +445,7 @@ function addEffect(type) {
 	}
 
 	const button = make('button', {
-		className: 'exitButtonFromCalculator',
+		className: 'passive-remove-btn',
 		textContent: 'X',
 		onclick: () => {
 			effects = effects.filter((e) => e !== effect)
@@ -461,7 +459,7 @@ function addEffect(type) {
 		make('div', { textContent: '%', className: 'percent-span' }),
 	])
 
-	const wrapper = make('div', { className: 'passiveWrapperFromCalculator' }, [
+	const wrapper = make('div', { className: 'passive-wrapper' }, [
 		make('div', { className: 'pimage-wrapper-pet-calc' }, imagechildren),
 		make('div', { className: 'listening-wrapper', onclick: () => inputs[0].focus() }, [
 			numberWrapper,
