@@ -310,10 +310,6 @@ code,
 	background-color: #191919;
 }
 
-.darkGrayBackground {
-	background-color: #050505;
-}
-
 .grayOnHover:hover {
 	background-color: rgba(255, 255, 255, 0.3);
 }

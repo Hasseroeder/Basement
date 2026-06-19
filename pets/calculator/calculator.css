@@ -61,13 +61,10 @@
 
 .input-lvl {
 	font-family: monospace;
-	font-size: 0.9rem;
 	width: 1.7rem;
-	height: 1rem;
-	text-align: start;
 	border: none;
 	background-color: transparent;
-	color: rgb(225, 225, 225);
+	color: lightgray;
 }
 
 .pet-button {
@@ -183,9 +180,9 @@
 
 .number-wrapper {
 	display: flex;
-	border-radius: 3px;
-	background-color: #050505;
-	height: max-content;
+	align-items: center;
+	font-family: monospace;
+	font-size: 0.8rem;
 }
 
 .original {
