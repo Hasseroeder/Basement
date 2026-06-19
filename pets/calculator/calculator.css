@@ -125,7 +125,8 @@
 
 .pet-output-wrapper .alias {
 	font-size: 0.75rem;
-	width: max-content;
+	width: min-content;
+	text-align: start;
 }
 
 .suggestions {
@@ -287,4 +288,5 @@ input[type='range']::-moz-range-thumb {
 	padding: 0.5rem 1rem 1rem 0.75rem;
 	display: flex;
 	flex-direction: column;
+	max-width: 38rem;
 }
