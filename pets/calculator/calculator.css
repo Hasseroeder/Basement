@@ -93,15 +93,9 @@
 }
 
 .passive-remove-btn {
-	width: 1rem;
-	height: 1rem;
-	position: absolute;
 	font-size: 0.6rem;
-	display: flex;
-	justify-content: center;
-	bottom: 70%;
-	left: 95%;
-	align-items: center;
+	width: 1.5rem;
+	min-width: 1.5rem;
 }
 
 .passive-wrapper {
@@ -221,4 +215,11 @@
 	transform: translateY(150%);
 	opacity: 0;
 	transition: 0.1s ease;
+}
+
+.passive-wrapper .number-wrapper,
+.passive-wrapper input,
+.passive-wrapper button {
+	height: 1.5rem;
+	min-height: 1.5rem;
 }
