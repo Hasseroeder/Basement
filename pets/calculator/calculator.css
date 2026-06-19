@@ -160,7 +160,7 @@
 .passive-wrapper {
 	background: #393939;
 	padding: 1rem;
-	border-radius: 0.75rem;
+	border-radius: 10rem;
 	font-family: monospace;
 	overflow: hidden;
 	position: relative;
