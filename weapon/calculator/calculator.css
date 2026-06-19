@@ -50,3 +50,13 @@ input[type='range'] {
 	transform: translate(-50%, 100%);
 	opacity: 0;
 }
+
+.weapon-desc-image {
+	vertical-align: text-bottom;
+	display: inline-block;
+	margin-bottom: -1.5px;
+}
+
+.smol-right-margin {
+	margin-right: 0.2rem;
+}

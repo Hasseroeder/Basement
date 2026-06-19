@@ -12,3 +12,51 @@ table.this-to-that td:last-child {
 table.this-to-that td:nth-child(2)::after {
 	content: '⇀';
 }
+
+.global-slider-wrapper input[type='range'] {
+	writing-mode: vertical-lr;
+	margin: 0.6rem 0;
+	flex: max-content;
+	background-color: #333;
+	appearance: none;
+	-webkit-appearance: none;
+	border-radius: 1rem;
+}
+
+.global-slider-wrapper input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: #333;
+	border-radius: 10rem;
+	outline: 2px outset #909090;
+	outline-offset: -0.7px;
+	border: none;
+}
+
+.global-slider-wrapper input[type='range']::-moz-range-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: #333;
+	border-radius: 10rem;
+	outline: 2px outset #909090;
+	outline-offset: -0.7px;
+	border: none;
+}
+
+.global-slider-wrapper {
+	padding: 0rem 0.5rem;
+	font-size: 0.8rem;
+	color: #707070;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.global-chart-wrapper {
+	aspect-ratio: auto 600 / 300;
+	width: 100%;
+}

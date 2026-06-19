@@ -101,7 +101,6 @@ function attachBattleCalculator() {
 function attachExpChart() {
 	const ctx = make('canvas')
 	const slider = make('input', {
-		className: 'global-tierate-slider',
 		type: 'range',
 		min: '0',
 		max: '100',
@@ -111,7 +110,7 @@ function attachExpChart() {
 
 	const percentText = make('div', { innerHTML: '0%' })
 	const tierateText = make('div', { innerHTML: 'tierate' })
-	const textWrapper = make('div', { style: 'height: 4.4rem' }, [percentText, tierateText])
+	const textWrapper = make('div', { style: 'height: 3.5rem' }, [percentText, tierateText])
 
 	this.container.append(
 		make('div', { className: 'global-chart-wrapper' }, [ctx]),
