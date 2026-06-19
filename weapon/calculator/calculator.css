@@ -86,3 +86,40 @@
 		opacity 0.4s ease;
 	white-space: nowrap;
 }
+
+.ranged-input {
+	border: none;
+	width: 1.5rem;
+	color: inherit;
+	font-size: 0.8rem;
+	border-radius: 3px;
+	font-family: monospace;
+	padding: 0.1rem;
+	text-align: end;
+	display: block;
+	background-color: transparent;
+}
+
+.ranged-input:focus {
+	outline: 1px solid lightskyblue;
+	outline-offset: 0px;
+}
+
+.input-wrapper {
+	background-color: #191919;
+	display: flex;
+	padding: 0;
+	border-radius: 0.2rem;
+	align-items: center;
+	width: max-content;
+	margin: 0 0.2rem;
+}
+
+.outer-input-wrapper {
+	display: inline-block;
+	margin: 0 -0.2rem;
+}
+
+.input-wrapper:hover {
+	background-color: #555555;
+}

@@ -610,13 +610,13 @@ button:hover {
 	transform: translateY(-30%) rotate(-135deg);
 }
 
-.lineFromWeaponCalculator .weapon-id {
+.weapon-line .weapon-id {
 	font-size: 0.8rem;
 	height: 1rem;
 	line-height: 1rem;
 }
 
-.lineFromWeaponCalculator {
+.weapon-line {
 	display: flex;
 	flex-direction: row;
 	font-size: 0.8rem;
@@ -624,13 +624,13 @@ button:hover {
 	height: 1.4rem;
 }
 
-.lineFromWeaponCalculator.description,
+.weapon-line.description,
 .passive-item,
 .buff-item {
 	height: unset;
 }
 
-.lineFromWeaponCalculator.description > div,
+.weapon-line.description > div,
 .passive-item > *,
 .buff-item > * {
 	display: inline;
@@ -655,48 +655,11 @@ button:hover {
 	border-radius: 999px;
 }
 
-.lineFromWeaponCalculator.header {
+.weapon-line.header {
 	font-weight: bolder;
 	font-size: 0.9rem;
 	margin: 1.2rem 0 0.4rem 0;
 	text-decoration: underline;
-}
-
-.inputWrapperFromCalculator {
-	background-color: #191919;
-	display: flex;
-	padding: 0;
-	border-radius: 0.2rem;
-	align-items: center;
-	width: max-content;
-	margin: 0 0.2rem;
-}
-
-.outerInputWrapperFromCalculator {
-	display: inline-block;
-	margin: 0 -0.2rem;
-}
-
-.inputWrapperFromCalculator:hover {
-	background-color: #555555;
-}
-
-.inputFromWeaponCalculator {
-	border: none;
-	width: 1.5rem;
-	color: inherit;
-	font-size: 0.8rem;
-	border-radius: 3px;
-	font-family: monospace;
-	padding: 0.1rem;
-	text-align: end;
-	display: block;
-	background-color: transparent;
-}
-
-.inputFromWeaponCalculator:focus {
-	outline: 1px solid lightskyblue;
-	outline-offset: 0px;
 }
 
 .passiveGridImage {

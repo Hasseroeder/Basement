@@ -138,7 +138,7 @@ class WeaponStat {
 					})
 				: ''
 
-		this.wrapper = make('div', { className: 'outerInputWrapperFromCalculator' })
+		this.wrapper = make('div', { className: 'outer-input-wrapper' })
 		this.numberInput = createRangedInput('number', this.wearConfig)
 		this.numberLabel = makeUnitLabel(this.noWearConfig)
 		this.qualityInput = createRangedInput('number', this.percentageConfig, { height: '1.5rem' })
@@ -153,7 +153,7 @@ class WeaponStat {
 		])
 
 		this.wrapper.append(
-			make('div', { className: 'inputWrapperFromCalculator tooltip-lite' }, [
+			make('div', { className: 'input-wrapper tooltip-lite' }, [
 				this.numberInput,
 				this.numberLabel,
 				this.tooltip,
@@ -243,11 +243,7 @@ function generateStatInputs(weapon) {
 
 function createRangedInput(type, { min, max, step, digits }, extraStyles = {}) {
 	const className =
-		type === 'range'
-			? 'weaponSlider'
-			: type === 'number'
-				? 'inputFromWeaponCalculator no-arrows'
-				: ''
+		type === 'range' ? 'weaponSlider' : type === 'number' ? 'ranged-input no-arrows' : ''
 
 	const style =
 		type === 'range'
