@@ -60,7 +60,6 @@ loadPets().then((pets) => {
 		// I would love not to downscale, but it helps with performance.
 		pet.emoteSrc = fileName + extension + size
 		pet.caught = { zoo: 0, hb: [] }
-		pet.displayed = {}
 		initPetDom(pet, cptier.zooPetGrid, cptier.hbPetGrid)
 		return pet
 	})
@@ -517,22 +516,26 @@ function importFromCookie() {
 const stringToLevel = (levelString) =>
 	levelString.split(',').forEach((value, i) => (traits[i].level = value || 0))
 
-function initPetDom(pet, zooTierWrapper, hbTierWrapper) {
+function initPetDom(pet, zooPetGrid, hbPetGrid) {
 	const makeCell = () => {
 		const textEl = make('div')
 		const wrapper = make('div', { className: 'pet-cell', dataset: { name: pet.name } }, [
 			make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
 			textEl,
 		])
-		return {
-			wrapper,
-			textEl,
+		wrapper.update = (visible, str) => {
+			if (visible !== wrapper._visibility) {
+				wrapper.style.display = visible ? 'flex' : 'none'
+				wrapper._visibility = visible
+			}
+			if (visible) textEl.textContent = str
 		}
+		return wrapper
 	}
 	pet.zooCell = makeCell()
 	pet.hbCell = makeCell()
-	zooTierWrapper.append(pet.zooCell.wrapper)
-	hbTierWrapper.append(pet.hbCell.wrapper)
+	zooPetGrid.append(pet.zooCell)
+	hbPetGrid.append(pet.hbCell)
 }
 
 function initLuckDom(tier, zooLuckContainer, hbLuckContainer) {
@@ -631,21 +634,20 @@ function displayNthHuntbot(n) {
 	for (const tier of zoo) {
 		tier.hbRow.style.display = 'none'
 		tier.hbRow._visibility = false
-		var tierPets = { value: 0 }
+		var tierPets = 0
 		for (const pet of tier.pets) {
-			processPet({
-				callOrigin: 'hb',
-				tierPets,
-				pet,
-				petCaught: pet.caught.hb[n],
-				digitsNeeded,
-				row: tier.hbRow,
-				cell: pet.hbCell,
-			})
+			const visible = pet.caught.hb[n] !== 0
+			if (visible && !tier.hbRow._visibility) {
+				tier.hbRow.style.display = 'flex'
+				tier.hbRow._visibility = true
+			}
+			const str = numStringToSubscript(zeroPad(pet.caught.hb[n], digitsNeeded))
+			pet.hbCell.update(visible, str)
+			tierPets += pet.caught.hb[n]
 		}
 		tier.luckEls.hb.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.hb[n], 3)
-		tier.luckEls.hb.actualLuck.textContent = tierPets.value.toLocaleString()
-		tier.luckEls.hb.arrow.update(tierPets.value, tier.expectedPetAmount.hb[n])
+		tier.luckEls.hb.actualLuck.textContent = tierPets.toLocaleString()
+		tier.luckEls.hb.arrow.update(tierPets, tier.expectedPetAmount.hb[n])
 	}
 }
 
@@ -654,44 +656,23 @@ function displayZoo() {
 	const digitsNeeded = String(zoo.getMaxCaught()).length
 	const countContainerArray = []
 	for (const tier of zoo) {
-		var tierPets = { value: 0 }
+		var tierPets = 0
 		for (const pet of tier.pets) {
-			processPet({
-				callOrigin: 'zoo',
-				tierPets,
-				pet,
-				petCaught: pet.caught.zoo,
-				digitsNeeded,
-				row: tier.zooRow,
-				cell: pet.zooCell,
-			})
+			const visible = pet.caught.zoo !== 0
+			if (visible && !tier.zooRow._visibility) {
+				tier.zooRow.style.display = 'flex'
+				tier.zooRow._visibility = true
+			}
+			const str = numStringToSubscript(zeroPad(pet.caught.zoo, digitsNeeded))
+			pet.zooCell.update(visible, str)
+			tierPets += pet.caught.zoo
 		}
 		tier.luckEls.zoo.expectedLuck.textContent = toFixedDigits(tier.expectedPetAmount.zoo, 3)
-		tier.luckEls.zoo.actualLuck.textContent = tierPets.value.toLocaleString()
-		tier.luckEls.zoo.arrow.update(tierPets.value, tier.expectedPetAmount.zoo)
-		if (tierPets.value) countContainerArray.push(`${tier.prefix}-${tierPets.value}`)
+		tier.luckEls.zoo.actualLuck.textContent = tierPets.toLocaleString()
+		tier.luckEls.zoo.arrow.update(tierPets, tier.expectedPetAmount.zoo)
+		if (tierPets) countContainerArray.push(`${tier.prefix}-${tierPets}`)
 	}
 	countContainer.textContent = countContainerArray.reverse().join(', ')
-}
-
-function processPet({ callOrigin, tierPets, pet, petCaught, digitsNeeded, row, cell }) {
-	const visible = petCaught !== 0
-	if (visible && !row._visibility) {
-		row.style.display = 'flex'
-		row._visibility = true
-	}
-	if (visible !== cell.wrapper._visibility) {
-		cell.wrapper.style.display = visible ? 'flex' : 'none'
-		cell.wrapper._visibility = visible
-	}
-	if (visible) {
-		const str = numStringToSubscript(zeroPad(petCaught, digitsNeeded))
-		if (pet.displayed[callOrigin] !== str) {
-			cell.textEl.textContent = str
-			pet.displayed[callOrigin] = str
-		}
-		tierPets.value += petCaught
-	}
 }
 
 function displayNthHuntbotFull(n) {
@@ -759,10 +740,6 @@ const reset = () => {
 			pet.caught = {
 				zoo: 0,
 				hb: [],
-			}
-			pet.displayed = {
-				//zoo: undefined,
-				//hb: undefined,
 			}
 		})
 	})
