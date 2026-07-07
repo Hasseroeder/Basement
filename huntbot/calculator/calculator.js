@@ -35,6 +35,8 @@ const currentHbLines = Array.from(document.querySelectorAll('#huntbotLine'))
 const countContainer = document.querySelector('#tierCountContainer')
 const zooLuckContainer = document.querySelector('#zoo-luck-container')
 const hbLuckContainer = document.querySelector('#hb-luck-container')
+const zooContainer = document.getElementById('zooContainer')
+const hbContainer = document.getElementById('huntbotContainer')
 
 let patreon = false
 let isDragging = false
@@ -50,10 +52,14 @@ zoo.forEach((tier) => {
 })
 
 loadPets().then((pets) => {
-	const cpatreonTier = zoo.find((tier) => tier.slug === 'cpatreon')
-	const cpatreonPets = pets.filter((pet) => pet.tier.name === 'cpatreon')
-	cpatreonTier.pets = cpatreonPets.map((pet) => {
+	//Custom Patreon Redo
+	const cptier = zoo.find((tier) => tier.slug === 'cpatreon')
+	cptier.zooPetGrid.innerHTML = ''
+	cptier.hbPetGrid.innerHTML = ''
+	const cppets = pets.filter((pet) => pet.tier.name === 'cpatreon')
+	cptier.pets = cppets.map((pet) => {
 		petByName.set(pet.name, pet)
+		initPetDom(pet, cptier.zooPetGrid, cptier.hbPetGrid)
 		const fileName = 'https://cdn.discordapp.com/emojis/' + pet.emoji
 		const extension = pet.animated ? '.gif' : '.png'
 		// Maybe always choose png? Would help with performance.
@@ -73,7 +79,7 @@ loadPets().then((pets) => {
 			},
 		}
 	})
-	cpatreonTier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
+	cptier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
 })
 
 const huntbotTexts = []
@@ -513,102 +519,84 @@ function importFromCookie() {
 const stringToLevel = (levelString) =>
 	levelString.split(',').forEach((value, i) => (traits[i].level = value || 0))
 
-initDom(zoo, document.getElementById('zooContainer'), document.getElementById('huntbotContainer'))
+for (const tier of zoo) {
+	const makeEmote = () => make('img', { src: tier.emoteSrc })
+	tier.zooPetGrid = make('div', { className: 'pet-grid' })
+	tier.hbPetGrid = make('div', { className: 'pet-grid' })
+	tier.zooRow = make('div', { className: 'zoo-row' }, [makeEmote(), tier.zooPetGrid])
+	tier.hbRow = make('div', { className: 'zoo-row' }, [makeEmote(), ' | ', tier.hbPetGrid])
+	zooContainer.append(tier.zooRow)
+	hbContainer.append(tier.hbRow)
 
-function initDom(zoo, zooContainer, hbContainer) {
-	for (const tier of zoo) {
-		const makeRow = () =>
-			make('div', { className: 'zoo-row' }, [make('img', { src: tier.emoteSrc })])
-		tier.zooRow = makeRow()
-		tier.hbRow = makeRow()
-		tier.hbRow.append(' | ')
-		zooContainer.append(tier.zooRow)
-		hbContainer.append(tier.hbRow)
+	for (const pet of tier.pets) initPetDom(pet, tier.zooPetGrid, tier.hbPetGrid)
+	initLuckDom(tier, zooLuckContainer, hbLuckContainer)
+}
 
-		const makeDetailsRow = ({ expectedLuck, actualLuck, arrow }) =>
-			make('div', { className: 'details-row' }, [
-				make('div', {}, [make('img', { src: tier.emoteSrc })]),
-				make('div', {}, [expectedLuck]),
-				make('div', {}, [arrow, actualLuck]),
-			])
-		const SVG_NS = 'http://www.w3.org/2000/svg'
-		const makeArrow = () => {
-			const el = document.createElementNS(SVG_NS, 'svg')
-			el.setAttribute('viewBox', '0 0 16 16')
-			el.setAttribute('xmlns', SVG_NS)
-			const path = document.createElementNS(SVG_NS, 'path')
-			path.setAttribute('d', 'M10 8L14 8V10L8 16L2 10V8H6V0L10 4.76995e-08V8Z')
-			path.setAttribute('fill', '#ffdc51')
-			el.append(path)
-
-			el.update = (actual, expected) => {
-				if (actual > expected) {
-					el.style.transform = 'rotate(-180deg)'
-					path.setAttribute('fill', '#56caff')
-				} else if (actual < expected) {
-					el.style.transform = 'rotate(0deg)'
-					path.setAttribute('fill', '#ff5656')
-				} else {
-					el.style.transform = 'rotate(-90deg)'
-					path.setAttribute('fill', '#ffdc51')
-				}
-			}
-			return el
-		}
-
-		tier.luckEls = {
-			zoo: {
-				expectedLuck: make('code'),
-				actualLuck: make('code'),
-				arrow: makeArrow(),
-			},
-			hb: {
-				expectedLuck: make('code'),
-				actualLuck: make('code'),
-				arrow: makeArrow(),
-			},
-		}
-
-		zooLuckContainer.append(makeDetailsRow(tier.luckEls.zoo))
-		hbLuckContainer.append(makeDetailsRow(tier.luckEls.hb))
-
-		const makeStat = (src, stat) =>
-			make('div', { className: 'gapped-box center-box' }, [
-				make('img', { src }),
-				make('div', { textContent: stat }),
-			])
-
-		let zooCellWrapper, hbCellWrapper
-		if (tier.slug == 'cpatreon') {
-			const extraZooWrapper = make('div', { className: 'custom-patreon-grid' })
-			const extraHbWrapper = make('div', { className: 'custom-patreon-grid' })
-			tier.zooRow.append(extraZooWrapper)
-			tier.hbRow.append(extraHbWrapper)
-			zooCellWrapper = extraZooWrapper
-			hbCellWrapper = extraHbWrapper
-		} else {
-			zooCellWrapper = tier.zooRow
-			hbCellWrapper = tier.hbRow
-		}
-		for (const pet of tier.pets) {
-			const makeCell = () => {
-				const textEl = make('div')
-				const wrapper = make(
-					'div',
-					{ className: 'pet-cell', dataset: { name: pet.name } },
-					[make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }), textEl]
-				)
-				return {
-					wrapper,
-					textEl,
-				}
-			}
-			pet.zooCell = makeCell()
-			pet.hbCell = makeCell()
-			zooCellWrapper.append(pet.zooCell.wrapper)
-			hbCellWrapper.append(pet.hbCell.wrapper)
+function initPetDom(pet, zooTierWrapper, hbTierWrapper) {
+	const makeCell = () => {
+		const textEl = make('div')
+		const wrapper = make('div', { className: 'pet-cell', dataset: { name: pet.name } }, [
+			make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
+			textEl,
+		])
+		return {
+			wrapper,
+			textEl,
 		}
 	}
+	pet.zooCell = makeCell()
+	pet.hbCell = makeCell()
+	zooTierWrapper.append(pet.zooCell.wrapper)
+	hbTierWrapper.append(pet.hbCell.wrapper)
+}
+
+function initLuckDom(tier, zooLuckContainer, hbLuckContainer) {
+	const SVG_NS = 'http://www.w3.org/2000/svg'
+	const makeDetailsRow = ({ expectedLuck, actualLuck, arrow }) =>
+		make('div', { className: 'details-row' }, [
+			make('div', {}, [make('img', { src: tier.emoteSrc })]),
+			make('div', {}, [expectedLuck]),
+			make('div', {}, [arrow, actualLuck]),
+		])
+	const makeArrow = () => {
+		const el = document.createElementNS(SVG_NS, 'svg')
+		el.setAttribute('viewBox', '0 0 16 16')
+		el.setAttribute('xmlns', SVG_NS)
+		const path = document.createElementNS(SVG_NS, 'path')
+		path.setAttribute('d', 'M10 8L14 8V10L8 16L2 10V8H6V0L10 4.76995e-08V8Z')
+		path.setAttribute('fill', '#ffdc51')
+		el.append(path)
+
+		el.update = (actual, expected) => {
+			if (actual > expected) {
+				el.style.transform = 'rotate(-180deg)'
+				path.setAttribute('fill', '#56caff')
+			} else if (actual < expected) {
+				el.style.transform = 'rotate(0deg)'
+				path.setAttribute('fill', '#ff5656')
+			} else {
+				el.style.transform = 'rotate(-90deg)'
+				path.setAttribute('fill', '#ffdc51')
+			}
+		}
+		return el
+	}
+
+	tier.luckEls = {
+		zoo: {
+			expectedLuck: make('code'),
+			actualLuck: make('code'),
+			arrow: makeArrow(),
+		},
+		hb: {
+			expectedLuck: make('code'),
+			actualLuck: make('code'),
+			arrow: makeArrow(),
+		},
+	}
+
+	zooLuckContainer.append(makeDetailsRow(tier.luckEls.zoo))
+	hbLuckContainer.append(makeDetailsRow(tier.luckEls.hb))
 }
 
 function newHuntbot() {

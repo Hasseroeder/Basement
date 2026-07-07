@@ -400,7 +400,7 @@ details[open] > summary img {
 	z-index: 1;
 }
 
-.custom-patreon-grid {
+.pet-grid {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 0.1rem 0.2rem;
