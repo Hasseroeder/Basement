@@ -59,19 +59,10 @@ loadPets().then((pets) => {
 		// Maybe always choose png? Would help with performance.
 		const size = '?size=32'
 		// I would love not to downscale, but it helps with performance.
-		return {
-			emoteSrc: fileName + extension + size,
-			name: pet.name,
-			stats: pet.stats,
-			caught: {
-				zoo: 0,
-				hb: [],
-			},
-			displayed: {
-				//zoo: undefined,
-				//hb: undefined,
-			},
-		}
+		pet.emoteSrc = fileName + extension + size
+		pet.caught = { zoo: 0, hb: [] }
+		pet.displayed = {}
+		return pet
 	})
 	cptier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
 	console.log(zoo)
