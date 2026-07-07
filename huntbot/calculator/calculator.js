@@ -45,12 +45,6 @@ const rawZoo = await loadJson('/huntbot/calculator/zoo.json')
 const zoo = rawZoo.filter((tier) => tier.huntbotAvailable)
 const petByName = new Map()
 
-zoo.forEach((tier) => {
-	tier.pets.forEach((pet) => {
-		petByName.set(pet.name, pet)
-	})
-})
-
 loadPets().then((pets) => {
 	//Custom Patreon Redo
 	const cptier = zoo.find((tier) => tier.slug === 'cpatreon')
@@ -80,6 +74,7 @@ loadPets().then((pets) => {
 		}
 	})
 	cptier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
+	console.log(zoo)
 })
 
 const huntbotTexts = []
@@ -122,6 +117,19 @@ zoo.getValue = function (n) {
 
 const tierTable = document.querySelector('.tier-table')
 zoo.forEach((tier) => {
+	const makeEmote = () => make('img', { src: tier.emoteSrc })
+	tier.zooPetGrid = make('div', { className: 'pet-grid' })
+	tier.hbPetGrid = make('div', { className: 'pet-grid' })
+	tier.zooRow = make('div', { className: 'zoo-row' }, [makeEmote(), tier.zooPetGrid])
+	tier.hbRow = make('div', { className: 'zoo-row' }, [makeEmote(), ' | ', tier.hbPetGrid])
+	zooContainer.append(tier.zooRow)
+	hbContainer.append(tier.hbRow)
+	tier.pets.forEach((pet) => {
+		petByName.set(pet.name, pet)
+		initPetDom(pet, tier.zooPetGrid, tier.hbPetGrid)
+	})
+	initLuckDom(tier, zooLuckContainer, hbLuckContainer)
+
 	Object.defineProperty(tier, 'rate', {
 		get() {
 			if (tier.patreonNeeded && !patreon) return 0
@@ -518,19 +526,6 @@ function importFromCookie() {
 
 const stringToLevel = (levelString) =>
 	levelString.split(',').forEach((value, i) => (traits[i].level = value || 0))
-
-for (const tier of zoo) {
-	const makeEmote = () => make('img', { src: tier.emoteSrc })
-	tier.zooPetGrid = make('div', { className: 'pet-grid' })
-	tier.hbPetGrid = make('div', { className: 'pet-grid' })
-	tier.zooRow = make('div', { className: 'zoo-row' }, [makeEmote(), tier.zooPetGrid])
-	tier.hbRow = make('div', { className: 'zoo-row' }, [makeEmote(), ' | ', tier.hbPetGrid])
-	zooContainer.append(tier.zooRow)
-	hbContainer.append(tier.hbRow)
-
-	for (const pet of tier.pets) initPetDom(pet, tier.zooPetGrid, tier.hbPetGrid)
-	initLuckDom(tier, zooLuckContainer, hbLuckContainer)
-}
 
 function initPetDom(pet, zooTierWrapper, hbTierWrapper) {
 	const makeCell = () => {
