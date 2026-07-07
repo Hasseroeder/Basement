@@ -50,7 +50,9 @@ loadPets().then((pets) => {
 	const cptier = zoo.find((tier) => tier.slug === 'cpatreon')
 	cptier.zooPetGrid.innerHTML = ''
 	cptier.hbPetGrid.innerHTML = ''
-	const cppets = pets.filter((pet) => pet.tier.name === 'cpatreon')
+	const cppets = pets
+		.filter((pet) => pet.tier.name === 'cpatreon')
+		.sort((petA, petB) => petA.name.localeCompare(petB.name))
 	cptier.pets = cppets.map((pet) => {
 		petByName.set(pet.name, pet)
 		const fileName = 'https://cdn.discordapp.com/emojis/' + pet.emoji
@@ -63,7 +65,6 @@ loadPets().then((pets) => {
 		initPetDom(pet, cptier.zooPetGrid, cptier.hbPetGrid)
 		return pet
 	})
-	cptier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
 })
 
 const huntbotTexts = []
