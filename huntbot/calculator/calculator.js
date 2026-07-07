@@ -53,7 +53,6 @@ loadPets().then((pets) => {
 	const cppets = pets.filter((pet) => pet.tier.name === 'cpatreon')
 	cptier.pets = cppets.map((pet) => {
 		petByName.set(pet.name, pet)
-		initPetDom(pet, cptier.zooPetGrid, cptier.hbPetGrid)
 		const fileName = 'https://cdn.discordapp.com/emojis/' + pet.emoji
 		const extension = pet.animated ? '.gif' : '.png'
 		// Maybe always choose png? Would help with performance.
@@ -62,10 +61,10 @@ loadPets().then((pets) => {
 		pet.emoteSrc = fileName + extension + size
 		pet.caught = { zoo: 0, hb: [] }
 		pet.displayed = {}
+		initPetDom(pet, cptier.zooPetGrid, cptier.hbPetGrid)
 		return pet
 	})
 	cptier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
-	console.log(zoo)
 })
 
 const huntbotTexts = []
