@@ -204,20 +204,27 @@ export const advancedLabelPluginFactory = (pluginConfig) => ({
 		const anns = chart.options.plugins.annotation.annotations
 		const { labels, groupName } = pluginConfig.data
 
-		labels.forEach(async ({ id, imageConfig, coor, rotation = 0 }) => {
-			const image = await createLabelImage(imageConfig)
-			const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 27.5)
+		this._imageLoadPromises = labels.map(({ id, imageConfig, coor, rotation = 0 }) =>
+			createLabelImage(imageConfig).then((image) => {
+				const { width, height } = scaleToFit(image.naturalWidth, image.naturalHeight, 27.5)
 
-			anns[id] = {
-				type: 'label',
-				content: image,
-				width,
-				height,
-				xValue: getX(coor),
-				yValue: getY(coor),
-				rotation,
-				group: groupName,
-			}
+				anns[id] = {
+					type: 'label',
+					content: image,
+					width,
+					height,
+					xValue: getX(coor),
+					yValue: getY(coor),
+					rotation,
+					group: groupName,
+				}
+			})
+		)
+
+		this._imageReadyPromise = Promise.allSettled(this._imageLoadPromises).then(() => {
+			if (this._deferInitialImageUpdate || this._initialImageUpdateFired) return
+			this._initialImageUpdateFired = true
+			chart.update()
 		})
 	},
 })

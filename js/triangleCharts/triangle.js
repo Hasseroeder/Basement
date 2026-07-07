@@ -18,6 +18,7 @@ export async function initializeTriangle() {
 	const modules = moduleConfigs.map((moduleConfig) => new Module(moduleConfig))
 
 	const plugins = modules.map((module) => module.plugins).flat()
+	plugins.forEach((plugin) => (plugin._deferInitialImageUpdate = true))
 
 	const initFns = []
 
@@ -83,4 +84,17 @@ export async function initializeTriangle() {
 		},
 	})
 	initFns.forEach((fn) => fn())
+
+	const imageLoadPromises = plugins.flatMap((plugin) => [
+		...(plugin._imageLoadPromises ?? []),
+		...(plugin.dataSets ?? []).flatMap((dataSet) => dataSet._imageLoadPromises ?? []),
+	])
+
+	if (imageLoadPromises.length > 0) {
+		Promise.allSettled(imageLoadPromises).then(() => {
+			if (myChart._initialImageUpdateFired) return
+			myChart._initialImageUpdateFired = true
+			myChart.update()
+		})
+	}
 }

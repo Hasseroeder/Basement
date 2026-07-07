@@ -27,31 +27,35 @@ export function getPixel(scales, coor) {
 	}
 }
 
-function handleDataPoints(data) {
+function handleDataPoints(data, imageLoadPromises = []) {
+	const loadImageElement = (src, size) => loadImage(src).then((img) => Object.assign(img, size))
+
 	return data.array.map((pet) => {
-		const imgEl = new Image()
-		imgEl.src = pet.image
-		imgEl.height = data.imageSize.height
-		imgEl.width = data.imageSize.width
 		const coor = getPosition(
 			data.attributeGroups.left.map((i) => pet.attributes[i]),
 			data.attributeGroups.right.map((i) => pet.attributes[i]),
 			data.attributeGroups.bottom.map((i) => pet.attributes[i])
 		)
-
-		return {
+		const point = {
 			x: getX(coor),
 			y: getY(coor),
 			label: pet.name,
-			imageEl: imgEl,
 			attributes: pet.attributes,
+			imageEl: null,
 		}
+		const imageLoadPromise = loadImageElement(pet.image, data.imageSize).then(
+			(loadedImage) => (point.imageEl = loadedImage)
+		)
+		imageLoadPromises.push(imageLoadPromise)
+		return point
 	})
 }
 
 export function buildTriangleDataset(dataSetConfig) {
+	const imageLoadPromises = []
 	return {
-		data: handleDataPoints(dataSetConfig),
+		data: handleDataPoints(dataSetConfig, imageLoadPromises),
+		_imageLoadPromises: imageLoadPromises,
 		pointStyle: (ctx) => ctx.raw.imageEl,
 		radius: dataSetConfig.radius,
 		hoverRadius: dataSetConfig.hoverRadius,
