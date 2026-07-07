@@ -408,7 +408,58 @@
 			"zoo": 0,
 			"hb": []
 		},
-		"pets": []
+		"pets": [
+			{
+				"emoteSrc": "/media/owo_images/pets/bitter.png",
+				"name": "bitter",
+				"stats": [1, 15, 1, 1, 1, 1],
+				"caught": {
+					"zoo": 0,
+					"hb": []
+				},
+				"displayed": {}
+			},
+			{
+				"emoteSrc": "/media/owo_images/pets/bitter.png",
+				"name": "bitter",
+				"stats": [1, 15, 1, 1, 1, 1],
+				"caught": {
+					"zoo": 0,
+					"hb": []
+				},
+				"displayed": {}
+			},
+			{
+				"emoteSrc": "/media/owo_images/pets/bitter.png",
+				"name": "bitter",
+				"stats": [1, 15, 1, 1, 1, 1],
+				"caught": {
+					"zoo": 0,
+					"hb": []
+				},
+				"displayed": {}
+			},
+			{
+				"emoteSrc": "/media/owo_images/pets/bitter.png",
+				"name": "bitter",
+				"stats": [1, 15, 1, 1, 1, 1],
+				"caught": {
+					"zoo": 0,
+					"hb": []
+				},
+				"displayed": {}
+			},
+			{
+				"emoteSrc": "/media/owo_images/pets/bitter.png",
+				"name": "bitter",
+				"stats": [1, 15, 1, 1, 1, 1],
+				"caught": {
+					"zoo": 0,
+					"hb": []
+				},
+				"displayed": {}
+			}
+		]
 	},
 	{
 		"prettyName": "Legendary",

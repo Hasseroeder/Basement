@@ -39,36 +39,42 @@ const hbLuckContainer = document.querySelector('#hb-luck-container')
 let patreon = false
 let isDragging = false
 
-const [localZoo, pets] = await Promise.all([loadJson('/huntbot/calculator/zoo.json'), loadPets()])
-
+const rawZoo = await loadJson('/huntbot/calculator/zoo.json')
+const zoo = rawZoo.filter((tier) => tier.huntbotAvailable)
 const petByName = new Map()
-for (const pet of pets) {
-	petByName.set(pet.name, pet)
-}
-const zoo = localZoo.filter((tier) => tier.huntbotAvailable)
-const cpatreonTier = zoo.find((tier) => tier.slug == 'cpatreon')
-pets.forEach((pet) => {
-	if (pet.tier.name !== 'cpatreon') return
-	const fileName = 'https://cdn.discordapp.com/emojis/' + pet.emoji
-	const extension = pet.animated ? '.gif' : '.png'
-	// Maybe always choose png? Would help with performance.
-	const size = '?size=32'
-	// I would love not to do this, but it helps with performance.
-	cpatreonTier.pets.push({
-		emoteSrc: fileName + extension + size,
-		name: pet.name,
-		stats: pet.stats,
-		caught: {
-			zoo: 0,
-			hb: [],
-		},
-		displayed: {
-			//zoo: undefined,
-			//hb: undefined,
-		},
+
+zoo.forEach((tier) => {
+	tier.pets.forEach((pet) => {
+		petByName.set(pet.name, pet)
 	})
 })
-cpatreonTier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
+
+loadPets().then((pets) => {
+	const cpatreonTier = zoo.find((tier) => tier.slug === 'cpatreon')
+	const cpatreonPets = pets.filter((pet) => pet.tier.name === 'cpatreon')
+	cpatreonTier.pets = cpatreonPets.map((pet) => {
+		petByName.set(pet.name, pet)
+		const fileName = 'https://cdn.discordapp.com/emojis/' + pet.emoji
+		const extension = pet.animated ? '.gif' : '.png'
+		// Maybe always choose png? Would help with performance.
+		const size = '?size=32'
+		// I would love not to downscale, but it helps with performance.
+		return {
+			emoteSrc: fileName + extension + size,
+			name: pet.name,
+			stats: pet.stats,
+			caught: {
+				zoo: 0,
+				hb: [],
+			},
+			displayed: {
+				//zoo: undefined,
+				//hb: undefined,
+			},
+		}
+	})
+	cpatreonTier.pets.sort((petA, petB) => petA.name.localeCompare(petB.name))
+})
 
 const huntbotTexts = []
 let currentHbIdx = -1
