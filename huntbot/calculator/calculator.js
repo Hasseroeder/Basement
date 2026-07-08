@@ -732,12 +732,8 @@ const reset = () => {
 			hb: [],
 		}
 		tier.pets.forEach((pet) => {
-			pet.zooCell.wrapper.style.display = 'none'
-			pet.zooCell.wrapper._visibility = false
-			pet.zooCell.textEl.textContent = ''
-			pet.hbCell.wrapper.style.display = 'none'
-			pet.hbCell.wrapper._visibility = false
-			pet.hbCell.textEl.textContent = ''
+			pet.zooCell.update(false)
+			pet.hbCell.update(false)
 			pet.caught = {
 				zoo: 0,
 				hb: [],
