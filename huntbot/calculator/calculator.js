@@ -519,17 +519,22 @@ const stringToLevel = (levelString) =>
 
 function initPetDom(pet, zooPetGrid, hbPetGrid) {
 	const makeCell = () => {
+		var displayedVisibility = false
+		var displayedStr = ''
 		const textEl = make('div')
 		const wrapper = make('div', { className: 'pet-cell', dataset: { name: pet.name } }, [
 			make('img', { src: pet.emoteSrc, loading: 'lazy', decoding: 'async' }),
 			textEl,
 		])
 		wrapper.update = (visible, str) => {
-			if (visible !== wrapper._visibility) {
+			if (visible !== displayedVisibility) {
 				wrapper.style.display = visible ? 'flex' : 'none'
-				wrapper._visibility = visible
+				displayedVisibility = visible
 			}
-			if (visible) textEl.textContent = str
+			if (visible && str !== displayedStr) {
+				textEl.textContent = str
+				displayedStr = str
+			}
 		}
 		return wrapper
 	}
