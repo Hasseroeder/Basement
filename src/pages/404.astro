@@ -1,0 +1,21 @@
+---
+import './main.css';
+import Construction from '../components/construction.astro'
+import ConstructionText from '../content/constructionText.mdx'
+import Navbar from '../components/navbar.astro';
+import Blinkies from '../components/blinkies.astro';
+import Head from '../components/head.astro';
+---
+<html>
+  <Head title="404 - Not Found" description="We're probably still working on this part of the page!" />
+
+  <body>
+    <div class="center-pillar">
+      <Navbar/>
+      <Construction>
+        <ConstructionText />
+      </Construction>
+      <Blinkies/>
+    </div>
+  </body>
+</html>

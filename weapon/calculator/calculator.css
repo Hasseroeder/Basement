@@ -254,11 +254,6 @@
 	width: 100%;
 }
 
-/*these are still WIP, would eventually be used for switching weapons in the weapon calculator*/
-.weaponImageGridWrapper:hover .toolbarSubMenu {
-	visibility: visible;
-}
-
 .weaponImageGridWrapper a:hover {
 	background-color: #555555;
 	color: lightgray;

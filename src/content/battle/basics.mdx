@@ -1,0 +1,63 @@
+## Quick preamble
+
+To learn the most about battles, always turn on battle logs! (`owo battlesetting logs=link`).  
+I've learned 50% of what I know today, just from logs.  
+Other sources of learning include Helper bots, as some of them also have logs and can help you simulate & understand matchups better.
+Otherwise, just talking with experienced players is a great resource, as the community is super helpful and always happy to explain mechanics.
+
+### OwO Battles
+
+There are 2 types of battles: friendly battles (`owob @user`) and random battles (`owob`).  
+When doing a friendly battle, the challenger will always go second, in random battles, however, they will always go first.
+
+The way that owo does random-battle matchmaking is by generating a random ID and checking what team correlates to that ID.
+Which means that you mostly battle old and inactive teams, not the actively played ones.  
+When a user gets their team deleted, that ID is no longer available and gets rounded up when checked.
+This is super rare, but when it happens, another team would be twice as common to encounter in battles.
+
+### the Battle System
+
+Each battle is split into 24 turns. And each turn is split into a pre-phase, a main-phase and an end-phase.
+
+#### Pre-Phase
+
+Firstly _canAttack_ gets checked, which will determine whether your pets will be able to act this turn.  
+This returns false for dead pets and for pets with the :freeze: freeze debuff applied.  
+_canAttack_ getting determined this early in the turn, means that even if your pet is un-frozen or revived later in the turn, it still won't be able to act.
+
+Then, during the pre-phase only, pets holding a :f_shield: Shield or :f_banner: Banner might act.  
+If a pet is holding a :f_shield: Shield but has no active :taunt: Taunt Buff, then the pet will use its shield, casting said buff.  
+For :f_banner: Banner the logic is slightly different, it will cast if it has no AttackUp Buff or if the AttackUp it has, were to expire after this turn.
+
+#### Main-Phase
+
+This is where the real magic happens! Damage is dealt, health is healed, and more! :woah:
+During the main phase, all pets act in alternating turns:
+First your pet in position 1,
+then the enemy pet in position 1,
+then your pet in position 2,
+etc. - if a pet is dead or its _canAttack_ is false, its turn is skipped, but the order will stay the same,
+i.e., two pets of one team might act after one another.  
+Position is incredibly important because of this ordering.
+
+#### End-Phase
+
+-# For the purposes of this, Buffs and Debuffs are both considered Buffs.
+
+During the end phase, post-turn buffs will trigger: :poison: Poison, :flame: Flame, :celeb: Celebration.
+
+Their effects are executed in reverse order of reception, which also reduces their duration by 1.
+But as these don't proc on dead pets, their duration is never reduced on them. ⇒ Dead pets keep these buffs indefinitely.
+
+The other Buffs also lose duration: :mort: :leech: :stinky: :taunt: :attup++: :defup: (but :freeze: duration is reduced elsewhere)  
+Buffs also have a "just created" tag on creation, this tag is removed now.  
+Only now, after all buffs went through their thing, a "clean up" is performed, and any that are at 0 duration (ie. marked for removal) are removed.
+
+:hgen: Hgen and :wgen: Wgen afterwards also trigger, and heal/replenish their pets.  
+I.e. when a :mort: Mortality Debuff ends in, say, turn 10, then Hgen will work again at full power in that turn.
+
+### Notes on reading logs
+
+Only after the Turn has ended, does the Battle Snapshot you see in the Logs get made.  
+Example: You'd think my Tank didn't have :taunt: this turn, but that's incorrect.  
+It had :taunt: throughout the whole turn, but only after the turn has ended, does OwO show the Battle Snapshot.

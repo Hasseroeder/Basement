@@ -1,16 +1,16 @@
-<!doctype html>
+---
+import '../main.css';
+import Navbar from '../../components/navbar.astro';
+import Blinkies from '../../components/blinkies.astro';
+import Construction from '../../components/construction.astro'
+import ConstructionText from '../../content/constructionText.mdx'
+import Head from '../../components/head.astro';
+---
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="icon" type="image/png" href="/media/misc_images/may.png" />
-    <title>Battles</title>
-    <link href="/main.css" rel="stylesheet" type="text/css" media="all" />
-  </head>
+  <Head title="Battle Math" description="Calculating Damage and Heal" />
   <body>
     <div class="center-pillar">
-      <div id="navbar"></div>
+      <Navbar/>
       <div class="container readable-text">
         <h1 style="margin-bottom: -0.6rem">Damage Calculation</h1>
         <p>
@@ -22,27 +22,27 @@
 
         <p>
           Each step will be followed by the example math for a level 50
-          <img class="battles-page-emotes" src="/media/owo_images/pets/deagle.gif" /> Eagle holding
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/pets/deagle.gif" /> Eagle holding
           a
-          <img class="battles-page-emotes" src="/media/owo_images/tiers/fabled.png" />
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_bow.png" />
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/tiers/fabled.png" />
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_bow.png" />
         </p>
 
         <h3 style="margin-bottom: -0.6rem">Base Damage</h3>
         <p>
           The first step for any attack involves only two numbers: the
           <a href="/pets.html">pet's relevant stat</a> (usually
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/STR.png" /> STR or
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/MAG.png" /> MAG for
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/STR.png" /> STR or
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/MAG.png" /> MAG for
           attacking weapons), and the weapon's modifier (e.g. 160% or 1.6 for a
-          <img class="battles-page-emotes" src="/media/owo_images/tiers/fabled.png" />
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_bow.png" />). Since
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/tiers/fabled.png" />
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_bow.png" />). Since
           the passives
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_str.png" />
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_str.png" />
           Strength and
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_mag.png" /> Magic
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_mag.png" /> Magic
           are calculated into the base
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/StrMag.png" />
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/StrMag.png" />
           STR/MAG stat, these are also accounted for during this step.
         </p>
         <pre class="discord-code"> BaseDamage = STR * WeaponModifier </pre>
@@ -71,27 +71,27 @@
         <ol>
           <li>
             Positive Modifiers (eg.
-            <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/attup.png" />
+            <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/attup.png" />
             Attack Up)
           </li>
           <li>
             Negative Modifiers (eg.
-            <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/defup.png" />
+            <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/defup.png" />
             Defense Up)
           </li>
           <li>
-            <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/PR.png" /> PR /
-            <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/MR.png" /> MR
+            <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/PR.png" /> PR /
+            <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/MR.png" /> MR
           </li>
           <li>
             Redirect Modifiers (<img
               class="battles-page-emotes"
-              src="/media/owo_images/battleEmojis/f_sg.png"
+              src="/src/assets/images/owo_images/battleEmojis/f_sg.png"
             />
             Safeguard,
-            <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/tether.png" />
+            <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/tether.png" />
             Tether, and
-            <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/leech.png" />
+            <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/leech.png" />
             Leech)
           </li>
         </ol>
@@ -103,19 +103,19 @@
         <h4 style="margin-bottom: -0.6rem">Positive Modifiers</h4>
         <p>
           Positive Modifiers include
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/attup.png" />,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/attup+.png" />,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/attup++.png" />,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_crit.png" />,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_enrage.png" />,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_gslay.png" />, and
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_resonance.png" />.
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/attup.png" />,
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/attup+.png" />,
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/attup++.png" />,
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_crit.png" />,
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_enrage.png" />,
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_gslay.png" />, and
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_resonance.png" />.
           Each of their buffs is based on the total of the Base Damage done.
         </p>
 
         <p>
           In our example, the damage will go through
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/attup.png" />.
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/attup.png" />.
         </p>
         <pre class="discord-code"> AfterPosModifiers = BaseDamage + (BaseDamage * Modifier) </pre>
         <br />
@@ -130,20 +130,20 @@
         <h4 style="margin-bottom: -0.6rem">Negative Modifiers</h4>
         <p>
           Negative Modifiers include
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png" />,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/defup.png" />,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/mort.png" />,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_adapt.png" />, and
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_resonance.png" />.
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/taunt.png" />,
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/defup.png" />,
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/mort.png" />,
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_adapt.png" />, and
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_resonance.png" />.
           These are stacked multiplicatively , with passives always going before buffs, multiplying
           on top of the previous step (Positive Modifiers).
         </p>
 
         <p>
           In our example, the damage will go through
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/taunt.png" /> and 1
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/taunt.png" /> and 1
           stack of
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_resonance.png" />.
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_resonance.png" />.
         </p>
         <pre class="discord-code"> AfterNegModifiers = AfterPosModifiers * (1 - Modifier) </pre>
         <br />
@@ -163,7 +163,7 @@
 
         <p>
           In our example, the damage will go through 60%
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/PR.png" /> PR.
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/PR.png" /> PR.
         </p>
         <pre class="discord-code"> AfterRes = AfterNegModifiers * (1 - Resistance) </pre>
         <br />
@@ -176,19 +176,19 @@
         <p>
           Finally comes Redirect Modifiers, which send the damage intercepted to something else.
           There are only three Redirect Modifiers,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_sg.png" />
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_sg.png" />
           Safeguard,
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/tether.png" />
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/tether.png" />
           Tether, and
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/leech.png" /> Leech.
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/leech.png" /> Leech.
           These are stacked multiplicatively , with passives always going before buffs, multiplying
           on top of the previous step (PR/MR).
         </p>
 
         <p>
           In our example, the damage will go through
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/f_sg.png" /> and
-          <img class="battles-page-emotes" src="/media/owo_images/battleEmojis/tether.png" />.
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/f_sg.png" /> and
+          <img class="battles-page-emotes" src="/src/assets/images/owo_images/battleEmojis/tether.png" />.
         </p>
         <pre class="discord-code"> FinalDamage = AfterRes * (1 - Modifier) </pre>
         <br />
@@ -202,9 +202,11 @@
         terms as you need, <b>multiplying</b> them with your current result.
       </div>
 
-      <div id="construction"></div>
-    </div>
+      <Construction>
+        <ConstructionText />
+      </Construction>
+      <Blinkies/>
 
-    <script type="module" src="/js/init.js"></script>
+    </div>
   </body>
 </html>

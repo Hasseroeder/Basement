@@ -18,22 +18,22 @@
 }
 
 body.tbh {
-	--cur-auto: url('/media/tbhCursors/tbh-normal.cur'), auto;
-	--cur-default: url('/media/tbhCursors/tbh-normal.cur'), default;
-	--cur-pointer: url('/media/tbhCursors/tbh-link.cur'), pointer;
-	--cur-text: url('/media/tbhCursors/tbh-text.cur'), text;
-	--cur-vertical-text: url('/media/tbhCursors/tbh-text.cur'), vertical-text;
-	--cur-crosshair: url('/media/tbhCursors/tbh-crosshair.cur'), crosshair;
-	--cur-move: url('/media/tbhCursors/tbh-move.cur'), move;
-	--cur-grab: url('/media/tbhCursors/tbh-crosshair.cur'), grab;
-	--cur-grabbing: url('/media/tbhCursors/tbh-crosshair.cur'), grabbing;
-	--cur-not-allowed: url('/media/tbhCursors/tbh-no.ani'), not-allowed;
-	--cur-wait: url('/media/tbhCursors/tbh-working.ani'), wait;
-	--cur-progress: url('/media/tbhCursors/tbh-busy.ani'), progress;
-	--cur-resize-ew: url('/media/tbhCursors/tbh-horizontal.cur'), ew-resize;
-	--cur-resize-ns: url('/media/tbhCursors/tbh-vertical.cur'), ns-resize;
-	--cur-resize-nesw: url('/media/tbhCursors/tbh-nesw.cur'), nesw-resize;
-	--cur-resize-nwse: url('/media/tbhCursors/tbh-nwse.cur'), nwse-resize;
+	--cur-auto: url('/src/assets/images/tbhCursors/tbh-normal.cur'), auto;
+	--cur-default: url('/src/assets/images/tbhCursors/tbh-normal.cur'), default;
+	--cur-pointer: url('/src/assets/images/tbhCursors/tbh-link.cur'), pointer;
+	--cur-text: url('/src/assets/images/tbhCursors/tbh-text.cur'), text;
+	--cur-vertical-text: url('/src/assets/images/tbhCursors/tbh-text.cur'), vertical-text;
+	--cur-crosshair: url('/src/assets/images/tbhCursors/tbh-crosshair.cur'), crosshair;
+	--cur-move: url('/src/assets/images/tbhCursors/tbh-move.cur'), move;
+	--cur-grab: url('/src/assets/images/tbhCursors/tbh-crosshair.cur'), grab;
+	--cur-grabbing: url('/src/assets/images/tbhCursors/tbh-crosshair.cur'), grabbing;
+	--cur-not-allowed: url('/src/assets/images/tbhCursors/tbh-no.ani'), not-allowed;
+	--cur-wait: url('/src/assets/images/tbhCursors/tbh-working.ani'), wait;
+	--cur-progress: url('/src/assets/images/tbhCursors/tbh-busy.ani'), progress;
+	--cur-resize-ew: url('/src/assets/images/tbhCursors/tbh-horizontal.cur'), ew-resize;
+	--cur-resize-ns: url('/src/assets/images/tbhCursors/tbh-vertical.cur'), ns-resize;
+	--cur-resize-nesw: url('/src/assets/images/tbhCursors/tbh-nesw.cur'), nesw-resize;
+	--cur-resize-nwse: url('/src/assets/images/tbhCursors/tbh-nwse.cur'), nwse-resize;
 }
 
 * {
@@ -101,7 +101,7 @@ code,
 
 /* END OF CURSORS */
 
-.toolbar {
+.bar {
 	display: flex;
 	align-items: center;
 	background-color: #333;
@@ -111,48 +111,12 @@ code,
 	margin-right: 2.5rem;
 }
 
-.toolbar a {
-	color: lightgray;
-	padding: 0.5rem;
-	text-decoration: none;
-	margin: 0 5px;
-}
-
-.toolbar a:hover {
-	background-color: #555555;
-	color: lightgray;
-}
-
-.toolbarSubMenu {
-	visibility: hidden;
-	z-index: 100;
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	transform: translateY(9%);
-	background-color: #333;
-	padding: 0.5rem 0.5rem;
-}
-
-.toolbarMenu:hover .toolbarSubMenu {
-	visibility: visible;
-}
-
-.toolbarSubMenu a,
-.toolbarSubMenu button {
-	width: fit-content;
-	display: flex;
-	margin: 0;
-	padding: 0.5rem;
-}
-
 .center-pillar {
 	width: 70%;
 	min-width: 1000px;
 	max-width: 1200px;
 	margin: 0 auto;
-	padding-bottom: 1.25rem;
-	padding-top: 1.25rem;
+	padding: 1.25rem 2.5rem;
 	background-color: #222222;
 }
 
@@ -174,8 +138,7 @@ code,
 }
 
 .container {
-	margin-left: 5rem;
-	margin-right: 5rem;
+	margin: 0 5rem;
 }
 
 .discord-code {
@@ -470,11 +433,6 @@ button:hover {
 	text-align: end;
 }
 
-.battles-page-emotes {
-	width: 1.05rem;
-	vertical-align: text-bottom;
-}
-
 .italic {
 	font-style: italic;
 }
@@ -487,29 +445,6 @@ button:hover {
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-}
-
-.construction-container {
-	padding: 2rem;
-	margin: 2rem 10rem;
-	border: 1px solid gray;
-}
-
-.construction-image {
-	height: 150px;
-	display: block;
-	margin: 0 auto;
-}
-
-.blinkie-footer {
-	margin: 2rem 4rem;
-	gap: 0.5rem;
-	display: flex;
-}
-
-.blinkie {
-	width: 100%;
-	display: block;
 }
 
 .grayed-text {

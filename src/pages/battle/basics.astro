@@ -1,0 +1,31 @@
+---
+import '../main.css';
+import Navbar from '../../components/navbar.astro';
+import Blinkies from '../../components/blinkies.astro';
+import Construction from '../../components/construction.astro'
+import ConstructionText from '../../content/constructionText.mdx'
+import Head from '../../components/head.astro';
+import BattleBasics from '../../content/battle/basics.mdx'
+--- 
+<style>
+  :global(.emote) {
+    width: 1.05rem;
+    vertical-align: text-bottom;
+  }
+</style>
+
+<html>
+  <Head title="Battles" description="Battle procedures under the hood" />
+  <body>
+    <div class="center-pillar">
+      <Navbar />
+      <div class="container">
+        <BattleBasics/>
+      </div>
+      <Construction>
+        <ConstructionText />
+      </Construction>
+      <Blinkies/>
+    </div>
+  </body>
+</html>

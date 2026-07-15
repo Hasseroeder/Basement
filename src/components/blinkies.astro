@@ -1,0 +1,55 @@
+<footer id="blinkies"></footer>
+<style is:global>
+	#blinkies {
+		margin: 1rem 0rem;
+		gap: 0.5rem;
+		display: flex;
+	}
+	#blinkies img {
+		width: 100%;
+		display: block;
+	}
+</style>
+<script>
+	// @ts-nocheck
+	import * as cookieUtil from '../utils/cookieUtil.js'
+	function checkForTBH() {
+		document.body.classList.toggle('tbh', cookieUtil.getCookie('tbh') == 'true')
+	}
+	checkForTBH();
+
+	const blinkies = [
+		{ file: 'blinkiesCafe-7m.gif', href: 'https://blinkies.cafe/' },
+		{ file: 'blinkiesCafe-ji.gif', href: 'https://blinkies.cafe/' },
+		{ file: 'autism_blinkie2.gif', fn: () => {
+			cookieUtil.setCookie('tbh', cookieUtil.getCookie('tbh') !== 'true', 30)
+			checkForTBH()
+		}},
+		{ file: 'advert_blinkie.gif', href: 'https://github.com/Hasseroeder/Basement/' },
+		{ file: 'rbot_blinkie.gif', href: 'https://discord.com/oauth2/authorize?client_id=519287796549156864&scope=bot%20applications.commands&permissions=347200' },
+		{ file: 'obs_blinkie.gif', href: 'https://discord.gg/owobot' },
+		{ file: 'anydice_blinkie.gif', href: 'https://anydice.com/' },
+		{ file: 'neon_blinkie.gif', href: 'https://discord.gg/neonutil' },
+		{ file: 'dontasktoask_blinkie.png', href: 'https://dontasktoask.com/' },
+	]
+	const shuffled = [...blinkies].sort(() => Math.random() - 0.5)
+	const selected = shuffled.slice(0, 4)
+
+	const footer = document.querySelector('#blinkies')
+
+	for (const blinkie of selected) {
+		const a = document.createElement('a')
+
+		if (blinkie.href) {
+			a.href = blinkie.href
+			a.target = '_blank'
+		}
+		a.onclick = blinkie.fn;
+
+		const img = document.createElement('img')
+		img.src = '/src/assets/images/blinkies/' + blinkie.file
+
+		a.appendChild(img)
+		footer.appendChild(a)
+	}
+</script>
