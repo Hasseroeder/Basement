@@ -1,0 +1,39 @@
+$$
+    \mathrm{Multi}(n) =
+    \begin{cases}
+        25 & \mathrm{if} \ n\bmod 100=0,\\
+        10 & \mathrm{if} \ n\bmod 50=0,\\
+        5 & \mathrm{if} \ n\bmod 10=0,\\
+        3 & \mathrm{if} \ n\bmod 5=0,\\
+        1 & \mathrm{otherwise}
+    \end{cases}
+$$  
+<br/>
+$$
+    \mathrm{Exp}_\mathrm{bonus}(n) = 
+    \min
+    \biggr(
+        100000,
+        \Bigr\lfloor\mathrm{Multi}(n) \cdot \left( 10\sqrt{10n} +500\right)\Bigr\rceil
+    \biggr)
+$$  
+<br/>
+$$
+    \mathrm{Exp}_\mathrm{streak}(s)=
+    50
+    +200s
+    +\sum_{n=1}
+    \Biggl[
+        \bigg(\frac{s}{s+1}\bigg)^{10n}
+        \cdot 
+        \mathrm{Exp}_\mathrm{win}(n)
+    \Biggl]
+$$  
+<br/>
+$$    
+    \mathrm{Exp}_\mathrm{battle}(s,t)= 
+    \frac
+        {\mathrm{Exp}_\mathrm{streak}(s)\cdot (1-t)}
+        {s+1}
+        +100t
+$$

@@ -1,0 +1,89 @@
+---
+import '../styles/main.css';
+import '../styles/textPage.css';
+import '../styles/exp.css';
+import Navbar from '../components/navbar.astro';
+import Blinkies from '../components/blinkies.astro';
+import Head from '../components/head.astro';
+import Opener from '../content/exp/opener.mdx'
+import StreakWorth from '../content/exp/streakWorth.mdx'
+import GlobalText from '../content/exp/globalText.mdx'
+import GlobalFunction from '../content/exp/globalFunction.mdx'
+import ExpScript from '../scripts/exp.astro'
+import ExpMultiplier from '../content/exp/expMultiplier.mdx'
+import Knowledge from '../content/exp/knowledge.mdx'
+import HuntExp from '../content/exp/huntExp.mdx'
+import HuntbotExp from '../content/exp/huntbotExp.mdx'
+--- 
+<html>
+  <Head title="Pet Exp" description="A guide for OwO Bot's Pet Exp mechanics" />
+  <body>
+    <div class="center-pillar">
+      <Navbar />
+      <section><Opener/></section>
+      <section>
+        <details>
+          <summary>Streak Worth</summary>
+          <div>
+            <StreakWorth/>
+          </div>
+        </details>
+      </section>
+      <section>
+        <details>
+          <summary>NeonUtil Global</summary>
+          <div>
+            <GlobalText/>
+            <input class="hiddenRadio" type="radio" id="functionButton" name="globaltabs" checked>
+            <input class="hiddenRadio" type="radio" id="calculatorButton" name="globaltabs">
+            <input class="hiddenRadio" type="radio" id="graphButton" name="globaltabs">
+            <div class="tab-container">
+              <label id="functionLabel" for="functionButton">Function</label>
+              <label id="calculatorLabel" for="calculatorButton">Calculator</label>
+              <label id="graphLabel" for="graphButton">Graph</label>
+            </div>
+            <div class="global-window" id="functionContainer">
+              <GlobalFunction/>
+            </div>
+            <div class="global-window" id="calculatorContainer"></div>
+            <div class="global-window" id="graphContainer"></div>
+            <ExpScript/>
+          </div>
+        </details>
+      </section>
+      <section>
+        <ExpMultiplier/>
+      </section>
+      <section>
+        <details>
+          <summary>Knowledge</summary>
+          <div>
+            <Knowledge/>
+          </div>
+        </details>
+      </section>
+      <section>
+        <HuntExp/>
+        <div class="gem-chart-container"
+          style="
+            background-color: #303030;
+            color: lightgray;
+            padding-top: 20px;
+            margin: 10px 10px 10px;
+            justify-content: center;
+            display: flex;
+          "
+        >
+          <canvas
+            id="gemChart"
+            style="max-width: 70%; max-height: 300px; margin-bottom: 10px; margin-right: 4rem"
+          ></canvas>
+        </div>
+      </section>
+      <section>
+        <HuntbotExp/>
+      </section>
+      <Blinkies/>
+    </div>
+  </body>
+</html>

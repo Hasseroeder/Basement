@@ -1,0 +1,136 @@
+table {
+	margin: 0.5rem 0;
+	border: none;
+}
+table td {
+	padding: 0 0.2rem;
+	border-radius: 3px;
+	font-size: 0.85rem;
+	font-family: monospace;
+	border: none;
+}
+thead {
+	display: none;
+}
+
+.global-slider-wrapper input[type='range'] {
+	writing-mode: vertical-lr;
+	margin: 0.6rem 0;
+	flex: max-content;
+	background-color: #333;
+	appearance: none;
+	-webkit-appearance: none;
+	border-radius: 1rem;
+}
+
+.global-slider-wrapper input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: #333;
+	border-radius: 10rem;
+	outline: 2px outset #909090;
+	outline-offset: -0.7px;
+	border: none;
+}
+
+.global-slider-wrapper input[type='range']::-moz-range-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: #333;
+	border-radius: 10rem;
+	outline: 2px outset #909090;
+	outline-offset: -0.7px;
+	border: none;
+}
+
+.global-slider-wrapper {
+	padding: 0rem 0.5rem;
+	font-size: 0.8rem;
+	color: #707070;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.global-chart-wrapper {
+	aspect-ratio: auto 600 / 300;
+	flex: auto;
+}
+
+#calculatorContainer > div > * {
+	height: 1rem;
+	min-width: 4rem;
+	font-family: monospace;
+	color: lightgray;
+	padding: 0.1rem 0.2rem;
+	margin: 0.1rem 0.05rem;
+	border: none;
+	border-radius: 2px;
+}
+
+#calculatorContainer > div > input {
+	background-color: #191919;
+}
+
+#calculatorContainer > div {
+	display: flex;
+	flex-direction: column;
+}
+
+.hiddenRadio {
+	display: none;
+}
+#functionContainer,
+#calculatorContainer,
+#graphContainer {
+	display: none;
+}
+#functionContainer {
+	flex-direction: column;
+}
+
+#functionButton:checked ~ #functionContainer,
+#calculatorButton:checked ~ #calculatorContainer,
+#graphButton:checked ~ #graphContainer {
+	display: flex;
+}
+.tab-container {
+	display: flex;
+	justify-content: center;
+}
+.tab-container label {
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	border: 2px outset #666;
+	border-radius: 4px 4px 0 0;
+	background-color: #333;
+	color: lightgray;
+	flex: auto;
+}
+#functionButton:checked ~ .tab-container #functionLabel,
+#calculatorButton:checked ~ .tab-container #calculatorLabel,
+#graphButton:checked ~ .tab-container #graphLabel {
+	background-color: #222;
+	border-bottom: unset;
+}
+
+.global-window {
+	background-color: #222;
+	justify-content: center;
+	padding: 1rem;
+	border: 2px outset #666;
+	border-top: unset;
+}
+
+.gem-chart-container {
+	background-color: #303030;
+	color: lightgray;
+	padding-top: 20px;
+	margin: 10px 10px 10px;
+	justify-content: center;
+	display: flex;
+}

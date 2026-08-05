@@ -1,0 +1,23 @@
+---
+import '../../styles/main.css';
+import '../../styles/textPage.css'
+import Navbar from '../../components/navbar.astro';
+import Blinkies from '../../components/blinkies.astro';
+import Construction from '../../components/construction.astro'
+import ConstructionText from '../../content/constructionText.mdx'
+import Head from '../../components/head.astro';
+import BattleBasics from '../../content/battleSystem/basics.mdx'
+--- 
+<html>
+  <Head title="Battles" description="Battle procedures under the hood" />
+  <body>
+    <div class="center-pillar">
+      <Navbar />
+      <section><BattleBasics/></section>
+      <Construction>
+        <ConstructionText />
+      </Construction>
+      <Blinkies/>
+    </div>
+  </body>
+</html>

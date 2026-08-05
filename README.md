@@ -113,6 +113,8 @@ Following other attempts to write guides, this one also won't be able to be kept
 
 ## Technical
 
+NONE OF THIS IS ACCURATE ANYMORE
+
 We try to use vanilla JavaScript to keep the entry barrier as low as possible. You don't need any NPM or Node to help with this project, and you could probably even develop in notepad. We do have some dependencies, but we pull those with CDN script tags, so that's easy peasy.
 
 - Chart.js v4.5.0

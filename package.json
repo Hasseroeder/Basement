@@ -8,7 +8,12 @@
 		"preview": "astro preview"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "^7.0.3",
+		"@astrojs/mdx": "^7.0.5",
+		"chart.js": "^4.5.1",
+		"papaparse": "^5.5.4",
+		"rehype-mathjax": "^7.1.0",
+		"remark-math": "^6.0.0",
 		"unist-util-visit": "^5.1.0"
-	}
+	},
+	"type": "module"
 }

@@ -1,0 +1,360 @@
+---
+import Papa from 'papaparse'
+import bonusXP from '../data/bonusXPperStreak.csv?raw'
+
+const xpTable = Object.fromEntries(
+  Papa.parse(bonusXP, {
+    skipEmptyLines: true,
+  }).data.map(([key, val]: [string, string]) => [key, Number(val)])
+)
+---
+<script define:vars={{ xpTable }}>
+	window.xpTable = xpTable
+</script>
+<script>
+import Chart from 'chart.js/auto'
+import { make } from '../utils/injectionUtil.js'
+
+const xpTable = (window as any).xpTable
+
+const calculatorContainer = document.getElementById('calculatorContainer') as HTMLElement
+const graphContainer = document.getElementById('graphContainer') as HTMLElement
+const gemChartEl = document.getElementById('gemChart') as HTMLCanvasElement
+
+const multiTable = new Array(100).fill(1)
+for (let i = 0; i < 100; i += 5) multiTable[i] = 3
+for (let i = 0; i < 100; i += 10) multiTable[i] = 5
+for (let i = 0; i < 100; i += 50) multiTable[i] = 10
+multiTable[0] = 25
+
+function bonusXp(n : number) {
+	// for 10*n, since we're going in steps of 10
+	const dynamic = 10 * Math.sqrt(10 * n)
+	const bonus = multiTable[n % 100] * (dynamic + 500)
+	return Math.min(100000, Math.round(bonus))
+}
+
+function calcBonusXp(streak : number) {
+	const winChance = streak / (streak + 1)
+	const accuracyFactor = 1 // this is basically a config constant,
+	// make it higher if you want more accuracy,
+	// or lower if you want faster execution
+
+	let sum = 0
+	for (let n = 1; n <= streak * accuracyFactor; n++) {
+		sum += winChance ** (10 * n) * bonusXp(n)
+	}
+	return sum
+}
+
+const _xpCache = new Map()
+function cachedBonusXp(streak : number) {
+	const key = String(streak)
+	if (_xpCache.has(key)) return _xpCache.get(key)
+	const result = calcBonusXp(streak)
+	_xpCache.set(key, result)
+	return result
+}
+
+Object.entries(xpTable).forEach(([key, val]) => {
+	_xpCache.set(key, val)
+})
+
+function battleExp(s : number, t : number) {
+	[s,t] = [Number(s), Number(t)]
+	const tieChance = 0.01 * t // converting from percent to decimal
+	const lossPart = 50 // adding 50xp because each streak will have a loss, giving 50
+	const winPart = 200 * s // average amount of wins in the streak, giving 200
+	const bonusPart = cachedBonusXp(s)
+	const sum = lossPart + winPart + bonusPart
+
+	const battleExp = (sum * (1 - tieChance)) / (s + 1) + t
+	return battleExp
+}
+
+function attachBattleCalculator(wrapper : HTMLElement) {
+	const output = make('div')
+	output.update = function () {
+		this.textContent = Number(battleExp(streak.value, tierate.value)).toFixed(2)
+	}
+	const streak = make('input', {
+		className: 'no-arrows',
+		type: 'number',
+		min: 0,
+		max: 1e6,
+		step: 1,
+		value: 1,
+		lang: 'en',
+		oninput: () => output.update(),
+	})
+	const tierate = make('input', {
+		className: 'no-arrows',
+		type: 'number',
+		min: 0,
+		max: 100,
+		step: 0.01,
+		value: 0,
+		lang: 'en',
+		oninput: () => output.update(),
+	})
+
+	wrapper.append(
+		make('div', { className: 'align-child-text-right' }, [
+			streak,
+			tierate,
+			output,
+		]),
+		make('div', {}, [
+			make('div', { textContent: 'streak' }),
+			make('div', { textContent: '% tierate' }),
+			make('div', { textContent: 'exp/battle' }),
+		])
+	)
+
+	output.update()
+}
+
+function attachExpChart(wrapper : HTMLElement) {
+	const ctx = make('canvas')
+	const slider = make('input', {
+		type: 'range',
+		min: '0',
+		max: '100',
+		step: '1',
+		value: '0',
+	})
+
+	const percentText = make('div', { innerHTML: '0%' })
+	const tierateText = make('div', { innerHTML: 'tierate' })
+	const textWrapper = make('div', { style: 'height: 3.5rem' }, [percentText, tierateText])
+
+	wrapper.append(
+		make('div', { className: 'global-chart-wrapper' }, [ctx]),
+		make('div', { className: 'global-slider-wrapper' }, [slider, textWrapper])
+	)
+
+	let currentTierate = 0
+
+	const points = Array.from({ length: 101 }, (_, i) =>
+		[..._xpCache.keys()].map((k) => ({
+			x: k,
+			y: battleExp(k, i).toFixed(1),
+		}))
+	)
+
+	const streakExpChart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			datasets: [
+				{
+					label: 'Exp/Battle',
+					data: points[currentTierate],
+					borderColor: 'rgba(154, 213, 213, 1)',
+				},
+			],
+		},
+		options: {
+			animation: false,
+			plugins: {
+				legend: { display: false },
+				tooltip: {
+					mode: 'index',
+					intersect: false,
+					displayColors: false,
+					callbacks: { title: (tooltipData) => 'Streak: ' + tooltipData[0].label },
+				},
+			},
+			hover: { mode: 'index', intersect: false },
+			scales: {
+				y: {
+					min: 0,
+					max: 1400,
+					title: { display: true, text: 'Exp/Battle', font: { size: 13 } },
+					grid: { color: '#333' },
+				},
+				x: {
+					title: { display: true, text: 'average Streak', font: { size: 13 } },
+					type: 'logarithmic',
+					grid: { color: '#333' },
+					ticks: {
+						font: { size: 10 },
+						minRotation: 90,
+						maxRotation: 90,
+						callback: (t) => t,
+					},
+				},
+			},
+		},
+	})
+
+	slider.addEventListener('input', () => {
+		currentTierate = +slider.value
+		percentText.innerHTML = slider.value + '%'
+		streakExpChart.data.datasets[0].data = points[currentTierate]
+		streakExpChart.update('none')
+	})
+}
+
+attachBattleCalculator(calculatorContainer)
+attachExpChart(graphContainer)
+
+/*
+
+	Gem Chart Code
+
+*/
+
+const wpp = (tier: number, patreon: boolean) => {
+	const rest = [
+		{ rate: 0.3, value: 10 }, //uncommon
+		{ rate: 0.1, value: 20 }, //rare
+		{ rate: 0.01, value: 400 }, //epic
+		{ rate: 0.001, value: 1000 }, //mythic
+		{ rate: patreon ? 0.005 : 0, value: 400 }, //patreon
+		{ rate: patreon ? 0.0001 : 0, value: 2000 }, //custom patreon
+		{ rate: 0.0005, value: 2000 }, //legendary
+		{ rate: 0.00001 * tier, value: 5000 }, //gem
+		{ rate: 0.00001, value: 100000 }, //fabled
+		{ rate: 0.000001, value: 300000 }, //hidden
+	]
+
+	const common = {
+		rate: 1 - rest.reduce((s, v) => s + v.rate, 0),
+		value: 1,
+	}
+
+	const allTiers = [common, ...rest]
+
+	return allTiers.reduce((s, v) => s + v.rate * v.value, 0)
+}
+
+const F = (tier: number, patreon: boolean) =>
+	[1, 2, 4, 5, 6, 7, 8, 10][tier] * // pets with hunting gem
+	(tier > 0 ? 2 : 1) * // empowering gem mult
+	wpp(tier, patreon) // worth per pet
+
+const tiers = [
+	{ label: 'No Gems', background: 'rgba(160, 160, 160, 0.2)', border: 'rgb(200, 200, 200)' },
+	{
+		imageName: '../src/assets/images/owo_images/gems/ch.png',
+		label: 'Common Gems',
+		background: 'rgba(154, 45, 43, 0.2)',
+		border: 'rgb(168, 94, 93)',
+	},
+	{
+		imageName: '../src/assets/images/owo_images/gems/uh.png',
+		label: 'Uncommon Gems',
+		background: 'rgba(42, 137, 154, 0.2)',
+		border: 'rgb(81, 151, 164)',
+	},
+	{
+		imageName: '../src/assets/images/owo_images/gems/rh.png',
+		label: 'Rare Gems',
+		background: 'rgba(217, 168, 61, 0.2)',
+		border: 'rgb(219, 177, 85)',
+	},
+	{
+		imageName: '../src/assets/images/owo_images/gems/eh.png',
+		label: 'Epic Gems',
+		background: 'rgba(51, 77, 234, 0.2)',
+		border: 'rgb(81, 103, 232)',
+	},
+	{
+		imageName: '../src/assets/images/owo_images/gems/mh.png',
+		label: 'Mythic Gems',
+		background: 'rgba(142, 73, 244, 0.2)',
+		border: 'rgb(163, 108, 247)',
+	},
+	{
+		imageName: '../src/assets/images/owo_images/gems/lh.png',
+		label: 'Legendary Gems',
+		background: 'rgba(251, 241, 61, 0.2)',
+		border: 'rgb(234, 228, 105)',
+	},
+	{
+		imageName: '../src/assets/images/owo_images/gems/fh.png',
+		label: 'Fabled Gems',
+		background: 'rgba(150, 220, 250, 0.2)',
+		border: 'rgb(181, 234, 248)',
+	},
+]
+
+const makeDataset = (label: string, { patreon }: { patreon: boolean }) => ({
+	label,
+	data: tiers.map((_, i) => F(i, patreon)),
+	backgroundColor: tiers.map((t) => t.background),
+	borderColor: tiers.map((t) => t.border),
+	borderWidth: 1,
+})
+
+const datasets = [
+	makeDataset('no Patreon', { patreon: false }),
+	makeDataset('Patreon', { patreon: true }),
+]
+
+const gemImages = tiers.map((t) => make('img', { src: t.imageName }))
+
+const drawImagesPlugin = {
+	id: 'drawImages',
+	afterDatasetsDraw(chart: any, _: any) {
+		const ctx = chart.ctx
+		const meta0 = chart.getDatasetMeta(0)
+		const meta1 = chart.getDatasetMeta(1)
+		const size = 32
+		const bottom = chart.chartArea.bottom
+
+		for (let i = 0; i <= meta0.data.length; i++) {
+			const img = gemImages[i]
+			if (!img) continue
+			if (!img.complete) {
+				img.onload = () => chart.update()
+				continue
+			}
+			const el0 = meta0.data[i]
+			const el1 = meta1.data[i]
+			const x = (el0.x + el1.x) / 2 - size / 2
+			const y = bottom - size / 2
+
+			ctx.drawImage(img, x, y, size, size)
+		}
+	},
+}
+
+new Chart(gemChartEl, {
+	type: 'bar',
+	data: {
+		labels: tiers.map((t) => t.label),
+		datasets: datasets,
+	},
+	options: {
+		plugins: {
+			tooltip: {
+				xAlign: 'center',
+				yAlign: 'bottom',
+				displayColors: false,
+				titleFont: { weight: 'normal' },
+				callbacks: {
+					title: (tooltipItem: any) => [
+						tooltipItem[0].label + ' - ' + tooltipItem[0].dataset.label,
+					],
+					label: (tooltipItem: any) => [tooltipItem.raw.toFixed(2) + ' exp/hunt'],
+				},
+			},
+			legend: { display: false },
+		},
+		scales: {
+			x: {
+				grid: { color: '#404040' },
+				ticks: { callback: () => '' },
+			},
+			y: {
+				beginAtZero: true,
+				grid: { color: '#404040' },
+				ticks: { color: 'lightgray' },
+			},
+		},
+	},
+	plugins: [drawImagesPlugin],
+})
+
+</script>

@@ -1,30 +1,19 @@
 import { visit } from 'unist-util-visit'
+import emojiJson from './remark-emotes.json'
 
-const emojis = {
-	//Buffs and Debuffs
-	taunt: '/src/assets/images/owo_images/battleEmojis/taunt.png',
-	freeze: '/src/assets/images/owo_images/battleEmojis/freeze.png',
-	poison: '/src/assets/images/owo_images/battleEmojis/poison.png',
-	flame: '/src/assets/images/owo_images/battleEmojis/flame.png',
-	celeb: '/src/assets/images/owo_images/battleEmojis/celeb.png',
-	mortality: '/src/assets/images/owo_images/battleEmojis/mort.png',
-	mort: '/src/assets/images/owo_images/battleEmojis/mort.png',
-	leech: '/src/assets/images/owo_images/battleEmojis/leech.png',
-	stinky: '/src/assets/images/owo_images/battleEmojis/stinky.png',
-	attup: '/src/assets/images/owo_images/battleEmojis/attup.png',
-	'attup+': '/src/assets/images/owo_images/battleEmojis/attup+.png',
-	'attup++': '/src/assets/images/owo_images/battleEmojis/attup++.png',
-	defup: '/src/assets/images/owo_images/battleEmojis/defup.png',
-	//Weapons
-	f_shield: '/src/assets/images/owo_images/battleEmojis/f_shield.png',
-	f_banner: '/src/assets/images/owo_images/battleEmojis/f_banner.png',
-	f_hgen: '/src/assets/images/owo_images/battleEmojis/f_hgen.png',
-	f_wgen: '/src/assets/images/owo_images/battleEmojis/f_wgen.png',
-	//Misc
-	woah: '/src/assets/images/misc_images/woah.png',
+function parseEmojiJson(data) {
+	function parseEmoteObject({ manifest, folderPath }) {
+		const entries = Object.entries(manifest).map(([key, value]) => [key, folderPath + value])
+		return Object.fromEntries(entries)
+	}
+	const unsightlyArray = Object.values(data).map(parseEmoteObject)
+	const prettyObject = Object.assign({}, ...unsightlyArray)
+	return prettyObject
 }
 
-const EMOTE_REGEX = /:([a-z0-9_]+):/g
+const emojis = parseEmojiJson(emojiJson)
+
+const EMOTE_REGEX = /:([a-z0-9_+]+):/g
 
 export default function remarkEmotes() {
 	return (tree) => {
