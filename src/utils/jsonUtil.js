@@ -111,7 +111,7 @@ export async function loadPets() {
 	return response.data.map((rawPet) => {
 		const animated = rawPet[0] ? true : false
 		const tier = tiers.find((tier) => tier.slug == tierSlugs[rawPet[5]])
-		const emoji = tier.folderPath + rawPet[2] + animated ? '.gif' : '.png'
+		const emoteSrc = tier.folderPath + rawPet[2] + animated ? '.gif' : '.png'
 		return {
 			animated, //bool
 			prettyName: rawPet[1], //string
