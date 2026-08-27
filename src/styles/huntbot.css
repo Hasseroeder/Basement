@@ -1,0 +1,18 @@
+table {
+	font-size: 0.8rem;
+	table-layout: fixed;
+}
+td:first-child,
+th:first-child {
+	width: 6%;
+	padding: 0;
+}
+td,
+th {
+	width: 5%; /*I have no clue why 5% works*/
+	height: 2.25rem;
+	overflow: hidden;
+}
+th {
+	font-size: 2rem;
+}

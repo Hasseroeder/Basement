@@ -1,0 +1,64 @@
+---
+const { avatar= "/src/assets/images/owo_images/avatars/owo_avatar.png", name="OwO", bot = true } = Astro.props;
+---
+<style>
+  .embed {
+    display: flex;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    margin-top: 0.125rem;
+    flex-direction: column;
+    background: #303030;
+    border-radius: 4px;
+    border-left: 4px solid #909090;
+    padding: 1rem;
+    width: 36rem;
+  }
+  .discord-message {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  .discord-message-header {
+    display: flex;
+    align-items: center;
+  }
+  .bot-tag {
+    margin: 0.075em 0.25rem;
+    padding: 0.071875rem 0.275rem;
+    border-radius: 3px;
+    background: #707070;
+    font-size: 0.625em;
+  }
+  .timestamp {
+    height: 1.25rem;
+    cursor: var(--cur-default);
+    color: rgb(148, 155, 164);
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+  .avatar {
+    width: 2.5rem;
+    border-radius: 50%;
+    height: 2.5rem;
+    margin-top: 0.25rem;
+  }
+</style>
+<script>
+  document
+		.querySelectorAll('.timestamp')
+		.forEach((el) => (el.textContent = new Date().toTimeString().slice(0, 5)))
+</script>
+<div class="discord-message">
+  <img class="avatar" src={avatar} />
+  <div>
+    <div class="discord-message-header">
+      <span class="discord-name">{name}</span>
+      {bot && <span class="bot-tag">✓APP</span>}
+      <span class="timestamp"></span>
+    </div>
+    <div class="embed">
+      <slot />
+    </div>
+  </div>
+</div>

@@ -17,30 +17,109 @@ export async function loadAll(obj) {
 
 export async function loadPets() {
 	const tiers = [
-		{ name: 'common', priority: 0, prettyName: 'Common' },
-		{ name: 'uncommon', priority: 1, prettyName: 'Uncommon' },
-		{ name: 'rare', priority: 2, prettyName: 'Rare' },
-		{ name: 'epic', priority: 3, prettyName: 'Epic' },
-		{ name: 'mythical', priority: 4, prettyName: 'Mythic' },
-		{ name: 'legendary', priority: 5, prettyName: 'Legendary' },
-		{ name: 'gem', priority: 5, prettyName: 'Gem' },
-		{ name: 'bot', priority: 6, prettyName: 'Bot' },
-		{ name: 'distorted', priority: 7, prettyName: 'Distorted' },
-		{ name: 'fabled', priority: 8, prettyName: 'Fabled' },
-		{ name: 'hidden', priority: 9, prettyName: 'Hidden' },
-		{ name: 'special', priority: 10, prettyName: 'Special' },
-		{ name: 'patreon', priority: 11, prettyName: 'Patreon' },
-		{ name: 'cpatreon', priority: 12, prettyName: 'Custom' },
+		{
+			slug: 'common',
+			priority: 0,
+			prettyName: 'Common',
+			folderPath: '/src/images/owo_images/pets/',
+		},
+		{
+			slug: 'uncommon',
+			priority: 1,
+			prettyName: 'Uncommon',
+			folderPath: '/src/images/owo_images/pets/',
+		},
+		{
+			slug: 'rare',
+			priority: 2,
+			prettyName: 'Rare',
+			folderPath: '/src/images/owo_images/pets/',
+		},
+		{
+			slug: 'epic',
+			priority: 3,
+			prettyName: 'Epic',
+			folderPath: '/src/images/owo_images/pets/',
+		},
+		{
+			slug: 'mythical',
+			priority: 4,
+			prettyName: 'Mythic',
+			folderPath: '/src/images/owo_images/pets/',
+		},
+		{
+			slug: 'legendary',
+			priority: 5,
+			prettyName: 'Legendary',
+			folderPath: 'https://cdn.discordapp.com/emojis/',
+		},
+		{
+			slug: 'gem',
+			priority: 5,
+			prettyName: 'Gem',
+			folderPath: 'https://cdn.discordapp.com/emojis/',
+		},
+		{
+			slug: 'bot',
+			priority: 6,
+			prettyName: 'Bot',
+			folderPath: 'https://cdn.discordapp.com/emojis/',
+		},
+		{
+			slug: 'distorted',
+			priority: 7,
+			prettyName: 'Distorted',
+			folderPath: 'https://cdn.discordapp.com/emojis/',
+		},
+		{
+			slug: 'fabled',
+			priority: 8,
+			prettyName: 'Fabled',
+			folderPath: 'https://cdn.discordapp.com/emojis/',
+		},
+		{
+			slug: 'hidden',
+			priority: 9,
+			prettyName: 'Hidden',
+			folderPath: 'https://cdn.discordapp.com/emojis/',
+		},
+		{
+			slug: 'special',
+			priority: 10,
+			prettyName: 'Special',
+			folderPath: 'https://cdn.discordapp.com/emojis/',
+		},
+		{
+			slug: 'patreon',
+			priority: 11,
+			prettyName: 'Patreon',
+			folderPath: 'https://cdn.discordapp.com/emojis/',
+		},
+		{
+			slug: 'cpatreon',
+			priority: 12,
+			prettyName: 'Custom',
+			folderPath: 'https://cdn.discordapp.com/emojis/',
+		},
 	]
+
+	//const fileName = 'https://cdn.discordapp.com/emojis/' + pet.emoji
+	//const extension = pet.animated ? '.gif' : '.png'
+
 	const response = await loadJson('https://neonutil.com/api/animals')
-	const tierNames = response.ranks
-	return response.data.map((rawPet) => ({
-		animated: rawPet[0],
-		name: rawPet[1],
-		lowerName: rawPet[1].toLowerCase(),
-		emoji: rawPet[2],
-		aliases: rawPet[3].map((alias) => alias.toLowerCase()),
-		stats: rawPet[4],
-		tier: tiers.find((tier) => tier.name == tierNames[rawPet[5]]),
-	}))
+	const tierSlugs = response.ranks
+	return response.data.map((rawPet) => {
+		const animated = rawPet[0] ? true : false
+		const tier = tiers.find((tier) => tier.slug == tierSlugs[rawPet[5]])
+		const emoji = tier.folderPath + rawPet[2] + animated ? '.gif' : '.png'
+		return {
+			animated, //bool
+			prettyName: rawPet[1], //string
+			slug: rawPet[1].toLowerCase(), //string
+			emoteSrc, // string
+			aliases: rawPet[3].map((alias) => alias.toLowerCase()), // string[]
+			stats: rawPet[4], // int[]
+			tier, // { slug: string, priority: int, prettyName: string, folderPath: string}
+		}
+	})
 }

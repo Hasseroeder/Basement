@@ -161,49 +161,25 @@ code,
 	min-height: 2.75rem;
 }
 
-.discord-message-header {
-	position: relative;
-	margin-left: -4.5rem;
-	padding-left: 4.5rem;
-}
-
 .discord-avatar {
 	width: 2.5rem;
-	position: absolute;
-	left: 0px;
-	top: 0.125rem;
-	margin-left: 1.3rem;
 	border-radius: 50%;
-	object-fit: cover;
 	height: 2.5rem;
+	margin-top: 0.25rem;
 }
 
 .discord-name {
 	display: inline;
 	font-weight: 500;
 	color: #eee;
-	line-height: 1.375rem;
 }
 
 .discord-bot-tag {
-	position: relative;
-	top: -0.1rem;
-	margin: 0.075em 0.25rem 0px 0px;
+	margin: 0.075em 0.25rem;
 	padding: 0.071875rem 0.275rem;
 	border-radius: 3px;
 	background: #707070;
 	font-size: 0.625em;
-}
-
-.discord-timestamp {
-	display: inline-block;
-	height: 1.25rem;
-	cursor: var(--cur-default);
-	color: rgb(148, 155, 164);
-	margin-left: 0.25rem;
-	font-size: 0.75rem;
-	line-height: 1.375rem;
-	vertical-align: baseline;
 }
 
 .discord-embed-outer {
@@ -255,10 +231,6 @@ code,
 
 .discord-pet-display {
 	width: 5rem;
-}
-
-.discord-message {
-	line-height: 1.375rem;
 }
 
 .grayOnHover {
@@ -493,15 +465,6 @@ button:hover {
 .subscript {
 	font-size: 0.7rem;
 	margin: 0.2rem;
-}
-
-.discord-code-background {
-	border-radius: 3px;
-	background-color: #191919;
-}
-
-table.align-child-text-left td {
-	text-align: left;
 }
 
 .center-box {

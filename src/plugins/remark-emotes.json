@@ -841,6 +841,7 @@
 			"r": "rare.png",
 			"rare": "rare.png",
 			"u": "uncommon.png",
+			"uc": "uncommon.png",
 			"uncommon": "uncommon.png",
 			"c": "common.png",
 			"common": "common.png",
@@ -850,7 +851,11 @@
 			"patreon": "patreon.png",
 			"cp": "patreon.gif",
 			"cpatreon": "patreon.gif",
-			"custom": "patreon.gif"
+			"custom": "patreon.gif",
+			"bot": "bot.gif",
+			"b": "bot.gif",
+			"gem": "gem.gif",
+			"g": "gem.gif"
 		},
 		"folderPath": "/src/assets/images/owo_images/tiers/"
 	},
@@ -921,7 +926,10 @@
 			"woah": "woah.png",
 			"crossed_swords": "crossed_swords.png",
 			"stonks": "stonks.png",
-			"heart": "heart.png"
+			"heart": "heart.png",
+			"blahaj_head": "blahaj_head.png",
+			"blahaj_tail": "blahaj_tail.png",
+			"colon_three": "colon_three.png"
 		},
 		"folderPath": "/src/assets/images/misc_images/"
 	},
@@ -929,7 +937,24 @@
 		"manifest": {
 			"hb": "robot.png",
 			"huntbot": "robot.png",
-			"robot": "robot.png"
+			"robot": "robot.png",
+			"efficiency": "efficiency.png",
+			"eff": "efficiency.png",
+			"cd": "efficiency.png",
+			"gain": "gain.png",
+			"time": "duration.png",
+			"duration": "duration.png",
+			"cost": "cost.png",
+			"cowoncy": "cost.png",
+			"owo": "cost.png",
+			"money": "cost.png",
+			"trashcan": "trashcan.png",
+			"radar": "radar.png",
+			"experience": "experience.png",
+			"exp": "experience.png",
+			"xp": "experience.png",
+			"essence": "essence.gif",
+			"ess": "essence.gif"
 		},
 		"folderPath": "/src/assets/images/owo_images/huntbot/"
 	}

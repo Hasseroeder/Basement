@@ -1,0 +1,37 @@
+---
+import '../styles/main.css';
+import '../styles/textPage.css';
+import '../styles/huntbot.css';
+import Navbar from '../components/navbar.astro';
+import Blinkies from '../components/blinkies.astro';
+import Head from '../components/head.astro';
+import Opener from '../content/huntbot/opener.mdx'
+import Efficiency from '../content/huntbot/efficiency.mdx'
+import TierChart from '../content/huntbot/tierChart.mdx'
+import TierChartText from '../content/huntbot/tierChartText.mdx'
+import Gain from '../content/huntbot/gain.mdx'
+import Duration from '../content/huntbot/duration.mdx'
+import Experience from '../content/huntbot/experience.mdx'
+import Cost from '../content/huntbot/cost.mdx'
+import Radar from '../content/huntbot/radar.mdx'
+import Walkthrough from '../content/huntbot/walkthrough.mdx'
+---
+<html>
+  <Head title="Huntbot" description="A guide for OwO Bot's Huntbot" />
+  <body>
+    <div class="center-pillar">
+      <Navbar/>
+      <section><Opener/></section>
+      <section><Efficiency/></section>
+      <section><TierChart/></section>
+      <section><TierChartText/></section>
+      <section><Gain/></section>
+      <section><Duration/></section>
+      <section><Experience/></section>
+      <section><Cost/></section>
+      <section><Radar/></section>
+      <section><Walkthrough/></section>
+      <Blinkies/>
+    </div>
+  </body>
+</html>
