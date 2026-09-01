@@ -34,7 +34,7 @@ type Tier = RawTier & {
 
 	readonly expectedPetAmount: {
 		zoo: number
-		hb: number[]
+		readonly hb: number[]
 	}
 
 	readonly hbRow: visibilityElement
@@ -45,13 +45,13 @@ type Tier = RawTier & {
 	readonly hbLuckEls: {
 		readonly expectedLuck: HTMLDivElement
 		readonly actualLuck: HTMLDivElement
-		readonly arrow: updateableSVGElement
+		readonly arrow: LuckArrow
 	}
 
 	readonly zooLuckEls: {
 		readonly expectedLuck: HTMLDivElement
 		readonly actualLuck: HTMLDivElement
-		readonly arrow: updateableSVGElement
+		readonly arrow: LuckArrow
 	}
 }
 
@@ -61,11 +61,11 @@ type RawPet = {
 	readonly slug: string
 	readonly emoteSrc: string
 	readonly aliases: string[]
-	readonly stats: number[]
+	readonly stats: PetStats
 }
 
 type Pet = RawPet & {
-	readonly caught: { zoo: number; hb: number[] }
+	readonly caught: { zoo: number; readonly hb: number[] }
 	readonly displayed: { zoo: boolean; hb: boolean }
 	readonly hbCell: PetCell
 	readonly zooCell: PetCell
@@ -75,15 +75,18 @@ type PetCell = HTMLElement & {
 	update: (visible: boolean, str?: string) => void
 }
 
-type updateableSVGElement = SVGSVGElement & {
-	update: (actual: number, expected: number) => void
-}
-
 type visibilityElement = HTMLElement & {
 	_visibility: boolean
 }
 
 type CaughtOptions = { readonly mode: 'zoo' } | { readonly mode: 'hb'; readonly index: number }
+
+type LuckArrow = {
+	element: SVGSVGElement
+	update(actual: number, expected: number): void
+}
+
+type PetStats = [hp: number, str: number, pr: number, wp: number, mag: number, mr: number]
 
 function getElement<T extends Element>(selector: string): T {
 	const element = document.querySelector<T>(selector)
@@ -112,8 +115,12 @@ const [firstButton, prevButton, nextButton, lastButton, resetButton] = Array.fro
 )
 
 const currentHbLines = Array.from(document.querySelectorAll('.huntbotLine'))
-if (currentHbLines.length === 0) {
-	throw new Error('No .huntbotLine elements found')
+if (currentHbLines.length !== 2) {
+	throw new Error("Haven't found two .huntbotLine elements")
+}
+const toggleAllButtons = document.querySelectorAll<HTMLButtonElement>('#sacToggles button')
+if (toggleAllButtons.length !== 2) {
+	throw new Error("Haven't found two #sacToggles button elements")
 }
 
 function updateZooValue(): void {
@@ -130,23 +137,25 @@ function updateHbValue(n: number): void {
 	if (sacHbValue) sacHbValue.textContent = sac.toLocaleString()
 }
 
-const petBySlug = new Map()
+const petBySlug = new Map<string, Pet>()
 
 const makePetCell = ({
 	emoteSrc,
 	prettyName,
+	slug,
 }: {
 	emoteSrc: string
 	prettyName: string
+	slug: string
 }): PetCell => {
-	var displayedVisibility = false
-	var displayedStr = ''
+	let displayedVisibility = false
+	let displayedStr = ''
 	const textEl = make('div')
 	const petCell: PetCell = make(
 		'div',
 		{
 			className: 'pet-cell',
-			dataset: { name: prettyName },
+			dataset: { prettyName, slug },
 			update: (visible: boolean, str?: string) => {
 				if (visible !== displayedVisibility) {
 					petCell.style.display = visible ? 'flex' : 'none'
@@ -213,7 +222,7 @@ const zoo = rawZoo
 			expectedPetAmount: { zoo: 0, hb: [] },
 			toggleSac: function (override?: boolean): void {
 				this.isSac = override ?? !this.isSac
-				sacText.innerHTML = this.isSac ? 'Sac' : 'Sell'
+				sacText.textContent = this.isSac ? 'Sac' : 'Sell'
 				sacImg.src = this.isSac
 					? '/src/assets/images/owo_images/essence.gif'
 					: '/src/assets/images/owo_images/cowoncy.png'
@@ -248,12 +257,12 @@ const zoo = rawZoo
 		}: {
 			expectedLuck: HTMLDivElement
 			actualLuck: HTMLDivElement
-			arrow: updateableSVGElement
+			arrow: LuckArrow
 		}): HTMLDivElement =>
 			make('div', { className: 'details-row' }, [
 				make('div', {}, [make('img', { src: tier.emoteSrc })]),
 				make('div', {}, [expectedLuck]),
-				make('div', {}, [arrow, actualLuck]),
+				make('div', {}, [arrow.element, actualLuck]),
 			])
 
 		zooLuckContainer.append(makeDetailsRow(tier.zooLuckEls))
@@ -283,22 +292,23 @@ loadJson('https://neonutil.com/api/animals').then((response) => {
 	const cptier = zoo.find((tier: Tier) => tier.slug === 'cpatreon')
 	if (!cptier) throw new Error('Invariant violation: "cpatreon" tier not found')
 	cptier.pets.length = 0
-	cptier.zooPetGrid.innerHTML = ''
-	cptier.hbPetGrid.innerHTML = ''
+	cptier.zooPetGrid.textContent = ''
+	cptier.hbPetGrid.textContent = ''
 	response.data.forEach(
 		([animated, prettyName, emote, aliases, stats, tierIdx]: [
 			number,
 			string,
 			string,
 			string[],
-			number[],
+			PetStats,
 			number,
 		]) => {
 			if (tierIdx !== 6) return // index 6 means Custom Patreon
 			const emoteSrc =
-				'https://cdn.discordapp.com/emojis/' + emote + animated
-					? '.gif'
-					: '.png' + '?size=32'
+				'https://cdn.discordapp.com/emojis/' +
+				emote +
+				(animated ? '.gif' : '.png') +
+				'?size=32'
 			const pet: Pet = {
 				animated: animated ? true : false,
 				prettyName,
@@ -308,8 +318,8 @@ loadJson('https://neonutil.com/api/animals').then((response) => {
 				stats,
 				caught: { zoo: 0, hb: [] },
 				displayed: { zoo: false, hb: false },
-				hbCell: makePetCell({ prettyName, emoteSrc }),
-				zooCell: makePetCell({ prettyName, emoteSrc }),
+				hbCell: makePetCell({ prettyName, emoteSrc, slug: prettyName.toLowerCase() }),
+				zooCell: makePetCell({ prettyName, emoteSrc, slug: prettyName.toLowerCase() }),
 			}
 			cptier.zooPetGrid.append(pet.zooCell)
 			cptier.hbPetGrid.append(pet.hbCell)
@@ -420,7 +430,7 @@ class Trait {
 				row,
 				update: () => {
 					const ROIs = [Efficiency, Gain, Radar]
-						.filter((trait) => trait.level != trait.max)
+						.filter((trait) => trait.level !== trait.max)
 						.map((trait) => trait.ROI)
 
 					row.classList.toggle('maxxed', this.level === this.max)
@@ -499,14 +509,15 @@ class Trait {
 
 	set level(value) {
 		value = Number(value)
+		if (!Number.isFinite(value)) value = 0
 		value = Math.max(0, value)
 		value = Math.min(Number(this.input.max), value)
 		this._level = value
 		//DOM updates
 		this.input.value = String(value)
-		this.btnM.textContent = value == 0 ? 'MIN' : '<'
-		this.btnP.text.textContent = value == this.max ? 'MAX' : '>'
-		this.btnP.ttEl.hidden = value == this.max
+		this.btnM.textContent = value === 0 ? 'MIN' : '<'
+		this.btnP.text.textContent = value === this.max ? 'MAX' : '>'
+		this.btnP.ttEl.hidden = value === this.max
 		this.btnP.ttText.textContent = String(this.cost)
 		drawData()
 		save()
@@ -613,8 +624,8 @@ const Radar = new Trait({
 	costParams: { mult: 50, exponent: 2.5 },
 	valueParams: { mult: 0.04, base: 0 },
 	upgradeWorth: () => {
-		const botTier = zoo.find((tier) => tier.slug == 'bot')
-		const commonTier = zoo.find((tier) => tier.slug == 'common')
+		const botTier = zoo.find((tier) => tier.slug === 'bot')
+		const commonTier = zoo.find((tier) => tier.slug === 'common')
 		if (!botTier || !commonTier) throw new Error('Invariant violation: tier not found')
 		return (
 			(botTier.isSac ? 0.00000004 * botTier.value.sac * dailyPets() : 0) -
@@ -639,7 +650,6 @@ const renderPatreon = (): void =>
 		.querySelectorAll<HTMLElement>('.patreon-graying')
 		.forEach((el) => (el.hidden = patreon))
 
-const toggleAllButtons = document.querySelectorAll<HTMLButtonElement>('#sacToggles button')
 toggleAllButtons[0].onclick = () => toggleAllTiers(false)
 toggleAllButtons[1].onclick = () => toggleAllTiers(true)
 const toggleAllTiers = (override: boolean) => zoo.forEach((tier) => tier.toggleSac(override))
@@ -685,7 +695,9 @@ document.addEventListener('pointerover', (e) => {
 	const petCell = target.closest<HTMLElement>('.pet-cell')
 	if (!petCell) return
 	const rect = petCell.getBoundingClientRect()
-	const pet = petBySlug.get(petCell.dataset.name)
+	if (!petCell.dataset.slug) throw new Error('Invariant violation: petCell missing data-slug')
+	const pet = petBySlug.get(petCell.dataset.slug)
+	if (!pet) throw new Error('Invariant violation: pet not found for slug ' + petCell.dataset.slug)
 	tt.update(pet)
 	tt.wrapper.style.visibility = 'visible'
 	tt.wrapper.style.left = `${rect.right - 3}px`
@@ -767,45 +779,50 @@ function importFromCookie() {
 }
 
 const stringToLevel = (levelString: string) =>
-	levelString.split(',').forEach((value, i) => (traits[i].level = Number(value || 0)))
+	levelString
+		.split(',')
+		.slice(0, traits.length)
+		.forEach((value, i) => (traits[i].level = Number(value || 0)))
 
 function generateLuckDom(): {
 	zooLuckEls: {
 		expectedLuck: HTMLDivElement
 		actualLuck: HTMLDivElement
-		arrow: updateableSVGElement
+		arrow: LuckArrow
 	}
 	hbLuckEls: {
 		expectedLuck: HTMLDivElement
 		actualLuck: HTMLDivElement
-		arrow: updateableSVGElement
+		arrow: LuckArrow
 	}
 } {
 	const SVG_NS = 'http://www.w3.org/2000/svg'
 
-	const makeArrow = () => {
-		const el = document.createElementNS(SVG_NS, 'svg') as updateableSVGElement
-		el.setAttribute('viewBox', '0 0 16 16')
-		el.setAttribute('xmlns', SVG_NS)
+	const makeArrow = (): LuckArrow => {
+		const element = document.createElementNS(SVG_NS, 'svg')
+		element.setAttribute('viewBox', '0 0 16 16')
+		element.setAttribute('xmlns', SVG_NS)
 		const path = document.createElementNS(SVG_NS, 'path')
 		path.setAttribute('d', 'M10 8L14 8V10L8 16L2 10V8H6V0L10 4.76995e-08V8Z')
 		path.setAttribute('fill', '#ffdc51')
-		el.append(path)
+		element.append(path)
 
-		//Property 'update' does not exist on type 'SVGSVGElement'.ts(2339)
-		el.update = (actual, expected) => {
+		const update = (actual: number, expected: number): void => {
 			if (actual > expected) {
-				el.style.transform = 'rotate(-180deg)'
+				element.style.transform = 'rotate(-180deg)'
 				path.setAttribute('fill', '#56caff')
 			} else if (actual < expected) {
-				el.style.transform = 'rotate(0deg)'
+				element.style.transform = 'rotate(0deg)'
 				path.setAttribute('fill', '#ff5656')
 			} else {
-				el.style.transform = 'rotate(-90deg)'
+				element.style.transform = 'rotate(-90deg)'
 				path.setAttribute('fill', '#ffdc51')
 			}
 		}
-		return el
+		return {
+			element,
+			update,
+		}
 	}
 
 	return {
@@ -838,6 +855,7 @@ function newHuntbot() {
 		for (let i = 0; i < pets; i++) {
 			const r = Math.random()
 			const tierIdx = rateArray.findIndex((rate) => r < rate)
+			if (tierIdx === -1) throw new Error('Tier rates do not cover the RNG range')
 			const petIdx = Math.floor(Math.random() * zoo[tierIdx].pets.length)
 
 			const pet = zoo[tierIdx].pets[petIdx]
@@ -869,7 +887,7 @@ function displayNthHuntbot(n: number) {
 	for (const tier of zoo) {
 		tier.hbRow.style.display = 'none'
 		tier.hbRow._visibility = false
-		var tierPets = 0
+		let tierPets = 0
 		for (const pet of tier.pets) {
 			const visible = pet.caught.hb[n] !== 0
 			if (visible && !tier.hbRow._visibility) {
@@ -889,9 +907,9 @@ function displayNthHuntbot(n: number) {
 function displayZoo() {
 	zpSpan.textContent = getZP({ mode: 'zoo' }).toLocaleString()
 	const digitsNeeded = String(getMaxCaught({ mode: 'zoo' })).length
-	const countContainerArray = []
+	const countContainerArray: string[] = []
 	for (const tier of zoo) {
-		var tierPets = 0
+		let tierPets = 0
 		for (const pet of tier.pets) {
 			const visible = pet.caught.zoo !== 0
 			if (visible && !tier.zooRow._visibility) {
@@ -962,12 +980,12 @@ const reset = () => {
 		tier.zooRow.style.display = 'none'
 		tier.zooRow._visibility = false
 		tier.expectedPetAmount.zoo = 0
-		tier.expectedPetAmount.hb = []
+		tier.expectedPetAmount.hb.length = 0
 		tier.pets.forEach((pet) => {
 			pet.zooCell.update(false)
 			pet.hbCell.update(false)
 			pet.caught.zoo = 0
-			pet.caught.hb = []
+			pet.caught.hb.length = 0
 		})
 	})
 }

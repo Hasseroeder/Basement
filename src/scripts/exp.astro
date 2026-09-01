@@ -15,11 +15,19 @@ const xpTable = Object.fromEntries(
 import Chart from 'chart.js/auto'
 import { make } from '../utils/injectionUtil.js'
 
+function getElement<T extends Element>(selector: string): T {
+	const element = document.querySelector<T>(selector)
+	if (!element) {
+		throw new Error(`Required DOM element not found: ${selector}`)
+	}
+	return element
+}
+
 const xpTable = (window as any).xpTable
 
-const calculatorContainer = document.getElementById('calculatorContainer') as HTMLElement
-const graphContainer = document.getElementById('graphContainer') as HTMLElement
-const gemChartEl = document.getElementById('gemChart') as HTMLCanvasElement
+const calculatorContainer = getElement<HTMLElement>('#calculatorContainer')
+const graphContainer = getElement<HTMLElement>('#graphContainer')
+const gemChartEl = getElement<HTMLCanvasElement>('#gemChart')
 
 const multiTable = new Array(100).fill(1)
 for (let i = 0; i < 100; i += 5) multiTable[i] = 3
