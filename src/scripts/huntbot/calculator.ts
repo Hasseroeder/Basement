@@ -175,7 +175,7 @@ const makePetCell = ({
 let patreon = false
 let isDragging = false
 
-const rawZoo: RawTier[] = await loadJson('/huntbot/calculator/zoo.json')
+const rawZoo: RawTier[] = await loadJson('/src/data/zoo.json')
 const zoo = rawZoo
 	.filter((rawTier) => rawTier.huntbotAvailable)
 	.map((rawTier) => {
