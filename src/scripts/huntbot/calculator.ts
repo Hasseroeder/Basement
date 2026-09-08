@@ -8,6 +8,7 @@ import {
 	toFixedDigits,
 } from '../../utils/inputUtil.js'
 import { loadJson } from '../../utils/jsonUtil.js'
+import { getElement } from '../../utils/domUtil.js'
 
 type RawTier = {
 	readonly prettyName: string
@@ -88,14 +89,6 @@ type LuckArrow = {
 
 type PetStats = [hp: number, str: number, pr: number, wp: number, mag: number, mr: number]
 
-function getElement<T extends Element>(selector: string): T {
-	const element = document.querySelector<T>(selector)
-	if (!element) {
-		throw new Error(`Required DOM element not found: ${selector}`)
-	}
-	return element
-}
-
 const sellZooValue = getElement('#cowoncyZooValue')
 const sacZooValue = getElement('#essenceZooValue')
 const sellHbValue = getElement('#cowoncyHbValue')
@@ -109,7 +102,7 @@ const hbContainer = getElement('#huntbotContainer')
 const tierTable = getElement('.tier-table')
 const zpSpan = getElement('#zpSpan')
 const tableBox = getElement('#table-box')
-const gridContainer = getElement('.gridContainer')
+const gridContainer = getElement('.grid-container')
 const [firstButton, prevButton, nextButton, lastButton, resetButton] = Array.from(
 	document.querySelectorAll<HTMLButtonElement>('#simming-buttons button')
 )
@@ -167,7 +160,10 @@ const makePetCell = ({
 				}
 			},
 		},
-		[make('img', { src: emoteSrc, loading: 'lazy', decoding: 'async' }), textEl]
+		[
+			make('img', { src: emoteSrc, loading: 'lazy', decoding: 'async', className: 'emote' }),
+			textEl,
+		]
 	)
 	return petCell
 }
@@ -179,7 +175,7 @@ const rawZoo: RawTier[] = await loadJson('/src/data/zoo.json')
 const zoo = rawZoo
 	.filter((rawTier) => rawTier.huntbotAvailable)
 	.map((rawTier) => {
-		const makeEmote = () => make('img', { src: rawTier.emoteSrc })
+		const makeEmote = () => make('img', { src: rawTier.emoteSrc, className: 'emote' })
 
 		const zooPetGrid = make('div', { className: 'pet-grid' })
 		const hbPetGrid = make('div', { className: 'pet-grid' })
@@ -260,7 +256,7 @@ const zoo = rawZoo
 			arrow: LuckArrow
 		}): HTMLDivElement =>
 			make('div', { className: 'details-row' }, [
-				make('div', {}, [make('img', { src: tier.emoteSrc })]),
+				make('div', {}, [make('img', { src: tier.emoteSrc, className: 'emote' })]),
 				make('div', {}, [expectedLuck]),
 				make('div', {}, [arrow.element, actualLuck]),
 			])
@@ -416,10 +412,10 @@ class Trait {
 		}
 		this.emoji = make('img', {
 			src: `/src/assets/images/owo_images/huntbot/${this.name.toLowerCase()}.png`,
-			style: { height: '1rem' },
+			className: 'emote',
 		})
 
-		const header = make('div', { className: 'header-wrapper' }, [this.emoji, this.header])
+		const header = make('h4', {}, [this.emoji, this.header])
 
 		if (upgradeWorth) {
 			this.upgradeWorth = upgradeWorth
@@ -433,7 +429,7 @@ class Trait {
 						.filter((trait) => trait.level !== trait.max)
 						.map((trait) => trait.ROI)
 
-					row.classList.toggle('maxxed', this.level === this.max)
+					row.classList.toggle('line-through', this.level === this.max)
 					row.classList.toggle('recommended', this.ROI === Math.max(...ROIs))
 					cells[1].textContent = this.cost.toLocaleString()
 					cells[2].textContent = signedNumberFixedString(upgradeWorth(), 1) + ` ess/day`
@@ -457,12 +453,12 @@ class Trait {
 
 		const numberWrapper = make(
 			'div',
-			{ className: 'numberWrapper  rounded gray-hover', onclick: () => this.input.focus() },
+			{ className: 'number-wrapper  rounded gray-hover', onclick: () => this.input.focus() },
 			[lvlSpan, this.input]
 		)
 
 		const ttImg = make('img', {
-			className: 'upgrade-image',
+			className: 'upgrade-image emote',
 			src: '/src/assets/images/owo_images/essence.gif',
 		})
 		const ttText = make('div')
@@ -663,7 +659,7 @@ const save = debounce(function () {
 
 const tt = {
 	wrapper: make('div', {
-		className: 'pet-tooltip consistent-images',
+		className: 'pet-tooltip',
 	}),
 	title: make('div'),
 	statCells: [
@@ -674,7 +670,10 @@ const tt = {
 		'/src/assets/images/owo_images/battleEmojis/mag.png',
 		'/src/assets/images/owo_images/battleEmojis/mr.png',
 	].map((src) =>
-		make('div', { className: 'gapped-box center-box' }, [make('img', { src }), make('div')])
+		make('div', { className: 'gapped-box center-box' }, [
+			make('img', { src, className: 'emote' }),
+			make('div'),
+		])
 	),
 	rows: [make('div', { className: 'gapped-box' }), make('div', { className: 'gapped-box' })],
 	update(pet: Pet) {

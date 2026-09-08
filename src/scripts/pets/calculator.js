@@ -1,5 +1,5 @@
-import { loadJson, loadPets } from '/js/util/jsonUtil.js'
-import { make, doTimestamps } from '/js/util/injectionUtil.js'
+import { loadPets } from '/src/utils/jsonUtil.js'
+import { make, doTimestamps } from '/src/utils/injectionUtil.js'
 
 const petContainer = document.getElementById('petContainer')
 const effectContainer = document.getElementById('effectContainer')
@@ -11,8 +11,8 @@ const inputLvl = document.querySelector('.input-lvl')
 const levelWrapper = document.querySelector('#level-wrapper')
 const sliderLvl = document.getElementById('sliderLvl')
 
-const inputs = Array.from(document.querySelectorAll('.myInputs'))
-const outputs = Array.from(document.querySelectorAll('.myOutputs'))
+const inputs = Array.from(document.querySelectorAll('.my-inputs'))
+const outputs = Array.from(document.querySelectorAll('.my-outputs'))
 
 //for Mode: matching pets
 let showPets = true

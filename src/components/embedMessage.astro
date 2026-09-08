@@ -12,12 +12,15 @@ const { avatar= "/src/assets/images/owo_images/avatars/owo_avatar.png", name="Ow
     border-radius: 4px;
     border-left: 4px solid #909090;
     padding: 1rem;
-    width: 36rem;
   }
   .discord-message {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
+    width:100%;
+  }
+  .discord-message-inner{
+    flex: 1
   }
   .discord-message-header {
     display: flex;
@@ -44,14 +47,9 @@ const { avatar= "/src/assets/images/owo_images/avatars/owo_avatar.png", name="Ow
     margin-top: 0.25rem;
   }
 </style>
-<script>
-  document
-		.querySelectorAll('.timestamp')
-		.forEach((el) => (el.textContent = new Date().toTimeString().slice(0, 5)))
-</script>
 <div class="discord-message">
   <img class="avatar" src={avatar} />
-  <div>
+  <div class="discord-message-inner">
     <div class="discord-message-header">
       <span class="discord-name">{name}</span>
       {bot && <span class="bot-tag">✓APP</span>}
