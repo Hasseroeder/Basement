@@ -77,13 +77,10 @@ export const simpleLabelPluginFactory = (pluginConfig) => ({
 	beforeUpdate(chart) {
 		const groupName = pluginConfig.data.groupName
 		const anns = Object.values(chart.options.plugins.annotation.annotations)
-		//anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
-		anns.forEach((ann) => (ann.display = true))
+		anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
 	},
 
 	beforeInit(chart) {
-		if (!chart.options.plugins.annotation.annotations)
-			chart.options.plugins.annotation.annotations = {}
 		const anns = chart.options.plugins.annotation.annotations
 		const { labels, groupName } = pluginConfig.data
 
@@ -113,14 +110,11 @@ export const triangleTickPluginFactory = (pluginConfig) => ({
 	beforeUpdate() {
 		const groupName = pluginConfig.data.groupName
 		const anns = Object.values(this.chart.options.plugins.annotation.annotations)
-		//anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
-		anns.forEach((ann) => (ann.display = true))
+		anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
 	},
 
 	beforeInit(chart) {
 		this.chart = chart
-		if (!chart.options.plugins.annotation.annotations)
-			chart.options.plugins.annotation.annotations = {}
 		const anns = chart.options.plugins.annotation.annotations
 		const rightRotation = 60
 		const posFns = [
@@ -157,13 +151,10 @@ export const triangleLinePluginFactory = (pluginConfig) => ({
 	beforeUpdate(chart) {
 		const groupName = pluginConfig.data.groupName
 		const anns = Object.values(chart.options.plugins.annotation.annotations)
-		//anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
-		anns.forEach((ann) => (ann.display = true))
+		anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
 	},
 
 	beforeInit(chart) {
-		if (!chart.options.plugins.annotation.annotations)
-			chart.options.plugins.annotation.annotations = {}
 		const anns = chart.options.plugins.annotation.annotations
 
 		const posFns = [
@@ -202,8 +193,7 @@ export const advancedLabelPluginFactory = (pluginConfig) => ({
 	beforeUpdate(chart) {
 		const groupName = pluginConfig.data.groupName
 		const anns = Object.values(chart.options.plugins.annotation.annotations)
-		//anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
-		anns.forEach((ann) => (ann.display = true))
+		anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
 	},
 
 	beforeInit(chart) {
@@ -212,8 +202,6 @@ export const advancedLabelPluginFactory = (pluginConfig) => ({
 			return { width: Math.round(naturalW * ratio), height: Math.round(naturalH * ratio) }
 		}
 
-		if (!chart.options.plugins.annotation.annotations)
-			chart.options.plugins.annotation.annotations = {}
 		const anns = chart.options.plugins.annotation.annotations
 		const { labels, groupName } = pluginConfig.data
 

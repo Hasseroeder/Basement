@@ -110,16 +110,3 @@ Following other attempts to write guides, this one also won't be able to be kept
     </table>
   </div>
 </div>
-
-## Technical
-
-NONE OF THIS IS ACCURATE ANYMORE
-
-We try to use vanilla JavaScript to keep the entry barrier as low as possible. You don't need any NPM or Node to help with this project, and you could probably even develop in notepad. We do have some dependencies, but we pull those with CDN script tags, so that's easy peasy.
-
-- Chart.js v4.5.0
-- chartjs-plugin-annotation v3.1.0
-- MathJax v3
-
-To keep formatting consistent across contributors, we use: `.editorconfig`, `.prettierrc`.  
-These files work in most modern editors and will automatically apply the project's style when you work on it.
