@@ -818,7 +818,25 @@
 	"pet": {
 		"manifest": {
 			"eagle": "deagle.gif",
-			"deagle": "deagle.gif"
+			"deagle": "deagle.gif",
+			"wolf": "dwolf.gif",
+			"dwolf": "dwolf.gif",
+			"gorilla": "dgorilla.gif",
+			"dgorilla": "dgorilla.gif",
+			"frog": "dfrog.gif",
+			"dfrog": "dfrog.gif",
+			"boar": "dboar.gif",
+			"dboar": "dboar.gif",
+			"owl": "gowl.gif",
+			"gowl": "gowl.gif",
+			"lion": "glion.gif",
+			"glion": "glion.gif",
+			"deer": "gdeer.gif",
+			"gdeer": "gdeer.gif",
+			"squid": "gsquid.gif",
+			"gsquid": "gsquid.gif",
+			"fox": "gfox.gif",
+			"gfox": "gfox.gif"
 		},
 		"folderPath": "/src/assets/images/owo_images/pets/"
 	},

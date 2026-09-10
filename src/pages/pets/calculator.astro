@@ -1,11 +1,11 @@
 ---
-import '../../styles/main.css';
-import '../../styles/pets/calculator.css';
-import '../../styles/discord-chat.css';
-import Navbar from '../../components/navbar.astro';
-import Blinkies from '../../components/blinkies.astro';
-import Head from '../../components/head.astro';
-import EmbedMessage from '../../components/embedMessage.astro';
+import '@/src/styles/main.css';
+import '@/src/styles/pets/calculator/calculator.css';
+import '@/src/styles/calculators.css';
+import Navbar from '@/src/components/navbar.astro';
+import Blinkies from '@/src/components/blinkies.astro';
+import Head from '@/src/components/head.astro';
+import EmbedMessage from '@/src/components/embedMessage.astro';
 ---
 <!doctype html>
 <html>
@@ -158,9 +158,9 @@ import EmbedMessage from '../../components/embedMessage.astro';
       </div>
       <Blinkies/>
     </div>
-    <script type="module" src="/src/scripts/pets/calculator.js"></script>
+    <script type="module" src="/src/scripts/pets/calculator/calculator.js"></script>
     <script>
-      import '../../scripts/timestamp';
+      import '@/src/scripts/timestamp';
     </script>
   </body>
 </html>

@@ -1,14 +1,14 @@
-import * as cookie from '../../utils/cookieUtil.js'
-import { signedNumberFixedString, numStringToSubscript, zeroPad } from '../../utils/stringUtil.js'
-import { make } from '../../utils/injectionUtil.js'
+import * as cookie from '@/src/utils/cookieUtil.js'
+import { signedNumberFixedString, numStringToSubscript, zeroPad } from '@/src/utils/stringUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
 import {
 	debounce,
 	roundToDecimals,
 	makeRepeatingButton,
 	toFixedDigits,
-} from '../../utils/inputUtil.js'
-import { loadJson } from '../../utils/jsonUtil.js'
-import { getElement } from '../../utils/domUtil.js'
+} from '@/src/utils/inputUtil.js'
+import { loadJson } from '@/src/utils/jsonUtil.js'
+import { getElement } from '@/src/utils/domUtil.js'
 
 type RawTier = {
 	readonly prettyName: string

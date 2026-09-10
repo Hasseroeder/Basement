@@ -1,0 +1,130 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import EmbedMessage from "./embedMessage.astro";
+
+const embedMessageProps = {
+  avatar: "/src/assets/images/owo_images/avatars/owo_avatar.png",
+  name: "OwO",
+  bot: true,
+};
+
+const { 
+    slug = "", 
+    nickname = "", 
+    description = "", 
+    count = "",
+    rank = "", 
+    rarity = "", 
+    aliases = [], 
+    sell = "", 
+    sacrifice = "", 
+    stats = { hp: 0, str: 0, pr: 0, wp: 0, mag: 0, mr: 0 }
+}:{ 
+    slug?: string; 
+    nickname?: string; 
+    description?: string; 
+    count?: string; 
+    rank?: string; 
+    rarity?: string; 
+    aliases?: string[]; 
+    sell?: string; 
+    sacrifice?: string; 
+    stats?: { hp: number, str: number, pr: number, wp: number, mag: number, mr: number }
+} = Astro.props;
+
+const gifPath = path.join(
+  process.cwd(),
+  "/src/assets/images/owo_images/pets",
+  `${slug}.gif`
+);
+
+const extension = fs.existsSync(gifPath) ? "gif" : "png";
+const petSrc = `/src/assets/images/owo_images/pets/${slug}.${extension}`;
+---
+<style>
+    h3 {
+        display: flex;
+        align-items: center;
+        margin: 0 0 0.5rem 0;
+        font-size: 1em;
+    }
+    .content {
+        font-size: 0.9em;
+        line-height: 1.35em;
+    }
+    .description {
+        white-space: pre-wrap;
+        font-style: italic;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: min-content;
+    }
+    .stats-grid > span {
+        display: flex;
+        align-items: center;
+          height: 1.10rem;
+    }
+    code {
+        font-size: 1.15em;
+        background: #202020;
+        line-height: unset;
+        padding: 0.0em 0.2em;
+    }
+    .big-image {
+        width: 4rem;
+        height: 4rem;
+    }
+</style>
+<EmbedMessage {...embedMessageProps}>
+    <div style="display:flex; gap: 1rem;">
+        <div>
+            <h3>
+                <img
+                    aria-label={":" + slug + ":"}
+                    src={petSrc}
+                    alt={":" + slug + ":"}
+                    draggable="false"
+                    class="emote"
+                />
+                &nbsp;
+                {slug}
+            </h3>
+            <div class="content">
+                <span class="description">{description}</span><br/>
+                <br/>
+                <strong>Nickname:</strong> {nickname}<br/>
+                <strong>Count:</strong> {count}<br/>
+                <strong>Rank:</strong> {rank}<br/>
+                <strong>Rarity:</strong> {rarity}<br/>
+                <strong>Alias:</strong> {aliases.join(", ")}<br/>
+                <strong>Sell:</strong> {sell}<br/>
+                <strong>Sacrifice:</strong> {sacrifice}<br/>
+                <div class="stats-grid">
+                    {Object.entries(stats).map(([key, value]) => (
+                        <span>
+                            <img 
+                                aria-label={":" + key + ":"}
+                                src={`/src/assets/images/owo_images/battleEmojis/${key}.png`}
+                                alt={":" + key + ":"}
+                                draggable="false"
+                                class="emote"
+                            />
+                            <code>{value}</code>
+                            &nbsp;
+                        </span>
+                    ))}
+                </div>
+            </div>
+        </div>
+        <img
+            aria-label={":" + slug + ":"}
+            src={petSrc}
+            alt={":" + slug + ":"}
+            draggable="false"
+            class="big-image"
+        />
+    </div>
+</EmbedMessage>

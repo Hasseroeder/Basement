@@ -28,13 +28,13 @@ table {
 	width: 100%;
 }
 
-section {
+.table-section {
 	display: flex;
 	gap: 3rem;
 	align-items: center;
 }
 
-section > div:last-child {
+.table-section > div:last-child {
 	flex: 1;
 }
 
@@ -42,7 +42,6 @@ section > div:last-child {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	padding: 1rem 1rem 0.5rem 0;
 }
 
 h3 {

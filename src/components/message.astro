@@ -1,0 +1,51 @@
+---
+const { avatar= "/src/assets/images/owo_images/avatars/owo_avatar.png", name="OwO", bot = true } = Astro.props;
+---
+<style>
+  .discord-message {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    width:100%;
+  }
+  .discord-message-inner{
+    flex: 1
+  }
+  .discord-message-header {
+    display: flex;
+    align-items: center;
+  }
+  .bot-tag {
+    margin: .075em 0 .075em 0.25rem;
+    padding: 0.071875rem 0.275rem;
+    border-radius: 3px;
+    background: #707070;
+    font-size: 0.625em;
+  }
+  .timestamp {
+    margin-left: 0.25rem;
+    height: 1.25rem;
+    cursor: var(--cur-default);
+    color: rgb(148, 155, 164);
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+  .avatar {
+    width: 2.5rem;
+    border-radius: 50%;
+    height: 2.5rem;
+  }
+</style>
+<div class="discord-message">
+  <img class="avatar" src={avatar} />
+  <div class="discord-message-inner">
+    <div class="discord-message-header">
+      <span class="discord-name">{name}</span>
+      {bot && <span class="bot-tag">✓APP</span>}
+      <span class="timestamp"></span>
+    </div>
+    <div>
+      <slot />
+    </div>
+  </div>
+</div>

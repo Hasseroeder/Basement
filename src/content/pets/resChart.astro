@@ -1,0 +1,32 @@
+<style>
+  .chart-container {
+    display: flex; 
+    align-items: flex-start; 
+    gap: 2.5rem
+  }
+  .level-container {
+    color: #aaa; 
+    font-size: 13px; 
+    text-align: end; 
+    margin-bottom: 5px; 
+    height: 20px
+  }
+  .legend-container {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+</style>
+
+<p>
+  Following the calculation for your actual resistance,
+  you'll see that each further point of internal resistance has less and less impact on your resulting percentage.<br />
+  Here is a chart that illustrates this nicely:  
+</p>
+<div id="chartContainer" class="chart-container">
+  <canvas id="myChart" style="max-width: 75%; max-height: 400px"></canvas>
+  <div>
+    <div id="level-container" class="level-container"></div>
+    <div id="legend-container" class="legend-container"></div>
+  </div>
+</div>

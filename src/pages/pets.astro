@@ -1,0 +1,105 @@
+---
+import '@/src/styles/main.css';
+import '@/src/styles/textPage.css';
+import Navbar from '@/src/components/navbar.astro';
+import Blinkies from '@/src/components/blinkies.astro';
+import Head from '@/src/components/head.astro';
+
+import Intro from '@/src/content/pets/intro.mdx'
+import FoxExplanation from '@/src/content/pets/foxExplanation.mdx'
+import FoxExplanation2 from '@/src/content/pets/foxExplanation2.mdx'
+import FoxStats from '@/src/content/pets/foxStats.mdx'
+import FoxResistance from '@/src/content/pets/foxResistance.mdx'
+
+import Links from '@/src/content/pets/links.mdx'
+
+import Message from '@/src/components/message.astro';
+import PetDexMessage from '@/src/components/petDexMessage.astro';
+
+import foxArt from '@/src/asciiArt/fox.txt?raw';
+
+const foxPetProps = {
+  slug: "gfox",
+  nickname: "Fennekin",
+  description: 
+`Ring-ding-ding-ding-dingeringeding!
+Gering-ding-ding-ding-dingeringeding!
+Gering-ding-ding-ding-dingeringeding!`,
+  count: "0/464",
+  rank: "legendary",
+  rarity: "18,206,767 total caught",
+  aliases: ["fox", "gfox"],
+  sell: "15000 Cowoncy | 11 sold",
+  sacrifice: "10000 Essence | 453 killed",
+  stats: {
+    hp: 4,
+    str: 9,
+    pr: 1,
+    wp: 3,
+    mag: 1,
+    mr: 2
+  }
+}
+--- 
+<!doctype html>
+<html>
+  <Head title="Pets" description="A guide for OwO Bot's pets" />
+  <body>
+    <div class="center-pillar">
+      <Navbar />
+      <section><Intro /></section>
+      <div class="flexContainer">
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <Message avatar="/src/assets/images/owo_images/avatars/heather_avatar.png" name="Heather" bot={false}>
+          owo dex fox
+          </Message>
+          <PetDexMessage {...foxPetProps} />
+        </div>
+        <div style="width: 50%"><FoxExplanation /></div>
+      </div>
+      <section style="margin-bottom: 0;"><FoxExplanation2 /></section>
+      <div class="flexContainer">
+        <div style="flex: 1;"><FoxStats /></div>
+        <div>
+          <pre class="art-display">{foxArt}</pre>
+          <FoxResistance/>
+        </div>
+      </div>
+      <section><Links /></section>
+      <div class="container" id="resChartContainer">
+        <div class="bar">
+          <button class="injectable-button"></button>
+          <div style="font-size: 1rem">Resistance Chart</div>
+        </div>
+      </div>
+      <div class="container" id="effectiveHPContainer">
+        <div class="bar">
+          <button class="injectable-button"></button>
+          <div style="font-size: 1rem">Effective Health</div>
+        </div>
+      </div>
+      <div class="container" id="effectiveStatsContainer">
+        <div class="bar">
+          <button class="injectable-button"></button>
+          <div style="font-size: 1rem">Effective Stats</div>
+        </div>
+      </div>
+      <div class="container" id="triangle0Container" style="margin-top: 1rem">
+        <div class="bar">
+          <button class="injectable-button"></button>
+          <div style="font-size: 1rem">Pet Roles</div>
+        </div>
+      </div>
+      <div class="container" id="triangle1Container">
+        <div class="bar">
+          <button class="injectable-button"></button>
+          <div style="font-size: 1rem">Pet Roles - Crune</div>
+        </div>
+      </div>
+      <Blinkies />
+    </div>
+    <script>
+      import '@/src/scripts/timestamp';
+    </script>
+  </body>
+</html>

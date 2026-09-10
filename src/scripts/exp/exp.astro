@@ -1,19 +1,24 @@
 ---
 import Papa from 'papaparse'
-import bonusXP from '../data/bonusXPperStreak.csv?raw'
+import bonusXP from '@/src/data/bonusXPperStreak.csv?raw'
 
 const xpTable = Object.fromEntries(
-  Papa.parse(bonusXP, {
+  Papa.parse<[string, string]>(bonusXP, {
     skipEmptyLines: true,
   }).data.map(([key, val]: [string, string]) => [key, Number(val)])
 )
+/*
+Argument of type '([key, val]: [string, string]) => [string, number]' is not assignable to parameter of type '(value: unknown, index: number, array: unknown[]) => [string, number]'.
+  Types of parameters '__0' and 'value' are incompatible.
+    Type 'unknown' is not assignable to type '[string, string]'.ts(2345)
+*/
 ---
 <script define:vars={{ xpTable }}>
 	window.xpTable = xpTable
 </script>
 <script>
 import Chart from 'chart.js/auto'
-import { make } from '../utils/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
 
 function getElement<T extends Element>(selector: string): T {
 	const element = document.querySelector<T>(selector)
@@ -244,43 +249,43 @@ const F = (tier: number, patreon: boolean) =>
 const tiers = [
 	{ label: 'No Gems', background: 'rgba(160, 160, 160, 0.2)', border: 'rgb(200, 200, 200)' },
 	{
-		imageName: '../src/assets/images/owo_images/gems/ch.png',
+		imageName: '@/src/assets/images/owo_images/gems/ch.png',
 		label: 'Common Gems',
 		background: 'rgba(154, 45, 43, 0.2)',
 		border: 'rgb(168, 94, 93)',
 	},
 	{
-		imageName: '../src/assets/images/owo_images/gems/uh.png',
+		imageName: '@/src/assets/images/owo_images/gems/uh.png',
 		label: 'Uncommon Gems',
 		background: 'rgba(42, 137, 154, 0.2)',
 		border: 'rgb(81, 151, 164)',
 	},
 	{
-		imageName: '../src/assets/images/owo_images/gems/rh.png',
+		imageName: '@/src/assets/images/owo_images/gems/rh.png',
 		label: 'Rare Gems',
 		background: 'rgba(217, 168, 61, 0.2)',
 		border: 'rgb(219, 177, 85)',
 	},
 	{
-		imageName: '../src/assets/images/owo_images/gems/eh.png',
+		imageName: '@/src/assets/images/owo_images/gems/eh.png',
 		label: 'Epic Gems',
 		background: 'rgba(51, 77, 234, 0.2)',
 		border: 'rgb(81, 103, 232)',
 	},
 	{
-		imageName: '../src/assets/images/owo_images/gems/mh.png',
+		imageName: '@/src/assets/images/owo_images/gems/mh.png',
 		label: 'Mythic Gems',
 		background: 'rgba(142, 73, 244, 0.2)',
 		border: 'rgb(163, 108, 247)',
 	},
 	{
-		imageName: '../src/assets/images/owo_images/gems/lh.png',
+		imageName: '@/src/assets/images/owo_images/gems/lh.png',
 		label: 'Legendary Gems',
 		background: 'rgba(251, 241, 61, 0.2)',
 		border: 'rgb(234, 228, 105)',
 	},
 	{
-		imageName: '../src/assets/images/owo_images/gems/fh.png',
+		imageName: '@/src/assets/images/owo_images/gems/fh.png',
 		label: 'Fabled Gems',
 		background: 'rgba(150, 220, 250, 0.2)',
 		border: 'rgb(181, 234, 248)',

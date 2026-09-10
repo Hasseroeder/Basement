@@ -367,3 +367,8 @@ details[open] > summary img {
 	font-size: 0.6rem;
 	color: #888;
 }
+
+.robot-portrait {
+	height: 5rem;
+	width: 5rem;
+}

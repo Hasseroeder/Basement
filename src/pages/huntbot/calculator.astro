@@ -1,11 +1,11 @@
 ---
-import '../../styles/main.css';
-import '../../styles/huntbot/calculator.css';
-import '../../styles/discord-chat.css';
-import Navbar from '../../components/navbar.astro';
-import Blinkies from '../../components/blinkies.astro';
-import Head from '../../components/head.astro';
-import EmbedMessage from '../../components/embedMessage.astro';
+import '@/src/styles/main.css';
+import '@/src/styles/huntbot/calculator/calculator.css';
+import '@/src/styles/calculators.css';
+import Navbar from '@/src/components/navbar.astro';
+import Blinkies from '@/src/components/blinkies.astro';
+import Head from '@/src/components/head.astro';
+import EmbedMessage from '@/src/components/embedMessage.astro';
 ---
 <html>
   <Head title="Huntbot - Calculator" description="A calculator for OwO Bot's huntbot" />
@@ -29,7 +29,7 @@ import EmbedMessage from '../../components/embedMessage.astro';
                 To obtain more essence, use
                 <code class="discord-code">owo sacrifice &#123;animal&#125; &#123;count&#125;</code>.
               </div>
-              <img class="discord-pet-display" src="/src/assets/images/owo_images/huntbot/robot.png" />
+              <img class="robot-portrait" src="/src/assets/images/owo_images/huntbot/robot.png" />
             </div>
             <div class="grid-container"></div>
             <div id="table-box" class="subtle-gray-hover"></div>
@@ -177,7 +177,7 @@ import EmbedMessage from '../../components/embedMessage.astro';
       <Blinkies/>
     </div>
     <script>
-      import '../../scripts/huntbot/calculator';
+      import '@/src/scripts/huntbot/calculator/calculator';
     </script>
   </body>
 </html>

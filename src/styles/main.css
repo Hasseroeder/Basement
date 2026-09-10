@@ -184,10 +184,6 @@ code,
 	color: rgb(255, 255, 255);
 }
 
-.discord-pet-display {
-	width: 5rem;
-}
-
 .grayOnHover {
 	transition: background-color 0.05s ease-in-out;
 }

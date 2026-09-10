@@ -11,13 +11,13 @@ h5 {
 }
 h6 {
 	/*h6 is used as a makeshift subscript*/
-	margin-bottom: 0px;
 	font-size: 0.7rem;
 	margin: 0.5rem 0 -0.25rem 0;
 }
 .emote {
-	width: 1.15em;
-	vertical-align: text-bottom;
+	width: 1.3em;
+	height: 1.3em;
+	vertical-align: center;
 }
 code {
 	padding: 0.2em;
@@ -59,7 +59,7 @@ details > summary::before {
 	content: '';
 	width: 2rem;
 	height: 2rem;
-	background-image: url('../assets/images/misc_images/chevron.png');
+	background-image: url('@/src/assets/images/misc_images/chevron.png');
 	background-size: cover;
 	transition: transform 0.1s ease;
 }
