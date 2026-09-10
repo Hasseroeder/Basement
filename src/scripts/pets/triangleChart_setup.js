@@ -2,7 +2,9 @@ import { initializeTriangle } from '@/src/scripts/pets/triangleCharts/triangle.j
 import { loadJson } from '@/src/utils/jsonUtil.js'
 
 window.addEventListener('DOMContentLoaded', async () => {
-	const triangleConfigs = await loadJson('/src/data/triangleCharts/triangleChartConfigs.json')
+	const triangleConfigs = await loadJson(
+		'/src/data/pets/triangleCharts/triangleChartConfigs.json'
+	)
 	const dataSetConfigs = []
 
 	for (const config of Object.values(triangleConfigs)) {

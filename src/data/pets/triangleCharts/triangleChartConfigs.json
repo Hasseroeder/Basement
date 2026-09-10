@@ -224,7 +224,7 @@
 						"data": {
 							"dataSetConfigs": [
 								{
-									"dataSource": "/src/data/triangleCharts/pets.json",
+									"dataSource": "/src/data/pets/triangleCharts/pets.json",
 									"attributeGroups": {
 										"left": [1, 4],
 										"right": [3],
@@ -478,7 +478,7 @@
 						"data": {
 							"dataSetConfigs": [
 								{
-									"dataSource": "/src/data/triangleCharts/cruneHolders.json",
+									"dataSource": "/src/data/pets/triangleCharts/cruneHolders.json",
 									"attributeGroups": {
 										"left": [2],
 										"right": [3, 5],
