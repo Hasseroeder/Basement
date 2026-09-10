@@ -17,6 +17,7 @@ const {
     rank = "", 
     rarity = "", 
     aliases = [], 
+    points = "",
     sell = "", 
     sacrifice = "", 
     stats = { hp: 0, str: 0, pr: 0, wp: 0, mag: 0, mr: 0 }
@@ -28,6 +29,7 @@ const {
     rank?: string; 
     rarity?: string; 
     aliases?: string[]; 
+    points?: string;
     sell?: string; 
     sacrifice?: string; 
     stats?: { hp: number, str: number, pr: number, wp: number, mag: number, mr: number }
@@ -100,6 +102,7 @@ const petSrc = `/src/assets/images/owo_images/pets/${slug}.${extension}`;
                 <strong>Rank:</strong> {rank}<br/>
                 <strong>Rarity:</strong> {rarity}<br/>
                 <strong>Alias:</strong> {aliases.join(", ")}<br/>
+                <strong>Points:</strong> {points}<br/>
                 <strong>Sell:</strong> {sell}<br/>
                 <strong>Sacrifice:</strong> {sacrifice}<br/>
                 <div class="stats-grid">

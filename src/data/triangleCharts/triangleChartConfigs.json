@@ -1,5 +1,5 @@
-[
-	{
+{
+	"#petRoles-container": {
 		"baseConfig": {
 			"additionalPadding": { "top": 0, "right": 0, "bottom": 65, "left": 0 }
 		},
@@ -19,7 +19,7 @@
 					}
 				],
 				"image": {
-					"src": "/media/misc_images/label.png"
+					"src": "/src/assets/images/misc_images/label.png"
 				}
 			},
 			{
@@ -35,12 +35,12 @@
 					}
 				],
 				"image": {
-					"src": "/media/misc_images/help.png"
+					"src": "/src/assets/images/misc_images/help.png"
 				}
 			},
 			{
 				"image": {
-					"src": "/media/misc_images/wikipedia-logo.png"
+					"src": "/src/assets/images/misc_images/wikipedia-logo.png"
 				},
 				"prettyName": "Ternary Charts",
 				"type": "link",
@@ -148,11 +148,11 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/STR.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/str.png"
 											},
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/MAG.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/mag.png"
 											}
 										],
 										"arrow": {
@@ -172,7 +172,7 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/WP.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/wp.png"
 											}
 										],
 										"arrow": {
@@ -192,15 +192,15 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/HP.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/hp.png"
 											},
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/PR.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/pr.png"
 											},
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/MR.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/mr.png"
 											}
 										],
 										"arrow": {
@@ -224,7 +224,7 @@
 						"data": {
 							"dataSetConfigs": [
 								{
-									"dataSource": "/pets/json/pets.json",
+									"dataSource": "/src/data/triangleCharts/pets.json",
 									"attributeGroups": {
 										"left": [1, 4],
 										"right": [3],
@@ -312,7 +312,7 @@
 			}
 		]
 	},
-	{
+	"#petRolesCrune-container": {
 		"baseConfig": {
 			"additionalPadding": { "top": 0, "right": 0, "bottom": 65, "left": 0 }
 		},
@@ -332,7 +332,7 @@
 					}
 				],
 				"image": {
-					"src": "/media/misc_images/label.png"
+					"src": "/src/assets/images/misc_images/label.png"
 				}
 			},
 			{
@@ -348,12 +348,12 @@
 					}
 				],
 				"image": {
-					"src": "/media/misc_images/help.png"
+					"src": "/src/assets/images/misc_images/help.png"
 				}
 			},
 			{
 				"image": {
-					"src": "/media/misc_images/wikipedia-logo.png"
+					"src": "/src/assets/images/misc_images/wikipedia-logo.png"
 				},
 				"prettyName": "Ternary Charts",
 				"type": "link",
@@ -410,7 +410,7 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/PR.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/pr.png"
 											}
 										],
 										"arrow": {
@@ -430,11 +430,11 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/WP.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/wp.png"
 											},
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/MR.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/mr.png"
 											}
 										],
 										"arrow": {
@@ -454,7 +454,7 @@
 											{ "type": "gap", "px": 3 },
 											{
 												"type": "image",
-												"source": "/media/owo_images/battleEmojis/HP.png"
+												"source": "/src/assets/images/owo_images/battleEmojis/hp.png"
 											}
 										],
 										"arrow": {
@@ -478,7 +478,7 @@
 						"data": {
 							"dataSetConfigs": [
 								{
-									"dataSource": "/pets/json/cruneHolders.json",
+									"dataSource": "/src/data/triangleCharts/cruneHolders.json",
 									"attributeGroups": {
 										"left": [2],
 										"right": [3, 5],
@@ -526,4 +526,4 @@
 			}
 		]
 	}
-]
+}

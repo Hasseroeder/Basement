@@ -1,4 +1,4 @@
-import { make } from '/js/util/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
 
 export const cardinals = ['left', 'right', 'bottom']
 

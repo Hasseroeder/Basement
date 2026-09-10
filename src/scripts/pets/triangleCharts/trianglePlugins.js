@@ -1,4 +1,4 @@
-import { make } from '/js/util/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
 import {
 	cardinals,
 	clearTrident,
@@ -13,7 +13,7 @@ import {
 	getX,
 	getY,
 } from './triangleUtils.js'
-import { roundToDecimals } from '/js/util/inputUtil.js'
+import { roundToDecimals } from '@/src/utils/inputUtil.js'
 
 // --------------------------------------------------------------------------------------
 //
@@ -77,15 +77,18 @@ export const simpleLabelPluginFactory = (pluginConfig) => ({
 	beforeUpdate(chart) {
 		const groupName = pluginConfig.data.groupName
 		const anns = Object.values(chart.options.plugins.annotation.annotations)
-		anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
+		//anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
+		anns.forEach((ann) => (ann.display = true))
 	},
 
 	beforeInit(chart) {
+		if (!chart.options.plugins.annotation.annotations)
+			chart.options.plugins.annotation.annotations = {}
 		const anns = chart.options.plugins.annotation.annotations
 		const { labels, groupName } = pluginConfig.data
 
 		labels.forEach((label) => {
-			anns[label.content + 'label'] = {
+			anns[label.content + '_label'] = {
 				type: 'label',
 				content: label.content,
 				xValue: getX(label.coor),
@@ -110,11 +113,14 @@ export const triangleTickPluginFactory = (pluginConfig) => ({
 	beforeUpdate() {
 		const groupName = pluginConfig.data.groupName
 		const anns = Object.values(this.chart.options.plugins.annotation.annotations)
-		anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
+		//anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
+		anns.forEach((ann) => (ann.display = true))
 	},
 
 	beforeInit(chart) {
 		this.chart = chart
+		if (!chart.options.plugins.annotation.annotations)
+			chart.options.plugins.annotation.annotations = {}
 		const anns = chart.options.plugins.annotation.annotations
 		const rightRotation = 60
 		const posFns = [
@@ -151,11 +157,15 @@ export const triangleLinePluginFactory = (pluginConfig) => ({
 	beforeUpdate(chart) {
 		const groupName = pluginConfig.data.groupName
 		const anns = Object.values(chart.options.plugins.annotation.annotations)
-		anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
+		//anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
+		anns.forEach((ann) => (ann.display = true))
 	},
 
 	beforeInit(chart) {
+		if (!chart.options.plugins.annotation.annotations)
+			chart.options.plugins.annotation.annotations = {}
 		const anns = chart.options.plugins.annotation.annotations
+
 		const posFns = [
 			(p) => ({ start: [p, 0], end: [p, 100 - p] }),
 			(p) => ({ start: [100 - p, p], end: [0, p] }),
@@ -192,7 +202,8 @@ export const advancedLabelPluginFactory = (pluginConfig) => ({
 	beforeUpdate(chart) {
 		const groupName = pluginConfig.data.groupName
 		const anns = Object.values(chart.options.plugins.annotation.annotations)
-		anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
+		//anns.filter((ann) => ann.group === groupName).forEach((ann) => (ann.display = !this.hidden))
+		anns.forEach((ann) => (ann.display = true))
 	},
 
 	beforeInit(chart) {
@@ -201,6 +212,8 @@ export const advancedLabelPluginFactory = (pluginConfig) => ({
 			return { width: Math.round(naturalW * ratio), height: Math.round(naturalH * ratio) }
 		}
 
+		if (!chart.options.plugins.annotation.annotations)
+			chart.options.plugins.annotation.annotations = {}
 		const anns = chart.options.plugins.annotation.annotations
 		const { labels, groupName } = pluginConfig.data
 
@@ -368,12 +381,12 @@ export const tooltipPluginFactory = (pluginConfig) => ({
 			const { chart, tooltip } = context
 			if (!plugin.tooltipEl) {
 				const statImageSources = [
-					'/media/owo_images/battleEmojis/HP.png',
-					'/media/owo_images/battleEmojis/STR.png',
-					'/media/owo_images/battleEmojis/PR.png',
-					'/media/owo_images/battleEmojis/WP.png',
-					'/media/owo_images/battleEmojis/MAG.png',
-					'/media/owo_images/battleEmojis/MR.png',
+					'/src/assets/images/owo_images/battleEmojis/hp.png',
+					'/src/assets/images/owo_images/battleEmojis/str.png',
+					'/src/assets/images/owo_images/battleEmojis/pr.png',
+					'/src/assets/images/owo_images/battleEmojis/wp.png',
+					'/src/assets/images/owo_images/battleEmojis/mag.png',
+					'/src/assets/images/owo_images/battleEmojis/mr.png',
 				]
 				plugin.tooltipEl = make('div', { className: 'triangle-tooltip' })
 

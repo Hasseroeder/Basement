@@ -1,20 +1,37 @@
 <style>
-  .chart-container {
+  .reschart-container {
     display: flex; 
     align-items: flex-start; 
     gap: 2.5rem
   }
-  .level-container {
+  .reschart-level-container {
     color: #aaa; 
     font-size: 13px; 
     text-align: end; 
     margin-bottom: 5px; 
     height: 20px
   }
-  .legend-container {
+  .reschart-legend-container {
     display: flex;
     align-items: center;
     gap: 1.2rem;
+  }
+  :global(.res-image) {
+    width: 20px;
+    margin: 0 0.2rem 0 0.125rem;
+  }
+  :global(.res-li) {
+    align-items: center;
+    cursor: var(--cur-pointer);
+    display: flex;
+    margin-bottom: 10px;
+    height: 20px;
+  }
+
+  :global(.res-li-container) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 </style>
 
@@ -23,10 +40,11 @@
   you'll see that each further point of internal resistance has less and less impact on your resulting percentage.<br />
   Here is a chart that illustrates this nicely:  
 </p>
-<div id="chartContainer" class="chart-container">
-  <canvas id="myChart" style="max-width: 75%; max-height: 400px"></canvas>
+<div class="reschart-container">
+  <canvas id="reschart" style="max-width: 75%; max-height: 400px"></canvas>
   <div>
-    <div id="level-container" class="level-container"></div>
-    <div id="legend-container" class="legend-container"></div>
+    <div id="reschart-level-container" class="reschart-level-container"></div>
+    <div id="reschart-legend-container" class="reschart-legend-container"></div>
   </div>
 </div>
+<script type="module" src="/src/scripts/pets/resChart_setup.js"></script>

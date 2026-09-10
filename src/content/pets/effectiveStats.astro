@@ -1,0 +1,90 @@
+---
+import PetDexMessage from '@/src/components/petDexMessage.astro';
+
+const lovebunnyProps = {
+  slug: "2023val_lovebunny",
+  nickname: "bnuny",
+  description: 
+`"...what are you looking at?"
+
+Art drawn by @novareid
+
+Holiday pet created on February 2023 for Valentines Day!`,
+  count: "0/6",
+  rank: "special",
+  rarity: "137,296 total caught",
+  aliases: ["2023val_lovebunny", "lovebunny", "bnuy"],
+  points: "500",
+  sell: "???",
+  sacrifice: "5000 Essence | 6 killed",
+  stats: {
+    hp: 8,
+    str: 1,
+    pr: 1,
+    wp: 8,
+    mag: 1,
+    mr: 1
+  }
+}
+
+const slothbotProps = {
+  slug: "slothbot",
+  nickname: "Pride",
+  description:
+`Their movements may be slow, but every motion by these sloths is calculated. They climb to the top of the trees to take in the energy of the sun, preserving their strength.
+
+You won't believe their eyes when they show their power`,
+  count: "0/4",
+  rank: "bot",
+  rarity: "37,376 total caught",
+  aliases: ["slothbot", "sloth"],
+  points: "30000",
+  sell: "???",
+  sacrifice: "10000 Essence | 4 killed",
+  stats: {
+    hp: 9,
+    str: 0,
+    pr: 2,
+    wp: 8,
+    mag: 0,
+    mr: 2
+  }
+}
+
+---
+<style>
+    .pet-container :global(.embed){
+        background-color: #272727;
+    }
+    .pet-container :global(.embed) :global(code){
+        background-color: #191919;
+    }
+    .pet-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0 2rem;
+        gap: 2rem;
+    }
+    .pet-container > div {
+        flex: 1;
+    }
+</style>
+
+<p>Using the stat-system I explained above, let's have a look at Lovebunny and Slothbot:</p>
+<div class="pet-container">
+  <PetDexMessage {...lovebunnyProps} />
+  <PetDexMessage {...slothbotProps} />
+</div>
+<p>
+  Lovebunny is a WP-tank with 20 stats and Slothbot is a WP-tank with 21 stats. We typically ignore
+  the STR and MAG stats on these pets though, since they're useless here. Slothbot has zeroed these
+  stats, which typically have a minimum of 1. By doing this, Slothbot is +3 stats better in the
+  relevant ones. And by being +3 stats better than a 20stat, we consider Slothbot to be a <i>23stat</i> pet.
+</p>
+<p>
+  This concept gets complex rather quickly, once you try to expand it outside of Bot Pets, because
+  when is a stat wasted, and when is it just placed suboptimally? Should a 20stat with one mediocre
+  stat choice be considered a 19.5stat pet? It's difficult to say, so we usually only use the
+  concept when talking about Bots and Bot-likes.
+</p>

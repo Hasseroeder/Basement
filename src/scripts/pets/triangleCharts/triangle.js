@@ -1,9 +1,9 @@
-import { make } from '/js/util/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
+import Chart from 'chart.js/auto'
 import { Module } from './module.js'
 
-export async function initializeTriangle() {
-	const container = this.cachedDiv.querySelector('#chartContainer')
-	const { moduleConfigs, baseConfig, buttonConfigs } = this.data
+export async function initializeTriangle(container, data) {
+	const { moduleConfigs, baseConfig, buttonConfigs } = data
 
 	const constantPadding = 10 // this is unavoidable due to chart.js annoyingness
 	const additionalPadding = baseConfig.additionalPadding
@@ -95,6 +95,7 @@ export async function initializeTriangle() {
 			if (myChart._initialImageUpdateFired) return
 			myChart._initialImageUpdateFired = true
 			myChart.update()
+			console.log(myChart)
 		})
 	}
 }

@@ -1,3 +1,5 @@
+import Chart from 'chart.js/auto'
+
 const xValues = Array.from({ length: 90 }, (_, index) => index + 1)
 
 const makeSeries = (resAmount) =>
@@ -48,7 +50,7 @@ const htmlLegendPlugin = {
 			}
 
 			const img = document.createElement('img')
-			img.src = `/media/owo_images/resistance_chart/image_${colorPalette.length - idx - 1}.gif`
+			img.src = `/src/assets/images/owo_images/resistance_chart/image_${colorPalette.length - idx - 1}.gif`
 			img.alt = ds.label
 			img.className = 'res-image'
 
@@ -81,74 +83,71 @@ const htmlLegendPlugin = {
 	},
 }
 
-function initializeResChart() {
-	const container = this.cachedDiv.querySelector('#chartContainer')
-	const lvlDiv = container.querySelector('#level-container')
-	const legendDiv = container.querySelector('#legend-container')
-	const ctx = container.querySelector('#myChart')
+const lvlDiv = document.querySelector('#reschart-level-container')
+const legendDiv = document.querySelector('#reschart-legend-container')
+const ctx = document.querySelector('#reschart')
 
-	new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: xValues,
-			datasets: datasets,
+new Chart(ctx, {
+	type: 'line',
+	data: {
+		labels: xValues,
+		datasets: datasets,
+	},
+	plugins: [htmlLegendPlugin],
+	options: {
+		onHover: function (_, chartElement, chart) {
+			if (chartElement.length) {
+				const level = chartElement[0].index
+				const nbsp = '\u00A0'
+				lvlDiv.textContent = `Level ${level}`
+				this.data.datasets.forEach((ds, i) => {
+					chart.percents[i].textContent =
+						nbsp + nbsp + nbsp + (ds.data[level] * 100).toFixed(1) + '%'
+				})
+			}
 		},
-		plugins: [htmlLegendPlugin],
-		options: {
-			onHover: function (_, chartElement, chart) {
-				if (chartElement.length) {
-					const level = chartElement[0].index
-					const nbsp = '\u00A0'
-					lvlDiv.textContent = `Level ${level}`
-					this.data.datasets.forEach((ds, i) => {
-						chart.percents[i].textContent =
-							nbsp + nbsp + nbsp + (ds.data[level] * 100).toFixed(1) + '%'
-					})
-				}
-			},
-			hover: {
-				mode: 'index',
-				intersect: false,
-			},
-			responsive: true,
-			plugins: {
-				tooltip: { enabled: false },
-				legend: { display: false },
-				htmlLegendPlugin: { legendDiv: legendDiv },
-			},
-			scales: {
-				x: {
-					grid: { color: '#404040' },
-					ticks: {
-						color: 'lightgray',
-						callback: function (value, index) {
-							return index % 5 === 0 ? value : null // Show every fifth tick
-						},
-					},
-					title: {
-						display: true, // Show the title
-						text: 'Pet Level', // Title text
+		hover: {
+			mode: 'index',
+			intersect: false,
+		},
+		responsive: true,
+		plugins: {
+			tooltip: { enabled: false },
+			legend: { display: false },
+			htmlLegendPlugin: { legendDiv: legendDiv },
+		},
+		scales: {
+			x: {
+				grid: { color: '#404040' },
+				ticks: {
+					color: 'lightgray',
+					callback: function (value, index) {
+						return index % 5 === 0 ? value : null // Show every fifth tick
 					},
 				},
-				y: {
-					beginAtZero: true,
-					grid: { color: '#404040' },
-					ticks: {
-						color: 'lightgray',
-						callback: function (value) {
-							if (value === 0) {
-								return '0%' // Explicitly format 0
-							} else {
-								return value * 100 + '%'
-							}
-						},
+				title: {
+					display: true, // Show the title
+					text: 'Pet Level', // Title text
+				},
+			},
+			y: {
+				beginAtZero: true,
+				grid: { color: '#404040' },
+				ticks: {
+					color: 'lightgray',
+					callback: function (value) {
+						if (value === 0) {
+							return '0%' // Explicitly format 0
+						} else {
+							return value * 100 + '%'
+						}
 					},
-					title: {
-						display: true, // Show the title
-						text: 'Actual Resistance', // Title text
-					},
+				},
+				title: {
+					display: true, // Show the title
+					text: 'Actual Resistance', // Title text
 				},
 			},
 		},
-	})
-}
+	},
+})

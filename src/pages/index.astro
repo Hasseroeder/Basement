@@ -7,8 +7,8 @@ import Head from '@/src/components/head.astro';
 
 import Intro from '@/src/content/index/intro.mdx';
 
-import cat1 from '@/src/asciiArt/cat1.txt?raw';
-import cat2 from '@/src/asciiArt/cat2.txt?raw';
+import Cat1 from '@/src/assets/asciiArt/cat1.txt?raw';
+import Cat2 from '@/src/assets/asciiArt/cat2.txt?raw';
 ---
 <html>
   <Head title="Introduction" description="A guide for OwO Bot's battle-related mechanics" />
@@ -19,7 +19,7 @@ import cat2 from '@/src/asciiArt/cat2.txt?raw';
       <section style="display: flex; justify-content: center">
         <div class="section-wrapper">
           <section class="table-section">
-            <pre class="art-display">{cat1}</pre>
+            <pre class="art-display">{Cat1}</pre>
             <div>
               <h3>## Basement</h3>
               <div class="table-wrapper">
@@ -75,7 +75,7 @@ import cat2 from '@/src/asciiArt/cat2.txt?raw';
             </div>
           </section>
           <section class="table-section">
-            <pre class="art-display">{cat2}</pre>
+            <pre class="art-display">{Cat2}</pre>
             <div>
               <h3>## Friends & Useful Stuff</h3>
               <div class="table-wrapper">

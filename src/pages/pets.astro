@@ -1,6 +1,7 @@
 ---
 import '@/src/styles/main.css';
 import '@/src/styles/textPage.css';
+import '@/src/styles/pets/triangleCharts.css'
 import Navbar from '@/src/components/navbar.astro';
 import Blinkies from '@/src/components/blinkies.astro';
 import Head from '@/src/components/head.astro';
@@ -10,13 +11,18 @@ import FoxExplanation from '@/src/content/pets/foxExplanation.mdx'
 import FoxExplanation2 from '@/src/content/pets/foxExplanation2.mdx'
 import FoxStats from '@/src/content/pets/foxStats.mdx'
 import FoxResistance from '@/src/content/pets/foxResistance.mdx'
+import FoxArt from '@/src/assets/asciiArt/fox.txt?raw';
 
 import Links from '@/src/content/pets/links.mdx'
 
 import Message from '@/src/components/message.astro';
 import PetDexMessage from '@/src/components/petDexMessage.astro';
 
-import foxArt from '@/src/asciiArt/fox.txt?raw';
+import ResChart from '@/src/content/pets/resChart.astro'
+import EffectiveHP from '@/src/content/pets/effectiveHP.mdx'
+import EffectiveStats from '@/src/content/pets/effectiveStats.astro'
+import PetRoles from '@/src/content/pets/petRoles.mdx'
+import PetRolesCrune from '@/src/content/pets/petRolesCrune.mdx'
 
 const foxPetProps = {
   slug: "gfox",
@@ -29,6 +35,7 @@ Gering-ding-ding-ding-dingeringeding!`,
   rank: "legendary",
   rarity: "18,206,767 total caught",
   aliases: ["fox", "gfox"],
+  points: "10000",
   sell: "15000 Cowoncy | 11 sold",
   sacrifice: "10000 Essence | 453 killed",
   stats: {
@@ -61,45 +68,62 @@ Gering-ding-ding-ding-dingeringeding!`,
       <div class="flexContainer">
         <div style="flex: 1;"><FoxStats /></div>
         <div>
-          <pre class="art-display">{foxArt}</pre>
+          <pre class="art-display">{FoxArt}</pre>
           <FoxResistance/>
         </div>
       </div>
       <section><Links /></section>
-      <div class="container" id="resChartContainer">
-        <div class="bar">
-          <button class="injectable-button"></button>
-          <div style="font-size: 1rem">Resistance Chart</div>
-        </div>
-      </div>
-      <div class="container" id="effectiveHPContainer">
-        <div class="bar">
-          <button class="injectable-button"></button>
-          <div style="font-size: 1rem">Effective Health</div>
-        </div>
-      </div>
-      <div class="container" id="effectiveStatsContainer">
-        <div class="bar">
-          <button class="injectable-button"></button>
-          <div style="font-size: 1rem">Effective Stats</div>
-        </div>
-      </div>
-      <div class="container" id="triangle0Container" style="margin-top: 1rem">
-        <div class="bar">
-          <button class="injectable-button"></button>
-          <div style="font-size: 1rem">Pet Roles</div>
-        </div>
-      </div>
-      <div class="container" id="triangle1Container">
-        <div class="bar">
-          <button class="injectable-button"></button>
-          <div style="font-size: 1rem">Pet Roles - Crune</div>
-        </div>
-      </div>
+      <section>
+        <details>
+          <summary>Resistance Chart</summary>
+          <div>
+            <ResChart/>
+          </div>
+        </details>
+      </section>
+      <section>
+        <details>
+          <summary>Effective Health</summary>
+          <div>
+            <EffectiveHP/>
+          </div>
+        </details>
+      </section>
+      <section>
+        <details>
+          <summary>Effective Stats</summary>
+          <div>
+            <EffectiveStats/>
+          </div>
+        </details>
+      </section>
+      <section>
+        <details>
+          <summary>Pet Roles</summary>
+          <div>
+            <PetRoles/>
+            <div style="display: flex; justify-content: center">
+              <div id="petRoles-container" style="display: flex"></div>
+            </div>
+          </div>
+        </details>
+      </section>
+      <section>
+        <details>
+          <summary>Pet Roles - Crune</summary>
+          <div>
+            <PetRolesCrune/>
+            <div style="display: flex; justify-content: center">
+              <div id="petRolesCrune-container" style="display: flex"></div>
+            </div>
+          </div>
+        </details>
+      </section>
       <Blinkies />
     </div>
     <script>
       import '@/src/scripts/timestamp';
     </script>
+    <script type="module" src="/src/scripts/pets/triangleChart_setup.js"></script>
   </body>
 </html>
