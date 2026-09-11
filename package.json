@@ -2,7 +2,8 @@
 	"devDependencies": {
 		"@types/node": "^26.5.0",
 		"@types/papaparse": "^5.5.2",
-		"astro": "^7.0.7"
+		"astro": "^7.0.7",
+		"sass": "^1.104.0"
 	},
 	"scripts": {
 		"dev": "astro dev",
