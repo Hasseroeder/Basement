@@ -14,7 +14,7 @@ export function appendPassiveNode(passive) {
 	passive.updateQualities()
 
 	const title = make('strong', {
-		innerHTML: ' ' + passive.name + ' - ',
+		textContent: ` ${passive.name} - `,
 	})
 
 	wrapper.append(passive.image, title, messageHandler.generateDescription(passive), passive.bList)

@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config'
+import { unified } from '@astrojs/markdown-remark'
 import remarkEmotes from './src/plugins/remark-emotes.js'
 import remarkMath from 'remark-math'
 import rehypeMathjax from 'rehype-mathjax'
@@ -10,8 +11,10 @@ export default defineConfig({
 	publicDir: 'public',
 	outDir: 'dist',
 	markdown: {
-		remarkPlugins: [remarkEmotes, remarkMath],
-		rehypePlugins: [rehypeMathjax],
+		processor: unified({
+			remarkPlugins: [remarkEmotes, remarkMath],
+			rehypePlugins: [rehypeMathjax],
+		}),
 	},
 	compilerOptions: {
 		strict: false,

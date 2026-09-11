@@ -39,7 +39,7 @@ export class Buff {
 
 export function appendBuffNode(buff) {
 	const wrapper = make('div', { className: 'buff-item' })
-	const title = make('strong', { innerHTML: ' ' + buff.name + ' - ' })
+	const title = make('strong', { textContent: ` ${buff.name} - ` })
 
 	wrapper.append(buff.image, title, messageHandler.generateDescription(buff))
 	buff.parent.bList.appendChild(wrapper)

@@ -39,7 +39,7 @@ const valueToPercent = (value, { min, range }) => Math.round((100 * (value - min
 function getStatImage(inputString, className) {
 	const gifUrl = weaponAssetUrl(`owo_images/battleEmojis/${inputString}.gif`)
 	const pngUrl = weaponAssetUrl(`owo_images/battleEmojis/${inputString}.png`)
-	const imageClasses = 'weapon-emote ' + className ?? ''
+	const imageClasses = ['weapon-emote', className].filter(Boolean).join(' ')
 
 	const image = make('img', {
 		alt: `:${inputString}:`,

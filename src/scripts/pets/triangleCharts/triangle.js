@@ -99,7 +99,6 @@ export async function initializeTriangle(container, data) {
 			if (myChart._initialImageUpdateFired) return
 			myChart._initialImageUpdateFired = true
 			myChart.update()
-			console.log(myChart)
 		})
 	}
 }

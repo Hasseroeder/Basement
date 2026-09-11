@@ -16,102 +16,31 @@ export async function loadAll(obj) {
 }
 
 export async function loadPets() {
+	const localPetPath = '/src/assets/images/owo_images/pets/'
+	const cdnPath = 'https://cdn.discordapp.com/emojis/'
 	const tiers = [
-		{
-			slug: 'common',
-			priority: 0,
-			prettyName: 'Common',
-			folderPath: '/src/images/owo_images/pets/',
-		},
-		{
-			slug: 'uncommon',
-			priority: 1,
-			prettyName: 'Uncommon',
-			folderPath: '/src/images/owo_images/pets/',
-		},
-		{
-			slug: 'rare',
-			priority: 2,
-			prettyName: 'Rare',
-			folderPath: '/src/images/owo_images/pets/',
-		},
-		{
-			slug: 'epic',
-			priority: 3,
-			prettyName: 'Epic',
-			folderPath: '/src/images/owo_images/pets/',
-		},
-		{
-			slug: 'mythical',
-			priority: 4,
-			prettyName: 'Mythic',
-			folderPath: '/src/images/owo_images/pets/',
-		},
-		{
-			slug: 'legendary',
-			priority: 5,
-			prettyName: 'Legendary',
-			folderPath: 'https://cdn.discordapp.com/emojis/',
-		},
-		{
-			slug: 'gem',
-			priority: 5,
-			prettyName: 'Gem',
-			folderPath: 'https://cdn.discordapp.com/emojis/',
-		},
-		{
-			slug: 'bot',
-			priority: 6,
-			prettyName: 'Bot',
-			folderPath: 'https://cdn.discordapp.com/emojis/',
-		},
-		{
-			slug: 'distorted',
-			priority: 7,
-			prettyName: 'Distorted',
-			folderPath: 'https://cdn.discordapp.com/emojis/',
-		},
-		{
-			slug: 'fabled',
-			priority: 8,
-			prettyName: 'Fabled',
-			folderPath: 'https://cdn.discordapp.com/emojis/',
-		},
-		{
-			slug: 'hidden',
-			priority: 9,
-			prettyName: 'Hidden',
-			folderPath: 'https://cdn.discordapp.com/emojis/',
-		},
-		{
-			slug: 'special',
-			priority: 10,
-			prettyName: 'Special',
-			folderPath: 'https://cdn.discordapp.com/emojis/',
-		},
-		{
-			slug: 'patreon',
-			priority: 11,
-			prettyName: 'Patreon',
-			folderPath: 'https://cdn.discordapp.com/emojis/',
-		},
-		{
-			slug: 'cpatreon',
-			priority: 12,
-			prettyName: 'Custom',
-			folderPath: 'https://cdn.discordapp.com/emojis/',
-		},
-	]
-
-	//const fileName = 'https://cdn.discordapp.com/emojis/' + pet.emoji
-	//const extension = pet.animated ? '.gif' : '.png'
+		['common', 0, 'Common', localPetPath],
+		['uncommon', 1, 'Uncommon', localPetPath],
+		['rare', 2, 'Rare', localPetPath],
+		['epic', 3, 'Epic', localPetPath],
+		['mythical', 4, 'Mythic', localPetPath],
+		['legendary', 5, 'Legendary', cdnPath],
+		['gem', 5, 'Gem', cdnPath],
+		['bot', 6, 'Bot', cdnPath],
+		['distorted', 7, 'Distorted', cdnPath],
+		['fabled', 8, 'Fabled', cdnPath],
+		['hidden', 9, 'Hidden', cdnPath],
+		['special', 10, 'Special', cdnPath],
+		['patreon', 11, 'Patreon', cdnPath],
+		['cpatreon', 12, 'Custom', cdnPath],
+	].map(([slug, priority, prettyName, folderPath]) => ({ slug, priority, prettyName, folderPath }))
 
 	const response = await loadJson('https://neonutil.com/api/animals')
 	const tierSlugs = response.ranks
 	return response.data.map((rawPet) => {
-		const animated = rawPet[0] ? true : false
+		const animated = Boolean(rawPet[0])
 		const tier = tiers.find((tier) => tier.slug == tierSlugs[rawPet[5]])
-		const emoteSrc = tier.folderPath + rawPet[2] + animated ? '.gif' : '.png'
+		const emoteSrc = tier.folderPath + rawPet[2] + (animated ? '.gif' : '.png')
 		return {
 			animated, //bool
 			prettyName: rawPet[1], //string
