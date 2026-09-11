@@ -3,7 +3,7 @@ import * as passiveHandler from './passiveHandler.js'
 import * as buffHandler from './buffHandler.js'
 import * as messageHandler from './messageHandler.js'
 import { getRarity, wpEmojiPath } from './util.js'
-import { debounce } from '/js/util/inputUtil.js'
+import { debounce } from '@/src/utils/inputUtil.js'
 
 export class WeaponFactory {
 	static fromRandom(

@@ -1,16 +1,17 @@
-import { make } from '/js/util/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
 import * as messageHandler from './messageHandler.js'
+import { weaponAssetUrl } from './util.js'
 
 export class Buff {
 	constructor({ parent, staticData, statOverride }) {
 		Object.assign(this, staticData)
 		this.parent = parent
 		this.image = make('img', {
-			src: '/media/owo_images/battleEmojis/' + this.slug + '.png',
+			src: weaponAssetUrl('owo_images/battleEmojis/' + this.slug + '.png'),
 			ariaLabel: this.slug,
 			alt: ':' + this.slug + ':',
 			draggable: false,
-			className: 'discord-embed-emote weapon-desc-image',
+			className: 'weapon-emote',
 		})
 
 		this.stats = this.statConfig.map((statConfig, i) => ({

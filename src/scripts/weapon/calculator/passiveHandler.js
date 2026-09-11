@@ -1,7 +1,7 @@
 import * as messageHandler from './messageHandler.js'
 import * as buffHandler from './buffHandler.js'
 import { getRarity, wpEmojiPath } from './util.js'
-import { make } from '/js/util/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
 
 const pList = document.querySelector('.passive-container')
 
@@ -30,7 +30,7 @@ export class Passive {
 			ariaLabel: this.slug,
 			alt: ':' + this.slug + ':',
 			draggable: false,
-			className: 'discord-embed-emote weapon-desc-image passive-emote',
+			className: 'weapon-emote passive-emote',
 		})
 
 		this.bList = make('div', { className: 'buffContainer' })

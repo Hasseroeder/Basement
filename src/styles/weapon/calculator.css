@@ -5,6 +5,45 @@
 	cursor: var(--cur-pointer);
 }
 
+.weapon-calculator-embed {
+	display: flex;
+	gap: 1rem;
+	width: 100%;
+}
+
+.weapon-calculator-details {
+	flex: 1;
+	min-width: 0;
+}
+
+.weapon-calculator-preview {
+	display: flex;
+	flex-direction: column;
+}
+
+.weaponImageGridWrapper {
+	width: 5rem;
+	height: 5rem;
+}
+
+.discord-pet-display {
+	width: 100%;
+	height: 100%;
+	border-radius: 0.2rem;
+	object-fit: contain;
+}
+
+.weapon-star {
+	margin-top: auto;
+	display: flex;
+	justify-content: center;
+}
+
+.weapon-star img {
+	width: 1.3rem;
+	height: 1.3rem;
+}
+
 .weaponSlider::-webkit-slider-runnable-track {
 	height: 6px;
 	background: #ccc;
@@ -18,7 +57,7 @@
 .weaponSlider::-moz-range-thumb {
 	width: 1.5rem;
 	height: 1.5rem;
-	background: url('/media/misc_images/colon_three.png') no-repeat center center;
+	background: url('/src/assets/images/misc_images/colon_three.png') no-repeat center center;
 	background-size: contain;
 	border: none;
 }
@@ -28,7 +67,7 @@
 	appearance: none;
 	width: 1.5rem;
 	height: 1.5rem;
-	background: url('/media/misc_images/colon_three.png') no-repeat center center;
+	background: url('/src/assets/images/misc_images/colon_three.png') no-repeat center center;
 	background-size: contain;
 	border: none;
 	margin-top: -0.55rem;
@@ -62,10 +101,10 @@
 	opacity: 0;
 }
 
-.weapon-desc-image {
-	vertical-align: text-bottom;
+.weapon-emote {
+	vertical-align: center;
 	display: inline-block;
-	margin-bottom: -1.5px;
+	width: 18px;
 }
 
 .smol-right-margin {

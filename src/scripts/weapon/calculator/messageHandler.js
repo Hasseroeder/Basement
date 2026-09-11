@@ -5,7 +5,7 @@ import {
 	getTierEmoji,
 	getTierEmojiPath,
 } from './util.js'
-import { make } from '/js/util/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
 
 const el = {
 	weaponHeader: document.getElementById('weaponHeader'),
@@ -46,7 +46,7 @@ function generateDescription(weaponOrPassive) {
 		if (part === STAT_TOKEN) return getStatNode()
 
 		const imgMatch = part.match(IMAGE_RE)
-		if (imgMatch) return getStatImage(imgMatch[1], 'weapon-desc-image')
+		if (imgMatch) return getStatImage(imgMatch[1], 'weapon-emote')
 
 		const boldMatch = part.match(BOLD_RE)
 		if (boldMatch)

@@ -1,0 +1,44 @@
+---
+import '@/src/styles/main.css'
+import '@/src/styles/calculators.css'
+import '@/src/styles/weapon/calculator.css'
+import Navbar from '@/src/components/navbar.astro'
+import Blinkies from '@/src/components/blinkies.astro'
+import Head from '@/src/components/head.astro'
+import EmbedMessage from '@/src/components/embedMessage.astro'
+import avatar from '@/src/assets/images/owo_images/avatars/owo_avatar.png'
+import star from '@/src/assets/images/owo_images/star.png'
+import wp from '@/src/assets/images/owo_images/battleEmojis/wp.png'
+---
+
+<!doctype html>
+<html>
+  <Head title="Weapon Calculator" description="A calculator for OwO Bot's weapons" url="https://owo.bwep.net/weapon/calculator/" />
+  <body>
+    <div class="center-pillar">
+      <Navbar />
+      <div class="page-wrapper"><div class="inner-page-wrapper">
+        <EmbedMessage avatar={avatar.src} name="OwO" bot={true}>
+          <div class="weapon-calculator-embed">
+            <div class="weapon-calculator-details">
+              <span id="weaponHeader" class="discord-text-bolder"></span>
+              <div class="weapon-line"><strong>Name:&nbsp;</strong><div id="weaponName"></div></div>
+              <div class="weapon-line"><strong>Owner:&nbsp;</strong><div id="ownerID"></div></div>
+              <div class="weapon-line"><strong>ID:&nbsp;</strong><code id="weaponID" class="discord-code weapon-id"></code></div>
+              <div class="weapon-line"><strong>Shard Value:&nbsp;</strong><div id="shardValue"></div></div>
+              <div class="weapon-line"><strong>Quality:&nbsp;</strong><img id="weaponQualityImage" class="emote" />&nbsp;<span id="weaponQualitySpan"></span></div>
+              <div class="weapon-line"><strong>Wear:&nbsp;</strong><div id="wearSelect"></div></div>
+              <div class="weapon-line"><strong>WP Cost:&nbsp;</strong><div id="WP-Cost"></div><img alt=":WP:" title=":WP:" class="emote" src={wp.src} /></div>
+              <div class="weapon-line header">Description:</div><div id="description" class="weapon-line description"></div>
+              <div id="buffContainer" class="buffContainer"></div><div class="passive-container"></div>
+              <div class="add-passive-wrapper prevent-select"><div class="text original">+ add passive</div><div class="text replacement"><div class="passive-grid"></div></div></div>
+            </div>
+            <div class="weapon-calculator-preview"><div class="weaponImageGridWrapper"><img id="weaponImage" alt="Weapon" draggable="false" class="discord-pet-display" /><div id="weaponImageGrid"></div></div><div class="add-passive-wrapper star-wrapper prevent-select weapon-star"><img src={star.src} alt="" /></div></div>
+          </div>
+        </EmbedMessage>
+      </div></div>
+      <Blinkies />
+    </div>
+    <script>import '@/src/scripts/weapon/calculator/main.js'</script>
+  </body>
+</html>

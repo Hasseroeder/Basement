@@ -1,6 +1,6 @@
 import { valueToPercent } from './util.js'
 
-const initWeaponSlug = 'sword' // start with sword if nothing is given
+const initWeaponSlug = 'sword' // Default to sword if no weapon is provided.
 const fabledPercent = 100 // default to this quality if can't read stats
 
 function splitHypenSpaces(string) {
@@ -41,12 +41,11 @@ const isOnlyNumbers = (str) => /^[\d.,\s-]+$/.test(str)
 function getStats(wear, { item, statToken }, { buffs }) {
 	const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ','
 
-	const itemStatics = item
-	const buffArray = itemStatics.buffSlugs.map((slug) => buffs.find((buff) => buff.slug === slug))
+	const buffArray = item.buffSlugs.map((slug) => buffs.find((buff) => buff.slug === slug))
 
 	const buffStatLength = buffArray.flatMap((buff) => buff.statConfig).length
-	const itemStatLength = itemStatics.statConfig.length
-	const wpStatLength = itemStatics.wpStatConfig ? 1 : 0
+	const itemStatLength = item.statConfig.length
+	const wpStatLength = item.wpStatConfig ? 1 : 0
 
 	const statLength = buffStatLength + itemStatLength + wpStatLength
 
@@ -68,24 +67,24 @@ function getStats(wear, { item, statToken }, { buffs }) {
 			return percentageMode ? raw : valueToPercent(raw, config) - wearBonus
 		}
 
-		if (itemStatics.wpStatConfig) {
+		if (item.wpStatConfig) {
 			const wpIndex = percentageMode ? statInts.length - 1 : 0
 			statOverrides.wpStat = percentageMode
 				? statInts[wpIndex]
-				: valueToPercent(statInts[wpIndex], itemStatics.wpStatConfig) - wearBonus
+				: valueToPercent(statInts[wpIndex], item.wpStatConfig) - wearBonus
 			if (!percentageMode) cursor++
 			// Move cursor past wpStat if it's at the front
 		}
 
-		statOverrides.base = itemStatics.statConfig.map(read)
+		statOverrides.base = item.statConfig.map(read)
 		statOverrides.buff = buffArray.map((buff) => buff.statConfig.map(read))
 
 		return statOverrides
 	}
 	return {
-		base: itemStatics.statConfig.map((_) => fabledPercent),
+		base: item.statConfig.map((_) => fabledPercent),
 		buff: buffArray.map((buff) => buff.statConfig.map((_) => fabledPercent)),
-		wpStat: itemStatics.wpStatConfig ? fabledPercent : undefined,
+		wpStat: item.wpStatConfig ? fabledPercent : undefined,
 	}
 }
 
@@ -107,7 +106,7 @@ function getMatches(arrayToSearch, query) {
 export function toWeapon(inputHash, wpbData) {
 	const { weapons, passives, buffs } = wpbData
 	const tokens = splitHypenSpaces(inputHash)
-	const weaponMatch = getMatches(weapons, tokens)[0] ?? { slug: initWeaponSlug, statToken: '' }
+	const weaponMatch = getMatches(weapons, tokens)[0] ?? { item: weapons[0], statToken: '' }
 	const wear = ['decent', 'fine', 'pristine'].includes(tokens[0]) ? tokens[0] : 'worn'
 	const statOverride = getStats(wear, weaponMatch, wpbData)
 	const passiveGenParams = getMatches(passives, tokens).map((passiveMatch) => ({

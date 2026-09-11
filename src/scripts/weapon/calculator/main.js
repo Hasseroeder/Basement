@@ -1,24 +1,14 @@
-import { customSelect } from '/js/util/customSelect.js'
-import { loadJson, loadAll } from '/js/util/jsonUtil.js'
-import { gridInjector, make } from '/js/util/injectionUtil.js'
+import { customSelect } from '@/src/utils/customSelect.js'
+import { make } from '@/src/utils/injectionUtil.js'
+import _weapons from '@/src/data/weapon/weapons.json'
+import passives from '@/src/data/weapon/passives.json'
+import buffs from '@/src/data/weapon/buffs.json'
 import { WeaponFactory } from './weapon.js'
 import * as passviveHandler from './passiveHandler.js'
+import { weaponAssetUrl } from './util.js'
 
-/*
-gridInjector({
-	container: document.querySelector("#weaponImageGrid"),
-	items: [weapons],
-	columns: `repeat(4, 3.5rem)`,
-	transform: `translate(6.5rem, -6rem)`,
-	onItemClick: () => console.log("add something here!")
-});
-*/
-
-const wpbData = await loadAll({
-	weapons: loadJson('/weapon/json/weapons.json'),
-	passives: loadJson('/weapon/json/passives.json'),
-	buffs: loadJson('/weapon/json/buffs.json'),
-})
+const weapons = _weapons.filter((weapon) => weapon.objectType === 'weapon')
+const wpbData = { weapons, passives, buffs }
 
 ;[...wpbData.weapons, ...wpbData.passives, ...wpbData.buffs].forEach((StatHaver) => {
 	;[...StatHaver.statConfig, StatHaver.wpStatConfig].filter(Boolean).forEach((stat) => {
@@ -34,7 +24,7 @@ const pGrid = document.querySelector('.passive-grid')
 pGrid.append(
 	...wpbData.passives.map((passive) =>
 		make('img', {
-			src: `/media/owo_images/battleEmojis/f_${passive.slug}.png`,
+			src: weaponAssetUrl(`owo_images/battleEmojis/f_${passive.slug}.png`),
 			alt: passive.slug,
 			title: passive.slug,
 			draggable: false,

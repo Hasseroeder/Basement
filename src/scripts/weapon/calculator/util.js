@@ -1,4 +1,20 @@
-import { make } from '/js/util/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
+
+const weaponAssets = {
+	...import.meta.glob('../../../assets/images/owo_images/battleEmojis/*', {
+		eager: true,
+		query: '?url',
+		import: 'default',
+	}),
+	...import.meta.glob('../../../assets/images/owo_images/tiers/*', {
+		eager: true,
+		query: '?url',
+		import: 'default',
+	}),
+}
+
+export const weaponAssetUrl = (path) =>
+	weaponAssets[`../../../assets/images/${path}`] ?? `/src/assets/images/${path}`
 
 function getRarity(quality) {
 	const tiers = [
@@ -21,9 +37,9 @@ const percentToValue = (percent, { min, range }) => min + (range * percent) / 10
 const valueToPercent = (value, { min, range }) => Math.round((100 * (value - min)) / range)
 
 function getStatImage(inputString, className) {
-	const gifUrl = `/media/owo_images/battleEmojis/${inputString}.gif`
-	const pngUrl = `/media/owo_images/battleEmojis/${inputString}.png`
-	const imageClasses = 'discord-embed-emote ' + className ?? ''
+	const gifUrl = weaponAssetUrl(`owo_images/battleEmojis/${inputString}.gif`)
+	const pngUrl = weaponAssetUrl(`owo_images/battleEmojis/${inputString}.png`)
+	const imageClasses = 'weapon-emote ' + className ?? ''
 
 	const image = make('img', {
 		alt: `:${inputString}:`,
@@ -52,19 +68,19 @@ function getTierEmoji(tier) {
 		alt: tier,
 		ariaLabel: tier,
 		title: `:${tier}:`,
-		className: 'discord-embed-emote',
+		className: 'weapon-emote',
 	})
 }
 
 function getTierEmojiPath(stringOrQuality) {
 	const paths = {
-		common: '/media/owo_images/tiers/common.png',
-		uncommon: '/media/owo_images/tiers/uncommon.png',
-		rare: '/media/owo_images/tiers/rare.png',
-		epic: '/media/owo_images/tiers/epic.png',
-		mythic: '/media/owo_images/tiers/mythic.png',
-		legendary: '/media/owo_images/tiers/legendary.gif',
-		fabled: '/media/owo_images/tiers/fabled.gif',
+		common: weaponAssetUrl('owo_images/tiers/common.png'),
+		uncommon: weaponAssetUrl('owo_images/tiers/uncommon.png'),
+		rare: weaponAssetUrl('owo_images/tiers/rare.png'),
+		epic: weaponAssetUrl('owo_images/tiers/epic.png'),
+		mythic: weaponAssetUrl('owo_images/tiers/mythic.png'),
+		legendary: weaponAssetUrl('owo_images/tiers/legendary.gif'),
+		fabled: weaponAssetUrl('owo_images/tiers/fabled.gif'),
 	}
 	if (stringOrQuality === undefined) {
 		return paths['fabled']
@@ -76,7 +92,7 @@ function getTierEmojiPath(stringOrQuality) {
 }
 
 const wpEmojiPath = (wp) =>
-	'/media/owo_images/battleEmojis/' + wp.prefix + wp.tier.at(0) + '_' + wp.slug + '.png'
+	weaponAssetUrl('owo_images/battleEmojis/' + wp.prefix + wp.tier.at(0) + '_' + wp.slug + '.png')
 
 export {
 	wpEmojiPath,
