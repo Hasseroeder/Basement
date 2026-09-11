@@ -25,16 +25,16 @@ export async function createInjectAble(html, pathName) {
 
 export const make = (tag, props = {}, children) => {
 	const el = document.createElement(tag)
-	const { style, dataset, ...attributes } = props
-
-	if (style && typeof style === 'object') {
-		Object.assign(el.style, style)
+	if (props.style && typeof props.style == 'object') {
+		Object.assign(el.style, props.style)
+		delete props.style
 	}
-	if (dataset && typeof dataset === 'object') {
-		Object.assign(el.dataset, dataset)
+	if (props.dataset && typeof props.dataset === 'object') {
+		Object.assign(el.dataset, props.dataset)
+		delete props.dataset
 	}
 
-	for (const [key, value] of Object.entries(attributes)) {
+	for (const [key, value] of Object.entries(props)) {
 		if (value === undefined) continue
 		el[key] = value
 	}

@@ -57,13 +57,12 @@ export async function initializeTriangle(container, data) {
 		container.append(buttonWrapper)
 	}
 
-	container.append(
-		make(
-			'div',
-			{ style: `width: ${outerWidth}px; height:${outerHeight}px; position: relative;` },
-			[ctx]
-		)
+	const stupidDumbWrapper = make(
+		'div',
+		{ style: `width: ${outerWidth}px; height:${outerHeight}px; position: relative;` },
+		[ctx]
 	)
+	container.append(stupidDumbWrapper)
 
 	const myChart = new Chart(ctx, {
 		type: 'scatter',
