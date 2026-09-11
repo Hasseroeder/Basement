@@ -1,4 +1,4 @@
-import Chart from 'chart.js/auto'
+import Chart from './chart.js'
 
 const xValues = Array.from({ length: 90 }, (_, index) => index + 1)
 

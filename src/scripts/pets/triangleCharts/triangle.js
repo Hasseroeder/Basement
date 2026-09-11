@@ -1,9 +1,6 @@
 import { make } from '@/src/utils/injectionUtil.js'
-import Chart from 'chart.js/auto'
-import annotationPlugin from 'chartjs-plugin-annotation'
+import Chart from '../chart.js'
 import { Module } from './module.js'
-
-Chart.register(annotationPlugin)
 
 export async function initializeTriangle(container, data) {
 	const { moduleConfigs, baseConfig, buttonConfigs } = data
@@ -78,7 +75,11 @@ export async function initializeTriangle(container, data) {
 			plugins: {
 				tooltip: { mode: 'nearest', enabled: false, animation: false },
 				legend: { display: false },
-				annotation: { clip: false },
+				annotation: {
+					clip: false,
+					// The ternary plugins populate this during their beforeInit hooks.
+					annotations: {},
+				},
 			},
 			scales: {
 				x: { display: false, min: 0, max: 100 },
