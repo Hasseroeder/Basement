@@ -1,5 +1,5 @@
-import { loadJson } from '/js/util/jsonUtil.js'
-import { make } from '/js/util/injectionUtil.js'
+import { loadJson } from '@/src/utils/jsonUtil.js'
+import { make } from '@/src/utils/injectionUtil.js'
 
 const weaponDisplay = {
 	image: document.getElementById('weaponImage'),
@@ -19,9 +19,9 @@ const buttons = {
 }
 
 const [weapons, passives, buffs] = await Promise.all([
-	loadJson('/weapon/json/weapons.json'),
-	loadJson('/weapon/json/passives.json'),
-	loadJson('/weapon/json/buffs.json'),
+	loadJson('/src/data/weapon/weapons.json'),
+	loadJson('/src/data/weapon/passives.json'),
+	loadJson('/src/data/weapon/buffs.json'),
 ])
 
 var currentWeaponID = fromWeaponString(location.hash.slice(1))
@@ -52,9 +52,9 @@ function updateWeaponDisplay() {
 
 	weaponDisplay.text.textContent =
 		(weapon.id ?? '???') + ' - ' + (weapon.aliases[0] ?? weapon.name)
-	weaponDisplay.image.src = `/media/owo_images/battleEmojis/${weapon.slug}.png`
+	weaponDisplay.image.src = `/src/assets/images/owo_images/battleEmojis/${weapon.slug}.png`
 
-	fetch(`/weapon/donatorPages/${weapon.slug}.html`).then(async (r) => {
+	fetch(`/content/weapon/${weapon.slug}.html`).then(async (r) => {
 		weaponContainer.innerHTML = await r.text()
 		createWikipediaContainer(weapon)
 	})
@@ -86,7 +86,7 @@ function createWikipediaContainer(weapon) {
 		]),
 		make('img', {
 			className: 'wikipedia-image',
-			src: `/media/owo_images/battleEmojis/${weapon.slug}.png`,
+			src: `/src/assets/images/owo_images/battleEmojis/${weapon.slug}.png`,
 		}),
 		make('div', { className: 'wikipedia-stars' }, weapon.wikiStars.map(makeStarDisplay)),
 		make('div', { className: 'wikipedia-id' }, [
@@ -112,7 +112,7 @@ function createWikipediaTable(weapon) {
 	;['common.png', 'fabled.gif'].forEach((rank) =>
 		rankHeader.append(
 			make('div', { className: 'wikipedia-stat-header' }, [
-				make('img', { src: '/media/owo_images/tiers/' + rank }),
+				make('img', { src: '/src/assets/images/owo_images/tiers/' + rank }),
 				rank == 'common.png' ? '0%' : '100%',
 			])
 		)
@@ -120,7 +120,7 @@ function createWikipediaTable(weapon) {
 
 	const makeImg = (emoji) =>
 		make('img', {
-			src: '/media/owo_images/battleEmojis/' + emoji,
+			src: '/src/assets/images/owo_images/battleEmojis/' + emoji,
 			title: emoji,
 		})
 

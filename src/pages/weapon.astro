@@ -1,0 +1,40 @@
+---
+import '@/src/styles/main.css';
+import '@/src/styles/textPage.css';
+import '@/src/styles/weapon/weapon.css'
+import Navbar from '@/src/components/navbar.astro';
+import Blinkies from '@/src/components/blinkies.astro';
+import Head from '@/src/components/head.astro';
+--- 
+<!doctype html>
+<html>
+  <Head title="Weapons" description="A guide for OwO Bot's weapons" />
+  <body>
+    <div class="center-pillar">
+      <Navbar />
+      <div>
+        <div class="flexContainer" style="justify-content: center">
+          <button id="previous" style="width: 5rem">&lt;&lt;</button>
+          <div
+            style="
+              margin: 2rem 0rem;
+              font-size: larger;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              width: 10rem;
+              justify-content: center;
+            "
+          >
+            <img id="weaponImage" style="width: 2rem" />
+            <div id="weaponText"></div>
+          </div>
+          <button id="next" style="width: 5rem">&gt;&gt;</button>
+        </div>
+        <div id="weaponContainer" class="container"></div>
+      </div>
+      <Blinkies />
+    </div>
+    <script type="module" src="/src/scripts/weapon/weapon.js" />
+  </body>
+</html>
