@@ -94,8 +94,6 @@
 	opacity: 1;
 }
 
-.text.original {
-}
 .text.replacement {
 	transform: translate(-50%, 100%);
 	opacity: 0;
