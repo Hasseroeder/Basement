@@ -1,14 +1,13 @@
 [
 	{
+		"objectType": "quasiweapon",
 		"name": "Physically Attacking",
 		"aliases": ["Fists", "Strength Attacking"],
 		"slug": "fists",
 		"wikiStars": [
 			{ "name": "Viability: ", "stars": 0 },
 			{ "name": "Ease of use: ", "stars": 0 }
-		],
-		"buffSlugs": [],
-		"statConfig": []
+		]
 	},
 	{
 		"objectType": "weapon",
@@ -24,7 +23,7 @@
 			{
 				"min": 35,
 				"max": 55,
-				"emoji": ["STR.png"],
+				"emoji": ["str.png"],
 				"unit": "%",
 				"digits": 4.5
 			}
@@ -32,12 +31,12 @@
 		"wpStatConfig": {
 			"min": 200,
 			"max": 100,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": [],
-		"description": "Deals [stat] of your :STR:STR to all opponents",
+		"description": "Deals [stat] of your :str:STR to all opponents",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -54,7 +53,7 @@
 			{
 				"min": 100,
 				"max": 150,
-				"emoji": ["MAG.png"],
+				"emoji": ["mag.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -62,12 +61,12 @@
 		"wpStatConfig": {
 			"min": 225,
 			"max": 150,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 6
 		},
 		"buffSlugs": [],
-		"description": "Heals [stat] of your :MAG:MAG to the lowest health ally. This weapon can overheal up to 50% of max :HP:HP.",
+		"description": "Heals [stat] of your :mag:MAG to the lowest health ally. This weapon can overheal up to 50% of max :HP:HP.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -84,7 +83,7 @@
 			{
 				"min": 110,
 				"max": 160,
-				"emoji": ["STR.png"],
+				"emoji": ["str.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -92,12 +91,12 @@
 		"wpStatConfig": {
 			"min": 220,
 			"max": 120,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": [],
-		"description": "Deals [stat] of your :STR:STR to a random opponent.",
+		"description": "Deals [stat] of your :str:STR to a random opponent.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -120,7 +119,7 @@
 			}
 		],
 		"buffSlugs": [],
-		"description": "Increase :all_stats:ALL stats by [stat], and changes your physical attacks to do 65%:STR:STR and 65%:MAG:MAG as TRUE damage. This weapon does not have an active ability.",
+		"description": "Increase :all_stats:ALL stats by [stat], and changes your physical attacks to do 65%:str:STR and 65%:mag:MAG as TRUE damage. This weapon does not have an active ability.",
 		"normalPassiveAmount": 0
 	},
 	{
@@ -137,7 +136,7 @@
 		"wpStatConfig": {
 			"min": 250,
 			"max": 150,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
@@ -174,7 +173,7 @@
 			{
 				"min": 25,
 				"max": 45,
-				"emoji": ["MAG.png"],
+				"emoji": ["mag.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -182,12 +181,12 @@
 		"wpStatConfig": {
 			"min": 200,
 			"max": 100,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": [],
-		"description": "Deal [stat] of your :MAG:MAG to ALL enemies and heal ALL allies by the damage dealt",
+		"description": "Deal [stat] of your :mag:MAG to ALL enemies and heal ALL allies by the damage dealt",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -204,7 +203,7 @@
 			{
 				"min": 70,
 				"max": 100,
-				"emoji": ["STR.png"],
+				"emoji": ["str.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -212,12 +211,12 @@
 		"wpStatConfig": {
 			"min": 200,
 			"max": 100,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": ["poison"],
-		"description": "Deals [stat] of your :STR:STR to a random enemy and applies **poison** for 3 turns.",
+		"description": "Deals [stat] of your :str:STR to a random enemy and applies **poison** for 3 turns.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -234,7 +233,7 @@
 			{
 				"min": 90,
 				"max": 120,
-				"emoji": ["MAG.png"],
+				"emoji": ["mag.png"],
 				"unit": "%",
 				"digits": 5
 			},
@@ -249,12 +248,12 @@
 		"wpStatConfig": {
 			"min": 250,
 			"max": 150,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": [],
-		"description": "Deal [stat] of your :MAG:MAG to a random enemy and transfer their :WP:WP to an ally equal to [stat] of the damage done",
+		"description": "Deal [stat] of your :mag:MAG to a random enemy and transfer their :WP:WP to an ally equal to [stat] of the damage done",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -271,7 +270,7 @@
 			{
 				"min": 75,
 				"max": 95,
-				"emoji": ["MAG.png"],
+				"emoji": ["mag.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -279,12 +278,12 @@
 		"wpStatConfig": {
 			"min": 200,
 			"max": 100,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": ["flame"],
-		"description": "Deals [stat] of your :MAG:MAG to a random enemy and applies **flame** for 3 turns.",
+		"description": "Deals [stat] of your :mag:MAG to a random enemy and applies **flame** for 3 turns.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -301,7 +300,7 @@
 			{
 				"min": 35,
 				"max": 65,
-				"emoji": ["MAG.png"],
+				"emoji": ["mag.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -309,12 +308,12 @@
 		"wpStatConfig": {
 			"min": 200,
 			"max": 100,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": [],
-		"description": "Sends a wave of energy and deals [stat] of your :MAG:MAG to all opponents",
+		"description": "Sends a wave of energy and deals [stat] of your :mag:MAG to all opponents",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -331,7 +330,7 @@
 			{
 				"min": 30,
 				"max": 50,
-				"emoji": ["MAG.png"],
+				"emoji": ["mag.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -339,12 +338,12 @@
 		"wpStatConfig": {
 			"min": 250,
 			"max": 150,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": ["defup"],
-		"description": "Heal all allies for [stat] of your :MAG:MAG and applies **Defense Up** for 2 turns.",
+		"description": "Heal all allies for [stat] of your :mag:MAG and applies **Defense Up** for 2 turns.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -361,7 +360,7 @@
 			{
 				"min": 60,
 				"max": 90,
-				"emoji": ["MAG.png"],
+				"emoji": ["mag.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -369,12 +368,12 @@
 		"wpStatConfig": {
 			"min": 200,
 			"max": 125,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 6
 		},
 		"buffSlugs": [],
-		"description": "Replenish [stat] of your :MAG:MAG as :WP:WP to an ally with the lowest :WP:WP. This weapon can overreplenish up to 50% of max :WP:WP.",
+		"description": "Replenish [stat] of your :mag:MAG as :WP:WP to an ally with the lowest :WP:WP. This weapon can overreplenish up to 50% of max :WP:WP.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -391,7 +390,7 @@
 			{
 				"min": 50,
 				"max": 80,
-				"emoji": ["MAG.png"],
+				"emoji": ["mag.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -399,12 +398,12 @@
 		"wpStatConfig": {
 			"min": 400,
 			"max": 300,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": [],
-		"description": "Revive a dead ally and heal them for [stat] of your :MAG:MAG",
+		"description": "Revive a dead ally and heal them for [stat] of your :mag:MAG",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -421,7 +420,7 @@
 			{
 				"min": 30,
 				"max": 50,
-				"emoji": ["STR.png"],
+				"emoji": ["str.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -429,12 +428,12 @@
 		"wpStatConfig": {
 			"min": 260,
 			"max": 160,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": ["freeze"],
-		"description": "Deals [stat] of your :STR:STR to a random opponent and apply **Freeze** for 2 turns.",
+		"description": "Deals [stat] of your :str:STR to a random opponent and apply **Freeze** for 2 turns.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -451,7 +450,7 @@
 		"wpStatConfig": {
 			"min": 300,
 			"max": 250,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 5
 		},
@@ -473,7 +472,7 @@
 			{
 				"min": 70,
 				"max": 100,
-				"emoji": ["STR.png"],
+				"emoji": ["str.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -481,12 +480,12 @@
 		"wpStatConfig": {
 			"min": 200,
 			"max": 100,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": ["mort"],
-		"description": "Deals [stat] of your :STR:STR to a random enemy and applies **Mortality** for 2 turns.",
+		"description": "Deals [stat] of your :str:STR to a random enemy and applies **Mortality** for 2 turns.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -503,7 +502,7 @@
 		"wpStatConfig": {
 			"min": 200,
 			"max": 100,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
@@ -525,14 +524,14 @@
 			{
 				"min": 50,
 				"max": 100,
-				"emoji": ["STR.png"],
+				"emoji": ["str.png"],
 				"unit": "%",
 				"digits": 5
 			},
 			{
 				"min": 50,
 				"max": 100,
-				"emoji": ["MAG.png"],
+				"emoji": ["mag.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -540,12 +539,12 @@
 		"wpStatConfig": {
 			"min": 220,
 			"max": 150,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 6
 		},
 		"buffSlugs": [],
-		"description": "Remove a buff from an enemy. If successful, deal [stat] of your :MAG:MAG to them. Remove a debuff from an ally. If successful, heal [stat] of your :STR:STR to them.",
+		"description": "Remove a buff from an enemy. If successful, deal [stat] of your :mag:MAG to them. Remove a debuff from an ally. If successful, heal [stat] of your :str:STR to them.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -562,14 +561,14 @@
 			{
 				"min": 50,
 				"max": 80,
-				"emoji": ["STR.png"],
+				"emoji": ["str.png"],
 				"unit": "%",
 				"digits": 4
 			},
 			{
 				"min": 40,
 				"max": 60,
-				"emoji": ["STR.png"],
+				"emoji": ["str.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -577,12 +576,12 @@
 		"wpStatConfig": {
 			"min": 230,
 			"max": 130,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": ["leech"],
-		"description": "Deal [stat] of your :STR:STR to a random enemy and apply **Leech** for 3 turns. If the **Leech** debuff is already on the target, deal [stat] more damage.",
+		"description": "Deal [stat] of your :str:STR to a random enemy and apply **Leech** for 3 turns. If the **Leech** debuff is already on the target, deal [stat] more damage.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -599,7 +598,7 @@
 			{
 				"min": 50,
 				"max": 80,
-				"emoji": ["STR.png"],
+				"emoji": ["str.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -607,12 +606,12 @@
 		"wpStatConfig": {
 			"min": 280,
 			"max": 180,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": ["stinky"],
-		"description": "Deal [stat] of your :STR:STR to a random enemy and apply **Stinky** for 2 turns.",
+		"description": "Deal [stat] of your :str:STR to a random enemy and apply **Stinky** for 2 turns.",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -629,35 +628,35 @@
 			{
 				"min": 1,
 				"max": 40,
-				"emoji": ["StrMag.png"],
+				"emoji": ["strmag.png"],
 				"unit": "%",
 				"digits": 5
 			},
 			{
 				"min": 1,
 				"max": 40,
-				"emoji": ["StrMag.png"],
+				"emoji": ["strmag.png"],
 				"unit": "%",
 				"digits": 5
 			},
 			{
 				"min": 1,
 				"max": 40,
-				"emoji": ["StrMag.png"],
+				"emoji": ["strmag.png"],
 				"unit": "%",
 				"digits": 5
 			},
 			{
 				"min": 1,
 				"max": 40,
-				"emoji": ["StrMag.png"],
+				"emoji": ["strmag.png"],
 				"unit": "%",
 				"digits": 5
 			},
 			{
 				"min": 1,
 				"max": 40,
-				"emoji": ["StrMag.png"],
+				"emoji": ["strmag.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -665,12 +664,12 @@
 		"wpStatConfig": {
 			"min": 200,
 			"max": 100,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
 		"buffSlugs": [],
-		"description": "Punches a random enemy 5 times. Each punch randomly deals either a percentage of your :STR:STR or :MAG:MAG. Punches deals: [stat], [stat], [stat], [stat], [stat]",
+		"description": "Punches a random enemy 5 times. Each punch randomly deals either a percentage of your :str:STR or :mag:MAG. Punches deals: [stat], [stat], [stat], [stat], [stat]",
 		"normalPassiveAmount": 1
 	},
 	{
@@ -694,7 +693,7 @@
 			{
 				"min": 5,
 				"max": 25,
-				"emoji": ["StrMag.png"],
+				"emoji": [],
 				"unit": "%",
 				"digits": 5
 			}
@@ -702,7 +701,7 @@
 		"wpStatConfig": {
 			"min": 250,
 			"max": 150,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
@@ -724,14 +723,14 @@
 			{
 				"min": 10,
 				"max": 20,
-				"emoji": ["WP.png"],
+				"emoji": ["wp.png"],
 				"unit": "%",
 				"digits": 5
 			},
 			{
 				"min": 35,
 				"max": 45,
-				"emoji": ["MAG.png", "WP.png"],
+				"emoji": ["mag.png", "wp.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -739,7 +738,7 @@
 		"wpStatConfig": {
 			"min": 100,
 			"max": 50,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
@@ -761,7 +760,7 @@
 		"wpStatConfig": {
 			"min": 250,
 			"max": 150,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},
@@ -783,7 +782,7 @@
 		"wpStatConfig": {
 			"min": 225,
 			"max": 125,
-			"emoji": ["WP.png"],
+			"emoji": ["wp.png"],
 			"unit": "",
 			"digits": 3
 		},

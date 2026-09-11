@@ -26,7 +26,7 @@
 			{
 				"min": 30,
 				"max": 50,
-				"emoji": ["MAG.png", "poison.png"],
+				"emoji": ["mag.png", "poison.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -35,20 +35,20 @@
 	},
 	{
 		"name": "Flame",
-		"description": "Deals [stat] of your :MAG:MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal [stat] damage to the target.",
+		"description": "Deals [stat] of your :mag:MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal [stat] damage to the target.",
 		"slug": "flame",
 		"statConfig": [
 			{
 				"min": 20,
 				"max": 40,
-				"emoji": ["MAG.png", "flame.png"],
+				"emoji": ["mag.png", "flame.png"],
 				"unit": "%",
 				"digits": 4
 			},
 			{
 				"min": 70,
 				"max": 100,
-				"emoji": ["MAG.png", "explosion.png"],
+				"emoji": ["mag.png", "explosion.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -134,7 +134,7 @@
 			{
 				"min": 45,
 				"max": 75,
-				"emoji": ["HP.png", "mort.png"],
+				"emoji": ["hp.png", "mort.png"],
 				"unit": "%",
 				"digits": 4
 			}
@@ -143,20 +143,20 @@
 	},
 	{
 		"name": "Celebration",
-		"description": "At the end of every turn, heal [stat] of your :iPR:iPR as :HP:HP and replenish [stat] of your :iMR:iMR as :WP:WP.",
+		"description": "At the end of every turn, heal [stat] of your :ipr:iPR as :hp:HP and replenish [stat] of your :imr:iMR as :wp:WP.",
 		"slug": "celeb",
 		"statConfig": [
 			{
 				"min": 20,
 				"max": 50,
-				"emoji": ["iPR.png", "celeb.png"],
+				"emoji": ["ipr.png", "celeb.png"],
 				"unit": "%",
 				"digits": 4
 			},
 			{
 				"min": 15,
 				"max": 40,
-				"emoji": ["iMR.png", "celeb.png"],
+				"emoji": ["imr.png", "celeb.png"],
 				"unit": "%",
 				"digits": 5
 			}
@@ -193,7 +193,7 @@
 			{
 				"min": 20,
 				"max": 50,
-				"emoji": ["MAG.png", "stinky.png"],
+				"emoji": ["mag.png", "stinky.png"],
 				"unit": "%",
 				"digits": 4
 			}

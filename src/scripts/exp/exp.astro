@@ -304,7 +304,7 @@ const gemImages = tiers.map((t) => make('img', { src: t.src }))
 
 const drawImagesPlugin = {
 	id: 'drawImages',
-	afterDatasetsDraw(chart: any, _: any) {
+	afterDatasetsDraw(chart: Chart) {
 		const ctx = chart.ctx
 		const meta0 = chart.getDatasetMeta(0)
 		const meta1 = chart.getDatasetMeta(1)
