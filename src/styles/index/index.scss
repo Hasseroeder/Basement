@@ -1,65 +1,74 @@
-.on-top {
-	z-index: 2;
-	position: relative;
-}
-
-.platform-logo {
-	z-index: 1;
-	width: 5rem;
-	position: absolute;
-	left: 48%;
-	top: 30%;
-}
-
-table {
-	border-right: none;
-	border-left: none;
-	width: 100%;
-
-	td {
-		text-align: start;
-		border-right: none;
-		border-left: none;
-		padding: 0 0.8rem;
-		position: relative;
-	}
-
-	tr {
-		height: 2.2rem;
-	}
+.table-sections-wrapper {
+	display: flex;
+	flex-direction: column;
+	width: max-content;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .table-section {
 	display: flex;
 	gap: 3rem;
 	align-items: center;
+	margin-bottom: 2rem;
 
-	> div:last-child {
+	&__inner-wrapper:last-child {
 		flex: 1;
 	}
 
-	h3 {
+	&__section-header {
 		margin: 0;
 	}
-}
 
-.table-wrapper {
-	display: flex;
-	gap: 2.5rem;
+	&__tables-wrapper {
+		display: flex;
+		gap: 2.5rem;
+	}
 
-	> div:last-child {
+	&__table-wrapper:last-child {
 		flex: 1;
+	}
+
+	&__table-header {
+		font-size: 0.7rem;
+		margin: 0.2rem;
+		color: #888;
+
+		&::before {
+			content: '-# ';
+			font-size: 0.7rem;
+		}
 	}
 }
 
-.link-table-box {
-	display: flex;
-	justify-content: center;
-	margin: 2rem;
+.link-table {
+	border-right: none;
+	border-left: none;
+	width: 100%;
 
-	> div {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
+	&__platform-logo {
+		z-index: 1;
+		width: 5rem;
+		position: absolute;
+		left: 48%;
+		top: 30%;
+	}
+
+	&__cell {
+		text-align: start;
+		border-right: none;
+		border-left: none;
+		padding: 0 0.8rem;
+		position: relative;
+
+		a,
+		code {
+			z-index: 2;
+			position: relative;
+		}
+	}
+
+	&__row {
+		height: 2.2rem;
 	}
 }

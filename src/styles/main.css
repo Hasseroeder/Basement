@@ -366,10 +366,6 @@ button:hover {
 	user-select: none;
 }
 
-.grayed-text {
-	color: #888;
-}
-
 .injectable-button {
 	padding: 0;
 	border: none;
@@ -406,16 +402,6 @@ button:hover {
 
 .readable-text .discord-code {
 	padding: 0.1em 0.2em;
-}
-
-.subscript::before {
-	content: '-# ';
-	font-size: 0.7rem;
-}
-
-.subscript {
-	font-size: 0.7rem;
-	margin: 0.2rem;
 }
 
 .center-box {
