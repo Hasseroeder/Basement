@@ -37,40 +37,39 @@
 	margin-top: auto;
 	display: flex;
 	justify-content: center;
-}
 
-.weapon-star img {
-	width: 1.3rem;
-	height: 1.3rem;
+	img {
+		width: 1.3rem;
+	}
 }
-
-.weaponSlider::-webkit-slider-runnable-track {
-	height: 6px;
-	background: #ccc;
-}
-
-.weaponSlider::-moz-range-track {
-	height: 6px;
-	background: #ccc;
-}
-
-.weaponSlider::-moz-range-thumb {
-	width: 1.5rem;
-	height: 1.5rem;
-	background: url('/src/assets/images/misc_images/colon_three.png') no-repeat center center;
-	background-size: contain;
-	border: none;
-}
-
-.weaponSlider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 1.5rem;
-	height: 1.5rem;
-	background: url('/src/assets/images/misc_images/colon_three.png') no-repeat center center;
-	background-size: contain;
-	border: none;
-	margin-top: -0.55rem;
+.weaponSlider {
+	&::-webkit-slider-runnable-track {
+		// you wouldn't believe how much I hate chromium... ..
+		// can't they just take Mozilla's example and code a coherent browser?
+		height: 6px;
+		background: #ccc;
+	}
+	&::-moz-range-track {
+		height: 6px;
+		background: #ccc;
+	}
+	&::-moz-range-thumb {
+		width: 1.5rem;
+		height: 1.5rem;
+		background: url('/src/assets/images/misc_images/colon_three.png') no-repeat center center;
+		background-size: contain;
+		border: none;
+	}
+	&::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 1.5rem;
+		height: 1.5rem;
+		background: url('/src/assets/images/misc_images/colon_three.png') no-repeat center center;
+		background-size: contain;
+		border: none;
+		margin-top: -0.55rem;
+	}
 }
 
 .add-passive-wrapper {
@@ -336,6 +335,7 @@
 	overflow: auto;
 	display: none;
 	z-index: 1000;
+	margin: 0.1rem 0;
 }
 
 .custom-select.open .options {
