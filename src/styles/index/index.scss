@@ -1,0 +1,65 @@
+.on-top {
+	z-index: 2;
+	position: relative;
+}
+
+.platform-logo {
+	z-index: 1;
+	width: 5rem;
+	position: absolute;
+	left: 48%;
+	top: 30%;
+}
+
+table {
+	border-right: none;
+	border-left: none;
+	width: 100%;
+
+	td {
+		text-align: start;
+		border-right: none;
+		border-left: none;
+		padding: 0 0.8rem;
+		position: relative;
+	}
+
+	tr {
+		height: 2.2rem;
+	}
+}
+
+.table-section {
+	display: flex;
+	gap: 3rem;
+	align-items: center;
+
+	> div:last-child {
+		flex: 1;
+	}
+
+	h3 {
+		margin: 0;
+	}
+}
+
+.table-wrapper {
+	display: flex;
+	gap: 2.5rem;
+
+	> div:last-child {
+		flex: 1;
+	}
+}
+
+.link-table-box {
+	display: flex;
+	justify-content: center;
+	margin: 2rem;
+
+	> div {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+}

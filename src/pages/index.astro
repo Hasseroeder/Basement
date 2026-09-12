@@ -1,6 +1,6 @@
 ---
 import '@/src/styles/main.css';
-import '@/src/styles/index/index.css';
+import '@/src/styles/index/index.scss';
 import Navbar from '@/src/components/navbar.astro';
 import Blinkies from '@/src/components/blinkies.astro';
 import Head from '@/src/components/head.astro';
@@ -16,8 +16,8 @@ import Cat2 from '@/src/assets/asciiArt/cat2.txt?raw';
     <div class="center-pillar">
       <Navbar />
       <section ><Intro /></section>
-      <section style="display: flex; justify-content: center">
-        <div class="section-wrapper">
+      <div class="link-table-box">
+        <div>
           <section class="table-section">
             <pre class="art-display">{Cat1}</pre>
             <div>
@@ -42,11 +42,11 @@ import Cat2 from '@/src/assets/asciiArt/cat2.txt?raw';
                   <table>
                     <tr>
                       <td>Heather</td>
-                      <td style="position: relative">
+                      <td>
                         <code class="discord-code on-top">@hsse</code>
                         <img src="/src/assets/images/misc_images/gray_discord_logo.svg" class="platform-logo" />
                       </td>
-                      <td style="position: relative">
+                      <td>
                         <a href="https://github.com/Hasseroeder" class="on-top">Hasseroeder</a>
                         <img src="/src/assets/images/misc_images/gray_github_logo.svg" class="platform-logo" />
                       </td>
@@ -138,7 +138,7 @@ import Cat2 from '@/src/assets/asciiArt/cat2.txt?raw';
             </div>
           </section>
         </div>
-      </section>
+      </div>
       <Blinkies />
     </div>
   </body>

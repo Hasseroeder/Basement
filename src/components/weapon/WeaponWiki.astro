@@ -62,36 +62,36 @@ if (weapon.objectType === "weapon"){
 const emojiPath = (emoji: string) => `/src/assets/images/owo_images/battleEmojis/${emoji}`
 ---
 
-<div class="wikipedia-container">
-	<div class="wikipedia-header">
+<div class="wikipedia">
+	<h3 class="wikipedia__header">
 		{weapon.name}
-		<div class="wikipedia-aliases">{aliases}</div>
-	</div>
-	<img class="wikipedia-image" src={emojiPath(`${weapon.slug}.png`)} alt={weapon.name} />
-	<div class="wikipedia-stars">
+		<div class="wikipedia__aliases">{aliases}</div>
+	</h3>
+	<img class="wikipedia__portrait" src={emojiPath(`${weapon.slug}.png`)} alt={weapon.name} />
+	<div class="wikipedia__stars">
 		{weapon.wikiStars.map((statistic) => <div><span>{statistic.name}</span>{'★'.repeat(statistic.stars)}{'☆'.repeat(5 - statistic.stars)}</div>)}
 	</div>
-	<div class="wikipedia-id"><div>ID: {'id' in weapon ? weapon.id : '???'}</div></div>
-	<div class="wikipedia-stats-header">Stats</div>
+	<div class="wikipedia__id">ID: {'id' in weapon ? weapon.id : '???'}</div>
+	<h4 class="wikipedia__stats-header">Stats</h4>
 	{
 		customStatTexts[weapon.slug]  ? (
-			<div class="wikipedia-nostat" set:html={customStatTexts[weapon.slug]} />
+			<div class="wikipedia__no-stat" set:html={customStatTexts[weapon.slug]} />
 		) : (
-			<div class="wikipedia-table">
-				<div>
+			<div class="wikipedia__table">
+				<div class="wikipedia__table-row">
 					{['common.png', 'fabled.gif'].map((rank) => (
-						<div class="wikipedia-stat-header">
-							<img src={`/src/assets/images/owo_images/tiers/${rank}`} alt="" />
+						<h4 class="wikipedia__table-cell">
+							<img class="wikipedia__stat-img" src={`/src/assets/images/owo_images/tiers/${rank}`} alt={rank} />
 							{rank === 'common.png' ? '0%' : '100%'}
-						</div>
+						</h4>
 					))}
 				</div>
 				{displayStats.map((stat) => (
-					<div class="wikipedia-stat-row">
+					<div class="wikipedia__table-row">
 						{[stat.min, stat.max].map((extreme) => (
-							<div>
+							<div class="wikipedia__table-cell">
 								{extreme + stat.unit}
-								{stat.emoji.map((emoji) => <img src={emojiPath(emoji)} title={emoji} alt={emoji} />)}
+								{stat.emoji.map((emoji) => <img class="wikipedia__stat-img" src={emojiPath(emoji)} title={emoji} alt={emoji} />)}
 							</div>
 						))}
 					</div>
@@ -99,7 +99,5 @@ const emojiPath = (emoji: string) => `/src/assets/images/owo_images/battleEmojis
 			</div>
 		)
 	}
-	<div class="wikipedia-calc-link">
-		{weapon.objectType === 'weapon' && <a href={`/weapon/calculator/#${weapon.slug}`}>Calculator</a>}
-	</div>
+	{weapon.objectType === 'weapon' && <a class="wikipedia__link" href={`/weapon/calculator/#${weapon.slug}`}>Calculator</a>}
 </div>

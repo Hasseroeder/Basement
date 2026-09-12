@@ -17,7 +17,7 @@ export default defineConfig({
 		}),
 	},
 	compilerOptions: {
-		strict: false,
+		strict: true,
 		allowJs: true,
 		checkJs: false,
 	},

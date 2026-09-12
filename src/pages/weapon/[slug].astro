@@ -1,7 +1,7 @@
 ---
 import '@/src/styles/main.css'
 import '@/src/styles/textPage.css'
-import '@/src/styles/weapon/weapon.css'
+import '@/src/styles/weapon/weapon.scss'
 import Navbar from '@/src/components/navbar.astro'
 import Blinkies from '@/src/components/blinkies.astro'
 import Head from '@/src/components/head.astro'
@@ -45,15 +45,15 @@ const { default: WeaponContent } = (await loadContent()) as WeaponContentModule
 			<Navbar />
 			<div>
 				<div class="page-header">
-					<a class="prev-button" href={`/weapon/${previous.slug}`}>&lt;&lt;</a>
-					<div>
-						<img src={`/src/assets/images/owo_images/battleEmojis/${weapon.slug}.png`} alt=`:${weapon.slug}:` />
+					<a class="page-header__prev-button" href={`/weapon/${previous.slug}`}>&lt;&lt;</a>
+					<div class="page-header__text">
+						<img class="page-header__emote" src={`/src/assets/images/owo_images/battleEmojis/${weapon.slug}.png`} alt=`:${weapon.slug}:` />
 						<div>{weapon.id ?? '???'} - {weapon.aliases[0] ?? weapon.name}</div>
 					</div>
-					<a class="next-button" href={`/weapon/${next.slug}`}>&gt;&gt;</a>
+					<a class="page-header__next-button" href={`/weapon/${next.slug}`}>&gt;&gt;</a>
 				</div>
-				<div style="display: flex;">
-					<div class="weapon-content"><WeaponContent /></div>
+				<div class="content">
+					<div class="content__loaded-mdx"><WeaponContent /></div>
 					<WeaponWiki {weapon} />
 				</div>
 			</div>
