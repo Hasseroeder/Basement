@@ -23,18 +23,22 @@ export async function initializeTriangle(container, data) {
 	const initFns = []
 
 	if (buttonConfigs && buttonConfigs.length > 0) {
-		const buttonWrapper = make('div', { className: 'triangle-button-wrapper' })
-		buttonConfigs.forEach((buttonConfig) => {
-			const button = make('button')
-			const children = []
-			if (buttonConfig.image) children.push(make('img', buttonConfig.image))
-			const textEl = make('div')
-			children.push(textEl)
-			if (buttonConfig.prettyName) textEl.textContent = buttonConfig.prettyName
+		const buttons = buttonConfigs.map((buttonConfig) => {
+			const button =
+				buttonConfig.type === 'link'
+					? make('a', {
+							href: buttonConfig.href,
+							target: '_blank',
+							className: 'control-wrapper__clickable',
+						})
+					: make('button', { className: 'control-wrapper__clickable' })
+			if (buttonConfig.image) button.append(make('img', buttonConfig.image))
+			if (buttonConfig.prettyName)
+				button.append(make('div', { textContent: buttonConfig.prettyName }))
 
 			if (buttonConfig.type === 'cycle') {
-				buttonWrapper.append(button)
 				const cycle = buttonConfig.cycle
+				const cycleText = make('div')
 				var idx = cycle.length - 1
 				button.onclick = () => {
 					const { turnOn, turnOff } = cycle[idx]
@@ -42,19 +46,16 @@ export async function initializeTriangle(container, data) {
 						if ((turnOn ?? []).includes(module.id)) module.hidden = false
 						if ((turnOff ?? []).includes(module.id)) module.hidden = true
 					})
-					textEl.textContent = cycle[idx].nameTo
+					cycleText.textContent = cycle[idx].nameTo
 					idx = (idx + 1) % cycle.length
 					myChart.update()
 				}
+				button.append(cycleText)
 				initFns.push(() => button.click()) // very inelegant
-			} else if (buttonConfig.type === 'link') {
-				buttonWrapper.append(
-					make('a', { href: buttonConfig.href, target: '_blank' }, [button])
-				)
 			}
-			button.append(...children)
+			return button
 		})
-		container.append(buttonWrapper)
+		container.append(make('div', { className: 'control-wrapper' }, buttons))
 	}
 
 	const stupidDumbWrapper = make(

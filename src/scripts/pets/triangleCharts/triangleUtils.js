@@ -192,10 +192,12 @@ export function initializeLabelDOM(chart, plugin) {
 
 	cardinals.forEach((cardinal) => {
 		plugin[cardinal] = {
-			container: make('div', { className: `triangle-help-label ${cardinal}` }),
-			text: make('span'),
+			container: make('div', { className: `ternary-tick ${cardinal}` }),
+			text: make('span', { className: 'ternary-tick__percentage-text' }),
 		}
-		plugin[cardinal].container.append(make('div', {}, [plugin[cardinal].text]))
+		plugin[cardinal].container.append(
+			make('div', { className: `ternary-tick__${cardinal}-wrapper` }, [plugin[cardinal].text])
+		)
 		container.append(plugin[cardinal].container)
 	})
 }
@@ -211,10 +213,15 @@ export function initializeTickDOM(chart, plugin) {
 			else if (cardinal === 'bottom') coor = getPixel(chart.scales, [0, 100 - percent])
 
 			const tickContainer = make('div', {
-				className: `triangle-help-label animated ${cardinal}`,
+				className: `ternary-tick ternary-tick--animated-fade-out`,
 			})
-			const tickText = make('span', { textContent: percent })
-			tickContainer.append(make('div', {}, [tickText]))
+			const tickText = make('span', {
+				className: 'ternary-tick__percentage-text',
+				textContent: percent,
+			})
+			tickContainer.append(
+				make('div', { className: `ternary-tick__${cardinal}-wrapper` }, [tickText])
+			)
 			container.append(tickContainer)
 
 			tickContainer.style.left = coor.x + 'px'

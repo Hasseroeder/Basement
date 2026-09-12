@@ -378,7 +378,11 @@ export const tooltipPluginFactory = (pluginConfig) => ({
 				]
 				plugin.tooltipEl = make('div', { className: 'triangle-tooltip' })
 
-				plugin.rows = [make('div'), make('div'), make('div')]
+				plugin.rows = [
+					make('h4', { className: 'triangle-tooltip__header' }),
+					make('div', { className: 'triangle-tooltip__row' }),
+					make('div', { className: 'triangle-tooltip__row' }),
+				]
 				plugin.tooltipEl.append(...plugin.rows)
 				plugin.statTexts = []
 
@@ -386,8 +390,8 @@ export const tooltipPluginFactory = (pluginConfig) => ({
 
 				statImageSources.forEach((src) => {
 					const text = document.createTextNode('')
-					const img = make('img', { src })
-					const cell = make('div', {}, [img, text])
+					const img = make('img', { className: 'triangle-tooltip__emote', src })
+					const cell = make('div', { className: 'triangle-tooltip__cell' }, [img, text])
 					plugin.statTexts.push(text)
 					statCells.push(cell)
 				})
