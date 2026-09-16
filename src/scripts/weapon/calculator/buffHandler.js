@@ -5,7 +5,7 @@ import { weaponAssetUrl } from './util.js'
 export class Buff {
 	constructor({ parent, staticData, statOverride }) {
 		this.objectType = staticData.objectType
-		if (this.objectType !== 'passive')
+		if (this.objectType !== 'buff')
 			throw new Error('Invariant violation: Buff constructor got passed a non-buff input')
 
 		this.name = staticData.name
