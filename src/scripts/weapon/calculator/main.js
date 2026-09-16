@@ -19,7 +19,7 @@ const wpbData = { weapons, passives, buffs }
 WeaponFactory.wpbData = wpbData
 const currentWeapon = WeaponFactory.fromHash()
 
-const pGrid = document.querySelector('#passive-selector')
+const pGrid = document.querySelector('#add-passive-wrapper__replacement')
 pGrid.append(
 	...wpbData.passives.map((passive) =>
 		make('img', {
@@ -27,7 +27,7 @@ pGrid.append(
 			alt: passive.slug,
 			title: passive.slug,
 			draggable: false,
-			className: 'passive-selector__passive-emote',
+			className: 'add-passive-wrapper__emote',
 			onmousedown: () =>
 				new passviveHandler.Passive({
 					staticData: passive,

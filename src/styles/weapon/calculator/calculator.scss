@@ -63,7 +63,7 @@
 	font-family: monospace;
 	overflow: hidden;
 	position: relative;
-	height: 3.3rem;
+	height: 3.4rem;
 
 	&:hover {
 		.add-passive-wrapper__original {
@@ -79,6 +79,16 @@
 	&__replacement {
 		transform: translateY(100%);
 		opacity: 0;
+		display: grid;
+		grid-template-rows: repeat(2, 1.4rem);
+		grid-auto-flow: column;
+		grid-auto-columns: 1.4rem;
+		padding: 0.3rem;
+		box-sizing: border-box;
+	}
+
+	&__original {
+		display: flex;
 	}
 
 	&__replacement,
@@ -89,9 +99,13 @@
 			opacity 0.4s ease;
 		width: 100%;
 		height: 100%;
-		display: flex;
 		justify-content: center;
 		align-items: center;
+	}
+
+	&__emote {
+		width: 100%;
+		cursor: var(--cur-pointer);
 	}
 }
 
@@ -298,16 +312,4 @@
 ._normal-emote {
 	vertical-align: center;
 	width: 18px;
-}
-
-.passive-selector {
-	display: grid;
-	grid-template-rows: repeat(2, 1.4rem);
-	grid-auto-flow: column;
-	grid-auto-columns: 1.4rem;
-
-	&__passive-emote {
-		width: 100%;
-		cursor: var(--cur-pointer);
-	}
 }
