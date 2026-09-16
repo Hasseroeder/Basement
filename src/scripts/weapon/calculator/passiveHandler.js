@@ -29,7 +29,20 @@ export function appendPassiveNode(passive) {
 export class Passive {
 	constructor({ staticData, statOverride, wpbData, parent }) {
 		const { buffs } = wpbData
-		Object.assign(this, staticData)
+
+		this.objectType = staticData.objectType
+		if (this.objectType !== 'passive')
+			throw new Error(
+				'Invariant violation: Passive constructor got passed a non-passive input'
+			)
+
+		this.name = staticData.name
+		this.slug = staticData.slug
+		this.aliases = staticData.aliases
+		this.statConfig = staticData.statConfig
+		this.description = staticData.description
+		this.buffSlugs = staticData.buffSlugs
+
 		this.parent = parent
 		this.image = make('img', {
 			ariaLabel: this.slug,

@@ -4,7 +4,16 @@ import { weaponAssetUrl } from './util.js'
 
 export class Buff {
 	constructor({ parent, staticData, statOverride }) {
-		Object.assign(this, staticData)
+		this.objectType = staticData.objectType
+		if (this.objectType !== 'passive')
+			throw new Error('Invariant violation: Buff constructor got passed a non-buff input')
+
+		this.name = staticData.name
+		this.slug = staticData.slug
+		this.statConfig = staticData.statConfig
+		this.traits = staticData.traits
+		this.description = staticData.description
+
 		this.parent = parent
 		this.image = make('img', {
 			src: weaponAssetUrl('owo_images/battleEmojis/' + this.slug + '.png'),
