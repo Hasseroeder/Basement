@@ -25,6 +25,7 @@ export class WeaponFactory {
 		)
 
 		return new Weapon({
+			objectType: 'weapon',
 			owner: { id: '@hsse', name: 'Heather' },
 			weaponID: '664DFC', // TODO: get rid of these stupid defaults
 			slug,
@@ -36,7 +37,11 @@ export class WeaponFactory {
 }
 
 class Weapon {
-	constructor({ owner, weaponID, slug, wear, statOverride, passiveGenParams }) {
+	constructor({ owner, weaponID, slug, wear, statOverride, passiveGenParams, objectType }) {
+		this.objectType = objectType
+		if (this.objectType !== 'weapon')
+			throw new Error('Invariant violation: Weapon constructor got passed a non-weapon input')
+
 		this.owner = owner
 		this.weaponID = weaponID
 		this.slug = slug
@@ -51,8 +56,8 @@ class Weapon {
 				noWear: statOverride.wpStat,
 			}
 
-		this.bList = document.getElementById('buffContainer')
-		this.image = document.getElementById('weaponImage')
+		this.bList = document.getElementById('buff-container')
+		this.image = document.getElementById('weapon-portrait')
 		this._wear
 
 		this.passives = []

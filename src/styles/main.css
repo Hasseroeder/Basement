@@ -178,12 +178,6 @@ code,
 	font-size: 0.625em;
 }
 
-.discord-text-bolder {
-	font-size: 1rem;
-	font-weight: 600;
-	color: rgb(255, 255, 255);
-}
-
 .grayOnHover {
 	transition: background-color 0.05s ease-in-out;
 }
@@ -326,10 +320,6 @@ button:hover {
 	color: lightgray;
 }
 
-.hidden {
-	visibility: hidden;
-}
-
 .grid {
 	display: grid;
 }
@@ -341,11 +331,6 @@ button:hover {
 	width: fit-content;
 	margin: unset;
 	display: flex;
-}
-
-.discord-text-emote {
-	width: 18px;
-	vertical-align: text-bottom;
 }
 
 .align-child-text-right * {

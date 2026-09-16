@@ -1,4 +1,3 @@
-import { customSelect } from '@/src/utils/customSelect.js'
 import { make } from '@/src/utils/injectionUtil.js'
 import _weapons from '@/src/data/weapon/weapons.json'
 import passives from '@/src/data/weapon/passives.json'
@@ -20,7 +19,7 @@ const wpbData = { weapons, passives, buffs }
 WeaponFactory.wpbData = wpbData
 const currentWeapon = WeaponFactory.fromHash()
 
-const pGrid = document.querySelector('.passive-grid')
+const pGrid = document.querySelector('#passive-selector')
 pGrid.append(
 	...wpbData.passives.map((passive) =>
 		make('img', {
@@ -28,6 +27,7 @@ pGrid.append(
 			alt: passive.slug,
 			title: passive.slug,
 			draggable: false,
+			className: 'passive-selector__passive-emote',
 			onmousedown: () =>
 				new passviveHandler.Passive({
 					staticData: passive,
@@ -38,10 +38,6 @@ pGrid.append(
 	)
 )
 
-const wearSelect = new customSelect(currentWeapon.wear, document.getElementById('wearSelect'), [
-	'WORN',
-	'DECENT',
-	'FINE',
-	'PRISTINE',
-])
-wearSelect.addEventListener('change', (e) => (currentWeapon.wear = e.detail.value))
+const wearSelect = document.querySelector('#wear-select')
+
+wearSelect.addEventListener('change', (e) => (currentWeapon.wear = e.target.value))

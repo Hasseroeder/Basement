@@ -11,7 +11,7 @@ export class Buff {
 			ariaLabel: this.slug,
 			alt: ':' + this.slug + ':',
 			draggable: false,
-			className: 'weapon-emote',
+			className: 'buffs__emote',
 		})
 
 		this.stats = this.statConfig.map((statConfig, i) => ({
@@ -38,9 +38,9 @@ export class Buff {
 }
 
 export function appendBuffNode(buff) {
-	const wrapper = make('div', { className: 'buff-item' })
+	const wrapper = make('div', { className: 'buffs__item' })
 	const title = make('strong', { textContent: ` ${buff.name} - ` })
 
-	wrapper.append(buff.image, title, messageHandler.generateDescription(buff))
+	wrapper.append(buff.image, title, ...messageHandler.generateDescription(buff))
 	buff.parent.bList.appendChild(wrapper)
 }

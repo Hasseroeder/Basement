@@ -3,10 +3,10 @@ import * as buffHandler from './buffHandler.js'
 import { getRarity, wpEmojiPath } from './util.js'
 import { make } from '@/src/utils/injectionUtil.js'
 
-const pList = document.querySelector('.passive-container')
+const pList = document.querySelector('#passives')
 
 export function appendPassiveNode(passive) {
-	const wrapper = make('div', { className: 'passive-item' })
+	const wrapper = make('div', { className: 'passives__item' })
 	passive.image.onclick = () => {
 		passive.remove()
 		wrapper.remove()
@@ -17,7 +17,12 @@ export function appendPassiveNode(passive) {
 		textContent: ` ${passive.name} - `,
 	})
 
-	wrapper.append(passive.image, title, messageHandler.generateDescription(passive), passive.bList)
+	wrapper.append(
+		passive.image,
+		title,
+		...messageHandler.generateDescription(passive),
+		passive.bList
+	)
 	pList.appendChild(wrapper)
 }
 
@@ -30,10 +35,10 @@ export class Passive {
 			ariaLabel: this.slug,
 			alt: ':' + this.slug + ':',
 			draggable: false,
-			className: 'weapon-emote passive-emote',
+			className: 'passives__emote',
 		})
 
-		this.bList = make('div', { className: 'buffContainer' })
+		this.bList = make('div', { className: 'buff-container' })
 
 		if (!statOverride)
 			statOverride = {

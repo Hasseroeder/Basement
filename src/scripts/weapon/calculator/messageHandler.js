@@ -1,14 +1,14 @@
 import {
 	valueToPercent,
 	percentToValue,
-	getStatImage,
-	getTierEmoji,
 	getTierEmojiPath,
+	weaponAssetUrl,
+	fileExists,
 } from './util.js'
 import { make } from '@/src/utils/injectionUtil.js'
 
 const el = {
-	weaponHeader: document.getElementById('weaponHeader'),
+	weaponHeader: document.getElementById('weapon-header'),
 	weaponName: document.getElementById('weaponName'),
 	ownerID: document.getElementById('ownerID'),
 	weaponID: document.getElementById('weaponID'),
@@ -16,7 +16,7 @@ const el = {
 	weaponQualityImage: document.getElementById('weaponQualityImage'),
 	weaponQualitySpan: document.getElementById('weaponQualitySpan'),
 	wpCost: document.getElementById('WP-Cost'),
-	description: document.getElementById('description'),
+	description: document.getElementById('weapon-line--description'),
 }
 
 function generateDescription(weaponOrPassive) {
@@ -39,14 +39,38 @@ function generateDescription(weaponOrPassive) {
 	const parts = weaponOrPassive.description.split(tokenRegex)
 	let statIndex = 0
 
-	return make('div', {}, parts.map(elif))
+	function descriptionEmote(inputString) {
+		const gifUrl = weaponAssetUrl(`owo_images/battleEmojis/${inputString}.gif`)
+		const pngUrl = weaponAssetUrl(`owo_images/battleEmojis/${inputString}.png`)
+		const className = {
+			passive: 'passives__emote',
+			buff: 'buffs__emote',
+			weapon: 'weapon-line--description__emote',
+		}[weaponOrPassive.objectType]
+
+		if (!className)
+			throw new Error(
+				"Invariant violation: Weapon, Buff, or Passive doesn't have a valid objectType"
+			)
+
+		const image = make('img', {
+			alt: `:${inputString}:`,
+			ariaLabel: inputString,
+			title: `:${inputString}:`,
+			className,
+		})
+
+		fileExists(gifUrl).then((exists) => (image.src = exists ? gifUrl : pngUrl))
+
+		return image
+	}
 
 	function elif(part) {
 		if (NEWLINE_RE.test(part)) return document.createElement('br')
 		if (part === STAT_TOKEN) return getStatNode()
 
 		const imgMatch = part.match(IMAGE_RE)
-		if (imgMatch) return getStatImage(imgMatch[1], 'weapon-emote')
+		if (imgMatch) return descriptionEmote(imgMatch[1])
 
 		const boldMatch = part.match(BOLD_RE)
 		if (boldMatch)
@@ -69,6 +93,8 @@ function generateDescription(weaponOrPassive) {
 		const stat = weaponOrPassive.stats[statIndex++]
 		return ((stat.IO = new WeaponStat(stat, weaponOrPassive)), stat.IO.wrapper)
 	}
+
+	return parts.map(elif)
 }
 
 function generateWPInput(weapon) {
@@ -133,32 +159,35 @@ class WeaponStat {
 		const makeUnitLabel = (config) =>
 			config.unit
 				? make('span', {
-						className: 'smol-right-margin prevent-select',
+						className: 'input-wrapper__unit-span',
 						textContent: config.unit,
 					})
 				: ''
 
-		this.wrapper = make('div', { className: 'outer-input-wrapper' })
 		this.numberInput = createRangedInput('number', this.wearConfig)
 		this.numberLabel = makeUnitLabel(this.noWearConfig)
 		this.qualityInput = createRangedInput('number', this.percentageConfig, { height: '1.5rem' })
 		this.qualityLabel = makeUnitLabel(this.percentageConfig)
 		this.slider = createRangedInput('range', this.wearConfig)
-		this.img = getTierEmoji(this.parent.tier)
-		this.tooltip = make('div', { className: 'hidden tooltip-lite-child' }, [
+		this.img = make('img', {
+			src: getTierEmojiPath(this.parent.tier),
+			alt: this.parent.tier,
+			ariaLabel: this.parent.tier,
+			title: `:${this.parent.tier}:`,
+			className: 'input-wrapper__tier-emote',
+		})
+		this.tooltip = make('div', { className: 'input-wrapper__tooltip' }, [
 			this.img,
 			this.qualityInput,
 			this.qualityLabel,
 			this.slider,
 		])
 
-		this.wrapper.append(
-			make('div', { className: 'input-wrapper tooltip-lite' }, [
-				this.numberInput,
-				this.numberLabel,
-				this.tooltip,
-			])
-		)
+		this.wrapper = make('div', { className: 'input-wrapper' }, [
+			this.numberInput,
+			this.numberLabel,
+			this.tooltip,
+		])
 
 		this._wireEvents()
 	}
@@ -238,29 +267,20 @@ function displayInfo(weapon) {
 
 function generateStatInputs(weapon) {
 	el.wpCost.append(generateWPInput(weapon))
-	el.description.append(generateDescription(weapon))
+	el.description.append(...generateDescription(weapon))
 }
 
-function createRangedInput(type, { min, max, step, digits }, extraStyles = {}) {
-	const className =
-		type === 'range' ? 'weaponSlider' : type === 'number' ? 'ranged-input no-arrows' : ''
+function createRangedInput(type, { min, max, step, digits }, style = {}) {
+	const className = {
+		range: 'input-wrapper__slider',
+		number: 'input-wrapper__number-input',
+	}[type]
 
-	const style =
-		type === 'range'
-			? {
-					margin: '0 0 0 0.2rem',
-					background: '#555',
-					transform: min > max ? 'scaleX(-1)' : '',
-					transformOrigin: min > max ? 'center' : '',
-					pointer: 'var(--cur-pointer)',
-				}
-			: type === 'number'
-				? {
-						width: digits * 0.5 + 'rem',
-					}
-				: {}
+	if (!className)
+		throw new Error('Invariant violation: ranged input type is not either range or number')
 
-	Object.assign(style, extraStyles)
+	if (type === 'range' && min > max) style.transform = 'scaleX(-1)'
+	else if (type === 'number') style.width = digits * 0.5 + 'rem'
 
 	return make('input', {
 		className,

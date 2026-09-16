@@ -1,6 +1,7 @@
 [
 	{
 		"name": "Taunt",
+		"objectType": "buff",
 		"description": "Taunts the enemy team and forces all opponents to attack this animal. Reduces incoming damage by [stat].",
 		"slug": "taunt",
 		"statConfig": [
@@ -20,6 +21,7 @@
 	},
 	{
 		"name": "Poison",
+		"objectType": "buff",
 		"description": "Deals [stat] of your :MAG:MAG as true damage at the end of the turn.",
 		"slug": "poison",
 		"statConfig": [
@@ -35,6 +37,7 @@
 	},
 	{
 		"name": "Flame",
+		"objectType": "buff",
 		"description": "Deals [stat] of your :mag:MAG at the end of the turn. Applying flame on a target that already has flame will explode and deal [stat] damage to the target.",
 		"slug": "flame",
 		"statConfig": [
@@ -57,6 +60,7 @@
 	},
 	{
 		"name": "Defense Up",
+		"objectType": "buff",
 		"description": "Reduces incoming damage by [stat].",
 		"slug": "defup",
 		"statConfig": [
@@ -76,6 +80,7 @@
 	},
 	{
 		"name": "Freeze",
+		"objectType": "buff",
 		"description": "Next turn, prevent the target from attacking. Remove a stack after triggering.",
 		"slug": "freeze",
 		"statConfig": [],
@@ -83,6 +88,7 @@
 	},
 	{
 		"name": "Attack Up",
+		"objectType": "buff",
 		"description": "Increases all damage by [stat]. Cannot stack with other Attack Up buffs.",
 		"slug": "attup",
 		"statConfig": [
@@ -98,6 +104,7 @@
 	},
 	{
 		"name": "Attack Up+",
+		"objectType": "buff",
 		"description": "Increases all damage by [stat]. Cannot stack with other Attack Up+ buffs.",
 		"slug": "attup+",
 		"statConfig": [
@@ -113,6 +120,7 @@
 	},
 	{
 		"name": "Attack Up++",
+		"objectType": "buff",
 		"description": "Increases all damage by [stat]. Cannot stack with other Attack Up++ buffs.",
 		"slug": "attup++",
 		"statConfig": [
@@ -128,6 +136,7 @@
 	},
 	{
 		"name": "Mortality",
+		"objectType": "buff",
 		"description": "Decreases all healing for this animal by [stat].",
 		"slug": "mort",
 		"statConfig": [
@@ -143,6 +152,7 @@
 	},
 	{
 		"name": "Celebration",
+		"objectType": "buff",
 		"description": "At the end of every turn, heal [stat] of your :ipr:iPR as :hp:HP and replenish [stat] of your :imr:iMR as :wp:WP.",
 		"slug": "celeb",
 		"statConfig": [
@@ -165,6 +175,7 @@
 	},
 	{
 		"name": "Leech",
+		"objectType": "buff",
 		"description": "The caster who applied this debuff steals [stat] of incoming heals and [stat] of incoming replenishes.",
 		"slug": "leech",
 		"statConfig": [
@@ -187,6 +198,7 @@
 	},
 	{
 		"name": "Stinky",
+		"objectType": "buff",
 		"description": "Prevents any future buffs *AND* debuffs from being applied to this animal. On success, deal [stat] :MAG:MAG to the animal. Stinky can be applied to stinky animals.",
 		"slug": "stinky",
 		"statConfig": [
@@ -202,6 +214,7 @@
 	},
 	{
 		"name": "Stoneskin",
+		"objectType": "buff",
 		"description": "Reduces incoming Physical damage by [stat] per stack. Remove all stacks upon taking damage of other types.",
 		"slug": "stoneskin",
 		"statConfig": [
@@ -222,6 +235,7 @@
 	},
 	{
 		"name": "Spellskin",
+		"objectType": "buff",
 		"description": "Reduces incoming Magical damage by [stat] per stack. Remove all stacks upon taking damage of other types.",
 		"slug": "spellskin",
 		"statConfig": [
@@ -242,6 +256,7 @@
 	},
 	{
 		"name": "Pest",
+		"objectType": "buff",
 		"description": "At the end of the turn, each stack of pests will deal [stat] of your :MAG:MAG as magical damage to the target. Pests will leave after they deal damage.",
 		"slug": "pest",
 		"statConfig": [
@@ -257,6 +272,7 @@
 	},
 	{
 		"name": "Thorn Tether",
+		"objectType": "buff",
 		"description": "Create a tether from the weapon owner to this animal. The owner absorbs [stat] of the incoming damage dealt, but also intercepts [stat] of healing and [stat] replenishing from the target.",
 		"slug": "tether",
 		"statConfig": [
@@ -290,6 +306,7 @@
 	},
 	{
 		"name": "Sin",
+		"objectType": "buff",
 		"description": "When consumed, each stack deals [stat] of your :StrMag: **highest** offense stat as physical damage to an enemy.",
 		"slug": "sin",
 		"statConfig": [
@@ -310,6 +327,7 @@
 	},
 	{
 		"name": "Virtue",
+		"objectType": "buff",
 		"description": "When consumed, each stack deals [stat] of your :StrMag: **lowest** offense stat as magical damage to an enemy.",
 		"slug": "virtue",
 		"statConfig": [

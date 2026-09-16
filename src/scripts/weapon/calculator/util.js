@@ -36,40 +36,13 @@ const percentToValue = (percent, { min, range }) => min + (range * percent) / 10
 
 const valueToPercent = (value, { min, range }) => Math.round((100 * (value - min)) / range)
 
-function getStatImage(inputString, className) {
-	const gifUrl = weaponAssetUrl(`owo_images/battleEmojis/${inputString}.gif`)
-	const pngUrl = weaponAssetUrl(`owo_images/battleEmojis/${inputString}.png`)
-	const imageClasses = ['weapon-emote', className].filter(Boolean).join(' ')
-
-	const image = make('img', {
-		alt: `:${inputString}:`,
-		ariaLabel: inputString,
-		title: `:${inputString}:`,
-		className: imageClasses,
-	})
-
-	fileExists(gifUrl).then((exists) => (image.src = exists ? gifUrl : pngUrl))
-
-	return image
-}
-
-async function fileExists(url) {
+export async function fileExists(url) {
 	try {
 		const res = await fetch(url, { method: 'HEAD' })
 		return res.ok && !res.headers.get('Content-Type')?.includes('text/html')
 	} catch {
 		return false
 	}
-}
-
-function getTierEmoji(tier) {
-	return make('img', {
-		src: getTierEmojiPath(tier),
-		alt: tier,
-		ariaLabel: tier,
-		title: `:${tier}:`,
-		className: 'weapon-emote',
-	})
 }
 
 function getTierEmojiPath(stringOrQuality) {
@@ -94,12 +67,4 @@ function getTierEmojiPath(stringOrQuality) {
 const wpEmojiPath = (wp) =>
 	weaponAssetUrl('owo_images/battleEmojis/' + wp.prefix + wp.tier.at(0) + '_' + wp.slug + '.png')
 
-export {
-	wpEmojiPath,
-	valueToPercent,
-	percentToValue,
-	getStatImage,
-	getTierEmoji,
-	getTierEmojiPath,
-	getRarity,
-}
+export { wpEmojiPath, valueToPercent, percentToValue, getTierEmojiPath, getRarity }
