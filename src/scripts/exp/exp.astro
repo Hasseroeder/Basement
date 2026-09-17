@@ -81,12 +81,12 @@ function battleExp(s : number, t : number) {
 }
 
 function attachBattleCalculator(wrapper : HTMLElement) {
-	const output = make('div', {className: "calculator-output"})
+	const output = make('div', {className: "calculator__output"})
 	output.update = function () {
 		this.textContent = Number(battleExp(streak.value, tierate.value)).toFixed(2)
 	}
 	const streak = make('input', {
-		className: 'calculator-input',
+		className: 'calculator__input',
 		type: 'number',
 		min: 0,
 		max: 1e6,
@@ -96,7 +96,7 @@ function attachBattleCalculator(wrapper : HTMLElement) {
 		oninput: () => output.update(),
 	})
 	const tierate = make('input', {
-		className: 'calculator-input',
+		className: 'calculator__input',
 		type: 'number',
 		min: 0,
 		max: 100,
@@ -107,14 +107,12 @@ function attachBattleCalculator(wrapper : HTMLElement) {
 	})
 
 	wrapper.append(
-		make('div', {}, [
+		make('div', {className:"calculator"}, [
 			streak,
-			tierate,
-			output,
-		]),
-		make('div', {}, [
 			make('div', { textContent: 'streak' }),
+			tierate,
 			make('div', { textContent: '% tierate' }),
+			output,
 			make('div', { textContent: 'exp/battle' }),
 		])
 	)
