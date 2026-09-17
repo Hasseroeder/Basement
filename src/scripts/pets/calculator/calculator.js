@@ -452,7 +452,7 @@ function addEffect(type) {
 		},
 	})
 
-	const numberWrapper = make('div', { className: 'grayOnHover number-wrapper' }, [
+	const numberWrapper = make('div', { className: 'number-wrapper' }, [
 		inputs[0],
 		make('div', { textContent: '%', className: 'percent-span' }),
 	])

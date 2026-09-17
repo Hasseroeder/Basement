@@ -134,3 +134,19 @@ thead {
 	justify-content: center;
 	display: flex;
 }
+
+.calculator-input {
+	-moz-appearance: textfield;
+	appearance: textfield;
+	text-align: end;
+
+	&::-webkit-inner-spin-button,
+	&::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+}
+
+.calculator-output {
+	text-align: end;
+}
