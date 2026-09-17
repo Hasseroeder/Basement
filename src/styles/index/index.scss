@@ -42,9 +42,8 @@
 }
 
 .link-table {
-	border-right: none;
-	border-left: none;
 	width: 100%;
+	border-collapse: collapse;
 
 	&__platform-logo {
 		z-index: 1;
@@ -61,14 +60,14 @@
 		padding: 0 0.8rem;
 		position: relative;
 
+		height: 2.2rem;
+		border-top: 1px solid #303030;
+		border-bottom: 1px solid #303030;
+
 		a,
 		code {
 			z-index: 2;
 			position: relative;
 		}
-	}
-
-	&__row {
-		height: 2.2rem;
 	}
 }

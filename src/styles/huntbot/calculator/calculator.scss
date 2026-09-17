@@ -22,11 +22,14 @@
 	line-height: 1.125rem;
 }
 
-.subtle-gray-hover {
+.roi-box,
+.intro,
+.trait-box {
 	border-radius: 0.3rem;
-}
-.subtle-gray-hover:hover {
-	background-color: #373737;
+
+	&:hover {
+		background-color: #373737;
+	}
 }
 
 .gray-hover:hover {
@@ -78,27 +81,18 @@
 	width: 1.5rem;
 }
 
-table {
-	margin: 0.5rem;
-}
+.roi-box {
+	padding: 0.5rem;
+	display: flex;
 
-table,
-td,
-th {
-	border: none;
-	width: 100%;
-}
-
-td,
-th {
-	padding: 0.1rem;
-	width: 6rem;
-}
-
-td:first-child,
-th:first-child {
-	padding: 0.1rem;
-	width: 6rem;
+	&__table {
+		flex: 1;
+	}
+	&__cell {
+		padding: 0.1rem;
+		width: 25%;
+		text-align: center;
+	}
 }
 
 input[type='checkbox'] {
@@ -371,4 +365,26 @@ details[open] > summary img {
 .robot-portrait {
 	height: 5rem;
 	width: 5rem;
+}
+
+.tooltip-text {
+	visibility: hidden;
+	background-color: #333;
+	padding: 0.2rem;
+	min-width: 4rem;
+	border-left: 0.125rem solid #d3d3d3;
+	border-right: 0.125rem solid #8d8d8d;
+	border-top: 0.125rem solid #d3d3d3;
+	border-bottom: 0.125rem solid #8d8d8d;
+
+	/* Position */
+	position: absolute;
+	left: 0%;
+	top: 120%;
+
+	font-size: 0.6rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.1rem;
 }

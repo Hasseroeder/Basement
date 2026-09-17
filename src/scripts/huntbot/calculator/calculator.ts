@@ -101,7 +101,7 @@ const zooContainer = getElement('#zooContainer')
 const hbContainer = getElement('#huntbotContainer')
 const tierTable = getElement('.tier-table')
 const zpSpan = getElement('#zpSpan')
-const tableBox = getElement('#table-box')
+const roiBox = getElement('#roi-box')
 const gridContainer = getElement('.grid-container')
 const [firstButton, prevButton, nextButton, lastButton, resetButton] = Array.from(
 	document.querySelectorAll<HTMLButtonElement>('#simming-buttons button')
@@ -368,12 +368,14 @@ function getSell(options: CaughtOptions): number {
 	)
 }
 
-const traitTable = make('table')
+const traitTable = make('table', { className: 'roi-box__table' })
 {
 	//table init
-	const cells = ['', 'Cost', 'Essence', 'ROI'].map((textContent) => make('td', { textContent }))
+	const cells = ['', 'Cost', 'Essence', 'ROI'].map((textContent) =>
+		make('td', { textContent, className: 'roi-box__cell' })
+	)
 	traitTable.append(make('tr', {}, cells))
-	tableBox.append(traitTable)
+	roiBox.append(traitTable)
 }
 
 const dailyPets = () => Efficiency.value * 24
@@ -419,7 +421,7 @@ class Trait {
 
 		if (upgradeWorth) {
 			this.upgradeWorth = upgradeWorth
-			const cells = [...Array(4)].map(() => make('td'))
+			const cells = [...Array(4)].map(() => make('td', { className: 'roi-box__cell' }))
 			const row = make('tr', {}, cells)
 			cells[0].textContent = this.name
 			this.roiTableRow = {
@@ -499,7 +501,7 @@ class Trait {
 			this.outputs[i] = () => (el.textContent = output())
 		})
 		gridContainer.append(
-			make('div', { className: 'subtle-gray-hover' }, [header, inputWrapper, outputWrapper])
+			make('div', { className: 'trait-box' }, [header, inputWrapper, outputWrapper])
 		)
 	}
 

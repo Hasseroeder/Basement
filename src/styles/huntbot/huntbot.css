@@ -1,6 +1,7 @@
 table {
 	font-size: 0.8rem;
 	table-layout: fixed;
+	border-collapse: collapse;
 }
 td:first-child,
 th:first-child {
@@ -10,8 +11,9 @@ th:first-child {
 td,
 th {
 	width: 5%; /*I have no clue why 5% works*/
-	height: 2.25rem;
 	overflow: hidden;
+	border: 1px solid #303030;
+	padding: 0.5rem 0.075rem;
 }
 th {
 	font-size: 2rem;

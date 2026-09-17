@@ -1,6 +1,6 @@
 ---
 import '@/src/styles/main.css';
-import '@/src/styles/huntbot/calculator/calculator.css';
+import '@/src/styles/huntbot/calculator/calculator.scss';
 import '@/src/styles/calculators.css';
 import Navbar from '@/src/components/navbar.astro';
 import Blinkies from '@/src/components/blinkies.astro';
@@ -16,7 +16,7 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
         <div class="inner-page-wrapper">
           <EmbedMessage avatar="/src/assets/images/owo_images/avatars/owo_avatar.png" name="OwO" bot={true}>
             <h3>HuntBot</h3>
-            <div class="subtle-gray-hover intro">
+            <div class="intro">
               <div style="flex: auto">
                 <code class="discord-code"
                   >BEEP. BOOP. I AM HUNTBOT. I WILL HUNT FOR YOU MASTER.</code
@@ -32,7 +32,7 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
               <img class="robot-portrait" src="/src/assets/images/owo_images/huntbot/robot.png" />
             </div>
             <div class="grid-container"></div>
-            <div id="table-box" class="subtle-gray-hover"></div>
+            <div id="roi-box" class="roi-box"></div>
           </EmbedMessage>
           <EmbedMessage avatar="/src/assets/images/owo_images/avatars/neonutil.png" name="NeonUtil" bot={true}>
             <div class="tier-table" draggable="false"></div>
