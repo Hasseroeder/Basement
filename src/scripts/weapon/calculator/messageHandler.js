@@ -254,8 +254,8 @@ class WeaponStat {
 }
 
 function displayInfo(weapon) {
-	el.weaponHeader.textContent = weapon.owner.name + "'s " + weapon.wearName + weapon.typeName
-	el.weaponName.textContent = weapon.typeName
+	el.weaponHeader.textContent = weapon.owner.name + "'s " + weapon.wearName + weapon.name
+	el.weaponName.textContent = weapon.name
 	el.ownerID.textContent = weapon.owner.id
 	el.weaponID.textContent = weapon.weaponID
 	const wsValue = weapon.shardValue

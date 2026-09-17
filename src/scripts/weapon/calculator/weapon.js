@@ -19,64 +19,76 @@ export class WeaponFactory {
 	}
 
 	static fromHash() {
-		const { slug, wear, statOverride, passiveGenParams } = blueprinter.toWeapon(
-			location.hash.slice(1),
-			WeaponFactory.wpbData
-		)
-
-		return new Weapon({
-			objectType: 'weapon',
-			owner: { id: '@hsse', name: 'Heather' },
-			weaponID: '664DFC', // TODO: get rid of these stupid defaults
-			slug,
-			wear,
-			statOverride,
-			passiveGenParams,
-		})
+		const weapon = new Weapon()
+		blueprinter.applyToWeapon(weapon, location.hash.slice(1), WeaponFactory.wpbData)
+		return weapon
 	}
 }
 
 class Weapon {
-	constructor({ owner, weaponID, slug, wear, statOverride, passiveGenParams, objectType }) {
-		this.objectType = objectType
-		if (this.objectType !== 'weapon')
-			throw new Error('Invariant violation: Weapon constructor got passed a non-weapon input')
-
-		this.owner = owner
-		this.weaponID = weaponID
-		this.slug = slug
-		this.stats = statOverride.base.map((override, i) => ({
-			noWearConfig: this.staticData.statConfig[i],
-			noWear: override,
-		}))
-
-		if (statOverride.wpStat)
-			this.wpStat = {
-				noWearConfig: this.staticData.wpStatConfig,
-				noWear: statOverride.wpStat,
-			}
-
+	constructor() {
+		this.objectType = 'weapon'
+		this.owner = { id: '@hsse', name: 'Heather' }
+		this.weaponID = '664DFC' // TODO: get rid of these stupid defaults
 		this.bList = document.getElementById('buff-container')
 		this.image = document.getElementById('weapon-portrait')
-		this._wear
-
+		this._wear = 'worn'
 		this.passives = []
 		this.buffs = []
-		passiveGenParams.forEach((params) => (params.parent = this))
-		passiveGenParams.forEach((params) => new passiveHandler.Passive(params))
-		const buffGenParams = this.buffSlugs.map((slug, i) => ({
-			parent: this,
-			staticData: WeaponFactory.wpbData.buffs.find((buff) => buff.slug === slug),
-			statOverride: statOverride.buff[i],
-		}))
-		buffGenParams.forEach((params) => new buffHandler.Buff(params))
+	}
 
+	setType(staticData) {
+		if (staticData.objectType !== this.objectType)
+			throw new Error('Invariant violation: Weapon type must use weapon static data')
+
+		this.slug = staticData.slug
+		this.stats = staticData.statConfig.map((noWearConfig) => ({ noWearConfig, noWear: 100 }))
+		this.wpStat = staticData.wpStatConfig
+			? { noWearConfig: staticData.wpStatConfig, noWear: 100 }
+			: undefined
+
+		this.name = staticData.name
+		this.aliases = staticData.aliases
+		this.statConfig = staticData.statConfig
+		this.description = staticData.description
+		this.buffSlugs = staticData.buffSlugs
+		this.normalPassiveAmount = staticData.normalPassiveAmount
+
+		this.buffs = []
+		this.buffSlugs.forEach((slug) => {
+			const staticData = WeaponFactory.wpbData.buffs.find((buff) => buff.slug === slug)
+			new buffHandler.Buff({
+				parent: this,
+				staticData,
+				statOverride: staticData.statConfig.map(() => 100),
+			})
+		})
+	}
+
+	applyStatOverrides({ base, buff: buffOverrides, wpStat }) {
+		this.stats.forEach((stat, i) => (stat.noWear = base[i]))
+		this.buffs.forEach((buff, i) =>
+			buff.stats.forEach((stat, j) => (stat.noWear = buffOverrides[i][j]))
+		)
+		if (this.wpStat) this.wpStat.noWear = wpStat
+	}
+
+	addPassive(staticData, statOverride) {
+		return new passiveHandler.Passive({
+			parent: this,
+			staticData,
+			statOverride,
+			wpbData: WeaponFactory.wpbData,
+		})
+	}
+
+	finishBlueprint(wear) {
 		messageHandler.generateStatInputs(this)
 		this.wear = wear
 	}
 
 	get isEmpowered() {
-		return this.passives.length > this.staticData.normalPassiveAmount
+		return this.passives.length > this.normalPassiveAmount
 	}
 
 	get hasWear() {
@@ -104,10 +116,6 @@ class Weapon {
 		return value
 	}
 
-	get buffSlugs() {
-		return this.staticData.buffSlugs
-	}
-
 	set wear(v) {
 		this._wear = v
 		this.allStats.forEach((stat) => stat.IO.updateWear())
@@ -133,24 +141,6 @@ class Weapon {
 				decent: 1,
 			}[this.wear] ?? 0
 		)
-	}
-
-	get staticData() {
-		return WeaponFactory.wpbData.weapons.find(
-			(weaponStatics) => weaponStatics.slug === this.slug
-		)
-	}
-
-	get typeName() {
-		return this.staticData.name
-	}
-
-	get aliases() {
-		return this.staticData.aliases
-	}
-
-	get description() {
-		return this.staticData.description
 	}
 
 	get tier() {

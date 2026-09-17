@@ -1,6 +1,5 @@
 import { valueToPercent } from './util.js'
 
-const initWeaponSlug = 'sword' // Default to sword if no weapon is provided.
 const fabledPercent = 100 // default to this quality if can't read stats
 
 function splitHypenSpaces(string) {
@@ -103,24 +102,18 @@ function getMatches(arrayToSearch, query) {
 	)
 }
 
-export function toWeapon(inputHash, wpbData) {
-	const { weapons, passives, buffs } = wpbData
+export function applyToWeapon(weapon, inputHash, wpbData) {
+	const { weapons, passives } = wpbData
 	const tokens = splitHypenSpaces(inputHash)
 	const weaponMatch = getMatches(weapons, tokens)[0] ?? { item: weapons[0], statToken: '' }
 	const wear = ['decent', 'fine', 'pristine'].includes(tokens[0]) ? tokens[0] : 'worn'
-	const statOverride = getStats(wear, weaponMatch, wpbData)
-	const passiveGenParams = getMatches(passives, tokens).map((passiveMatch) => ({
-		staticData: passiveMatch.item,
-		statOverride: getStats(wear, passiveMatch, wpbData),
-		wpbData,
-	}))
 
-	return {
-		slug: weaponMatch.item.slug,
-		wear,
-		statOverride,
-		passiveGenParams,
-	}
+	weapon.setType(weaponMatch.item)
+	weapon.applyStatOverrides(getStats(wear, weaponMatch, wpbData))
+	getMatches(passives, tokens).forEach((passiveMatch) =>
+		weapon.addPassive(passiveMatch.item, getStats(wear, passiveMatch, wpbData))
+	)
+	weapon.finishBlueprint(wear)
 }
 
 export function toString(weapon) {
