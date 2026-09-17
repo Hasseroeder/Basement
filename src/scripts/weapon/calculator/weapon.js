@@ -35,6 +35,8 @@ class Weapon {
 		this._wear = 'worn'
 		this.passives = []
 		this.buffs = []
+		// all staticData still uninitialized, which will need to be added before this is functional.
+		// see below: setType()
 	}
 
 	setType(staticData) {
