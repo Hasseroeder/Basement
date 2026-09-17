@@ -106,6 +106,7 @@ export function applyToWeapon(weapon, inputHash, wpbData) {
 	const { weapons, passives } = wpbData
 	const tokens = splitHypenSpaces(inputHash)
 	const weaponMatch = getMatches(weapons, tokens)[0] ?? { item: weapons[0], statToken: '' }
+	// default to the first weapon entry if we don't get a valid match from the blueprint
 	const wear = ['decent', 'fine', 'pristine'].includes(tokens[0]) ? tokens[0] : 'worn'
 
 	weapon.setType(weaponMatch.item)
