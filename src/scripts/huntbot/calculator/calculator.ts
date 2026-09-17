@@ -107,9 +107,9 @@ const [firstButton, prevButton, nextButton, lastButton, resetButton] = Array.fro
 	document.querySelectorAll<HTMLButtonElement>('#simming-buttons button')
 )
 
-const currentHbLines = Array.from(document.querySelectorAll('.huntbotLine'))
+const currentHbLines = Array.from(document.querySelectorAll('.hb-container__code'))
 if (currentHbLines.length !== 2) {
-	throw new Error("Haven't found two .huntbotLine elements")
+	throw new Error("Haven't found two .hb-container__code elements")
 }
 const toggleAllButtons = document.querySelectorAll<HTMLButtonElement>('#sacToggles button')
 if (toggleAllButtons.length !== 2) {
@@ -285,6 +285,9 @@ const zoo = rawZoo
 	})
 
 loadJson('https://neonutil.com/api/animals').then((response) => {
+	if (!response || !response.ok) return
+	// we don't need to throw an error, this just leaves the calculator without custom patreon pets.
+
 	const cptier = zoo.find((tier: Tier) => tier.slug === 'cpatreon')
 	if (!cptier) throw new Error('Invariant violation: "cpatreon" tier not found')
 	cptier.pets.length = 0
