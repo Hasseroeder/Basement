@@ -1,5 +1,5 @@
 import { loadPets } from '/src/utils/jsonUtil.js'
-import { make, doTimestamps } from '/src/utils/injectionUtil.js'
+import { make } from '/src/utils/injectionUtil.js'
 
 const petContainer = document.getElementById('petContainer')
 const effectContainer = document.getElementById('effectContainer')
@@ -486,7 +486,6 @@ const prefix = (quality) =>
 	].findLast(({ min }) => min < quality).prefix
 
 document.addEventListener('DOMContentLoaded', async () => {
-	doTimestamps()
 	inputs.forEach((input) => {
 		input.addEventListener('change', updateStats)
 		input.addEventListener('wheel', (ev) => {
