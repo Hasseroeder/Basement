@@ -754,8 +754,8 @@ document.addEventListener('paste', (e) => {
 	extractLevels(e.clipboardData.getData('text'))
 })
 
-const patreonCheckWrapper = getElement<HTMLElement>('#patreon-checkbox')
-const patreonCheck = getElement<HTMLInputElement>('#patreon-checkbox__checkbox')
+const patreonCheckWrapper = getElement<HTMLElement>('#patreon-label')
+const patreonCheck = getElement<HTMLInputElement>('#patreon-label__checkbox')
 patreonCheckWrapper.onclick = () => {
 	patreon = patreonCheck.checked
 	save()

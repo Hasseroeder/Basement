@@ -254,8 +254,7 @@
 	}
 }
 
-.patreon-checkbox {
-	/* is technically a label wrapping the actual checkbox element... should I name this patreon-label?*/
+.patreon-label {
 	@extend ._interactive-hover-gray;
 	@extend ._no-select;
 
