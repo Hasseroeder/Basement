@@ -1,7 +1,7 @@
 ---
 import '@/src/styles/main.scss';
 import '@/src/styles/pets/calculator/calculator.scss';
-import '@/src/styles/calculators.css';
+import '@/src/styles/calculators.scss';
 import Navbar from '@/src/components/navbar.astro';
 import Blinkies from '@/src/components/blinkies.astro';
 import Head from '@/src/components/head.astro';
@@ -14,14 +14,14 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
     <div class="center-pillar"> 
       <Navbar/>
       <div class="page-wrapper">
-        <div class="inner-page-wrapper">
+        <div class="page-wrapper__inner">
           <div class="discord-message">
-            <img class="avatar" src="/src/assets/images/owo_images/avatars/owo_avatar.png"/>
-            <div class="discord-message-inner">
-              <div class="discord-message-header">
-                <span class="discord-name">OwO</span>
-                <span class="bot-tag">✓APP</span>
-                <span class="timestamp"></span>
+            <img class="discord-message__avatar" src="/src/assets/images/owo_images/avatars/owo_avatar.png"/>
+            <div class="discord-message__inner">
+              <div class="discord-message__header">
+                <span class="discord-message__name">OwO</span>
+                <span class="discord-message__bot-tag">✓APP</span>
+                <span class="discord-message__timestamp"></span>
               </div>
               <div style="display: flex; gap: 1rem;">
                 <div class="embed">

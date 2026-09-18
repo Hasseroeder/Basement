@@ -8,21 +8,21 @@ const { avatar= "/src/assets/images/owo_images/avatars/owo_avatar.png", name="Ow
     gap: 0.5rem;
     width:100%;
   }
-  .discord-message-inner{
+  .discord-message__inner{
     flex: 1
   }
-  .discord-message-header {
+  .discord-message__header {
     display: flex;
     align-items: center;
   }
-  .bot-tag {
+  .discord-message__bot-tag {
     margin: .075em 0 .075em 0.25rem;
     padding: 0.071875rem 0.275rem;
     border-radius: 3px;
     background: #707070;
     font-size: 0.625em;
   }
-  .timestamp {
+  .discord-message__timestamp {
     margin-left: 0.25rem;
     height: 1.25rem;
     cursor: var(--cur-default);
@@ -30,22 +30,22 @@ const { avatar= "/src/assets/images/owo_images/avatars/owo_avatar.png", name="Ow
     font-size: 0.75rem;
     line-height: 1.25rem;
   }
-  .avatar {
+  .discord-message__avatar {
     width: 2.5rem;
     border-radius: 50%;
     height: 2.5rem;
   }
-  .discord-name {
+  .discord-message__name {
     color: #eee;
   }
 </style>
 <div class="discord-message">
-  <img class="avatar" src={avatar} />
-  <div class="discord-message-inner">
-    <div class="discord-message-header">
-      <span class="discord-name">{name}</span>
-      {bot && <span class="bot-tag">✓APP</span>}
-      <span class="timestamp"></span>
+  <img class="discord-message__avatar" src={avatar} />
+  <div class="discord-message__inner">
+    <div class="discord-message__header">
+      <span class="discord-message__name">{name}</span>
+      {bot && <span class="discord-message__bot-tag">✓APP</span>}
+      <span class="discord-message__timestamp"></span>
     </div>
     <slot />
   </div>

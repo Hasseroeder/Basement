@@ -1,7 +1,7 @@
 ---
 import '@/src/styles/main.scss';
 import '@/src/styles/huntbot/calculator/calculator.scss';
-import '@/src/styles/calculators.css';
+import '@/src/styles/calculators.scss';
 import Navbar from '@/src/components/navbar.astro';
 import Blinkies from '@/src/components/blinkies.astro';
 import Head from '@/src/components/head.astro';
@@ -13,7 +13,7 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
     <div class="center-pillar">
       <Navbar/>
       <div class="page-wrapper">
-        <div class="inner-page-wrapper">
+        <div class="page-wrapper__inner">
           <EmbedMessage avatar="/src/assets/images/owo_images/avatars/owo_avatar.png" name="OwO" bot={true}>
             <h3 class="header">HuntBot</h3>
             <div class="intro">
