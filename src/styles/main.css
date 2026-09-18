@@ -238,12 +238,6 @@ button:hover {
 	color: lightgray;
 }
 
-.prevent-select {
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
 .center-box {
 	display: flex;
 	justify-content: center;

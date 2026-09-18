@@ -93,16 +93,16 @@ const sellZooValue = getElement('#cowoncyZooValue')
 const sacZooValue = getElement('#essenceZooValue')
 const sellHbValue = getElement('#cowoncyHbValue')
 const sacHbValue = getElement('#essenceHbValue')
-const huntbotIdxEl = getElement('#huntbotIdx')
-const countContainer = getElement('#tierCountContainer')
+const huntbotIdxEl = getElement('#huntbot-idx')
+const countContainer = getElement('#tier-count-container')
 const zooLuckContainer = getElement('#zoo-luck-container')
 const hbLuckContainer = getElement('#hb-luck-container')
-const zooContainer = getElement('#zooContainer')
-const hbContainer = getElement('#huntbotContainer')
-const tierTable = getElement('.tier-table')
+const zooContainer = getElement('#zoo-container__tier-container')
+const hbContainer = getElement('#hb-container__tier-container')
+const tierGrid = getElement('.tier-grid')
 const zpSpan = getElement('#zpSpan')
 const roiBox = getElement('#roi-box')
-const gridContainer = getElement('.grid-container')
+const traitGrid = getElement('#trait-grid')
 const [firstButton, prevButton, nextButton, lastButton, resetButton] = Array.from(
 	document.querySelectorAll<HTMLButtonElement>('#simming-buttons button')
 )
@@ -111,9 +111,9 @@ const currentHbLines = Array.from(document.querySelectorAll('.hb-container__code
 if (currentHbLines.length !== 2) {
 	throw new Error("Haven't found two .hb-container__code elements")
 }
-const toggleAllButtons = document.querySelectorAll<HTMLButtonElement>('#sacToggles button')
+const toggleAllButtons = document.querySelectorAll<HTMLButtonElement>('.sac-toggles__button')
 if (toggleAllButtons.length !== 2) {
-	throw new Error("Haven't found two #sacToggles button elements")
+	throw new Error("Haven't found two .sac-toggles__button elements")
 }
 
 function updateZooValue(): void {
@@ -147,7 +147,7 @@ const makePetCell = ({
 	const petCell: PetCell = make(
 		'div',
 		{
-			className: 'pet-cell',
+			className: 'pet-grid__cell',
 			dataset: { prettyName, slug },
 			update: (visible: boolean, str?: string) => {
 				if (visible !== displayedVisibility) {
@@ -161,7 +161,12 @@ const makePetCell = ({
 			},
 		},
 		[
-			make('img', { src: emoteSrc, loading: 'lazy', decoding: 'async', className: 'emote' }),
+			make('img', {
+				src: emoteSrc,
+				loading: 'lazy',
+				decoding: 'async',
+				className: 'pet-grid__emote',
+			}),
 			textEl,
 		]
 	)
@@ -179,11 +184,11 @@ const zoo = rawZoo
 
 		const zooPetGrid = make('div', { className: 'pet-grid' })
 		const hbPetGrid = make('div', { className: 'pet-grid' })
-		const zooRow: visibilityElement = make('div', { className: 'zoo-row' }, [
+		const zooRow: visibilityElement = make('div', { className: 'zoo-container__zoo-row' }, [
 			makeEmote(),
 			zooPetGrid,
 		])
-		const hbRow: visibilityElement = make('div', { className: 'zoo-row' }, [
+		const hbRow: visibilityElement = make('div', { className: 'hb-container__zoo-row' }, [
 			makeEmote(),
 			' | ',
 			hbPetGrid,
@@ -205,7 +210,7 @@ const zoo = rawZoo
 			hbPetGrid.append(pet.hbCell)
 		})
 
-		const sacImg = make('img', { className: 'smol', draggable: false })
+		const sacImg = make('img', { className: 'tier-grid__sac-emote', draggable: false })
 		const sacText = make('div')
 		const tier: Tier = {
 			...rawTier,
@@ -246,28 +251,21 @@ const zoo = rawZoo
 			...generateLuckDom(),
 		}
 
-		const makeDetailsRow = ({
-			expectedLuck,
-			actualLuck,
-			arrow,
-		}: {
-			expectedLuck: HTMLDivElement
-			actualLuck: HTMLDivElement
-			arrow: LuckArrow
-		}): HTMLDivElement =>
-			make('div', { className: 'details-row' }, [
-				make('div', {}, [make('img', { src: tier.emoteSrc, className: 'emote' })]),
-				make('div', {}, [expectedLuck]),
-				make('div', {}, [arrow.element, actualLuck]),
-			])
-
-		zooLuckContainer.append(makeDetailsRow(tier.zooLuckEls))
-		hbLuckContainer.append(makeDetailsRow(tier.hbLuckEls))
+		zooLuckContainer.append(
+			make('div', {}, [make('img', { src: tier.emoteSrc, className: 'emote' })]),
+			make('div', {}, [tier.zooLuckEls.expectedLuck]),
+			make('div', {}, [tier.zooLuckEls.arrow.element, tier.zooLuckEls.actualLuck])
+		)
+		hbLuckContainer.append(
+			make('div', {}, [make('img', { src: tier.emoteSrc, className: 'emote' })]),
+			make('div', {}, [tier.hbLuckEls.expectedLuck]),
+			make('div', {}, [tier.hbLuckEls.arrow.element, tier.hbLuckEls.actualLuck])
+		)
 
 		const wrapper = make(
 			'div',
 			{
-				className: 'tier-cell gray-hover',
+				className: 'tier-grid__cell',
 				onmousedown: () => tier.toggleSac(),
 				onmouseenter: (e: MouseEvent) => {
 					if (e.relatedTarget && wrapper.contains(e.relatedTarget)) return
@@ -275,12 +273,16 @@ const zoo = rawZoo
 				},
 			},
 			[
-				make('img', { src: tier.emoteSrc, draggable: false }),
-				make('div', { className: 'dynamic' }, [sacText, sacImg]),
-				tier.patreonNeeded ? make('div', { className: 'patreon-graying' }) : '',
+				make('img', {
+					className: 'tier-grid__tier-emote',
+					src: tier.emoteSrc,
+					draggable: false,
+				}),
+				make('div', { className: 'tier-grid__sac-indicator' }, [sacText, sacImg]),
+				tier.patreonNeeded ? make('div', { className: 'tier-grid__patreon-graying' }) : '',
 			]
 		)
-		tierTable.append(wrapper)
+		tierGrid.append(wrapper)
 		return tier
 	})
 
@@ -417,15 +419,17 @@ class Trait {
 		}
 		this.emoji = make('img', {
 			src: `/src/assets/images/owo_images/huntbot/${this.name.toLowerCase()}.png`,
-			className: 'emote',
 		})
 
-		const header = make('h4', {}, [this.emoji, this.header])
+		const header = make('h4', { className: 'trait-grid__trait-header' }, [
+			this.emoji,
+			this.header,
+		])
 
 		if (upgradeWorth) {
 			this.upgradeWorth = upgradeWorth
 			const cells = [...Array(4)].map(() => make('td', { className: 'roi-box__cell' }))
-			const row = make('tr', {}, cells)
+			const row = make('tr', { className: 'roi-box__row' }, cells)
 			cells[0].textContent = this.name
 			this.roiTableRow = {
 				row,
@@ -444,57 +448,60 @@ class Trait {
 			traitTable.append(row)
 		}
 
-		const lvlSpan = make('div', {
+		const lvlSpan = make('span', {
 			textContent: 'Lvl',
-			className: 'calculatorLevel',
+			className: 'trait-inputs__lvl-span',
 		})
 		this.input = make('input', {
 			type: 'number',
 			min: 0,
 			max: this.max,
-			className: 'number-input no-arrows',
+			className: 'trait-inputs__lvl-number-input',
 			onchange: () => (this.level = Number(this.input.value)),
 		})
 
 		const numberWrapper = make(
 			'div',
-			{ className: 'number-wrapper  rounded gray-hover', onclick: () => this.input.focus() },
+			{
+				className: 'trait-inputs__number-wrapper',
+				onclick: () => this.input.focus(),
+			},
 			[lvlSpan, this.input]
 		)
 
 		const ttImg = make('img', {
-			className: 'upgrade-image emote',
+			className: 'trait-inputs__upgrade-tooltip-emote',
 			src: '/src/assets/images/owo_images/essence.gif',
 		})
 		const ttText = make('div')
-		const ttEl = make('span', { className: 'tooltip-text' }, [ttImg, ttText])
+		const ttEl = make('span', { className: 'trait-inputs__upgrade-tooltip' }, [ttImg, ttText])
 		const text = make('div')
-		const btnP = make(
+		const nextButton = make(
 			'button',
 			{
-				className: 'gray-hover tooltip',
+				className: 'trait-inputs__next-button',
 				onclick: () => this.level++,
 			},
 			[text, ttEl]
 		)
-		const btnM = make('button', {
-			className: 'gray-hover',
+		const prevButton = make('button', {
+			className: 'trait-inputs__prev-button',
 			onclick: () => this.level--,
 		})
-		this.btnM = btnM
-		this.btnP = { text, ttText, ttEl }
+		this.prevButton = prevButton
+		this.nextButton = { text, ttText, ttEl }
 
 		const inputWrapper = make(
 			'div',
 			{
-				className: 'gapped-box',
+				className: 'trait-inputs',
 				onwheel: (e: WheelEvent) => {
 					e.preventDefault()
 					if (e.deltaY < 0) this.level++
 					else this.level--
 				},
 			},
-			[btnM, numberWrapper, btnP]
+			[prevButton, numberWrapper, nextButton]
 		)
 
 		const outputWrapper = make('ul')
@@ -503,8 +510,12 @@ class Trait {
 			outputWrapper.append(el)
 			this.outputs[i] = () => (el.textContent = output())
 		})
-		gridContainer.append(
-			make('div', { className: 'trait-box' }, [header, inputWrapper, outputWrapper])
+		traitGrid.append(
+			make('div', { className: 'trait-grid__trait-box' }, [
+				header,
+				inputWrapper,
+				outputWrapper,
+			])
 		)
 	}
 
@@ -516,10 +527,10 @@ class Trait {
 		this._level = value
 		//DOM updates
 		this.input.value = String(value)
-		this.btnM.textContent = value === 0 ? 'MIN' : '<'
-		this.btnP.text.textContent = value === this.max ? 'MAX' : '>'
-		this.btnP.ttEl.hidden = value === this.max
-		this.btnP.ttText.textContent = String(this.cost)
+		this.prevButton.textContent = value === 0 ? 'MIN' : '<'
+		this.nextButton.text.textContent = value === this.max ? 'MAX' : '>'
+		this.nextButton.ttEl.style.visibility = value === this.max ? 'hidden' : ''
+		this.nextButton.ttText.textContent = String(this.cost)
 		drawData()
 		save()
 	}
@@ -558,8 +569,8 @@ class Trait {
 	header: HTMLSpanElement
 	emoji: HTMLImageElement
 	input: HTMLInputElement
-	btnM: HTMLButtonElement
-	btnP: {
+	prevButton: HTMLButtonElement
+	nextButton: {
 		text: HTMLDivElement
 		ttText: HTMLDivElement
 		ttEl: HTMLSpanElement
@@ -648,7 +659,7 @@ const traits = [Efficiency, Duration, Cost, Gain, Experience, Radar]
 
 const renderPatreon = (): void =>
 	document
-		.querySelectorAll<HTMLElement>('.patreon-graying')
+		.querySelectorAll<HTMLElement>('.tier-grid__patreon-graying')
 		.forEach((el) => (el.hidden = patreon))
 
 toggleAllButtons[0].onclick = () => toggleAllTiers(false)
@@ -664,7 +675,7 @@ const save = debounce(function () {
 
 const tt = {
 	wrapper: make('div', {
-		className: 'pet-tooltip',
+		className: 'pet-grid__tooltip',
 	}),
 	title: make('div'),
 	statCells: [
@@ -696,7 +707,7 @@ document.body.append(tt.wrapper)
 document.addEventListener('pointerover', (e) => {
 	const target = e.target
 	if (!(target instanceof Element)) return
-	const petCell = target.closest<HTMLElement>('.pet-cell')
+	const petCell = target.closest<HTMLElement>('.pet-grid__cell')
 	if (!petCell) return
 	const rect = petCell.getBoundingClientRect()
 	if (!petCell.dataset.slug) throw new Error('Invariant violation: petCell missing data-slug')
@@ -711,15 +722,19 @@ document.addEventListener('pointerover', (e) => {
 document.addEventListener('pointerout', (e) => {
 	const target = e.target
 	if (!(target instanceof Element)) return
-	const petCell = target.closest('.pet-cell')
+	const petCell = target.closest('.pet-grid__cell')
 	if (!petCell) return
 	if (!(e.relatedTarget instanceof Node)) return
 	if (petCell.contains(e.relatedTarget)) return
 	tt.wrapper.style.visibility = 'hidden'
 })
 
-const hbWorthEls = Array.from(document.querySelectorAll('.hbworth'))
-const petWorthEls = Array.from(document.querySelectorAll('.petworth'))
+const hbWorthEls = Array.from(
+	document.querySelectorAll('#hb-value-stats .value-stats__output-span')
+)
+const petWorthEls = Array.from(
+	document.querySelectorAll('#pet-value-stats .value-stats__output-span')
+)
 
 function petValue() {
 	let sacWorth = 0
@@ -739,8 +754,8 @@ document.addEventListener('paste', (e) => {
 	extractLevels(e.clipboardData.getData('text'))
 })
 
-const patreonCheckWrapper = getElement<HTMLElement>('#patreonCheck')
-const patreonCheck = getElement<HTMLInputElement>('#patreonCheck input')
+const patreonCheckWrapper = getElement<HTMLElement>('#patreon-checkbox')
+const patreonCheck = getElement<HTMLInputElement>('#patreon-checkbox__checkbox')
 patreonCheckWrapper.onclick = () => {
 	patreon = patreonCheck.checked
 	save()
@@ -806,6 +821,7 @@ function generateLuckDom(): {
 		const element = document.createElementNS(SVG_NS, 'svg')
 		element.setAttribute('viewBox', '0 0 16 16')
 		element.setAttribute('xmlns', SVG_NS)
+		element.classList.add('simming-details__luck-arrow')
 		const path = document.createElementNS(SVG_NS, 'path')
 		path.setAttribute('d', 'M10 8L14 8V10L8 16L2 10V8H6V0L10 4.76995e-08V8Z')
 		path.setAttribute('fill', '#ffdc51')

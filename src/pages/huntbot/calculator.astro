@@ -15,75 +15,87 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
       <div class="page-wrapper">
         <div class="inner-page-wrapper">
           <EmbedMessage avatar="/src/assets/images/owo_images/avatars/owo_avatar.png" name="OwO" bot={true}>
-            <h3>HuntBot</h3>
+            <h3 class="header">HuntBot</h3>
             <div class="intro">
-              <div style="flex: auto">
-                <code class="discord-code"
+              <div class="intro__paragraph">
+                <code class="intro__code"
                   >BEEP. BOOP. I AM HUNTBOT. I WILL HUNT FOR YOU MASTER.</code
                 ><br />
-                Use the command
-                <code class="discord-code">owo autohunt &#123;cowoncy&#125;</code> to get started.<br />
-                You can use
-                <code class="discord-code">owo upgrade &#123;trait&#125; &#123;count&#125;</code> to upgrade the traits
+                Use the command&nbsp;
+                <code class="intro__code">owo autohunt &#123;cowoncy&#125;</code> to get started.<br />
+                You can use&nbsp;
+                <code class="intro__code">owo upgrade &#123;trait&#125; &#123;count&#125;</code> to upgrade the traits
                 below.<br />
-                To obtain more essence, use
-                <code class="discord-code">owo sacrifice &#123;animal&#125; &#123;count&#125;</code>.
+                To obtain more essence, use&nbsp;
+                <code class="intro__code">owo sacrifice &#123;animal&#125; &#123;count&#125;</code>.
               </div>
-              <img class="robot-portrait" src="/src/assets/images/owo_images/huntbot/robot.png" />
+              <img class="intro__portrait" src="/src/assets/images/owo_images/huntbot/robot.png" />
             </div>
-            <div class="grid-container"></div>
+            <div id="trait-grid" class="trait-grid"></div>
             <div id="roi-box" class="roi-box"></div>
           </EmbedMessage>
           <EmbedMessage avatar="/src/assets/images/owo_images/avatars/neonutil.png" name="NeonUtil" bot={true}>
-            <div class="tier-table" draggable="false"></div>
+            <div class="tier-grid" draggable="false"></div>
             <div class="gapped-box biggest">
               <div class="gapped-box column" style="width: 7rem">
-                <label class="gray-hover prevent-select gapped-box center-box" id="patreonCheck">
-                  <input type="checkbox" />
+                <label class="patreon-checkbox" id="patreon-checkbox">
+                  <input type="checkbox" class="patreon-checkbox__checkbox" id="patreon-checkbox__checkbox"/>
                   <strong>Patreon</strong>
                 </label>
-                <div id="sacToggles" class="gapped-box flexing-children">
-                  <button class="gray-hover center-box bigger">
-                    <img src="/src/assets/images/owo_images/cowoncy.png" class="smol" draggable="false" />
+                <div class="sac-toggles">
+                  <button class="sac-toggles__button">
+                    <img src="/src/assets/images/owo_images/cowoncy.png" class="sac-toggles__emote" draggable="false" />
                   </button>
-                  <button class="gray-hover center-box bigger">
-                    <img src="/src/assets/images/owo_images/essence.gif" class="smol" draggable="false" />
+                  <button class="sac-toggles__button">
+                    <img src="/src/assets/images/owo_images/essence.gif" class="sac-toggles__emote" draggable="false" />
                   </button>
                 </div>
               </div>
               <div class="gapped-box">
-                <div style="min-width: 12rem">
-                  <h4>Pet Worth:</h4>
-                  <ul>
-                    <li>
-                      <span class="petworth"> </span>
-                      <ul><li class="petworth"></li></ul>
+                <div class="value-stats" id="pet-value-stats">
+                  <h4 class="value-stats__header">Pet Worth:</h4>
+                  <ul class="value-stats__ul">
+                    <li class="value-stats__li">
+                      <span class="value-stats__output-span"></span>
+                      <ul class="value-stats__ul--child-style">
+                        <li class="value-stats__li--child-style">
+                          <span class="value-stats__output-span"></span>
+                        </li>
+                      </ul>
                     </li>
-                    <li class="petworth"></li>
+                    <li class="value-stats__li">
+                      <span class="value-stats__output-span"></span>
+                    </li>
                   </ul>
                 </div>
-                <div>
-                  <h4>HB Pet Worth:</h4>
-                  <ul>
-                    <li>
-                      <span class="hbworth"></span>
-                      <ul><li class="hbworth"></li></ul>
+                <div class="value-stats" id="hb-value-stats">
+                  <h4 class="value-stats__header">HB Pet Worth:</h4>
+                  <ul class="value-stats__ul">
+                    <li class="value-stats__li">
+                      <span class="value-stats__output-span"></span>
+                      <ul class="value-stats__ul--child-style">
+                        <li class="value-stats__li--child-style">
+                          <span class="value-stats__output-span"></span>
+                        </li>
+                      </ul>
                     </li>
-                    <li class="hbworth"></li>
+                    <li class="value-stats__li">
+                      <span class="value-stats__output-span"></span>
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
           </EmbedMessage>
           <EmbedMessage avatar="/src/assets/images/owo_images/avatars/reactionbot.png" name="reaction bot" bot={true}>
-            <div class="gapped-box flexing-children button-container" id="simming-buttons">
-              <button class="gray-hover">(f)irst</button>
-              <button class="gray-hover">(p)rev</button>
-              <button class="gray-hover">(n)ext</button>
-              <button class="gray-hover">(l)ast</button>
-              <button class="gray-hover">(r)eset</button>
+            <div class="simming-buttons" id="simming-buttons">
+              <button class="simming-buttons__button">(f)irst</button>
+              <button class="simming-buttons__button">(p)rev</button>
+              <button class="simming-buttons__button">(n)ext</button>
+              <button class="simming-buttons__button">(l)ast</button>
+              <button class="simming-buttons__button">(r)eset</button>
             </div>
-            <div id="huntbotIdx">0/0</div>
+            <div class="huntbot-idx" id="huntbot-idx">0/0</div>
             <div class="simming-container">
               <div class="hb-container">
                 <div class="hb-container__text-line">
@@ -96,37 +108,29 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
                   &nbsp;|&nbsp;
                   <code class="hb-container__code">BOOP BEEP BEEP</code>
                 </div>
-                <div id="huntbotContainer" class="tier-container"></div>
-                <div class="value-wrapper">
-                  <details class="zp-container">
-                    <summary class="prevent-select">
-                      <div class="details-row">
-                        <div><img src="/src/assets/images/misc_images/chevron.png" class="emote"/></div>
-                        <div>Value</div>
-                      </div>
+                <div id="hb-container__tier-container"></div>
+                <div class="hb-container__value-wrapper">
+                  <details class="simming-details">
+                    <summary class="simming-details__summary">
+                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron"/></div>
+                      <div>Value</div>
                     </summary>
-                    <div>
-                      <div class="details-row">
-                        <div><img src="/src/assets/images/owo_images/cowoncy.png" class="emote"/></div>
-                        <div>Cowoncy:</div>
-                        <code id="cowoncyHbValue">0</code>
-                      </div>
-                      <div class="details-row">
-                        <div><img src="/src/assets/images/owo_images/essence.gif" class="emote" /></div>
-                        <div>Essence:</div>
-                        <code id="essenceHbValue">0</code>
-                      </div>
+                    <div class="simming-details__content">
+                      <div><img src="/src/assets/images/owo_images/cowoncy.png" class="emote"/></div>
+                      <div>Cowoncy:</div>
+                      <code id="cowoncyHbValue">0</code>
+                      <div><img src="/src/assets/images/owo_images/essence.gif" class="emote" /></div>
+                      <div>Essence:</div>
+                      <code id="essenceHbValue">0</code>
                     </div>
                   </details>
-                  <details class="zp-container">
-                    <summary class="prevent-select">
-                      <div class="details-row">
-                        <div><img src="/src/assets/images/misc_images/chevron.png" class="emote"/></div>
-                        <div>Expected Pets</div>
-                        <div>Actual Pets</div>
-                      </div>
+                  <details class="simming-details">
+                    <summary class="simming-details__summary">
+                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron"/></div>
+                      <div>Expected Pets</div>
+                      <div>Actual Pets</div>
                     </summary>
-                    <div id="hb-luck-container"></div>
+                    <div id="hb-luck-container" class="simming-details__content"></div>
                   </details>
                 </div>
               </div>
@@ -134,39 +138,31 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
                 <div class="zoo-container__text-line">
                   <code class="zoo-container__code">🌿 🌱 🌳 your zoo! 🌳 🌿 🌱</code>
                 </div>
-                <div id="zooContainer" class="tier-container"></div>
-                <div class="zp-container">Zoo Points: <span id="zpSpan">0</span></div>
-                <div class="zp-container" id="tierCountContainer"></div>
-                <div class="value-wrapper">
-                  <details class="zp-container">
-                    <summary class="prevent-select">
-                      <div class="details-row">
-                        <div><img src="/src/assets/images/misc_images/chevron.png" class="emote" /></div>
-                        <div>Value</div>
-                      </div>
+                <div id="zoo-container__tier-container"></div>
+                <div class="zoo-container__zp-container">Zoo Points: <span id="zpSpan">0</span></div>
+                <div class="zoo-container__zp-container" id="tier-count-container"></div>
+                <div class="zoo-container__value-wrapper">
+                  <details class="simming-details">
+                    <summary class="simming-details__summary">
+                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron" /></div>
+                      <div>Value</div>
                     </summary>
-                    <div>
-                      <div class="details-row">
-                        <div><img src="/src/assets/images/owo_images/cowoncy.png" class="emote" /></div>
-                        <div>Cowoncy:</div>
-                        <code id="cowoncyZooValue">0</code>
-                      </div>
-                      <div class="details-row">
-                        <div><img src="/src/assets/images/owo_images/essence.gif" class="emote" /></div>
-                        <div>Essence:</div>
-                        <code id="essenceZooValue">0</code>
-                      </div>
+                    <div class="simming-details__content">
+                      <div><img src="/src/assets/images/owo_images/cowoncy.png" class="emote" /></div>
+                      <div>Cowoncy:</div>
+                      <code id="cowoncyZooValue">0</code>
+                      <div><img src="/src/assets/images/owo_images/essence.gif" class="emote" /></div>
+                      <div>Essence:</div>
+                      <code id="essenceZooValue">0</code>
                     </div>
                   </details>
-                  <details class="zp-container">
-                    <summary class="prevent-select">
-                      <div class="details-row">
-                        <div><img src="/src/assets/images/misc_images/chevron.png" class="emote" /></div>
-                        <div>Expected Pets</div>
-                        <div>Actual Pets</div>
-                      </div>
+                  <details class="simming-details">
+                    <summary class="simming-details__summary">
+                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron" /></div>
+                      <div>Expected Pets</div>
+                      <div>Actual Pets</div>
                     </summary>
-                    <div id="zoo-luck-container"></div>
+                    <div id="zoo-luck-container" class="simming-details__content"></div>
                   </details>
                 </div>
               </div>
