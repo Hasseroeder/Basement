@@ -675,9 +675,9 @@ const save = debounce(function () {
 
 const tt = {
 	wrapper: make('div', {
-		className: 'pet-grid__tooltip',
+		className: 'pet-tooltip',
 	}),
-	title: make('div'),
+	title: make('div', { className: 'pet-tooltip__header' }),
 	statCells: [
 		'/src/assets/images/owo_images/battleEmojis/hp.png',
 		'/src/assets/images/owo_images/battleEmojis/str.png',
@@ -686,12 +686,11 @@ const tt = {
 		'/src/assets/images/owo_images/battleEmojis/mag.png',
 		'/src/assets/images/owo_images/battleEmojis/mr.png',
 	].map((src) =>
-		make('div', { className: 'gapped-box center-box' }, [
-			make('img', { src, className: 'emote' }),
+		make('div', { className: 'pet-tooltip__stat-cell' }, [
+			make('img', { src, className: 'pet-tooltip__stat-emote' }),
 			make('div'),
 		])
 	),
-	rows: [make('div', { className: 'gapped-box' }), make('div', { className: 'gapped-box' })],
 	update(pet: Pet) {
 		this.title.textContent = pet.prettyName
 		pet.stats.forEach((value: number, i: number) => {
@@ -699,9 +698,7 @@ const tt = {
 		})
 	},
 }
-tt.rows[0].append(tt.statCells[0], tt.statCells[1], tt.statCells[2])
-tt.rows[1].append(tt.statCells[3], tt.statCells[4], tt.statCells[5])
-tt.wrapper.append(tt.title, ...tt.rows)
+tt.wrapper.append(tt.title, ...tt.statCells)
 document.body.append(tt.wrapper)
 
 document.addEventListener('pointerover', (e) => {
@@ -715,8 +712,8 @@ document.addEventListener('pointerover', (e) => {
 	if (!pet) throw new Error('Invariant violation: pet not found for slug ' + petCell.dataset.slug)
 	tt.update(pet)
 	tt.wrapper.style.visibility = 'visible'
-	tt.wrapper.style.left = `${rect.right - 3}px`
-	tt.wrapper.style.top = `${rect.bottom - 3}px`
+	tt.wrapper.style.left = `${rect.right - 7}px`
+	tt.wrapper.style.top = `${rect.bottom - 7}px`
 })
 
 document.addEventListener('pointerout', (e) => {

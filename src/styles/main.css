@@ -265,10 +265,6 @@ button:hover {
 	gap: 2rem;
 }
 
-.flexing-children > * {
-	flex: 1;
-}
-
 .center-pillar > section {
 	margin: 2rem;
 }

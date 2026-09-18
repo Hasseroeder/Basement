@@ -474,17 +474,6 @@
 			z-index: 1;
 		}
 	}
-
-	&__tooltip {
-		position: fixed;
-		visibility: hidden;
-		pointer-events: none;
-		background-color: #222;
-		padding: 0.2rem 0.35rem;
-		border-radius: 0.2rem;
-		z-index: 1;
-		font-family: monospace;
-	}
 }
 
 .huntbot-idx {
@@ -492,4 +481,29 @@
 	margin-bottom: 0.2rem;
 	font-size: 0.6rem;
 	color: #888;
+}
+
+.pet-tooltip {
+	position: fixed;
+	visibility: hidden;
+	pointer-events: none;
+	background-color: #222;
+	padding: 0.2rem 0.35rem;
+	border-radius: 0.2rem;
+	z-index: 1;
+	font-family: monospace;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+
+	&__header {
+		grid-column: span 3;
+	}
+	&__stat-emote {
+		width: 1.4em;
+		height: 1.4em;
+	}
+	&__stat-cell {
+		display: flex;
+		padding-right: 0.2rem;
+	}
 }
