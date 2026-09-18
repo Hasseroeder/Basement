@@ -101,16 +101,6 @@ code,
 
 /* END OF CURSORS */
 
-.bar {
-	display: flex;
-	align-items: center;
-	background-color: #333;
-	overflow: hidden;
-	padding: 0.625rem;
-	margin-left: 2.5rem;
-	margin-right: 2.5rem;
-}
-
 .center-pillar {
 	width: 70%;
 	min-width: 1000px;
@@ -128,15 +118,6 @@ code,
 	height: max-content;
 }
 
-.flexContainer {
-	display: flex;
-	align-items: center;
-	margin-left: 5rem;
-	margin-right: 5rem;
-	margin-bottom: 1.25rem;
-	gap: 2.5rem;
-}
-
 .discord-code {
 	padding: 0.2em;
 	margin: -0.2em 0px;
@@ -149,36 +130,6 @@ code,
 
 .discord-code.light {
 	background-color: #202020;
-}
-
-.discord-message-outer {
-	margin-top: 1rem;
-	padding: 0.125rem 16px 0.125rem 4.5rem;
-	min-height: 2.75rem;
-}
-
-.discord-avatar {
-	width: 2.5rem;
-	border-radius: 50%;
-	height: 2.5rem;
-	margin-top: 0.25rem;
-}
-
-.discord-name {
-	display: inline;
-	font-weight: 500;
-	color: #eee;
-}
-
-.no-arrows {
-	-moz-appearance: textfield;
-	appearance: textfield;
-}
-
-.no-arrows::-webkit-inner-spin-button,
-.no-arrows::-webkit-outer-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
 }
 
 button {
@@ -236,33 +187,6 @@ a:hover {
 button:hover {
 	background-color: #555555;
 	color: lightgray;
-}
-
-.center-box {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.center-box.column {
-	flex-direction: column;
-}
-
-.gapped-box {
-	display: flex;
-	gap: 0.25rem;
-}
-
-.gapped-box.column {
-	flex-direction: column;
-}
-
-.gapped-box.bigger {
-	gap: 0.75rem;
-}
-
-.gapped-box.biggest {
-	gap: 2rem;
 }
 
 .center-pillar > section {

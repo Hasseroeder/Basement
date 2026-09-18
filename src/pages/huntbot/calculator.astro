@@ -36,8 +36,8 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
           </EmbedMessage>
           <EmbedMessage avatar="/src/assets/images/owo_images/avatars/neonutil.png" name="NeonUtil" bot={true}>
             <div class="tier-grid" draggable="false"></div>
-            <div class="gapped-box biggest">
-              <div class="gapped-box column" style="width: 7rem">
+            <div class="embed-footer-box">
+              <div class="embed-footer-box__input-box">
                 <label class="patreon-label" id="patreon-label">
                   <input type="checkbox" class="patreon-label__checkbox" id="patreon-label__checkbox"/>
                   <strong>Patreon</strong>
@@ -51,7 +51,7 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
                   </button>
                 </div>
               </div>
-              <div class="gapped-box">
+              <div class="embed-footer-box__output-box">
                 <div class="value-stats" id="pet-value-stats">
                   <h4 class="value-stats__header">Pet Worth:</h4>
                   <ul class="value-stats__ul">

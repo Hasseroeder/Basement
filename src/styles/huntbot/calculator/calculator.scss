@@ -6,6 +6,7 @@
 }
 
 ._interactive-hover-gray {
+	border-radius: 0.3rem;
 	background-color: #202020;
 	&:hover {
 		background-color: #555555;
@@ -92,7 +93,6 @@
 		font-size: 0.7rem;
 		font-family: monospace;
 		flex: 1;
-		border-radius: 0.3rem;
 		height: 1.7rem;
 		min-height: 1.7rem;
 		border: none;
@@ -115,14 +115,15 @@
 		gap: 0.4rem;
 		padding: 0.5rem 0;
 		position: relative;
+		border-radius: 0;
 
 		&:first-child {
-			border-radius: 0.5rem 0 0 0.5rem;
+			border-radius: 0.3rem 0 0 0.3rem;
 			padding-left: 0.1rem;
 		}
 
 		&:last-child {
-			border-radius: 0 0.5rem 0.5rem 0;
+			border-radius: 0 0.3rem 0.3rem 0;
 			padding-right: 0.1rem;
 		}
 	}
@@ -187,7 +188,6 @@
 	&__number-wrapper {
 		@extend ._interactive-hover-gray;
 
-		border-radius: 0.3rem;
 		height: 1.7rem;
 		min-height: 1.7rem;
 	}
@@ -262,7 +262,6 @@
 	gap: 0.25rem;
 	justify-content: center;
 	align-items: center;
-	border-radius: 0.3rem;
 	cursor: var(--cur-pointer);
 	flex: 1;
 
@@ -318,7 +317,6 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		border-radius: 0.3rem;
 		height: unset;
 		min-height: 1.7rem;
 		width: 2.5rem;
@@ -505,5 +503,21 @@
 	&__stat-cell {
 		display: flex;
 		padding-right: 0.2rem;
+	}
+}
+
+.embed-footer-box {
+	gap: 2rem;
+	display: flex;
+
+	&__input-box {
+		display: flex;
+		gap: 0.25rem;
+		flex-direction: column;
+		width: 7rem;
+	}
+	&__output-box {
+		display: flex;
+		gap: 0.25rem;
 	}
 }
