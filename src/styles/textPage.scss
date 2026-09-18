@@ -41,33 +41,34 @@ p {
 
 details {
 	background-color: #333;
-}
 
-details > summary {
-	padding: 0.625rem;
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	flex: auto;
-}
-details > summary:hover {
-	background-color: #555;
-}
+	> summary {
+		padding: 0.625rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex: auto;
 
-details > summary::before {
-	display: inline-block;
-	content: '';
-	width: 2rem;
-	height: 2rem;
-	background-image: url('@/src/assets/images/misc_images/chevron.png');
-	background-size: cover;
-	transition: transform 0.1s ease;
-}
+		&:hover {
+			background-color: #555;
+		}
 
-details[open] > summary::before {
-	transform: rotate(90deg);
-}
+		&::before {
+			display: inline-block;
+			content: '';
+			width: 2rem;
+			height: 2rem;
+			background-image: url('@/src/assets/images/misc_images/chevron.png');
+			background-size: cover;
+			transition: transform 0.1s ease;
+		}
+	}
 
-details > div {
-	padding: 0rem 2rem 1rem 2rem;
+	&[open] > summary::before {
+		transform: rotate(90deg);
+	}
+
+	> div {
+		padding: 0rem 2rem 1rem 2rem;
+	}
 }
