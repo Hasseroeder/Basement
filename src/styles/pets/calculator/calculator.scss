@@ -350,3 +350,8 @@ input[type='range'] {
 		background-color: rgba(255, 255, 255, 0.3);
 	}
 }
+/*
+	TODO: 
+	Fully migrate all this onto scss and BEM naming schemes once we've got astro in the production build.
+	We can't really test some of this right now.
+*/
