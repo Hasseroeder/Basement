@@ -108,6 +108,9 @@ code,
 	margin: 0 auto;
 	padding: 1.25rem 2.5rem;
 	background-color: #222222;
+	> section {
+		margin: 2rem;
+	}
 }
 
 .art-display {
@@ -126,10 +129,10 @@ code,
 	display: inline;
 	color: rgb(211, 211, 211);
 	border: none;
-}
 
-.discord-code.light {
-	background-color: #202020;
+	&.light {
+		background-color: #202020;
+	}
 }
 
 button {
@@ -146,6 +149,10 @@ button {
 	cursor: var(--cur-pointer);
 	margin-right: 10px;
 	border-radius: 0.2rem;
+
+	&:hover {
+		background-color: #555555;
+	}
 }
 
 body {
@@ -168,27 +175,17 @@ h1 {
 
 a {
 	color: #6d97c0;
-}
-
-a:hover {
-	color: #70b7cf;
+	&:hover {
+		color: #70b7cf;
+	}
 }
 
 .tooltip {
 	position: relative;
 	display: inline-block;
-}
 
-.tooltip:hover * {
-	visibility: visible;
-	opacity: 1;
-}
-
-button:hover {
-	background-color: #555555;
-	color: lightgray;
-}
-
-.center-pillar > section {
-	margin: 2rem;
+	&:hover * {
+		visibility: visible;
+		opacity: 1;
+	}
 }
