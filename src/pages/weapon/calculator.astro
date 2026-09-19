@@ -1,0 +1,66 @@
+---
+import '@/src/styles/main.scss'
+import '@/src/styles/calculators.scss'
+import '@/src/styles/weapon/calculator/calculator.scss'
+import Navbar from '@/src/components/navbar.astro'
+import Blinkies from '@/src/components/blinkies.astro'
+import Head from '@/src/components/head.astro'
+import EmbedMessage from '@/src/components/embedMessage.astro'
+import avatar from '@/src/assets/images/owo_images/avatars/owo_avatar.png'
+import star from '@/src/assets/images/owo_images/star.png'
+import wp from '@/src/assets/images/owo_images/battleEmojis/wp.png'
+---
+
+<!doctype html>
+<html>
+  <Head title="Weapon Calculator" description="A calculator for OwO Bot's weapons" url="https://owo.bwep.net/weapon/calculator/" />
+  <body>
+    <div class="center-pillar">
+      <Navbar />
+      <div class="page-wrapper">
+        <div class="page-wrapper__inner">
+          <EmbedMessage avatar={avatar.src} name="OwO" bot={true}>
+            <div class="inner-embed">
+              <div class="inner-embed__weapon-calculator">
+                <span id="weapon-header" class="weapon-header"></span>
+                <div class="weapon-line"><strong>Name:&nbsp;</strong><div id="weaponName"></div></div>
+                <div class="weapon-line"><strong>Owner:&nbsp;</strong><div id="ownerID"></div></div>
+                <div class="weapon-line"><strong>ID:&nbsp;</strong><code id="weaponID" class="weapon-id"></code></div>
+                <div class="weapon-line"><strong>Shard Value:&nbsp;</strong><div id="shardValue"></div></div>
+                <div class="weapon-line"><strong>Quality:&nbsp;</strong><img id="weaponQualityImage" class="emote" />&nbsp;<span id="weaponQualitySpan"></span></div>
+                <div class="weapon-line"><strong>Wear:&nbsp;</strong>
+                  <select name="wear" id="wear-select" class="wear-select">
+                    <option value="worn">worn</option>
+                    <option value="decent">decent</option>
+                    <option value="fine">fine</option>
+                    <option value="pristine">pristine</option>
+                  </select>
+                </div>
+                <div class="weapon-line"><strong>WP Cost:&nbsp;</strong><div id="WP-Cost"></div><img alt=":WP:" title=":WP:" class="emote" src={wp.src} /></div>
+                <div class="weapon-line--description-header">Description:</div>
+                <div id="weapon-line--description" class="weapon-line--description"></div>
+                <div id="buff-container" class="buff-container"></div>
+                <div id="passives" class="passives"></div>
+                <div class="add-passive-wrapper">
+                  <div class="add-passive-wrapper__original">+ add passive</div>
+                  <div id="add-passive-wrapper__replacement" class="add-passive-wrapper__replacement"></div>
+                </div>
+              </div>
+              <div class="inner-embed__aside">
+                <img id="weapon-portrait" alt="Weapon" draggable="false" class="weapon-portrait" />
+                <div class="weapon-star">
+                  <img src={star.src} />
+                </div>
+              </div>
+            </div>
+          </EmbedMessage>
+        </div>
+      </div>
+      <Blinkies />
+    </div>
+    <script>
+      import '@/src/scripts/weapon/calculator/main.js'
+			import '@/src/scripts/timestamp';
+    </script>
+  </body>
+</html>

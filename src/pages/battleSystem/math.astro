@@ -1,0 +1,23 @@
+---
+import '@/src/styles/main.scss';
+import '@/src/styles/textPage.scss'
+import Navbar from '@/src/components/navbar.astro';
+import Blinkies from '@/src/components/blinkies.astro';
+import Construction from '@/src/components/construction.astro'
+import ConstructionText from '@/src/content/constructionText.mdx'
+import Head from '@/src/components/head.astro';
+import BattleMath from '@/src/content/battleSystem/math.mdx'
+--- 
+<html>
+  <Head title="Battle Math" description="Calculating Damage and Heal" />
+  <body>
+    <div class="center-pillar">
+      <Navbar/>
+      <section><BattleMath/></section>
+      <Construction>
+        <ConstructionText />
+      </Construction>
+      <Blinkies/>
+    </div>
+  </body>
+</html>

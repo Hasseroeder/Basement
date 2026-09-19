@@ -1,0 +1,98 @@
+# Damage Calculation
+
+After a pet uses a weapon, it goes through three main steps to calculate the total damage:  
+
+1. calculating base damage 
+2. adding random variance 
+3. going through various modifiers
+
+All three of these steps are done for every Attack, Heal, or Replenish,  
+but for simplicity they will only be referred to as Attacks or Damage in this section.
+
+Each step will be followed by the example math for a level 50 :eagle: Eagle holding a :f: :f_bow:
+
+## Base Damage
+
+The first step for any attack involves only two numbers:
+
+- the [pet's relevant stat](/pets) (usually :str: STR or :mag: MAG for attacking weapons),
+- and the weapon's modifier (e.g. 160% or 1.6 for a :f: :f_bow:).
+
+Since the passives :f_str: Strength and :f_mag: Magic are calculated into the base :strmag: STR/MAG stat, these are also accounted for during this step.
+
+`BaseDamage = STR × WeaponModifier`  
+`BaseDamage = (50 × 13 + 100) × 1.6`  
+`BaseDamage = 1200`
+
+## Random Bonus
+
+After base damage is calculated, a random ±50 damage is added.  
+OwO will pick a random number from -50 to +50 and add it, then it will round to the nearest whole number.
+
+For simplicity, we will be assuming that OwO picked the random number 0, so 1200 is still our total damage to this point.
+
+## Modifiers
+
+###### -# This gets very into the weeds, be warned.
+
+There are many modifiers that can add and subtract from the base damage.  
+These factors are categorized into four distinct groups:
+
+- Positive Modifiers (eg. :attup: Attack Up)
+- Negative Modifiers (eg. :defup: Defense Up)
+- :pr: PR / :mr: MR
+- Redirect Modifiers (:sg: Safeguard, :tether: Tether, and :leech: Leech)
+
+These are done step by step, and any increase or decrease to damage is based on the total of the previous step.
+
+### Positive Modifiers
+
+Positive Modifiers include :attup:, :attup+:, :attup++:, :crit:, :enrage:, :gslay:, :resonance:, and :sprout:.  
+Each of their buffs is based on the total of the Base Damage done.
+
+In our example, the damage will go through :attup:.
+
+`AfterPosModifiers = BaseDamage + (BaseDamage × Modifier)`  
+`AfterPosModifiers = 1200 + (1200 × 0.25)`  
+`AfterPosModifiers = 1500`
+
+Note that you can add as many `+ (BaseDamage × Modifier)` terms as you need, adding them all onto the Base Damage.
+
+### Negative Modifiers
+
+Negative Modifiers include :taunt:, :defup:, :mort:, :adapt:, and :resonance:.  
+These are stacked multiplicatively, with passives always going before buffs, multiplying on top of the previous step (Positive Modifiers).
+
+In our example, the damage will go through :taunt: Taunt and 1 stack of :resonance: Resonance.
+
+`AfterNegModifiers = AfterPosModifiers × (1 - Modifier)`  
+`AfterNegModifiers = 1500 × (1 - 0.5) × (1 - 0.1)`  
+`AfterNegModifiers = 675`
+
+Note that you can add as many `× (1 - Modifier)` terms as you need, _multiplying_ them with your current result.
+
+### Resistance
+
+Resistance is the most basic of all of the steps,
+simply reducing damage from the previous step by the res % shown on `owoteam`.  
+It is important to note that res is rounded as shown, with no decimals after the %.
+
+In our example, the damage will go through 60% :pr: PR.
+
+`AfterRes = AfterNegModifiers × (1 - Resistance)`  
+`AfterRes = 675 × (1 - 0.6)`  
+`AfterRes = 270`
+
+### Redirect Modifier
+
+Finally comes Redirect Modifiers, which send the damage intercepted to something else.  
+There are only three Redirect Modifiers, :sg:, :tether:, and :leech:.  
+These are stacked multiplicatively, with passives always going before buffs, multiplying on top of the previous step (Resistance).
+
+In our example, the damage will go through :sg: Safeguard and :tether: Tether.
+
+`FinalDamage = AfterRes × (1 - Modifier)`  
+`FinalDamage = 270 × (1 - 0.4) × (1 - 0.4)`  
+`FinalDamage = 97.2`
+
+Note that you can add as many `× (1 - Modifier)` terms as you need, _multiplying_ them with your current result.

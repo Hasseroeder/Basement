@@ -1,0 +1,21 @@
+---
+import Message from "./message.astro";
+const { avatar= "/src/assets/images/owo_images/avatars/owo_avatar.png", name="OwO", bot = true } = Astro.props;
+---
+<style>
+  .embed {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.125rem;
+    flex-direction: column;
+    background: #303030;
+    border-radius: 4px;
+    border-left: 4px solid #909090;
+    padding: 1rem;
+  }
+</style>
+<Message avatar={avatar} name={name} bot={bot}>
+  <div class="embed">
+    <slot />
+  </div>
+</Message>

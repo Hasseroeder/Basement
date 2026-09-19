@@ -1,0 +1,18 @@
+---
+import '@/src/styles/main.scss';
+import weapons from '@/src/data/weapons.json'
+import Head from '@/src/components/head.astro'
+
+const defaultSlug = weapons[1].slug
+--- 
+<!doctype html>
+<html>
+	<Head title="Weapons" description="A guide for OwO Bot's weapons" />
+  <body>
+    <div class="center-pillar">
+      <script define:vars={{ defaultSlug }}>
+        location.replace(`/weapon/${defaultSlug}`)
+      </script>
+    </div>
+  </body>
+</html>

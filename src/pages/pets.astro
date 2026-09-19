@@ -1,0 +1,124 @@
+---
+import '@/src/styles/main.scss';
+import '@/src/styles/pets/pets.scss'
+import '@/src/styles/textPage.scss';
+import '@/src/styles/pets/triangleCharts.scss'
+import Navbar from '@/src/components/navbar.astro';
+import Blinkies from '@/src/components/blinkies.astro';
+import Head from '@/src/components/head.astro';
+
+import Intro from '@/src/content/pets/intro.mdx'
+import FoxExplanation from '@/src/content/pets/foxExplanation.mdx'
+import FoxExplanation2 from '@/src/content/pets/foxExplanation2.mdx'
+import FoxStats from '@/src/content/pets/foxStats.mdx'
+import FoxResistance from '@/src/content/pets/foxResistance.mdx'
+import FoxArt from '@/src/assets/asciiArt/fox.txt?raw';
+
+import Links from '@/src/content/pets/links.mdx'
+
+import Message from '@/src/components/message.astro';
+import PetDexMessage from '@/src/components/petDexMessage.astro';
+
+import ResChart from '@/src/content/pets/resChart.astro'
+import EffectiveHP from '@/src/content/pets/effectiveHP.mdx'
+import EffectiveStats from '@/src/content/pets/effectiveStats.astro'
+import PetRoles from '@/src/content/pets/petRoles.mdx'
+import PetRolesCrune from '@/src/content/pets/petRolesCrune.mdx'
+
+const foxPetProps = {
+  slug: "gfox",
+  nickname: "Fennekin",
+  description: 
+`Ring-ding-ding-ding-dingeringeding!
+Gering-ding-ding-ding-dingeringeding!
+Gering-ding-ding-ding-dingeringeding!`,
+  count: "0/464",
+  rank: "legendary",
+  rarity: "18,206,767 total caught",
+  aliases: ["fox", "gfox"],
+  points: "10000",
+  sell: "15000 Cowoncy | 11 sold",
+  sacrifice: "10000 Essence | 453 killed",
+  stats: {
+    hp: 4,
+    str: 9,
+    pr: 1,
+    wp: 3,
+    mag: 1,
+    mr: 2
+  }
+}
+--- 
+<!doctype html>
+<html>
+  <Head title="Pets" description="A guide for OwO Bot's pets" />
+  <body>
+    <div class="center-pillar">
+      <Navbar />
+      <section><Intro /></section>
+      <div class="flexContainer">
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <Message avatar="/src/assets/images/owo_images/avatars/heather_avatar.png" name="Heather" bot={false}>
+          owo dex fox
+          </Message>
+          <PetDexMessage {...foxPetProps} />
+        </div>
+        <div style="width: 50%"><FoxExplanation /></div>
+      </div>
+      <section style="margin-bottom: 0;"><FoxExplanation2 /></section>
+      <div class="flexContainer">
+        <div style="flex: 1;"><FoxStats /></div>
+        <div>
+          <pre class="art-display">{FoxArt}</pre>
+          <FoxResistance/>
+        </div>
+      </div>
+      <section><Links /></section>
+      <section>
+        <details>
+          <summary>Resistance Chart</summary>
+          <div><ResChart/></div>
+        </details>
+      </section>
+      <section>
+        <details>
+          <summary>Effective Health</summary>
+          <div><EffectiveHP/></div>
+        </details>
+      </section>
+      <section>
+        <details>
+          <summary>Effective Stats</summary>
+          <div><EffectiveStats/></div>
+        </details>
+      </section>
+      <section>
+        <details>
+          <summary>Pet Roles</summary>
+          <div>
+            <PetRoles/>
+            <div style="display: flex; justify-content: center">
+              <div id="petRoles-container" style="display: flex"></div>
+            </div>
+          </div>
+        </details>
+      </section>
+      <section>
+        <details>
+          <summary>Pet Roles - Crune</summary>
+          <div>
+            <PetRolesCrune/>
+            <div style="display: flex; justify-content: center">
+              <div id="petRolesCrune-container" style="display: flex"></div>
+            </div>
+          </div>
+        </details>
+      </section>
+      <Blinkies />
+    </div>
+    <script>
+      import '@/src/scripts/timestamp';
+    </script>
+    <script type="module" src="/src/scripts/pets/triangleChart_setup.js"></script>
+  </body>
+</html>

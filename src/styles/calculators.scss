@@ -1,0 +1,23 @@
+.page-wrapper {
+	flex-direction: column;
+	display: flex;
+	align-items: center;
+	padding: 1.2rem 2.4rem 1.2rem 0;
+
+	&__inner {
+		gap: 1.2rem;
+		flex-direction: column;
+		display: flex;
+		align-items: center;
+		width: 45rem;
+	}
+}
+
+.emote {
+	width: 1.4em;
+	height: 1.4em;
+}
+
+.embed {
+	font-size: 0.8rem;
+}

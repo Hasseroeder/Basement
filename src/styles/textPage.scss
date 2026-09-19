@@ -1,0 +1,74 @@
+h1 {
+	font-size: 1.7rem;
+	margin-top: 2rem;
+	margin-bottom: -0.25rem;
+}
+h2,
+h3,
+h4,
+h5 {
+	margin-bottom: -0.25rem;
+}
+h6 {
+	/*h6 is used as a makeshift subscript*/
+	font-size: 0.7rem;
+	margin: 0.5rem 0 -0.25rem 0;
+}
+.emote {
+	width: 1.3em;
+	height: 1.3em;
+	vertical-align: center;
+}
+code {
+	padding: 0.2em;
+	border-radius: 3px;
+	background: #191919;
+	font-size: 1.1em;
+	line-height: 1.4em;
+	display: inline;
+	white-space: pre;
+}
+ul {
+	padding-left: 25px; /* default is 40px */
+	line-height: 1.4rem;
+}
+ul:not(li > ul) {
+	margin: 10px 0px; /* default is 16px 0px */
+}
+p {
+	line-height: 1.4rem;
+}
+
+details {
+	background-color: #333;
+
+	> summary {
+		padding: 0.625rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex: auto;
+
+		&:hover {
+			background-color: #555;
+		}
+
+		&::before {
+			display: inline-block;
+			content: '';
+			width: 2rem;
+			height: 2rem;
+			background-image: url('/src/assets/images/misc_images/chevron.png');
+			background-size: cover;
+			transition: transform 0.1s ease;
+		}
+	}
+
+	&[open] > summary::before {
+		transform: rotate(90deg);
+	}
+
+	> div {
+		padding: 0rem 2rem 1rem 2rem;
+	}
+}

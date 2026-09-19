@@ -1,0 +1,63 @@
+---
+import '@/src/styles/main.scss'
+import '@/src/styles/textPage.scss'
+import '@/src/styles/weapon/weapon.scss'
+import Navbar from '@/src/components/navbar.astro'
+import Blinkies from '@/src/components/blinkies.astro'
+import Head from '@/src/components/head.astro'
+import WeaponWiki from '@/src/components/weapon/WeaponWiki.astro'
+import weapons from '@/src/data/weapons.json'
+
+type WeaponContentModule = {
+    default: typeof import('../../content/weapon/sword.mdx').default
+}
+
+const contentModules = import.meta.glob('../../content/weapon/*.mdx')
+
+export function getStaticPaths() {
+	return weapons.map((weapon, index) => ({
+		params: { slug: weapon.slug },
+		props: {
+			weapon,
+			previous: weapons[(index - 1 + weapons.length) % weapons.length],
+			next: weapons[(index + 1) % weapons.length],
+		},
+	}))
+}
+
+const { weapon, previous, next } = Astro.props
+const loadContent = contentModules[`../../content/weapon/${weapon.slug}.mdx`]
+
+if (!loadContent) throw new Error(`Missing weapon content for ${weapon.slug}`)
+
+const { default: WeaponContent } = (await loadContent()) as WeaponContentModule
+---
+
+<!doctype html>
+<html>
+	<Head 
+		title={`${weapon.name}`} 
+		description={`A guide for OwO Bot's ${weapon.name}`} 
+		image={`/src/assets/images/owo_images/battleEmojis/${weapon.slug}.png`} 
+	/>
+	<body>
+		<div class="center-pillar">
+			<Navbar />
+			<div>
+				<div class="page-header">
+					<a class="page-header__prev-button" href={`/weapon/${previous.slug}`}>&lt;&lt;</a>
+					<div class="page-header__text">
+						<img class="page-header__emote" src={`/src/assets/images/owo_images/battleEmojis/${weapon.slug}.png`} alt=`:${weapon.slug}:` />
+						<div>{weapon.id ?? '???'} - {weapon.aliases[0] ?? weapon.name}</div>
+					</div>
+					<a class="page-header__next-button" href={`/weapon/${next.slug}`}>&gt;&gt;</a>
+				</div>
+				<div class="content">
+					<div class="content__loaded-mdx"><WeaponContent /></div>
+					<WeaponWiki {weapon} />
+				</div>
+			</div>
+			<Blinkies />
+		</div>
+	</body>
+</html>

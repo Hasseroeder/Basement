@@ -1,0 +1,195 @@
+:root {
+	--cur-auto: auto;
+	--cur-default: default;
+	--cur-pointer: pointer;
+	--cur-text: text;
+	--cur-vertical-text: vertical-text;
+	--cur-crosshair: crosshair;
+	--cur-move: move;
+	--cur-grab: grab;
+	--cur-grabbing: grabbing;
+	--cur-not-allowed: not-allowed;
+	--cur-wait: wait;
+	--cur-progress: progress;
+	--cur-resize-ew: ew-resize;
+	--cur-resize-ns: ns-resize;
+	--cur-resize-nesw: nesw-resize;
+	--cur-resize-nwse: nwse-resize;
+}
+
+body.tbh {
+	--cur-auto: url('/src/assets/images/tbhCursors/tbh-normal.cur'), auto;
+	--cur-default: url('/src/assets/images/tbhCursors/tbh-normal.cur'), default;
+	--cur-pointer: url('/src/assets/images/tbhCursors/tbh-link.cur'), pointer;
+	--cur-text: url('/src/assets/images/tbhCursors/tbh-text.cur'), text;
+	--cur-vertical-text: url('/src/assets/images/tbhCursors/tbh-text.cur'), vertical-text;
+	--cur-crosshair: url('/src/assets/images/tbhCursors/tbh-crosshair.cur'), crosshair;
+	--cur-move: url('/src/assets/images/tbhCursors/tbh-move.cur'), move;
+	--cur-grab: url('/src/assets/images/tbhCursors/tbh-crosshair.cur'), grab;
+	--cur-grabbing: url('/src/assets/images/tbhCursors/tbh-crosshair.cur'), grabbing;
+	--cur-not-allowed: url('/src/assets/images/tbhCursors/tbh-no.ani'), not-allowed;
+	--cur-wait: url('/src/assets/images/tbhCursors/tbh-working.ani'), wait;
+	--cur-progress: url('/src/assets/images/tbhCursors/tbh-busy.ani'), progress;
+	--cur-resize-ew: url('/src/assets/images/tbhCursors/tbh-horizontal.cur'), ew-resize;
+	--cur-resize-ns: url('/src/assets/images/tbhCursors/tbh-vertical.cur'), ns-resize;
+	--cur-resize-nesw: url('/src/assets/images/tbhCursors/tbh-nesw.cur'), nesw-resize;
+	--cur-resize-nwse: url('/src/assets/images/tbhCursors/tbh-nwse.cur'), nwse-resize;
+}
+
+* {
+	cursor: inherit;
+}
+
+body,
+html {
+	cursor: var(--cur-default);
+}
+
+a,
+button,
+[role='button'] {
+	cursor: var(--cur-pointer);
+}
+
+input,
+textarea,
+code,
+[contenteditable] {
+	cursor: var(--cur-text);
+}
+
+.vertical-text {
+	cursor: var(--cur-vertical-text);
+}
+
+.crosshair {
+	cursor: var(--cur-crosshair);
+}
+
+.move {
+	cursor: var(--cur-move);
+}
+.grab {
+	cursor: var(--cur-grab);
+}
+.grabbing {
+	cursor: var(--cur-grabbing);
+}
+.not-allowed {
+	cursor: var(--cur-not-allowed);
+}
+
+.wait {
+	cursor: var(--cur-wait);
+}
+.loading {
+	cursor: var(--cur-progress);
+}
+
+.resize-ew {
+	cursor: var(--cur-resize-ew);
+}
+.resize-ns {
+	cursor: var(--cur-resize-ns);
+}
+.resize-nesw {
+	cursor: var(--cur-resize-nesw);
+}
+.resize-nwse {
+	cursor: var(--cur-resize-nwse);
+}
+
+/* END OF CURSORS */
+
+.center-pillar {
+	width: 70%;
+	min-width: 1000px;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 1.25rem 2.5rem;
+	background-color: #222222;
+	> section {
+		margin: 2rem;
+	}
+}
+
+.art-display {
+	background-color: #333;
+	margin: 1rem 0;
+	padding: 0.5rem;
+	width: max-content;
+	height: max-content;
+}
+
+.discord-code {
+	padding: 0.2em;
+	margin: -0.2em 0px;
+	border-radius: 3px;
+	background: #191919;
+	display: inline;
+	color: rgb(211, 211, 211);
+	border: none;
+
+	&.light {
+		background-color: #202020;
+	}
+}
+
+button {
+	/*
+		TODO:
+		This general button styling is horribly inconvenient and should be removed as soon as possible.
+	*/
+	background-color: #333;
+	color: lightgray;
+	border-color: lightgray;
+	height: 2rem;
+	min-height: 2rem;
+	max-height: min-content;
+	width: 2rem;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	cursor: var(--cur-pointer);
+	margin-right: 10px;
+	border-radius: 0.2rem;
+
+	&:hover {
+		background-color: #555555;
+	}
+}
+
+body {
+	font-family:
+		Whitney,
+		Helvetica Neue,
+		Helvetica,
+		Arial,
+		sans-serif;
+	background-color: #101010;
+	color: lightgray;
+	text-rendering: optimizelegibility;
+}
+
+h1 {
+	font-size: 1.7rem;
+	margin-top: 2rem;
+	margin-bottom: 0px;
+}
+
+a {
+	color: #6d97c0;
+	&:hover {
+		color: #70b7cf;
+	}
+}
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+
+	&:hover * {
+		visibility: visible;
+		opacity: 1;
+	}
+}

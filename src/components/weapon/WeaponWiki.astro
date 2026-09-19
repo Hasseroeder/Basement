@@ -1,0 +1,103 @@
+---
+import buffs from '@/src/data/buffs.json'
+
+type _BaseWeapon = {
+	name: string,
+	aliases: string[],
+	slug: string,
+	wikiStars: { name: string, stars: number }[]
+}
+
+type QuasiWeapon = _BaseWeapon & {
+	objectType: "quasiweapon"
+}
+
+type Weapon = _BaseWeapon & {
+	objectType: "weapon"
+	id: number
+	statConfig: Stat[],
+	wpStatConfig?: Stat,
+	buffSlugs: string[],
+	description: string,
+	normalPassiveAmount: number
+}
+
+type Stat = {
+	min: number,
+	max: number,
+	emoji: string[],
+	unit: string,
+	digits: number
+}
+
+type Buff = {
+	name: string,
+	description: string,
+	slug: string,
+	statConfig: Stat[],
+	traits: { slug: string, value?: number }[]
+}
+
+const { weapon } = Astro.props as { weapon: Weapon | QuasiWeapon }
+
+const customStatTexts: Record<string, string> = {
+	'orb': 'none,<br> but two passives!',
+	'fists': 'none,<br> not actually a weapon!',
+}
+
+const aliases = weapon.aliases?.length ? `aliases: ${weapon.aliases.join(', ')}` : ''
+
+let displayStats: Stat[] = [];
+
+if (weapon.objectType === "weapon"){
+	const buffStats = weapon.buffSlugs
+        .map(slug => buffs.find(buff => buff.slug === slug))
+        .flatMap(buff => buff?.statConfig ?? []);	
+	displayStats.push(...weapon.statConfig)
+	displayStats.push(...buffStats)
+	if (weapon.wpStatConfig !== undefined)
+		displayStats.push(weapon.wpStatConfig)
+} 
+
+const emojiPath = (emoji: string) => `/src/assets/images/owo_images/battleEmojis/${emoji}`
+---
+
+<div class="wikipedia">
+	<h3 class="wikipedia__header">
+		{weapon.name}
+		<div class="wikipedia__aliases">{aliases}</div>
+	</h3>
+	<img class="wikipedia__portrait" src={emojiPath(`${weapon.slug}.png`)} alt={weapon.name} />
+	<div class="wikipedia__stars">
+		{weapon.wikiStars.map((statistic) => <div><span>{statistic.name}</span>{'★'.repeat(statistic.stars)}{'☆'.repeat(5 - statistic.stars)}</div>)}
+	</div>
+	<div class="wikipedia__id">ID: {'id' in weapon ? weapon.id : '???'}</div>
+	<h4 class="wikipedia__stats-header">Stats</h4>
+	{
+		customStatTexts[weapon.slug]  ? (
+			<div class="wikipedia__no-stat" set:html={customStatTexts[weapon.slug]} />
+		) : (
+			<div class="wikipedia__table">
+				<div class="wikipedia__table-row">
+					{['common.png', 'fabled.gif'].map((rank) => (
+						<h4 class="wikipedia__table-cell">
+							<img class="wikipedia__stat-img" src={`/src/assets/images/owo_images/tiers/${rank}`} alt={rank} />
+							{rank === 'common.png' ? '0%' : '100%'}
+						</h4>
+					))}
+				</div>
+				{displayStats.map((stat) => (
+					<div class="wikipedia__table-row">
+						{[stat.min, stat.max].map((extreme) => (
+							<div class="wikipedia__table-cell">
+								{extreme + stat.unit}
+								{stat.emoji.map((emoji) => <img class="wikipedia__stat-img" src={emojiPath(emoji)} title={emoji} alt={emoji} />)}
+							</div>
+						))}
+					</div>
+				))}
+			</div>
+		)
+	}
+	{weapon.objectType === 'weapon' && <a class="wikipedia__link" href={`/weapon/calculator/#${weapon.slug}`}>Calculator</a>}
+</div>

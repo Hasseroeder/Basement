@@ -1,0 +1,134 @@
+---
+import weapons from '@/src/data/weapons.json'
+---
+<style lang="scss">
+nav {
+	display: flex;
+	align-items: center;
+	background-color: #333;
+  padding: 0.5rem 1rem;
+}
+
+a {
+	color: lightgray;
+  text-decoration: none;
+  display:block;
+  padding:0.5rem;
+  &:hover {
+    background-color: #555555;
+  }
+}
+
+.menu {
+  position: relative;
+  &:hover {
+    .sub-menu,
+    .sub-menu--grid {
+      visibility: visible;
+    }
+  }
+}
+
+.sub-menu {
+	visibility: hidden;
+	z-index: 5;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	background-color: #333;
+  min-width: 100%;
+  width: max-content;
+  box-shadow: 
+    0.5rem 0.5rem #333, 
+    -0.5rem 0.5rem #333;
+
+  &--grid{
+    visibility: hidden;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: #333;
+    padding: 0 0.5rem 0.5rem;
+    display:grid;
+    z-index: 5;
+    position: absolute;
+    left: -3.5rem;
+    right: -3.5rem;
+
+    &__item {
+      display: flex;
+      padding: 0.5rem;
+      position: relative;
+
+      &:hover .sub-menu--grid__tooltip {
+        visibility: visible;
+      }
+    }
+
+    &__tooltip {
+      border: 0.125rem outset #ccc;
+      background-color: #333;
+      color: lightgray;
+      position: absolute;
+      left: 90%;
+      z-index: 6;
+      pointer-events: none;
+      padding: 0 1rem;
+      width: max-content;
+      visibility: hidden;
+      align-content: center;
+      font-size: 0.75rem;
+      top: 0.5rem;
+      bottom: 0.5rem;
+    }
+
+    &__emote {
+      width: 100%;
+    }
+  }
+}
+</style>
+<nav>
+  <div class="menu">
+    <a href="/">Introduction</a>
+  </div>
+  <div class="menu">
+    <a href="/pets">Pets</a>
+    <div class="sub-menu">
+      <a href="/pets">└ Guide</a>
+      <a href="/pets/calculator">└ Calculator</a>
+    </div>
+  </div>
+  <div class="menu">
+    <a href="/battleSystem/basics">Battle System</a>
+    <div class="sub-menu">
+      <a href="/battleSystem/basics">└ Basics</a>
+      <a href="/battleSystem/math">└ Math</a>
+    </div>
+  </div>
+  <div class="menu">
+    <a href="/exp/">Exp</a>
+  </div>
+  <div class="menu">
+    <a href="/weapon">Weapon</a>
+    <div class="sub-menu--grid">
+      {weapons.map((weapon) => (
+        <a href={`/weapon/${weapon.slug}`} class="sub-menu--grid__item">
+          <img
+            class="sub-menu--grid__emote"
+            src={`/src/assets/images/owo_images/battleEmojis/f_${weapon.slug}.png`}
+          />
+          <div class="sub-menu--grid__tooltip">
+            {weapon.name}
+            {weapon.id && <><br />{weapon.id}</>}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+  <div class="menu">
+    <a href="/huntbot">Huntbot</a>
+    <div class="sub-menu">
+      <a href="/huntbot">└ Guide</a>
+      <a href="/huntbot/calculator">└ Calculator</a>
+    </div>
+  </div>
+</nav>

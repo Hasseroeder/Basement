@@ -1,0 +1,16 @@
+# :robot: Huntbot
+
+Former huntbot guides have always tried to give exact instructions, such as "upgrade this twice, then that once".  
+I feel that vastly oversimplifies the whole topic though,
+so I'll also try to give more insights into how exactly people got to those exact instructions.  
+And then you can maybe adjust the instructions slightly based on your own situation!
+
+Upgrade cost grows polynomially, this means that as your huntbot is leveled higher, and becomes more useful, it becomes increasingly expensive to upgrade.  
+These are the relevant formulas for upgrading to level x from the previous level:  
+
+`Efficiency(x)  = floor(10x^1.748) for x ≤ 215`  
+`Gain(x)        = floor(10x^1.800) for x ≤ 200`  
+`Duration(x)    = floor(10x^1.700) for x ≤ 235`  
+`Exp(x)         = floor(10x^1.800) for x ≤ 200`  
+`Cost(x)        = floor(1000x^3.4) for x ≤ 5  `  
+`Radar(x)       = floor(50x^2.500) for x ≤ 999`

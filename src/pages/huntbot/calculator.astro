@@ -1,0 +1,180 @@
+---
+import '@/src/styles/main.scss';
+import '@/src/styles/huntbot/calculator/calculator.scss';
+import '@/src/styles/calculators.scss';
+import Navbar from '@/src/components/navbar.astro';
+import Blinkies from '@/src/components/blinkies.astro';
+import Head from '@/src/components/head.astro';
+import EmbedMessage from '@/src/components/embedMessage.astro';
+---
+<html>
+  <Head title="Huntbot - Calculator" description="A calculator for OwO Bot's huntbot" />
+  <body>
+    <div class="center-pillar">
+      <Navbar/>
+      <div class="page-wrapper">
+        <div class="page-wrapper__inner">
+          <EmbedMessage avatar="/src/assets/images/owo_images/avatars/owo_avatar.png" name="OwO" bot={true}>
+            <h3 class="header">HuntBot</h3>
+            <div class="intro">
+              <div class="intro__paragraph">
+                <code class="intro__code"
+                  >BEEP. BOOP. I AM HUNTBOT. I WILL HUNT FOR YOU MASTER.</code
+                ><br />
+                Use the command&nbsp;
+                <code class="intro__code">owo autohunt &#123;cowoncy&#125;</code> to get started.<br />
+                You can use&nbsp;
+                <code class="intro__code">owo upgrade &#123;trait&#125; &#123;count&#125;</code> to upgrade the traits
+                below.<br />
+                To obtain more essence, use&nbsp;
+                <code class="intro__code">owo sacrifice &#123;animal&#125; &#123;count&#125;</code>.
+              </div>
+              <img class="intro__portrait" src="/src/assets/images/owo_images/huntbot/robot.png" />
+            </div>
+            <div id="trait-grid" class="trait-grid"></div>
+            <div id="roi-box" class="roi-box"></div>
+          </EmbedMessage>
+          <EmbedMessage avatar="/src/assets/images/owo_images/avatars/neonutil.png" name="NeonUtil" bot={true}>
+            <div class="tier-grid" draggable="false"></div>
+            <div class="embed-footer-box">
+              <div class="embed-footer-box__input-box">
+                <label class="patreon-label" id="patreon-label">
+                  <input type="checkbox" class="patreon-label__checkbox" id="patreon-label__checkbox"/>
+                  <strong>Patreon</strong>
+                </label>
+                <div class="sac-toggles">
+                  <button class="sac-toggles__button">
+                    <img src="/src/assets/images/owo_images/cowoncy.png" class="sac-toggles__emote" draggable="false" />
+                  </button>
+                  <button class="sac-toggles__button">
+                    <img src="/src/assets/images/owo_images/essence.gif" class="sac-toggles__emote" draggable="false" />
+                  </button>
+                </div>
+              </div>
+              <div class="embed-footer-box__output-box">
+                <div class="value-stats" id="pet-value-stats">
+                  <h4 class="value-stats__header">Pet Worth:</h4>
+                  <ul class="value-stats__ul">
+                    <li class="value-stats__li">
+                      <span class="value-stats__output-span"></span>
+                      <ul class="value-stats__ul--child-style">
+                        <li class="value-stats__li--child-style">
+                          <span class="value-stats__output-span"></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="value-stats__li">
+                      <span class="value-stats__output-span"></span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="value-stats" id="hb-value-stats">
+                  <h4 class="value-stats__header">HB Pet Worth:</h4>
+                  <ul class="value-stats__ul">
+                    <li class="value-stats__li">
+                      <span class="value-stats__output-span"></span>
+                      <ul class="value-stats__ul--child-style">
+                        <li class="value-stats__li--child-style">
+                          <span class="value-stats__output-span"></span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="value-stats__li">
+                      <span class="value-stats__output-span"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </EmbedMessage>
+          <EmbedMessage avatar="/src/assets/images/owo_images/avatars/reactionbot.png" name="reaction bot" bot={true}>
+            <div class="simming-buttons" id="simming-buttons">
+              <button class="simming-buttons__button">(f)irst</button>
+              <button class="simming-buttons__button">(p)rev</button>
+              <button class="simming-buttons__button">(n)ext</button>
+              <button class="simming-buttons__button">(l)ast</button>
+              <button class="simming-buttons__button">(r)eset</button>
+            </div>
+            <div class="huntbot-idx" id="huntbot-idx">0/0</div>
+            <div class="simming-container">
+              <div class="hb-container">
+                <div class="hb-container__text-line">
+                  <img src="/src/assets/images/owo_images/huntbot/robot.png" class="emote" />
+                  &nbsp;|&nbsp;
+                  <code class="hb-container__code">BEEP BOOP</code>
+                </div>
+                <div class="hb-container__text-line">
+                  <img src="/src/assets/images/misc_images/blank.png" class="emote" />
+                  &nbsp;|&nbsp;
+                  <code class="hb-container__code">BOOP BEEP BEEP</code>
+                </div>
+                <div id="hb-container__tier-container"></div>
+                <div class="hb-container__value-wrapper">
+                  <details class="simming-details">
+                    <summary class="simming-details__summary">
+                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron"/></div>
+                      <div>Value</div>
+                    </summary>
+                    <div class="simming-details__content">
+                      <div><img src="/src/assets/images/owo_images/cowoncy.png" class="emote"/></div>
+                      <div>Cowoncy:</div>
+                      <code id="cowoncyHbValue">0</code>
+                      <div><img src="/src/assets/images/owo_images/essence.gif" class="emote" /></div>
+                      <div>Essence:</div>
+                      <code id="essenceHbValue">0</code>
+                    </div>
+                  </details>
+                  <details class="simming-details">
+                    <summary class="simming-details__summary">
+                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron"/></div>
+                      <div>Expected Pets</div>
+                      <div>Actual Pets</div>
+                    </summary>
+                    <div id="hb-luck-container" class="simming-details__content"></div>
+                  </details>
+                </div>
+              </div>
+              <div class="zoo-container">
+                <div class="zoo-container__text-line">
+                  <code class="zoo-container__code">🌿 🌱 🌳 your zoo! 🌳 🌿 🌱</code>
+                </div>
+                <div id="zoo-container__tier-container"></div>
+                <div class="zoo-container__zp-container">Zoo Points: <span id="zpSpan">0</span></div>
+                <div class="zoo-container__zp-container" id="tier-count-container"></div>
+                <div class="zoo-container__value-wrapper">
+                  <details class="simming-details">
+                    <summary class="simming-details__summary">
+                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron" /></div>
+                      <div>Value</div>
+                    </summary>
+                    <div class="simming-details__content">
+                      <div><img src="/src/assets/images/owo_images/cowoncy.png" class="emote" /></div>
+                      <div>Cowoncy:</div>
+                      <code id="cowoncyZooValue">0</code>
+                      <div><img src="/src/assets/images/owo_images/essence.gif" class="emote" /></div>
+                      <div>Essence:</div>
+                      <code id="essenceZooValue">0</code>
+                    </div>
+                  </details>
+                  <details class="simming-details">
+                    <summary class="simming-details__summary">
+                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron" /></div>
+                      <div>Expected Pets</div>
+                      <div>Actual Pets</div>
+                    </summary>
+                    <div id="zoo-luck-container" class="simming-details__content"></div>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </EmbedMessage>
+        </div>
+      </div>
+      <Blinkies/>
+    </div>
+    <script>
+      import '@/src/scripts/huntbot/calculator/calculator';
+      import '@/src/scripts/timestamp';
+    </script>
+  </body>
+</html>

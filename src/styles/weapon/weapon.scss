@@ -1,0 +1,131 @@
+.wikipedia {
+	width: 18rem;
+	margin-left: 2rem;
+	border: 1px solid gray;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+
+	&__header {
+		background-color: #353535;
+		padding: 0.5rem 1.5rem;
+		text-align: center;
+		border-bottom: 1px solid gray;
+		box-sizing: border-box;
+		width: 100%;
+		margin: 0;
+	}
+
+	&__aliases {
+		font-size: 0.8rem;
+		color: #999;
+		font-weight: normal;
+	}
+
+	&__portrait {
+		width: 60%;
+		padding: 0.5rem;
+	}
+
+	&__stars {
+		margin-bottom: 0.5rem;
+		font-size: 0.9rem;
+	}
+
+	&__id {
+		padding: 0.5rem;
+		background-color: #353535;
+		border-top: 1px solid gray;
+		font-size: 0.9rem;
+		box-sizing: border-box;
+		width: 100%;
+		border-bottom: 1px solid gray;
+	}
+
+	&__stats-header {
+		margin: 0.75rem 0 0.5rem 0;
+	}
+
+	&__table {
+		width: 100%;
+	}
+
+	&__table-row {
+		display: flex;
+		border-bottom: 1px solid #353535;
+
+		&:first-child {
+			border-top: 1px solid #353535;
+		}
+	}
+
+	&__table-cell {
+		padding: 0.35rem 0;
+		gap: 0.2rem;
+		flex: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0;
+
+		&:first-child {
+			border-right: 1px solid #353535;
+		}
+	}
+
+	&__stat-img {
+		width: 1rem;
+	}
+
+	&__no-stat {
+		padding: 0.5rem;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		border-bottom: 1px solid #353535;
+		border-top: 1px solid #353535;
+		box-sizing: border-box;
+	}
+
+	&__link {
+		padding: 0.5rem;
+	}
+}
+
+.page-header {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin: 1.25rem 0;
+	gap: 1.25rem;
+
+	&__text,
+	&__prev-button,
+	&__next-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #353535;
+		height: 2rem;
+		width: 15rem;
+		padding: 0.2rem;
+		gap: 0.5rem;
+	}
+
+	&__prev-button:hover,
+	&__next-button:hover {
+		background-color: #555;
+	}
+
+	&__emote {
+		height: 100%;
+	}
+}
+
+.content {
+	display: flex;
+
+	&__loaded-mdx {
+		width: 100%;
+	}
+}

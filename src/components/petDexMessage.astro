@@ -1,0 +1,148 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import EmbedMessage from "./embedMessage.astro";
+
+const embedMessageProps = {
+  avatar: "/src/assets/images/owo_images/avatars/owo_avatar.png",
+  name: "OwO",
+  bot: true,
+};
+
+const { 
+    slug = "", 
+    nickname = "", 
+    description = "", 
+    count = "",
+    rank = "", 
+    rarity = "", 
+    aliases = [], 
+    points = "",
+    sell = "", 
+    sacrifice = "", 
+    stats = { hp: 0, str: 0, pr: 0, wp: 0, mag: 0, mr: 0 }
+}:{ 
+    slug?: string; 
+    nickname?: string; 
+    description?: string; 
+    count?: string; 
+    rank?: string; 
+    rarity?: string; 
+    aliases?: string[]; 
+    points?: string;
+    sell?: string; 
+    sacrifice?: string; 
+    stats?: { hp: number, str: number, pr: number, wp: number, mag: number, mr: number }
+} = Astro.props;
+
+const gifPath = path.join(
+  process.cwd(),
+  "/src/assets/images/owo_images/pets",
+  `${slug}.gif`
+);
+
+const extension = fs.existsSync(gifPath) ? "gif" : "png";
+const petSrc = `/src/assets/images/owo_images/pets/${slug}.${extension}`;
+---
+<style lang="scss">
+    .pet-container {
+        display:flex; 
+        gap: 1rem;
+
+        &__header {
+            display: flex;
+            align-items: center;
+            margin: 0 0 0.5rem 0;
+            font-size: 1em;
+
+            > img {
+                width: 1.3em;
+                height: 1.3em;
+            }
+        }
+
+        &__content {
+            font-size: 0.9em;
+            line-height: 1.35em;
+        }
+
+        &__portrait {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        &__description {
+            white-space: pre-wrap;
+            font-style: italic;
+        }
+
+        &__stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            width: min-content;
+        }
+
+        &__stats-cell {
+            display: flex;
+            align-items: center;
+            height: 1.10rem;
+
+            code {
+                font-size: 1.15em;
+                background: #202020;
+                line-height: unset;
+                padding: 0.0em 0.2em;
+            }
+        }
+    }
+</style>
+<EmbedMessage {...embedMessageProps}>
+    <div class="pet-container">
+        <div>
+            <h3 class="pet-container__header">
+                <img
+                    aria-label={":" + slug + ":"}
+                    src={petSrc}
+                    alt={":" + slug + ":"}
+                    draggable="false"
+                />
+                &nbsp;
+                {slug}
+            </h3>
+            <div class="pet-container__content">
+                <span class="pet-container__description">{description}</span><br/>
+                <br/>
+                <strong>Nickname:</strong> {nickname}<br/>
+                <strong>Count:</strong> {count}<br/>
+                <strong>Rank:</strong> {rank}<br/>
+                <strong>Rarity:</strong> {rarity}<br/>
+                <strong>Alias:</strong> {aliases.join(", ")}<br/>
+                <strong>Points:</strong> {points}<br/>
+                <strong>Sell:</strong> {sell}<br/>
+                <strong>Sacrifice:</strong> {sacrifice}<br/>
+                <div class="pet-container__stats-grid">
+                    {Object.entries(stats).map(([key, value]) => (
+                        <span class="pet-container__stats-cell">
+                            <img 
+                                aria-label={":" + key + ":"}
+                                src={`/src/assets/images/owo_images/battleEmojis/${key}.png`}
+                                alt={":" + key + ":"}
+                                draggable="false"
+                                class="emote"
+                            />
+                            <code>{value}</code>
+                            &nbsp;
+                        </span>
+                    ))}
+                </div>
+            </div>
+        </div>
+        <img
+            aria-label={":" + slug + ":"}
+            src={petSrc}
+            alt={":" + slug + ":"}
+            draggable="false"
+            class="pet-container__portrait"
+        />
+    </div>
+</EmbedMessage>

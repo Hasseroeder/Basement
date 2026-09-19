@@ -1,0 +1,29 @@
+## :radar: radar
+
+:bot: Bot chance is 0% by default, and every Radar upgrade adds +0.000004% onto that.  
+The max level is technically 999, but this can't be achieved, which is why there's no real "maxed" huntbot.  
+Whenever we refer to such, we only mean a huntbot that has had everything but Radar maxed.
+
+Because :bot: Bots pets sacrifice for more than :common: Common pets,
+we could also talk about the *Return on Investment* here, such as with Gain & Efficiency. 
+It doesn't make much sense to do this, as the effects are miniscule,
+but I've included the calculation on the calculator anyway.
+Going solely by ROI, you should have a level 2 Radar by the time Efficiency & Gain maxed.
+
+Though, that's probably not why you're considering Radar.  
+But even as the biggest Bot-enthusiast, you shouldn't have Radar over level 30 by the time you're maxed.  
+It's just way too expensive and probably has no payoff.  
+
+#### math 😱
+
+We'll calculate some more; this time Bot chances.  
+Assuming you have a level 20 Radar, your base chance is **0.00008%**.  
+Thus, our chance of not getting a bot for each individual pet is: `NoBot = 100% - 0.00008%`  
+
+Imagine we have a maxed huntbot and we leave it running for 5 weeks.  
+We will have gotten `35 * 5760 = 201600` pets by then.  
+
+Now if we take `Unlucky = NoBot ^ pets`, then we'll have the chance of not having gotten a Bot within so many pets.  
+
+Now your chances of getting a :bot: Bot pet are `100% - Unlucky`  
+In this example, within 5 weeks we had a Bot chance of `0.14895`, i.e. **14.895%**!
