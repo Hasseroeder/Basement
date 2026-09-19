@@ -201,7 +201,7 @@ function outputSmallPetContainer(pet) {
 
 	const children = [
 		make('img', {
-			src: getPetImage(pet, true),
+			src: pet.emoteSrc,
 			style: { width: '3rem' },
 		}),
 		make('div', {
@@ -358,7 +358,7 @@ function setLevelTo(value) {
 function displayPet(pet) {
 	const children = [
 		make('img', {
-			src: getPetImage(pet),
+			src: pet.emoteSrc,
 			className: 'one-rem',
 		}),
 		make('code', {
@@ -377,18 +377,6 @@ function displayPet(pet) {
 }
 
 const createHeader = (string) => make('div', { textContent: string, className: 'pet-row' })
-
-function getPetImage(pet, wantAnimated) {
-	if (wantAnimated && pet.animated == 1) {
-		return `https://cdn.discordapp.com/emojis/${pet.emoji}.gif?size=96`
-	} else if (
-		['common', 'uncommon', 'rare', 'epic', 'mythical', 'hidden'].includes(pet.tier.name)
-	) {
-		return `/media/owo_images/pets/${pet.name}.png`
-	} else {
-		return `https://cdn.discordapp.com/emojis/${pet.emoji}.png?size=96`
-	}
-}
 
 function addAddEffects() {
 	const effectIcons = [

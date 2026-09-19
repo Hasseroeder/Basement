@@ -1,5 +1,3 @@
-import { make } from '@/src/utils/injectionUtil.js'
-
 const weaponAssets = {
 	...import.meta.glob('../../../assets/images/owo_images/battleEmojis/*', {
 		eager: true,
