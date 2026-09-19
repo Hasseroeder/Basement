@@ -158,7 +158,7 @@ function onInput(textInput, suggestions) {
 	const q = textInput.value.trim().toLowerCase()
 
 	suggestedPets = allPets.filter(
-		(pet) => pet.lowerName.includes(q) || pet.aliases.some((alias) => alias.includes(q))
+		(pet) => pet.slug.includes(q) || pet.aliases.some((alias) => alias.includes(q))
 	)
 	suggestedPets = sortPets(suggestedPets)
 	suggestedPets = suggestedPets.slice(0, 5)
