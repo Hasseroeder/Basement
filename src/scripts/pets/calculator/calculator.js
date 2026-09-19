@@ -77,7 +77,7 @@ const sortPets = (array) =>
 	array.sort((petA, petB) => {
 		if (petA.tier.priority !== petB.tier.priority)
 			return petA.tier.priority - petB.tier.priority
-		else return petA.name.localeCompare(petB.name)
+		else return petA.slug.localeCompare(petB.slug)
 	})
 
 function outputPetContainer() {

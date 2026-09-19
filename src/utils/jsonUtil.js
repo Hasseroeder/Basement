@@ -19,26 +19,21 @@ export async function loadPets() {
 	const localPetPath = '/assets/images/owo_images/pets/'
 	const cdnPath = 'https://cdn.discordapp.com/emojis/'
 	const tiers = [
-		['common', 0, 'Common', localPetPath],
-		['uncommon', 1, 'Uncommon', localPetPath],
-		['rare', 2, 'Rare', localPetPath],
-		['epic', 3, 'Epic', localPetPath],
-		['mythical', 4, 'Mythic', localPetPath],
-		['legendary', 5, 'Legendary', cdnPath],
-		['gem', 5, 'Gem', cdnPath],
-		['bot', 6, 'Bot', cdnPath],
-		['distorted', 7, 'Distorted', cdnPath],
-		['fabled', 8, 'Fabled', cdnPath],
-		['hidden', 9, 'Hidden', cdnPath],
-		['special', 10, 'Special', cdnPath],
-		['patreon', 11, 'Patreon', cdnPath],
-		['cpatreon', 12, 'Custom', cdnPath],
-	].map(([slug, priority, prettyName, folderPath]) => ({
-		slug,
-		priority,
-		prettyName,
-		folderPath,
-	}))
+		{ priority: 0, slug: 'common', prettyName: 'Common', folderPath: localPetPath },
+		{ priority: 1, slug: 'uncommon', prettyName: 'Uncommon', folderPath: localPetPath },
+		{ priority: 2, slug: 'rare', prettyName: 'Rare', folderPath: localPetPath },
+		{ priority: 3, slug: 'epic', prettyName: 'Epic', folderPath: localPetPath },
+		{ priority: 4, slug: 'mythic', prettyName: 'Mythic', folderPath: localPetPath },
+		{ priority: 5, slug: 'legendary', prettyName: 'Legendary', folderPath: cdnPath },
+		{ priority: 6, slug: 'gem', prettyName: 'Gem', folderPath: cdnPath },
+		{ priority: 7, slug: 'bot', prettyName: 'Bot', folderPath: cdnPath },
+		{ priority: 8, slug: 'distorted', prettyName: 'Distorted', folderPath: cdnPath },
+		{ priority: 9, slug: 'fabled', prettyName: 'Fabled', folderPath: cdnPath },
+		{ priority: 10, slug: 'hidden', prettyName: 'Hidden', folderPath: cdnPath },
+		{ priority: 11, slug: 'special', prettyName: 'Special', folderPath: cdnPath },
+		{ priority: 12, slug: 'patreon', prettyName: 'Patreon', folderPath: cdnPath },
+		{ priority: 13, slug: 'cpatreon', prettyName: 'Custom', folderPath: cdnPath },
+	]
 
 	const response = await loadJson('https://neonutil.com/api/animals')
 	const tierSlugs = response.ranks
