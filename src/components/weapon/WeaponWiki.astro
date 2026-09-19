@@ -59,7 +59,7 @@ if (weapon.objectType === "weapon"){
 		displayStats.push(weapon.wpStatConfig)
 } 
 
-const emojiPath = (emoji: string) => `/src/assets/images/owo_images/battleEmojis/${emoji}`
+const emojiPath = (emoji: string) => `/assets/images/owo_images/battleEmojis/${emoji}`
 ---
 
 <div class="wikipedia">
@@ -81,7 +81,7 @@ const emojiPath = (emoji: string) => `/src/assets/images/owo_images/battleEmojis
 				<div class="wikipedia__table-row">
 					{['common.png', 'fabled.gif'].map((rank) => (
 						<h4 class="wikipedia__table-cell">
-							<img class="wikipedia__stat-img" src={`/src/assets/images/owo_images/tiers/${rank}`} alt={rank} />
+							<img class="wikipedia__stat-img" src={`/assets/images/owo_images/tiers/${rank}`} alt={rank} />
 							{rank === 'common.png' ? '0%' : '100%'}
 						</h4>
 					))}

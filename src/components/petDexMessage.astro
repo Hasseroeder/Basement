@@ -4,7 +4,7 @@ import path from "node:path";
 import EmbedMessage from "./embedMessage.astro";
 
 const embedMessageProps = {
-  avatar: "/src/assets/images/owo_images/avatars/owo_avatar.png",
+  avatar: "/assets/images/owo_images/avatars/owo_avatar.png",
   name: "OwO",
   bot: true,
 };
@@ -37,12 +37,12 @@ const {
 
 const gifPath = path.join(
   process.cwd(),
-  "/src/assets/images/owo_images/pets",
+  "/assets/images/owo_images/pets",
   `${slug}.gif`
 );
 
 const extension = fs.existsSync(gifPath) ? "gif" : "png";
-const petSrc = `/src/assets/images/owo_images/pets/${slug}.${extension}`;
+const petSrc = `/assets/images/owo_images/pets/${slug}.${extension}`;
 ---
 <style lang="scss">
     .pet-container {
@@ -125,7 +125,7 @@ const petSrc = `/src/assets/images/owo_images/pets/${slug}.${extension}`;
                         <span class="pet-container__stats-cell">
                             <img 
                                 aria-label={":" + key + ":"}
-                                src={`/src/assets/images/owo_images/battleEmojis/${key}.png`}
+                                src={`/assets/images/owo_images/battleEmojis/${key}.png`}
                                 alt={":" + key + ":"}
                                 draggable="false"
                                 class="emote"

@@ -26,7 +26,7 @@
 			"stoneskin": "stoneskin.png",
 			"spellskin": "spellskin.png"
 		},
-		"folderPath": "/src/assets/images/owo_images/battleEmojis/"
+		"folderPath": "/assets/images/owo_images/battleEmojis/"
 	},
 	"weapon": {
 		"manifest": {
@@ -605,7 +605,7 @@
 			"bu_aedge": "bu_aedge.png",
 			"bc_aedge": "bc_aedge.png"
 		},
-		"folderPath": "/src/assets/images/owo_images/battleEmojis/"
+		"folderPath": "/assets/images/owo_images/battleEmojis/"
 	},
 	"passive": {
 		"manifest": {
@@ -812,7 +812,7 @@
 			"u_swarm": "u_swarm.png",
 			"c_swarm": "c_swarm.png"
 		},
-		"folderPath": "/src/assets/images/owo_images/battleEmojis/"
+		"folderPath": "/assets/images/owo_images/battleEmojis/"
 	},
 	"pet": {
 		"manifest": {
@@ -886,7 +886,7 @@
 			"flamingo": "glitchflamingo.gif",
 			"2023halloween_capybara": "2023halloween_capybara.gif"
 		},
-		"folderPath": "/src/assets/images/owo_images/pets/"
+		"folderPath": "/assets/images/owo_images/pets/"
 	},
 	"tier": {
 		"manifest": {
@@ -923,7 +923,7 @@
 			"gem": "gem.gif",
 			"g": "gem.gif"
 		},
-		"folderPath": "/src/assets/images/owo_images/tiers/"
+		"folderPath": "/assets/images/owo_images/tiers/"
 	},
 	"stat": {
 		"manifest": {
@@ -941,7 +941,7 @@
 			"mr": "mr.png",
 			"imr": "imr.png"
 		},
-		"folderPath": "/src/assets/images/owo_images/battleEmojis/"
+		"folderPath": "/assets/images/owo_images/battleEmojis/"
 	},
 	"gems": {
 		"manifest": {
@@ -985,7 +985,7 @@
 			"us": "us.png",
 			"cs": "cs.png"
 		},
-		"folderPath": "/src/assets/images/owo_images/gems/"
+		"folderPath": "/assets/images/owo_images/gems/"
 	},
 	"misc": {
 		"manifest": {
@@ -997,7 +997,7 @@
 			"blahaj_tail": "blahaj_tail.png",
 			"colon_three": "colon_three.png"
 		},
-		"folderPath": "/src/assets/images/misc_images/"
+		"folderPath": "/assets/images/misc_images/"
 	},
 	"huntbot": {
 		"manifest": {
@@ -1022,6 +1022,6 @@
 			"essence": "essence.gif",
 			"ess": "essence.gif"
 		},
-		"folderPath": "/src/assets/images/owo_images/huntbot/"
+		"folderPath": "/assets/images/owo_images/huntbot/"
 	}
 }

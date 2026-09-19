@@ -225,8 +225,8 @@ const zoo = rawZoo
 				this.isSac = override ?? !this.isSac
 				sacText.textContent = this.isSac ? 'Sac' : 'Sell'
 				sacImg.src = this.isSac
-					? '/src/assets/images/owo_images/essence.gif'
-					: '/src/assets/images/owo_images/cowoncy.png'
+					? '/assets/images/owo_images/essence.gif'
+					: '/assets/images/owo_images/cowoncy.png'
 				drawData()
 				updateZooValue()
 				updateHbValue(currentHbIdx)
@@ -418,7 +418,7 @@ class Trait {
 			this.header.title = title
 		}
 		this.emoji = make('img', {
-			src: `/src/assets/images/owo_images/huntbot/${this.name.toLowerCase()}.png`,
+			src: `/assets/images/owo_images/huntbot/${this.name.toLowerCase()}.png`,
 		})
 
 		const header = make('h4', { className: 'trait-grid__trait-header' }, [
@@ -471,7 +471,7 @@ class Trait {
 
 		const ttImg = make('img', {
 			className: 'trait-inputs__upgrade-tooltip-emote',
-			src: '/src/assets/images/owo_images/essence.gif',
+			src: '/assets/images/owo_images/essence.gif',
 		})
 		const ttText = make('div')
 		const ttEl = make('span', { className: 'trait-inputs__upgrade-tooltip' }, [ttImg, ttText])
@@ -679,12 +679,12 @@ const tt = {
 	}),
 	title: make('div', { className: 'pet-tooltip__header' }),
 	statCells: [
-		'/src/assets/images/owo_images/battleEmojis/hp.png',
-		'/src/assets/images/owo_images/battleEmojis/str.png',
-		'/src/assets/images/owo_images/battleEmojis/pr.png',
-		'/src/assets/images/owo_images/battleEmojis/wp.png',
-		'/src/assets/images/owo_images/battleEmojis/mag.png',
-		'/src/assets/images/owo_images/battleEmojis/mr.png',
+		'/assets/images/owo_images/battleEmojis/hp.png',
+		'/assets/images/owo_images/battleEmojis/str.png',
+		'/assets/images/owo_images/battleEmojis/pr.png',
+		'/assets/images/owo_images/battleEmojis/wp.png',
+		'/assets/images/owo_images/battleEmojis/mag.png',
+		'/assets/images/owo_images/battleEmojis/mr.png',
 	].map((src) =>
 		make('div', { className: 'pet-tooltip__stat-cell' }, [
 			make('img', { src, className: 'pet-tooltip__stat-emote' }),

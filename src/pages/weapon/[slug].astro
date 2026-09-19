@@ -38,7 +38,7 @@ const { default: WeaponContent } = (await loadContent()) as WeaponContentModule
 	<Head 
 		title={`${weapon.name}`} 
 		description={`A guide for OwO Bot's ${weapon.name}`} 
-		image={`/src/assets/images/owo_images/battleEmojis/${weapon.slug}.png`} 
+		image={`/assets/images/owo_images/battleEmojis/${weapon.slug}.png`} 
 	/>
 	<body>
 		<div class="center-pillar">
@@ -47,7 +47,7 @@ const { default: WeaponContent } = (await loadContent()) as WeaponContentModule
 				<div class="page-header">
 					<a class="page-header__prev-button" href={`/weapon/${previous.slug}`}>&lt;&lt;</a>
 					<div class="page-header__text">
-						<img class="page-header__emote" src={`/src/assets/images/owo_images/battleEmojis/${weapon.slug}.png`} alt=`:${weapon.slug}:` />
+						<img class="page-header__emote" src={`/assets/images/owo_images/battleEmojis/${weapon.slug}.png`} alt=`:${weapon.slug}:` />
 						<div>{weapon.id ?? '???'} - {weapon.aliases[0] ?? weapon.name}</div>
 					</div>
 					<a class="page-header__next-button" href={`/weapon/${next.slug}`}>&gt;&gt;</a>

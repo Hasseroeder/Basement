@@ -5,13 +5,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": false,
 		"_rate": null,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/common.png",
+		"emoteSrc": "/assets/images/owo_images/tiers/common.png",
 		"prefix": "C",
 		"value": { "sell": 1, "sac": 1, "points": 1, "exp": 1 },
 		"pets": [
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/bee.png",
+				"emoteSrc": "/assets/images/owo_images/pets/bee.png",
 				"slug": "bee",
 				"prettyName": "bee",
 				"aliases": ["wasp"],
@@ -19,7 +19,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/bug.png",
+				"emoteSrc": "/assets/images/owo_images/pets/bug.png",
 				"slug": "bug",
 				"prettyName": "bug",
 				"aliases": ["worm", "caterpillar"],
@@ -27,7 +27,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/snail.png",
+				"emoteSrc": "/assets/images/owo_images/pets/snail.png",
 				"slug": "snail",
 				"prettyName": "snail",
 				"aliases": ["slug"],
@@ -35,7 +35,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/beetle.png",
+				"emoteSrc": "/assets/images/owo_images/pets/beetle.png",
 				"slug": "beetle",
 				"prettyName": "beetle",
 				"aliases": ["ladybug"],
@@ -43,7 +43,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/butterfly.png",
+				"emoteSrc": "/assets/images/owo_images/pets/butterfly.png",
 				"slug": "butterfly",
 				"prettyName": "butterfly",
 				"aliases": [],
@@ -57,13 +57,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": false,
 		"_rate": 0.3,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/uncommon.png",
+		"emoteSrc": "/assets/images/owo_images/tiers/uncommon.png",
 		"prefix": "U",
 		"value": { "sell": 3, "sac": 5, "points": 5, "exp": 10 },
 		"pets": [
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/chick.png",
+				"emoteSrc": "/assets/images/owo_images/pets/chick.png",
 				"slug": "chick",
 				"prettyName": "chick",
 				"aliases": ["baby_chick"],
@@ -71,7 +71,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/mouse.png",
+				"emoteSrc": "/assets/images/owo_images/pets/mouse.png",
 				"slug": "mouse",
 				"prettyName": "mouse",
 				"aliases": ["mouse2", "rat"],
@@ -79,7 +79,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/chicken.png",
+				"emoteSrc": "/assets/images/owo_images/pets/chicken.png",
 				"slug": "chicken",
 				"prettyName": "chicken",
 				"aliases": ["rooster"],
@@ -87,7 +87,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/rabbit.png",
+				"emoteSrc": "/assets/images/owo_images/pets/rabbit.png",
 				"slug": "rabbit",
 				"prettyName": "rabbit",
 				"aliases": ["rabbit2", "bunny"],
@@ -95,7 +95,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/chipmunk.png",
+				"emoteSrc": "/assets/images/owo_images/pets/chipmunk.png",
 				"slug": "chipmunk",
 				"prettyName": "chipmunk",
 				"aliases": ["squirrel"],
@@ -109,13 +109,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": false,
 		"_rate": 0.1,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/rare.png",
+		"emoteSrc": "/assets/images/owo_images/tiers/rare.png",
 		"prefix": "R",
 		"value": { "sell": 10, "sac": 20, "points": 20, "exp": 20 },
 		"pets": [
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/sheep.png",
+				"emoteSrc": "/assets/images/owo_images/pets/sheep.png",
 				"slug": "sheep",
 				"prettyName": "sheep",
 				"aliases": ["ram", "goat"],
@@ -123,7 +123,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/pig.png",
+				"emoteSrc": "/assets/images/owo_images/pets/pig.png",
 				"slug": "pig",
 				"prettyName": "pig",
 				"aliases": ["pig2"],
@@ -131,7 +131,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/cow.png",
+				"emoteSrc": "/assets/images/owo_images/pets/cow.png",
 				"slug": "cow",
 				"prettyName": "cow",
 				"aliases": ["cow2"],
@@ -139,7 +139,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/dog.png",
+				"emoteSrc": "/assets/images/owo_images/pets/dog.png",
 				"slug": "dog",
 				"prettyName": "dog",
 				"aliases": ["dog2", "doggy", "puppy", "wolf"],
@@ -147,7 +147,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/cat.png",
+				"emoteSrc": "/assets/images/owo_images/pets/cat.png",
 				"slug": "cat",
 				"prettyName": "cat",
 				"aliases": ["cat2", "kitty", "kitten"],
@@ -161,13 +161,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": false,
 		"_rate": 0.01,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/epic.png",
+		"emoteSrc": "/assets/images/owo_images/tiers/epic.png",
 		"prefix": "E",
 		"value": { "sell": 250, "sac": 250, "points": 250, "exp": 400 },
 		"pets": [
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/crocodile.png",
+				"emoteSrc": "/assets/images/owo_images/pets/crocodile.png",
 				"slug": "crocodile",
 				"prettyName": "crocodile",
 				"aliases": ["alligator"],
@@ -175,7 +175,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/tiger.png",
+				"emoteSrc": "/assets/images/owo_images/pets/tiger.png",
 				"slug": "tiger",
 				"prettyName": "tiger",
 				"aliases": ["tiger2", "cheetah"],
@@ -183,7 +183,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/penguin.png",
+				"emoteSrc": "/assets/images/owo_images/pets/penguin.png",
 				"slug": "penguin",
 				"prettyName": "penguin",
 				"aliases": [],
@@ -191,7 +191,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/elephant.png",
+				"emoteSrc": "/assets/images/owo_images/pets/elephant.png",
 				"slug": "elephant",
 				"prettyName": "elephant",
 				"aliases": [],
@@ -199,7 +199,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/whale.png",
+				"emoteSrc": "/assets/images/owo_images/pets/whale.png",
 				"slug": "whale",
 				"prettyName": "whale",
 				"aliases": [],
@@ -213,13 +213,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": false,
 		"_rate": 0.001,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/mythic.png",
+		"emoteSrc": "/assets/images/owo_images/tiers/mythic.png",
 		"prefix": "M",
 		"value": { "sell": 5000, "sac": 3000, "points": 3000, "exp": 1000 },
 		"pets": [
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/dragon.png",
+				"emoteSrc": "/assets/images/owo_images/pets/dragon.png",
 				"slug": "dragon",
 				"prettyName": "dragon",
 				"aliases": [],
@@ -227,7 +227,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/unicorn.png",
+				"emoteSrc": "/assets/images/owo_images/pets/unicorn.png",
 				"slug": "unicorn",
 				"prettyName": "unicorn",
 				"aliases": [],
@@ -235,7 +235,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/snowman.png",
+				"emoteSrc": "/assets/images/owo_images/pets/snowman.png",
 				"slug": "snowman",
 				"prettyName": "snowman",
 				"aliases": ["snowman2", "snow"],
@@ -243,7 +243,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/ghost.png",
+				"emoteSrc": "/assets/images/owo_images/pets/ghost.png",
 				"slug": "ghost",
 				"prettyName": "ghost",
 				"aliases": ["ghost"],
@@ -251,7 +251,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/dove.png",
+				"emoteSrc": "/assets/images/owo_images/pets/dove.png",
 				"slug": "dove",
 				"prettyName": "dove",
 				"aliases": ["bird"],
@@ -265,13 +265,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": true,
 		"_rate": 0.005,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/patreon.png",
+		"emoteSrc": "/assets/images/owo_images/tiers/patreon.png",
 		"prefix": "P",
 		"value": { "sell": 1000, "sac": 500, "points": 500, "exp": 400 },
 		"pets": [
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/pbird.png",
+				"emoteSrc": "/assets/images/owo_images/pets/pbird.png",
 				"slug": "pbird",
 				"prettyName": "pbird",
 				"aliases": ["redbird"],
@@ -279,7 +279,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/pdolphin.png",
+				"emoteSrc": "/assets/images/owo_images/pets/pdolphin.png",
 				"slug": "pdolphin",
 				"prettyName": "pdolphin",
 				"aliases": ["dolphin"],
@@ -287,7 +287,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/pogre.png",
+				"emoteSrc": "/assets/images/owo_images/pets/pogre.png",
 				"slug": "pogre",
 				"prettyName": "pogre",
 				"aliases": ["ogre"],
@@ -295,7 +295,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/pscorpion.png",
+				"emoteSrc": "/assets/images/owo_images/pets/pscorpion.png",
 				"slug": "pscorpion",
 				"prettyName": "pscorpion",
 				"aliases": ["scorpion"],
@@ -303,7 +303,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/ptiger.png",
+				"emoteSrc": "/assets/images/owo_images/pets/ptiger.png",
 				"slug": "ptiger",
 				"prettyName": "ptiger",
 				"aliases": ["patreontiger"],
@@ -317,13 +317,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": true,
 		"_rate": 0.0001,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/patreon.gif",
+		"emoteSrc": "/assets/images/owo_images/tiers/patreon.gif",
 		"prefix": "CP",
 		"value": { "sell": 50000, "sac": 25000, "points": 25000, "exp": 2000 },
 		"pets": [
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/bitter.png",
+				"emoteSrc": "/assets/images/owo_images/pets/bitter.png",
 				"slug": "bitter",
 				"prettyName": "bitter",
 				"aliases": [],
@@ -331,7 +331,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/bitter.png",
+				"emoteSrc": "/assets/images/owo_images/pets/bitter.png",
 				"slug": "bitter",
 				"prettyName": "bitter",
 				"aliases": [],
@@ -339,7 +339,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/bitter.png",
+				"emoteSrc": "/assets/images/owo_images/pets/bitter.png",
 				"slug": "bitter",
 				"prettyName": "bitter",
 				"aliases": [],
@@ -347,7 +347,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/bitter.png",
+				"emoteSrc": "/assets/images/owo_images/pets/bitter.png",
 				"slug": "bitter",
 				"prettyName": "bitter",
 				"aliases": [],
@@ -355,7 +355,7 @@
 			},
 			{
 				"animated": false,
-				"emoteSrc": "/src/assets/images/owo_images/pets/bitter.png",
+				"emoteSrc": "/assets/images/owo_images/pets/bitter.png",
 				"slug": "bitter",
 				"prettyName": "bitter",
 				"aliases": [],
@@ -369,13 +369,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": false,
 		"_rate": 0.0005,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/legendary.gif",
+		"emoteSrc": "/assets/images/owo_images/tiers/legendary.gif",
 		"prefix": "L",
 		"value": { "sell": 15000, "sac": 10000, "points": 10000, "exp": 2000 },
 		"pets": [
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/gdeer.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/gdeer.gif",
 				"slug": "gdeer",
 				"prettyName": "gdeer",
 				"aliases": ["deer"],
@@ -383,7 +383,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/gfox.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/gfox.gif",
 				"slug": "gfox",
 				"prettyName": "gfox",
 				"aliases": ["fox"],
@@ -391,7 +391,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/glion.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/glion.gif",
 				"slug": "glion",
 				"prettyName": "glion",
 				"aliases": ["lion"],
@@ -399,7 +399,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/gowl.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/gowl.gif",
 				"slug": "gowl",
 				"prettyName": "gowl",
 				"aliases": ["owl"],
@@ -407,7 +407,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/gsquid.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/gsquid.gif",
 				"slug": "gsquid",
 				"prettyName": "gsquid",
 				"aliases": ["squid"],
@@ -421,13 +421,13 @@
 		"huntbotAvailable": false,
 		"patreonNeeded": false,
 		"_rate": null,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/gem.gif",
+		"emoteSrc": "/assets/images/owo_images/tiers/gem.gif",
 		"prefix": "G",
 		"value": { "sell": 30000, "sac": 20000, "points": 20000, "exp": 5000 },
 		"pets": [
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/gcamel.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/gcamel.gif",
 				"slug": "gcamel",
 				"prettyName": "gcamel",
 				"aliases": ["camel"],
@@ -435,7 +435,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/gfish.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/gfish.gif",
 				"slug": "gfish",
 				"prettyName": "gfish",
 				"aliases": ["fish"],
@@ -443,7 +443,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/gpanda.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/gpanda.gif",
 				"slug": "gpanda",
 				"prettyName": "gpanda",
 				"aliases": ["panda"],
@@ -451,7 +451,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/gshrimp.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/gshrimp.gif",
 				"slug": "gshrimp",
 				"prettyName": "gshrimp",
 				"aliases": ["shrimp"],
@@ -459,7 +459,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/gspider.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/gspider.gif",
 				"slug": "gspider",
 				"prettyName": "gspider",
 				"aliases": ["spider"],
@@ -473,13 +473,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": false,
 		"_rate": null,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/bot.gif",
+		"emoteSrc": "/assets/images/owo_images/tiers/bot.gif",
 		"prefix": "B",
 		"value": { "sell": 50000, "sac": 10000, "points": 30000 },
 		"pets": [
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/dinobot.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/dinobot.gif",
 				"slug": "dinobot",
 				"prettyName": "dinobot",
 				"aliases": ["dinosaur", "rexbot", "trex"],
@@ -487,7 +487,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/giraffbot.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/giraffbot.gif",
 				"slug": "giraffbot",
 				"prettyName": "giraffbot",
 				"aliases": ["giraffebot", "giraffe"],
@@ -495,7 +495,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/hedgebot.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/hedgebot.gif",
 				"slug": "hedgebot",
 				"prettyName": "hedgebot",
 				"aliases": ["hedgehog"],
@@ -503,7 +503,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/lobbot.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/lobbot.gif",
 				"slug": "lobbot",
 				"prettyName": "lobbot",
 				"aliases": ["lobster"],
@@ -511,7 +511,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/slothbot.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/slothbot.gif",
 				"slug": "slothbot",
 				"prettyName": "slothbot",
 				"aliases": ["sloth"],
@@ -525,13 +525,13 @@
 		"huntbotAvailable": false,
 		"patreonNeeded": false,
 		"_rate": 0.0000025,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/distorted.gif",
+		"emoteSrc": "/assets/images/owo_images/tiers/distorted.gif",
 		"prefix": "D",
 		"value": { "sell": 300000, "sac": 200000, "points": 200000, "exp": 100000 },
 		"pets": [
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/glitchflamingo.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/glitchflamingo.gif",
 				"slug": "glitchflamingo",
 				"prettyName": "glitchflamingo",
 				"aliases": ["flamingo", "gflamingo"],
@@ -539,7 +539,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/glitchotter.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/glitchotter.gif",
 				"slug": "glitchotter",
 				"prettyName": "glitchotter",
 				"aliases": ["otter", "gotter"],
@@ -547,7 +547,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/glitchparrot.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/glitchparrot.gif",
 				"slug": "glitchparrot",
 				"prettyName": "glitchparrot",
 				"aliases": ["parrot", "gparrot"],
@@ -555,7 +555,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/glitchraccoon.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/glitchraccoon.gif",
 				"slug": "glitchraccoon",
 				"prettyName": "glitchraccoon",
 				"aliases": ["raccoon", "graccoon"],
@@ -563,7 +563,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/glitchzebra.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/glitchzebra.gif",
 				"slug": "glitchzebra",
 				"prettyName": "glitchzebra",
 				"aliases": ["zebra", "gzebra"],
@@ -577,13 +577,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": false,
 		"_rate": 0.00001,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/fabled.gif",
+		"emoteSrc": "/assets/images/owo_images/tiers/fabled.gif",
 		"prefix": "F",
 		"value": { "sell": 250000, "sac": 100000, "points": 100000, "exp": 100000 },
 		"pets": [
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/dboar.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/dboar.gif",
 				"slug": "dboar",
 				"prettyName": "dboar",
 				"aliases": ["boar"],
@@ -591,7 +591,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/deagle.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/deagle.gif",
 				"slug": "deagle",
 				"prettyName": "deagle",
 				"aliases": ["eagle", "murica", "america"],
@@ -599,7 +599,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/dfrog.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/dfrog.gif",
 				"slug": "dfrog",
 				"prettyName": "dfrog",
 				"aliases": ["frog", "toad", "dtoad"],
@@ -607,7 +607,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/dgorilla.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/dgorilla.gif",
 				"slug": "dgorilla",
 				"prettyName": "dgorilla",
 				"aliases": ["gorilla"],
@@ -615,7 +615,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/dwolf.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/dwolf.gif",
 				"slug": "dwolf",
 				"prettyName": "dwolf",
 				"aliases": ["wolf", "ddog"],
@@ -629,7 +629,7 @@
 		"huntbotAvailable": false,
 		"patreonNeeded": false,
 		"_rate": null,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/special.png",
+		"emoteSrc": "/assets/images/owo_images/tiers/special.png",
 		"prefix": "S",
 		"value": { "sell": 6000, "sac": 5000, "points": 500, "exp": 250 },
 		"pets": []
@@ -640,13 +640,13 @@
 		"huntbotAvailable": true,
 		"patreonNeeded": false,
 		"_rate": 0.000001,
-		"emoteSrc": "/src/assets/images/owo_images/tiers/hidden.gif",
+		"emoteSrc": "/assets/images/owo_images/tiers/hidden.gif",
 		"prefix": "H",
 		"value": { "sell": 1000000, "sac": 500000, "points": 500000, "exp": 300000 },
 		"pets": [
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/hkoala.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/hkoala.gif",
 				"slug": "hkoala",
 				"prettyName": "hkoala",
 				"aliases": ["koala"],
@@ -654,7 +654,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/hlizard.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/hlizard.gif",
 				"slug": "hlizard",
 				"prettyName": "hlizard",
 				"aliases": ["lizard"],
@@ -662,7 +662,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/hmonkey.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/hmonkey.gif",
 				"slug": "hmonkey",
 				"prettyName": "hmonkey",
 				"aliases": ["monkey"],
@@ -670,7 +670,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/hsnake.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/hsnake.gif",
 				"slug": "hsnake",
 				"prettyName": "hsnake",
 				"aliases": ["snake"],
@@ -678,7 +678,7 @@
 			},
 			{
 				"animated": true,
-				"emoteSrc": "/src/assets/images/owo_images/pets/hsquid.gif",
+				"emoteSrc": "/assets/images/owo_images/pets/hsquid.gif",
 				"slug": "hsquid",
 				"prettyName": "hsquid",
 				"aliases": ["octopus"],

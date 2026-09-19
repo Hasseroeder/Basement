@@ -14,7 +14,7 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
       <Navbar/>
       <div class="page-wrapper">
         <div class="page-wrapper__inner">
-          <EmbedMessage avatar="/src/assets/images/owo_images/avatars/owo_avatar.png" name="OwO" bot={true}>
+          <EmbedMessage avatar="/assets/images/owo_images/avatars/owo_avatar.png" name="OwO" bot={true}>
             <h3 class="header">HuntBot</h3>
             <div class="intro">
               <div class="intro__paragraph">
@@ -29,12 +29,12 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
                 To obtain more essence, use&nbsp;
                 <code class="intro__code">owo sacrifice &#123;animal&#125; &#123;count&#125;</code>.
               </div>
-              <img class="intro__portrait" src="/src/assets/images/owo_images/huntbot/robot.png" />
+              <img class="intro__portrait" src="/assets/images/owo_images/huntbot/robot.png" />
             </div>
             <div id="trait-grid" class="trait-grid"></div>
             <div id="roi-box" class="roi-box"></div>
           </EmbedMessage>
-          <EmbedMessage avatar="/src/assets/images/owo_images/avatars/neonutil.png" name="NeonUtil" bot={true}>
+          <EmbedMessage avatar="/assets/images/owo_images/avatars/neonutil.png" name="NeonUtil" bot={true}>
             <div class="tier-grid" draggable="false"></div>
             <div class="embed-footer-box">
               <div class="embed-footer-box__input-box">
@@ -44,10 +44,10 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
                 </label>
                 <div class="sac-toggles">
                   <button class="sac-toggles__button">
-                    <img src="/src/assets/images/owo_images/cowoncy.png" class="sac-toggles__emote" draggable="false" />
+                    <img src="/assets/images/owo_images/cowoncy.png" class="sac-toggles__emote" draggable="false" />
                   </button>
                   <button class="sac-toggles__button">
-                    <img src="/src/assets/images/owo_images/essence.gif" class="sac-toggles__emote" draggable="false" />
+                    <img src="/assets/images/owo_images/essence.gif" class="sac-toggles__emote" draggable="false" />
                   </button>
                 </div>
               </div>
@@ -87,7 +87,7 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
               </div>
             </div>
           </EmbedMessage>
-          <EmbedMessage avatar="/src/assets/images/owo_images/avatars/reactionbot.png" name="reaction bot" bot={true}>
+          <EmbedMessage avatar="/assets/images/owo_images/avatars/reactionbot.png" name="reaction bot" bot={true}>
             <div class="simming-buttons" id="simming-buttons">
               <button class="simming-buttons__button">(f)irst</button>
               <button class="simming-buttons__button">(p)rev</button>
@@ -99,12 +99,12 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
             <div class="simming-container">
               <div class="hb-container">
                 <div class="hb-container__text-line">
-                  <img src="/src/assets/images/owo_images/huntbot/robot.png" class="emote" />
+                  <img src="/assets/images/owo_images/huntbot/robot.png" class="emote" />
                   &nbsp;|&nbsp;
                   <code class="hb-container__code">BEEP BOOP</code>
                 </div>
                 <div class="hb-container__text-line">
-                  <img src="/src/assets/images/misc_images/blank.png" class="emote" />
+                  <img src="/assets/images/misc_images/blank.png" class="emote" />
                   &nbsp;|&nbsp;
                   <code class="hb-container__code">BOOP BEEP BEEP</code>
                 </div>
@@ -112,21 +112,21 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
                 <div class="hb-container__value-wrapper">
                   <details class="simming-details">
                     <summary class="simming-details__summary">
-                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron"/></div>
+                      <div><img src="/assets/images/misc_images/chevron.png" class="simming-details__chevron"/></div>
                       <div>Value</div>
                     </summary>
                     <div class="simming-details__content">
-                      <div><img src="/src/assets/images/owo_images/cowoncy.png" class="emote"/></div>
+                      <div><img src="/assets/images/owo_images/cowoncy.png" class="emote"/></div>
                       <div>Cowoncy:</div>
                       <code id="cowoncyHbValue">0</code>
-                      <div><img src="/src/assets/images/owo_images/essence.gif" class="emote" /></div>
+                      <div><img src="/assets/images/owo_images/essence.gif" class="emote" /></div>
                       <div>Essence:</div>
                       <code id="essenceHbValue">0</code>
                     </div>
                   </details>
                   <details class="simming-details">
                     <summary class="simming-details__summary">
-                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron"/></div>
+                      <div><img src="/assets/images/misc_images/chevron.png" class="simming-details__chevron"/></div>
                       <div>Expected Pets</div>
                       <div>Actual Pets</div>
                     </summary>
@@ -144,21 +144,21 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
                 <div class="zoo-container__value-wrapper">
                   <details class="simming-details">
                     <summary class="simming-details__summary">
-                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron" /></div>
+                      <div><img src="/assets/images/misc_images/chevron.png" class="simming-details__chevron" /></div>
                       <div>Value</div>
                     </summary>
                     <div class="simming-details__content">
-                      <div><img src="/src/assets/images/owo_images/cowoncy.png" class="emote" /></div>
+                      <div><img src="/assets/images/owo_images/cowoncy.png" class="emote" /></div>
                       <div>Cowoncy:</div>
                       <code id="cowoncyZooValue">0</code>
-                      <div><img src="/src/assets/images/owo_images/essence.gif" class="emote" /></div>
+                      <div><img src="/assets/images/owo_images/essence.gif" class="emote" /></div>
                       <div>Essence:</div>
                       <code id="essenceZooValue">0</code>
                     </div>
                   </details>
                   <details class="simming-details">
                     <summary class="simming-details__summary">
-                      <div><img src="/src/assets/images/misc_images/chevron.png" class="simming-details__chevron" /></div>
+                      <div><img src="/assets/images/misc_images/chevron.png" class="simming-details__chevron" /></div>
                       <div>Expected Pets</div>
                       <div>Actual Pets</div>
                     </summary>

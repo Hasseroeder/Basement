@@ -16,7 +16,7 @@ export async function loadAll(obj) {
 }
 
 export async function loadPets() {
-	const localPetPath = '/src/assets/images/owo_images/pets/'
+	const localPetPath = '/assets/images/owo_images/pets/'
 	const cdnPath = 'https://cdn.discordapp.com/emojis/'
 	const tiers = [
 		['common', 0, 'Common', localPetPath],
@@ -33,7 +33,12 @@ export async function loadPets() {
 		['special', 10, 'Special', cdnPath],
 		['patreon', 11, 'Patreon', cdnPath],
 		['cpatreon', 12, 'Custom', cdnPath],
-	].map(([slug, priority, prettyName, folderPath]) => ({ slug, priority, prettyName, folderPath }))
+	].map(([slug, priority, prettyName, folderPath]) => ({
+		slug,
+		priority,
+		prettyName,
+		folderPath,
+	}))
 
 	const response = await loadJson('https://neonutil.com/api/animals')
 	const tierSlugs = response.ranks

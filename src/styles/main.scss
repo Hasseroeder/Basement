@@ -18,22 +18,22 @@
 }
 
 body.tbh {
-	--cur-auto: url('/src/assets/images/tbhCursors/tbh-normal.cur'), auto;
-	--cur-default: url('/src/assets/images/tbhCursors/tbh-normal.cur'), default;
-	--cur-pointer: url('/src/assets/images/tbhCursors/tbh-link.cur'), pointer;
-	--cur-text: url('/src/assets/images/tbhCursors/tbh-text.cur'), text;
-	--cur-vertical-text: url('/src/assets/images/tbhCursors/tbh-text.cur'), vertical-text;
-	--cur-crosshair: url('/src/assets/images/tbhCursors/tbh-crosshair.cur'), crosshair;
-	--cur-move: url('/src/assets/images/tbhCursors/tbh-move.cur'), move;
-	--cur-grab: url('/src/assets/images/tbhCursors/tbh-crosshair.cur'), grab;
-	--cur-grabbing: url('/src/assets/images/tbhCursors/tbh-crosshair.cur'), grabbing;
-	--cur-not-allowed: url('/src/assets/images/tbhCursors/tbh-no.ani'), not-allowed;
-	--cur-wait: url('/src/assets/images/tbhCursors/tbh-working.ani'), wait;
-	--cur-progress: url('/src/assets/images/tbhCursors/tbh-busy.ani'), progress;
-	--cur-resize-ew: url('/src/assets/images/tbhCursors/tbh-horizontal.cur'), ew-resize;
-	--cur-resize-ns: url('/src/assets/images/tbhCursors/tbh-vertical.cur'), ns-resize;
-	--cur-resize-nesw: url('/src/assets/images/tbhCursors/tbh-nesw.cur'), nesw-resize;
-	--cur-resize-nwse: url('/src/assets/images/tbhCursors/tbh-nwse.cur'), nwse-resize;
+	--cur-auto: url('/assets/images/tbhCursors/tbh-normal.cur'), auto;
+	--cur-default: url('/assets/images/tbhCursors/tbh-normal.cur'), default;
+	--cur-pointer: url('/assets/images/tbhCursors/tbh-link.cur'), pointer;
+	--cur-text: url('/assets/images/tbhCursors/tbh-text.cur'), text;
+	--cur-vertical-text: url('/assets/images/tbhCursors/tbh-text.cur'), vertical-text;
+	--cur-crosshair: url('/assets/images/tbhCursors/tbh-crosshair.cur'), crosshair;
+	--cur-move: url('/assets/images/tbhCursors/tbh-move.cur'), move;
+	--cur-grab: url('/assets/images/tbhCursors/tbh-crosshair.cur'), grab;
+	--cur-grabbing: url('/assets/images/tbhCursors/tbh-crosshair.cur'), grabbing;
+	--cur-not-allowed: url('/assets/images/tbhCursors/tbh-no.ani'), not-allowed;
+	--cur-wait: url('/assets/images/tbhCursors/tbh-working.ani'), wait;
+	--cur-progress: url('/assets/images/tbhCursors/tbh-busy.ani'), progress;
+	--cur-resize-ew: url('/assets/images/tbhCursors/tbh-horizontal.cur'), ew-resize;
+	--cur-resize-ns: url('/assets/images/tbhCursors/tbh-vertical.cur'), ns-resize;
+	--cur-resize-nesw: url('/assets/images/tbhCursors/tbh-nesw.cur'), nesw-resize;
+	--cur-resize-nwse: url('/assets/images/tbhCursors/tbh-nwse.cur'), nwse-resize;
 }
 
 * {

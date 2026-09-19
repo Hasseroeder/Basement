@@ -14,7 +14,7 @@ const weaponAssets = {
 }
 
 export const weaponAssetUrl = (path) =>
-	weaponAssets[`../../../assets/images/${path}`] ?? `/src/assets/images/${path}`
+	weaponAssets[`../../../assets/images/${path}`] ?? `/assets/images/${path}`
 
 function getRarity(quality) {
 	const tiers = [

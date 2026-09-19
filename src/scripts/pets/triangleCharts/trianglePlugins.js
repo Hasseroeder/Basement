@@ -369,12 +369,12 @@ export const tooltipPluginFactory = (pluginConfig) => ({
 			const { chart, tooltip } = context
 			if (!plugin.tooltipEl) {
 				const statImageSources = [
-					'/src/assets/images/owo_images/battleEmojis/hp.png',
-					'/src/assets/images/owo_images/battleEmojis/str.png',
-					'/src/assets/images/owo_images/battleEmojis/pr.png',
-					'/src/assets/images/owo_images/battleEmojis/wp.png',
-					'/src/assets/images/owo_images/battleEmojis/mag.png',
-					'/src/assets/images/owo_images/battleEmojis/mr.png',
+					'/assets/images/owo_images/battleEmojis/hp.png',
+					'/assets/images/owo_images/battleEmojis/str.png',
+					'/assets/images/owo_images/battleEmojis/pr.png',
+					'/assets/images/owo_images/battleEmojis/wp.png',
+					'/assets/images/owo_images/battleEmojis/mag.png',
+					'/assets/images/owo_images/battleEmojis/mr.png',
 				]
 				plugin.tooltipEl = make('div', { className: 'triangle-tooltip' })
 
