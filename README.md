@@ -110,3 +110,5 @@ Following other attempts to write guides, this one also won't be able to be kept
     </table>
   </div>
 </div>
+
+#### TODO: add a small paragraph on the technical aspects of the project
