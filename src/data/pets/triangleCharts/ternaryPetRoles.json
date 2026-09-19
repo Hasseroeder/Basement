@@ -1,0 +1,454 @@
+{
+	"baseConfig": {
+		"additionalPadding": { "top": 0, "right": 0, "bottom": 65, "left": 0 }
+	},
+	"buttonConfigs": [
+		{
+			"type": "cycle",
+			"cycle": [
+				{
+					"nameTo": "Enable Pets",
+					"turnOn": ["labels"],
+					"turnOff": ["pets"]
+				},
+				{
+					"nameTo": "Enable Labels",
+					"turnOn": ["pets"],
+					"turnOff": ["labels"]
+				}
+			],
+			"image": {
+				"src": "/assets/images/misc_images/label.png"
+			}
+		},
+		{
+			"type": "cycle",
+			"cycle": [
+				{
+					"nameTo": "Disable Help",
+					"turnOn": ["help"]
+				},
+				{
+					"nameTo": "Enable Help",
+					"turnOff": ["help"]
+				}
+			],
+			"image": {
+				"src": "/assets/images/misc_images/help.png"
+			}
+		},
+		{
+			"image": {
+				"src": "/assets/images/misc_images/wikipedia-logo.png"
+			},
+			"prettyName": "Ternary Charts",
+			"type": "link",
+			"href": "https://en.wikipedia.org/wiki/Ternary_plot"
+		}
+	],
+	"moduleConfigs": [
+		{
+			"id": "default",
+			"pluginConfigs": [
+				{
+					"factory": "tooltipPluginFactory"
+				},
+				{
+					"factory": "triangleLinePluginFactory",
+					"data": { "groupName": "gridlines" }
+				},
+				{
+					"factory": "polygonPluginFactory",
+					"data": [
+						{
+							"coorArray": [
+								[100, 0],
+								[50, 50],
+								[40, 50],
+								[90, 0]
+							],
+							"color": "rgba(65, 172, 39, 0.25)"
+						},
+						{
+							"coorArray": [
+								[90, 0],
+								[40, 50],
+								[30, 50],
+								[80, 0]
+							],
+							"color": "rgba(99, 192, 187, 0.25)"
+						},
+						{
+							"coorArray": [
+								[100, 0],
+								[85, 15],
+								[55, 15],
+								[55, 0]
+							],
+							"color": "rgba(210, 210, 210, 0.25)"
+						},
+						{
+							"coorArray": [
+								[55, 0],
+								[55, 15],
+								[15, 15],
+								[15, 0]
+							],
+							"color": "rgba(218, 147, 214, 0.25)"
+						},
+						{
+							"coorArray": [
+								[15, 0],
+								[15, 15],
+								[0, 15],
+								[0, 0]
+							],
+							"color": "rgba(210, 210, 210, 0.25)"
+						},
+						{
+							"coorArray": [
+								[15, 15],
+								[15, 50],
+								[0, 50],
+								[0, 15]
+							],
+							"color": "rgba(99, 192, 187, 0.25)"
+						},
+						{
+							"coorArray": [
+								[15, 15],
+								[45, 15],
+								[15, 45]
+							],
+							"color": "rgba(76, 148, 255, 0.25)"
+						},
+						{
+							"coorArray": [
+								[45, 15],
+								[85, 15],
+								[50, 50],
+								[15, 50],
+								[15, 45]
+							],
+							"color": "rgba(160, 160, 160, 0.25)"
+						}
+					]
+				},
+				{
+					"factory": "advancedLabelPluginFactory",
+					"data": {
+						"groupName": "scaleTitles",
+						"labels": [
+							{
+								"id": "leftScaleTitle",
+								"imageConfig": {
+									"elements": [
+										{ "type": "text", "content": "% of stats in Power" },
+										{ "type": "gap", "px": 3 },
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/str.png"
+										},
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/mag.png"
+										}
+									],
+									"arrow": {
+										"length": 350,
+										"gap": 20,
+										"direction": "ltr"
+									}
+								},
+								"coor": [56, -12],
+								"rotation": -60
+							},
+							{
+								"id": "rightScaleTitle",
+								"imageConfig": {
+									"elements": [
+										{ "type": "text", "content": "% of stats in WP" },
+										{ "type": "gap", "px": 3 },
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/wp.png"
+										}
+									],
+									"arrow": {
+										"length": 350,
+										"gap": 20,
+										"direction": "ltr"
+									}
+								},
+								"coor": [56, 56],
+								"rotation": 60
+							},
+							{
+								"id": "bottomScaleTitle",
+								"imageConfig": {
+									"elements": [
+										{ "type": "text", "content": "% of stats in Tanking" },
+										{ "type": "gap", "px": 3 },
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/hp.png"
+										},
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/pr.png"
+										},
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/mr.png"
+										}
+									],
+									"arrow": {
+										"length": 350,
+										"gap": -20,
+										"direction": "rtl"
+									}
+								},
+								"coor": [-12, 56]
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": "pets",
+			"pluginConfigs": [
+				{
+					"factory": "dataSetPluginFactory",
+					"data": {
+						"dataSetConfigs": [
+							{
+								"attributeGroups": {
+									"left": [1, 4],
+									"right": [3],
+									"bottom": [0, 2, 5]
+								},
+								"imageSize": { "height": 22, "width": 22 },
+								"hoverRadius": 15,
+								"radius": 15,
+								"array": [
+									{
+										"image": "/assets/images/owo_images/pets/2023val_day.gif",
+										"name": "2023val_day",
+										"attributes": [7, 1, 1, 9, 1, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2023val_love.gif",
+										"name": "2023val_love",
+										"attributes": [9, 1, 1, 7, 1, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2023val_night.gif",
+										"name": "2023val_night",
+										"attributes": [12, 1, 1, 5, 1, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2023val_lovebunny.gif",
+										"name": "2023val_lovebunny",
+										"attributes": [8, 1, 1, 8, 1, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2023val_AngelOwO.gif",
+										"name": "2023val_AngelOwO",
+										"attributes": [2, 1, 1, 7, 8, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/gspider.gif",
+										"name": "gspider",
+										"attributes": [0, 19, 0, 1, 0, 0]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/gcamel.gif",
+										"name": "gcamel",
+										"attributes": [1, 0, 0, 5, 14, 0]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/gshrimp.gif",
+										"name": "gshrimp",
+										"attributes": [0, 0, 0, 10, 10, 0]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/gpanda.gif",
+										"name": "gpanda",
+										"attributes": [1, 10, 0, 9, 0, 0]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/gfox.gif",
+										"name": "fox",
+										"attributes": [4, 9, 1, 3, 1, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/slothbot.gif",
+										"name": "slothbot",
+										"attributes": [9, 0, 2, 8, 0, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/lobbot.gif",
+										"name": "lobbot",
+										"attributes": [14, 0, 3, 1, 0, 3]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/dinobot.gif",
+										"name": "dinobot",
+										"attributes": [13, 0, 2, 4, 0, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2024may_flower.gif",
+										"name": "2024may_flower",
+										"attributes": [15, 1, 1, 1, 1, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/dgorilla.gif",
+										"name": "dgorilla",
+										"attributes": [8, 7, 2, 1, 1, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2021specialhalloween.gif",
+										"name": "2021specialhalloween",
+										"attributes": [9, 6, 2, 1, 1, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/gsquid.gif",
+										"name": "gsquid",
+										"attributes": [3, 1, 2, 6, 6, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/gdeer.gif",
+										"name": "gdeer",
+										"attributes": [3, 1, 1, 3, 11, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/glion.gif",
+										"name": "glion",
+										"attributes": [7, 7, 2, 1, 1, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/glitchzebra.gif",
+										"name": "glitchzebra",
+										"attributes": [3, 1, 2, 8, 5, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/deagle.gif",
+										"name": "deagle",
+										"attributes": [2, 13, 2, 1, 1, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/bitter.png",
+										"name": "bitter",
+										"attributes": [1, 15, 1, 1, 1, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2022hal_vampire.gif",
+										"name": "2022hal_vampire",
+										"attributes": [2, 1, 1, 1, 14, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2024june_pastel.gif",
+										"name": "2024june_pastel",
+										"attributes": [11, 3, 3, 1, 1, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/snail.png",
+										"name": "snail",
+										"attributes": [8, 1, 2, 3, 5, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/dboar.gif",
+										"name": "dboar",
+										"attributes": [7, 5, 2, 4, 1, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/new_owo.png",
+										"name": "new_owo",
+										"attributes": [4, 1, 1, 4, 11, 1]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2024dec_christmasreindeer.gif",
+										"name": "2024dec_christmasreindeer",
+										"attributes": [7, 1, 1, 1, 9, 1]
+									}
+								]
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": "labels",
+			"pluginConfigs": [
+				{
+					"factory": "simpleLabelPluginFactory",
+					"data": {
+						"groupName": "polygonLabels",
+						"labels": [
+							{
+								"content": "Gem",
+								"coor": [70, 25],
+								"rotation": 60,
+								"color": "rgb(65, 172, 39)"
+							},
+							{
+								"content": "Gemlike",
+								"coor": [60, 25],
+								"rotation": 60,
+								"color": "rgb(99, 192, 187)"
+							},
+							{
+								"content": "Attacker",
+								"coor": [72.5, 7],
+								"rotation": -60,
+								"color": "rgb(210, 210, 210)"
+							},
+							{
+								"content": "Hybrid",
+								"coor": [35.5, 7],
+								"rotation": -60,
+								"color": "rgb(218, 147, 214)"
+							},
+							{
+								"content": "Pure",
+								"coor": [7.5, 7],
+								"rotation": -60,
+								"color": "rgb(210, 210, 210)"
+							},
+							{
+								"content": "WP Tank",
+								"coor": [7.5, 32.5],
+								"color": "rgb(99, 192, 187)"
+							},
+							{
+								"content": "WP Hybrid",
+								"coor": [23, 25.6],
+								"color": "rgb(76, 148, 255)"
+							},
+							{
+								"content": "Supporter",
+								"coor": [47.5, 32.5],
+								"color": "rgb(160, 160, 160)"
+							},
+							{
+								"content": "Useless",
+								"coor": [15, 67.5],
+								"color": "rgb(160, 160, 160)"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": "help",
+			"pluginConfigs": [
+				{
+					"factory": "cursorLine_with_ticksPluginFactory"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,245 @@
+{
+	"baseConfig": {
+		"additionalPadding": { "top": 0, "right": 0, "bottom": 65, "left": 0 }
+	},
+	"buttonConfigs": [
+		{
+			"type": "cycle",
+			"cycle": [
+				{
+					"nameTo": "Enable Pets",
+					"turnOn": ["labels"],
+					"turnOff": ["pets"]
+				},
+				{
+					"nameTo": "Enable Labels",
+					"turnOn": ["pets"],
+					"turnOff": ["labels"]
+				}
+			],
+			"image": {
+				"src": "/assets/images/misc_images/label.png"
+			}
+		},
+		{
+			"type": "cycle",
+			"cycle": [
+				{
+					"nameTo": "Disable Help",
+					"turnOn": ["help"]
+				},
+				{
+					"nameTo": "Enable Help",
+					"turnOff": ["help"]
+				}
+			],
+			"image": {
+				"src": "/assets/images/misc_images/help.png"
+			}
+		},
+		{
+			"image": {
+				"src": "/assets/images/misc_images/wikipedia-logo.png"
+			},
+			"prettyName": "Ternary Charts",
+			"type": "link",
+			"href": "https://en.wikipedia.org/wiki/Ternary_plot"
+		}
+	],
+	"moduleConfigs": [
+		{
+			"id": "default",
+			"pluginConfigs": [
+				{
+					"factory": "tooltipPluginFactory"
+				},
+				{
+					"factory": "triangleLinePluginFactory",
+					"data": { "groupName": "gridlines" }
+				},
+				{
+					"factory": "polygonPluginFactory",
+					"data": [
+						{
+							"coorArray": [
+								[70, 10],
+								[70, 15],
+								[45, 40],
+								[45, 20],
+								[55, 10]
+							],
+							"color": "rgba(40, 119, 194, 0.25)"
+						},
+						{
+							"coorArray": [
+								[45, 40],
+								[40, 45],
+								[15, 45],
+								[15, 25],
+								[20, 20],
+								[45, 20]
+							],
+							"color": "rgba(133, 106, 207, 0.25)"
+						}
+					]
+				},
+				{
+					"factory": "advancedLabelPluginFactory",
+					"data": {
+						"groupName": "scaleTitles",
+						"labels": [
+							{
+								"id": "leftScaleTitle",
+								"imageConfig": {
+									"elements": [
+										{ "type": "text", "content": "% of stats in Healing" },
+										{ "type": "gap", "px": 3 },
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/pr.png"
+										}
+									],
+									"arrow": {
+										"length": 350,
+										"gap": 20,
+										"direction": "ltr"
+									}
+								},
+								"coor": [56, -12],
+								"rotation": -60
+							},
+							{
+								"id": "rightScaleTitle",
+								"imageConfig": {
+									"elements": [
+										{ "type": "text", "content": "% of stats in Sustain" },
+										{ "type": "gap", "px": 3 },
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/wp.png"
+										},
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/mr.png"
+										}
+									],
+									"arrow": {
+										"length": 350,
+										"gap": 20,
+										"direction": "ltr"
+									}
+								},
+								"coor": [56, 56],
+								"rotation": 60
+							},
+							{
+								"id": "bottomScaleTitle",
+								"imageConfig": {
+									"elements": [
+										{ "type": "text", "content": "% of stats in Health" },
+										{ "type": "gap", "px": 3 },
+										{
+											"type": "image",
+											"source": "/assets/images/owo_images/battleEmojis/hp.png"
+										}
+									],
+									"arrow": {
+										"length": 350,
+										"gap": -20,
+										"direction": "rtl"
+									}
+								},
+								"coor": [-12, 56]
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": "pets",
+			"pluginConfigs": [
+				{
+					"factory": "dataSetPluginFactory",
+					"data": {
+						"dataSetConfigs": [
+							{
+								"attributeGroups": {
+									"left": [2],
+									"right": [3, 5],
+									"bottom": [0]
+								},
+								"imageSize": { "height": 22, "width": 22 },
+								"hoverRadius": 15,
+								"radius": 15,
+								"array": [
+									{
+										"image": "/assets/images/owo_images/pets/giraffbot.gif",
+										"name": "giraffbot",
+										"attributes": [12, 0, 4, 1, 0, 4]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2023halloween_capybara.gif",
+										"name": "2023halloween_capybara",
+										"attributes": [4, 1, 10, 1, 1, 3]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2024spring_easter.gif",
+										"name": "2024spring_easter",
+										"attributes": [4, 1, 11, 1, 1, 2]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/2024feb_fastelavn.gif",
+										"name": "2024feb_fastelavn",
+										"attributes": [4, 1, 9, 1, 1, 4]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/hedgebot.gif",
+										"name": "hedgebot",
+										"attributes": [7, 0, 6, 2, 0, 6]
+									},
+									{
+										"image": "/assets/images/owo_images/pets/accelpadoru.png",
+										"name": "accelpadoru",
+										"attributes": [5, 1, 9, 1, 1, 3]
+									}
+								]
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": "labels",
+			"pluginConfigs": [
+				{
+					"factory": "simpleLabelPluginFactory",
+					"data": {
+						"groupName": "polygonLabels",
+						"labels": [
+							{
+								"content": "shielded",
+								"coor": [55, 20],
+								"color": "rgb(40, 119, 194)"
+							},
+							{
+								"content": "non-shielded",
+								"coor": [30, 32.5],
+								"color": "rgb(133, 106, 207)"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": "help",
+			"pluginConfigs": [
+				{
+					"factory": "cursorLine_with_ticksPluginFactory"
+				}
+			]
+		}
+	]
+}

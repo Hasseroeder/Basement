@@ -9,6 +9,8 @@ import {
 } from '@/src/utils/inputUtil.js'
 import { loadJson } from '@/src/utils/jsonUtil.js'
 import { getElement } from '@/src/utils/domUtil.js'
+import rawZooData from '@/src/data/huntbot/calculator/zoo.json'
+const rawZoo = rawZooData as RawTier[]
 
 type RawTier = {
 	readonly prettyName: string
@@ -176,7 +178,6 @@ const makePetCell = ({
 let patreon = false
 let isDragging = false
 
-const rawZoo: RawTier[] = await loadJson('/src/data/huntbot/calculator/zoo.json')
 const zoo = rawZoo
 	.filter((rawTier) => rawTier.huntbotAvailable)
 	.map((rawTier) => {
