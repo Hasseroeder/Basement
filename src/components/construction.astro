@@ -4,7 +4,6 @@ const images = import.meta.glob(
   { eager: true, import: "default" }
 );
 const imageList = Object.values(images);
-const randomImage = imageList[Math.floor(Math.random() * imageList.length)];
 ---
 <style>
   h3 {
@@ -24,8 +23,13 @@ const randomImage = imageList[Math.floor(Math.random() * imageList.length)];
     margin: 0 auto;
   }
 </style>
+<script  define:vars={{imageList}}>
+  const image = imageList[Math.floor(Math.random() * imageList.length)];
+  const imgEL = document.querySelector<HTMLImageElement>("#construction-gif");
+  if (imgEL) imgEL.src = image;
+</script>
 
 <div>
-  <img src={Object(randomImage).src}/>
+  <img id="construction-gif"/>
   <slot />
 </div>
