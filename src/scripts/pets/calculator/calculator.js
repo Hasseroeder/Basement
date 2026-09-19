@@ -392,7 +392,7 @@ function addAddEffects() {
 	const imgContainer = make('div', { className: 'replacement passive-emoji-wrapper' }, [
 		...effectIcons.map((name, i) =>
 			make('img', {
-				src: '/media/owo_images/battleEmojis/' + name,
+				src: '/assets/images/owo_images/battleEmojis/' + name,
 				style: { height: i == 6 ? '1.4rem' : '1.5rem' },
 				onclick: () => addEffect(i),
 			})
