@@ -1,26 +1,34 @@
-<style>
+<style lang="scss">
 nav {
 	display: flex;
 	align-items: center;
 	background-color: #333;
   padding: 0.5rem 1rem;
 }
+
 a {
 	color: lightgray;
   text-decoration: none;
   display:block;
   padding:0.5rem;
+  &:hover {
+    background-color: #555555;
+  }
 }
-a:hover {
-	background-color: #555555;
-}
+
 .menu {
   position: relative;
+  &:hover {
+    .sub-menu,
+    .sub-menu--grid {
+      visibility: visible;
+    }
+  }
 }
 
 .sub-menu {
 	visibility: hidden;
-	z-index: 100;
+	z-index: 5;
 	position: absolute;
 	display: flex;
 	flex-direction: column;
@@ -30,13 +38,49 @@ a:hover {
   box-shadow: 
     0.5rem 0.5rem #333, 
     -0.5rem 0.5rem #333;
-}
 
-.top-level{
-}
+  &--grid{
+    visibility: hidden;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: #333;
+    padding: 0 0.5rem 0.5rem;
+    display:grid;
+    z-index: 5;
+    position: absolute;
+    left: -3.5rem;
+    right: -3.5rem;
 
-.menu:hover .sub-menu {
-	visibility: visible;
+    &__item {
+      display: flex;
+      padding: 0.5rem;
+      position: relative;
+
+      &:hover .sub-menu--grid__tooltip {
+        visibility: visible;
+      }
+    }
+
+    &__tooltip {
+      border: 0.125rem outset #ccc;
+      background-color: #333;
+      color: lightgray;
+      position: absolute;
+      left: 90%;
+      z-index: 6;
+      pointer-events: none;
+      padding: 0 1rem;
+      width: max-content;
+      visibility: hidden;
+      align-content: center;
+      font-size: 0.75rem;
+      top: 0.5rem;
+      bottom: 0.5rem;
+    }
+
+    &__emote {
+      width: 100%;
+    }
+  }
 }
 </style>
 <nav>
@@ -62,8 +106,115 @@ a:hover {
   </div>
   <div class="menu">
     <a href="/weapon">Weapon</a>
-    <div class="sub-menu">
-      <a href="/weapon/calculator">└ Calculator</a>
+    <div class="sub-menu--grid">
+      <a href="/weapon#fists" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_fists.png">
+        <div class="sub-menu--grid__tooltip">Physically Attacking</div>
+      </a>
+      <a href="/weapon#sword" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_sword.png">
+        <div class="sub-menu--grid__tooltip">Great Sword<br>101</div>
+      </a>
+      <a href="/weapon#hstaff" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_hstaff.png">
+        <div class="sub-menu--grid__tooltip">Healing Staff<br>102</div>
+      </a>
+      <a href="/weapon#bow" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_bow.png">
+        <div class="sub-menu--grid__tooltip">Bow<br>103</div>
+      </a>
+      <a href="/weapon#rune" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_rune.png">
+        <div class="sub-menu--grid__tooltip">Rune of the Forgotten<br>104</div>
+      </a>
+      <a href="/weapon#shield" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_shield.png">
+        <div class="sub-menu--grid__tooltip">Defender's Aegis<br>105</div>
+      </a>
+      <a href="/weapon#orb" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_orb.png">
+        <div class="sub-menu--grid__tooltip">Orb of Potency<br>106</div>
+      </a>
+      <a href="/weapon#vstaff" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_vstaff.png">
+        <div class="sub-menu--grid__tooltip">Vampiric Staff<br>107</div>
+      </a>
+      <a href="/weapon#dagger" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_dagger.png">
+        <div class="sub-menu--grid__tooltip">Poison Dagger<br>108</div>
+      </a>
+      <a href="/weapon#wand" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_wand.png">
+        <div class="sub-menu--grid__tooltip">Wand of Absorption<br>109</div>
+      </a>
+      <a href="/weapon#fstaff" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_fstaff.png">
+        <div class="sub-menu--grid__tooltip">Flame Staff<br>110</div>
+      </a>
+      <a href="/weapon#estaff" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_estaff.png">
+        <div class="sub-menu--grid__tooltip">Energy Staff<br>111</div>
+      </a>
+      <a href="/weapon#sstaff" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_sstaff.png">
+        <div class="sub-menu--grid__tooltip">Spirit Staff<br>112</div>
+      </a>
+      <a href="/weapon#scepter" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_scepter.png">
+        <div class="sub-menu--grid__tooltip">Arcane Scepter<br>113</div>
+      </a>
+      <a href="/weapon#rstaff" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_rstaff.png">
+        <div class="sub-menu--grid__tooltip">Resurrection Staff<br>114</div>
+      </a>
+      <a href="/weapon#axe" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_axe.png">
+        <div class="sub-menu--grid__tooltip">Glacial Axe<br>115</div>
+      </a>
+      <a href="/weapon#banner" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_banner.png">
+        <div class="sub-menu--grid__tooltip">Vanguard's Banner<br>116</div>
+      </a>
+      <a href="/weapon#scythe" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_scythe.png">
+        <div class="sub-menu--grid__tooltip">Culling Scythe<br>117</div>
+      </a>
+      <a href="/weapon#crune" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_crune.png">
+        <div class="sub-menu--grid__tooltip">Rune of Celebration<br>118</div>
+      </a>
+      <a href="/weapon#pstaff" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_pstaff.png">
+        <div class="sub-menu--grid__tooltip">Staff of Purity<br>119</div>
+      </a>
+      <a href="/weapon#lscythe" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_lscythe.png">
+        <div class="sub-menu--grid__tooltip">Leeching Scythe<br>120</div>
+      </a>
+      <a href="/weapon#ffish" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_ffish.png">
+        <div class="sub-menu--grid__tooltip">Foul Fish<br>121</div>
+      </a>
+      <a href="/weapon#lrune" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_lrune.png">
+        <div class="sub-menu--grid__tooltip">Rune of Luck<br>122</div>
+      </a>
+      <a href="/weapon#cstaff" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_cstaff.png">
+        <div class="sub-menu--grid__tooltip">Staff of Corruption<br>123</div>
+      </a>
+      <a href="/weapon#stithe" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_stithe.png">
+        <div class="sub-menu--grid__tooltip">Soul Tithe<br>124</div>
+      </a>
+      <a href="/weapon#bhstaff" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_bhstaff.png">
+        <div class="sub-menu--grid__tooltip">Briar-Heart Staff<br>125</div>
+      </a>
+      <a href="/weapon#aedge" class="sub-menu--grid__item">
+        <img class="sub-menu--grid__emote" src="/src/assets/images/owo_images/battleEmojis/f_aedge.png">
+        <div class="sub-menu--grid__tooltip">Arbiter's Edge<br>126</div>
+      </a>
     </div>
   </div>
   <div class="menu">
