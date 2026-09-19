@@ -1,13 +1,14 @@
-<footer id="blinkies"></footer>
-<style is:global>
-	#blinkies {
+<footer id="blinkies" class="blinkies"></footer>
+<style is:global lang="scss">
+	.blinkies {
 		margin: 1rem 0rem;
 		gap: 0.5rem;
 		display: flex;
-	}
-	#blinkies img {
-		width: 100%;
-		display: block;
+		
+		&__blinkie {
+			width: 100%;
+			display: block;
+		}
 	}
 </style>
 <script>
@@ -53,7 +54,7 @@
 
 		const img = document.createElement('img')
 		img.src = '/src/assets/images/blinkies/' + blinkie.file
-
+		img.className = "blinkies__blinkie";
 		a.appendChild(img)
 		footer.appendChild(a)
 	}
