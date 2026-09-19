@@ -1,9 +1,18 @@
 ---
-const images = import.meta.glob(
-  "@/assets/images/construction/*.gif",
+const images: Record<string, imageObj> = import.meta.glob(
+  "/src/assets/images/construction/*.gif",
   { eager: true, import: "default" }
 );
+
+type imageObj = {
+  src: string;
+  width: number;
+  height: number;
+  format: string;
+}
+
 const imageList = Object.values(images);
+const srcList = imageList.map((image) => image.src)
 ---
 <style>
   h3 {
@@ -23,13 +32,12 @@ const imageList = Object.values(images);
     margin: 0 auto;
   }
 </style>
-<script  define:vars={{imageList}}>
-  const image = imageList[Math.floor(Math.random() * imageList.length)];
-  const imgEL = document.querySelector<HTMLImageElement>("#construction-gif");
-  if (imgEL) imgEL.src = image;
-</script>
-
 <div>
   <img id="construction-gif"/>
   <slot />
 </div>
+<script  define:vars={{srcList}}>
+  const src = srcList[Math.floor(Math.random() * srcList.length)];
+  const imgEl = document.querySelector("#construction-gif");
+  if (imgEl) imgEl.src = src;
+</script>
