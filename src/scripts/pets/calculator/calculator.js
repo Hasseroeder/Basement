@@ -145,7 +145,7 @@ function outputPetContainerSEARCH() {
 	textInput.addEventListener('blur', () => (suggestionWrapper.style.display = 'none'))
 
 	petContainer.append(textInput, suggestionWrapper)
-	if (chosenPet && chosenPet.name) outputSmallPetContainer(chosenPet)
+	if (chosenPet && chosenPet.slug) outputSmallPetContainer(chosenPet)
 	textInput.focus()
 }
 
@@ -182,7 +182,7 @@ function renderSuggestions(query, suggestions) {
 				'div',
 				{
 					className: 'suggestion',
-					textContent: pet.name,
+					textContent: pet.prettyName,
 					onmousedown: (_) => applyItem(i, suggestions),
 				},
 				[
@@ -205,7 +205,7 @@ function outputSmallPetContainer(pet) {
 			style: { width: '3rem' },
 		}),
 		make('div', {
-			innerHTML: pet.name,
+			innerHTML: pet.prettyName,
 			className: 'discord-code light name',
 		}),
 		pet.aliases &&
@@ -250,7 +250,7 @@ async function applyItem(i, suggestions) {
 	chosenPet = suggestedPets[i] ?? suggestedPets[0]
 	suggestedPets = []
 
-	if (!chosenPet || !chosenPet.name) return
+	if (!chosenPet || !chosenPet.slug) return
 	petToStats(chosenPet)
 	outputSmallPetContainer(chosenPet)
 }
@@ -362,7 +362,7 @@ function displayPet(pet) {
 			className: 'one-rem',
 		}),
 		make('code', {
-			textContent: pet.name,
+			textContent: pet.prettyName,
 			className: 'discord-code pet-name',
 		}),
 		make('span', {
