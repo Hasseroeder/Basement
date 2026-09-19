@@ -23,7 +23,7 @@ export async function loadPets() {
 		{ priority: 1, slug: 'uncommon', prettyName: 'Uncommon', folderPath: localPetPath },
 		{ priority: 2, slug: 'rare', prettyName: 'Rare', folderPath: localPetPath },
 		{ priority: 3, slug: 'epic', prettyName: 'Epic', folderPath: localPetPath },
-		{ priority: 4, slug: 'mythic', prettyName: 'Mythic', folderPath: localPetPath },
+		{ priority: 4, slug: 'mythical', prettyName: 'Mythic', folderPath: localPetPath },
 		{ priority: 5, slug: 'legendary', prettyName: 'Legendary', folderPath: cdnPath },
 		{ priority: 6, slug: 'gem', prettyName: 'Gem', folderPath: cdnPath },
 		{ priority: 7, slug: 'bot', prettyName: 'Bot', folderPath: cdnPath },
@@ -39,7 +39,7 @@ export async function loadPets() {
 	const tierSlugs = response.ranks
 	return response.data.map((rawPet) => {
 		const animated = Boolean(rawPet[0])
-		const tier = tiers.find((tier) => tier.slug == tierSlugs[rawPet[5]])
+		const tier = tiers.find((tier) => tier.slug === tierSlugs[rawPet[5]])
 		const emoteSrc = tier.folderPath + rawPet[2] + (animated ? '.gif' : '.png')
 		return {
 			animated, //bool
