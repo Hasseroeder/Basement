@@ -1,44 +1,47 @@
-.pet-name {
-	font-size: 0.7rem;
-	line-height: unset;
-	width: unset;
-	background-color: #191919;
-}
+.pet-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(20, 1.25rem);
+	grid-auto-flow: column;
 
-.one-rem {
-	width: 1rem;
-	height: 1rem;
-}
+	&__cell {
+		display: flex;
+		align-items: center;
+		font-size: 0.75rem;
+		gap: 0.1rem;
+		width: 0rem; /* this is probably not the canonical way to prevent dynamic scaling... */
 
-.pet-row:hover .tooltip {
-	visibility: visible;
-}
-
-.pet-row {
-	display: flex;
-	align-items: center;
-	font-size: 0.75rem;
-	height: 1.25rem;
-}
-.tooltip-parent {
-	position: relative;
-	display: flex;
-	align-items: center;
-	gap: 0.1rem;
-	width: min-content;
-}
-.tooltip-parent .tooltip {
-	z-index: 100;
-	width: max-content;
-	padding: 0.1rem;
-	pointer-events: none;
-	border: 2.5px solid rgb(25, 25, 25);
-	font-size: 0.7rem;
-	border-radius: 0.2rem;
-	visibility: hidden;
-	background-color: #333;
-	position: absolute;
-	left: calc(100% + 0.1rem);
+		&:hover .pet-grid__aliases-tooltip {
+			visibility: visible;
+		}
+	}
+	&__img {
+		height: 90%;
+	}
+	&__name {
+		font-size: 0.7rem;
+		background-color: #202020;
+		padding: 0.2em;
+		border-radius: 3px;
+		position: relative;
+	}
+	&__aliases-tooltip {
+		z-index: 1;
+		width: max-content;
+		padding: 0 0.1rem;
+		display: flex;
+		align-items: center;
+		pointer-events: none;
+		border: 2.5px solid #202020;
+		border-radius: 0.2rem;
+		visibility: hidden;
+		background-color: #333;
+		position: absolute;
+		left: 100%;
+		margin-left: 0.1rem;
+		top: 0;
+		bottom: 0;
+	}
 }
 
 .level-wrapper {
@@ -58,7 +61,7 @@
 	color: lightgray;
 }
 
-.pet-button {
+.mode-switch-button {
 	margin: 1rem 0;
 	font-size: 0.75rem;
 	border-radius: 10rem;
@@ -70,21 +73,15 @@
 .arrow-before {
 	flex: 1;
 	position: relative;
-}
 
-.arrow-before::before {
-	content: '→';
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	color: rgb(225, 225, 225);
-	left: 0rem;
-}
-
-.passive-remove-btn {
-	font-size: 0.6rem;
-	width: 1.5rem;
-	min-width: 1.5rem;
+	&::before {
+		content: '→';
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		color: rgb(225, 225, 225);
+		left: 0rem;
+	}
 }
 
 .pet-output-wrapper {
@@ -97,17 +94,17 @@
 	flex-direction: column;
 	gap: 0.3rem;
 	background: #393939;
-}
 
-.pet-output-wrapper .name {
-	font-weight: bold;
-	width: max-content;
-}
+	.name {
+		font-weight: bold;
+		width: max-content;
+	}
 
-.pet-output-wrapper .alias {
-	font-size: 0.75rem;
-	width: fit-content;
-	text-align: start;
+	.alias {
+		font-size: 0.75rem;
+		width: fit-content;
+		text-align: start;
+	}
 }
 
 .suggestions {
@@ -125,34 +122,19 @@
 	gap: 0.35rem;
 	align-items: baseline;
 	font-size: 0.75rem;
-}
 
-.suggestion .alias {
-	font-size: 0.6rem;
-}
+	&:hover,
+	&.active {
+		background: #555;
+	}
 
-.suggestion:hover,
-.suggestion.active {
-	background: #555;
+	.alias {
+		font-size: 0.6rem;
+	}
 }
 
 .suggestions > .suggestion:not(:last-child) {
 	border-bottom: 1px dashed #666;
-}
-
-.column {
-	display: flex;
-	flex: 1;
-	flex-direction: column;
-}
-
-.passive-wrapper:hover .original {
-	transform: translateY(-150%);
-	opacity: 0;
-}
-.passive-wrapper:hover .replacement {
-	transform: translateY(0);
-	opacity: 1;
 }
 
 .passive-wrapper {
@@ -171,6 +153,35 @@
 	align-items: center;
 	border-right: 2px solid #202020;
 	border-bottom: 2px solid #202020;
+
+	&:hover {
+		.original {
+			transform: translateY(-150%);
+			opacity: 0;
+		}
+		.replacement {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+
+	.original {
+		position: absolute;
+		width: inherit;
+		font-family: monospace;
+		font-size: 0.8rem;
+		text-align: center;
+		transition: 0.1s ease;
+	}
+	.replacement {
+		transform: translateY(150%);
+		opacity: 0;
+		transition: 0.1s ease;
+		width: inherit;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }
 
 .passive-image-wrapper {
@@ -184,14 +195,14 @@
 .pet-input-grid {
 	display: grid;
 	grid-template-columns: 8rem 8rem;
-}
 
-.pet-input-grid > div {
-	display: flex;
-	align-items: center;
-	gap: 0.3rem;
-	height: 1.5rem;
-	padding-right: 0.5rem;
+	> div {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		height: 1.5rem;
+		padding-right: 0.5rem;
+	}
 }
 
 .stat-title {
@@ -226,24 +237,6 @@
 
 #effectContainer {
 	flex: 1;
-}
-
-.original {
-	position: absolute;
-	width: inherit;
-	font-family: monospace;
-	font-size: 0.8rem;
-	text-align: center;
-	transition: 0.1s ease;
-}
-.replacement {
-	transform: translateY(150%);
-	opacity: 0;
-	transition: 0.1s ease;
-	width: inherit;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 .level-wrapper,
@@ -310,7 +303,7 @@ input[type='range'] {
 	width: unset;
 }
 
-#petContainer {
+.pet-container {
 	display: flex;
 	flex-direction: column;
 }
@@ -318,13 +311,13 @@ input[type='range'] {
 .nav-button-wrapper {
 	display: flex;
 	gap: 1rem;
-}
 
-.nav-button-wrapper > button {
-	margin: 1rem 0;
-	border-radius: 10rem;
-	border-color: #909090;
-	flex: 1;
+	> button {
+		margin: 1rem 0;
+		border-radius: 10rem;
+		border-color: #909090;
+		flex: 1;
+	}
 }
 
 .listening-wrapper {

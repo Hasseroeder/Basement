@@ -1,10 +1,10 @@
 import { loadPets } from '/src/utils/jsonUtil.js'
 import { make } from '/src/utils/injectionUtil.js'
 
-const petContainer = document.getElementById('petContainer')
+const petContainer = document.getElementById('pet-container')
 const effectContainer = document.getElementById('effectContainer')
 
-const petButton = document.querySelector('.pet-button')
+const modeSwitchButton = document.querySelector('#mode-switch-button')
 const statSpan = document.getElementById('statSpan')
 
 const inputLvl = document.querySelector('.input-lvl')
@@ -16,9 +16,7 @@ const outputs = Array.from(document.querySelectorAll('.my-outputs'))
 
 //for Mode: matching pets
 let showPets = true
-let page = 0
-let columns = []
-const maxDisplayColumns = 3
+let pageIdx = 0
 
 let petArray
 
@@ -91,41 +89,44 @@ function outputPetContainer() {
 }
 
 function outputPetContainerMATCHING() {
-	columns = [make('div', { className: 'column' })]
-	page = 0
-	let headersCreated = 0
-	petArray.forEach((_, i) => {
-		if (i === 0 || petArray[i].tier != petArray[i - 1].tier) {
-			headersCreated++
-			columns.at(-1).append(createHeader(petArray[i].tier.prettyName))
-		}
-		if ((i + headersCreated) % 20 == 0) {
-			columns.push(make('div', { className: 'column' }))
-		}
-		columns.at(-1).append(displayPet(petArray[i]))
+	const petGrid = make('div', {
+		className: 'pet-grid',
 	})
-
 	petContainer.append(
-		make('div', { style: { display: 'flex' } }),
+		petGrid,
 		make('div', { className: 'nav-button-wrapper' }, [
 			make('button', {
 				textContent: '<',
 				tabIndex: '9',
-				onclick: () => swapPages(page - 1),
+				onclick: () => swapRenderedPage(false),
 			}),
 			make('button', {
 				textContent: '>',
 				tabIndex: '10',
-				onclick: () => swapPages(page + 1),
+				onclick: () => swapRenderedPage(true),
 			}),
 		])
 	)
 
-	function swapPages(newPage) {
-		page = Math.min(Math.max(newPage, 0), Math.ceil(columns.length / maxDisplayColumns) - 1)
-		displayColumns()
+	const childrenEls = []
+	petArray.forEach((pet, i) => {
+		if (i === 0 || pet.tier !== petArray[i - 1].tier) {
+			childrenEls.push(renderHeader(pet.tier.prettyName))
+		}
+		childrenEls.push(renderPet(pet))
+	})
+
+	swapRenderedPage(false)
+	function swapRenderedPage(direction) {
+		direction ? pageIdx++ : pageIdx--
+		const pageSize = 60
+		pageIdx = Math.max(pageIdx, 0)
+		pageIdx = Math.min(pageIdx, Math.floor(childrenEls.length / pageSize))
+		const startIdx = pageIdx * pageSize
+		const endIdx = startIdx + pageSize
+
+		petGrid.replaceChildren(...childrenEls.slice(startIdx, endIdx))
 	}
-	displayColumns()
 }
 
 function outputPetContainerSEARCH() {
@@ -148,11 +149,6 @@ function outputPetContainerSEARCH() {
 	if (chosenPet && chosenPet.slug) outputSmallPetContainer(chosenPet)
 	textInput.focus()
 }
-
-const displayColumns = () =>
-	petContainer.firstChild.replaceChildren(
-		...columns.slice(page * maxDisplayColumns, page * maxDisplayColumns + maxDisplayColumns)
-	)
 
 function onInput(textInput, suggestions) {
 	const q = textInput.value.trim().toLowerCase()
@@ -269,7 +265,7 @@ function updateInternalStats() {
 	}
 
 	// buff types are this order: hp, str, pr,  wp,  mag, mr, rune
-	// internal stats are this;   hp, wp,  str, mag, pr,  mr
+	// internal stats are this:   hp, wp,  str, mag, pr,  mr
 	const statOrder = [0, 2, 4, 1, 3, 5]
 	const extraStats = [0, 0, 0, 0, 0, 0]
 
@@ -290,6 +286,7 @@ function updateInternalStats() {
 	extraStats.forEach((stat, i) => (internalStats[i] += stat))
 
 	updateOutsideStats()
+	updateOutputs()
 }
 
 function getBoost(type, quality) {
@@ -298,7 +295,7 @@ function getBoost(type, quality) {
 	return boost
 }
 
-function updateOutsideStats() {
+const updateOutsideStats = () =>
 	outsideStats.forEach((_, i) => {
 		if (i <= 3) {
 			outsideStats[i] = internalStats[i] // hp, str, wp, mag
@@ -310,15 +307,12 @@ function updateOutsideStats() {
 			outsideStats[i] = internalStats[i - 4] //ipr imr
 		}
 	})
-	updateOutputs()
-}
 
-function updateOutputs() {
+const updateOutputs = () =>
 	outputs.forEach((output, i) => {
 		output.textContent =
 			i == 4 || i == 5 ? (outsideStats[i] * 100).toFixed(1) + '%' : outsideStats[i].toFixed(0)
 	})
-}
 
 function updateStats() {
 	inputs.forEach((input, i) => (stats[i] = input?.value))
@@ -355,28 +349,28 @@ function setLevelTo(value) {
 	updateInternalStats()
 }
 
-function displayPet(pet) {
-	const children = [
+const renderPet = (pet) =>
+	make('div', { className: 'pet-grid__cell' }, [
 		make('img', {
 			src: pet.emoteSrc,
-			className: 'one-rem',
+			className: 'pet-grid__img',
 		}),
-		make('code', {
-			textContent: pet.prettyName,
-			className: 'discord-code pet-name',
-		}),
-		make('span', {
-			innerHTML: pet.aliases.length ? pet.aliases.join(', ') : 'no Alias',
-			className: 'tooltip',
-		}),
-	]
-
-	return make('div', { className: 'pet-row' }, [
-		make('div', { className: 'tooltip-parent' }, children),
+		make(
+			'code',
+			{
+				textContent: pet.prettyName,
+				className: 'pet-grid__name',
+			},
+			[
+				make('span', {
+					innerHTML: pet.aliases.length ? pet.aliases.join(', ') : 'no Alias',
+					className: 'pet-grid__aliases-tooltip',
+				}),
+			]
+		),
 	])
-}
 
-const createHeader = (string) => make('div', { textContent: string, className: 'pet-row' })
+const renderHeader = (string) => make('div', { textContent: string, className: 'pet-grid__cell' })
 
 function addAddEffects() {
 	const effectIcons = [
@@ -425,7 +419,7 @@ function addEffect(type) {
 	function updateValue(value) {
 		effect.quality = +value
 		inputs.forEach((i) => (i.value = +value))
-		imagechildren[0].src = `/media/owo_images/battleEmojis/${getImageForEffect(effect)}.png`
+		imagechildren[0].src = `/assets/images/owo_images/battleEmojis/${getImageForEffect(effect)}.png`
 		imagechildren[1].textContent = boostToString(effect)
 		updateInternalStats()
 	}
@@ -493,9 +487,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	inputs[0].focus()
 
-	petButton.addEventListener('click', function () {
+	modeSwitchButton.addEventListener('click', function () {
 		showPets = !showPets
-		petButton.textContent = showPets ? 'Mode: Matching Pets' : 'Mode:   Search Pets'
+		modeSwitchButton.textContent = showPets ? 'Mode: Matching Pets' : 'Mode:   Search Pets'
 		updatePetArray()
 	})
 
