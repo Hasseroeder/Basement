@@ -1,18 +1,20 @@
 import { loadPets } from '/src/utils/jsonUtil.js'
 import { make } from '/src/utils/injectionUtil.js'
 
-const petContainer = document.getElementById('pet-container')
-const effectContainer = document.getElementById('effectContainer')
+const modeContainer = document.getElementById('mode-container')
+const effectContainer = document.getElementById('effect-container')
 
 const modeSwitchButton = document.querySelector('#mode-switch-button')
-const statSpan = document.getElementById('statSpan')
+const statSpan = document.querySelector('#stat-span')
 
 const inputLvl = document.querySelector('.input-lvl')
-const levelWrapper = document.querySelector('#level-wrapper')
-const sliderLvl = document.getElementById('sliderLvl')
+const levelWrapper = document.querySelector('#level-wrapper__number-wrapper')
+const sliderLvl = document.getElementById('level-wrapper__slider')
 
-const inputs = Array.from(document.querySelectorAll('.my-inputs'))
-const outputs = Array.from(document.querySelectorAll('.my-outputs'))
+const inputs = Array.from(document.querySelectorAll('.pet-input-grid__input'))
+const outputs = Array.from(
+	document.querySelectorAll('.pet-input-grid__output, .pet-output-grid__output')
+)
 
 //for Mode: matching pets
 let showPets = true
@@ -80,10 +82,10 @@ const sortPets = (array) =>
 
 function outputPetContainer() {
 	if (showPets) {
-		petContainer.innerHTML = ''
+		modeContainer.innerHTML = ''
 		outputPetContainerMATCHING()
 	} else if (!document.getElementById('textInput')) {
-		petContainer.innerHTML = ''
+		modeContainer.innerHTML = ''
 		outputPetContainerSEARCH()
 	}
 }
@@ -92,15 +94,17 @@ function outputPetContainerMATCHING() {
 	const petGrid = make('div', {
 		className: 'pet-grid',
 	})
-	petContainer.append(
+	modeContainer.append(
 		petGrid,
-		make('div', { className: 'nav-button-wrapper' }, [
+		make('div', { className: 'nav-buttons--pet-grid' }, [
 			make('button', {
+				className: 'nav-buttons--pet-grid__button',
 				textContent: '<',
 				tabIndex: '9',
 				onclick: () => swapRenderedPage(false),
 			}),
 			make('button', {
+				className: 'nav-buttons--pet-grid__button',
 				textContent: '>',
 				tabIndex: '10',
 				onclick: () => swapRenderedPage(true),
@@ -119,12 +123,11 @@ function outputPetContainerMATCHING() {
 	swapRenderedPage(false)
 	function swapRenderedPage(direction) {
 		direction ? pageIdx++ : pageIdx--
-		const pageSize = 60
+		const pageSize = 30
 		pageIdx = Math.max(pageIdx, 0)
-		pageIdx = Math.min(pageIdx, Math.floor(childrenEls.length / pageSize))
+		pageIdx = Math.min(pageIdx, Math.floor((childrenEls.length - 1) / pageSize))
 		const startIdx = pageIdx * pageSize
 		const endIdx = startIdx + pageSize
-
 		petGrid.replaceChildren(...childrenEls.slice(startIdx, endIdx))
 	}
 }
@@ -133,7 +136,7 @@ function outputPetContainerSEARCH() {
 	const textInput = make('input', {
 		id: 'textInput',
 		tabIndex: '9',
-		className: 'discord-code search-bar',
+		className: 'search-bar',
 		autocomplete: 'off',
 		placeholder: 'type pet here...',
 	})
@@ -145,7 +148,7 @@ function outputPetContainerSEARCH() {
 	textInput.addEventListener('keydown', (e) => onKeyDown(e, textInput, suggestionWrapper))
 	textInput.addEventListener('blur', () => (suggestionWrapper.style.display = 'none'))
 
-	petContainer.append(textInput, suggestionWrapper)
+	modeContainer.append(textInput, suggestionWrapper)
 	if (chosenPet && chosenPet.slug) outputSmallPetContainer(chosenPet)
 	textInput.focus()
 }
@@ -177,13 +180,13 @@ function renderSuggestions(query, suggestions) {
 			make(
 				'div',
 				{
-					className: 'suggestion',
+					className: 'suggestions__suggestion',
 					textContent: pet.prettyName,
 					onmousedown: (_) => applyItem(i, suggestions),
 				},
 				[
 					make('div', {
-						className: 'alias',
+						className: 'suggestions__pet-aliases',
 						innerHTML: aliases.join(', '),
 					}),
 				]
@@ -193,35 +196,35 @@ function renderSuggestions(query, suggestions) {
 }
 
 function outputSmallPetContainer(pet) {
-	document.getElementById('petOutput')?.remove()
-
 	const children = [
 		make('img', {
 			src: pet.emoteSrc,
-			style: { width: '3rem' },
+			className: 'pet-output__portrait',
 		}),
 		make('div', {
 			innerHTML: pet.prettyName,
-			className: 'discord-code light name',
+			className: 'pet-output__name',
 		}),
-		pet.aliases &&
-			pet.aliases[0] &&
-			make('div', {
-				innerHTML: 'Aliases: ' + pet.aliases.join(', '),
-				className: 'discord-code light alias',
-			}),
-	].filter(Boolean)
+		make('div', {
+			innerHTML: 'Aliases: ' + (pet.aliases[0] ? pet.aliases.join(', ') : 'none'),
+			className: 'pet-output__aliases',
+		}),
+	]
 
-	petContainer.append(
-		make(
-			'div',
-			{
-				className: 'pet-output-wrapper',
-				id: 'petOutput',
-			},
-			children
+	const oldOutput = document.getElementById('pet-output')
+	if (oldOutput) oldOutput.replaceChildren(...children)
+	else {
+		modeContainer.append(
+			make(
+				'div',
+				{
+					className: 'pet-output',
+					id: 'pet-output',
+				},
+				children
+			)
 		)
-	)
+	}
 }
 
 async function onKeyDown(e, textInput, suggestions) {
@@ -382,8 +385,11 @@ function addAddEffects() {
 		'f_mr.png',
 		'f_rune.png',
 	]
-	const text = make('div', { className: 'original', textContent: 'add effect' })
-	const imgContainer = make('div', { className: 'replacement passive-emoji-wrapper' }, [
+	const text = make('div', {
+		className: 'passive-wrapper--adding__original',
+		textContent: 'add effect',
+	})
+	const imgContainer = make('div', { className: 'passive-wrapper--adding__replacement' }, [
 		...effectIcons.map((name, i) =>
 			make('img', {
 				src: '/assets/images/owo_images/battleEmojis/' + name,
@@ -393,39 +399,55 @@ function addAddEffects() {
 		),
 	])
 
-	effectContainer.append(make('div', { className: 'passive-wrapper' }, [text, imgContainer]))
+	effectContainer.append(
+		make('div', { className: 'passive-wrapper--adding' }, [text, imgContainer])
+	)
 }
 
 function addEffect(type) {
-	const effect = { type: type }
+	const effect = { type: type, quality: 100 }
 	effects.push(effect)
 
-	const inputs = [
-		make('input', {
-			type: 'number',
-			className: 'passive-number-input no-arrows',
-			min: 0,
-			max: 100,
-		}),
-		make('input', { type: 'range', min: 0, max: 100 }),
-	]
-	inputs.forEach((input) => (input.oninput = () => updateValue(input.value)))
+	const numberInput = make('input', {
+		type: 'number',
+		className: 'passive-wrapper__number-input',
+		min: 0,
+		max: 100,
+		value: 100,
+		oninput() {
+			updateUI(this)
+		},
+	})
+	const rangeInput = make('input', {
+		type: 'range',
+		min: 0,
+		max: 100,
+		value: 100,
+		oninput() {
+			updateUI(this)
+		},
+	})
 
-	const imagechildren = [
-		make('img', { style: 'height:1.5rem; display:block;' }),
-		make('div', { style: 'font-size:0.5rem;' }),
-	]
+	const passivePortrait = make('img', {
+		className: 'passive-wrapper__passive-portrait',
+		src: `/assets/images/owo_images/battleEmojis/${getImageForEffect(effect)}.png`,
+	})
+	const boostOutput = make('div', {
+		className: 'passive-wrapper__boost-output',
+		textContent: boostToString(effect),
+	})
 
-	function updateValue(value) {
-		effect.quality = +value
-		inputs.forEach((i) => (i.value = +value))
-		imagechildren[0].src = `/assets/images/owo_images/battleEmojis/${getImageForEffect(effect)}.png`
-		imagechildren[1].textContent = boostToString(effect)
+	function updateUI({ value }) {
+		effect.quality = Number(value)
+		numberInput.value = Number(value)
+		rangeInput.value = Number(value)
+		passivePortrait.src = `/assets/images/owo_images/battleEmojis/${getImageForEffect(effect)}.png`
+		boostOutput.textContent = boostToString(effect)
 		updateInternalStats()
 	}
 
-	const button = make('div', {
-		className: 'fake-button',
+	const button = make('button', {
+		className: 'passive-wrapper__removal-button',
 		textContent: 'X',
 		onclick: () => {
 			effects = effects.filter((e) => e !== effect)
@@ -434,21 +456,23 @@ function addEffect(type) {
 		},
 	})
 
-	const numberWrapper = make('div', { className: 'number-wrapper' }, [
-		inputs[0],
-		make('div', { textContent: '%', className: 'percent-span' }),
-	])
+	const numberWrapper = make(
+		'div',
+		{ className: 'passive-wrapper__number-wrapper', onclick: () => numberInput.focus() },
+		[numberInput, make('div', { textContent: '%', className: 'percent-span' })]
+	)
 
 	const wrapper = make('div', { className: 'passive-wrapper' }, [
-		make('div', { className: 'passive-image-wrapper' }, imagechildren),
-		make('div', { className: 'listening-wrapper', onclick: () => inputs[0].focus() }, [
-			numberWrapper,
+		make('div', { className: 'passive-wrapper__identity-wrapper' }, [
+			passivePortrait,
+			boostOutput,
 		]),
-		inputs[1],
+		numberWrapper,
+		rangeInput,
 		button,
 	])
 	effectContainer.insertBefore(wrapper, effectContainer.lastChild)
-	updateValue(100)
+	updateUI({ value: 100 })
 }
 
 const boostToString = (effect) =>

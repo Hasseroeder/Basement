@@ -290,6 +290,7 @@ const zoo = rawZoo
 loadJson('https://neonutil.com/api/animals').then((response) => {
 	if (!response || !response.ok) return
 	// we don't need to throw an error, this just leaves the calculator without custom patreon pets.
+	// TODO: use the shared helper from jsonUtil.js here
 
 	const cptier = zoo.find((tier: Tier) => tier.slug === 'cpatreon')
 	if (!cptier) throw new Error('Invariant violation: "cpatreon" tier not found')

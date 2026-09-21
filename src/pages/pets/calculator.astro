@@ -6,6 +6,7 @@ import Navbar from '@/src/components/navbar.astro';
 import Blinkies from '@/src/components/blinkies.astro';
 import Head from '@/src/components/head.astro';
 import EmbedMessage from '@/src/components/embedMessage.astro';
+import Message from '@/src/components/message.astro';
 ---
 <!doctype html>
 <html>
@@ -15,144 +16,136 @@ import EmbedMessage from '@/src/components/embedMessage.astro';
       <Navbar/>
       <div class="page-wrapper">
         <div class="page-wrapper__inner">
-          <div class="discord-message">
-            <img class="discord-message__avatar" src="/assets/images/owo_images/avatars/owo_avatar.png"/>
-            <div class="discord-message__inner">
-              <div class="discord-message__header">
-                <span class="discord-message__name">OwO</span>
-                <span class="discord-message__bot-tag">✓APP</span>
-                <span class="discord-message__timestamp"></span>
-              </div>
-              <div style="display: flex; gap: 1rem;">
-                <div class="embed">
-                  <h3 style="margin: 0; display: flex; align-items: center; gap: 0.2rem;">
-                    <img src="/assets/images/owo_images/huntbot/robot.png" class="emote" />
-                    Pet Calculator
-                  </h3>
-                  <div class="outer-level-wrapper">
-                    <div id="level-wrapper" class="level-wrapper">
-                      <code>&nbsp;Lvl.&nbsp;</code>
-                      <input
-                        class="no-arrows input-lvl"
-                        type="number"
-                        min="1"
-                        value="20"
-                        tabindex="1"
-                      />
-                    </div>
-                    <input id="sliderLvl" type="range" min="1" max="120" value="20" />
+          <Message avatar="/assets/images/owo_images/avatars/owo_avatar.png" name="OwO" bot={false}>
+            <div style="display: flex; gap: 1rem;">
+              <div class="embed">
+                <h3 class="calculator-header">
+                  <img src="/assets/images/owo_images/huntbot/robot.png" class="emote" />
+                  Pet Calculator
+                </h3>
+                <div class="level-wrapper">
+                  <div id="level-wrapper__number-wrapper" class="level-wrapper__number-wrapper">
+                    <code>&nbsp;Lvl.&nbsp;</code>
+                    <input
+                      class="input-lvl"
+                      type="number"
+                      min="1"
+                      value="20"
+                      tabindex="1"
+                    />
                   </div>
-                  <div class="pet-input-grid">
-                    <div>
-                      <img src="/assets/images/owo_images/battleEmojis/hp.png" class="emote" />
-                      <input
-                        required
-                        class="discord-code no-arrows my-inputs stat-title stat-text"
-                        type="number"
-                        min="0"
-                        max="99"
-                        value="15"
-                        tabindex="2"
-                      /><code class="arrow-before discord-code light my-outputs stat-text"></code>
-                    </div>
-                    <div>
-                      <img src="/assets/images/owo_images/battleEmojis/wp.png" class="emote" />
-                      <input
-                        required
-                        class="discord-code no-arrows my-inputs stat-title stat-text"
-                        type="number"
-                        min="0"
-                        max="99"
-                        value="1"
-                        tabindex="5"
-                      /><code class="arrow-before discord-code light my-outputs stat-text"></code>
-                    </div>
-                    <div>
-                      <img src="/assets/images/owo_images/battleEmojis/str.png" class="emote" />
-                      <input
-                        required
-                        class="discord-code no-arrows my-inputs stat-title stat-text"
-                        type="number"
-                        min="0"
-                        max="99"
-                        value="1"
-                        tabindex="3"
-                      /><code class="arrow-before discord-code light my-outputs stat-text"></code>
-                    </div>
-                    <div>
-                      <img src="/assets/images/owo_images/battleEmojis/mag.png" class="emote" />
-                      <input
-                        required
-                        class="discord-code no-arrows my-inputs stat-title stat-text"
-                        type="number"
-                        min="0"
-                        max="99"
-                        value="1"
-                        tabindex="6"
-                      /><code class="arrow-before discord-code light my-outputs stat-text"></code>
-                    </div>
-                    <div>
-                      <img src="/assets/images/owo_images/battleEmojis/pr.png" class="emote" />
-                      <input
-                        required
-                        class="discord-code no-arrows my-inputs stat-title stat-text"
-                        type="number"
-                        min="0"
-                        max="99"
-                        value="1"
-                        tabindex="4"
-                      /><code class="arrow-before discord-code light my-outputs stat-text"> %</code>
-                    </div>
-                    <div>
-                      <img src="/assets/images/owo_images/battleEmojis/mr.png" class="emote" />
-                      <input
-                        required
-                        class="discord-code no-arrows my-inputs stat-title stat-text"
-                        type="number"
-                        min="0"
-                        max="99"
-                        value="1"
-                        tabindex="7"
-                      /><code class="arrow-before discord-code light my-outputs stat-text"> %</code>
-                    </div>
-                  </div>
-                  <span id="statSpan">20 stats</span>
+                  <input id="level-wrapper__slider" type="range" min="1" max="120" value="20" />
                 </div>
-                <div class="embed" id="effectContainer"></div>
+                <div class="pet-input-grid">
+                  <div class="pet-input-grid__cell">
+                    <img src="/assets/images/owo_images/battleEmojis/hp.png" class="pet-input-grid__stat-emote" />
+                    <input
+                      required
+                      class="pet-input-grid__input"
+                      type="number"
+                      min="0"
+                      max="99"
+                      value="15"
+                      tabindex="2"
+                    /><code class="pet-input-grid__output"></code>
+                  </div>
+                  <div class="pet-input-grid__cell">
+                    <img src="/assets/images/owo_images/battleEmojis/wp.png" class="pet-input-grid__stat-emote" />
+                    <input
+                      required
+                      class="pet-input-grid__input"
+                      type="number"
+                      min="0"
+                      max="99"
+                      value="1"
+                      tabindex="5"
+                    /><code class="pet-input-grid__output"></code>
+                  </div>
+                  <div class="pet-input-grid__cell">
+                    <img src="/assets/images/owo_images/battleEmojis/str.png" class="pet-input-grid__stat-emote" />
+                    <input
+                      required
+                      class="pet-input-grid__input"
+                      type="number"
+                      min="0"
+                      max="99"
+                      value="1"
+                      tabindex="3"
+                    /><code class="pet-input-grid__output"></code>
+                  </div>
+                  <div class="pet-input-grid__cell">
+                    <img src="/assets/images/owo_images/battleEmojis/mag.png" class="pet-input-grid__stat-emote" />
+                    <input
+                      required
+                      class="pet-input-grid__input"
+                      type="number"
+                      min="0"
+                      max="99"
+                      value="1"
+                      tabindex="6"
+                    /><code class="pet-input-grid__output"></code>
+                  </div>
+                  <div class="pet-input-grid__cell">
+                    <img src="/assets/images/owo_images/battleEmojis/pr.png" class="pet-input-grid__stat-emote" />
+                    <input
+                      required
+                      class="pet-input-grid__input"
+                      type="number"
+                      min="0"
+                      max="99"
+                      value="1"
+                      tabindex="4"
+                    /><code class="pet-input-grid__output"> %</code>
+                  </div>
+                  <div class="pet-input-grid__cell">
+                    <img src="/assets/images/owo_images/battleEmojis/mr.png" class="pet-input-grid__stat-emote" />
+                    <input
+                      required
+                      class="pet-input-grid__input"
+                      type="number"
+                      min="0"
+                      max="99"
+                      value="1"
+                      tabindex="7"
+                    /><code class="pet-input-grid__output"> %</code>
+                  </div>
+                </div>
+                <span id="stat-span" class="stat-span">20 stats</span>
               </div>
+              <div class="embed effect-container" id="effect-container"></div>
             </div>
-          </div>
+          </Message>
           <EmbedMessage avatar="/assets/images/owo_images/avatars/neonutil.png" name="NeonUtil" bot={true}>
-            <div class="pet-input-grid">
-              <div>
+            <div class="pet-output-grid">
+              <div class="pet-output-grid__cell">
                 <img
                   src="/assets/images/owo_images/battleEmojis/prhp.png"
-                  class="emote"
+                  class="pet-output-grid__stat-emote"
                 />
-                <code class="discord-code light stat-title stat-text">eHP</code>
-                <code class="arrow-before discord-code light my-outputs stat-text"></code>
+                <code class="pet-output-grid__stat-title">eHP</code>
+                <code class="pet-output-grid__output"></code>
               </div>
-              <div>
+              <div class="pet-output-grid__cell">
                 <img
                   src="/assets/images/owo_images/battleEmojis/mrhp.png"
-                  class="emote"
+                  class="pet-output-grid__stat-emote"
                 />
-                <code class="discord-code light stat-title stat-text">eHP</code>
-                <code class="arrow-before discord-code light my-outputs stat-text"></code>
+                <code class="pet-output-grid__stat-title">eHP</code>
+                <code class="pet-output-grid__output"></code>
               </div>
-              <div>
-                <img src="/assets/images/owo_images/battleEmojis/ipr.png" class="emote" />
-                <code class="discord-code light stat-title stat-text">iPR</code>
-                <code class="arrow-before discord-code light my-outputs stat-text"></code>
+              <div class="pet-output-grid__cell">
+                <img src="/assets/images/owo_images/battleEmojis/ipr.png" class="pet-output-grid__stat-emote" />
+                <code class="pet-output-grid__stat-title">iPR</code>
+                <code class="pet-output-grid__output"></code>
               </div>
-              <div>
-                <img src="/assets/images/owo_images/battleEmojis/imr.png" class="emote" />
-                <code class="discord-code light stat-title stat-text">iMR</code>
-                <code class="arrow-before discord-code light my-outputs stat-text"></code>
+              <div class="pet-output-grid__cell">
+                <img src="/assets/images/owo_images/battleEmojis/imr.png" class="pet-output-grid__stat-emote" />
+                <code class="pet-output-grid__stat-title">iMR</code>
+                <code class="pet-output-grid__output"></code>
               </div>
             </div>
             <button tabindex="8" class="mode-switch-button" id="mode-switch-button">Mode: Matching Pets</button>
-            <div id="pet-container" class="pet-container"></div>
+            <div id="mode-container" class="mode-container"></div>
           </EmbedMessage>
         </div>
       </div>
