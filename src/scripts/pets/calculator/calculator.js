@@ -459,7 +459,7 @@ function addEffect(type) {
 	const numberWrapper = make(
 		'div',
 		{ className: 'passive-wrapper__number-wrapper', onclick: () => numberInput.focus() },
-		[numberInput, make('div', { textContent: '%', className: 'percent-span' })]
+		[numberInput, make('div', { textContent: '%' })]
 	)
 
 	const wrapper = make('div', { className: 'passive-wrapper' }, [
