@@ -22,7 +22,8 @@
 		{ file: 'blinkiesCafe-7m.gif', href: 'https://blinkies.cafe/' },
 		{ file: 'blinkiesCafe-ji.gif', href: 'https://blinkies.cafe/' },
 		{ file: 'autism_blinkie2.gif', fn: () => {
-			cookieUtil.setCookie('tbh', cookieUtil.getCookie('tbh') !== 'true', 30)
+			const newValue = cookieUtil.getCookie('tbh') === 'true' ? "false" : "true";
+			cookieUtil.setCookie('tbh', newValue, 30)
 			checkForTBH()
 		}},
 		{ file: 'advert_blinkie.gif', href: 'https://github.com/Hasseroeder/Basement/' },

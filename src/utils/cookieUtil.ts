@@ -1,4 +1,4 @@
-function setCookie(name, value, daysToLive, path = '/') {
+function setCookie(name: string, value: string, daysToLive: number, path = '/') {
 	const date = new Date()
 	date.setDate(date.getDate() + daysToLive)
 
@@ -6,11 +6,11 @@ function setCookie(name, value, daysToLive, path = '/') {
 	document.cookie = `${name}=${value}; ${expires}; path=${path};`
 }
 
-function deleteCookie(name, path = '/') {
+function deleteCookie(name: string, path = '/') {
 	setCookie(name, '', -1, path)
 }
 
-function getCookie(name) {
+function getCookie(name: string) {
 	const cookieDecoded = decodeURIComponent(document.cookie)
 	const cookieArray = cookieDecoded.split('; ')
 
