@@ -1,5 +1,5 @@
 import * as cookie from '@/src/utils/cookieUtil.js'
-import { signedNumberFixedString, numStringToSubscript, zeroPad } from '@/src/utils/stringUtil.js'
+import { signedNumberFixedString, numStringToSubscript, zeroPad } from '@/src/utils/stringUtil.ts'
 import { make } from '@/src/utils/injectionUtil.js'
 import {
 	debounce,
@@ -7,7 +7,7 @@ import {
 	makeRepeatingButton,
 	toFixedDigits,
 } from '@/src/utils/inputUtil.js'
-import { loadPets } from '@/src/utils/jsonUtil.js'
+import { loadPets } from '@/src/utils/jsonUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
 import rawZooData from '@/src/data/huntbot/calculator/zoo.json'
 const rawZoo = rawZooData as RawTier[]

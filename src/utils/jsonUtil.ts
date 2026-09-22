@@ -1,4 +1,4 @@
-async function loadJson(path) {
+async function loadJson(path: string) {
 	var jsonData
 	try {
 		const response = await fetch(path)
@@ -39,25 +39,32 @@ export async function loadPets() {
 		as I've been doing when developing.
 	*/
 	const tierSlugs = response.ranks
-	return response.data.map((rawPet) => {
+	return response.data.map((rawPet: [number, string, string, string[], number[], number]) => {
 		const animated = Boolean(rawPet[0])
 		const tier = tiers.find((tier) => tier.slug === tierSlugs[rawPet[5]])
+		if (!tier)
+			throw new Error('Scientists have discovered a new tier?! -- slug tier not found x3')
 		const prettyName = rawPet[1]
 		const slug = rawPet[1].toLowerCase()
 		const aliases = rawPet[3].map((alias) => alias.toLowerCase())
 		const stats = rawPet[4]
-		let emoteSrc = cdnPath + rawPet[2] + (animated ? '.gif' : '.png')
+		const defaultSrc = cdnPath + rawPet[2] + (animated ? '.gif' : '.png')
 
-		if (tier.slug === 'hidden')
-			emoteSrc = {
-				hmonkey: `${localPetPath}monkey.png`,
-				hlizard: `${localPetPath}lizard.png`,
-				hkoala: `${localPetPath}koala.png`,
-				hsquid: `${localPetPath}octopus.png`,
-				hsnake: `${localPetPath}snake.png`,
-			}[slug]
-		else if (['common', 'uncommon', 'rare', 'epic', 'mythical'].includes(tier.slug))
-			emoteSrc = localPetPath + slug + '.png'
+		const hiddenSrcOverride = {
+			hmonkey: `${localPetPath}monkey.png`,
+			hlizard: `${localPetPath}lizard.png`,
+			hkoala: `${localPetPath}koala.png`,
+			hsquid: `${localPetPath}octopus.png`,
+			hsnake: `${localPetPath}snake.png`,
+		}[slug]
+
+		const curemSrcOverride = ['common', 'uncommon', 'rare', 'epic', 'mythical'].includes(
+			tier.slug
+		)
+			? localPetPath + slug + '.png'
+			: undefined
+
+		const emoteSrc = curemSrcOverride ?? hiddenSrcOverride ?? defaultSrc
 
 		return {
 			animated, //bool

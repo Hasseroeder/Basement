@@ -1,4 +1,4 @@
-import { loadPets } from '/src/utils/jsonUtil.js'
+import { loadPets } from '/src/utils/jsonUtil.ts'
 import { make } from '/src/utils/injectionUtil.js'
 
 const modeContainer = document.getElementById('mode-container')
