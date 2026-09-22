@@ -1,5 +1,5 @@
 import { make } from '@/src/utils/injectionUtil.js'
-import Chart from '../chart.js'
+import Chart from '../chart.ts'
 import { Module } from './module.js'
 
 export async function initializeTriangle(container, data) {
