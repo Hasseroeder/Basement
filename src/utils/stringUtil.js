@@ -5,10 +5,6 @@ export function signedNumberFixedString(input, fixed) {
 	return sign + formatted
 }
 
-export function capitalizeFirstLetter(string) {
-	return string.slice(0, 1).toUpperCase() + string.slice(1)
-}
-
 export const zeroPad = (num, places) => String(num).padStart(places, '0')
 
 export function numStringToSubscript(string) {

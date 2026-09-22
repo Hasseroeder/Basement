@@ -1,4 +1,4 @@
-export async function loadJson(path) {
+async function loadJson(path) {
 	var jsonData
 	try {
 		const response = await fetch(path)
@@ -7,12 +7,6 @@ export async function loadJson(path) {
 		console.error('Error loading json:', error)
 	}
 	return jsonData
-}
-
-export async function loadAll(obj) {
-	const entries = Object.entries(obj)
-	const results = await Promise.all(entries.map(([_, p]) => p))
-	return Object.fromEntries(entries.map(([key], i) => [key, results[i]]))
 }
 
 export async function loadPets() {
