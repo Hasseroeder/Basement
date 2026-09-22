@@ -13,23 +13,31 @@ export async function loadPets() {
 	const localPetPath = '/assets/images/owo_images/pets/'
 	const cdnPath = 'https://cdn.discordapp.com/emojis/'
 	const tiers = [
-		{ priority: 0, slug: 'common', prettyName: 'Common' },
-		{ priority: 1, slug: 'uncommon', prettyName: 'Uncommon' },
-		{ priority: 2, slug: 'rare', prettyName: 'Rare' },
-		{ priority: 3, slug: 'epic', prettyName: 'Epic' },
-		{ priority: 4, slug: 'mythical', prettyName: 'Mythic' },
-		{ priority: 5, slug: 'legendary', prettyName: 'Legendary' },
-		{ priority: 6, slug: 'gem', prettyName: 'Gem' },
-		{ priority: 7, slug: 'bot', prettyName: 'Bot' },
-		{ priority: 8, slug: 'distorted', prettyName: 'Distorted' },
-		{ priority: 9, slug: 'fabled', prettyName: 'Fabled' },
-		{ priority: 10, slug: 'hidden', prettyName: 'Hidden' },
-		{ priority: 11, slug: 'special', prettyName: 'Special' },
-		{ priority: 12, slug: 'patreon', prettyName: 'Patreon' },
-		{ priority: 13, slug: 'cpatreon', prettyName: 'Custom' },
+		{ slug: 'common', prettyName: 'Common' },
+		{ slug: 'uncommon', prettyName: 'Uncommon' },
+		{ slug: 'rare', prettyName: 'Rare' },
+		{ slug: 'epic', prettyName: 'Epic' },
+		{ slug: 'mythical', prettyName: 'Mythic' },
+		{ slug: 'legendary', prettyName: 'Legendary' },
+		{ slug: 'gem', prettyName: 'Gem' },
+		{ slug: 'bot', prettyName: 'Bot' },
+		{ slug: 'distorted', prettyName: 'Distorted' },
+		{ slug: 'fabled', prettyName: 'Fabled' },
+		{ slug: 'hidden', prettyName: 'Hidden' },
+		{ slug: 'special', prettyName: 'Special' },
+		{ slug: 'patreon', prettyName: 'Patreon' },
+		{ slug: 'cpatreon', prettyName: 'Custom' },
 	]
 
 	const response = await loadJson('https://neonutil.com/api/animals')
+	//const response = await loadJson('/data/neonutilAnimalAPI.json')
+	/*
+		Neon's API doesn't give you a valid CORS response for local development.
+		The CORS allows for just owo.bwep.net to have access to this data.
+		Either you build a reverse proxy that serves this API for you. 
+		Or you use this slightly outdated data at /public/data/neonutilAnimalAPI.json,
+		as I've been doing when developing.
+	*/
 	const tierSlugs = response.ranks
 	return response.data.map((rawPet) => {
 		const animated = Boolean(rawPet[0])
@@ -58,7 +66,7 @@ export async function loadPets() {
 			emoteSrc, // string
 			aliases, // string[]
 			stats, // int[]
-			tier, // { slug: string, priority: int, prettyName: string }
+			tier, // { slug: string, prettyName: string }
 		}
 	})
 }

@@ -73,12 +73,30 @@ const effectMin = [0.05, 0.05, 0.15, 0.1, 0.05, 0.15, 0.05]
 const effectMax = [0.2, 0.2, 0.35, 0.3, 0.2, 0.35, 0.15]
 const boostSuffix = ['hp', 'str', 'pr', 'wp', 'mag', 'mr', 'rune']
 
-const sortPets = (array) =>
-	array.sort((petA, petB) => {
-		if (petA.tier.priority !== petB.tier.priority)
-			return petA.tier.priority - petB.tier.priority
+const sortPets = (array) => {
+	const tierOrder = [
+		'common',
+		'uncommon',
+		'rare',
+		'epic',
+		'mythical',
+		'legendary',
+		'gem',
+		'bot',
+		'distorted',
+		'fabled',
+		'hidden',
+		'special',
+		'patreon',
+		'cpatreon',
+	]
+
+	return array.sort((petA, petB) => {
+		if (tierOrder.indexOf(petA.tier.slug) !== tierOrder.indexOf(petB.tier.slug))
+			return tierOrder.indexOf(petA.tier.slug) - tierOrder.indexOf(petB.tier.slug)
 		else return petA.slug.localeCompare(petB.slug)
 	})
+}
 
 function outputPetContainer() {
 	if (showPets) {

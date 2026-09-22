@@ -296,7 +296,7 @@ loadPets().then(
 			emoteSrc: string
 			aliases: string[]
 			stats: PetStats
-			tier: { slug: string; priority: number; prettyName: string }
+			tier: { slug: string; prettyName: string }
 		}[]
 	) => {
 		// this doesn't execute if loadPets() doesn't correctly fetch the API
