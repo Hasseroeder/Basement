@@ -456,19 +456,17 @@ function addEffect(type) {
 		},
 	})
 
-	const numberWrapper = make(
-		'div',
-		{ className: 'passive-wrapper__number-wrapper', onclick: () => numberInput.focus() },
-		[numberInput, make('div', { textContent: '%' })]
-	)
-
 	const wrapper = make('div', { className: 'passive-wrapper' }, [
 		make('div', { className: 'passive-wrapper__identity-wrapper' }, [
 			passivePortrait,
 			boostOutput,
 		]),
-		numberWrapper,
-		rangeInput,
+		make(
+			'div',
+			{ className: 'passive-wrapper__number-wrapper', onclick: () => numberInput.focus() },
+			[numberInput, make('div', { textContent: '%' })]
+		),
+		make('div', { className: 'passive-wrapper__range-wrapper' }, [rangeInput]),
 		button,
 	])
 	effectContainer.insertBefore(wrapper, effectContainer.lastChild)
