@@ -204,10 +204,11 @@ $embed-border-gray: #909090;
 		@extend ._inner-embed;
 
 		padding: 0 1rem;
-		width: 100%;
 		position: relative;
 		height: 3.3rem;
 		overflow: hidden;
+		display: flex;
+		justify-content: center;
 
 		&:hover {
 			.passive-wrapper--adding__original {
@@ -223,10 +224,8 @@ $embed-border-gray: #909090;
 		&__replacement {
 			height: 100%;
 			display: flex;
-			justify-content: center;
 			align-items: center;
 			transition: 0.1s ease;
-			width: inherit;
 		}
 		&__original {
 			position: absolute;
