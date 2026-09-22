@@ -236,6 +236,10 @@ $embed-border-gray: #909090;
 		&__replacement {
 			transform: translateY(100%);
 			opacity: 0;
+
+			img {
+				cursor: var(--cur-pointer);
+			}
 		}
 	}
 
