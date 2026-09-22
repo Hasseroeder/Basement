@@ -6,7 +6,7 @@ import {
 	roundToDecimals,
 	makeRepeatingButton,
 	toFixedDigits,
-} from '@/src/utils/inputUtil.js'
+} from '@/src/utils/inputUtil.ts'
 import { loadPets } from '@/src/utils/jsonUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
 import rawZooData from '@/src/data/huntbot/calculator/zoo.json'

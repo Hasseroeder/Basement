@@ -1,38 +1,40 @@
-export function roundToDecimals(value, decimals) {
+export function roundToDecimals(value: number, decimals: number) {
 	const factor = Math.pow(10, decimals)
 	return Math.round(value * factor) / factor
 }
 
-export function toFixedDigits(value, digits) {
-	const digitsBeforeDot = String(value.toFixed(0)).length
+export function toFixedDigits(value: number, digits: number) {
+	const digitsBeforeDot = value.toFixed(0).length
 	const neededDigitsAfterDot = digits - digitsBeforeDot
 	const boundRounding = Math.max(0, neededDigitsAfterDot)
 
 	return roundToDecimals(value, boundRounding).toLocaleString()
 }
 
-export function debounce(fn, wait = 200, immediate = false) {
-	let timeoutId
+export function debounce<T extends (...args: any[]) => any>(
+	fn: T,
+	wait = 200
+): (...args: Parameters<T>) => void {
+	let timeoutId: ReturnType<typeof setTimeout>
 
-	return function debounced(...args) {
+	return function debounced(this: ThisParameterType<T>, ...args: Parameters<T>) {
 		const context = this
-		const callNow = immediate && !timeoutId
-
 		clearTimeout(timeoutId)
-		timeoutId = setTimeout(() => {
-			timeoutId = null
-			if (!immediate) fn.apply(context, args)
-		}, wait)
-
-		if (callNow) fn.apply(context, args)
+		timeoutId = setTimeout(() => fn.apply(context, args), wait)
 	}
 }
 
-export function makeRepeatingButton(el, action, delay = 400, interval = 50) {
-	let timeoutId = null
-	let intervalId = null
+export function makeRepeatingButton(
+	el: HTMLElement,
+	action: () => void,
+	delay = 400,
+	interval = 50
+) {
+	let timeoutId: ReturnType<typeof setTimeout>
+	let intervalId: ReturnType<typeof setInterval>
 
 	const start = () => {
+		stop()
 		action()
 
 		timeoutId = setTimeout(() => {
@@ -43,8 +45,6 @@ export function makeRepeatingButton(el, action, delay = 400, interval = 50) {
 	const stop = () => {
 		clearTimeout(timeoutId)
 		clearInterval(intervalId)
-		timeoutId = null
-		intervalId = null
 	}
 
 	el.addEventListener('mousedown', start)

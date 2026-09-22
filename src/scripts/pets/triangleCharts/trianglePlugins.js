@@ -13,7 +13,7 @@ import {
 	getX,
 	getY,
 } from './triangleUtils.js'
-import { roundToDecimals } from '@/src/utils/inputUtil.js'
+import { roundToDecimals } from '@/src/utils/inputUtil.ts'
 
 // --------------------------------------------------------------------------------------
 //
