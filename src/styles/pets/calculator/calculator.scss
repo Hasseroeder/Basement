@@ -203,6 +203,7 @@ $embed-border-gray: #909090;
 	&--adding {
 		@extend ._inner-embed;
 
+		padding: 0 1rem;
 		width: 100%;
 		position: relative;
 		height: 3.3rem;
