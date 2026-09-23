@@ -465,8 +465,8 @@ class Trait {
 		})
 		this.input = make('input', {
 			type: 'number',
-			min: 0,
-			max: this.max,
+			min: String(0),
+			max: String(this.max),
 			className: 'trait-inputs__lvl-number-input',
 			onchange: () => (this.level = Number(this.input.value)),
 		})

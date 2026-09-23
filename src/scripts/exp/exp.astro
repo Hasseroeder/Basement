@@ -88,20 +88,20 @@ function attachBattleCalculator(wrapper : HTMLElement) {
 	const streak = make('input', {
 		className: 'calculator__input',
 		type: 'number',
-		min: 0,
-		max: 1e6,
-		step: 1,
-		value: 1,
+		min: '0',
+		max: '1000000',
+		step: '1',
+		value: '1',
 		lang: 'en',
 		oninput: update,
 	})
 	const tierate = make('input', {
 		className: 'calculator__input',
 		type: 'number',
-		min: 0,
-		max: 100,
-		step: 0.01,
-		value: 0,
+		min: '0',
+		max: '100',
+		step: '0.01',
+		value: '0',
 		lang: 'en',
 		oninput: update,
 	})

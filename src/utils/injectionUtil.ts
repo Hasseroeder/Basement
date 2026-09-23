@@ -1,23 +1,27 @@
+type Props<K extends keyof HTMLElementTagNameMap> = Omit<
+	Partial<HTMLElementTagNameMap[K]>,
+	'style' | 'dataset'
+> & {
+	style?: Partial<CSSStyleDeclaration>
+	dataset?: Record<string, string>
+}
+
 export const make = <K extends keyof HTMLElementTagNameMap>(
 	tag: K,
-	props: {
-		style?: Record<string, string>
-		dataset?: Record<string, string>
-		[key: string]: any
-	} = {},
+	props?: Props<K>,
 	children?: (Node | string)[]
 ): HTMLElementTagNameMap[K] => {
 	const el = document.createElement(tag)
-	if (props.style && typeof props.style === 'object') {
+	if (props?.style && typeof props.style === 'object') {
 		Object.assign(el.style, props.style)
 		delete props.style
 	}
-	if (props.dataset && typeof props.dataset === 'object') {
+	if (props?.dataset && typeof props.dataset === 'object') {
 		Object.assign(el.dataset, props.dataset)
 		delete props.dataset
 	}
 
-	for (const [key, value] of Object.entries(props)) {
+	for (const [key, value] of Object.entries(props ?? {})) {
 		if (value === undefined) continue
 		;(el as any)[key] = value
 	}
@@ -27,5 +31,3 @@ export const make = <K extends keyof HTMLElementTagNameMap>(
 	}
 	return el
 }
-
-const testDiv = make('div')
