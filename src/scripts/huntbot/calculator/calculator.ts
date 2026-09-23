@@ -1,6 +1,6 @@
 import * as cookie from '@/src/utils/cookieUtil.js'
 import { signedNumberFixedString, numStringToSubscript, zeroPad } from '@/src/utils/stringUtil.ts'
-import { make } from '@/src/utils/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.ts'
 import {
 	debounce,
 	roundToDecimals,
@@ -40,20 +40,20 @@ type Tier = RawTier & {
 		readonly hb: number[]
 	}
 
-	readonly hbRow: visibilityElement
-	readonly zooRow: visibilityElement
+	readonly hbRow: { visibility: boolean; el: HTMLDivElement }
+	readonly zooRow: { visibility: boolean; el: HTMLDivElement }
 	readonly hbPetGrid: HTMLDivElement
 	readonly zooPetGrid: HTMLDivElement
 
 	readonly hbLuckEls: {
-		readonly expectedLuck: HTMLDivElement
-		readonly actualLuck: HTMLDivElement
+		readonly expectedLuck: HTMLElement
+		readonly actualLuck: HTMLElement
 		readonly arrow: LuckArrow
 	}
 
 	readonly zooLuckEls: {
-		readonly expectedLuck: HTMLDivElement
-		readonly actualLuck: HTMLDivElement
+		readonly expectedLuck: HTMLElement
+		readonly actualLuck: HTMLElement
 		readonly arrow: LuckArrow
 	}
 }
@@ -70,16 +70,14 @@ type RawPet = {
 type Pet = RawPet & {
 	readonly caught: { zoo: number; readonly hb: number[] }
 	readonly displayed: { zoo: boolean; hb: boolean }
-	readonly hbCell: PetCell
-	readonly zooCell: PetCell
-}
-
-type PetCell = HTMLElement & {
-	update: (visible: boolean, str?: string) => void
-}
-
-type visibilityElement = HTMLElement & {
-	_visibility: boolean
+	readonly hbCell: {
+		el: HTMLDivElement
+		update: (visible: boolean, str?: string) => void
+	}
+	readonly zooCell: {
+		el: HTMLDivElement
+		update: (visible: boolean, str?: string) => void
+	}
 }
 
 type CaughtOptions = { readonly mode: 'zoo' } | { readonly mode: 'hb'; readonly index: number }
@@ -142,25 +140,15 @@ const makePetCell = ({
 	emoteSrc: string
 	prettyName: string
 	slug: string
-}): PetCell => {
+}) => {
 	let displayedVisibility = false
 	let displayedStr = ''
 	const textEl = make('div')
-	const petCell: PetCell = make(
+	const petCellEl = make(
 		'div',
 		{
 			className: 'pet-grid__cell',
 			dataset: { prettyName, slug },
-			update: (visible: boolean, str?: string) => {
-				if (visible !== displayedVisibility) {
-					petCell.style.display = visible ? 'flex' : 'none'
-					displayedVisibility = visible
-				}
-				if (visible && str && str !== displayedStr) {
-					textEl.textContent = str
-					displayedStr = str
-				}
-			},
 		},
 		[
 			make('img', {
@@ -172,7 +160,17 @@ const makePetCell = ({
 			textEl,
 		]
 	)
-	return petCell
+	function update(visible: boolean, str?: string) {
+		if (visible !== displayedVisibility) {
+			petCellEl.style.display = visible ? 'flex' : 'none'
+			displayedVisibility = visible
+		}
+		if (visible && str && str !== displayedStr) {
+			textEl.textContent = str
+			displayedStr = str
+		}
+	}
+	return { el: petCellEl, update }
 }
 
 let patreon = false
@@ -185,17 +183,20 @@ const zoo = rawZoo
 
 		const zooPetGrid = make('div', { className: 'pet-grid' })
 		const hbPetGrid = make('div', { className: 'pet-grid' })
-		const zooRow: visibilityElement = make('div', { className: 'zoo-container__zoo-row' }, [
-			makeEmote(),
-			zooPetGrid,
-		])
-		const hbRow: visibilityElement = make('div', { className: 'hb-container__zoo-row' }, [
-			makeEmote(),
-			' | ',
-			hbPetGrid,
-		])
-		zooContainer.append(zooRow)
-		hbContainer.append(hbRow)
+		const zooRow = {
+			visibility: false,
+			el: make('div', { className: 'zoo-container__zoo-row' }, [makeEmote(), zooPetGrid]),
+		}
+		const hbRow = {
+			visibility: false,
+			el: make('div', { className: 'hb-container__zoo-row' }, [
+				makeEmote(),
+				' | ',
+				hbPetGrid,
+			]),
+		}
+		zooContainer.append(zooRow.el)
+		hbContainer.append(hbRow.el)
 
 		const pets: Pet[] = rawTier.pets.map((rawPet) => ({
 			...rawPet,
@@ -207,11 +208,14 @@ const zoo = rawZoo
 
 		pets.forEach((pet) => {
 			petBySlug.set(pet.slug, pet)
-			zooPetGrid.append(pet.zooCell)
-			hbPetGrid.append(pet.hbCell)
+			zooPetGrid.append(pet.zooCell.el)
+			hbPetGrid.append(pet.hbCell.el)
 		})
 
-		const sacImg = make('img', { className: 'tier-grid__sac-emote', draggable: false })
+		const sacImg = make('img', {
+			className: 'tier-grid__sac-emote',
+			draggable: false,
+		})
 		const sacText = make('div')
 		const tier: Tier = {
 			...rawTier,
@@ -269,7 +273,7 @@ const zoo = rawZoo
 				className: 'tier-grid__cell',
 				onmousedown: () => tier.toggleSac(),
 				onmouseenter: (e: MouseEvent) => {
-					if (e.relatedTarget && wrapper.contains(e.relatedTarget)) return
+					if (e.relatedTarget instanceof Node && wrapper.contains(e.relatedTarget)) return
 					if (isDragging) tier.toggleSac()
 				},
 			},
@@ -329,8 +333,8 @@ loadPets().then(
 					slug: rawPet.prettyName.toLowerCase(),
 				}),
 			}
-			cptier.zooPetGrid.append(pet.zooCell)
-			cptier.hbPetGrid.append(pet.hbCell)
+			cptier.zooPetGrid.append(pet.zooCell.el)
+			cptier.hbPetGrid.append(pet.hbCell.el)
 			petBySlug.set(pet.slug, pet)
 			cptier.pets.push(pet)
 		})
@@ -701,7 +705,10 @@ const tt = {
 	update(pet: Pet) {
 		this.title.textContent = pet.prettyName
 		pet.stats.forEach((value: number, i: number) => {
-			this.statCells[i].querySelector('div').textContent = value
+			const statNumber = this.statCells[i].querySelector('div')
+			if (!statNumber)
+				throw new Error("Invariant violation: statCell doesn't have a div inside")
+			statNumber.textContent = String(value)
 		})
 	},
 }
@@ -809,13 +816,13 @@ const stringToLevel = (levelString: string) =>
 
 function generateLuckDom(): {
 	zooLuckEls: {
-		expectedLuck: HTMLDivElement
-		actualLuck: HTMLDivElement
+		expectedLuck: HTMLElement
+		actualLuck: HTMLElement
 		arrow: LuckArrow
 	}
 	hbLuckEls: {
-		expectedLuck: HTMLDivElement
-		actualLuck: HTMLDivElement
+		expectedLuck: HTMLElement
+		actualLuck: HTMLElement
 		arrow: LuckArrow
 	}
 } {
@@ -909,14 +916,14 @@ function displayNthHuntbot(n: number) {
 
 	const digitsNeeded = String(getMaxCaught({ mode: 'hb', index: n })).length
 	for (const tier of zoo) {
-		tier.hbRow.style.display = 'none'
-		tier.hbRow._visibility = false
+		tier.hbRow.el.style.display = 'none'
+		tier.hbRow.visibility = false
 		let tierPets = 0
 		for (const pet of tier.pets) {
 			const visible = pet.caught.hb[n] !== 0
-			if (visible && !tier.hbRow._visibility) {
-				tier.hbRow.style.display = 'flex'
-				tier.hbRow._visibility = true
+			if (visible && !tier.hbRow.visibility) {
+				tier.hbRow.el.style.display = 'flex'
+				tier.hbRow.visibility = true
 			}
 			const str = numStringToSubscript(zeroPad(pet.caught.hb[n], digitsNeeded))
 			pet.hbCell.update(visible, str)
@@ -936,9 +943,9 @@ function displayZoo() {
 		let tierPets = 0
 		for (const pet of tier.pets) {
 			const visible = pet.caught.zoo !== 0
-			if (visible && !tier.zooRow._visibility) {
-				tier.zooRow.style.display = 'flex'
-				tier.zooRow._visibility = true
+			if (visible && !tier.zooRow.visibility) {
+				tier.zooRow.el.style.display = 'flex'
+				tier.zooRow.visibility = true
 			}
 			const str = numStringToSubscript(zeroPad(pet.caught.zoo, digitsNeeded))
 			pet.zooCell.update(visible, str)
@@ -999,10 +1006,10 @@ const reset = () => {
 		tier.hbLuckEls.expectedLuck.textContent = ''
 		tier.hbLuckEls.actualLuck.textContent = ''
 		tier.hbLuckEls.arrow.update(0, 0)
-		tier.hbRow.style.display = 'none'
-		tier.hbRow._visibility = false
-		tier.zooRow.style.display = 'none'
-		tier.zooRow._visibility = false
+		tier.hbRow.el.style.display = 'none'
+		tier.hbRow.visibility = false
+		tier.zooRow.el.style.display = 'none'
+		tier.zooRow.visibility = false
 		tier.expectedPetAmount.zoo = 0
 		tier.expectedPetAmount.hb.length = 0
 		tier.pets.forEach((pet) => {

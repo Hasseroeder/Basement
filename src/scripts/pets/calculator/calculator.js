@@ -1,5 +1,5 @@
 import { loadPets } from '/src/utils/jsonUtil.ts'
-import { make } from '/src/utils/injectionUtil.js'
+import { make } from '/src/utils/injectionUtil.ts'
 
 const modeContainer = document.getElementById('mode-container')
 const effectContainer = document.getElementById('effect-container')

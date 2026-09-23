@@ -13,7 +13,7 @@ const xpTable = Object.fromEntries(
 </script>
 <script>
 import Chart from 'chart.js/auto'
-import { make } from '@/src/utils/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.ts'
 
 function getElement<T extends Element>(selector: string): T {
 	const element = document.querySelector<T>(selector)
@@ -82,8 +82,8 @@ function battleExp(s : number, t : number) {
 
 function attachBattleCalculator(wrapper : HTMLElement) {
 	const output = make('div', {className: "calculator__output"})
-	output.update = function () {
-		this.textContent = Number(battleExp(streak.value, tierate.value)).toFixed(2)
+	function update() {
+		output.textContent = Number(battleExp(Number(streak.value), Number(tierate.value))).toFixed(2)
 	}
 	const streak = make('input', {
 		className: 'calculator__input',
@@ -93,7 +93,7 @@ function attachBattleCalculator(wrapper : HTMLElement) {
 		step: 1,
 		value: 1,
 		lang: 'en',
-		oninput: () => output.update(),
+		oninput: update,
 	})
 	const tierate = make('input', {
 		className: 'calculator__input',
@@ -103,7 +103,7 @@ function attachBattleCalculator(wrapper : HTMLElement) {
 		step: 0.01,
 		value: 0,
 		lang: 'en',
-		oninput: () => output.update(),
+		oninput: update,
 	})
 
 	wrapper.append(
@@ -117,7 +117,7 @@ function attachBattleCalculator(wrapper : HTMLElement) {
 		])
 	)
 
-	output.update()
+	update()
 }
 
 function attachExpChart(wrapper : HTMLElement) {
@@ -132,7 +132,7 @@ function attachExpChart(wrapper : HTMLElement) {
 
 	const percentText = make('div', { innerHTML: '0%' })
 	const tierateText = make('div', { innerHTML: 'tierate' })
-	const textWrapper = make('div', { style: 'height: 3.5rem' }, [percentText, tierateText])
+	const textWrapper = make('div', { style: { height: "3.5rem" } }, [percentText, tierateText])
 
 	wrapper.append(
 		make('div', { className: 'global-chart-wrapper' }, [ctx]),

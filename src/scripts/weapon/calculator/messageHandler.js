@@ -5,7 +5,7 @@ import {
 	weaponAssetUrl,
 	fileExists,
 } from './util.js'
-import { make } from '@/src/utils/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.ts'
 
 const el = {
 	weaponHeader: document.getElementById('weapon-header'),

@@ -1,4 +1,4 @@
-import { make } from '@/src/utils/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.ts'
 import Chart from '../chart.ts'
 import { Module } from './module.js'
 

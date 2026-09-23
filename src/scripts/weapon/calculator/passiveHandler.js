@@ -1,7 +1,7 @@
 import * as messageHandler from './messageHandler.js'
 import * as buffHandler from './buffHandler.js'
 import { getRarity, wpEmojiPath } from './util.js'
-import { make } from '@/src/utils/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.ts'
 
 const pList = document.querySelector('#passives')
 

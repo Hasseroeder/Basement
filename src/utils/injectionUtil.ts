@@ -1,6 +1,14 @@
-export const make = (tag, props = {}, children) => {
+export const make = <K extends keyof HTMLElementTagNameMap>(
+	tag: K,
+	props: {
+		style?: Record<string, string>
+		dataset?: Record<string, string>
+		[key: string]: any
+	} = {},
+	children?: (Node | string)[]
+): HTMLElementTagNameMap[K] => {
 	const el = document.createElement(tag)
-	if (props.style && typeof props.style == 'object') {
+	if (props.style && typeof props.style === 'object') {
 		Object.assign(el.style, props.style)
 		delete props.style
 	}
@@ -11,7 +19,7 @@ export const make = (tag, props = {}, children) => {
 
 	for (const [key, value] of Object.entries(props)) {
 		if (value === undefined) continue
-		el[key] = value
+		;(el as any)[key] = value
 	}
 
 	if (children) {
@@ -19,3 +27,5 @@ export const make = (tag, props = {}, children) => {
 	}
 	return el
 }
+
+const testDiv = make('div')

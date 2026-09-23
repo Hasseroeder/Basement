@@ -1,4 +1,4 @@
-import { make } from '@/src/utils/injectionUtil.js'
+import { make } from '@/src/utils/injectionUtil.ts'
 import * as messageHandler from './messageHandler.js'
 import { weaponAssetUrl } from './util.js'
 
