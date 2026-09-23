@@ -6,3 +6,28 @@
 	margin-bottom: 1.25rem;
 	gap: 2.5rem;
 }
+.res-image {
+	width: 20px;
+	margin: 0 0.2rem 0 0.125rem;
+}
+.res-li {
+	align-items: center;
+	cursor: var(--cur-pointer);
+	display: flex;
+	margin-bottom: 10px;
+	height: 20px;
+}
+.res-ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.res-color-circle {
+	border-radius: 10px;
+	width: 7px;
+	height: 7px;
+	margin-right: 2px;
+}
+.res-percent-span {
+	color: #aaa;
+}
