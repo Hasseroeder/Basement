@@ -2,20 +2,14 @@ import Chart from 'chart.js/auto'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import { make } from '@/src/utils/injectionUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
-import type { Plugin, ChartType, ChartDataset } from 'chart.js'
+import type { Plugin, ChartDataset } from 'chart.js'
 Chart.register(annotationPlugin)
 
-declare module 'chart.js' {
-	interface Chart {
-		legendText: HTMLLIElement[]
-		percents: HTMLSpanElement[]
-	}
-	interface PluginOptionsByType<TType extends ChartType> {
-		htmlLegendPlugin?: {
-			legendDiv: HTMLElement
-		}
-	}
-}
+const lvlDiv = getElement('#reschart-level-container')
+const legendDiv = getElement<HTMLDivElement>('#reschart-legend-container')
+const ctx = getElement<HTMLCanvasElement>('#reschart')
+const ul = make('ul', { className: 'res-ul' })
+legendDiv.append(ul)
 
 const xValues = Array.from({ length: 90 }, (_, index) => index + 1)
 
@@ -32,75 +26,77 @@ const petData = [
 	{ resistance: 0, color: 'rgb(147, 196, 125)', imageName: 'gspider.gif' },
 ]
 
-const datasets: ChartDataset<'line', number[]>[] = petData.map(({ color, resistance }) => {
-	const data = Array.from(
-		{ length: 90 },
-		(_, i) => (0.8 * (25 + 2 * i * resistance)) / (125 + 2 * i * resistance)
-	)
-	return {
-		label: `${resistance} Res`,
-		data,
-		borderColor: color,
-		pointRadius: 0,
-		pointHoverRadius: 7,
+const dataSetDomMap = new Map<
+	ChartDataset<'line', number[]>,
+	{
+		percentSpan: HTMLSpanElement
+		liWrapper: HTMLLIElement
 	}
-})
+>()
 
-const htmlLegendPlugin: Plugin<'line'> = {
-	id: 'htmlLegend',
-	beforeInit(chart) {
-		const legendContainer = chart.options.plugins?.htmlLegendPlugin?.legendDiv
-		if (!(legendContainer instanceof HTMLElement)) {
-			throw new Error('Invariant violation: htmlLegendPlugin.legendDiv is required')
-		}
-		const ul = make('ul', { className: 'res-ul' })
-		legendContainer.append(ul)
-
-		chart.legendText = []
-		chart.percents = []
-
-		chart.data.datasets.forEach((ds, idx) => {
-			const li = make('li', {
-				className: 'res-li',
-				onclick() {
-					chart.setDatasetVisibility(idx, !chart.isDatasetVisible(idx))
-					chart.update()
-				},
-			})
-			const colorCircle = make('div', {
-				style: { backgroundColor: petData[idx].color },
-				className: 'res-color-circle',
-			})
-			const img = make('img', {
-				src: `/assets/images/owo_images/pets/${petData[idx].imageName}`,
-				alt: ds.label ?? '',
-				className: 'res-image',
-			})
-			const p = make('p', {
-				textContent: ds.label,
-			})
-			const percentSpan = make('span', {
-				className: 'res-percent-span',
-			})
-
-			li.append(colorCircle, img, p, percentSpan)
-			ul.appendChild(li)
-
-			chart.percents.push(percentSpan)
-			chart.legendText.push(li)
+const datasets: ChartDataset<'line', number[]>[] = petData.map(
+	({ color, resistance, imageName }) => {
+		const data = Array.from(
+			{ length: 90 },
+			(_, i) => (0.8 * (25 + 2 * i * resistance)) / (125 + 2 * i * resistance)
+		)
+		const liWrapper = make('li', {
+			className: 'res-li',
+			onclick() {
+				const chart = Chart.getChart(ctx)
+				if (!chart) return
+				const idx = chart.data.datasets.indexOf(dataset)
+				if (idx === -1) return
+				chart.setDatasetVisibility(idx, !chart.isDatasetVisible(idx))
+				chart.update()
+			},
 		})
-	},
+		const colorCircle = make('div', {
+			style: { backgroundColor: color },
+			className: 'res-color-circle',
+		})
+		const img = make('img', {
+			src: `/assets/images/owo_images/pets/${imageName}`,
+			alt: `${resistance} Res`,
+			className: 'res-image',
+		})
+		const p = make('p', {
+			textContent: `${resistance} Res`,
+		})
+		const percentSpan = make('span', {
+			className: 'res-percent-span',
+		})
 
-	afterUpdate(chart) {
-		chart.legendText.forEach((p, idx) => {
-			p.style.textDecoration = chart.isDatasetVisible(idx) ? '' : 'line-through'
+		liWrapper.append(colorCircle, img, p, percentSpan)
+		ul.appendChild(liWrapper)
+
+		const dataset = {
+			label: `${resistance} Res`,
+			data,
+			borderColor: color,
+			pointRadius: 0,
+			pointHoverRadius: 7,
+		}
+		dataSetDomMap.set(dataset, {
+			percentSpan,
+			liWrapper,
+		})
+		return dataset
+	}
+)
+
+const htmlLegendPlugin: Plugin<'line', number[]> = {
+	id: 'htmlLegend',
+	afterUpdate(chart: Chart<'line', number[]>) {
+		chart.data.datasets.forEach((ds, idx) => {
+			const domEls = dataSetDomMap.get(ds)
+			if (!domEls) throw new Error('Invariant violation: we fucked up dom elements somehow.')
+			domEls.liWrapper.style.textDecoration = chart.isDatasetVisible(idx)
+				? ''
+				: 'line-through'
 		})
 	},
 }
-
-const lvlDiv = getElement('#reschart-level-container')
-const legendDiv = getElement<HTMLDivElement>('#reschart-legend-container')
-const ctx = getElement<HTMLCanvasElement>('#reschart')
 
 new Chart(ctx, {
 	type: 'line',
@@ -110,15 +106,16 @@ new Chart(ctx, {
 	},
 	plugins: [htmlLegendPlugin],
 	options: {
-		onHover: function (_, chartElement, chart: Chart<'line'>) {
+		onHover: function (_, chartElement, chart: Chart<'line', number[]>) {
 			if (chartElement.length) {
 				const level = chartElement[0].index
 				const nbsp = '\u00A0'
 				lvlDiv.textContent = `Level ${level}`
-				chart.data.datasets.forEach((ds, i) => {
-					if (typeof ds.data[level] !== 'number')
-						throw new Error('Invariant violation: data point not a number')
-					chart.percents[i].textContent =
+				chart.data.datasets.forEach((ds) => {
+					const domEls = dataSetDomMap.get(ds)
+					if (!domEls)
+						throw new Error('Invariant violation: we fucked up dom elements somehow.')
+					domEls.percentSpan.textContent =
 						nbsp + nbsp + nbsp + (ds.data[level] * 100).toFixed(1) + '%'
 				})
 			}
@@ -131,7 +128,6 @@ new Chart(ctx, {
 		plugins: {
 			tooltip: { enabled: false },
 			legend: { display: false },
-			htmlLegendPlugin: { legendDiv: legendDiv },
 		},
 		scales: {
 			x: {
@@ -143,8 +139,8 @@ new Chart(ctx, {
 					},
 				},
 				title: {
-					display: true, // Show the title
-					text: 'Pet Level', // Title text
+					display: true,
+					text: 'Pet Level',
 				},
 			},
 			y: {
@@ -160,8 +156,8 @@ new Chart(ctx, {
 					},
 				},
 				title: {
-					display: true, // Show the title
-					text: 'Actual Resistance', // Title text
+					display: true,
+					text: 'Actual Resistance',
 				},
 			},
 		},
