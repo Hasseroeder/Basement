@@ -8,6 +8,7 @@ import {
 	toFixedDigits,
 } from '@/src/utils/inputUtil.ts'
 import { loadPets } from '@/src/utils/jsonUtil.ts'
+import type { RawPet } from '@/src/utils/jsonUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
 import rawZooData from '@/src/data/huntbot/calculator/zoo.json'
 const rawZoo = rawZooData as RawTier[]
@@ -56,15 +57,6 @@ type Tier = RawTier & {
 		readonly actualLuck: HTMLElement
 		readonly arrow: LuckArrow
 	}
-}
-
-type RawPet = {
-	readonly animated: boolean
-	readonly prettyName: string
-	readonly slug: string
-	readonly emoteSrc: string
-	readonly aliases: string[]
-	readonly stats: PetStats
 }
 
 type Pet = RawPet & {
@@ -291,56 +283,45 @@ const zoo = rawZoo
 		return tier
 	})
 
-loadPets().then(
-	(
-		data: {
-			animated: boolean
-			prettyName: string
-			slug: string
-			emoteSrc: string
-			aliases: string[]
-			stats: PetStats
-			tier: { slug: string; prettyName: string }
-		}[]
-	) => {
-		// this doesn't execute if loadPets() doesn't correctly fetch the API
-		// we'd get a malformed cptier if it did
-		const cptier = zoo.find((tier: Tier) => tier.slug === 'cpatreon')
-		if (!cptier) throw new Error('Invariant violation: "cpatreon" tier not found')
-		cptier.pets.length = 0
-		cptier.zooPetGrid.textContent = ''
-		cptier.hbPetGrid.textContent = ''
-		data.forEach((rawPet) => {
-			if (rawPet.tier.slug !== 'cpatreon') return
-			const emoteSrc = rawPet.emoteSrc + '?size=32'
-			const pet: Pet = {
-				animated: rawPet.animated ? true : false,
+loadPets().then((RawPets) => {
+	// this doesn't execute if loadPets() doesn't correctly fetch the API
+	// we'd get a malformed cptier if it did
+	const cptier = zoo.find((tier: Tier) => tier.slug === 'cpatreon')
+	if (!cptier) throw new Error('Invariant violation: "cpatreon" tier not found')
+	cptier.pets.length = 0
+	cptier.zooPetGrid.textContent = ''
+	cptier.hbPetGrid.textContent = ''
+	RawPets.forEach((rawPet) => {
+		if (rawPet.tier.slug !== 'cpatreon') return
+		const emoteSrc = rawPet.emoteSrc + '?size=32'
+		const pet: Pet = {
+			tier: rawPet.tier,
+			animated: rawPet.animated ? true : false,
+			prettyName: rawPet.prettyName,
+			slug: rawPet.prettyName.toLowerCase(),
+			emoteSrc,
+			aliases: rawPet.aliases.map((alias) => alias.toLowerCase()),
+			stats: rawPet.stats,
+			caught: { zoo: 0, hb: [] },
+			displayed: { zoo: false, hb: false },
+			hbCell: makePetCell({
 				prettyName: rawPet.prettyName,
-				slug: rawPet.prettyName.toLowerCase(),
 				emoteSrc,
-				aliases: rawPet.aliases.map((alias) => alias.toLowerCase()),
-				stats: rawPet.stats,
-				caught: { zoo: 0, hb: [] },
-				displayed: { zoo: false, hb: false },
-				hbCell: makePetCell({
-					prettyName: rawPet.prettyName,
-					emoteSrc,
-					slug: rawPet.prettyName.toLowerCase(),
-				}),
-				zooCell: makePetCell({
-					prettyName: rawPet.prettyName,
-					emoteSrc,
-					slug: rawPet.prettyName.toLowerCase(),
-				}),
-			}
-			cptier.zooPetGrid.append(pet.zooCell.el)
-			cptier.hbPetGrid.append(pet.hbCell.el)
-			petBySlug.set(pet.slug, pet)
-			cptier.pets.push(pet)
-		})
-		cptier.pets.sort((petA, petB) => petA.slug.localeCompare(petB.slug))
-	}
-)
+				slug: rawPet.prettyName.toLowerCase(),
+			}),
+			zooCell: makePetCell({
+				prettyName: rawPet.prettyName,
+				emoteSrc,
+				slug: rawPet.prettyName.toLowerCase(),
+			}),
+		}
+		cptier.zooPetGrid.append(pet.zooCell.el)
+		cptier.hbPetGrid.append(pet.hbCell.el)
+		petBySlug.set(pet.slug, pet)
+		cptier.pets.push(pet)
+	})
+	cptier.pets.sort((petA, petB) => petA.slug.localeCompare(petB.slug))
+})
 
 const huntbotTexts: [string, string][] = []
 let currentHbIdx = -1

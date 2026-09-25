@@ -43,76 +43,84 @@ import Message from '@/src/components/message.astro';
                     <img src="/assets/images/owo_images/battleEmojis/hp.png" class="pet-input-grid__stat-emote" />
                     <input
                       required
+                      id="hp-input"
                       class="pet-input-grid__input"
                       type="number"
                       min="0"
                       max="99"
                       value="15"
                       tabindex="2"
-                    /><code class="pet-input-grid__output"></code>
+                    /><code id="hp-output" class="pet-input-grid__output"></code>
                   </div>
                   <div class="pet-input-grid__cell">
                     <img src="/assets/images/owo_images/battleEmojis/wp.png" class="pet-input-grid__stat-emote" />
                     <input
                       required
+                      id="wp-input"
                       class="pet-input-grid__input"
                       type="number"
                       min="0"
                       max="99"
                       value="1"
                       tabindex="5"
-                    /><code class="pet-input-grid__output"></code>
+                    /><code id="wp-output" class="pet-input-grid__output"></code>
                   </div>
                   <div class="pet-input-grid__cell">
                     <img src="/assets/images/owo_images/battleEmojis/str.png" class="pet-input-grid__stat-emote" />
                     <input
                       required
+                      id="str-input"
                       class="pet-input-grid__input"
                       type="number"
                       min="0"
                       max="99"
                       value="1"
                       tabindex="3"
-                    /><code class="pet-input-grid__output"></code>
+                    /><code id="str-output" class="pet-input-grid__output"></code>
                   </div>
                   <div class="pet-input-grid__cell">
                     <img src="/assets/images/owo_images/battleEmojis/mag.png" class="pet-input-grid__stat-emote" />
                     <input
                       required
+                      id="mag-input"
                       class="pet-input-grid__input"
                       type="number"
                       min="0"
                       max="99"
                       value="1"
                       tabindex="6"
-                    /><code class="pet-input-grid__output"></code>
+                    /><code id="mag-output" class="pet-input-grid__output"></code>
                   </div>
                   <div class="pet-input-grid__cell">
                     <img src="/assets/images/owo_images/battleEmojis/pr.png" class="pet-input-grid__stat-emote" />
                     <input
                       required
+                      id="ipr-input"
                       class="pet-input-grid__input"
                       type="number"
                       min="0"
                       max="99"
                       value="1"
                       tabindex="4"
-                    /><code class="pet-input-grid__output"> %</code>
+                    /><code id="pr-output" class="pet-input-grid__output"> %</code>
                   </div>
                   <div class="pet-input-grid__cell">
                     <img src="/assets/images/owo_images/battleEmojis/mr.png" class="pet-input-grid__stat-emote" />
                     <input
                       required
+                      id="imr-input"
                       class="pet-input-grid__input"
                       type="number"
                       min="0"
                       max="99"
                       value="1"
                       tabindex="7"
-                    /><code class="pet-input-grid__output"> %</code>
+                    /><code id="mr-output" class="pet-input-grid__output"> %</code>
                   </div>
                 </div>
-                <span id="stat-span" class="stat-span">20 stats</span>
+                <span class="stat-span">
+                  <span id="inner-stat-span">20</span> stats
+                </span>
               </div>
               <div class="embed effect-container" id="effect-container"></div>
             </div>
@@ -125,7 +133,7 @@ import Message from '@/src/components/message.astro';
                   class="pet-output-grid__stat-emote"
                 />
                 <code class="pet-output-grid__stat-title">eHP</code>
-                <code class="pet-output-grid__output"></code>
+                <code id="prEhp-output" class="pet-output-grid__output"></code>
               </div>
               <div class="pet-output-grid__cell">
                 <img
@@ -133,17 +141,17 @@ import Message from '@/src/components/message.astro';
                   class="pet-output-grid__stat-emote"
                 />
                 <code class="pet-output-grid__stat-title">eHP</code>
-                <code class="pet-output-grid__output"></code>
+                <code id="mrEhp-output" class="pet-output-grid__output"></code>
               </div>
               <div class="pet-output-grid__cell">
                 <img src="/assets/images/owo_images/battleEmojis/ipr.png" class="pet-output-grid__stat-emote" />
                 <code class="pet-output-grid__stat-title">iPR</code>
-                <code class="pet-output-grid__output"></code>
+                <code id="ipr-output" class="pet-output-grid__output"></code>
               </div>
               <div class="pet-output-grid__cell">
                 <img src="/assets/images/owo_images/battleEmojis/imr.png" class="pet-output-grid__stat-emote" />
                 <code class="pet-output-grid__stat-title">iMR</code>
-                <code class="pet-output-grid__output"></code>
+                <code id="imr-output" class="pet-output-grid__output"></code>
               </div>
             </div>
             <button tabindex="8" class="mode-switch-button" id="mode-switch-button">Mode: Matching Pets</button>

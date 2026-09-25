@@ -9,7 +9,17 @@ async function loadJson(path: string) {
 	return jsonData
 }
 
-export async function loadPets() {
+export type RawPet = {
+	readonly animated: boolean
+	readonly prettyName: string
+	readonly slug: string
+	readonly emoteSrc: string
+	readonly aliases: string[]
+	readonly stats: number[]
+	readonly tier: { readonly slug: string; readonly prettyName: string }
+}
+
+export async function loadPets(): Promise<RawPet[]> {
 	const localPetPath = '/assets/images/owo_images/pets/'
 	const cdnPath = 'https://cdn.discordapp.com/emojis/'
 	const tiers = [
@@ -66,14 +76,16 @@ export async function loadPets() {
 
 		const emoteSrc = curemSrcOverride ?? hiddenSrcOverride ?? defaultSrc
 
-		return {
-			animated, //bool
-			prettyName, //string
-			slug, //string
-			emoteSrc, // string
-			aliases, // string[]
-			stats, // int[]
-			tier, // { slug: string, prettyName: string }
+		const pet: RawPet = {
+			animated,
+			prettyName,
+			slug,
+			emoteSrc,
+			aliases,
+			stats,
+			tier,
 		}
+
+		return pet
 	})
 }
