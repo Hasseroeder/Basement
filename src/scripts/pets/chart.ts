@@ -1,4 +1,0 @@
-import Chart from 'chart.js/auto'
-import annotationPlugin from 'chartjs-plugin-annotation'
-Chart.register(annotationPlugin)
-export default Chart

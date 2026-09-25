@@ -1,6 +1,8 @@
 import { make } from '@/src/utils/injectionUtil.ts'
-import Chart from '../chart.ts'
 import { Module } from './module.js'
+import Chart from 'chart.js/auto'
+import annotationPlugin from 'chartjs-plugin-annotation'
+Chart.register(annotationPlugin)
 
 export async function initializeTriangle(container, data) {
 	const { moduleConfigs, baseConfig, buttonConfigs } = data
