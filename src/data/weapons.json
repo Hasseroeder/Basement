@@ -19,7 +19,7 @@
 			{ "name": "Viability: ", "stars": 1 },
 			{ "name": "Ease of use: ", "stars": 4 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 35,
 				"max": 55,
@@ -28,7 +28,7 @@
 				"digits": 4.5
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 200,
 			"max": 100,
 			"emoji": ["wp.png"],
@@ -49,7 +49,7 @@
 			{ "name": "Viability: ", "stars": 0 },
 			{ "name": "Ease of use: ", "stars": 2 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 100,
 				"max": 150,
@@ -58,7 +58,7 @@
 				"digits": 5
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 225,
 			"max": 150,
 			"emoji": ["wp.png"],
@@ -79,7 +79,7 @@
 			{ "name": "Viability: ", "stars": 4 },
 			{ "name": "Ease of use: ", "stars": 3 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 110,
 				"max": 160,
@@ -88,7 +88,7 @@
 				"digits": 5
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 220,
 			"max": 120,
 			"emoji": ["wp.png"],
@@ -109,7 +109,7 @@
 			{ "name": "Viability: ", "stars": 4 },
 			{ "name": "Ease of use: ", "stars": 3 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 5,
 				"max": 15,
@@ -132,8 +132,8 @@
 			{ "name": "Viability: ", "stars": 5 },
 			{ "name": "Ease of use: ", "stars": 5 }
 		],
-		"statConfig": [],
-		"wpStatConfig": {
+		"rawStatConfigs": [],
+		"rawWPStatConfig": {
 			"min": 250,
 			"max": 150,
 			"emoji": ["wp.png"],
@@ -154,7 +154,7 @@
 			{ "name": "Viability: ", "stars": 1 },
 			{ "name": "Ease of use: ", "stars": 1 }
 		],
-		"statConfig": [],
+		"rawStatConfigs": [],
 		"buffSlugs": [],
 		"description": "This weapon has no active ability, but comes with two passives!",
 		"normalPassiveAmount": 2
@@ -169,7 +169,7 @@
 			{ "name": "Viability: ", "stars": 1 },
 			{ "name": "Ease of use: ", "stars": 2 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 25,
 				"max": 45,
@@ -178,7 +178,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 200,
 			"max": 100,
 			"emoji": ["wp.png"],
@@ -199,7 +199,7 @@
 			{ "name": "Viability: ", "stars": 4 },
 			{ "name": "Ease of use: ", "stars": 4 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 70,
 				"max": 100,
@@ -208,7 +208,7 @@
 				"digits": 5
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 200,
 			"max": 100,
 			"emoji": ["wp.png"],
@@ -229,7 +229,7 @@
 			{ "name": "Viability: ", "stars": 4 },
 			{ "name": "Ease of use: ", "stars": 0 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 90,
 				"max": 120,
@@ -245,7 +245,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 250,
 			"max": 150,
 			"emoji": ["wp.png"],
@@ -266,7 +266,7 @@
 			{ "name": "Viability: ", "stars": 1 },
 			{ "name": "Ease of use: ", "stars": 2 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 75,
 				"max": 95,
@@ -275,7 +275,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 200,
 			"max": 100,
 			"emoji": ["wp.png"],
@@ -296,7 +296,7 @@
 			{ "name": "Viability: ", "stars": 4 },
 			{ "name": "Ease of use: ", "stars": 3 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 35,
 				"max": 65,
@@ -305,7 +305,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 200,
 			"max": 100,
 			"emoji": ["wp.png"],
@@ -326,7 +326,7 @@
 			{ "name": "Viability: ", "stars": 3 },
 			{ "name": "Ease of use: ", "stars": 4 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 30,
 				"max": 50,
@@ -335,7 +335,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 250,
 			"max": 150,
 			"emoji": ["wp.png"],
@@ -356,7 +356,7 @@
 			{ "name": "Viability: ", "stars": 0 },
 			{ "name": "Ease of use: ", "stars": 0 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 60,
 				"max": 90,
@@ -365,7 +365,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 200,
 			"max": 125,
 			"emoji": ["wp.png"],
@@ -386,7 +386,7 @@
 			{ "name": "Viability: ", "stars": 5 },
 			{ "name": "Ease of use: ", "stars": 4 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 50,
 				"max": 80,
@@ -395,7 +395,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 400,
 			"max": 300,
 			"emoji": ["wp.png"],
@@ -416,7 +416,7 @@
 			{ "name": "Viability: ", "stars": 2 },
 			{ "name": "Ease of use: ", "stars": 2 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 30,
 				"max": 50,
@@ -425,7 +425,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 260,
 			"max": 160,
 			"emoji": ["wp.png"],
@@ -446,8 +446,8 @@
 			{ "name": "Viability: ", "stars": 1 },
 			{ "name": "Ease of use: ", "stars": 1 }
 		],
-		"statConfig": [],
-		"wpStatConfig": {
+		"rawStatConfigs": [],
+		"rawWPStatConfig": {
 			"min": 300,
 			"max": 250,
 			"emoji": ["wp.png"],
@@ -468,7 +468,7 @@
 			{ "name": "Viability: ", "stars": 4 },
 			{ "name": "Ease of use: ", "stars": 2 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 70,
 				"max": 100,
@@ -477,7 +477,7 @@
 				"digits": 5
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 200,
 			"max": 100,
 			"emoji": ["wp.png"],
@@ -498,8 +498,8 @@
 			{ "name": "Viability: ", "stars": 5 },
 			{ "name": "Ease of use: ", "stars": 3 }
 		],
-		"statConfig": [],
-		"wpStatConfig": {
+		"rawStatConfigs": [],
+		"rawWPStatConfig": {
 			"min": 200,
 			"max": 100,
 			"emoji": ["wp.png"],
@@ -520,7 +520,7 @@
 			{ "name": "Viability: ", "stars": 4 },
 			{ "name": "Ease of use: ", "stars": 2 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 50,
 				"max": 100,
@@ -536,7 +536,7 @@
 				"digits": 5
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 220,
 			"max": 150,
 			"emoji": ["wp.png"],
@@ -557,7 +557,7 @@
 			{ "name": "Viability: ", "stars": 5 },
 			{ "name": "Ease of use: ", "stars": 2 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 50,
 				"max": 80,
@@ -573,7 +573,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 230,
 			"max": 130,
 			"emoji": ["wp.png"],
@@ -594,7 +594,7 @@
 			{ "name": "Viability: ", "stars": 5 },
 			{ "name": "Ease of use: ", "stars": 3 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 50,
 				"max": 80,
@@ -603,7 +603,7 @@
 				"digits": 4
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 280,
 			"max": 180,
 			"emoji": ["wp.png"],
@@ -624,7 +624,7 @@
 			{ "name": "Viability: ", "stars": 0 },
 			{ "name": "Ease of use: ", "stars": 0 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 1,
 				"max": 40,
@@ -661,7 +661,7 @@
 				"digits": 5
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 200,
 			"max": 100,
 			"emoji": ["wp.png"],
@@ -682,7 +682,7 @@
 			{ "name": "Viability: ", "stars": 0 },
 			{ "name": "Ease of use: ", "stars": 0 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 5,
 				"max": 25,
@@ -698,7 +698,7 @@
 				"digits": 5
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 250,
 			"max": 150,
 			"emoji": ["wp.png"],
@@ -719,7 +719,7 @@
 			{ "name": "Viability: ", "stars": 0 },
 			{ "name": "Ease of use: ", "stars": 0 }
 		],
-		"statConfig": [
+		"rawStatConfigs": [
 			{
 				"min": 10,
 				"max": 20,
@@ -735,7 +735,7 @@
 				"digits": 5
 			}
 		],
-		"wpStatConfig": {
+		"rawWPStatConfig": {
 			"min": 100,
 			"max": 50,
 			"emoji": ["wp.png"],
@@ -756,8 +756,8 @@
 			{ "name": "Viability: ", "stars": 0 },
 			{ "name": "Ease of use: ", "stars": 0 }
 		],
-		"statConfig": [],
-		"wpStatConfig": {
+		"rawStatConfigs": [],
+		"rawWPStatConfig": {
 			"min": 250,
 			"max": 150,
 			"emoji": ["wp.png"],
@@ -778,8 +778,8 @@
 			{ "name": "Viability: ", "stars": 0 },
 			{ "name": "Ease of use: ", "stars": 0 }
 		],
-		"statConfig": [],
-		"wpStatConfig": {
+		"rawStatConfigs": [],
+		"rawWPStatConfig": {
 			"min": 225,
 			"max": 125,
 			"emoji": ["wp.png"],

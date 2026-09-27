@@ -1,19 +1,24 @@
-import { make } from '@/src/utils/injectionUtil.ts'
 import * as messageHandler from './messageHandler.js'
+import * as passiveHandler from './passiveHandler.js'
+import * as weaponHandler from './weapon.js'
+import type { PreparedBuff } from './main.js'
+import { make } from '@/src/utils/injectionUtil.ts'
 import { weaponAssetUrl } from './util.js'
 
 export class Buff {
-	constructor({ parent, staticData, statOverride }) {
+	constructor({
+		parent,
+		staticData,
+	}: {
+		parent: weaponHandler.Weapon | passiveHandler.Passive
+		staticData: PreparedBuff
+	}) {
+		//TODO: implement statOverrides for buffs
 		this.objectType = staticData.objectType
-		if (this.objectType !== 'buff')
-			throw new Error('Invariant violation: Buff constructor got passed a non-buff input')
-
 		this.name = staticData.name
 		this.slug = staticData.slug
-		this.statConfig = staticData.statConfig
 		this.traits = staticData.traits
 		this.description = staticData.description
-
 		this.parent = parent
 		this.image = make('img', {
 			src: weaponAssetUrl('owo_images/battleEmojis/' + this.slug + '.png'),
@@ -23,12 +28,8 @@ export class Buff {
 			className: 'buffs__emote',
 		})
 
-		this.stats = this.statConfig.map((statConfig, i) => ({
-			noWearConfig: statConfig,
-			noWear: statOverride[i],
-		}))
-
-		this.parent.buffs.push(this)
+		this.stats = staticData.stats.map((stat) => stat.initializeWith(this))
+		this.stats.forEach((stat) => stat._syncAll(100))
 		appendBuffNode(this)
 	}
 
@@ -41,12 +42,28 @@ export class Buff {
 	get wearBonus() {
 		return this.parent.wearBonus
 	}
-	updateQualities() {
-		this.parent.updateQualities()
+	render() {
+		this.parent.render()
 	}
+
+	stats: messageHandler.WeaponStat[]
+
+	objectType: 'buff'
+
+	description: string
+
+	slug: string
+
+	name: string
+
+	parent: passiveHandler.Passive | weaponHandler.Weapon
+
+	image: HTMLImageElement
+
+	traits: { slug: string; value?: number }[]
 }
 
-export function appendBuffNode(buff) {
+export function appendBuffNode(buff: Buff) {
 	const wrapper = make('div', { className: 'buffs__item' })
 	const title = make('strong', { textContent: ` ${buff.name} - ` })
 

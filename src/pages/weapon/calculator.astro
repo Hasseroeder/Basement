@@ -20,11 +20,11 @@ import EmbedMessage from '@/src/components/embedMessage.astro'
             <div class="inner-embed">
               <div class="inner-embed__weapon-calculator">
                 <span id="weapon-header" class="weapon-header"></span>
-                <div class="weapon-line"><strong>Name:&nbsp;</strong><div id="weaponName"></div></div>
-                <div class="weapon-line"><strong>Owner:&nbsp;</strong><div id="ownerID"></div></div>
-                <div class="weapon-line"><strong>ID:&nbsp;</strong><code id="weaponID" class="weapon-id"></code></div>
-                <div class="weapon-line"><strong>Shard Value:&nbsp;</strong><div id="shardValue"></div></div>
-                <div class="weapon-line"><strong>Quality:&nbsp;</strong><img id="weaponQualityImage" class="emote" />&nbsp;<span id="weaponQualitySpan"></span></div>
+                <div class="weapon-line"><strong>Name:&nbsp;</strong><div id="weapon-name"></div></div>
+                <div class="weapon-line"><strong>Owner:&nbsp;</strong><div id="owner-id"></div></div>
+                <div class="weapon-line"><strong>ID:&nbsp;</strong><code id="weapon-id" class="weapon-id"></code></div>
+                <div class="weapon-line"><strong>Shard Value:&nbsp;</strong><div id="shard-value"></div></div>
+                <div class="weapon-line"><strong>Quality:&nbsp;</strong><img id="weapon-quality-image" class="emote" />&nbsp;<span id="weapon-quality-span"></span></div>
                 <div class="weapon-line"><strong>Wear:&nbsp;</strong>
                   <select name="wear" id="wear-select" class="wear-select">
                     <option value="worn">worn</option>
@@ -35,7 +35,7 @@ import EmbedMessage from '@/src/components/embedMessage.astro'
                 </div>
                 <div class="weapon-line">
                   <strong>WP Cost:&nbsp;</strong>
-                  <div id="WP-Cost"></div>
+                  <div id="wp-cost"></div>
                   <img alt=":WP:" title=":WP:" class="emote" src="/assets/images/owo_images/battleEmojis/wp.png" />
                 </div>
                 <div class="weapon-line--description-header">Description:</div>

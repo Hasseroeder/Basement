@@ -1,44 +1,8 @@
 ---
+import type {RawQuasiWeapon, RawWeapon, RawStatConfig} from '@/src/scripts/wpbTypes' 
 import buffs from '@/src/data/buffs.json'
 
-type _BaseWeapon = {
-	name: string,
-	aliases: string[],
-	slug: string,
-	wikiStars: { name: string, stars: number }[]
-}
-
-type QuasiWeapon = _BaseWeapon & {
-	objectType: "quasiweapon"
-}
-
-type Weapon = _BaseWeapon & {
-	objectType: "weapon"
-	id: number
-	statConfig: Stat[],
-	wpStatConfig?: Stat,
-	buffSlugs: string[],
-	description: string,
-	normalPassiveAmount: number
-}
-
-type Stat = {
-	min: number,
-	max: number,
-	emoji: string[],
-	unit: string,
-	digits: number
-}
-
-type Buff = {
-	name: string,
-	description: string,
-	slug: string,
-	statConfig: Stat[],
-	traits: { slug: string, value?: number }[]
-}
-
-const { weapon } = Astro.props as { weapon: Weapon | QuasiWeapon }
+const { weapon } = Astro.props as { weapon: RawWeapon | RawQuasiWeapon }
 
 const customStatTexts: Record<string, string> = {
 	'orb': 'none,<br> but two passives!',
@@ -47,16 +11,16 @@ const customStatTexts: Record<string, string> = {
 
 const aliases = weapon.aliases?.length ? `aliases: ${weapon.aliases.join(', ')}` : ''
 
-let displayStats: Stat[] = [];
+let displayStats: RawStatConfig[] = [];
 
 if (weapon.objectType === "weapon"){
 	const buffStats = weapon.buffSlugs
         .map(slug => buffs.find(buff => buff.slug === slug))
-        .flatMap(buff => buff?.statConfig ?? []);	
-	displayStats.push(...weapon.statConfig)
+        .flatMap(buff => buff?.rawStatConfigs ?? []);	
+	displayStats.push(...weapon.rawStatConfigs)
 	displayStats.push(...buffStats)
-	if (weapon.wpStatConfig !== undefined)
-		displayStats.push(weapon.wpStatConfig)
+	if (weapon.rawWPStatConfig !== undefined)
+		displayStats.push(weapon.rawWPStatConfig)
 } 
 
 const emojiPath = (emoji: string) => `/assets/images/owo_images/battleEmojis/${emoji}`
