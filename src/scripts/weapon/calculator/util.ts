@@ -13,7 +13,6 @@ const weaponAssets = {
 		import: 'default',
 	}),
 }
-// TODO: check whether these paths work in production
 
 export type TierName = 'common' | 'uncommon' | 'rare' | 'epic' | 'mythic' | 'legendary' | 'fabled'
 export type WearName = 'worn' | 'decent' | 'fine' | 'pristine'
