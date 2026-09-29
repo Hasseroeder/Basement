@@ -1,6 +1,7 @@
 import * as buffHandler from './buffHandler.js'
 import * as weaponHandler from './weapon.js'
 import * as messageHandler from './messageHandler.js'
+import * as blueprinter from './blueprintParser.js'
 import { getRarity } from './util.js'
 import { make } from '@/src/utils/injectionUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
@@ -30,7 +31,15 @@ export function appendPassiveNode(passive: Passive) {
 }
 
 export class Passive {
-	constructor({ parent, staticData }: { parent: weaponHandler.Weapon; staticData: RawPassive }) {
+	constructor({
+		parent,
+		staticData,
+		statOverrides,
+	}: {
+		parent: weaponHandler.Weapon
+		staticData: RawPassive
+		statOverrides?: blueprinter.StatOverrides
+	}) {
 		this.objectType = staticData.objectType
 		this.name = staticData.name
 		this.slug = staticData.slug
@@ -45,10 +54,12 @@ export class Passive {
 		})
 		this.bList = make('div', { className: 'buff-container' })
 
-		this.stats = staticData.rawStatConfigs.map(
-			(stat) => new messageHandler.WeaponStat(this, stat)
-		)
-		this.buffs = staticData.buffSlugs.map((slug) => {
+		this.stats = staticData.rawStatConfigs.map((stat, i) => {
+			const override = statOverrides ? statOverrides.baseStatOverrides[i] : 100
+			return new messageHandler.WeaponStat(this, stat, override)
+		})
+
+		this.buffs = staticData.buffSlugs.map((slug, i) => {
 			const buffData = weaponHandler.WeaponFactory.wpbData.buffs.find(
 				(buff) => buff.slug === slug
 			)
@@ -57,10 +68,9 @@ export class Passive {
 			return new buffHandler.Buff({
 				parent: this,
 				staticData: buffData,
+				baseStatOverrides: statOverrides?.buffStatOverrides[i],
 			})
 		})
-
-		this.parent.passives.push(this)
 		appendPassiveNode(this)
 	}
 

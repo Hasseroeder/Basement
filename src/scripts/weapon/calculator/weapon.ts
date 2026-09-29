@@ -27,8 +27,7 @@ export class WeaponFactory {
 	}
 
 	static fromHash() {
-		const weapon = new Weapon()
-		blueprinter.applyToWeapon(weapon, location.hash.slice(1), WeaponFactory.wpbData)
+		const weapon = blueprinter.createWeapon(location.hash.slice(1), WeaponFactory.wpbData)
 		return weapon
 	}
 
@@ -36,44 +35,52 @@ export class WeaponFactory {
 }
 
 export class Weapon {
-	constructor() {
+	constructor(
+		staticData: RawWeapon,
+		{ baseStatOverrides, buffStatOverrides, wpStatOverride }: blueprinter.StatOverrides
+	) {
 		this.owner = { id: '@hsse', name: 'Heather' }
 		this.weaponID = '664DFC' // TODO: get rid of these stupid defaults
 		this.bList = getElement<HTMLDivElement>('#buff-container')
 		this.image = getElement<HTMLImageElement>('#weapon-portrait')
 		this._wear = 'worn'
-		this.passives = []
-		this.buffs = []
-		// all staticData still uninitialized, which will need to be added before this is functional.
-		// see below: setType()
-	}
-
-	setType(staticData: RawWeapon) {
 		this.objectType = staticData.objectType
 		this.slug = staticData.slug
 		this.name = staticData.name
 		this.aliases = staticData.aliases
 		this.description = staticData.description
 		this.normalPassiveAmount = staticData.normalPassiveAmount
+		this.passives = []
 
-		if (staticData.rawWPStatConfig)
-			this.wpStat = new messageHandler.WeaponStat(this, staticData.rawWPStatConfig)
+		if (staticData.rawWPStatConfig && wpStatOverride !== undefined)
+			this.wpStat = new messageHandler.WeaponStat(
+				this,
+				staticData.rawWPStatConfig,
+				wpStatOverride
+			)
+		else if (
+			(staticData.rawWPStatConfig === undefined && wpStatOverride) ||
+			(staticData.rawWPStatConfig && wpStatOverride === undefined)
+		)
+			throw new Error('wpStat data corrupt')
+
 		this.stats = staticData.rawStatConfigs.map(
-			(stat) => new messageHandler.WeaponStat(this, stat)
+			(stat, i) => new messageHandler.WeaponStat(this, stat, baseStatOverrides[i])
 		)
 
-		this.buffs = staticData.buffSlugs.map((slug) => {
+		this.buffs = staticData.buffSlugs.map((slug, i) => {
 			const buffData = WeaponFactory.wpbData.buffs.find((buff) => buff.slug === slug)
 			if (!buffData)
 				throw new Error('Invariant Violation: buff for buff slug does not exist.')
 			return new buffHandler.Buff({
 				parent: this,
 				staticData: buffData,
+				baseStatOverrides: buffStatOverrides[i],
 			})
 		})
 	}
 
-	objectType?: 'weapon'
+	objectType: 'weapon'
 
 	owner: {
 		id: string
@@ -92,15 +99,15 @@ export class Weapon {
 
 	buffs: buffHandler.Buff[]
 
-	slug?: string
+	slug: string
 
-	name?: string
+	name: string
 
-	aliases?: string[]
+	aliases: string[]
 
-	description?: string
+	description: string
 
-	normalPassiveAmount?: 0 | 1 | 2
+	normalPassiveAmount: 0 | 1 | 2
 
 	get qualityWear() {
 		const relevantStats = [...this.weaponStats, ...this.buffStats, ...this.passiveStats]
@@ -108,52 +115,18 @@ export class Weapon {
 		return cumStats / relevantStats.length
 	}
 
-	get stats() {
-		// This one is kinda ugly and cheating typescript
-		if (!this._stats) throw new Error('weapon.stats undefined at calltime')
-		return this._stats
-	}
-	set stats(v: messageHandler.WeaponStat[]) {
-		this._stats = v
-	}
-
-	_stats?: messageHandler.WeaponStat[]
+	stats: messageHandler.WeaponStat[]
 
 	wpStat?: messageHandler.WeaponStat
 
-	applyStatOverrides({
-		baseStatOverrides,
-		buffStatOverrides,
-		wpStatOverride,
-	}: blueprinter.StatOverrides) {
-		if (!this.stats) throw new Error('weapon.stats undefined when overrides applied')
-		this.stats.forEach((stat, i) => (stat.noWear = baseStatOverrides[i]))
-		this.buffs.forEach((buff, i) => {
-			if (!buff.stats) throw new Error('buff.stats undefined when overrides applied')
-			buff.stats.forEach((stat, j) => (stat.noWear = buffStatOverrides[i][j]))
-		})
-		if (this.wpStat && wpStatOverride) this.wpStat.noWear = wpStatOverride
-		else if ((!this.wpStat && wpStatOverride) || (this.wpStat && !wpStatOverride))
-			throw new Error('wpStat data corrupt')
-	}
-
-	addPassive(staticData: RawPassive, statOverride?: blueprinter.StatOverrides) {
-		const passive = new passiveHandler.Passive({
-			parent: this,
-			staticData: staticData,
-		})
-
-		if (statOverride) {
-			const { baseStatOverrides, buffStatOverrides } = statOverride
-			if (!passive.stats) throw new Error('passive.stats undefined when overrides applied')
-			passive.stats.forEach((stat, i) => (stat.noWear = baseStatOverrides[i]))
-			passive.buffs.forEach((buff, i) => {
-				if (!buff.stats) throw new Error('buff.stats undefined when overrides applied')
-				buff.stats.forEach((stat, j) => (stat.noWear = buffStatOverrides[i][j]))
+	addPassive(staticData: RawPassive, statOverrides?: blueprinter.StatOverrides) {
+		this.passives.push(
+			new passiveHandler.Passive({
+				parent: this,
+				staticData: staticData,
+				statOverrides,
 			})
-		}
-
-		return passive
+		)
 	}
 
 	get isEmpowered() {

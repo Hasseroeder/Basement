@@ -121,12 +121,13 @@ const clamp = (val: number, { min, max, step }: { min: number; max: number; step
 export class WeaponStat {
 	constructor(
 		parent: buffHandler.Buff | weaponHandler.Weapon | passiveHandler.Passive,
-		rawWeaponStat: RawStatConfig
+		rawWeaponStat: RawStatConfig,
+		baseStatOverride: number
 	) {
 		this.parent = parent
 		this.max = rawWeaponStat.max
 		this.min = rawWeaponStat.min
-		this._noWear = 100
+		this._noWear = baseStatOverride
 		this.emoji = rawWeaponStat.emoji
 		this.unit = rawWeaponStat.unit
 		this.digits = rawWeaponStat.digits

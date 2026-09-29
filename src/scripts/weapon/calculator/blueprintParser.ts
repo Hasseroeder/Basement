@@ -2,6 +2,8 @@ import * as messageHandler from './messageHandler.js'
 import * as weaponHandler from './weapon.ts'
 import { valueToPercent } from './util.js'
 import type { RawBuff, RawPassive, RawStatConfig, RawWeapon } from '../../wpbTypes.ts'
+import { Weapon } from './weapon.ts'
+import { getElement } from '@/src/utils/domUtil.ts'
 
 export type StatOverrides = {
 	baseStatOverrides: number[]
@@ -124,8 +126,7 @@ function getMatches<T extends RawWeapon | RawPassive>(
 	)
 }
 
-export function applyToWeapon(
-	weapon: weaponHandler.Weapon,
+export function createWeapon(
 	inputHash: string,
 	wpbData: { weapons: RawWeapon[]; passives: RawPassive[]; buffs: RawBuff[] }
 ) {
@@ -138,13 +139,16 @@ export function applyToWeapon(
 	// default to the first weapon entry if we don't get a valid match from the blueprint
 	const wear = ['decent', 'fine', 'pristine'].includes(tokens[0]) ? tokens[0] : 'worn'
 
-	weapon.setType(weaponMatch.item)
-	weapon.applyStatOverrides(getStats(wear, weaponMatch, wpbData))
+	const weapon = new Weapon(weaponMatch.item, getStats(wear, weaponMatch, wpbData))
 	getMatches<RawPassive>(passives, tokens).forEach((passiveMatch) =>
 		weapon.addPassive(passiveMatch.item, getStats(wear, passiveMatch, wpbData))
 	)
 	weapon.wear = wear
+	getElement<HTMLSelectElement>('#wear-select').value = wear
+
 	messageHandler.generateStatInputs(weapon)
+
+	return weapon
 }
 
 export function weaponToString(weapon: weaponHandler.Weapon) {

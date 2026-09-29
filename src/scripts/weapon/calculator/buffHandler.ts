@@ -9,9 +9,11 @@ export class Buff {
 	constructor({
 		parent,
 		staticData,
+		baseStatOverrides,
 	}: {
 		parent: weaponHandler.Weapon | passiveHandler.Passive
 		staticData: RawBuff
+		baseStatOverrides?: number[]
 	}) {
 		this.objectType = staticData.objectType
 		this.name = staticData.name
@@ -27,9 +29,10 @@ export class Buff {
 			className: 'buffs__emote',
 		})
 
-		this.stats = staticData.rawStatConfigs.map(
-			(stat) => new messageHandler.WeaponStat(this, stat)
-		)
+		this.stats = staticData.rawStatConfigs.map((stat, i) => {
+			const override = baseStatOverrides ? baseStatOverrides[i] : 100
+			return new messageHandler.WeaponStat(this, stat, override)
+		})
 		appendBuffNode(this)
 	}
 
