@@ -4,7 +4,7 @@ import * as messageHandler from './messageHandler.js'
 import { getRarity } from './util.js'
 import { make } from '@/src/utils/injectionUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
-import type { PreparedPassive } from './main.js'
+import type { RawPassive } from '../../wpbTypes.js'
 
 const pList = getElement('#passives')
 
@@ -30,13 +30,7 @@ export function appendPassiveNode(passive: Passive) {
 }
 
 export class Passive {
-	constructor({
-		parent,
-		staticData,
-	}: {
-		parent: weaponHandler.Weapon
-		staticData: PreparedPassive
-	}) {
+	constructor({ parent, staticData }: { parent: weaponHandler.Weapon; staticData: RawPassive }) {
 		this.objectType = staticData.objectType
 		this.name = staticData.name
 		this.slug = staticData.slug
@@ -51,8 +45,9 @@ export class Passive {
 		})
 		this.bList = make('div', { className: 'buff-container' })
 
-		this.stats = staticData.stats.map((stat) => stat.initializeWith(this))
-		this.stats.forEach((stat) => stat._syncAll(100))
+		this.stats = staticData.rawStatConfigs.map(
+			(stat) => new messageHandler.WeaponStat(this, stat)
+		)
 		this.buffs = staticData.buffSlugs.map((slug) => {
 			const buffData = weaponHandler.WeaponFactory.wpbData.buffs.find(
 				(buff) => buff.slug === slug
@@ -69,12 +64,12 @@ export class Passive {
 		appendPassiveNode(this)
 	}
 
-	get allStats(): messageHandler.WeaponStat[] {
-		const allStats = [...this.stats, ...this.buffs.flatMap((b) => b.stats)]
-		allStats.forEach((stat) => {
-			if (!stat) throw new Error("We've fucked up somehow and a stat is undefined")
-		})
-		return allStats as messageHandler.WeaponStat[]
+	get passiveStats() {
+		return this.stats
+	}
+
+	get buffStats() {
+		return this.buffs.flatMap((b) => b.stats)
 	}
 
 	get prefix() {
@@ -105,13 +100,9 @@ export class Passive {
 	}
 
 	get qualityWear() {
-		const cumStats = this.allStats.reduce((acc, stat) => acc + stat.withWear, 0)
-		return cumStats / this.allStats.length
-	}
-
-	get qualityNoWear() {
-		const cumStats = this.allStats.reduce((acc, stat) => acc + stat.noWear, 0)
-		return cumStats / this.allStats.length
+		const releveantStats = [...this.passiveStats, ...this.buffStats]
+		const cumStats = releveantStats.reduce((acc, stat) => acc + stat.withWear, 0)
+		return cumStats / releveantStats.length
 	}
 
 	slug: string

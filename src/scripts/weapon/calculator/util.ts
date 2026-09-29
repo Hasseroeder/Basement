@@ -35,11 +35,15 @@ function getRarity(quality: number) {
 	return tier.name
 }
 
-const percentToValue = (percent: number, { min, range }: { min: number; range: number }) =>
-	min + (range * percent) / 100
+const percentToValue = (percent: number, { min, max }: { min: number; max: number }) => {
+	const range = max - min
+	return min + (range * percent) / 100
+}
 
-const valueToPercent = (value: number, { min, range }: { min: number; range: number }) =>
-	Math.round((100 * (value - min)) / range)
+const valueToPercent = (value: number, { min, max }: { min: number; max: number }) => {
+	const range = max - min
+	return Math.round((100 * (value - min)) / range)
+}
 
 export async function fileExists(url: string) {
 	try {

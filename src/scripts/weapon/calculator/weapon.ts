@@ -5,12 +5,12 @@ import * as messageHandler from './messageHandler.js'
 import { getRarity, weaponEmojiPath } from './util.js'
 import { debounce } from '@/src/utils/inputUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
-import type { PreparedWeapon, PreparedPassive, PreparedBuff } from './main.js'
+import type { RawWeapon, RawPassive, RawBuff } from '../../wpbTypes.js'
 
 export type WpbData = {
-	weapons: PreparedWeapon[]
-	passives: PreparedPassive[]
-	buffs: PreparedBuff[]
+	weapons: RawWeapon[]
+	passives: RawPassive[]
+	buffs: RawBuff[]
 }
 
 export class WeaponFactory {
@@ -48,7 +48,7 @@ export class Weapon {
 		// see below: setType()
 	}
 
-	setType(staticData: PreparedWeapon) {
+	setType(staticData: RawWeapon) {
 		this.objectType = staticData.objectType
 		this.slug = staticData.slug
 		this.name = staticData.name
@@ -56,8 +56,11 @@ export class Weapon {
 		this.description = staticData.description
 		this.normalPassiveAmount = staticData.normalPassiveAmount
 
-		this.wpStat = staticData.wpStat?.initializeWith(this)
-		this.stats = staticData.stats.map((stat) => stat.initializeWith(this))
+		if (staticData.rawWPStatConfig)
+			this.wpStat = new messageHandler.WeaponStat(this, staticData.rawWPStatConfig)
+		this.stats = staticData.rawStatConfigs.map(
+			(stat) => new messageHandler.WeaponStat(this, stat)
+		)
 
 		this.buffs = staticData.buffSlugs.map((slug) => {
 			const buffData = WeaponFactory.wpbData.buffs.find((buff) => buff.slug === slug)
@@ -97,19 +100,24 @@ export class Weapon {
 
 	description?: string
 
-	normalPassiveAmount?: 1 | 2
+	normalPassiveAmount?: 0 | 1 | 2
 
 	get qualityWear() {
-		const cumStats = this.allStats.reduce((acc, stat) => acc + stat.withWear, 0)
-		return cumStats / this.allStats.length
+		const relevantStats = [...this.weaponStats, ...this.buffStats, ...this.passiveStats]
+		const cumStats = relevantStats.reduce((acc, stat) => acc + stat.withWear, 0)
+		return cumStats / relevantStats.length
 	}
 
-	get qualityNoWear() {
-		const cumStats = this.allStats.reduce((acc, stat) => acc + stat.noWear, 0)
-		return cumStats / this.allStats.length
+	get stats() {
+		// This one is kinda ugly and cheating typescript
+		if (!this._stats) throw new Error('weapon.stats undefined at calltime')
+		return this._stats
+	}
+	set stats(v: messageHandler.WeaponStat[]) {
+		this._stats = v
 	}
 
-	stats?: messageHandler.WeaponStat[]
+	_stats?: messageHandler.WeaponStat[]
 
 	wpStat?: messageHandler.WeaponStat
 
@@ -118,7 +126,6 @@ export class Weapon {
 		buffStatOverrides,
 		wpStatOverride,
 	}: blueprinter.StatOverrides) {
-		// TODO: oh my god this function looks ugly
 		if (!this.stats) throw new Error('weapon.stats undefined when overrides applied')
 		this.stats.forEach((stat, i) => (stat.noWear = baseStatOverrides[i]))
 		this.buffs.forEach((buff, i) => {
@@ -130,15 +137,28 @@ export class Weapon {
 			throw new Error('wpStat data corrupt')
 	}
 
-	addPassive(staticData: PreparedPassive, statOverride?: blueprinter.StatOverrides) {
-		return new passiveHandler.Passive({
+	addPassive(staticData: RawPassive, statOverride?: blueprinter.StatOverrides) {
+		const passive = new passiveHandler.Passive({
 			parent: this,
 			staticData: staticData,
 		})
+
+		if (statOverride) {
+			const { baseStatOverrides, buffStatOverrides } = statOverride
+			if (!passive.stats) throw new Error('passive.stats undefined when overrides applied')
+			passive.stats.forEach((stat, i) => (stat.noWear = baseStatOverrides[i]))
+			passive.buffs.forEach((buff, i) => {
+				if (!buff.stats) throw new Error('buff.stats undefined when overrides applied')
+				buff.stats.forEach((stat, j) => (stat.noWear = buffStatOverrides[i][j]))
+			})
+		}
+
+		return passive
 	}
 
 	get isEmpowered() {
-		if (!this.normalPassiveAmount) throw new Error('weapon.normalPassiveAmount undefined')
+		if (this.normalPassiveAmount === undefined)
+			throw new Error('weapon.normalPassiveAmount undefined')
 		return this.passives.length > this.normalPassiveAmount
 	}
 
@@ -169,7 +189,8 @@ export class Weapon {
 
 	set wear(v) {
 		this._wear = v
-		this.allStats.forEach((stat) => stat.updateWear())
+		const relevantStats = [...this.weaponStats, ...this.buffStats, ...this.passiveStats]
+		relevantStats.forEach((stat) => stat.updateWear())
 		this.render()
 	}
 	get wear() {
@@ -198,25 +219,22 @@ export class Weapon {
 		return getRarity(this.qualityWear)
 	}
 
-	get allStats(): messageHandler.WeaponStat[] {
-		if (!this.stats) throw new Error('weapon.stats undefined')
-		return [
-			...this.stats,
-			...this.buffs.flatMap((b) => b.stats),
-			this.wpStat,
-			...this.passives.flatMap((p) => p.allStats),
-		].filter((stat) => stat !== undefined)
-		// I'd love to use .filter(Boolean) but TypeScript doesn't understand that
+	get buffStats(): messageHandler.WeaponStat[] {
+		return this.buffs.flatMap((b) => b.stats)
 	}
 
-	get selfStats(): messageHandler.WeaponStat[] {
-		if (!this.stats) throw new Error('weapon.stats undefined')
-		const allStats = [...this.stats, ...this.buffs.flatMap((b) => b.stats), this.wpStat]
-		return allStats.filter((stat) => stat !== undefined)
-		// I'd love to use .filter(Boolean) but TypeScript doesn't understand that
+	get weaponStats(): messageHandler.WeaponStat[] {
+		const relevantStats = [...this.stats, this.wpStat]
+		return relevantStats.filter((stat) => stat !== undefined)
 	}
 
-	updateHash = debounce(() => history.replaceState(null, '', '#' + blueprinter.toString(this)))
+	get passiveStats(): messageHandler.WeaponStat[] {
+		return this.passives.flatMap((passive) => [...passive.passiveStats, ...passive.buffStats])
+	}
+
+	updateHash = debounce(() =>
+		history.replaceState(null, '', '#' + blueprinter.weaponToString(this))
+	)
 
 	render() {
 		this.image.src = weaponEmojiPath(this)

@@ -16,7 +16,7 @@ export type RawWeapon = _RawBaseWeapon & {
 	rawWPStatConfig?: RawStatConfig
 	buffSlugs: string[]
 	description: string
-	normalPassiveAmount: 1 | 2
+	normalPassiveAmount: 0 | 1 | 2
 }
 
 export type RawStatConfig = {

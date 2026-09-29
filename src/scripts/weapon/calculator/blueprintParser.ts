@@ -1,7 +1,7 @@
 import * as messageHandler from './messageHandler.js'
 import * as weaponHandler from './weapon.ts'
 import { valueToPercent } from './util.js'
-import type { PreparedWeapon, PreparedPassive, PreparedBuff } from './main.js'
+import type { RawBuff, RawPassive, RawStatConfig, RawWeapon } from '../../wpbTypes.ts'
 
 export type StatOverrides = {
 	baseStatOverrides: number[]
@@ -48,8 +48,8 @@ const isOnlyNumbers = (str: string) => /^[\d.,\s-]+$/.test(str)
 
 function getStats(
 	wear: string,
-	{ item, statToken }: { item: PreparedWeapon | PreparedPassive; statToken: string },
-	{ buffs }: { buffs: PreparedBuff[] }
+	{ item, statToken }: { item: RawWeapon | RawPassive; statToken: string },
+	{ buffs }: { buffs: RawBuff[] }
 ): StatOverrides {
 	const separator = statToken.match(/\d([,\- ])\d/)?.[1] ?? ','
 
@@ -59,9 +59,9 @@ function getStats(
 		return buff
 	})
 
-	const buffStatAmount = buffArray.flatMap((buff) => buff?.stats).length
-	const itemStatAmount = item.stats.length
-	const wpStatAmount = item.objectType === 'weapon' && item.wpStat ? 1 : 0
+	const buffStatAmount = buffArray.flatMap((buff) => buff?.rawStatConfigs).length
+	const itemStatAmount = item.rawStatConfigs.length
+	const wpStatAmount = item.objectType === 'weapon' && item.rawWPStatConfig ? 1 : 0
 
 	const statAmount = buffStatAmount + itemStatAmount + wpStatAmount
 
@@ -78,34 +78,35 @@ function getStats(
 		let wpStatOverride: number | undefined = undefined
 		const percentageMode = separator === ','
 		let cursor = 0
-		const read = (config: messageHandler.WeaponStat) => {
+		const read = (config: RawStatConfig) => {
 			const raw = statInts[cursor++]
 			return percentageMode ? raw : valueToPercent(raw, config) - wearBonus
 		}
 
-		if (item.objectType === 'weapon' && item.wpStat) {
+		if (item.objectType === 'weapon' && item.rawWPStatConfig) {
 			const wpIndex = percentageMode ? statInts.length - 1 : 0
 			wpStatOverride = percentageMode
 				? statInts[wpIndex]
-				: valueToPercent(statInts[wpIndex], item.wpStat) - wearBonus
+				: valueToPercent(statInts[wpIndex], item.rawWPStatConfig) - wearBonus
 			if (!percentageMode) cursor++
 			// Move cursor past wpStat if it's at the front
 		}
 
 		return {
-			baseStatOverrides: item.stats.map(read),
-			buffStatOverrides: buffArray.map((buff) => buff.stats.map(read)),
+			baseStatOverrides: item.rawStatConfigs.map(read),
+			buffStatOverrides: buffArray.map((buff) => buff.rawStatConfigs.map(read)),
 			wpStatOverride,
 		}
 	}
 	return {
-		baseStatOverrides: item.stats.map((_) => fabledPercent),
-		buffStatOverrides: buffArray.map((buff) => buff.stats.map((_) => fabledPercent)),
-		wpStatOverride: item.objectType === 'weapon' && item.wpStat ? fabledPercent : undefined,
+		baseStatOverrides: item.rawStatConfigs.map((_) => fabledPercent),
+		buffStatOverrides: buffArray.map((buff) => buff.rawStatConfigs.map((_) => fabledPercent)),
+		wpStatOverride:
+			item.objectType === 'weapon' && item.rawWPStatConfig ? fabledPercent : undefined,
 	}
 }
 
-function getMatches<T extends PreparedWeapon | PreparedPassive>(
+function getMatches<T extends RawWeapon | RawPassive>(
 	arrayToSearch: T[],
 	query: string[]
 ): { item: T; statToken: string }[] {
@@ -126,11 +127,11 @@ function getMatches<T extends PreparedWeapon | PreparedPassive>(
 export function applyToWeapon(
 	weapon: weaponHandler.Weapon,
 	inputHash: string,
-	wpbData: { weapons: PreparedWeapon[]; passives: PreparedPassive[]; buffs: PreparedBuff[] }
+	wpbData: { weapons: RawWeapon[]; passives: RawPassive[]; buffs: RawBuff[] }
 ) {
 	const { weapons, passives } = wpbData
 	const tokens = splitHypenSpaces(inputHash)
-	const weaponMatch = getMatches<PreparedWeapon>(weapons, tokens)[0] ?? {
+	const weaponMatch = getMatches<RawWeapon>(weapons, tokens)[0] ?? {
 		item: weapons[0],
 		statToken: '',
 	}
@@ -139,26 +140,32 @@ export function applyToWeapon(
 
 	weapon.setType(weaponMatch.item)
 	weapon.applyStatOverrides(getStats(wear, weaponMatch, wpbData))
-	getMatches<PreparedPassive>(passives, tokens).forEach((passiveMatch) =>
+	getMatches<RawPassive>(passives, tokens).forEach((passiveMatch) =>
 		weapon.addPassive(passiveMatch.item, getStats(wear, passiveMatch, wpbData))
 	)
 	weapon.wear = wear
 	messageHandler.generateStatInputs(weapon)
 }
 
-export function toString(weapon: weaponHandler.Weapon) {
+export function weaponToString(weapon: weaponHandler.Weapon) {
 	const formatStats = (stats: messageHandler.WeaponStat[]) => {
-		const isFabled = stats.every(({ noWear }) => noWear === 100)
-		return isFabled ? '' : stats.map(({ noWear }) => noWear).join(',')
+		const isFabled = stats.every(({ noWear: noWear }) => noWear === 100)
+		return isFabled ? '' : stats.map(({ noWear: noWear }) => noWear).join(',')
 	}
 
 	const wearString = weapon.wear !== 'worn' ? weapon.wear : ''
-	const statstring = formatStats(weapon.selfStats)
+	const weaponStats = [...weapon.stats, ...weapon.buffStats, weapon.wpStat].filter(
+		(stat) => stat !== undefined
+	)
+	const statstring = formatStats(weaponStats)
 
 	const passiveParts =
 		weapon.passives.length === 0
 			? ['none']
-			: weapon.passives.flatMap((passive) => [passive.slug, formatStats(passive.allStats)])
+			: weapon.passives.flatMap((passive) => [
+					passive.slug,
+					formatStats([...passive.passiveStats, ...passive.buffStats]),
+				])
 
 	return [wearString, weapon.slug, statstring, ...passiveParts].filter(Boolean).join('-')
 }

@@ -1,9 +1,9 @@
 import * as messageHandler from './messageHandler.js'
 import * as passiveHandler from './passiveHandler.js'
 import * as weaponHandler from './weapon.js'
-import type { PreparedBuff } from './main.js'
 import { make } from '@/src/utils/injectionUtil.ts'
 import { weaponAssetUrl } from './util.js'
+import type { RawBuff } from '../../wpbTypes.js'
 
 export class Buff {
 	constructor({
@@ -11,9 +11,8 @@ export class Buff {
 		staticData,
 	}: {
 		parent: weaponHandler.Weapon | passiveHandler.Passive
-		staticData: PreparedBuff
+		staticData: RawBuff
 	}) {
-		//TODO: implement statOverrides for buffs
 		this.objectType = staticData.objectType
 		this.name = staticData.name
 		this.slug = staticData.slug
@@ -28,8 +27,9 @@ export class Buff {
 			className: 'buffs__emote',
 		})
 
-		this.stats = staticData.stats.map((stat) => stat.initializeWith(this))
-		this.stats.forEach((stat) => stat._syncAll(100))
+		this.stats = staticData.rawStatConfigs.map(
+			(stat) => new messageHandler.WeaponStat(this, stat)
+		)
 		appendBuffNode(this)
 	}
 

@@ -20,7 +20,7 @@ const el = {
 	shardValue: getElement<HTMLDivElement>('#shard-value'),
 	weaponQualityImage: getElement<HTMLImageElement>('#weapon-quality-image'),
 	weaponQualitySpan: getElement<HTMLSpanElement>('#weapon-quality-span'),
-	wpCost: getElement<HTMLDivElement>('#wp-cost'),
+	wpCost: getElement<HTMLDivElement>('#weapon-line__wp-cost'),
 	description: getElement<HTMLDivElement>('#weapon-line--description'),
 }
 
@@ -103,18 +103,12 @@ function generateDescription(
 	function getStatNode(): HTMLDivElement {
 		const stats = item.stats
 		const _statIdx = statIndex++
-		if (!stats || !stats[_statIdx].wrapper)
+		if (!stats || !stats[_statIdx].dom.wrapper)
 			throw new Error('Tried to generate a description for a not yet initialized item.')
-		return stats[_statIdx].wrapper
+		return stats[_statIdx].dom.wrapper
 	}
 
 	return parts.map(elif)
-}
-
-function generateWPInput(weapon: weaponHandler.Weapon) {
-	//TODO: check whether I really need these characters for nbsp
-	const stat = weapon.wpStat
-	return stat && stat.wrapper ? stat.wrapper : `\u00A0${0}\u00A0`
 }
 
 const clamp = (val: number, { min, max, step }: { min: number; max: number; step: number }) => {
@@ -125,62 +119,19 @@ const clamp = (val: number, { min, max, step }: { min: number; max: number; step
 }
 
 export class WeaponStat {
-	constructor(stat: RawStatConfig) {
-		this.max = stat.max
-		this.min = stat.min
-		this.noWear = 100
-		this.emoji = stat.emoji
-		this.unit = stat.unit
-		this.digits = stat.digits
-		// still has uninitialized properties
-	}
-
-	initializeWith(parent: buffHandler.Buff | passiveHandler.Passive | weaponHandler.Weapon) {
+	constructor(
+		parent: buffHandler.Buff | weaponHandler.Weapon | passiveHandler.Passive,
+		rawWeaponStat: RawStatConfig
+	) {
 		this.parent = parent
-		this._buildDOM()
-		return this
-	}
-
-	get step() {
-		return this.range / 100
-	}
-	get range() {
-		return this.max - this.min
-	}
-	get wear() {
-		if (!this.parent) throw new Error('WeaponStat.wear asked before parent was set')
-		return this.parent.wear
-	}
-	get wearBonus() {
-		if (!this.parent) throw new Error('WeaponStat.wearBonus asked before parent was set')
-		return this.parent.wearBonus
-	}
-	get wearName() {
-		if (!this.parent) throw new Error('WeaponStat.wearName asked before parent was set')
-		return this.parent.wearName
-	}
-
-	get percentageConfig() {
-		const bonus = this.wearBonus
-		return {
-			min: bonus,
-			max: 100 + bonus,
-			range: 100,
-			step: 1,
-			unit: '%',
-			digits: 3.5,
-		}
-	}
-
-	get wearConfig() {
-		const bonus = this.step * this.wearBonus
-		return {
-			...this,
-			range: this.range,
-			step: this.step,
-			min: this.min + bonus,
-			max: this.max + bonus,
-		}
+		this.max = rawWeaponStat.max
+		this.min = rawWeaponStat.min
+		this._noWear = 100
+		this.emoji = rawWeaponStat.emoji
+		this.unit = rawWeaponStat.unit
+		this.digits = rawWeaponStat.digits
+		this.dom = this._buildDOM()
+		this._syncDom(this.withWear)
 	}
 
 	_buildDOM() {
@@ -190,31 +141,44 @@ export class WeaponStat {
 				textContent: unit,
 			})
 
-		this.numberInput = createRangedInput('number', this.wearConfig)
-		this.numberLabel = makeUnitLabel(this)
-		this.qualityInput = createRangedInput('number', this.percentageConfig, { height: '1.5rem' })
-		this.qualityLabel = makeUnitLabel(this.percentageConfig)
-		this.slider = createRangedInput('range', this.wearConfig)
-		this.img = make('img', {
+		const numberInput = createRangedInput('number', this.wearConfig)
+		const numberLabel = makeUnitLabel(this)
+		const qualityInput = createRangedInput('number', this.percentageConfig, {
+			height: '1.5rem',
+		})
+		const qualityLabel = makeUnitLabel(this.percentageConfig)
+		const slider = createRangedInput('range', this.wearConfig)
+		const img = make('img', {
 			className: 'input-wrapper__tier-emote',
 		})
-		this.tooltip = make('div', { className: 'input-wrapper__tooltip' }, [
-			this.img,
-			this.qualityInput,
-			this.qualityLabel,
-			this.slider,
+		const tooltip = make('div', { className: 'input-wrapper__tooltip' }, [
+			img,
+			qualityInput,
+			qualityLabel,
+			slider,
 		])
-		this.wrapper = make('div', { className: 'input-wrapper' }, [
-			this.numberInput,
-			this.numberLabel,
-			this.tooltip,
+		const wrapper = make('div', { className: 'input-wrapper' }, [
+			numberInput,
+			numberLabel,
+			tooltip,
 		])
 
 		this._wireEvents({
-			numberInput: this.numberInput,
-			qualityInput: this.qualityInput,
-			slider: this.slider,
+			numberInput,
+			qualityInput,
+			slider,
 		})
+
+		return {
+			numberInput,
+			numberLabel,
+			qualityInput,
+			qualityLabel,
+			slider,
+			img,
+			tooltip,
+			wrapper,
+		}
 	}
 
 	_wireEvents({
@@ -234,14 +198,19 @@ export class WeaponStat {
 					valueType === 'percent'
 						? Number(input.value)
 						: valueToPercent(Number(input.value), this)
-				this._syncAll(val)
+				this._syncDom(val)
+				this.noWear = val - this.wearBonus
+				this.parent.render()
 			})
 			input.addEventListener('change', (e) => {
 				const val =
 					valueType === 'percent'
 						? Number(input.value)
 						: valueToPercent(Number(input.value), this)
-				this._syncAll(clamp(val, this.percentageConfig))
+				const clampedVal = clamp(val, this.percentageConfig)
+				this._syncDom(clampedVal)
+				this.noWear = clampedVal - this.wearBonus
+				this.parent.render()
 			})
 		}
 		wire(numberInput, 'raw')
@@ -249,50 +218,86 @@ export class WeaponStat {
 		wire(slider, 'raw')
 	}
 
-	_syncAll(pct: number) {
-		if (!this.parent) throw new Error('WeaponStat._syncAll called before parent was set')
-		if (!this.numberInput || !this.slider || !this.img || !this.qualityInput)
-			throw new Error('WeaponStat input dom nonexistant at _syncAll call time')
-		const noWearPct = pct - this.wearBonus
-		const rawValue = percentToValue(pct, this)
+	_syncDom(percentWear?: number) {
+		if (!percentWear) percentWear = this.withWear
+		const rawValue = percentToValue(percentWear, this)
 		const floatfixValue = String(Number(rawValue.toFixed(10)))
 
-		this.numberInput.value = floatfixValue
-		this.slider.value = floatfixValue
+		this.dom.numberInput.value = floatfixValue
+		this.dom.slider.value = floatfixValue
 
 		// percentToValue() 100% -> Sword 55% STR
 		// valueToPercent() Sword 55% STR -> 100%
 
-		this.qualityInput.value = String(pct)
-		this.img.src = getTierEmojiPath(pct)
-		this.noWear = noWearPct
-
-		this.parent.render()
+		this.dom.qualityInput.value = String(percentWear)
+		this.dom.img.src = getTierEmojiPath(percentWear)
 	}
 
 	updateWear() {
 		;[
-			{ el: this.numberInput, config: this.wearConfig },
-			{ el: this.slider, config: this.wearConfig },
-			{ el: this.qualityInput, config: this.percentageConfig },
+			{ el: this.dom.numberInput, config: this.wearConfig },
+			{ el: this.dom.slider, config: this.wearConfig },
+			{ el: this.dom.qualityInput, config: this.percentageConfig },
 		].forEach((input) => {
-			if (!input.el)
-				throw new Error('wear tried to be updated before input elements were created')
 			const { min, max } = input.config
 			input.el.min = String(Math.min(min, max))
 			input.el.max = String(Math.max(min, max))
 		})
-
-		this._syncAll(this.noWear + this.wearBonus)
+		this._syncDom(this.noWear + this.wearBonus)
 	}
 
-	noWear: number
-
+	get wear() {
+		return this.parent.wear
+	}
+	get wearBonus() {
+		return this.parent.wearBonus
+	}
+	get wearName() {
+		return this.parent.wearName
+	}
 	get withWear() {
 		return this.noWear + this.wearBonus
 	}
+	get step() {
+		return this.range / 100
+	}
+	get range() {
+		return this.max - this.min
+	}
+	get percentageConfig() {
+		const bonus = this.wearBonus
+		return {
+			min: bonus,
+			max: 100 + bonus,
+			range: 100,
+			step: 1,
+			unit: '%',
+			digits: 3.5,
+		}
+	}
+	get wearConfig() {
+		const bonus = this.step * this.wearBonus
+		return {
+			...this,
+			range: this.range,
+			step: this.step,
+			min: this.min + bonus,
+			max: this.max + bonus,
+		}
+	}
 
-	parent?: buffHandler.Buff | passiveHandler.Passive | weaponHandler.Weapon
+	parent: buffHandler.Buff | passiveHandler.Passive | weaponHandler.Weapon
+
+	_noWear: number
+
+	get noWear() {
+		return this._noWear
+	}
+
+	set noWear(v: number) {
+		this._noWear = v
+		this._syncDom()
+	}
 
 	min: number
 
@@ -304,25 +309,27 @@ export class WeaponStat {
 
 	digits: number
 
-	numberInput?: HTMLInputElement
+	dom: {
+		numberInput: HTMLInputElement
 
-	slider?: HTMLInputElement
+		slider: HTMLInputElement
 
-	qualityInput?: HTMLInputElement
+		qualityInput: HTMLInputElement
 
-	tooltip?: HTMLDivElement
+		tooltip: HTMLDivElement
 
-	wrapper?: HTMLDivElement
+		wrapper: HTMLDivElement
 
-	qualityLabel?: HTMLSpanElement
+		qualityLabel: HTMLSpanElement
 
-	numberLabel?: HTMLSpanElement
+		numberLabel: HTMLSpanElement
 
-	img?: HTMLImageElement
+		img: HTMLImageElement
+	}
 }
 
 function displayInfo(weapon: weaponHandler.Weapon) {
-	if (!weapon.name || !weapon.qualityWear)
+	if (!weapon.name || weapon.qualityWear === undefined)
 		throw new Error('weapon.name or weapon.qualityWear undefined at displayInfo')
 
 	el.weaponHeader.textContent = weapon.owner.name + "'s " + weapon.wearName + weapon.name
@@ -337,8 +344,9 @@ function displayInfo(weapon: weaponHandler.Weapon) {
 }
 
 function generateStatInputs(weapon: weaponHandler.Weapon) {
-	el.wpCost.append(generateWPInput(weapon))
 	el.description.append(...generateDescription(weapon))
+	const wpDom = weapon.wpStat ? weapon.wpStat.dom.wrapper : ' 0 '
+	el.wpCost.append(wpDom)
 }
 
 function createRangedInput(

@@ -48,7 +48,7 @@
 	font-size: 0.8rem;
 	border: none;
 	border-radius: 0.2rem;
-	padding: 0.1rem;
+	padding: 0.1rem 0.2rem;
 	background-color: #191919;
 	color: lightgray;
 }
@@ -258,6 +258,10 @@
 			@extend ._normal-emote;
 		}
 	}
+
+	&__wp-cost {
+		white-space: pre;
+	}
 }
 
 .passives {
@@ -273,7 +277,7 @@
 
 	&__emote {
 		@extend ._normal-emote;
-		:hover {
+		&:hover {
 			background-color: #666;
 			cursor: var(--cur-pointer);
 		}
