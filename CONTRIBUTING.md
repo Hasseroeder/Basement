@@ -40,7 +40,7 @@ npm run preview
 
 ## Where to make changes
 
-- Guide articles are generally MDX files under `src/content/`, grouped by parent page.
+- Text content is generally MDX files under `src/content/`, grouped by parent page.
     - The associated Markdown pipeline also includes custom emote handling with `:emote:` and math rendering with `$2+2$`.
     - To add a new emote, head to `src/plugins/remark-emotes.json` and add whatever you need to the list.
 - Pages lay in `src/pages/` and their reusable UI lays in `src/components/`.
