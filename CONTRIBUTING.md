@@ -11,7 +11,7 @@ Basement is a simple static website.
 The foundation of any site is **HTML**, **JS**, and **CSS**.
 We use [**Astro**](https://astro.build/), [**TypeScript**](https://www.typescriptlang.org/), and [**SCSS**](https://sass-lang.com/documentation/syntax/) to extend on top of that.  
 These allow us to more easily write text pages with Markdown and they make our code vastly more readable.  
-To get started with all of this, you'll firstly need node.js and npm.
+To get started with all of this, you'll need node.js and npm.
 
 ## Setting up the project
 
