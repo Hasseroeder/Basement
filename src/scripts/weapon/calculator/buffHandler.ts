@@ -28,7 +28,6 @@ export class Buff {
 			draggable: false,
 			className: 'buffs__emote',
 		})
-
 		this.stats = staticData.rawStatConfigs.map((stat, i) => {
 			const override = baseStatOverrides ? baseStatOverrides[i] : 100
 			return new messageHandler.WeaponStat(this, stat, override)
@@ -38,9 +37,6 @@ export class Buff {
 
 	get wear() {
 		return this.parent.wear
-	}
-	get wearName() {
-		return this.parent.wearName
 	}
 	get wearBonus() {
 		return this.parent.wearBonus

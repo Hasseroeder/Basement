@@ -26,18 +26,16 @@ export class WeaponFactory {
 		// note: rune needs special stats
 	}
 
-	static fromHash() {
-		const weapon = blueprinter.createWeapon(location.hash.slice(1), WeaponFactory.wpbData)
-		return weapon
+	static fromHash(wpbData: WpbData) {
+		return blueprinter.createWeapon(location.hash.slice(1), wpbData)
 	}
-
-	static wpbData: WpbData
 }
 
 export class Weapon {
 	constructor(
 		staticData: RawWeapon,
-		{ baseStatOverrides, buffStatOverrides, wpStatOverride }: blueprinter.StatOverrides
+		{ baseStatOverrides, buffStatOverrides, wpStatOverride }: blueprinter.StatOverrides,
+		wpbData: WpbData
 	) {
 		this.owner = { id: '@hsse', name: 'Heather' }
 		this.weaponID = '664DFC' // TODO: get rid of these stupid defaults
@@ -69,7 +67,7 @@ export class Weapon {
 		)
 
 		this.buffs = staticData.buffSlugs.map((slug, i) => {
-			const buffData = WeaponFactory.wpbData.buffs.find((buff) => buff.slug === slug)
+			const buffData = wpbData.buffs.find((buff) => buff.slug === slug)
 			if (!buffData)
 				throw new Error('Invariant Violation: buff for buff slug does not exist.')
 			return new buffHandler.Buff({
@@ -119,12 +117,17 @@ export class Weapon {
 
 	wpStat?: messageHandler.WeaponStat
 
-	addPassive(staticData: RawPassive, statOverrides?: blueprinter.StatOverrides) {
+	addPassive(
+		staticData: RawPassive,
+		wpbData: WpbData,
+		statOverrides?: blueprinter.StatOverrides
+	) {
 		this.passives.push(
 			new passiveHandler.Passive({
 				parent: this,
 				staticData: staticData,
 				statOverrides,
+				wpbData,
 			})
 		)
 	}
@@ -172,9 +175,9 @@ export class Weapon {
 	get wearName() {
 		return (
 			{
-				pristine: 'Pristine\u00A0',
-				fine: 'Fine\u00A0',
-				decent: 'Decent\u00A0',
+				pristine: 'Pristine',
+				fine: 'Fine',
+				decent: 'Decent',
 			}[this.wear] ?? ''
 		)
 	}

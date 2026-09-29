@@ -9,23 +9,23 @@ import { getElement } from '@/src/utils/domUtil.js'
 
 const weapons = rawWeapons.filter((rawWeapon) => rawWeapon.objectType === 'weapon')
 
-weaponHandler.WeaponFactory.wpbData = {
+const wpbData = {
 	weapons: weapons as RawWeapon[],
 	passives: passives as RawPassive[],
 	buffs: buffs as RawBuff[],
 }
-const currentWeapon = weaponHandler.WeaponFactory.fromHash()
+const currentWeapon = weaponHandler.WeaponFactory.fromHash(wpbData)
 
 const pGrid = getElement('#add-passive-wrapper__replacement')
 pGrid.append(
-	...weaponHandler.WeaponFactory.wpbData.passives.map((passive) =>
+	...wpbData.passives.map((passive) =>
 		make('img', {
 			src: weaponAssetUrl(`owo_images/battleEmojis/f_${passive.slug}.png`),
 			alt: passive.slug,
 			title: passive.slug,
 			draggable: false,
 			className: 'add-passive-wrapper__emote',
-			onmousedown: () => currentWeapon.addPassive(passive),
+			onmousedown: () => currentWeapon.addPassive(passive, wpbData),
 		})
 	)
 )

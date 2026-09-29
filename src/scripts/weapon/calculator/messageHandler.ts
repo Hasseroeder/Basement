@@ -220,7 +220,7 @@ export class WeaponStat {
 	}
 
 	_syncDom(percentWear?: number) {
-		if (!percentWear) percentWear = this.withWear
+		if (percentWear === undefined) percentWear = this.withWear
 		const rawValue = percentToValue(percentWear, this)
 		const floatfixValue = String(Number(rawValue.toFixed(10)))
 
@@ -252,9 +252,6 @@ export class WeaponStat {
 	}
 	get wearBonus() {
 		return this.parent.wearBonus
-	}
-	get wearName() {
-		return this.parent.wearName
 	}
 	get withWear() {
 		return this.noWear + this.wearBonus
@@ -333,7 +330,7 @@ function displayInfo(weapon: weaponHandler.Weapon) {
 	if (!weapon.name || weapon.qualityWear === undefined)
 		throw new Error('weapon.name or weapon.qualityWear undefined at displayInfo')
 
-	el.weaponHeader.textContent = weapon.owner.name + "'s " + weapon.wearName + weapon.name
+	el.weaponHeader.textContent = weapon.owner.name + "'s " + weapon.wearName + ' ' + weapon.name
 	el.weaponName.textContent = weapon.name
 	el.ownerID.textContent = weapon.owner.id
 	el.weaponID.textContent = weapon.weaponID

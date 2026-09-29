@@ -139,9 +139,9 @@ export function createWeapon(
 	// default to the first weapon entry if we don't get a valid match from the blueprint
 	const wear = ['decent', 'fine', 'pristine'].includes(tokens[0]) ? tokens[0] : 'worn'
 
-	const weapon = new Weapon(weaponMatch.item, getStats(wear, weaponMatch, wpbData))
+	const weapon = new Weapon(weaponMatch.item, getStats(wear, weaponMatch, wpbData), wpbData)
 	getMatches<RawPassive>(passives, tokens).forEach((passiveMatch) =>
-		weapon.addPassive(passiveMatch.item, getStats(wear, passiveMatch, wpbData))
+		weapon.addPassive(passiveMatch.item, wpbData, getStats(wear, passiveMatch, wpbData))
 	)
 	weapon.wear = wear
 	getElement<HTMLSelectElement>('#wear-select').value = wear

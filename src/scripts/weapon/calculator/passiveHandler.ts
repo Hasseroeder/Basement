@@ -35,10 +35,12 @@ export class Passive {
 		parent,
 		staticData,
 		statOverrides,
+		wpbData,
 	}: {
 		parent: weaponHandler.Weapon
 		staticData: RawPassive
 		statOverrides?: blueprinter.StatOverrides
+		wpbData: weaponHandler.WpbData
 	}) {
 		this.objectType = staticData.objectType
 		this.name = staticData.name
@@ -60,9 +62,7 @@ export class Passive {
 		})
 
 		this.buffs = staticData.buffSlugs.map((slug, i) => {
-			const buffData = weaponHandler.WeaponFactory.wpbData.buffs.find(
-				(buff) => buff.slug === slug
-			)
+			const buffData = wpbData.buffs.find((buff) => buff.slug === slug)
 			if (!buffData)
 				throw new Error('Invariant Violation: buff for buff slug does not exist.')
 			return new buffHandler.Buff({
@@ -92,9 +92,6 @@ export class Passive {
 
 	get wear() {
 		return this.parent.wear
-	}
-	get wearName() {
-		return this.parent.wearName
 	}
 	get wearBonus() {
 		return this.parent.wearBonus
