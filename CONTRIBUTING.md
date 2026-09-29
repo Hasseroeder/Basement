@@ -3,7 +3,7 @@
 Contributions to Basement's guides, calculations, and site are welcome.
 If you are unsure about either OwO or Basement, open an issue or ask in the
 [support server](https://discord.gg/wA82GZ2rnR) before doing extensive work.
-We are more than happy to help you with git, code editors and any languages we use.
+We are more than happy to help with git, code editors and any languages we use.
 The first few steps are always the most difficult ones when starting a hobby.
 This is especially so for coding.
 
