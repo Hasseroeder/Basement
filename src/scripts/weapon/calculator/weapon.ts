@@ -7,6 +7,7 @@ import type { WearName } from './util.js'
 import { debounce } from '@/src/utils/inputUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
 import type { RawWeapon, RawPassive, RawBuff } from '../../wpbTypes.js'
+import { make } from '@/src/utils/injectionUtil.js'
 
 export type WpbData = {
 	weapons: RawWeapon[]
@@ -71,11 +72,19 @@ export class Weapon {
 			const buffData = wpbData.buffs.find((buff) => buff.slug === slug)
 			if (!buffData)
 				throw new Error('Invariant Violation: buff for buff slug does not exist.')
-			return new buffHandler.Buff({
+			const buff = new buffHandler.Buff({
 				parent: this,
 				staticData: buffData,
 				baseStatOverrides: buffStatOverrides[i],
 			})
+			this.bList.append(
+				make('div', { className: 'buffs__item' }, [
+					buff.image,
+					make('strong', { textContent: ` ${buff.name} - ` }),
+					...messageHandler.generateDescription(buff),
+				])
+			)
+			return buff
 		})
 	}
 

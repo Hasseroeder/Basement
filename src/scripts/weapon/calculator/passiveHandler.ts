@@ -21,12 +21,19 @@ export function appendPassiveNode(passive: Passive) {
 		textContent: ` ${passive.name} - `,
 	})
 
-	wrapper.append(
-		passive.image,
-		title,
-		...messageHandler.generateDescription(passive),
-		passive.bList
+	const bList = make(
+		'div',
+		{ className: 'buff-container' },
+		passive.buffs.map((buff) =>
+			make('div', { className: 'buffs__item' }, [
+				buff.image,
+				make('strong', { textContent: ` ${buff.name} - ` }),
+				...messageHandler.generateDescription(buff),
+			])
+		)
 	)
+
+	wrapper.append(passive.image, title, ...messageHandler.generateDescription(passive), bList)
 	pList.appendChild(wrapper)
 }
 
@@ -48,7 +55,6 @@ export class Passive {
 		this.aliases = staticData.aliases
 		this.description = staticData.description
 		this.parent = parent
-		this.bList = make('div', { className: 'buff-container' })
 
 		this.stats = staticData.rawStatConfigs.map((stat, i) => {
 			const override = statOverrides ? statOverrides.baseStatOverrides[i] : 100
@@ -126,8 +132,6 @@ export class Passive {
 	parent: weaponHandler.Weapon
 
 	image: HTMLImageElement
-
-	bList: HTMLDivElement
 
 	stats: messageHandler.WeaponStat[]
 

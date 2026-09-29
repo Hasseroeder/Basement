@@ -32,7 +32,6 @@ export class Buff {
 			const override = baseStatOverrides ? baseStatOverrides[i] : 100
 			return new messageHandler.WeaponStat(this, stat, override)
 		})
-		appendBuffNode(this)
 	}
 
 	get wear() {
@@ -60,12 +59,4 @@ export class Buff {
 	image: HTMLImageElement
 
 	traits: { slug: string; value?: number }[]
-}
-
-export function appendBuffNode(buff: Buff) {
-	const wrapper = make('div', { className: 'buffs__item' })
-	const title = make('strong', { textContent: ` ${buff.name} - ` })
-
-	wrapper.append(buff.image, title, ...messageHandler.generateDescription(buff))
-	buff.parent.bList.appendChild(wrapper)
 }
