@@ -1,6 +1,7 @@
 import * as messageHandler from './messageHandler.js'
 import * as weaponHandler from './weapon.ts'
 import { valueToPercent } from './util.js'
+import type { WearName } from './util.js'
 import type { RawBuff, RawPassive, RawStatConfig, RawWeapon } from '../../wpbTypes.ts'
 import { Weapon } from './weapon.ts'
 import { getElement } from '@/src/utils/domUtil.ts'
@@ -133,11 +134,13 @@ export function createWeapon(
 	const { weapons, passives } = wpbData
 	const tokens = splitHypenSpaces(inputHash)
 	const weaponMatch = getMatches<RawWeapon>(weapons, tokens)[0] ?? {
-		item: weapons[0],
+		item: weapons[0], // default to the first weapon entry if we don't get a valid match from the blueprint
 		statToken: '',
 	}
-	// default to the first weapon entry if we don't get a valid match from the blueprint
-	const wear = ['decent', 'fine', 'pristine'].includes(tokens[0]) ? tokens[0] : 'worn'
+
+	const wearNames: WearName[] = ['worn', 'decent', 'fine', 'pristine']
+	const wearIdx = wearNames.findIndex((wearName) => wearName === tokens[0])
+	const wear: WearName = wearNames[wearIdx] ?? wearNames[0]
 
 	const weapon = new Weapon(weaponMatch.item, getStats(wear, weaponMatch, wpbData), wpbData)
 	getMatches<RawPassive>(passives, tokens).forEach((passiveMatch) =>

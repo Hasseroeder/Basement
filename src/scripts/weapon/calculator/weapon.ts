@@ -3,6 +3,7 @@ import * as passiveHandler from './passiveHandler.js'
 import * as buffHandler from './buffHandler.js'
 import * as messageHandler from './messageHandler.js'
 import { getRarity, weaponEmojiPath } from './util.js'
+import type { WearName } from './util.js'
 import { debounce } from '@/src/utils/inputUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
 import type { RawWeapon, RawPassive, RawBuff } from '../../wpbTypes.js'
@@ -91,7 +92,7 @@ export class Weapon {
 
 	image: HTMLImageElement
 
-	_wear: string
+	_wear: WearName
 
 	passives: passiveHandler.Passive[]
 
@@ -173,22 +174,20 @@ export class Weapon {
 		return this._wear
 	}
 	get wearName() {
-		return (
-			{
-				pristine: 'Pristine',
-				fine: 'Fine',
-				decent: 'Decent',
-			}[this.wear] ?? ''
-		)
+		return {
+			pristine: 'Pristine',
+			fine: 'Fine',
+			decent: 'Decent',
+			worn: '',
+		}[this.wear]
 	}
 	get wearBonus() {
-		return (
-			{
-				pristine: 5,
-				fine: 3,
-				decent: 1,
-			}[this.wear] ?? 0
-		)
+		return {
+			pristine: 5,
+			fine: 3,
+			decent: 1,
+			worn: 0,
+		}[this.wear]
 	}
 
 	get tier() {

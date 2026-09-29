@@ -2,7 +2,7 @@ import * as buffHandler from './buffHandler.js'
 import * as weaponHandler from './weapon.js'
 import * as messageHandler from './messageHandler.js'
 import * as blueprinter from './blueprintParser.js'
-import { getRarity } from './util.js'
+import { getRarity, weaponEmojiPath } from './util.js'
 import { make } from '@/src/utils/injectionUtil.ts'
 import { getElement } from '@/src/utils/domUtil.js'
 import type { RawPassive } from '../../wpbTypes.js'
@@ -48,12 +48,6 @@ export class Passive {
 		this.aliases = staticData.aliases
 		this.description = staticData.description
 		this.parent = parent
-		this.image = make('img', {
-			ariaLabel: this.slug,
-			alt: ':' + this.slug + ':',
-			draggable: false,
-			className: 'passives__emote',
-		})
 		this.bList = make('div', { className: 'buff-container' })
 
 		this.stats = staticData.rawStatConfigs.map((stat, i) => {
@@ -71,6 +65,15 @@ export class Passive {
 				baseStatOverrides: statOverrides?.buffStatOverrides[i],
 			})
 		})
+
+		this.image = make('img', {
+			ariaLabel: this.slug,
+			alt: ':' + this.slug + ':',
+			draggable: false,
+			className: 'passives__emote',
+			src: weaponEmojiPath(this),
+		})
+
 		appendPassiveNode(this)
 	}
 

@@ -15,7 +15,8 @@ const weaponAssets = {
 }
 // TODO: check whether these paths work in production
 
-type TierName = 'common' | 'uncommon' | 'rare' | 'epic' | 'mythic' | 'legendary' | 'fabled'
+export type TierName = 'common' | 'uncommon' | 'rare' | 'epic' | 'mythic' | 'legendary' | 'fabled'
+export type WearName = 'worn' | 'decent' | 'fine' | 'pristine'
 
 export const weaponAssetUrl = (path: string) =>
 	weaponAssets[`@/src/assets/images/${path}`] ?? `/assets/images/${path}`

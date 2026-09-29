@@ -4,6 +4,7 @@ import passives from '@/src/data/passives.json'
 import buffs from '@/src/data/buffs.json'
 import { make } from '@/src/utils/injectionUtil.ts'
 import { weaponAssetUrl } from './util.js'
+import type { WearName } from './util.js'
 import type { RawBuff, RawPassive, RawWeapon } from '../../wpbTypes.js'
 import { getElement } from '@/src/utils/domUtil.js'
 
@@ -31,4 +32,4 @@ pGrid.append(
 )
 
 const wearSelect = getElement<HTMLSelectElement>('#wear-select')
-wearSelect.addEventListener('change', (e) => (currentWeapon.wear = wearSelect.value))
+wearSelect.addEventListener('change', (e) => (currentWeapon.wear = wearSelect.value as WearName))
