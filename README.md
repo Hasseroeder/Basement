@@ -111,4 +111,7 @@ Following other attempts to write guides, this one also won't be able to be kept
   </div>
 </div>
 
-#### TODO: add a small paragraph on the technical aspects of the project
+## Technical
+
+We have a guide on the technical parts of the project! Yippie!  
+[CONTRIBUTING.md](CONTRIBUTING.md) explains how to contribute and how the itty-bitty pieces of the website interact. You should read it.
