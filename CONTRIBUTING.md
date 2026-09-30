@@ -3,7 +3,7 @@
 Contributions to Basement's guides, calculations, and site are welcome.
 If you are unsure about either OwO or Basement, open an issue or ask in the
 [support server](https://discord.gg/wA82GZ2rnR) before doing extensive work.
-We are more than happy to help with git, code editors and any languages we use.
+We're more than happy to help with git, code editors and any languages we use.
 The first few steps are always the most difficult ones when starting a hobby.
 This is especially so for coding.
 
@@ -44,10 +44,10 @@ npm run preview
     - The associated Markdown pipeline also includes custom emote handling with `:emote:` and math rendering with `$2+2$`.
     - To add a new emote, head to `src/plugins/remark-emotes.json` and add whatever you need to the list.
 - Pages lay in `src/pages/` and their reusable UI lays in `src/components/`.
-- Styles lay in `src/styles/` and use Sassy CSS. :>
+- Styles lay in `src/styles/` and use Sassy CSS.
 - Scripts lay in `src/scripts/`, with related data in `src/data/`.
     - We try to use TypeScript for the purpose of scripts, but JavaScript is also really fine.
-    - And the associated data is mostly CSV and JSON.
+    - The associated data is mostly CSV and JSON.
 - Imported and processed assets belong in `src/assets/`.
 - As-is assets (mostly images) belong in `public/assets`, as this folder is simply served at the root of the website when live.
     - there's also as-is `public/data/neonutilAnimalAPI.json` laying there, which isn't used in production.  
