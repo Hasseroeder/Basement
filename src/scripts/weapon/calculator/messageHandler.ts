@@ -136,18 +136,19 @@ export class WeaponStat {
 	}
 
 	_buildDOM() {
-		const makeUnitLabel = ({ unit }: { unit: string }) =>
+		const makeUnitLabel = ({ unit }: { unit: string }, clickFocus: HTMLElement) =>
 			make('span', {
 				className: 'input-wrapper__unit-span',
 				textContent: unit,
+				onclick: () => clickFocus.focus(),
 			})
 
 		const numberInput = createRangedInput('number', this.wearConfig)
-		const numberLabel = makeUnitLabel(this)
+		const numberLabel = makeUnitLabel(this, numberInput)
 		const qualityInput = createRangedInput('number', this.percentageConfig, {
 			height: '1.5rem',
 		})
-		const qualityLabel = makeUnitLabel(this.percentageConfig)
+		const qualityLabel = makeUnitLabel(this.percentageConfig, qualityInput)
 		const slider = createRangedInput('range', this.wearConfig)
 		const img = make('img', {
 			className: 'input-wrapper__tier-emote',
